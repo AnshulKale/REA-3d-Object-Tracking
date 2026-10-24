@@ -1,0 +1,2250 @@
+Program: camera.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: set_name
+// Entry: 00000000
+// Signature: undefined __thiscall set_name(Camera * this, string * param_1)
+// ========================================
+
+
+/* m3t::Camera::set_name(std::string const&) */
+
+void __thiscall m3t::Camera::set_name(Camera *this,string *param_1)
+
+{
+  std::string::operator=((string *)(this + 8),param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_metafile_path
+// Entry: 00000008
+// Signature: undefined __thiscall set_metafile_path(Camera * this, path * param_1)
+// ========================================
+
+
+/* m3t::Camera::set_metafile_path(std::__fs::filesystem::path const&) */
+
+void __thiscall m3t::Camera::set_metafile_path(Camera *this,path *param_1)
+
+{
+  std::string::operator=((string *)(this + 0x20),(string *)param_1);
+  this[0x189] = (Camera)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_camera2world_pose
+// Entry: 00000030
+// Signature: undefined __thiscall set_camera2world_pose(Camera * this, Transform * param_1)
+// ========================================
+
+
+/* m3t::Camera::set_camera2world_pose(Eigen::Transform<float, 3, 2, 0> const&) */
+
+void __thiscall m3t::Camera::set_camera2world_pose(Camera *this,Transform *param_1)
+
+{
+  float fVar1;
+  undefined8 uVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float fVar6;
+  undefined8 uVar7;
+  float fVar8;
+  undefined8 uVar9;
+  float fVar10;
+  undefined8 uVar11;
+  float fVar12;
+  undefined8 uVar13;
+  float fVar14;
+  float fVar15;
+  float fVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float fVar21;
+  float fVar22;
+  
+  uVar5 = *(undefined8 *)(param_1 + 8);
+  uVar4 = *(undefined8 *)param_1;
+  *(undefined8 *)(this + 0xd8) = uVar5;
+  *(undefined8 *)(this + 0xd0) = uVar4;
+  uVar9 = *(undefined8 *)(param_1 + 0x18);
+  uVar7 = *(undefined8 *)(param_1 + 0x10);
+  *(undefined8 *)(this + 0xe8) = uVar9;
+  *(undefined8 *)(this + 0xe0) = uVar7;
+  uVar13 = *(undefined8 *)(param_1 + 0x28);
+  uVar11 = *(undefined8 *)(param_1 + 0x20);
+  *(undefined8 *)(this + 0xf8) = uVar13;
+  *(undefined8 *)(this + 0xf0) = uVar11;
+  uVar2 = *(undefined8 *)(param_1 + 0x30);
+  *(undefined8 *)(this + 0x108) = *(undefined8 *)(param_1 + 0x38);
+  *(undefined8 *)(this + 0x100) = uVar2;
+  fVar8 = (float)((ulong)uVar7 >> 0x20);
+  fVar19 = (float)uVar13;
+  fVar12 = (float)((ulong)uVar11 >> 0x20);
+  fVar17 = (float)uVar9;
+  fVar18 = -fVar12 * fVar17 + fVar19 * fVar8;
+  fVar6 = (float)uVar7;
+  fVar10 = (float)uVar11;
+  fVar14 = -fVar19 * fVar6 + fVar10 * fVar17;
+  fVar20 = -fVar10 * fVar8 + fVar12 * fVar6;
+  fVar1 = (float)uVar4;
+  fVar3 = (float)((ulong)uVar4 >> 0x20);
+  fVar16 = (float)uVar5;
+  fVar15 = 1.0 / (fVar1 * fVar18 + fVar3 * fVar14 + fVar20 * fVar16);
+  fVar21 = (-fVar3 * fVar19 + fVar16 * fVar12) * fVar15;
+  fVar19 = (-fVar16 * fVar10 + fVar1 * fVar19) * fVar15;
+  fVar22 = (-fVar8 * fVar16 + fVar17 * fVar3) * fVar15;
+  fVar10 = (-fVar1 * fVar12 + fVar3 * fVar10) * fVar15;
+  fVar17 = (-fVar17 * fVar1 + fVar6 * fVar16) * fVar15;
+  fVar18 = fVar18 * fVar15;
+  fVar14 = fVar14 * fVar15;
+  fVar20 = fVar20 * fVar15;
+  fVar15 = (-fVar6 * fVar3 + fVar8 * fVar1) * fVar15;
+  fVar1 = (float)uVar2;
+  fVar3 = (float)((ulong)uVar2 >> 0x20);
+  fVar16 = *(float *)(this + 0x108);
+  *(ulong *)(this + 0x110) = CONCAT44(fVar21,fVar18);
+  *(float *)(this + 0x118) = fVar22;
+  *(undefined4 *)(this + 0x11c) = 0;
+  *(ulong *)(this + 0x120) = CONCAT44(fVar19,fVar14);
+  *(float *)(this + 0x128) = fVar17;
+  *(undefined4 *)(this + 300) = 0;
+  *(ulong *)(this + 0x130) = CONCAT44(fVar10,fVar20);
+  *(float *)(this + 0x138) = fVar15;
+  *(undefined4 *)(this + 0x13c) = 0;
+  *(ulong *)(this + 0x140) =
+       CONCAT44((-fVar21 * fVar1 - fVar19 * fVar3) - fVar10 * fVar16,
+                (-fVar18 * fVar1 - fVar14 * fVar3) - fVar20 * fVar16);
+  *(float *)(this + 0x148) = (-(fVar15 * fVar16) - fVar17 * fVar3) - fVar22 * fVar1;
+  *(undefined4 *)(this + 0x14c) = 0x3f800000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_world2camera_pose
+// Entry: 00000184
+// Signature: undefined __thiscall set_world2camera_pose(Camera * this, Transform * param_1)
+// ========================================
+
+
+/* m3t::Camera::set_world2camera_pose(Eigen::Transform<float, 3, 2, 0> const&) */
+
+void __thiscall m3t::Camera::set_world2camera_pose(Camera *this,Transform *param_1)
+
+{
+  float fVar1;
+  undefined8 uVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float fVar6;
+  undefined8 uVar7;
+  float fVar8;
+  undefined8 uVar9;
+  float fVar10;
+  undefined8 uVar11;
+  float fVar12;
+  undefined8 uVar13;
+  float fVar14;
+  float fVar15;
+  float fVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float fVar21;
+  float fVar22;
+  
+  uVar5 = *(undefined8 *)(param_1 + 8);
+  uVar4 = *(undefined8 *)param_1;
+  *(undefined8 *)(this + 0x118) = uVar5;
+  *(undefined8 *)(this + 0x110) = uVar4;
+  uVar9 = *(undefined8 *)(param_1 + 0x18);
+  uVar7 = *(undefined8 *)(param_1 + 0x10);
+  *(undefined8 *)(this + 0x128) = uVar9;
+  *(undefined8 *)(this + 0x120) = uVar7;
+  uVar13 = *(undefined8 *)(param_1 + 0x28);
+  uVar11 = *(undefined8 *)(param_1 + 0x20);
+  *(undefined8 *)(this + 0x138) = uVar13;
+  *(undefined8 *)(this + 0x130) = uVar11;
+  uVar2 = *(undefined8 *)(param_1 + 0x30);
+  *(undefined8 *)(this + 0x148) = *(undefined8 *)(param_1 + 0x38);
+  *(undefined8 *)(this + 0x140) = uVar2;
+  fVar8 = (float)((ulong)uVar7 >> 0x20);
+  fVar19 = (float)uVar13;
+  fVar12 = (float)((ulong)uVar11 >> 0x20);
+  fVar17 = (float)uVar9;
+  fVar18 = -fVar12 * fVar17 + fVar19 * fVar8;
+  fVar6 = (float)uVar7;
+  fVar10 = (float)uVar11;
+  fVar14 = -fVar19 * fVar6 + fVar10 * fVar17;
+  fVar20 = -fVar10 * fVar8 + fVar12 * fVar6;
+  fVar1 = (float)uVar4;
+  fVar3 = (float)((ulong)uVar4 >> 0x20);
+  fVar16 = (float)uVar5;
+  fVar15 = 1.0 / (fVar1 * fVar18 + fVar3 * fVar14 + fVar20 * fVar16);
+  fVar21 = (-fVar3 * fVar19 + fVar16 * fVar12) * fVar15;
+  fVar19 = (-fVar16 * fVar10 + fVar1 * fVar19) * fVar15;
+  fVar22 = (-fVar8 * fVar16 + fVar17 * fVar3) * fVar15;
+  fVar10 = (-fVar1 * fVar12 + fVar3 * fVar10) * fVar15;
+  fVar17 = (-fVar17 * fVar1 + fVar6 * fVar16) * fVar15;
+  fVar18 = fVar18 * fVar15;
+  fVar14 = fVar14 * fVar15;
+  fVar20 = fVar20 * fVar15;
+  fVar15 = (-fVar6 * fVar3 + fVar8 * fVar1) * fVar15;
+  fVar1 = (float)uVar2;
+  fVar3 = (float)((ulong)uVar2 >> 0x20);
+  fVar16 = *(float *)(this + 0x148);
+  *(ulong *)(this + 0xd0) = CONCAT44(fVar21,fVar18);
+  *(float *)(this + 0xd8) = fVar22;
+  *(undefined4 *)(this + 0xdc) = 0;
+  *(ulong *)(this + 0xe0) = CONCAT44(fVar19,fVar14);
+  *(float *)(this + 0xe8) = fVar17;
+  *(undefined4 *)(this + 0xec) = 0;
+  *(ulong *)(this + 0xf0) = CONCAT44(fVar10,fVar20);
+  *(float *)(this + 0xf8) = fVar15;
+  *(undefined4 *)(this + 0xfc) = 0;
+  *(ulong *)(this + 0x100) =
+       CONCAT44((-fVar21 * fVar1 - fVar19 * fVar3) - fVar10 * fVar16,
+                (-fVar18 * fVar1 - fVar14 * fVar3) - fVar20 * fVar16);
+  *(float *)(this + 0x108) = (-(fVar15 * fVar16) - fVar17 * fVar3) - fVar22 * fVar1;
+  *(undefined4 *)(this + 0x10c) = 0x3f800000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: StartSavingImages
+// Entry: 000002d8
+// Signature: undefined __thiscall StartSavingImages(Camera * this, path * param_1, int param_2, string * param_3)
+// ========================================
+
+
+/* m3t::Camera::StartSavingImages(std::__fs::filesystem::path const&, int, std::string const&) */
+
+void __thiscall
+m3t::Camera::StartSavingImages(Camera *this,path *param_1,int param_2,string *param_3)
+
+{
+  this[0x188] = (Camera)0x1;
+  std::string::operator=((string *)(this + 0x150),(string *)param_1);
+  *(int *)(this + 0x168) = param_2;
+  std::string::operator=((string *)(this + 0x170),param_3);
+  this[0x189] = (Camera)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: StopSavingImages
+// Entry: 00000328
+// Signature: undefined __thiscall StopSavingImages(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::StopSavingImages() */
+
+void __thiscall m3t::Camera::StopSavingImages(Camera *this)
+
+{
+  this[0x188] = (Camera)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: image
+// Entry: 00000330
+// Signature: undefined __thiscall image(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::image() const */
+
+Camera * __thiscall m3t::Camera::image(Camera *this)
+
+{
+  return this + 0x38;
+}
+
+
+
+
+// ========================================
+// Function: name
+// Entry: 00000338
+// Signature: undefined __thiscall name(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::name() const */
+
+Camera * __thiscall m3t::Camera::name(Camera *this)
+
+{
+  return this + 8;
+}
+
+
+
+
+// ========================================
+// Function: metafile_path
+// Entry: 00000340
+// Signature: undefined __thiscall metafile_path(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::metafile_path() const */
+
+Camera * __thiscall m3t::Camera::metafile_path(Camera *this)
+
+{
+  return this + 0x20;
+}
+
+
+
+
+// ========================================
+// Function: intrinsics
+// Entry: 00000348
+// Signature: undefined __thiscall intrinsics(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::intrinsics() const */
+
+Camera * __thiscall m3t::Camera::intrinsics(Camera *this)
+
+{
+  return this + 0x98;
+}
+
+
+
+
+// ========================================
+// Function: camera2world_pose
+// Entry: 00000350
+// Signature: undefined __thiscall camera2world_pose(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::camera2world_pose() const */
+
+Camera * __thiscall m3t::Camera::camera2world_pose(Camera *this)
+
+{
+  return this + 0xd0;
+}
+
+
+
+
+// ========================================
+// Function: world2camera_pose
+// Entry: 00000358
+// Signature: undefined __thiscall world2camera_pose(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::world2camera_pose() const */
+
+Camera * __thiscall m3t::Camera::world2camera_pose(Camera *this)
+
+{
+  return this + 0x110;
+}
+
+
+
+
+// ========================================
+// Function: save_directory
+// Entry: 00000360
+// Signature: undefined __thiscall save_directory(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::save_directory() const */
+
+Camera * __thiscall m3t::Camera::save_directory(Camera *this)
+
+{
+  return this + 0x150;
+}
+
+
+
+
+// ========================================
+// Function: save_index
+// Entry: 00000368
+// Signature: undefined __thiscall save_index(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::save_index() const */
+
+undefined4 __thiscall m3t::Camera::save_index(Camera *this)
+
+{
+  return *(undefined4 *)(this + 0x168);
+}
+
+
+
+
+// ========================================
+// Function: save_image_type
+// Entry: 00000370
+// Signature: undefined __thiscall save_image_type(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::save_image_type() const */
+
+Camera * __thiscall m3t::Camera::save_image_type(Camera *this)
+
+{
+  return this + 0x170;
+}
+
+
+
+
+// ========================================
+// Function: save_images
+// Entry: 00000378
+// Signature: undefined __thiscall save_images(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::save_images() const */
+
+Camera __thiscall m3t::Camera::save_images(Camera *this)
+
+{
+  return this[0x188];
+}
+
+
+
+
+// ========================================
+// Function: set_up
+// Entry: 00000380
+// Signature: undefined __thiscall set_up(Camera * this)
+// ========================================
+
+
+/* m3t::Camera::set_up() const */
+
+Camera __thiscall m3t::Camera::set_up(Camera *this)
+
+{
+  return this[0x189];
+}
+
+
+
+
+// ========================================
+// Function: Camera
+// Entry: 00000388
+// Signature: undefined __thiscall Camera(Camera * this, string * param_1)
+// ========================================
+
+
+/* m3t::Camera::Camera(std::string const&) */
+
+Camera * __thiscall m3t::Camera::Camera(Camera *this,string *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001b88;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)(param_1 + 8);
+    uVar1 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar2;
+    *(undefined8 *)(this + 8) = uVar1;
+  }
+  *(undefined8 *)(this + 0x20) = 0;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  cv::Mat::Mat((Mat *)(this + 0x38));
+  *(undefined8 *)(this + 0xbc) = 0;
+  *(undefined8 *)(this + 0xb4) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0x98) = 0;
+  *(undefined4 *)(this + 0xd0) = 0x3f800000;
+  *(undefined8 *)(this + 0xdc) = 0;
+  *(undefined8 *)(this + 0xd4) = 0;
+  *(undefined4 *)(this + 0xe4) = 0x3f800000;
+  *(undefined8 *)(this + 0xe8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0xf8) = 0x3f800000;
+  *(undefined8 *)(this + 0xfc) = 0;
+  *(undefined8 *)(this + 0x104) = 0;
+  *(undefined8 *)(this + 0x10c) = 0x3f8000003f800000;
+  *(undefined8 *)(this + 0x11c) = 0;
+  *(undefined8 *)(this + 0x114) = 0;
+  *(undefined4 *)(this + 0x124) = 0x3f800000;
+  *(undefined8 *)(this + 0x128) = 0;
+  *(undefined8 *)(this + 0x130) = 0;
+  *(undefined4 *)(this + 0x138) = 0x3f800000;
+  *(undefined8 *)(this + 0x144) = 0;
+  *(undefined8 *)(this + 0x13c) = 0;
+  *(undefined4 *)(this + 0x14c) = 0x3f800000;
+  *(undefined8 *)(this + 0x158) = 0;
+  *(undefined8 *)(this + 0x160) = 0;
+  *(undefined4 *)(this + 0x168) = 0;
+  *(undefined8 *)(this + 0x150) = 0;
+  this[0x187] = (Camera)0x3;
+  *(undefined4 *)(this + 0x170) = 0x676e70;
+  *(undefined2 *)(this + 0x188) = 0;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000474
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000500;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000500:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 00000524
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000005b0
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000005c4
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000614
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: Camera
+// Entry: 00000638
+// Signature: undefined __thiscall Camera(Camera * this, string * param_1, path * param_2)
+// ========================================
+
+
+/* m3t::Camera::Camera(std::string const&, std::__fs::filesystem::path const&) */
+
+Camera * __thiscall m3t::Camera::Camera(Camera *this,string *param_1,path *param_2)
+
+{
+  path pVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001b88;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+    pVar1 = param_2[0x17];
+  }
+  else {
+    uVar3 = *(undefined8 *)(param_1 + 8);
+    uVar2 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar3;
+    *(undefined8 *)(this + 8) = uVar2;
+    pVar1 = param_2[0x17];
+  }
+  if ((char)pVar1 < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 0x20),*(char **)param_2,*(ulong *)(param_2 + 8));
+  }
+  else {
+    uVar3 = *(undefined8 *)(param_2 + 8);
+    uVar2 = *(undefined8 *)param_2;
+    *(undefined8 *)(this + 0x30) = *(undefined8 *)(param_2 + 0x10);
+    *(undefined8 *)(this + 0x28) = uVar3;
+    *(undefined8 *)(this + 0x20) = uVar2;
+  }
+  cv::Mat::Mat((Mat *)(this + 0x38));
+  *(undefined8 *)(this + 0xbc) = 0;
+  *(undefined8 *)(this + 0xb4) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0x98) = 0;
+  *(undefined4 *)(this + 0xd0) = 0x3f800000;
+  *(undefined8 *)(this + 0xdc) = 0;
+  *(undefined8 *)(this + 0xd4) = 0;
+  *(undefined4 *)(this + 0xe4) = 0x3f800000;
+  *(undefined8 *)(this + 0xe8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0xf8) = 0x3f800000;
+  *(undefined8 *)(this + 0xfc) = 0;
+  *(undefined8 *)(this + 0x104) = 0;
+  *(undefined8 *)(this + 0x10c) = 0x3f8000003f800000;
+  *(undefined8 *)(this + 0x11c) = 0;
+  *(undefined8 *)(this + 0x114) = 0;
+  *(undefined4 *)(this + 0x124) = 0x3f800000;
+  *(undefined8 *)(this + 0x128) = 0;
+  *(undefined8 *)(this + 0x130) = 0;
+  *(undefined4 *)(this + 0x138) = 0x3f800000;
+  *(undefined8 *)(this + 0x144) = 0;
+  *(undefined8 *)(this + 0x13c) = 0;
+  *(undefined4 *)(this + 0x14c) = 0x3f800000;
+  *(undefined8 *)(this + 0x158) = 0;
+  *(undefined8 *)(this + 0x160) = 0;
+  *(undefined4 *)(this + 0x168) = 0;
+  *(undefined8 *)(this + 0x150) = 0;
+  this[0x187] = (Camera)0x3;
+  *(undefined4 *)(this + 0x170) = 0x676e70;
+  *(undefined2 *)(this + 0x188) = 0;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: SaveImageIfDesired
+// Entry: 0000077c
+// Signature: undefined __cdecl SaveImageIfDesired(void)
+// ========================================
+
+
+/* m3t::Camera::SaveImageIfDesired() */
+
+void m3t::Camera::SaveImageIfDesired(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ColorCamera
+// Entry: 00000780
+// Signature: undefined __thiscall ColorCamera(ColorCamera * this, string * param_1)
+// ========================================
+
+
+/* m3t::ColorCamera::ColorCamera(std::string const&) */
+
+ColorCamera * __thiscall m3t::ColorCamera::ColorCamera(ColorCamera *this,string *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001b88;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)(param_1 + 8);
+    uVar1 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar2;
+    *(undefined8 *)(this + 8) = uVar1;
+  }
+  *(undefined8 *)(this + 0x20) = 0;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  cv::Mat::Mat((Mat *)(this + 0x38));
+  *(undefined8 *)(this + 0xbc) = 0;
+  *(undefined8 *)(this + 0xb4) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0x98) = 0;
+  *(undefined4 *)(this + 0xd0) = 0x3f800000;
+  *(undefined8 *)(this + 0xdc) = 0;
+  *(undefined8 *)(this + 0xd4) = 0;
+  *(undefined4 *)(this + 0xe4) = 0x3f800000;
+  *(undefined8 *)(this + 0xe8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0xf8) = 0x3f800000;
+  *(undefined8 *)(this + 0xfc) = 0;
+  *(undefined8 *)(this + 0x104) = 0;
+  *(undefined8 *)(this + 0x10c) = 0x3f8000003f800000;
+  *(undefined8 *)(this + 0x11c) = 0;
+  *(undefined8 *)(this + 0x114) = 0;
+  *(undefined4 *)(this + 0x124) = 0x3f800000;
+  *(undefined8 *)(this + 0x128) = 0;
+  *(undefined8 *)(this + 0x130) = 0;
+  *(undefined4 *)(this + 0x138) = 0x3f800000;
+  *(undefined8 *)(this + 0x144) = 0;
+  *(undefined8 *)(this + 0x13c) = 0;
+  *(undefined4 *)(this + 0x14c) = 0x3f800000;
+  *(undefined8 *)(this + 0x158) = 0;
+  *(undefined8 *)(this + 0x160) = 0;
+  *(undefined4 *)(this + 0x168) = 0;
+  *(undefined8 *)(this + 0x150) = 0;
+  this[0x187] = (ColorCamera)0x3;
+  *(undefined4 *)(this + 0x170) = 0x676e70;
+  *(undefined2 *)(this + 0x188) = 0;
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001bb8;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ColorCamera
+// Entry: 00000878
+// Signature: undefined __thiscall ColorCamera(ColorCamera * this, string * param_1, path * param_2)
+// ========================================
+
+
+/* m3t::ColorCamera::ColorCamera(std::string const&, std::__fs::filesystem::path const&) */
+
+void __thiscall m3t::ColorCamera::ColorCamera(ColorCamera *this,string *param_1,path *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)Camera::Camera((Camera *)this,param_1,param_2);
+  *puVar1 = &PTR____cxa_pure_virtual_00001bb8;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: SaveMetaDataIfDesired
+// Entry: 00000898
+// Signature: undefined __cdecl SaveMetaDataIfDesired(void)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00000d60) */
+/* WARNING: Removing unreachable block (ram,0x00000bb0) */
+/* WARNING: Removing unreachable block (ram,0x00000afc) */
+/* WARNING: Removing unreachable block (ram,0x00000a78) */
+/* WARNING: Removing unreachable block (ram,0x000009bc) */
+/* WARNING: Removing unreachable block (ram,0x000009d0) */
+/* WARNING: Removing unreachable block (ram,0x00000a68) */
+/* WARNING: Removing unreachable block (ram,0x00000a84) */
+/* WARNING: Removing unreachable block (ram,0x00000b40) */
+/* WARNING: Removing unreachable block (ram,0x00000c90) */
+/* WARNING: Removing unreachable block (ram,0x00000d98) */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::ColorCamera::SaveMetaDataIfDesired() const */
+
+void m3t::ColorCamera::SaveMetaDataIfDesired(void)
+
+{
+  path *ppVar1;
+  undefined8 *puVar2;
+  long *plVar3;
+  ulong uVar4;
+  undefined4 *puVar5;
+  path *ppVar6;
+  size_t sVar7;
+  ulong uVar8;
+  undefined8 *puVar9;
+  byte bVar10;
+  char cVar11;
+  bool bVar12;
+  code *pcVar13;
+  int iVar14;
+  long in_x0;
+  FileStorage *pFVar15;
+  undefined8 *****pppppuVar16;
+  path *in_x2;
+  undefined8 local_1d0;
+  undefined8 uStack_1c8;
+  undefined8 uStack_1c0;
+  undefined8 uStack_1b8;
+  undefined8 local_1b0;
+  undefined8 uStack_1a8;
+  undefined8 uStack_1a0;
+  undefined8 uStack_198;
+  long local_188;
+  undefined4 local_180;
+  ulong local_178;
+  undefined8 uStack_170;
+  undefined8 local_168;
+  undefined8 local_160;
+  long lStack_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 uStack_140;
+  undefined4 uStack_138;
+  undefined4 local_134;
+  undefined4 uStack_130;
+  undefined8 uStack_12c;
+  long local_120;
+  undefined4 local_118;
+  ulong local_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 local_f8;
+  long lStack_f0;
+  undefined8 local_e8;
+  undefined8 uStack_e0;
+  undefined8 local_d8;
+  undefined8 ****local_d0;
+  path *ppStack_c8;
+  ulong local_c0;
+  undefined8 uStack_b8;
+  undefined8 local_b0;
+  undefined8 local_a8;
+  long lStack_a0;
+  undefined8 ***local_98;
+  undefined8 uStack_90;
+  undefined8 local_88;
+  undefined8 ****local_80;
+  path *ppStack_78;
+  undefined8 local_70;
+  
+  if (*(char *)(in_x0 + 0x188) == '\0') {
+    return;
+  }
+  bVar10 = *(byte *)(in_x0 + 0x1f);
+  ppVar6 = *(path **)(in_x0 + 0x10);
+  if (-1 < (char)bVar10) {
+    ppVar6 = (path *)(ulong)bVar10;
+  }
+  ppVar1 = ppVar6 + 5;
+  if ((path *)0x7ffffffffffffff7 < ppVar1) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  puVar2 = (undefined8 *)(in_x0 + 8);
+  if (ppVar1 < (path *)0x17) {
+    ppStack_78 = (path *)0x0;
+    local_80 = (undefined8 *****)0x0;
+    pppppuVar16 = &local_80;
+    local_70 = (long)ppVar1 << 0x38;
+    if (ppVar6 != (path *)0x0) goto LAB_00000944;
+  }
+  else {
+    uVar4 = ((ulong)ppVar1 & 0xfffffffffffffff8) + 8;
+    if (((ulong)ppVar1 | 7) != 0x17) {
+      uVar4 = (ulong)ppVar1 | 7;
+    }
+    pppppuVar16 = operator_new(uVar4 + 1);
+    local_70 = uVar4 + 1 | 0x8000000000000000;
+    local_80 = pppppuVar16;
+    ppStack_78 = ppVar1;
+LAB_00000944:
+    puVar9 = (void *)*puVar2;
+    if (-1 < (char)bVar10) {
+      puVar9 = puVar2;
+    }
+    in_x2 = ppVar6;
+    _memmove(pppppuVar16,puVar9,(size_t)ppVar6);
+  }
+  *(undefined4 *)((long)pppppuVar16 + (long)ppVar6) = 0x6d61792e;
+  *(undefined2 *)((path *)((long)pppppuVar16 + (long)ppVar6) + 4) = 0x6c;
+  ppStack_c8 = ppStack_78;
+  local_d0 = local_80;
+  local_c0 = local_70;
+  std::__fs::filesystem::operator/[abi_ne180100_
+            ((filesystem *)(in_x0 + 0x150),(path *)&local_d0,in_x2);
+  ppStack_78 = (path *)uStack_90;
+  local_80 = (undefined8 ****)local_98;
+  local_70 = local_88;
+  local_e8 = 0;
+  uStack_e0 = 0;
+  local_d8 = 0;
+  cv::FileStorage::FileStorage((FileStorage *)&local_d0,(string *)&local_80,1,(string *)&local_e8);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_directory");
+  cv::operator<<(pFVar15,"./");
+  local_188 = _vtable;
+  local_120 = _vtable + 0x10;
+  local_118 = ppStack_c8._0_4_;
+  uStack_108 = uStack_b8;
+  local_110 = local_c0;
+  local_100 = local_b0;
+  local_f8 = local_a8;
+  lStack_f0 = lStack_a0;
+  if (lStack_a0 != 0) {
+    plVar3 = (long *)(lStack_a0 + 8);
+    do {
+      cVar11 = '\x01';
+      bVar12 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar12) {
+        *plVar3 = *plVar3 + 1;
+        cVar11 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar11 != '\0');
+  }
+  local_70 = CONCAT17(10,(undefined7)local_70);
+  local_80 = (undefined8 ****)l__str_8._0_8_;
+  ppStack_78 = (path *)CONCAT53(ppStack_78._3_5_,0x7363);
+  uStack_148 = *(undefined8 *)(in_x0 + 0xa0);
+  local_150 = *(undefined8 *)(in_x0 + 0x98);
+  uStack_140 = *(undefined8 *)(in_x0 + 0xa8);
+  uStack_138 = (undefined4)*(undefined8 *)(in_x0 + 0xb0);
+  uStack_12c = *(undefined8 *)(in_x0 + 0xbc);
+  local_134 = (undefined4)*(undefined8 *)(in_x0 + 0xb4);
+  uStack_130 = (undefined4)((ulong)*(undefined8 *)(in_x0 + 0xb4) >> 0x20);
+  m3t::WriteValueToYaml(&local_120,&local_80,&local_150);
+  cv::FileStorage::~FileStorage((FileStorage *)&local_120);
+  local_188 = local_188 + 0x10;
+  local_180 = ppStack_c8._0_4_;
+  uStack_170 = uStack_b8;
+  local_178 = local_c0;
+  local_168 = local_b0;
+  local_160 = local_a8;
+  lStack_158 = lStack_a0;
+  if (lStack_a0 != 0) {
+    plVar3 = (long *)(lStack_a0 + 8);
+    do {
+      cVar11 = '\x01';
+      bVar12 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar12) {
+        *plVar3 = *plVar3 + 1;
+        cVar11 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar11 != '\0');
+  }
+  local_70 = CONCAT17(0x11,(undefined7)local_70);
+  local_70 = CONCAT62(local_70._2_6_,0x65);
+  ppStack_78 = (path *)l__str_9._8_8_;
+  local_80 = (undefined8 ****)l__str_9._0_8_;
+  uStack_1c8 = *(undefined8 *)(in_x0 + 0xd8);
+  local_1d0 = *(undefined8 *)(in_x0 + 0xd0);
+  uStack_1b8 = *(undefined8 *)(in_x0 + 0xe8);
+  uStack_1c0 = *(undefined8 *)(in_x0 + 0xe0);
+  uStack_1a8 = *(undefined8 *)(in_x0 + 0xf8);
+  local_1b0 = *(undefined8 *)(in_x0 + 0xf0);
+  uStack_198 = *(undefined8 *)(in_x0 + 0x108);
+  uStack_1a0 = *(undefined8 *)(in_x0 + 0x100);
+  m3t::WriteValueToYaml(&local_188,&local_80,&local_1d0);
+  cv::FileStorage::~FileStorage((FileStorage *)&local_188);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"image_name_pre");
+  bVar10 = *(byte *)(in_x0 + 0x1f);
+  sVar7 = *(size_t *)(in_x0 + 0x10);
+  if (-1 < (char)bVar10) {
+    sVar7 = (ulong)bVar10;
+  }
+  uVar4 = sVar7 + 7;
+  if (0x7ffffffffffffff7 < uVar4) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (uVar4 < 0x17) {
+    ppStack_78 = (path *)0x0;
+    local_80 = (undefined8 *****)0x0;
+    pppppuVar16 = &local_80;
+    local_70 = uVar4 << 0x38;
+    if (sVar7 != 0) goto LAB_00000c44;
+  }
+  else {
+    uVar8 = (uVar4 & 0xfffffffffffffff8) + 8;
+    if ((uVar4 | 7) != 0x17) {
+      uVar8 = uVar4 | 7;
+    }
+    pppppuVar16 = operator_new(uVar8 + 1);
+    local_70 = uVar8 + 1 | 0x8000000000000000;
+    local_80 = pppppuVar16;
+    ppStack_78 = (path *)uVar4;
+LAB_00000c44:
+    puVar9 = (undefined8 *)*puVar2;
+    if (-1 < (char)bVar10) {
+      puVar9 = puVar2;
+    }
+    _memmove(pppppuVar16,puVar9,sVar7);
+  }
+  puVar5 = (undefined4 *)((long)pppppuVar16 + sVar7);
+  *(undefined4 *)((long)puVar5 + 3) = 0x5f656761;
+  *puVar5 = 0x616d695f;
+  *(undefined1 *)((long)puVar5 + 7) = 0;
+  cv::operator<<(pFVar15,(string *)&local_80);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_index");
+  iVar14 = (**(code **)(*(long *)pFVar15 + 0x18))();
+  if (iVar14 != 0) {
+    if (*(int *)(pFVar15 + 8) == 6) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_80,"No element name has been given");
+      cv::error(-2,(string *)&local_80,"operator<<",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-ios-install/include/opencv4/opencv2/core/persistence.hpp"
+                ,0x4c8);
+      goto LAB_00000e38;
+    }
+    cv::write(pFVar15,(string *)(pFVar15 + 0x10),*(int *)(in_x0 + 0x168));
+    if (((byte)pFVar15[8] >> 2 & 1) != 0) {
+      *(undefined4 *)(pFVar15 + 8) = 6;
+    }
+  }
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"n_leading_zeros");
+  iVar14 = (**(code **)(*(long *)pFVar15 + 0x18))();
+  if (iVar14 != 0) {
+    if (*(int *)(pFVar15 + 8) == 6) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_80,"No element name has been given");
+      cv::error(-2,(string *)&local_80,"operator<<",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-ios-install/include/opencv4/opencv2/core/persistence.hpp"
+                ,0x4c8);
+LAB_00000e38:
+                    /* WARNING: Does not return */
+      pcVar13 = (code *)SoftwareBreakpoint(1,0xe3c);
+      (*pcVar13)();
+    }
+    cv::write(pFVar15,(string *)(pFVar15 + 0x10),0);
+    if (((byte)pFVar15[8] >> 2 & 1) != 0) {
+      *(undefined4 *)(pFVar15 + 8) = 6;
+    }
+  }
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"image_name_post");
+  local_70 = local_70 & 0xffffffffffffff;
+  local_80 = (undefined8 ****)((ulong)local_80 & 0xffffffffffffff00);
+  cv::operator<<(pFVar15,(string *)&local_80);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_image_type");
+  cv::operator<<(pFVar15,(string *)(in_x0 + 0x170));
+  cv::FileStorage::release();
+  cv::FileStorage::~FileStorage((FileStorage *)&local_d0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator/[abi:ne180100]
+// Entry: 00000f34
+// Signature: undefined __thiscall operator/[abi:ne180100](filesystem * this, path * param_1, path * param_2)
+// ========================================
+
+
+/* std::__fs::filesystem::operator/[abi:ne180100](std::__fs::filesystem::path const&,
+   std::__fs::filesystem::path const&) */
+
+void __thiscall
+std::__fs::filesystem::operator/[abi_ne180100_(filesystem *this,path *param_1,path *param_2)
+
+{
+  path *ppVar1;
+  long extraout_x1;
+  long extraout_x1_00;
+  string *in_x8;
+  undefined8 uVar2;
+  
+  if ((char)this[0x17] < '\0') {
+    string::__init_copy_ctor_external(in_x8,*(char **)this,*(ulong *)(this + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)this;
+    *(undefined8 *)(in_x8 + 8) = *(undefined8 *)(this + 8);
+    *(undefined8 *)in_x8 = uVar2;
+    *(undefined8 *)(in_x8 + 0x10) = *(undefined8 *)(this + 0x10);
+  }
+  std::__fs::filesystem::path::__root_directory();
+  if (extraout_x1 == 0) {
+    std::__fs::filesystem::path::__filename();
+    if (extraout_x1_00 != 0) {
+      std::string::push_back((char)in_x8);
+    }
+    ppVar1 = *(path **)param_1;
+    if (-1 < (char)param_1[0x17]) {
+      ppVar1 = param_1;
+    }
+    std::string::append((char *)in_x8,(ulong)ppVar1);
+  }
+  else {
+    std::string::operator=(in_x8,(string *)param_1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator<<
+// Entry: 00000fec
+// Signature: undefined __cdecl operator<<(FileStorage * param_1, char * param_2)
+// ========================================
+
+
+/* cv::TEMPNAMEPLACEHOLDERVALUE(cv::FileStorage&, char const*) */
+
+undefined8 cv::operator<<(FileStorage *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 ***pppuVar3;
+  undefined8 uVar4;
+  undefined8 **local_58;
+  size_t local_50;
+  undefined8 uStack_48;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    uStack_48 = CONCAT17((char)sVar2,(undefined7)uStack_48);
+    pppuVar3 = &local_58;
+    if (sVar2 == 0) goto LAB_0000107c;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    pppuVar3 = operator_new(uVar1 + 1);
+    uStack_48 = uVar1 + 1 | 0x8000000000000000;
+    local_58 = pppuVar3;
+    local_50 = sVar2;
+  }
+  _memcpy(pppuVar3,param_2,sVar2);
+LAB_0000107c:
+  *(undefined1 *)((long)pppuVar3 + sVar2) = 0;
+  uVar4 = cv::operator<<(param_1,(string *)&local_58);
+  if ((long)uStack_48 < 0) {
+    operator_delete(local_58);
+  }
+  return uVar4;
+}
+
+
+
+
+// ========================================
+// Function: NormalizedDepthImage
+// Entry: 000010e0
+// Signature: undefined __cdecl NormalizedDepthImage(float param_1, float param_2)
+// ========================================
+
+
+/* m3t::DepthCamera::NormalizedDepthImage(float, float) const */
+
+void m3t::DepthCamera::NormalizedDepthImage(float param_1,float param_2)
+
+{
+  long in_x0;
+  Mat *in_x8;
+  float fVar1;
+  float fVar2;
+  undefined4 local_58 [4];
+  undefined8 uStack_48;
+  
+  fVar2 = *(float *)(in_x0 + 0x18c);
+  cv::Mat::Mat(in_x8);
+  local_58[0] = 0x2010000;
+  uStack_48 = 0;
+  fVar1 = 255.0 / ((param_2 - param_1) / fVar2);
+  cv::Mat::convertTo((_OutputArray *)(in_x0 + 0x38),(int)local_58,(double)fVar1,
+                     (double)((-param_1 / fVar2) * fVar1));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: depth_scale
+// Entry: 00001184
+// Signature: undefined __thiscall depth_scale(DepthCamera * this)
+// ========================================
+
+
+/* m3t::DepthCamera::depth_scale() const */
+
+undefined4 __thiscall m3t::DepthCamera::depth_scale(DepthCamera *this)
+
+{
+  return *(undefined4 *)(this + 0x18c);
+}
+
+
+
+
+// ========================================
+// Function: DepthCamera
+// Entry: 0000118c
+// Signature: undefined __thiscall DepthCamera(DepthCamera * this, string * param_1)
+// ========================================
+
+
+/* m3t::DepthCamera::DepthCamera(std::string const&) */
+
+DepthCamera * __thiscall m3t::DepthCamera::DepthCamera(DepthCamera *this,string *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001b88;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)(param_1 + 8);
+    uVar1 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar2;
+    *(undefined8 *)(this + 8) = uVar1;
+  }
+  *(undefined8 *)(this + 0x20) = 0;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  cv::Mat::Mat((Mat *)(this + 0x38));
+  *(undefined8 *)(this + 0xbc) = 0;
+  *(undefined8 *)(this + 0xb4) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined4 *)(this + 0xd0) = 0x3f800000;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0x98) = 0;
+  *(undefined8 *)(this + 0xdc) = 0;
+  *(undefined8 *)(this + 0xd4) = 0;
+  *(undefined4 *)(this + 0xe4) = 0x3f800000;
+  *(undefined8 *)(this + 0xe8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0xf8) = 0x3f800000;
+  *(undefined8 *)(this + 0xfc) = 0;
+  *(undefined8 *)(this + 0x104) = 0;
+  *(undefined8 *)(this + 0x10c) = 0x3f8000003f800000;
+  *(undefined8 *)(this + 0x11c) = 0;
+  *(undefined8 *)(this + 0x114) = 0;
+  *(undefined4 *)(this + 0x124) = 0x3f800000;
+  *(undefined8 *)(this + 0x128) = 0;
+  *(undefined8 *)(this + 0x130) = 0;
+  *(undefined4 *)(this + 0x138) = 0x3f800000;
+  *(undefined8 *)(this + 0x144) = 0;
+  *(undefined8 *)(this + 0x13c) = 0;
+  *(undefined4 *)(this + 0x14c) = 0x3f800000;
+  *(undefined8 *)(this + 0x158) = 0;
+  *(undefined8 *)(this + 0x160) = 0;
+  *(undefined4 *)(this + 0x168) = 0;
+  *(undefined8 *)(this + 0x150) = 0;
+  this[0x187] = (DepthCamera)0x3;
+  *(undefined4 *)(this + 0x170) = 0x676e70;
+  *(undefined2 *)(this + 0x188) = 0;
+  *(undefined ***)this = &PTR____cxa_pure_virtual_00001bf0;
+  *(undefined4 *)(this + 0x18c) = 0x3a83126f;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: DepthCamera
+// Entry: 00001290
+// Signature: undefined __thiscall DepthCamera(DepthCamera * this, string * param_1, path * param_2)
+// ========================================
+
+
+/* m3t::DepthCamera::DepthCamera(std::string const&, std::__fs::filesystem::path const&) */
+
+void __thiscall m3t::DepthCamera::DepthCamera(DepthCamera *this,string *param_1,path *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)Camera::Camera((Camera *)this,param_1,param_2);
+  *puVar1 = &PTR____cxa_pure_virtual_00001bf0;
+  *(undefined4 *)((long)puVar1 + 0x18c) = 0x3a83126f;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: SaveMetaDataIfDesired
+// Entry: 000012bc
+// Signature: undefined __cdecl SaveMetaDataIfDesired(void)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000017d4) */
+/* WARNING: Removing unreachable block (ram,0x000015d4) */
+/* WARNING: Removing unreachable block (ram,0x00001520) */
+/* WARNING: Removing unreachable block (ram,0x0000149c) */
+/* WARNING: Removing unreachable block (ram,0x000013e0) */
+/* WARNING: Removing unreachable block (ram,0x000013f4) */
+/* WARNING: Removing unreachable block (ram,0x0000148c) */
+/* WARNING: Removing unreachable block (ram,0x000014a8) */
+/* WARNING: Removing unreachable block (ram,0x00001564) */
+/* WARNING: Removing unreachable block (ram,0x00001704) */
+/* WARNING: Removing unreachable block (ram,0x0000180c) */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::DepthCamera::SaveMetaDataIfDesired() const */
+
+void m3t::DepthCamera::SaveMetaDataIfDesired(void)
+
+{
+  path *ppVar1;
+  undefined8 *puVar2;
+  long *plVar3;
+  ulong uVar4;
+  undefined4 *puVar5;
+  path *ppVar6;
+  size_t sVar7;
+  ulong uVar8;
+  undefined8 *puVar9;
+  byte bVar10;
+  char cVar11;
+  bool bVar12;
+  code *pcVar13;
+  int iVar14;
+  long in_x0;
+  FileStorage *pFVar15;
+  undefined8 *****pppppuVar16;
+  path *in_x2;
+  undefined8 local_1d0;
+  undefined8 uStack_1c8;
+  undefined8 uStack_1c0;
+  undefined8 uStack_1b8;
+  undefined8 local_1b0;
+  undefined8 uStack_1a8;
+  undefined8 uStack_1a0;
+  undefined8 uStack_198;
+  long local_188;
+  undefined4 local_180;
+  ulong local_178;
+  undefined8 uStack_170;
+  undefined8 local_168;
+  undefined8 local_160;
+  long lStack_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 uStack_140;
+  undefined4 uStack_138;
+  undefined4 local_134;
+  undefined4 uStack_130;
+  undefined8 uStack_12c;
+  long local_120;
+  undefined4 local_118;
+  ulong local_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 local_f8;
+  long lStack_f0;
+  undefined8 local_e8;
+  undefined8 uStack_e0;
+  undefined8 local_d8;
+  undefined8 ****local_d0;
+  path *ppStack_c8;
+  ulong local_c0;
+  undefined8 uStack_b8;
+  undefined8 local_b0;
+  undefined8 local_a8;
+  long lStack_a0;
+  undefined8 ***local_98;
+  undefined8 uStack_90;
+  undefined8 local_88;
+  undefined8 ****local_80;
+  path *ppStack_78;
+  undefined8 local_70;
+  
+  if (*(char *)(in_x0 + 0x188) == '\0') {
+    return;
+  }
+  bVar10 = *(byte *)(in_x0 + 0x1f);
+  ppVar6 = *(path **)(in_x0 + 0x10);
+  if (-1 < (char)bVar10) {
+    ppVar6 = (path *)(ulong)bVar10;
+  }
+  ppVar1 = ppVar6 + 5;
+  if ((path *)0x7ffffffffffffff7 < ppVar1) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  puVar2 = (undefined8 *)(in_x0 + 8);
+  if (ppVar1 < (path *)0x17) {
+    ppStack_78 = (path *)0x0;
+    local_80 = (undefined8 *****)0x0;
+    pppppuVar16 = &local_80;
+    local_70 = (long)ppVar1 << 0x38;
+    if (ppVar6 != (path *)0x0) goto LAB_00001368;
+  }
+  else {
+    uVar4 = ((ulong)ppVar1 & 0xfffffffffffffff8) + 8;
+    if (((ulong)ppVar1 | 7) != 0x17) {
+      uVar4 = (ulong)ppVar1 | 7;
+    }
+    pppppuVar16 = operator_new(uVar4 + 1);
+    local_70 = uVar4 + 1 | 0x8000000000000000;
+    local_80 = pppppuVar16;
+    ppStack_78 = ppVar1;
+LAB_00001368:
+    puVar9 = (void *)*puVar2;
+    if (-1 < (char)bVar10) {
+      puVar9 = puVar2;
+    }
+    in_x2 = ppVar6;
+    _memmove(pppppuVar16,puVar9,(size_t)ppVar6);
+  }
+  *(undefined4 *)((long)pppppuVar16 + (long)ppVar6) = 0x6d61792e;
+  *(undefined2 *)((path *)((long)pppppuVar16 + (long)ppVar6) + 4) = 0x6c;
+  ppStack_c8 = ppStack_78;
+  local_d0 = local_80;
+  local_c0 = local_70;
+  std::__fs::filesystem::operator/[abi_ne180100_
+            ((filesystem *)(in_x0 + 0x150),(path *)&local_d0,in_x2);
+  ppStack_78 = (path *)uStack_90;
+  local_80 = (undefined8 ****)local_98;
+  local_70 = local_88;
+  local_e8 = 0;
+  uStack_e0 = 0;
+  local_d8 = 0;
+  cv::FileStorage::FileStorage((FileStorage *)&local_d0,(string *)&local_80,1,(string *)&local_e8);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_directory");
+  cv::operator<<(pFVar15,"./");
+  local_188 = _vtable;
+  local_120 = _vtable + 0x10;
+  local_118 = ppStack_c8._0_4_;
+  uStack_108 = uStack_b8;
+  local_110 = local_c0;
+  local_100 = local_b0;
+  local_f8 = local_a8;
+  lStack_f0 = lStack_a0;
+  if (lStack_a0 != 0) {
+    plVar3 = (long *)(lStack_a0 + 8);
+    do {
+      cVar11 = '\x01';
+      bVar12 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar12) {
+        *plVar3 = *plVar3 + 1;
+        cVar11 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar11 != '\0');
+  }
+  local_70 = CONCAT17(10,(undefined7)local_70);
+  local_80 = (undefined8 ****)l__str_8._0_8_;
+  ppStack_78 = (path *)CONCAT53(ppStack_78._3_5_,0x7363);
+  uStack_148 = *(undefined8 *)(in_x0 + 0xa0);
+  local_150 = *(undefined8 *)(in_x0 + 0x98);
+  uStack_140 = *(undefined8 *)(in_x0 + 0xa8);
+  uStack_138 = (undefined4)*(undefined8 *)(in_x0 + 0xb0);
+  uStack_12c = *(undefined8 *)(in_x0 + 0xbc);
+  local_134 = (undefined4)*(undefined8 *)(in_x0 + 0xb4);
+  uStack_130 = (undefined4)((ulong)*(undefined8 *)(in_x0 + 0xb4) >> 0x20);
+  m3t::WriteValueToYaml(&local_120,&local_80,&local_150);
+  cv::FileStorage::~FileStorage((FileStorage *)&local_120);
+  local_188 = local_188 + 0x10;
+  local_180 = ppStack_c8._0_4_;
+  uStack_170 = uStack_b8;
+  local_178 = local_c0;
+  local_168 = local_b0;
+  local_160 = local_a8;
+  lStack_158 = lStack_a0;
+  if (lStack_a0 != 0) {
+    plVar3 = (long *)(lStack_a0 + 8);
+    do {
+      cVar11 = '\x01';
+      bVar12 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar12) {
+        *plVar3 = *plVar3 + 1;
+        cVar11 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar11 != '\0');
+  }
+  local_70 = CONCAT17(0x11,(undefined7)local_70);
+  local_70 = CONCAT62(local_70._2_6_,0x65);
+  ppStack_78 = (path *)l__str_9._8_8_;
+  local_80 = (undefined8 ****)l__str_9._0_8_;
+  uStack_1c8 = *(undefined8 *)(in_x0 + 0xd8);
+  local_1d0 = *(undefined8 *)(in_x0 + 0xd0);
+  uStack_1b8 = *(undefined8 *)(in_x0 + 0xe8);
+  uStack_1c0 = *(undefined8 *)(in_x0 + 0xe0);
+  uStack_1a8 = *(undefined8 *)(in_x0 + 0xf8);
+  local_1b0 = *(undefined8 *)(in_x0 + 0xf0);
+  uStack_198 = *(undefined8 *)(in_x0 + 0x108);
+  uStack_1a0 = *(undefined8 *)(in_x0 + 0x100);
+  m3t::WriteValueToYaml(&local_188,&local_80,&local_1d0);
+  cv::FileStorage::~FileStorage((FileStorage *)&local_188);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"depth_scale");
+  iVar14 = (**(code **)(*(long *)pFVar15 + 0x18))();
+  if (iVar14 != 0) {
+    if (*(int *)(pFVar15 + 8) == 6) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_80,"No element name has been given");
+      cv::error(-2,(string *)&local_80,"operator<<",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-ios-install/include/opencv4/opencv2/core/persistence.hpp"
+                ,0x4c8);
+      goto LAB_000018e0;
+    }
+    cv::write(pFVar15,(string *)(pFVar15 + 0x10),*(float *)(in_x0 + 0x18c));
+    if (((byte)pFVar15[8] >> 2 & 1) != 0) {
+      *(undefined4 *)(pFVar15 + 8) = 6;
+    }
+  }
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"image_name_pre");
+  bVar10 = *(byte *)(in_x0 + 0x1f);
+  sVar7 = *(size_t *)(in_x0 + 0x10);
+  if (-1 < (char)bVar10) {
+    sVar7 = (ulong)bVar10;
+  }
+  uVar4 = sVar7 + 7;
+  if (0x7ffffffffffffff7 < uVar4) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (uVar4 < 0x17) {
+    ppStack_78 = (path *)0x0;
+    local_80 = (undefined8 *****)0x0;
+    pppppuVar16 = &local_80;
+    local_70 = uVar4 << 0x38;
+    if (sVar7 != 0) goto LAB_000016b8;
+  }
+  else {
+    uVar8 = (uVar4 & 0xfffffffffffffff8) + 8;
+    if ((uVar4 | 7) != 0x17) {
+      uVar8 = uVar4 | 7;
+    }
+    pppppuVar16 = operator_new(uVar8 + 1);
+    local_70 = uVar8 + 1 | 0x8000000000000000;
+    local_80 = pppppuVar16;
+    ppStack_78 = (path *)uVar4;
+LAB_000016b8:
+    puVar9 = (undefined8 *)*puVar2;
+    if (-1 < (char)bVar10) {
+      puVar9 = puVar2;
+    }
+    _memmove(pppppuVar16,puVar9,sVar7);
+  }
+  puVar5 = (undefined4 *)((long)pppppuVar16 + sVar7);
+  *(undefined4 *)((long)puVar5 + 3) = 0x5f656761;
+  *puVar5 = 0x616d695f;
+  *(undefined1 *)((long)puVar5 + 7) = 0;
+  cv::operator<<(pFVar15,(string *)&local_80);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_index");
+  iVar14 = (**(code **)(*(long *)pFVar15 + 0x18))();
+  if (iVar14 != 0) {
+    if (*(int *)(pFVar15 + 8) == 6) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_80,"No element name has been given");
+      cv::error(-2,(string *)&local_80,"operator<<",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-ios-install/include/opencv4/opencv2/core/persistence.hpp"
+                ,0x4c8);
+      goto LAB_000018e0;
+    }
+    cv::write(pFVar15,(string *)(pFVar15 + 0x10),*(int *)(in_x0 + 0x168));
+    if (((byte)pFVar15[8] >> 2 & 1) != 0) {
+      *(undefined4 *)(pFVar15 + 8) = 6;
+    }
+  }
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"n_leading_zeros");
+  iVar14 = (**(code **)(*(long *)pFVar15 + 0x18))();
+  if (iVar14 != 0) {
+    if (*(int *)(pFVar15 + 8) == 6) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_80,"No element name has been given");
+      cv::error(-2,(string *)&local_80,"operator<<",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-ios-install/include/opencv4/opencv2/core/persistence.hpp"
+                ,0x4c8);
+LAB_000018e0:
+                    /* WARNING: Does not return */
+      pcVar13 = (code *)SoftwareBreakpoint(1,0x18e4);
+      (*pcVar13)();
+    }
+    cv::write(pFVar15,(string *)(pFVar15 + 0x10),0);
+    if (((byte)pFVar15[8] >> 2 & 1) != 0) {
+      *(undefined4 *)(pFVar15 + 8) = 6;
+    }
+  }
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"image_name_post");
+  local_70 = local_70 & 0xffffffffffffff;
+  local_80 = (undefined8 ****)((ulong)local_80 & 0xffffffffffffff00);
+  cv::operator<<(pFVar15,(string *)&local_80);
+  pFVar15 = (FileStorage *)cv::operator<<((FileStorage *)&local_d0,"load_image_type");
+  cv::operator<<(pFVar15,(string *)(in_x0 + 0x170));
+  cv::FileStorage::release();
+  cv::FileStorage::~FileStorage((FileStorage *)&local_d0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: release
+// Entry: 00003100
+// Signature: undefined release(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::FileStorage::release(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: FileStorage
+// Entry: 00003200
+// Signature: undefined __thiscall FileStorage(FileStorage * this, string * param_1, int param_2, string * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::FileStorage::FileStorage(FileStorage *this,string *param_1,int param_2,string *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~FileStorage
+// Entry: 00003300
+// Signature: undefined __thiscall ~FileStorage(FileStorage * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::FileStorage::~FileStorage(FileStorage *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00003400
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00003500
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* cv::Mat::~Mat() */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00003600
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: write
+// Entry: 00003700
+// Signature: undefined write(FileStorage * param_1, string * param_2, float param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::write(FileStorage *param_1,string *param_2,float param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: write
+// Entry: 00003800
+// Signature: undefined write(FileStorage * param_1, string * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::write(FileStorage *param_1,string *param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator<<
+// Entry: 00003900
+// Signature: undefined operator<<(FileStorage * param_1, string * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::operator<<(FileStorage *param_1,string *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: WriteValueToYaml
+// Entry: 00003a00
+// Signature: undefined WriteValueToYaml(FileStorage param_1, string * param_2, Transform param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void m3t::WriteValueToYaml(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: WriteValueToYaml
+// Entry: 00003b00
+// Signature: undefined WriteValueToYaml(FileStorage param_1, string * param_2, Intrinsics param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void m3t::WriteValueToYaml(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: convertTo
+// Entry: 00003c00
+// Signature: undefined convertTo(_OutputArray * param_1, int param_2, double param_3, double param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::convertTo(_OutputArray *param_1,int param_2,double param_3,double param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __filename
+// Entry: 00003d00
+// Signature: undefined __filename(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__fs::filesystem::path::__filename(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __root_directory
+// Entry: 00003e00
+// Signature: undefined __root_directory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__fs::filesystem::path::__root_directory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00003f00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00004000
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: append
+// Entry: 00004100
+// Signature: undefined append(char * param_1, ulong param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::append(char *param_1,ulong param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: push_back
+// Entry: 00004200
+// Signature: undefined push_back(char param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::push_back(char param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004300
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00004900
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00004a00
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00004b00
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00004e00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00005000
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00005100
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00005200
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 61
+// Failed: 0
+// Skipped external functions: 0

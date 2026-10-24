@@ -1,0 +1,1107 @@
+Program: gzwrite.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: int __cdecl ltmp0(gzFile file, voidpc buf, uint len)
+// ========================================
+
+
+int ltmp0(gzFile file,voidpc buf,uint len)
+
+{
+  int iVar1;
+  
+  if (((file != (gzFile)0x0) && (*(int *)((long)file + 0x18) == 0x79b1)) &&
+     (*(int *)((long)file + 0x74) == 0)) {
+    if (-1 < (int)len) {
+      iVar1 = _gz_write(file,buf,len);
+      return iVar1;
+    }
+    _gz_error(file,0xfffffffd,0xde0);
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _gz_write
+// Entry: 00000054
+// Signature: undefined _gz_write(void)
+// ========================================
+
+
+ulong _gz_write(long param_1,void *param_2,ulong param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  long lVar5;
+  long lVar6;
+  ulong uVar7;
+  ulong uVar8;
+  
+  if (param_3 != 0) {
+    if ((*(int *)(param_1 + 0x28) == 0) && (iVar3 = _gz_init(param_1), iVar3 == -1)) {
+      return 0;
+    }
+    if (*(int *)(param_1 + 0x70) != 0) {
+      *(undefined4 *)(param_1 + 0x70) = 0;
+      iVar3 = _gz_zero(param_1,*(undefined8 *)(param_1 + 0x68));
+      if (iVar3 == -1) {
+        return 0;
+      }
+    }
+    uVar8 = param_3;
+    if (param_3 < *(uint *)(param_1 + 0x28)) {
+      while( true ) {
+        if (*(int *)(param_1 + 0x88) == 0) {
+          lVar5 = *(long *)(param_1 + 0x30);
+          *(long *)(param_1 + 0x80) = lVar5;
+          lVar6 = lVar5;
+        }
+        else {
+          lVar5 = *(long *)(param_1 + 0x30);
+          lVar6 = *(long *)(param_1 + 0x80);
+        }
+        uVar4 = ((int)lVar6 + *(int *)(param_1 + 0x88)) - (int)lVar5;
+        uVar2 = *(int *)(param_1 + 0x28) - uVar4;
+        uVar1 = (uint)uVar8;
+        if (uVar2 <= uVar8) {
+          uVar1 = uVar2;
+        }
+        uVar7 = (ulong)uVar1;
+        _memcpy((void *)(lVar5 + (ulong)uVar4),param_2,uVar7);
+        *(uint *)(param_1 + 0x88) = uVar1 + *(int *)(param_1 + 0x88);
+        *(ulong *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + uVar7;
+        if (uVar8 - uVar7 == 0) break;
+        param_2 = (void *)((long)param_2 + uVar7);
+        iVar3 = _gz_comp(param_1,0);
+        uVar8 = uVar8 - uVar7;
+        if (iVar3 == -1) {
+          return 0;
+        }
+      }
+    }
+    else {
+      if ((*(int *)(param_1 + 0x88) != 0) && (iVar3 = _gz_comp(param_1,0), iVar3 == -1)) {
+        return 0;
+      }
+      *(void **)(param_1 + 0x80) = param_2;
+      do {
+        uVar7 = uVar8;
+        if (0xfffffffe < uVar8) {
+          uVar7 = 0xffffffff;
+        }
+        *(int *)(param_1 + 0x88) = (int)uVar7;
+        *(ulong *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + uVar7;
+        iVar3 = _gz_comp(param_1,0);
+        if (iVar3 == -1) {
+          return 0;
+        }
+        uVar8 = uVar8 - uVar7;
+      } while (uVar8 != 0);
+    }
+  }
+  return param_3;
+}
+
+
+
+
+// ========================================
+// Function: _gzfwrite
+// Entry: 000001ec
+// Signature: undefined _gzfwrite(void)
+// ========================================
+
+
+ulong _gzfwrite(undefined8 param_1,ulong param_2,ulong param_3,long param_4)
+
+{
+  ulong uVar1;
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  ulong uVar4;
+  
+  if (param_4 == 0) {
+    return 0;
+  }
+  if ((*(int *)(param_4 + 0x18) == 0x79b1) && (*(int *)(param_4 + 0x74) == 0)) {
+    auVar2._8_8_ = 0;
+    auVar2._0_8_ = param_2;
+    auVar3._8_8_ = 0;
+    auVar3._0_8_ = param_3;
+    if ((param_2 != 0) && (SUB168(auVar2 * auVar3,8) != 0)) {
+      _gz_error(param_4,0xfffffffe,0xe05);
+      return 0;
+    }
+    if (param_2 * param_3 != 0) {
+      uVar4 = _gz_write(param_4,param_1);
+      uVar1 = 0;
+      if (param_2 != 0) {
+        uVar1 = uVar4 / param_2;
+      }
+      return uVar1;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _gzputc
+// Entry: 0000028c
+// Signature: int __cdecl _gzputc(gzFile file, int c)
+// ========================================
+
+
+int _gzputc(gzFile file,int c)
+
+{
+  uint uVar1;
+  int iVar2;
+  ulong uVar3;
+  long lVar4;
+  undefined1 local_21;
+  
+  if (file == (gzFile)0x0) {
+    return -1;
+  }
+  if (*(int *)((long)file + 0x18) != 0x79b1) {
+    return -1;
+  }
+  if (*(int *)((long)file + 0x74) != 0) {
+    return -1;
+  }
+  if (*(int *)((long)file + 0x70) != 0) {
+    *(undefined4 *)((long)file + 0x70) = 0;
+    iVar2 = _gz_zero(file,*(undefined8 *)((long)file + 0x68));
+    if (iVar2 == -1) {
+      return -1;
+    }
+  }
+  uVar1 = *(uint *)((long)file + 0x28);
+  local_21 = (undefined1)c;
+  if (uVar1 != 0) {
+    if (*(uint *)((long)file + 0x88) == 0) {
+      lVar4 = *(long *)((long)file + 0x30);
+      *(long *)((long)file + 0x80) = lVar4;
+      uVar3 = 0;
+      if (uVar1 != 0) goto LAB_00000338;
+    }
+    else {
+      lVar4 = *(long *)((long)file + 0x30);
+      uVar3 = (*(long *)((long)file + 0x80) + (ulong)*(uint *)((long)file + 0x88)) - lVar4;
+      if ((uint)uVar3 < uVar1) {
+LAB_00000338:
+        *(undefined1 *)(lVar4 + (uVar3 & 0xffffffff)) = local_21;
+        *(int *)((long)file + 0x88) = *(int *)((long)file + 0x88) + 1;
+        *(long *)((long)file + 0x10) = *(long *)((long)file + 0x10) + 1;
+        return c & 0xff;
+      }
+    }
+  }
+  lVar4 = _gz_write(file,&local_21,1);
+  uVar1 = c & 0xff;
+  if (lVar4 != 1) {
+    uVar1 = 0xffffffff;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _gz_zero
+// Entry: 000003b4
+// Signature: undefined _gz_zero(void)
+// ========================================
+
+
+undefined8 _gz_zero(long param_1,long param_2)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  ulong uVar3;
+  
+  if ((*(int *)(param_1 + 0x88) == 0) || (uVar2 = _gz_comp(param_1,0), (int)uVar2 != -1)) {
+    if (param_2 == 0) {
+      return 0;
+    }
+    uVar1 = (uint)param_2;
+    if ((long)(ulong)*(uint *)(param_1 + 0x28) <= param_2) {
+      uVar1 = *(uint *)(param_1 + 0x28);
+    }
+    uVar3 = (ulong)uVar1;
+    _bzero(*(void **)(param_1 + 0x30),uVar3);
+    *(uint *)(param_1 + 0x88) = uVar1;
+    *(undefined8 *)(param_1 + 0x80) = *(undefined8 *)(param_1 + 0x30);
+    *(ulong *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + uVar3;
+    uVar2 = _gz_comp(param_1,0);
+    if ((int)uVar2 != -1) {
+      param_2 = param_2 - uVar3;
+      if (param_2 == 0) {
+        return 0;
+      }
+      do {
+        uVar1 = (uint)param_2;
+        if ((long)(ulong)*(uint *)(param_1 + 0x28) <= param_2) {
+          uVar1 = *(uint *)(param_1 + 0x28);
+        }
+        *(uint *)(param_1 + 0x88) = uVar1;
+        *(undefined8 *)(param_1 + 0x80) = *(undefined8 *)(param_1 + 0x30);
+        *(ulong *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + (ulong)uVar1;
+        uVar2 = _gz_comp(param_1,0);
+        if ((int)uVar2 == -1) {
+          return uVar2;
+        }
+        param_2 = param_2 - (ulong)uVar1;
+      } while (param_2 != 0);
+      uVar2 = 0;
+    }
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: _gzputs
+// Entry: 000004a0
+// Signature: int __cdecl _gzputs(gzFile file, char * s)
+// ========================================
+
+
+int _gzputs(gzFile file,char *s)
+
+{
+  size_t sVar1;
+  ulong uVar2;
+  int iVar3;
+  
+  if (file == (gzFile)0x0) {
+    return -1;
+  }
+  if ((*(int *)((long)file + 0x18) == 0x79b1) && (*(int *)((long)file + 0x74) == 0)) {
+    sVar1 = _strlen(s);
+    if (sVar1 >> 0x1f == 0) {
+      uVar2 = _gz_write(file,s,sVar1);
+      iVar3 = (int)sVar1;
+      if (uVar2 < sVar1) {
+        iVar3 = -1;
+      }
+      return iVar3;
+    }
+    _gz_error(file,0xfffffffe,0xe26);
+    return -1;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzvprintf
+// Entry: 00000554
+// Signature: undefined _gzvprintf(void)
+// ========================================
+
+
+uint _gzvprintf(long param_1,char *param_2,va_list param_3)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  long lVar6;
+  
+  if ((param_1 == 0) || (*(int *)(param_1 + 0x18) != 0x79b1)) {
+    return 0xfffffffe;
+  }
+  if (*(int *)(param_1 + 0x74) == 0) {
+    if ((*(int *)(param_1 + 0x28) == 0) && (iVar4 = _gz_init(param_1), iVar4 == -1)) {
+LAB_000006d4:
+      return *(uint *)(param_1 + 0x74);
+    }
+    if (*(int *)(param_1 + 0x70) != 0) {
+      *(undefined4 *)(param_1 + 0x70) = 0;
+      iVar4 = _gz_zero(param_1,*(undefined8 *)(param_1 + 0x68));
+      if (iVar4 == -1) goto LAB_000006d4;
+    }
+    if (*(uint *)(param_1 + 0x88) == 0) {
+      lVar6 = *(long *)(param_1 + 0x30);
+      *(long *)(param_1 + 0x80) = lVar6;
+    }
+    else {
+      lVar6 = *(long *)(param_1 + 0x80);
+    }
+    pcVar2 = (char *)(lVar6 + (ulong)*(uint *)(param_1 + 0x88));
+    pcVar2[*(int *)(param_1 + 0x28) - 1] = '\0';
+    uVar5 = _vsnprintf(pcVar2,(ulong)*(uint *)(param_1 + 0x28),param_2,param_3);
+    if (uVar5 != 0) {
+      uVar3 = *(uint *)(param_1 + 0x28);
+      if ((uVar3 <= uVar5) || (pcVar2[uVar3 - 1] != '\0')) {
+        return 0;
+      }
+      uVar1 = *(int *)(param_1 + 0x88) + uVar5;
+      *(uint *)(param_1 + 0x88) = uVar1;
+      *(long *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + (long)(int)uVar5;
+      if (uVar3 <= uVar1) {
+        *(uint *)(param_1 + 0x88) = uVar3;
+        iVar4 = _gz_comp(param_1,0);
+        if (iVar4 != -1) {
+          _memmove(*(void **)(param_1 + 0x30),
+                   (void *)((long)*(void **)(param_1 + 0x30) + (ulong)*(uint *)(param_1 + 0x28)),
+                   (ulong)(uVar1 - uVar3));
+          *(undefined8 *)(param_1 + 0x80) = *(undefined8 *)(param_1 + 0x30);
+          *(uint *)(param_1 + 0x88) = uVar1 - uVar3;
+          return uVar5;
+        }
+        goto LAB_000006d4;
+      }
+    }
+  }
+  else {
+    uVar5 = 0xfffffffe;
+  }
+  return uVar5;
+}
+
+
+
+
+// ========================================
+// Function: _gz_init
+// Entry: 000006ec
+// Signature: undefined _gz_init(void)
+// ========================================
+
+
+undefined8 _gz_init(long param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  void *pvVar3;
+  void *pvVar4;
+  
+  uVar1 = *(uint *)(param_1 + 0x2c);
+  pvVar3 = _malloc((ulong)(uVar1 << 1));
+  *(void **)(param_1 + 0x30) = pvVar3;
+  if (pvVar3 != (void *)0x0) {
+    if (*(int *)(param_1 + 0x40) != 0) {
+      *(uint *)(param_1 + 0x28) = uVar1;
+      return 0;
+    }
+    pvVar4 = _malloc((ulong)uVar1);
+    *(void **)(param_1 + 0x38) = pvVar4;
+    if (pvVar4 != (void *)0x0) {
+      *(undefined8 *)(param_1 + 0xc0) = 0;
+      *(undefined8 *)(param_1 + 200) = 0;
+      *(undefined8 *)(param_1 + 0xd0) = 0;
+      iVar2 = _deflateInit2_((z_streamp)(param_1 + 0x80),*(int *)(param_1 + 0x58),8,0x1f,8,
+                             *(int *)(param_1 + 0x5c),"1.3",0x70);
+      if (iVar2 == 0) {
+        *(undefined8 *)(param_1 + 0x80) = 0;
+        *(undefined4 *)(param_1 + 0x28) = *(undefined4 *)(param_1 + 0x2c);
+        if (*(int *)(param_1 + 0x40) != 0) {
+          return 0;
+        }
+        *(undefined4 *)(param_1 + 0xa0) = *(undefined4 *)(param_1 + 0x2c);
+        *(undefined8 *)(param_1 + 0x98) = *(undefined8 *)(param_1 + 0x38);
+        *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_1 + 0x38);
+        return 0;
+      }
+      _free(*(void **)(param_1 + 0x38));
+      pvVar3 = *(void **)(param_1 + 0x30);
+    }
+    _free(pvVar3);
+  }
+  _gz_error(param_1,0xfffffffc,0xe48);
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _gz_comp
+// Entry: 000007f0
+// Signature: undefined _gz_comp(void)
+// ========================================
+
+
+undefined8 _gz_comp(long param_1,int param_2)
+
+{
+  z_streamp strm;
+  int iVar1;
+  int iVar2;
+  ulong uVar3;
+  int *piVar4;
+  char *pcVar5;
+  void *pvVar6;
+  uint uVar7;
+  void *pvVar8;
+  int iVar9;
+  
+  if ((*(int *)(param_1 + 0x28) == 0) && (iVar1 = _gz_init(param_1), iVar1 == -1)) {
+    return 0xffffffff;
+  }
+  if (*(int *)(param_1 + 0x40) == 0) {
+    strm = (z_streamp)(param_1 + 0x80);
+    if (*(int *)(param_1 + 0x60) != 0) {
+      if (*(int *)(param_1 + 0x88) == 0) {
+        return 0;
+      }
+      _deflateReset(strm);
+      *(undefined4 *)(param_1 + 0x60) = 0;
+    }
+    if (param_2 == 0) {
+      iVar1 = *(int *)(param_1 + 0xa0);
+      do {
+        iVar2 = iVar1;
+        if (iVar1 == 0) {
+          pvVar8 = *(void **)(param_1 + 0x98);
+          pvVar6 = *(void **)(param_1 + 8);
+          if (pvVar6 < pvVar8) {
+            do {
+              uVar3 = (long)pvVar8 - (long)pvVar6;
+              if (0x3fffffff < (long)uVar3) {
+                uVar3 = 0x40000000;
+              }
+              uVar3 = _write(*(int *)(param_1 + 0x1c),pvVar6,uVar3 & 0xffffffff);
+              if ((int)uVar3 < 0) goto LAB_00000a9c;
+              pvVar6 = (void *)(*(long *)(param_1 + 8) + (uVar3 & 0xffffffff));
+              *(void **)(param_1 + 8) = pvVar6;
+              pvVar8 = *(void **)(param_1 + 0x98);
+            } while (pvVar6 < pvVar8);
+            iVar2 = *(int *)(param_1 + 0xa0);
+            if (iVar2 != 0) goto LAB_000009a8;
+          }
+          iVar2 = *(int *)(param_1 + 0x28);
+          *(int *)(param_1 + 0xa0) = iVar2;
+          *(undefined8 *)(param_1 + 0x98) = *(undefined8 *)(param_1 + 0x38);
+          *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_1 + 0x38);
+        }
+LAB_000009a8:
+        iVar1 = _deflate(strm,0);
+        if (iVar1 == -2) goto LAB_00000ad4;
+        iVar1 = *(int *)(param_1 + 0xa0);
+      } while (iVar2 != iVar1);
+    }
+    else if (param_2 == 4) {
+      iVar2 = 0;
+      iVar1 = *(int *)(param_1 + 0xa0);
+      do {
+        iVar9 = iVar1;
+        if ((iVar1 == 0) || (iVar2 == 1)) {
+          pvVar8 = *(void **)(param_1 + 0x98);
+          pvVar6 = *(void **)(param_1 + 8);
+          if (pvVar6 < pvVar8) {
+            do {
+              uVar3 = (long)pvVar8 - (long)pvVar6;
+              if (0x3fffffff < (long)uVar3) {
+                uVar3 = 0x40000000;
+              }
+              uVar3 = _write(*(int *)(param_1 + 0x1c),pvVar6,uVar3 & 0xffffffff);
+              if ((int)uVar3 < 0) goto LAB_00000a9c;
+              pvVar6 = (void *)(*(long *)(param_1 + 8) + (uVar3 & 0xffffffff));
+              *(void **)(param_1 + 8) = pvVar6;
+              pvVar8 = *(void **)(param_1 + 0x98);
+            } while (pvVar6 < pvVar8);
+            iVar9 = *(int *)(param_1 + 0xa0);
+          }
+          if (iVar9 == 0) {
+            iVar9 = *(int *)(param_1 + 0x28);
+            *(int *)(param_1 + 0xa0) = iVar9;
+            *(undefined8 *)(param_1 + 0x98) = *(undefined8 *)(param_1 + 0x38);
+            *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_1 + 0x38);
+          }
+        }
+        iVar2 = _deflate(strm,4);
+        if (iVar2 == -2) {
+LAB_00000ad4:
+          _gz_error(param_1,0xfffffffe,0xe5a);
+          return 0xffffffff;
+        }
+        iVar1 = *(int *)(param_1 + 0xa0);
+      } while (iVar9 != iVar1);
+    }
+    else {
+      do {
+        pvVar8 = *(void **)(param_1 + 0x98);
+        pvVar6 = *(void **)(param_1 + 8);
+        if (pvVar6 < pvVar8) {
+          do {
+            uVar3 = (long)pvVar8 - (long)pvVar6;
+            if (0x3fffffff < (long)uVar3) {
+              uVar3 = 0x40000000;
+            }
+            uVar3 = _write(*(int *)(param_1 + 0x1c),pvVar6,uVar3 & 0xffffffff);
+            if ((int)uVar3 < 0) goto LAB_00000a9c;
+            pvVar6 = (void *)(*(long *)(param_1 + 8) + (uVar3 & 0xffffffff));
+            *(void **)(param_1 + 8) = pvVar6;
+            pvVar8 = *(void **)(param_1 + 0x98);
+          } while (pvVar6 < pvVar8);
+        }
+        iVar1 = *(int *)(param_1 + 0xa0);
+        if (iVar1 == 0) {
+          iVar1 = *(int *)(param_1 + 0x28);
+          *(int *)(param_1 + 0xa0) = iVar1;
+          *(undefined8 *)(param_1 + 0x98) = *(undefined8 *)(param_1 + 0x38);
+          *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_1 + 0x38);
+        }
+        iVar2 = _deflate(strm,param_2);
+        if (iVar2 == -2) goto LAB_00000ad4;
+      } while (iVar1 != *(int *)(param_1 + 0xa0));
+    }
+    if (param_2 == 4) {
+      *(undefined4 *)(param_1 + 0x60) = 1;
+      return 0;
+    }
+  }
+  else {
+    uVar7 = *(uint *)(param_1 + 0x88);
+    if (uVar7 != 0) {
+      pvVar6 = *(void **)(param_1 + 0x80);
+      do {
+        if (0x3fffffff < uVar7) {
+          uVar7 = 0x40000000;
+        }
+        uVar3 = _write(*(int *)(param_1 + 0x1c),pvVar6,(ulong)uVar7);
+        if ((int)uVar3 < 0) {
+LAB_00000a9c:
+          piVar4 = ___error();
+          pcVar5 = _strerror(*piVar4);
+          _gz_error(param_1,0xffffffff,pcVar5);
+          return 0xffffffff;
+        }
+        pvVar6 = (void *)(*(long *)(param_1 + 0x80) + (uVar3 & 0xffffffff));
+        *(void **)(param_1 + 0x80) = pvVar6;
+        uVar7 = *(int *)(param_1 + 0x88) - (int)uVar3;
+        *(uint *)(param_1 + 0x88) = uVar7;
+      } while (uVar7 != 0);
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _gzprintf
+// Entry: 00000b04
+// Signature: int __cdecl _gzprintf(gzFile file, char * format, ...)
+// ========================================
+
+
+int _gzprintf(gzFile file,char *format,...)
+
+{
+  int iVar1;
+  
+  iVar1 = _gzvprintf((int)file,format,&stack0x00000000);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _gzflush
+// Entry: 00000b2c
+// Signature: int __cdecl _gzflush(gzFile file, int flush)
+// ========================================
+
+
+int _gzflush(gzFile file,int flush)
+
+{
+  int iVar1;
+  
+  if (file == (gzFile)0x0) {
+    return -2;
+  }
+  if (*(int *)((long)file + 0x18) != 0x79b1) {
+    return -2;
+  }
+  if (4 < (uint)flush) {
+    return -2;
+  }
+  if (*(int *)((long)file + 0x74) != 0) {
+    return -2;
+  }
+  if (*(int *)((long)file + 0x70) != 0) {
+    *(undefined4 *)((long)file + 0x70) = 0;
+    iVar1 = _gz_zero(file,*(undefined8 *)((long)file + 0x68));
+    if (iVar1 == -1) goto LAB_00000b94;
+  }
+  _gz_comp(file,flush);
+LAB_00000b94:
+  return *(int *)((long)file + 0x74);
+}
+
+
+
+
+// ========================================
+// Function: _gzsetparams
+// Entry: 00000bbc
+// Signature: int __cdecl _gzsetparams(gzFile file, int level, int strategy)
+// ========================================
+
+
+int _gzsetparams(gzFile file,int level,int strategy)
+
+{
+  int iVar1;
+  
+  if (file == (gzFile)0x0) {
+    return -2;
+  }
+  if (((*(int *)((long)file + 0x18) != 0x79b1) || (*(int *)((long)file + 0x74) != 0)) ||
+     (*(int *)((long)file + 0x40) != 0)) {
+    return -2;
+  }
+  if ((*(int *)((long)file + 0x58) == level) && (*(int *)((long)file + 0x5c) == strategy)) {
+    return 0;
+  }
+  if (*(int *)((long)file + 0x70) != 0) {
+    *(undefined4 *)((long)file + 0x70) = 0;
+    iVar1 = _gz_zero(file,*(undefined8 *)((long)file + 0x68));
+    if (iVar1 == -1) goto LAB_00000cb0;
+  }
+  if (*(int *)((long)file + 0x28) != 0) {
+    if ((*(int *)((long)file + 0x88) != 0) && (iVar1 = _gz_comp(file,5), iVar1 == -1)) {
+LAB_00000cb0:
+      return *(int *)((long)file + 0x74);
+    }
+    _deflateParams((z_streamp)((long)file + 0x80),level,strategy);
+  }
+  *(int *)((long)file + 0x58) = level;
+  *(int *)((long)file + 0x5c) = strategy;
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _gzclose_w
+// Entry: 00000cc4
+// Signature: int __cdecl _gzclose_w(gzFile file)
+// ========================================
+
+
+int _gzclose_w(gzFile file)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  if ((file == (gzFile)0x0) || (*(int *)((long)file + 0x18) != 0x79b1)) {
+    return -2;
+  }
+  if (*(int *)((long)file + 0x70) == 0) {
+    iVar2 = _gz_comp(file,4);
+  }
+  else {
+    *(undefined4 *)((long)file + 0x70) = 0;
+    iVar2 = _gz_zero(file,*(undefined8 *)((long)file + 0x68));
+    if (iVar2 == -1) {
+      iVar1 = *(int *)((long)file + 0x74);
+      iVar2 = _gz_comp(file,4);
+      goto joined_r0x00000dd8;
+    }
+    iVar2 = _gz_comp(file,4);
+  }
+  iVar1 = 0;
+joined_r0x00000dd8:
+  if (iVar2 == -1) {
+    iVar1 = *(int *)((long)file + 0x74);
+    iVar2 = *(int *)((long)file + 0x28);
+  }
+  else {
+    iVar2 = *(int *)((long)file + 0x28);
+  }
+  if (iVar2 != 0) {
+    if (*(int *)((long)file + 0x40) == 0) {
+      _deflateEnd((z_streamp)((long)file + 0x80));
+      _free(*(void **)((long)file + 0x38));
+    }
+    _free(*(void **)((long)file + 0x30));
+  }
+  _gz_error(file,0,0);
+  _free(*(void **)((long)file + 0x20));
+  iVar2 = _close(*(int *)((long)file + 0x1c));
+  if (iVar2 == -1) {
+    iVar1 = -1;
+  }
+  _free(file);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___error
+// Entry: 00002000
+// Signature: int * ___error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int * ___error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00002100
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _close
+// Entry: 00002200
+// Signature: int _close(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _close(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflate
+// Entry: 00002300
+// Signature: int _deflate(z_streamp strm, int flush)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflate(z_streamp strm,int flush)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateEnd
+// Entry: 00002400
+// Signature: int _deflateEnd(z_streamp strm)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateEnd(z_streamp strm)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateInit2_
+// Entry: 00002500
+// Signature: int _deflateInit2_(z_streamp strm, int level, int method, int windowBits, int memLevel, int strategy, char * version, int stream_size)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateInit2_(z_streamp strm,int level,int method,int windowBits,int memLevel,int strategy,
+                  char *version,int stream_size)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateParams
+// Entry: 00002600
+// Signature: int _deflateParams(z_streamp strm, int level, int strategy)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateParams(z_streamp strm,int level,int strategy)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateReset
+// Entry: 00002700
+// Signature: int _deflateReset(z_streamp strm)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateReset(z_streamp strm)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00002800
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _gz_error
+// Entry: 00002900
+// Signature: undefined _gz_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _gz_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00002a00
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00002b00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00002c00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strerror
+// Entry: 00002d00
+// Signature: char * _strerror(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strerror(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00002e00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vsnprintf
+// Entry: 00002f00
+// Signature: int _vsnprintf(char * param_1, size_t param_2, char * param_3, va_list param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _vsnprintf(char *param_1,size_t param_2,char *param_3,va_list param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _write
+// Entry: 00003000
+// Signature: ssize_t _write(int param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ssize_t _write(int param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 30
+// Failed: 0
+// Skipped external functions: 0

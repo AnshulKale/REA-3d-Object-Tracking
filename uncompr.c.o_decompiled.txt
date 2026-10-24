@@ -1,0 +1,179 @@
+Program: uncompr.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: undefined ltmp0(void)
+// ========================================
+
+
+int ltmp0(Bytef *param_1,ulong *param_2,Bytef *param_3,ulong *param_4)
+
+{
+  ulong uVar1;
+  int iVar2;
+  ulong uVar3;
+  ulong uVar4;
+  Bytef BStack_c1;
+  z_stream local_c0;
+  
+  uVar4 = *param_4;
+  uVar3 = *param_2;
+  if (uVar3 == 0) {
+    param_1 = &BStack_c1;
+    uVar3 = 1;
+  }
+  else {
+    *param_2 = 0;
+  }
+  local_c0.avail_in = 0;
+  local_c0.zfree = ltmp0;
+  local_c0.opaque = (voidpf)0x0;
+  local_c0.zalloc = ltmp0;
+  local_c0.next_in = param_3;
+  iVar2 = _inflateInit_(&local_c0,"1.3",0x70);
+  local_c0.next_out = param_1;
+  if (iVar2 != 0) {
+    return iVar2;
+  }
+LAB_000000c0:
+  uVar1 = uVar3;
+  if (0xfffffffe < uVar3) {
+    uVar1 = 0xffffffff;
+  }
+  local_c0.avail_out = (uInt)uVar1;
+  uVar3 = uVar3 - uVar1;
+  if (local_c0.avail_in != 0) goto LAB_000000ac;
+  do {
+    uVar1 = uVar4;
+    if (0xfffffffe < uVar4) {
+      uVar1 = 0xffffffff;
+    }
+    local_c0.avail_in = (uInt)uVar1;
+    uVar4 = uVar4 - uVar1;
+    iVar2 = _inflate(&local_c0,0);
+    while( true ) {
+      if (iVar2 != 0) {
+        *param_4 = *param_4 - (uVar4 + local_c0.avail_in);
+        if (param_1 == &BStack_c1) {
+          if (local_c0.total_out != 0 && iVar2 == -5) {
+            uVar3 = 1;
+          }
+          _inflateEnd(&local_c0);
+        }
+        else {
+          *param_2 = local_c0.total_out;
+          _inflateEnd(&local_c0);
+        }
+        if (iVar2 == 2) {
+          return -3;
+        }
+        if (iVar2 == 1) {
+          return 0;
+        }
+        if (iVar2 != -5) {
+          return iVar2;
+        }
+        if (uVar3 + local_c0.avail_out != 0) {
+          return -3;
+        }
+        return -5;
+      }
+      if (local_c0.avail_out == 0) goto LAB_000000c0;
+      if (local_c0.avail_in == 0) break;
+LAB_000000ac:
+      iVar2 = _inflate(&local_c0,0);
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _uncompress
+// Entry: 00000194
+// Signature: int __cdecl _uncompress(Bytef * dest, uLongf * destLen, Bytef * source, uLong sourceLen)
+// ========================================
+
+
+int _uncompress(Bytef *dest,uLongf *destLen,Bytef *source,uLong sourceLen)
+
+{
+  int iVar1;
+  uLong local_18;
+  
+  local_18 = sourceLen;
+  iVar1 = ltmp0((int)dest,destLen,source,&local_18);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _inflate
+// Entry: 00001000
+// Signature: int _inflate(z_streamp strm, int flush)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _inflate(z_streamp strm,int flush)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _inflateEnd
+// Entry: 00001100
+// Signature: int _inflateEnd(z_streamp strm)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _inflateEnd(z_streamp strm)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _inflateInit_
+// Entry: 00001200
+// Signature: int _inflateInit_(z_streamp strm, char * version, int stream_size)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _inflateInit_(z_streamp strm,char *version,int stream_size)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 5
+// Failed: 0
+// Skipped external functions: 0

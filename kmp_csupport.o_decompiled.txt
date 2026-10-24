@@ -1,0 +1,6296 @@
+Program: kmp_csupport.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmpc_begin
+// Entry: 00000000
+// Signature: void __cdecl __kmpc_begin(ident_t * loc, kmp_int32 flags)
+// ========================================
+
+
+void __kmpc_begin(ident_t *loc,kmp_int32 flags)
+
+{
+  int iVar1;
+  char *pcVar2;
+  
+                    /* Unresolved local var: char * env@[DW_OP_breg31(sp): +8] */
+  pcVar2 = _getenv("KMP_INITIAL_THREAD_BIND");
+  if ((pcVar2 == (char *)0x0) || (iVar1 = ___kmp_str_match_true(pcVar2), iVar1 == 0)) {
+    iVar1 = ___kmp_ignore_mppbeg();
+    if (iVar1 == 0) {
+      ___kmp_internal_begin();
+    }
+  }
+  else {
+    ___kmp_middle_initialize();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end
+// Entry: 00000084
+// Signature: void __cdecl __kmpc_end(ident_t * loc)
+// ========================================
+
+
+void __kmpc_end(ident_t *loc)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_ignore_mppend();
+  if (iVar1 == 0) {
+    ___kmp_internal_end_thread(0xffffffff);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_global_thread_num
+// Entry: 000000c0
+// Signature: kmp_int32 __cdecl __kmpc_global_thread_num(ident_t * loc)
+// ========================================
+
+
+kmp_int32 __kmpc_global_thread_num(ident_t *loc)
+
+{
+  kmp_int32 kVar1;
+  
+                    /* Unresolved local var: kmp_int32 gtid@[DW_OP_breg31(sp): +4] */
+  kVar1 = ___kmp_get_global_thread_id_reg();
+  return kVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_global_num_threads
+// Entry: 000000e8
+// Signature: kmp_int32 __cdecl __kmpc_global_num_threads(ident_t * loc)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_global_num_threads(ident_t *loc)
+
+{
+  return *____kmp_all_nth;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_bound_thread_num
+// Entry: 00000104
+// Signature: kmp_int32 __cdecl __kmpc_bound_thread_num(ident_t * loc)
+// ========================================
+
+
+kmp_int32 __kmpc_bound_thread_num(ident_t *loc)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  iVar1 = __kmp_tid_from_gtid(iVar1);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_tid_from_gtid
+// Entry: 00000128
+// Signature: int __cdecl __kmp_tid_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmp_tid_from_gtid(int gtid)
+
+{
+  return *(int *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x20);
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_bound_num_threads
+// Entry: 00000150
+// Signature: kmp_int32 __cdecl __kmpc_bound_num_threads(ident_t * loc)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_int32 __kmpc_bound_num_threads(ident_t *loc)
+
+{
+  kmp_info_t *pkVar1;
+  
+  pkVar1 = __kmp_entry_thread();
+  return (((pkVar1->th).th_team)->t).t_nproc;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_entry_thread
+// Entry: 00000178
+// Signature: kmp_info_t * __kmp_entry_thread(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_entry_thread(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(kmp_info_t **)(*____kmp_threads + (long)iVar1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_ok_to_fork
+// Entry: 000001ac
+// Signature: kmp_int32 __cdecl __kmpc_ok_to_fork(ident_t * loc)
+// ========================================
+
+
+kmp_int32 __kmpc_ok_to_fork(ident_t *loc)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_in_parallel
+// Entry: 000001c0
+// Signature: kmp_int32 __cdecl __kmpc_in_parallel(ident_t * loc)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_int32 __kmpc_in_parallel(ident_t *loc)
+
+{
+  kmp_info_t *pkVar1;
+  
+  pkVar1 = __kmp_entry_thread();
+  return (((pkVar1->th).th_root)->r).r_active;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_push_num_threads
+// Entry: 000001e8
+// Signature: void __cdecl __kmpc_push_num_threads(ident_t * loc, kmp_int32 global_tid, kmp_int32 num_threads)
+// ========================================
+
+
+void __kmpc_push_num_threads(ident_t *loc,kmp_int32 global_tid,kmp_int32 num_threads)
+
+{
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_push_num_threads(loc,global_tid,num_threads);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_assert_valid_gtid
+// Entry: 00000224
+// Signature: void __cdecl __kmp_assert_valid_gtid(kmp_int32 gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_assert_valid_gtid(kmp_int32 gtid)
+
+{
+  bool bVar1;
+  undefined1 auStack_30 [28];
+  kmp_int32 local_14;
+  
+  bVar1 = true;
+  if (-1 < gtid) {
+    bVar1 = *____kmp_threads_capacity <= gtid;
+  }
+  if (bVar1) {
+    local_14 = gtid;
+    ___kmp_msg_format(0x40084);
+    ___kmp_fatal(auStack_30);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_pop_num_threads
+// Entry: 000002c8
+// Signature: void __cdecl __kmpc_pop_num_threads(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+void __kmpc_pop_num_threads(ident_t *loc,kmp_int32 global_tid)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_push_proc_bind
+// Entry: 000002dc
+// Signature: void __cdecl __kmpc_push_proc_bind(ident_t * loc, kmp_int32 global_tid, kmp_int32 proc_bind)
+// ========================================
+
+
+void __kmpc_push_proc_bind(ident_t *loc,kmp_int32 global_tid,kmp_int32 proc_bind)
+
+{
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_push_proc_bind(loc,global_tid,proc_bind);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_fork_call
+// Entry: 00000318
+// Signature: void __cdecl __kmpc_fork_call(ident_t * loc, kmp_int32 argc, kmpc_micro microtask, ...)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_fork_call(ident_t *loc,kmp_int32 argc,kmpc_micro microtask,...)
+
+{
+  int Gtid;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_50;
+  long local_48;
+  long local_40;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  Gtid = ___kmp_get_global_thread_id_reg();
+                    /* Unresolved local var: va_list ap@[???]
+                       Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+  if ((*__ompt_enabled & 1) != 0) {
+                    /* Unresolved local var: kmp_info_t * master_th@[DW_OP_breg31(sp): +40] */
+    local_48 = *(long *)(*____kmp_threads + (long)Gtid * 8);
+    local_40 = *(long *)(local_48 + 0x1b8) + 0xe8;
+    *(undefined1 **)(*(long *)(local_48 + 0x1b8) + 0xf0) = &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_50,Gtid,unaff_x30);
+  ___kmp_fork_call(loc,Gtid,1,argc,microtask,____kmp_invoke_task_func,&stack0x00000000);
+  ___kmp_join_call(loc,Gtid,1,0);
+  if ((*__ompt_enabled & 1) != 0) {
+    *(undefined8 *)(local_40 + 8) = 0;
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_50);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 00000434
+// Signature: void __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid, void * ReturnAddress)
+// ========================================
+
+
+/* DWARF original prototype: void OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid,
+   void * ReturnAddress) */
+
+void __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int Gtid,void *ReturnAddress)
+
+{
+  OmptReturnAddressGuard(this,Gtid,ReturnAddress);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 00000470
+// Signature: void __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* DWARF original prototype: void ~OmptReturnAddressGuard(OmptReturnAddressGuard * this) */
+
+void __thiscall OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  ~OmptReturnAddressGuard(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_fork_call_if
+// Entry: 0000049c
+// Signature: void __cdecl __kmpc_fork_call_if(ident_t * loc, kmp_int32 argc, kmpc_micro microtask, kmp_int32 cond, void * args)
+// ========================================
+
+
+void __kmpc_fork_call_if(ident_t *loc,kmp_int32 argc,kmpc_micro microtask,kmp_int32 cond,void *args)
+
+{
+  kmp_int32 local_40;
+  kmp_int32 local_3c;
+  void *local_38;
+  int local_2c;
+  kmpc_micro local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+  local_38 = args;
+  local_2c = cond;
+  local_28 = microtask;
+  local_1c = argc;
+  local_18 = loc;
+                    /* Unresolved local var: int gtid@[DW_OP_breg31(sp): +20]
+                       Unresolved local var: int zero@[DW_OP_breg31(sp): +16] */
+  local_3c = ___kmp_get_global_thread_id_reg();
+  local_40 = 0;
+  if (local_2c == 0) {
+    __kmpc_serialized_parallel(local_18,local_3c);
+    if (local_38 == (void *)0x0) {
+      (*local_28)(&local_3c,&local_40);
+    }
+    else {
+      (*local_28)(&local_3c,&local_40);
+    }
+    __kmpc_end_serialized_parallel(local_18,local_3c);
+  }
+  else if (local_38 == (void *)0x0) {
+    __kmpc_fork_call(local_18,local_1c,local_28);
+  }
+  else {
+    __kmpc_fork_call(local_18,local_1c,local_28);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_serialized_parallel
+// Entry: 00000598
+// Signature: void __cdecl __kmpc_serialized_parallel(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+void __kmpc_serialized_parallel(ident_t *loc,kmp_int32 global_tid)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  ident_t *local_18;
+  
+  local_1c = global_tid;
+  local_18 = loc;
+                    /* Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  __kmp_assert_valid_gtid(global_tid);
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmp_serialized_parallel(local_18,local_1c);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_serialized_parallel
+// Entry: 000005ec
+// Signature: void __cdecl __kmpc_end_serialized_parallel(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_end_serialized_parallel(ident_t *loc,kmp_int32 global_tid)
+
+{
+  ompt_team_info_t *poVar1;
+  long lVar2;
+  ulong *puVar3;
+  void *pvVar4;
+  code *pcVar5;
+  dispatch_private_info_t *pdVar6;
+  ompt_data_t *local_50;
+  undefined8 local_48;
+  kmp_task_team_t *local_40;
+  kmp_team_p *local_38;
+  kmp_info *local_30;
+  kmp_internal_control_t *local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+  puVar3 = __ompt_enabled;
+                    /* Unresolved local var: kmp_internal_control_t * top@[???]
+                       Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * serial_team@[???]
+                       Unresolved local var: kmp_task_team_t * task_team@[???] */
+  lVar2 = __ompt_callbacks;
+                    /* Unresolved local var: ompt_data_t * parent_task_data@[DW_OP_breg31(sp): +48]
+                        */
+  if ((loc == (ident_t *)0x0) || ((loc->flags & 8U) == 0)) {
+    local_1c = global_tid;
+    local_18 = loc;
+    __kmp_assert_valid_gtid(global_tid);
+    if (*____kmp_init_parallel == 0) {
+      ___kmp_parallel_initialize();
+    }
+    ___kmp_resume_if_soft_paused();
+    local_30 = *(kmp_info **)(*____kmp_threads + (long)local_1c * 8);
+    local_38 = (local_30->th).th_serial_team;
+    local_40 = (local_30->th).th_task_team;
+    if ((local_40 != (kmp_task_team_t *)0x0) &&
+       (((local_40->tt).tt_found_proxy_tasks != 0 ||
+        ((local_40->tt).tt_hidden_helper_task_encountered != 0)))) {
+      ___kmp_task_team_wait(local_30,local_38,1);
+    }
+    DataMemoryBarrier(2,3);
+    if ((local_38->t).t_serialized == 0) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                          0x23b);
+    }
+    if (((*puVar3 & 1) != 0) && (*(int *)(local_30->th_pad + 0x160) != 0x101)) {
+      local_48 = 0;
+      (((local_30->th).th_current_task)->ompt_task_info).frame.exit_frame.value = 0;
+      if ((*puVar3 >> 7 & 1) != 0) {
+        (**(code **)(lVar2 + 0x30))
+                  (2,0,&(((local_30->th).th_current_task)->ompt_task_info).task_data,1,
+                   (((local_30->th).th_current_task)->ompt_task_info).thread_num);
+      }
+      __ompt_get_task_info_internal
+                (1,(int *)0x0,&local_50,(ompt_frame_t **)0x0,(ompt_data_t **)0x0,(int *)0x0);
+      if ((*puVar3 >> 4 & 1) != 0) {
+        pcVar5 = *(code **)(lVar2 + 0x18);
+        poVar1 = &(local_38->t).ompt_team_info;
+        pvVar4 = __ompt_load_return_address(local_1c);
+        (*pcVar5)(poVar1,local_50,0x80000001,pvVar4);
+      }
+      __ompt_lw_taskteam_unlink(local_30);
+      *(char *)((long)local_30->th_pad + 0x160) = '\x01';
+      *(char *)((long)local_30->th_pad + 0x161) = '\x01';
+      *(char *)((long)local_30->th_pad + 0x162) = '\0';
+      *(char *)((long)local_30->th_pad + 0x163) = '\0';
+    }
+    local_28 = (local_38->t).t_control_stack_top;
+    if ((local_28 != (kmp_internal_control_t *)0x0) &&
+       (local_28->serial_nesting_level == (local_38->t).t_serialized)) {
+      copy_icvs(&(((*(local_38->t).t_threads)->th).th_current_task)->td_icvs,local_28);
+      (local_38->t).t_control_stack_top = local_28->next;
+      ____kmp_free(local_28);
+    }
+                    /* Unresolved local var: dispatch_private_info_t *
+                       disp_buffer@[DW_OP_breg31(sp): +40] */
+    pdVar6 = ((local_38->t).t_dispatch)->th_disp_buffer;
+    ((local_38->t).t_dispatch)->th_disp_buffer = ((local_38->t).t_dispatch)->th_disp_buffer->next;
+    ____kmp_free(pdVar6);
+    (local_30->th).th_def_allocator = (local_38->t).t_def_allocator;
+    (local_38->t).t_serialized = (local_38->t).t_serialized + -1;
+    if ((local_38->t).t_serialized == 0) {
+      ___kmp_pop_current_task_from_thread(local_30);
+      (local_30->th).th_team = (local_38->t).t_parent;
+      *(int *)(local_30->th_pad + 0x20) = (local_38->t).t_master_tid;
+      (local_30->th).th_team_nproc = (((local_38->t).t_parent)->t).t_nproc;
+      (local_30->th).th_team_master = *(((local_38->t).t_parent)->t).t_threads;
+      (local_30->th).th_team_serialized = (((local_30->th).th_team)->t).t_serialized;
+      (local_30->th).th_dispatch =
+           (((local_30->th).th_team)->t).t_dispatch + (local_38->t).t_master_tid;
+      if ((&((local_30->th).th_current_task)->td_flags)->executing != 0) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp"
+                            ,0x28e);
+      }
+      (&((local_30->th).th_current_task)->td_flags)->executing = 1;
+      if (*____kmp_tasking_mode != 0) {
+        (local_30->th).th_task_team =
+             *(kmp_task_team_t **)
+              ((long)(local_30->th).th_team + (ulong)(local_30->th).th_task_state * 8 + 0x1a8);
+      }
+    }
+    (local_38->t).t_level = (local_38->t).t_level + -1;
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_pop_parallel(local_1c,0);
+    }
+    if ((*puVar3 & 1) != 0) {
+      *(uint *)(local_30->th_pad + 0x160) = (uint)((local_30->th).th_team_serialized == 0);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_push_num_teams
+// Entry: 00000b24
+// Signature: void __cdecl __kmpc_push_num_teams(ident_t * loc, kmp_int32 global_tid, kmp_int32 num_teams, kmp_int32 num_threads)
+// ========================================
+
+
+void __kmpc_push_num_teams
+               (ident_t *loc,kmp_int32 global_tid,kmp_int32 num_teams,kmp_int32 num_threads)
+
+{
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_push_num_teams(loc,global_tid,num_teams,num_threads);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_push_num_teams_51
+// Entry: 00000b68
+// Signature: void __cdecl __kmpc_push_num_teams_51(ident_t * loc, kmp_int32 global_tid, kmp_int32 num_teams_lb, kmp_int32 num_teams_ub, kmp_int32 num_threads)
+// ========================================
+
+
+void __kmpc_push_num_teams_51
+               (ident_t *loc,kmp_int32 global_tid,kmp_int32 num_teams_lb,kmp_int32 num_teams_ub,
+               kmp_int32 num_threads)
+
+{
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_push_num_teams_51(loc,global_tid,num_teams_lb,num_teams_ub,num_threads);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_fork_teams
+// Entry: 00000bb4
+// Signature: void __cdecl __kmpc_fork_teams(ident_t * loc, kmp_int32 argc, kmpc_micro microtask, ...)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_fork_teams(ident_t *loc,kmp_int32 argc,kmpc_micro microtask,...)
+
+{
+  int iVar1;
+  long lVar2;
+  long lVar3;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_54;
+  int local_4c;
+  long local_48;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: va_list ap@[???]
+                       Unresolved local var: kmp_team_t * parent_team@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: int tid@[DW_OP_breg31(sp): +52]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +44]
+                       Unresolved local var: kmp_cg_root_t * tmp@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int i@[DW_OP_breg31(sp): +28] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  lVar2 = *(long *)(*____kmp_threads + (long)iVar1 * 8);
+  *(kmpc_micro *)(lVar2 + 0x78) = microtask;
+  *(undefined4 *)(lVar2 + 0x80) = *(undefined4 *)(*(long *)(lVar2 + 0x40) + 0x290);
+  local_48 = *(long *)(lVar2 + 0x40);
+  local_4c = __kmp_tid_from_gtid(iVar1);
+  if ((*__ompt_enabled & 1) != 0) {
+    *(undefined1 **)(*(long *)(local_48 + 0x288) + (long)local_4c * 0x140 + 0xf0) =
+         &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_54,iVar1,unaff_x30);
+  if (*(int *)(lVar2 + 0xd4) == 0) {
+    ___kmp_push_num_teams(loc,iVar1,0);
+  }
+  ___kmp_fork_call(loc,iVar1,1,argc,____kmp_teams_master,____kmp_invoke_teams_master,
+                   &stack0x00000000);
+  ___kmp_join_call(loc,iVar1,1,0);
+  lVar3 = *(long *)(lVar2 + 0x548);
+  *(undefined8 *)(lVar2 + 0x548) = *(undefined8 *)(lVar3 + 0x10);
+  iVar1 = *(int *)(lVar3 + 0xc);
+  *(int *)(lVar3 + 0xc) = iVar1 + -1;
+  if (iVar1 == 1) {
+    ____kmp_free(lVar3);
+  }
+  *(undefined4 *)(*(long *)(lVar2 + 0x1b8) + 0x50) = *(undefined4 *)(*(long *)(lVar2 + 0x548) + 8);
+  *(undefined8 *)(lVar2 + 0x78) = 0;
+  *(undefined4 *)(lVar2 + 0x80) = 0;
+  *(undefined8 *)(lVar2 + 0xd4) = 0;
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_54);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_invoke_task_func
+// Entry: 00000d8c
+// Signature: int __cdecl __kmpc_invoke_task_func(int gtid)
+// ========================================
+
+
+int __kmpc_invoke_task_func(int gtid)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_invoke_task_func(gtid);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_load_return_address
+// Entry: 00000db0
+// Signature: void * __cdecl __ompt_load_return_address(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * __ompt_load_return_address(int gtid)
+
+{
+  long lVar1;
+  void *pvVar2;
+  
+                    /* Unresolved local var: kmp_info_t * thr@[???]
+                       Unresolved local var: void * return_address@[???] */
+  lVar1 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  pvVar2 = *(void **)(lVar1 + 0x158);
+  *(undefined8 *)(lVar1 + 0x158) = 0;
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: copy_icvs
+// Entry: 00000df0
+// Signature: void __cdecl copy_icvs(kmp_internal_control_t * dst, kmp_internal_control_t * src)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void copy_icvs(kmp_internal_control_t *dst,kmp_internal_control_t *src)
+
+{
+  _memcpy(dst,src,0x30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_flush
+// Entry: 00000e20
+// Signature: void __cdecl __kmpc_flush(ident_t * loc)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_flush(ident_t *loc)
+
+{
+  undefined8 uVar1;
+  code *pcVar2;
+  undefined8 unaff_x30;
+  
+  DataMemoryBarrier(2,3);
+  if ((*__ompt_enabled >> 0x15 & 1) != 0) {
+    pcVar2 = *(code **)(__ompt_callbacks + 0xa0);
+    uVar1 = __ompt_get_thread_data_internal();
+    (*pcVar2)(uVar1,unaff_x30);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_barrier
+// Entry: 00000e94
+// Signature: void __cdecl __kmpc_barrier(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_barrier(ident_t *loc,kmp_int32 global_tid)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_60;
+  ompt_frame_t *local_58;
+  undefined8 local_50;
+  undefined8 uStack_48;
+  undefined8 local_40;
+  undefined1 auStack_38 [28];
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  if (*____kmp_env_consistency_check != 0) {
+    if (local_18 == (ident_t *)0x0) {
+      ___kmp_msg_format(0x40083);
+      uStack_48 = ____kmp_msg_null[1];
+      local_50 = *____kmp_msg_null;
+      local_40 = ____kmp_msg_null[2];
+      ___kmp_msg(1,auStack_38);
+    }
+    ___kmp_check_barrier(local_1c,0xb,local_18);
+  }
+  if (((*__ompt_enabled & 1) != 0) &&
+     (__ompt_get_task_info_internal
+                (0,(int *)0x0,(ompt_data_t **)0x0,&local_58,(ompt_data_t **)0x0,(int *)0x0),
+     (local_58->enter_frame).value == 0)) {
+    (local_58->enter_frame).ptr = &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_60,local_1c,unaff_x30);
+  *(ident_t **)(*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x1a0) = local_18;
+  ___kmp_barrier(0,local_1c,0,0,0);
+  if ((*__ompt_enabled & 1) != 0) {
+    (local_58->enter_frame).value = 0;
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_60);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_master
+// Entry: 00001060
+// Signature: kmp_int32 __cdecl __kmpc_master(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_master(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  uint local_20;
+  
+                    /* Unresolved local var: int status@[???] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  iVar2 = __kmp_tid_from_gtid(global_tid);
+  local_20 = (uint)(iVar2 == 0);
+  if ((local_20 != 0) && ((*__ompt_enabled >> 0xe & 1) != 0)) {
+    lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+    iVar2 = __kmp_tid_from_gtid(global_tid);
+    (**(code **)(lVar1 + 0x68))
+              (1,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,unaff_x30);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    if (local_20 == 0) {
+      ___kmp_check_sync(global_tid,9,loc,0,0);
+    }
+    else {
+      ___kmp_push_sync(global_tid,9,loc,0,0);
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_master
+// Entry: 00001204
+// Signature: void __cdecl __kmpc_end_master(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_end_master(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  
+                    /* Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  __kmp_assert_valid_gtid(global_tid);
+  lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+  if ((*__ompt_enabled >> 0xe & 1) != 0) {
+    iVar2 = __kmp_tid_from_gtid(global_tid);
+    (**(code **)(lVar1 + 0x68))
+              (2,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,unaff_x30);
+  }
+  if ((*____kmp_env_consistency_check != 0) && (iVar2 = __kmp_tid_from_gtid(global_tid), iVar2 == 0)
+     ) {
+    ___kmp_pop_sync(global_tid,9,loc);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_masked
+// Entry: 0000131c
+// Signature: kmp_int32 __cdecl __kmpc_masked(ident_t * loc, kmp_int32 global_tid, kmp_int32 filter)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_masked(ident_t *loc,kmp_int32 global_tid,kmp_int32 filter)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  uint local_24;
+  
+                    /* Unresolved local var: int status@[???]
+                       Unresolved local var: int tid@[???] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_info_t * this_thr@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +24] */
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  iVar2 = __kmp_tid_from_gtid(global_tid);
+  local_24 = (uint)(iVar2 == filter);
+  if ((local_24 != 0) && ((*__ompt_enabled >> 0xe & 1) != 0)) {
+    lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+    (**(code **)(lVar1 + 0x68))
+              (1,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,unaff_x30);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    if (local_24 == 0) {
+      ___kmp_check_sync(global_tid,0xc,loc,0,0);
+    }
+    else {
+      ___kmp_push_sync(global_tid,0xc,loc,0,0);
+    }
+  }
+  return local_24;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_masked
+// Entry: 000014c0
+// Signature: void __cdecl __kmpc_end_masked(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_end_masked(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  
+                    /* Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  __kmp_assert_valid_gtid(global_tid);
+  lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+  if ((*__ompt_enabled >> 0xe & 1) != 0) {
+    iVar2 = __kmp_tid_from_gtid(global_tid);
+    (**(code **)(lVar1 + 0x68))
+              (2,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,unaff_x30);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_pop_sync(global_tid,0xc,loc);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_ordered
+// Entry: 000015b8
+// Signature: void __cdecl __kmpc_ordered(ident_t * loc, kmp_int32 gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_ordered(ident_t *loc,kmp_int32 gtid)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_48;
+  void *local_40;
+  kmp_team_t *local_38;
+  kmp_team_t *local_30;
+  long local_28;
+  undefined4 local_20;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: int cid@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: ompt_wait_id_t lck@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: void * codeptr_ra@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +24] */
+  lVar1 = __ompt_callbacks;
+  local_20 = 0;
+  local_1c = gtid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(gtid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  local_28 = *(long *)(*____kmp_threads + (long)local_1c * 8);
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_48,local_1c,unaff_x30);
+  if ((*puVar2 & 1) != 0) {
+    local_38 = __kmp_team_from_gtid(local_1c);
+    *(kmp_team_t **)(local_28 + 0x168) = local_38;
+    *(undefined4 *)(local_28 + 0x160) = 0x44;
+    local_30 = local_38;
+    local_40 = __ompt_load_return_address(local_1c);
+    if ((*puVar2 >> 0x12 & 1) != 0) {
+      (**(code **)(lVar1 + 0x88))(7,0,1,local_38,local_40);
+    }
+  }
+  if (**(long **)(local_28 + 0x58) == 0) {
+    ___kmp_parallel_deo(&local_1c,&local_20,local_18);
+  }
+  else {
+    (*(code *)**(undefined8 **)(local_28 + 0x58))(&local_1c,&local_20,local_18);
+  }
+  if ((*puVar2 & 1) != 0) {
+    *(undefined4 *)(local_28 + 0x160) = 1;
+    *(undefined8 *)(local_28 + 0x168) = 0;
+    if ((*puVar2 >> 0x13 & 1) != 0) {
+      (**(code **)(lVar1 + 0x90))(7,local_38,local_40);
+    }
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_48);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_team_from_gtid
+// Entry: 000017b4
+// Signature: kmp_team_t * __cdecl __kmp_team_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_team_t * __kmp_team_from_gtid(int gtid)
+
+{
+  return *(kmp_team_t **)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x40);
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_ordered
+// Entry: 000017dc
+// Signature: void __cdecl __kmpc_end_ordered(ident_t * loc, kmp_int32 gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_end_ordered(ident_t *loc,kmp_int32 gtid)
+
+{
+  long lVar1;
+  kmp_team_t *pkVar2;
+  void *pvVar3;
+  code *pcVar4;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_30;
+  long local_28;
+  undefined4 local_20;
+  int local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: int cid@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+  lVar1 = __ompt_callbacks;
+  local_20 = 0;
+  local_1c = gtid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(gtid);
+  local_28 = *(long *)(*____kmp_threads + (long)local_1c * 8);
+  if (*(long *)(*(long *)(local_28 + 0x58) + 8) == 0) {
+    ___kmp_parallel_dxo(&local_1c,&local_20,local_18);
+  }
+  else {
+    (**(code **)(*(long *)(local_28 + 0x58) + 8))(&local_1c,&local_20,local_18);
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_30,local_1c,unaff_x30);
+  if ((*__ompt_enabled >> 10 & 1) != 0) {
+    pcVar4 = *(code **)(lVar1 + 0x48);
+    pkVar2 = __kmp_team_from_gtid(local_1c);
+    pvVar3 = __ompt_load_return_address(local_1c);
+    (*pcVar4)(7,pkVar2,pvVar3);
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_critical
+// Entry: 000018f4
+// Signature: void __cdecl __kmpc_critical(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * crit)
+// ========================================
+
+
+void __kmpc_critical(ident_t *loc,kmp_int32 global_tid,kmp_critical_name *crit)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_30;
+  kmp_critical_name *local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +16] */
+  local_28 = crit;
+  local_1c = global_tid;
+  local_18 = loc;
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_30,global_tid,unaff_x30);
+  __kmpc_critical_with_hint(local_18,local_1c,local_28,0);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_critical_with_hint
+// Entry: 00001950
+// Signature: void __cdecl __kmpc_critical_with_hint(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * crit, uint32_t hint)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_critical_with_hint
+               (ident_t *loc,kmp_int32 global_tid,kmp_critical_name *crit,uint32_t hint)
+
+{
+  char cVar1;
+  bool bVar2;
+  long lVar3;
+  ulong *puVar4;
+  uint32_t uVar5;
+  kmp_int32 kVar6;
+  ident_t *piVar7;
+  kmp_dyna_lockseq_t kVar8;
+  kmp_mutex_impl_t kVar9;
+  code *pcVar10;
+  kmp_user_lock *ilock;
+  kmp_user_lock_p pkVar11;
+  void *unaff_x30;
+  void *local_90;
+  undefined1 auStack_88 [24];
+  undefined4 local_70;
+  kmp_user_lock_p local_68;
+  undefined4 local_4c;
+  kmp_user_lock_p local_48;
+  uint32_t local_3c;
+  kmp_user_lock_p local_38;
+  kmp_int32 local_2c;
+  ident_t *local_28;
+  
+  puVar4 = __ompt_enabled;
+                    /* Unresolved local var: kmp_user_lock_p lck@[???]
+                       Unresolved local var: ompt_state_t prev_state@[???]
+                       Unresolved local var: ompt_thread_info_t ti@[???]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +128]
+                       Unresolved local var: kmp_dyna_lock_t * lk@[DW_OP_breg31(sp): +120]
+                       Unresolved local var: kmp_dyna_lockseq_t lockseq@[DW_OP_breg31(sp): +116] */
+  lVar3 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_indirect_lock_t * ilk@[DW_OP_breg31(sp): +104] */
+  local_4c = 0x102;
+  local_3c = hint;
+  local_38 = (kmp_user_lock_p)crit;
+  local_2c = global_tid;
+  local_28 = loc;
+  local_90 = __ompt_load_return_address(global_tid);
+  if (local_90 == (void *)0x0) {
+    local_90 = unaff_x30;
+  }
+  __kmp_assert_valid_gtid(local_2c);
+  pkVar11 = local_38;
+  kVar8 = __kmp_map_hint_to_lock((ulong)local_3c);
+  if (*(int *)&(pkVar11->pool).next == 0) {
+    if (((int)kVar8 < 1) || (1 < (int)kVar8)) {
+      __kmp_init_indirect_csptr
+                ((kmp_critical_name *)local_38,local_28,local_2c,kVar8 - locktag_drdpa);
+    }
+    else {
+      do {
+        if (*(int *)&(local_38->pool).next != 0) break;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(local_38,0x10);
+        if (bVar2) {
+          *(kmp_dyna_lockseq_t *)&(local_38->pool).next = kVar8 << 1 | 1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+    }
+  }
+  piVar7 = local_28;
+  kVar6 = local_2c;
+  if (((uint)*(byte *)&(pkVar11->pool).next & -(*(uint *)&(pkVar11->pool).next & 1)) == 0) {
+    ilock = (pkVar11->pool).next;
+    pkVar11 = (ilock->pool).next;
+    local_48 = pkVar11;
+    if (*____kmp_env_consistency_check != 0) {
+      kVar8 = __kmp_map_hint_to_lock((ulong)local_3c);
+      ___kmp_push_sync(kVar6,6,piVar7,pkVar11,kVar8);
+    }
+    if ((*puVar4 & 1) != 0) {
+      _memcpy(auStack_88,(void *)(*(long *)(*____kmp_threads + (long)local_2c * 8) + 0x148),0x38);
+      uVar5 = local_3c;
+      local_4c = local_70;
+      local_68 = local_48;
+      local_70 = 0x42;
+      if ((*puVar4 >> 0x12 & 1) != 0) {
+        pcVar10 = *(code **)(lVar3 + 0x88);
+        kVar9 = __ompt_get_mutex_impl_type((void *)0x0,(kmp_indirect_lock_t *)ilock);
+        (*pcVar10)(5,uVar5,kVar9,local_48,local_90);
+      }
+    }
+    (**(code **)(*____kmp_indirect_set + (ulong)(ilock->pool).index * 8))(local_48,local_2c);
+  }
+  else {
+    local_48 = pkVar11;
+    if (*____kmp_env_consistency_check != 0) {
+      kVar8 = __kmp_map_hint_to_lock((ulong)local_3c);
+      ___kmp_push_sync(kVar6,6,piVar7,pkVar11,kVar8);
+    }
+    if ((*puVar4 & 1) != 0) {
+      _memcpy(auStack_88,(void *)(*(long *)(*____kmp_threads + (long)local_2c * 8) + 0x148),0x38);
+      uVar5 = local_3c;
+      local_4c = local_70;
+      local_68 = local_48;
+      local_70 = 0x42;
+      if ((*puVar4 >> 0x12 & 1) != 0) {
+        pcVar10 = *(code **)(lVar3 + 0x88);
+        kVar9 = __ompt_get_mutex_impl_type(local_38,(kmp_indirect_lock_t *)0x0);
+        (*pcVar10)(5,uVar5,kVar9,local_48,local_90);
+      }
+    }
+    (**(code **)(*____kmp_direct_set +
+                (ulong)((uint)*(byte *)&(pkVar11->pool).next & -(*(uint *)&(pkVar11->pool).next & 1)
+                       ) * 8))(pkVar11,local_2c);
+  }
+  if ((*puVar4 & 1) != 0) {
+    local_70 = local_4c;
+    local_68 = (kmp_user_lock_p)0x0;
+    if ((*puVar4 >> 0x13 & 1) != 0) {
+      (**(code **)(lVar3 + 0x90))(5,local_48,local_90);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_map_hint_to_lock
+// Entry: 00001dc8
+// Signature: kmp_dyna_lockseq_t __cdecl __kmp_map_hint_to_lock(uintptr_t hint)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_dyna_lockseq_t __kmp_map_hint_to_lock(uintptr_t hint)
+
+{
+  undefined4 local_4;
+  
+  if ((hint & 0x10000) == 0) {
+    if ((hint & 0x20000) == 0) {
+      if ((hint & 0x40000) == 0) {
+        if (((hint & 2) == 0) || ((hint & 1) == 0)) {
+          if (((hint & 8) == 0) || ((hint & 4) == 0)) {
+            if ((hint & 2) == 0) {
+              if (((hint & 1) == 0) || ((hint & 8) != 0)) {
+                if ((hint & 8) == 0) {
+                  local_4 = *____kmp_user_lock_seq;
+                }
+                else {
+                  local_4 = *____kmp_user_lock_seq;
+                }
+              }
+              else {
+                local_4 = lockseq_tas;
+              }
+            }
+            else {
+              local_4 = lockseq_queuing;
+            }
+          }
+          else {
+            local_4 = *____kmp_user_lock_seq;
+          }
+        }
+        else {
+          local_4 = *____kmp_user_lock_seq;
+        }
+      }
+      else {
+        local_4 = *____kmp_user_lock_seq;
+      }
+    }
+    else {
+      local_4 = *____kmp_user_lock_seq;
+    }
+  }
+  else {
+    local_4 = *____kmp_user_lock_seq;
+  }
+  return local_4;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_indirect_csptr
+// Entry: 00001f4c
+// Signature: void __cdecl __kmp_init_indirect_csptr(kmp_critical_name * crit, ident_t * loc, kmp_int32 gtid, kmp_indirect_locktag_t tag)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_init_indirect_csptr
+               (kmp_critical_name *crit,ident_t *loc,kmp_int32 gtid,kmp_indirect_locktag_t tag)
+
+{
+  char cVar1;
+  bool bVar2;
+  undefined8 *puVar3;
+  undefined1 auStack_30 [8];
+  kmp_indirect_locktag_t local_28;
+  kmp_int32 local_24;
+  ident_t *local_20;
+  kmp_critical_name *local_18;
+  
+                    /* Unresolved local var: void * idx@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: kmp_indirect_lock_t * * lck@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: kmp_indirect_lock_t * ilk@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int status@[DW_OP_breg31(sp): +12] */
+  local_28 = tag;
+  local_24 = gtid;
+  local_20 = loc;
+  local_18 = crit;
+  puVar3 = (undefined8 *)___kmp_allocate_indirect_lock(auStack_30,gtid,tag);
+  (**(code **)(____kmp_indirect_init + (ulong)*(uint *)(puVar3 + 1) * 8))(*puVar3);
+  if (*(long *)(____kmp_indirect_set_location + (ulong)*(uint *)(puVar3 + 1) * 8) != 0) {
+    (**(code **)(____kmp_indirect_set_location + (ulong)*(uint *)(puVar3 + 1) * 8))
+              (*puVar3,local_20);
+  }
+  if (*(long *)(____kmp_indirect_set_flags + (ulong)*(uint *)(puVar3 + 1) * 8) != 0) {
+    (**(code **)(____kmp_indirect_set_flags + (ulong)*(uint *)(puVar3 + 1) * 8))(*puVar3,1);
+  }
+  do {
+    if (*(long *)*crit != 0) {
+      return;
+    }
+    cVar1 = '\x01';
+    bVar2 = (bool)ExclusiveMonitorPass(crit,0x10);
+    if (bVar2) {
+      *(undefined8 **)*crit = puVar3;
+      cVar1 = ExclusiveMonitorsStatus();
+    }
+  } while (cVar1 != '\0');
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_mutex_impl_type
+// Entry: 000020a4
+// Signature: kmp_mutex_impl_t __cdecl __ompt_get_mutex_impl_type(void * user_lock, kmp_indirect_lock_t * ilock)
+// ========================================
+
+
+kmp_mutex_impl_t __ompt_get_mutex_impl_type(void *user_lock,kmp_indirect_lock_t *ilock)
+
+{
+  kmp_indirect_locktag_t kVar1;
+  kmp_indirect_lock_t *local_28;
+  
+  local_28 = ilock;
+  if (user_lock != (void *)0x0) {
+    if (((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) != 0) {
+      if (((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) != 3) {
+        return kmp_mutex_impl_none;
+      }
+      return kmp_mutex_impl_spin;
+    }
+    local_28 = *(kmp_indirect_lock_t **)user_lock;
+  }
+  if (local_28 == (kmp_indirect_lock_t *)0x0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0x587);
+  }
+  kVar1 = local_28->type;
+  if (locktag_drdpa < kVar1) {
+    if (kVar1 == locktag_nested_tas) {
+      return kmp_mutex_impl_spin;
+    }
+    if (2 < kVar1 - locktag_nested_ticket) {
+      return kmp_mutex_impl_none;
+    }
+  }
+  return kmp_mutex_impl_queuing;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_critical
+// Entry: 000021e8
+// Signature: void __cdecl __kmpc_end_critical(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * crit)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_end_critical(ident_t *loc,kmp_int32 global_tid,kmp_critical_name *crit)
+
+{
+  long lVar1;
+  kmp_critical_name *pakVar2;
+  void *pvVar3;
+  code *pcVar4;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_48;
+  undefined8 *local_40;
+  uint local_34;
+  kmp_critical_name *local_30;
+  kmp_critical_name *local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: kmp_user_lock_p lck@[???]
+                       Unresolved local var: int locktag@[???]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +40] */
+  lVar1 = __ompt_callbacks;
+  local_34 = (uint)(byte)(*crit)[0] & -((*crit)[0] & 1U);
+  local_28 = crit;
+  local_1c = global_tid;
+  local_18 = loc;
+  if (local_34 == 0) {
+    local_40 = *(undefined8 **)*crit;
+    if (local_40 == (undefined8 *)0x0) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                          0x66a);
+    }
+    local_30 = (kmp_critical_name *)*local_40;
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_pop_sync(local_1c,6,local_18);
+    }
+    (**(code **)(*____kmp_indirect_unset + (ulong)*(uint *)(local_40 + 1) * 8))(local_30,local_1c);
+  }
+  else {
+    local_30 = crit;
+    if (crit == (kmp_critical_name *)0x0) {
+                    /* Unresolved local var: kmp_indirect_lock_t * ilk@[DW_OP_breg31(sp): +48] */
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                          0x654);
+    }
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_pop_sync(local_1c,6,local_18);
+    }
+    (**(code **)(*____kmp_direct_unset +
+                (ulong)((uint)(byte)(*local_30)[0] & -((*local_30)[0] & 1U)) * 8))
+              (local_30,local_1c);
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_48,local_1c,unaff_x30);
+  pakVar2 = local_30;
+  if ((*__ompt_enabled >> 10 & 1) != 0) {
+    pcVar4 = *(code **)(lVar1 + 0x48);
+    pvVar3 = __ompt_load_return_address(0);
+    (*pcVar4)(5,pakVar2,pvVar3);
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_48);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_barrier_master
+// Entry: 0000240c
+// Signature: kmp_int32 __cdecl __kmpc_barrier_master(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_barrier_master(ident_t *loc,kmp_int32 global_tid)
+
+{
+  bool bVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_30;
+  ompt_frame_t *local_28;
+  int local_20;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: int status@[???]
+                       Unresolved local var: ompt_frame_t * ompt_frame@[???]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_check_barrier(local_1c,0xb,local_18);
+  }
+  if (((*__ompt_enabled & 1) != 0) &&
+     (__ompt_get_task_info_internal
+                (0,(int *)0x0,(ompt_data_t **)0x0,&local_28,(ompt_data_t **)0x0,(int *)0x0),
+     (local_28->enter_frame).value == 0)) {
+    (local_28->enter_frame).ptr = &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_30,local_1c,unaff_x30);
+  local_20 = ___kmp_barrier(0,local_1c,1,0,0);
+  if ((*__ompt_enabled & 1) != 0) {
+    (local_28->enter_frame).value = 0;
+  }
+  bVar1 = local_20 == 0;
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_30);
+  return (uint)bVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_barrier_master
+// Entry: 00002584
+// Signature: void __cdecl __kmpc_end_barrier_master(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+void __kmpc_end_barrier_master(ident_t *loc,kmp_int32 global_tid)
+
+{
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_end_split_barrier(0,global_tid);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_barrier_master_nowait
+// Entry: 000025b8
+// Signature: kmp_int32 __cdecl __kmpc_barrier_master_nowait(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_barrier_master_nowait(ident_t *loc,kmp_int32 global_tid)
+
+{
+  kmp_int32 kVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_60;
+  ompt_frame_t *local_58;
+  undefined8 local_50;
+  undefined8 uStack_48;
+  undefined8 local_40;
+  undefined1 auStack_38 [24];
+  kmp_int32 local_20;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: kmp_int32 ret@[???]
+                       Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +48] */
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  if (*____kmp_env_consistency_check != 0) {
+    if (local_18 == (ident_t *)0x0) {
+      ___kmp_msg_format(0x40083);
+      uStack_48 = ____kmp_msg_null[1];
+      local_50 = *____kmp_msg_null;
+      local_40 = ____kmp_msg_null[2];
+      ___kmp_msg(1,auStack_38);
+    }
+    ___kmp_check_barrier(local_1c,0xb,local_18);
+  }
+  if (((*__ompt_enabled & 1) != 0) &&
+     (__ompt_get_task_info_internal
+                (0,(int *)0x0,(ompt_data_t **)0x0,&local_58,(ompt_data_t **)0x0,(int *)0x0),
+     (local_58->enter_frame).value == 0)) {
+    (local_58->enter_frame).ptr = &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_60,local_1c,unaff_x30);
+  ___kmp_barrier(0,local_1c,0,0,0);
+  if ((*__ompt_enabled & 1) != 0) {
+    (local_58->enter_frame).value = 0;
+  }
+  local_20 = __kmpc_master(local_18,local_1c);
+  if ((*____kmp_env_consistency_check != 0) && (local_20 != 0)) {
+    ___kmp_pop_sync(local_1c,9,local_18);
+  }
+  kVar1 = local_20;
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_60);
+  return kVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_single
+// Entry: 000027cc
+// Signature: kmp_int32 __cdecl __kmpc_single(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_single(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  int iVar3;
+  int iVar4;
+  long lVar5;
+  undefined8 unaff_x30;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: kmp_int32 rc@[???]
+                       Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: int tid@[???] */
+  lVar1 = __ompt_callbacks;
+  __kmp_assert_valid_gtid(global_tid);
+  iVar3 = ___kmp_enter_single(global_tid,loc,1);
+  lVar5 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+  iVar4 = __kmp_tid_from_gtid(global_tid);
+  if ((*puVar2 & 1) != 0) {
+    if (iVar3 == 0) {
+      if ((*puVar2 >> 0xd & 1) != 0) {
+        (**(code **)(lVar1 + 0x60))
+                  (4,1,lVar5 + 0x1e0,*(long *)(lVar5 + 0x288) + (long)iVar4 * 0x140 + 0x100,1,
+                   unaff_x30);
+        (**(code **)(lVar1 + 0x60))
+                  (4,2,lVar5 + 0x1e0,*(long *)(lVar5 + 0x288) + (long)iVar4 * 0x140 + 0x100,1,
+                   unaff_x30);
+      }
+    }
+    else if ((*puVar2 >> 0xd & 1) != 0) {
+      (**(code **)(lVar1 + 0x60))
+                (3,1,lVar5 + 0x1e0,*(long *)(lVar5 + 0x288) + (long)iVar4 * 0x140 + 0x100,1,
+                 unaff_x30);
+    }
+  }
+  return iVar3;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_single
+// Entry: 000029c0
+// Signature: void __cdecl __kmpc_end_single(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_end_single(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  
+                    /* Unresolved local var: kmp_info_t * this_thr@[???]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  lVar1 = __ompt_callbacks;
+  __kmp_assert_valid_gtid(global_tid);
+  ___kmp_exit_single(global_tid);
+  lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x40);
+  iVar2 = __kmp_tid_from_gtid(global_tid);
+  if ((*__ompt_enabled >> 0xd & 1) != 0) {
+    (**(code **)(lVar1 + 0x60))
+              (3,2,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,1,unaff_x30)
+    ;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_for_static_fini
+// Entry: 00002a98
+// Signature: void __cdecl __kmpc_for_static_fini(ident_t * loc, kmp_int32 global_tid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_for_static_fini(ident_t *loc,kmp_int32 global_tid)
+
+{
+  long lVar1;
+  undefined8 uVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  undefined4 local_20;
+  
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: ompt_work_t ompt_work_type@[???]
+                       Unresolved local var: ompt_team_info_t * team_info@[???]
+                       Unresolved local var: ompt_task_info_t * task_info@[DW_OP_breg31(sp): +32] */
+  if ((*__ompt_enabled >> 0xd & 1) != 0) {
+    local_20 = 1;
+    uVar2 = __ompt_get_teaminfo(0,(int *)0x0);
+    lVar3 = __ompt_get_task_info_object(0);
+    if (loc != (ident_t *)0x0) {
+      if ((loc->flags & 0x200U) == 0) {
+        if ((loc->flags & 0x400U) == 0) {
+          if ((loc->flags & 0x800U) != 0) {
+            local_20 = 6;
+          }
+        }
+        else {
+          local_20 = 2;
+        }
+      }
+      else {
+        local_20 = 1;
+      }
+    }
+    (**(code **)(lVar1 + 0x60))(local_20,2,uVar2,lVar3 + 0x18,0,unaff_x30);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_pop_workshare(global_tid,2,loc);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_num_threads
+// Entry: 00002c04
+// Signature: void __cdecl ompc_set_num_threads(int arg)
+// ========================================
+
+
+void ompc_set_num_threads(int arg)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_num_threads(arg,uVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_dynamic
+// Entry: 00002c38
+// Signature: void __cdecl ompc_set_dynamic(int flag)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ompc_set_dynamic(int flag)
+
+{
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): 0] */
+  pkVar1 = __kmp_entry_thread();
+  ___kmp_save_internal_controls(pkVar1);
+  (((pkVar1->th).th_current_task)->td_icvs).dynamic = flag != 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_nested
+// Entry: 00002c94
+// Signature: void __cdecl ompc_set_nested(int flag)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ompc_set_nested(int flag)
+
+{
+  kmp_info_t *pkVar1;
+  int local_24;
+  
+                    /* Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +16] */
+  pkVar1 = __kmp_entry_thread();
+  ___kmp_save_internal_controls(pkVar1);
+  if (flag == 0) {
+    local_24 = 1;
+  }
+  else {
+    local_24 = *____kmp_dflt_max_active_levels;
+  }
+  (((pkVar1->th).th_current_task)->td_icvs).max_active_levels = local_24;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_max_active_levels
+// Entry: 00002d04
+// Signature: void __cdecl ompc_set_max_active_levels(int max_active_levels)
+// ========================================
+
+
+void ompc_set_max_active_levels(int max_active_levels)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_max_active_levels(uVar1,max_active_levels);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_schedule
+// Entry: 00002d2c
+// Signature: void __cdecl ompc_set_schedule(omp_sched_t kind, int modifier)
+// ========================================
+
+
+void ompc_set_schedule(omp_sched_t kind,int modifier)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_schedule(uVar1,kind,modifier);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_get_ancestor_thread_num
+// Entry: 00002d5c
+// Signature: int __cdecl ompc_get_ancestor_thread_num(int level)
+// ========================================
+
+
+int ompc_get_ancestor_thread_num(int level)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  uVar2 = ___kmp_get_global_thread_id_reg();
+  iVar1 = ___kmp_get_ancestor_thread_num(uVar2,level);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: ompc_get_team_size
+// Entry: 00002d84
+// Signature: int __cdecl ompc_get_team_size(int level)
+// ========================================
+
+
+int ompc_get_team_size(int level)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  uVar2 = ___kmp_get_global_thread_id_reg();
+  iVar1 = ___kmp_get_team_size(uVar2,level);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: ompc_set_affinity_format
+// Entry: 00002dac
+// Signature: void __cdecl ompc_set_affinity_format(char * format)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ompc_set_affinity_format(char *format)
+
+{
+  size_t sVar1;
+  char *buffer;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  buffer = (char *)*____kmp_affinity_format;
+  sVar1 = _strlen(format);
+  __kmp_strncpy_truncate(buffer,0x200,format,sVar1 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_strncpy_truncate
+// Entry: 00002e24
+// Signature: void __cdecl __kmp_strncpy_truncate(char * buffer, size_t buf_size, char * src, size_t src_size)
+// ========================================
+
+
+void __kmp_strncpy_truncate(char *buffer,size_t buf_size,char *src,size_t src_size)
+
+{
+  size_t local_30;
+  
+  local_30 = src_size;
+  if (buf_size <= src_size) {
+    local_30 = buf_size - 1;
+  }
+  _strncpy(buffer,src,local_30);
+  buffer[local_30] = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_get_affinity_format
+// Entry: 00002e94
+// Signature: size_t __cdecl ompc_get_affinity_format(char * buffer, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+size_t ompc_get_affinity_format(char *buffer,size_t size)
+
+{
+  size_t sVar1;
+  
+                    /* Unresolved local var: size_t format_size@[DW_OP_breg31(sp): +8] */
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  sVar1 = _strlen((char *)*____kmp_affinity_format);
+  if ((buffer != (char *)0x0) && (size != 0)) {
+    __kmp_strncpy_truncate(buffer,size,(char *)*____kmp_affinity_format,sVar1 + 1);
+  }
+  return sVar1;
+}
+
+
+
+
+// ========================================
+// Function: ompc_display_affinity
+// Entry: 00002f3c
+// Signature: void __cdecl ompc_display_affinity(char * format)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ompc_display_affinity(char *format)
+
+{
+  undefined4 uVar1;
+  
+                    /* Unresolved local var: int gtid@[DW_OP_breg31(sp): +4] */
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  uVar1 = ___kmp_get_global_thread_id();
+  ___kmp_aux_display_affinity(uVar1,format);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompc_capture_affinity
+// Entry: 00002f90
+// Signature: size_t __cdecl ompc_capture_affinity(char * buffer, size_t buf_size, char * format)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+size_t ompc_capture_affinity(char *buffer,size_t buf_size,char *format)
+
+{
+  undefined4 uVar1;
+  size_t sVar2;
+  char *local_238;
+  undefined4 local_230;
+  int local_22c;
+  char local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: int gtid@[DW_OP_breg31(sp): +28]
+                       Unresolved local var: size_t num_required@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: kmp_str_buf_t capture_buf@[DW_OP_breg31(sp): +56] */
+  local_28 = *____stack_chk_guard;
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  uVar1 = ___kmp_get_global_thread_id();
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = '\0';
+  sVar2 = ___kmp_aux_capture_affinity(uVar1,format);
+  if ((buffer != (char *)0x0) && (buf_size != 0)) {
+    __kmp_strncpy_truncate(buffer,buf_size,local_238,(long)(local_22c + 1));
+  }
+  ___kmp_str_buf_free(&local_238);
+  if (*____stack_chk_guard != local_28) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return sVar2;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_stacksize
+// Entry: 000030a8
+// Signature: void __cdecl kmpc_set_stacksize(int arg)
+// ========================================
+
+
+void kmpc_set_stacksize(int arg)
+
+{
+  ___kmp_aux_set_stacksize((long)arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_stacksize_s
+// Entry: 000030cc
+// Signature: void __cdecl kmpc_set_stacksize_s(size_t arg)
+// ========================================
+
+
+void kmpc_set_stacksize_s(size_t arg)
+
+{
+  ___kmp_aux_set_stacksize(arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_blocktime
+// Entry: 000030f0
+// Signature: void __cdecl kmpc_set_blocktime(int arg)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_set_blocktime(int arg)
+
+{
+  int gtid;
+  int iVar1;
+  kmp_info_t *pkVar2;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: int tid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id_reg();
+  iVar1 = __kmp_tid_from_gtid(gtid);
+  pkVar2 = __kmp_thread_from_gtid(gtid);
+  ___kmp_aux_set_blocktime(arg,pkVar2,iVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_thread_from_gtid
+// Entry: 0000313c
+// Signature: kmp_info_t * __cdecl __kmp_thread_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_thread_from_gtid(int gtid)
+
+{
+  return *(kmp_info_t **)(*____kmp_threads + (long)gtid * 8);
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_library
+// Entry: 00003160
+// Signature: void __cdecl kmpc_set_library(int arg)
+// ========================================
+
+
+void kmpc_set_library(int arg)
+
+{
+  ___kmp_user_set_library(arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_defaults
+// Entry: 00003184
+// Signature: void __cdecl kmpc_set_defaults(char * str)
+// ========================================
+
+
+void kmpc_set_defaults(char *str)
+
+{
+  size_t sVar1;
+  
+  sVar1 = _strlen(str);
+  ___kmp_aux_set_defaults(str,sVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_disp_num_buffers
+// Entry: 000031bc
+// Signature: void __cdecl kmpc_set_disp_num_buffers(int arg)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void kmpc_set_disp_num_buffers(int arg)
+
+{
+  if (((*____kmp_init_serial == 0) && (0 < arg)) && (arg < 0x1001)) {
+    *____kmp_dispatch_num_buffers = arg;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_affinity_mask_proc
+// Entry: 00003224
+// Signature: int __cdecl kmpc_set_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmpc_set_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_unset_affinity_mask_proc
+// Entry: 0000323c
+// Signature: int __cdecl kmpc_unset_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmpc_unset_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_get_affinity_mask_proc
+// Entry: 00003254
+// Signature: int __cdecl kmpc_get_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmpc_get_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_copyprivate
+// Entry: 0000326c
+// Signature: void __cdecl __kmpc_copyprivate(ident_t * loc, kmp_int32 gtid, size_t cpy_size, void * cpy_data, _func_void_void_ptr_void_ptr * cpy_func, kmp_int32 didit)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_copyprivate(ident_t *loc,kmp_int32 gtid,size_t cpy_size,void *cpy_data,
+                       _func_void_void_ptr_void_ptr *cpy_func,kmp_int32 didit)
+
+{
+  kmp_team_t *pkVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_98;
+  OmptReturnAddressGuard OStack_90;
+  ompt_frame_t *local_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 local_70;
+  undefined1 auStack_60 [24];
+  void **local_48;
+  kmp_int32 local_3c;
+  _func_void_void_ptr_void_ptr *local_38;
+  void *local_30;
+  size_t local_28;
+  int local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * * data_ptr@[???]
+                       Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +48] */
+  local_3c = didit;
+  local_38 = cpy_func;
+  local_30 = cpy_data;
+  local_28 = cpy_size;
+  local_1c = gtid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(gtid);
+  DataMemoryBarrier(2,3);
+  pkVar1 = __kmp_team_from_gtid(local_1c);
+  local_48 = &(pkVar1->t).t_copypriv_data;
+  if ((*____kmp_env_consistency_check != 0) && (local_18 == (ident_t *)0x0)) {
+    ___kmp_msg_format(0x40083);
+    uStack_78 = ____kmp_msg_null[1];
+    local_80 = *____kmp_msg_null;
+    local_70 = ____kmp_msg_null[2];
+    ___kmp_msg(1,auStack_60);
+  }
+  if (local_3c != 0) {
+    *local_48 = local_30;
+  }
+  if (((*__ompt_enabled & 1) != 0) &&
+     (__ompt_get_task_info_internal
+                (0,(int *)0x0,(ompt_data_t **)0x0,&local_88,(ompt_data_t **)0x0,(int *)0x0),
+     (local_88->enter_frame).value == 0)) {
+    (local_88->enter_frame).ptr = &stack0xfffffffffffffff0;
+  }
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_90,local_1c,unaff_x30);
+  ___kmp_barrier(0,local_1c,0,0,0);
+  if (local_3c == 0) {
+    (*local_38)(local_30,*local_48);
+  }
+                    /* Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +40] */
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_98,local_1c,unaff_x30);
+  ___kmp_barrier(0,local_1c,0,0,0);
+  if ((*__ompt_enabled & 1) != 0) {
+    (local_88->enter_frame).value = 0;
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_98);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_90);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_copyprivate_light
+// Entry: 0000348c
+// Signature: void * __cdecl __kmpc_copyprivate_light(ident_t * loc, kmp_int32 gtid, void * cpy_data)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * __kmpc_copyprivate_light(ident_t *loc,kmp_int32 gtid,void *cpy_data)
+
+{
+  kmp_team_t *pkVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_70;
+  ompt_frame_t *local_68;
+  undefined8 local_60;
+  undefined8 uStack_58;
+  undefined8 local_50;
+  undefined1 auStack_48 [24];
+  void **local_30;
+  void *local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * * data_ptr@[???]
+                       Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +40] */
+  DataMemoryBarrier(2,3);
+  local_28 = cpy_data;
+  local_1c = gtid;
+  local_18 = loc;
+  pkVar1 = __kmp_team_from_gtid(gtid);
+  local_30 = &(pkVar1->t).t_copypriv_data;
+  if ((*____kmp_env_consistency_check != 0) && (local_18 == (ident_t *)0x0)) {
+    ___kmp_msg_format(0x40083);
+    uStack_58 = ____kmp_msg_null[1];
+    local_60 = *____kmp_msg_null;
+    local_50 = ____kmp_msg_null[2];
+    ___kmp_msg(1,auStack_48);
+  }
+  if (local_28 != (void *)0x0) {
+    *local_30 = local_28;
+  }
+  if ((*__ompt_enabled & 1) != 0) {
+                    /* Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+    __ompt_get_task_info_internal
+              (0,(int *)0x0,(ompt_data_t **)0x0,&local_68,(ompt_data_t **)0x0,(int *)0x0);
+    if ((local_68->enter_frame).value == 0) {
+      (local_68->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_70,local_1c,unaff_x30);
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_70);
+  }
+  ___kmp_barrier(0,local_1c,0,0,0);
+  return *local_30;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_init_lock_with_hint
+// Entry: 00003610
+// Signature: void __cdecl __kmpc_init_lock_with_hint(ident_t * loc, kmp_int32 gtid, void * * user_lock, uintptr_t hint)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_init_lock_with_hint(ident_t *loc,kmp_int32 gtid,void **user_lock,uintptr_t hint)
+
+{
+  long lVar1;
+  uintptr_t uVar2;
+  void **lock;
+  ident_t *loc_00;
+  kmp_dyna_lockseq_t seq;
+  kmp_mutex_impl_t kVar3;
+  code *pcVar4;
+  void *unaff_x30;
+  void *local_68;
+  undefined1 auStack_48 [24];
+  uintptr_t local_30;
+  void **local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +72] */
+  lVar1 = __ompt_callbacks;
+  local_30 = hint;
+  local_28 = user_lock;
+  local_1c = gtid;
+  local_18 = loc;
+  if ((*____kmp_env_consistency_check != 0) && (user_lock == (void **)0x0)) {
+    ___kmp_msg_format(0x40004);
+    ___kmp_fatal(auStack_48);
+  }
+  loc_00 = local_18;
+  lock = local_28;
+  seq = __kmp_map_hint_to_lock(local_30);
+  __kmp_init_lock_with_hint(loc_00,lock,seq);
+  local_68 = __ompt_load_return_address(local_1c);
+  uVar2 = local_30;
+  if (local_68 == (void *)0x0) {
+    local_68 = unaff_x30;
+  }
+  if ((*__ompt_enabled & 0x10000) != 0) {
+    pcVar4 = *(code **)(lVar1 + 0x78);
+    kVar3 = __ompt_get_mutex_impl_type(local_28,(kmp_indirect_lock_t *)0x0);
+    (*pcVar4)(1,uVar2 & 0xffffffff,kVar3,local_28,local_68);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_lock_with_hint
+// Entry: 0000377c
+// Signature: void __cdecl __kmp_init_lock_with_hint(ident_t * loc, void * * lock, kmp_dyna_lockseq_t seq)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_init_lock_with_hint(ident_t *loc,void **lock,kmp_dyna_lockseq_t seq)
+
+{
+  if (((int)seq < 1) || (1 < (int)seq)) {
+    (*(code *)*____kmp_direct_init)(lock,seq);
+  }
+  else {
+    (*(code *)____kmp_direct_init[(int)(seq << 1 | 1)])(lock,seq);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_init_nest_lock_with_hint
+// Entry: 0000380c
+// Signature: void __cdecl __kmpc_init_nest_lock_with_hint(ident_t * loc, kmp_int32 gtid, void * * user_lock, uintptr_t hint)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_init_nest_lock_with_hint(ident_t *loc,kmp_int32 gtid,void **user_lock,uintptr_t hint)
+
+{
+  long lVar1;
+  uintptr_t uVar2;
+  void **lock;
+  ident_t *loc_00;
+  kmp_dyna_lockseq_t seq;
+  kmp_mutex_impl_t kVar3;
+  code *pcVar4;
+  void *unaff_x30;
+  void *local_68;
+  undefined1 auStack_48 [24];
+  uintptr_t local_30;
+  void **local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +72] */
+  lVar1 = __ompt_callbacks;
+  local_30 = hint;
+  local_28 = user_lock;
+  local_1c = gtid;
+  local_18 = loc;
+  if ((*____kmp_env_consistency_check != 0) && (user_lock == (void **)0x0)) {
+    ___kmp_msg_format(0x40004);
+    ___kmp_fatal(auStack_48);
+  }
+  loc_00 = local_18;
+  lock = local_28;
+  seq = __kmp_map_hint_to_lock(local_30);
+  __kmp_init_nest_lock_with_hint(loc_00,lock,seq);
+  local_68 = __ompt_load_return_address(local_1c);
+  uVar2 = local_30;
+  if (local_68 == (void *)0x0) {
+    local_68 = unaff_x30;
+  }
+  if ((*__ompt_enabled & 0x10000) != 0) {
+    pcVar4 = *(code **)(lVar1 + 0x78);
+    kVar3 = __ompt_get_mutex_impl_type(local_28,(kmp_indirect_lock_t *)0x0);
+    (*pcVar4)(3,uVar2 & 0xffffffff,kVar3,local_28,local_68);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_nest_lock_with_hint
+// Entry: 00003978
+// Signature: void __cdecl __kmp_init_nest_lock_with_hint(ident_t * loc, void * * lock, kmp_dyna_lockseq_t seq)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_init_nest_lock_with_hint(ident_t *loc,void **lock,kmp_dyna_lockseq_t seq)
+
+{
+  undefined4 local_24;
+  
+  switch(seq) {
+  case lockseq_tas:
+    local_24 = 5;
+    break;
+  case lockseq_ticket:
+    local_24 = 6;
+    break;
+  case lockseq_queuing:
+    local_24 = 7;
+    break;
+  case lockseq_drdpa:
+    local_24 = 8;
+    break;
+  default:
+    local_24 = 7;
+  }
+  (*(code *)*____kmp_direct_init)(lock,local_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_init_lock
+// Entry: 00003a34
+// Signature: void __cdecl __kmpc_init_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_init_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  kmp_mutex_impl_t kVar2;
+  code *pcVar3;
+  void *unaff_x30;
+  void *local_68;
+  undefined1 auStack_40 [24];
+  void **local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +40] */
+  lVar1 = __ompt_callbacks;
+  local_28 = user_lock;
+  local_1c = gtid;
+  local_18 = loc;
+  if ((*____kmp_env_consistency_check != 0) && (user_lock == (void **)0x0)) {
+    ___kmp_msg_format(0x40004);
+    ___kmp_fatal(auStack_40);
+  }
+  __kmp_init_lock_with_hint(local_18,local_28,*____kmp_user_lock_seq);
+  local_68 = __ompt_load_return_address(local_1c);
+  if (local_68 == (void *)0x0) {
+    local_68 = unaff_x30;
+  }
+  if ((*__ompt_enabled & 0x10000) != 0) {
+    pcVar3 = *(code **)(lVar1 + 0x78);
+    kVar2 = __ompt_get_mutex_impl_type(local_28,(kmp_indirect_lock_t *)0x0);
+    (*pcVar3)(1,0,kVar2,local_28,local_68);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_init_nest_lock
+// Entry: 00003b84
+// Signature: void __cdecl __kmpc_init_nest_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_init_nest_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  kmp_mutex_impl_t kVar2;
+  code *pcVar3;
+  void *unaff_x30;
+  void *local_68;
+  undefined1 auStack_40 [24];
+  void **local_28;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +40] */
+  lVar1 = __ompt_callbacks;
+  local_28 = user_lock;
+  local_1c = gtid;
+  local_18 = loc;
+  if ((*____kmp_env_consistency_check != 0) && (user_lock == (void **)0x0)) {
+    ___kmp_msg_format(0x40004);
+    ___kmp_fatal(auStack_40);
+  }
+  __kmp_init_nest_lock_with_hint(local_18,local_28,*____kmp_user_lock_seq);
+  local_68 = __ompt_load_return_address(local_1c);
+  if (local_68 == (void *)0x0) {
+    local_68 = unaff_x30;
+  }
+  if ((*__ompt_enabled & 0x10000) != 0) {
+    pcVar3 = *(code **)(lVar1 + 0x78);
+    kVar2 = __ompt_get_mutex_impl_type(local_28,(kmp_indirect_lock_t *)0x0);
+    (*pcVar3)(3,0,kVar2,local_28,local_68);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_destroy_lock
+// Entry: 00003cd4
+// Signature: void __cdecl __kmpc_destroy_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_destroy_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  void *unaff_x30;
+  undefined8 local_30;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +16] */
+  lVar1 = __ompt_callbacks;
+  local_30 = __ompt_load_return_address(gtid);
+  if (local_30 == (void *)0x0) {
+    local_30 = unaff_x30;
+  }
+  if ((*__ompt_enabled >> 0x11 & 1) != 0) {
+    (**(code **)(lVar1 + 0x80))(1,user_lock,local_30);
+  }
+  (**(code **)(*____kmp_direct_destroy +
+              (ulong)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))(user_lock);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_destroy_nest_lock
+// Entry: 00003dac
+// Signature: void __cdecl __kmpc_destroy_nest_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_destroy_nest_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  void *unaff_x30;
+  undefined8 local_30;
+  
+                    /* Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +16] */
+  lVar1 = __ompt_callbacks;
+  local_30 = __ompt_load_return_address(gtid);
+  if (local_30 == (void *)0x0) {
+    local_30 = unaff_x30;
+  }
+  if ((*__ompt_enabled >> 0x11 & 1) != 0) {
+    (**(code **)(lVar1 + 0x80))(3,user_lock,local_30);
+  }
+  (**(code **)(*____kmp_direct_destroy +
+              (ulong)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))(user_lock);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_set_lock
+// Entry: 00003e84
+// Signature: void __cdecl __kmpc_set_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_set_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  uint uVar1;
+  byte bVar2;
+  long lVar3;
+  kmp_mutex_impl_t kVar4;
+  code *pcVar5;
+  void *unaff_x30;
+  undefined8 local_38;
+  
+                    /* Unresolved local var: int tag@[???]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +24] */
+  lVar3 = __ompt_callbacks;
+  bVar2 = *(byte *)user_lock;
+  uVar1 = *(uint *)user_lock;
+  local_38 = __ompt_load_return_address(gtid);
+  if (local_38 == (void *)0x0) {
+    local_38 = unaff_x30;
+  }
+  if ((*__ompt_enabled >> 0x12 & 1) != 0) {
+    pcVar5 = *(code **)(lVar3 + 0x88);
+    kVar4 = __ompt_get_mutex_impl_type(user_lock,(kmp_indirect_lock_t *)0x0);
+    (*pcVar5)(1,0,kVar4,user_lock,local_38);
+  }
+  (**(code **)(*____kmp_direct_set + (long)(int)((uint)bVar2 & -(uVar1 & 1)) * 8))(user_lock,gtid);
+  if ((*__ompt_enabled >> 0x13 & 1) != 0) {
+    (**(code **)(lVar3 + 0x90))(1,user_lock,local_38);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_set_nest_lock
+// Entry: 00003fc4
+// Signature: void __cdecl __kmpc_set_nest_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_set_nest_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  kmp_mutex_impl_t kVar3;
+  int iVar4;
+  code *pcVar5;
+  void *unaff_x30;
+  void *local_30;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: void * codeptr@[???]
+                       Unresolved local var: int acquire_status@[???] */
+  lVar1 = __ompt_callbacks;
+  local_30 = __ompt_load_return_address(gtid);
+  if (local_30 == (void *)0x0) {
+    local_30 = unaff_x30;
+  }
+  if (((*puVar2 & 1) != 0) && ((*puVar2 >> 0x12 & 1) != 0)) {
+    pcVar5 = *(code **)(lVar1 + 0x88);
+    kVar3 = __ompt_get_mutex_impl_type(user_lock,(kmp_indirect_lock_t *)0x0);
+    (*pcVar5)(3,0,kVar3,user_lock,local_30);
+  }
+  iVar4 = (**(code **)(*____kmp_direct_set +
+                      (ulong)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))
+                    (user_lock,gtid);
+  if ((*puVar2 & 1) != 0) {
+    if (iVar4 == 1) {
+      if ((*puVar2 >> 0x13 & 1) != 0) {
+        (**(code **)(lVar1 + 0x90))(3,user_lock,local_30);
+      }
+    }
+    else if ((*puVar2 >> 0x14 & 1) != 0) {
+      (**(code **)(lVar1 + 0x98))(1,user_lock,local_30);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_unset_lock
+// Entry: 0000419c
+// Signature: void __cdecl __kmpc_unset_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_unset_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  void *unaff_x30;
+  undefined8 local_38;
+  
+                    /* Unresolved local var: int tag@[???]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +24] */
+  lVar1 = __ompt_callbacks;
+  (**(code **)(*____kmp_direct_unset +
+              (long)(int)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))
+            (user_lock,gtid);
+  local_38 = __ompt_load_return_address(gtid);
+  if (local_38 == (void *)0x0) {
+    local_38 = unaff_x30;
+  }
+  if ((*__ompt_enabled >> 10 & 1) != 0) {
+    (**(code **)(lVar1 + 0x48))(1,user_lock,local_38);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_unset_nest_lock
+// Entry: 00004280
+// Signature: void __cdecl __kmpc_unset_nest_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_unset_nest_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  int iVar3;
+  void *unaff_x30;
+  undefined8 local_38;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: int release_status@[???]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +24] */
+  lVar1 = __ompt_callbacks;
+  iVar3 = (**(code **)(*____kmp_direct_unset +
+                      (ulong)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))
+                    (user_lock,gtid);
+  local_38 = __ompt_load_return_address(gtid);
+  if (local_38 == (void *)0x0) {
+    local_38 = unaff_x30;
+  }
+  if ((*puVar2 & 1) != 0) {
+    if (iVar3 == 1) {
+      if ((*puVar2 >> 10 & 1) != 0) {
+        (**(code **)(lVar1 + 0x48))(3,user_lock,local_38);
+      }
+    }
+    else if ((*puVar2 >> 0x14 & 1) != 0) {
+      (**(code **)(lVar1 + 0x98))(2,user_lock,local_38);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_test_lock
+// Entry: 000043e0
+// Signature: int __cdecl __kmpc_test_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmpc_test_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  uint uVar1;
+  byte bVar2;
+  long lVar3;
+  kmp_mutex_impl_t kVar4;
+  int iVar5;
+  code *pcVar6;
+  void *unaff_x30;
+  undefined8 local_40;
+  undefined4 local_14;
+  
+                    /* Unresolved local var: int rc@[???]
+                       Unresolved local var: int tag@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +32] */
+  lVar3 = __ompt_callbacks;
+  bVar2 = *(byte *)user_lock;
+  uVar1 = *(uint *)user_lock;
+  local_40 = __ompt_load_return_address(gtid);
+  if (local_40 == (void *)0x0) {
+    local_40 = unaff_x30;
+  }
+  if ((*__ompt_enabled >> 0x12 & 1) != 0) {
+    pcVar6 = *(code **)(lVar3 + 0x88);
+    kVar4 = __ompt_get_mutex_impl_type(user_lock,(kmp_indirect_lock_t *)0x0);
+    (*pcVar6)(1,0,kVar4,user_lock,local_40);
+  }
+  iVar5 = (**(code **)(*____kmp_direct_test + (long)(int)((uint)bVar2 & -(uVar1 & 1)) * 8))
+                    (user_lock,gtid);
+  if (iVar5 == 0) {
+    local_14 = 0;
+  }
+  else {
+    if ((*__ompt_enabled >> 0x13 & 1) != 0) {
+      (**(code **)(lVar3 + 0x90))(1,user_lock,local_40);
+    }
+    local_14 = 1;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_test_nest_lock
+// Entry: 00004550
+// Signature: int __cdecl __kmpc_test_nest_lock(ident_t * loc, kmp_int32 gtid, void * * user_lock)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmpc_test_nest_lock(ident_t *loc,kmp_int32 gtid,void **user_lock)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  kmp_mutex_impl_t kVar3;
+  int iVar4;
+  code *pcVar5;
+  void *unaff_x30;
+  void *local_38;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: int rc@[???]
+                       Unresolved local var: void * codeptr@[DW_OP_breg31(sp): +40] */
+  lVar1 = __ompt_callbacks;
+  local_38 = __ompt_load_return_address(gtid);
+  if (local_38 == (void *)0x0) {
+    local_38 = unaff_x30;
+  }
+  if ((*puVar2 >> 0x12 & 1) != 0) {
+    pcVar5 = *(code **)(lVar1 + 0x88);
+    kVar3 = __ompt_get_mutex_impl_type(user_lock,(kmp_indirect_lock_t *)0x0);
+    (*pcVar5)(3,0,kVar3,user_lock,local_38);
+  }
+  iVar4 = (**(code **)(*____kmp_direct_test +
+                      (ulong)((uint)*(byte *)user_lock & -(*(uint *)user_lock & 1)) * 8))
+                    (user_lock,gtid);
+  if (((*puVar2 & 1) != 0) && (iVar4 != 0)) {
+    if (iVar4 == 1) {
+      if ((*puVar2 >> 0x13 & 1) != 0) {
+        (**(code **)(lVar1 + 0x90))(3,user_lock,local_38);
+      }
+    }
+    else if ((*puVar2 >> 0x14 & 1) != 0) {
+      (**(code **)(lVar1 + 0x98))(1,user_lock,local_38);
+    }
+  }
+  return iVar4;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_reduce_nowait
+// Entry: 00004720
+// Signature: kmp_int32 __cdecl __kmpc_reduce_nowait(ident_t * loc, kmp_int32 global_tid, kmp_int32 num_vars, size_t reduce_size, void * reduce_data, _func_void_void_ptr_void_ptr * reduce_func, kmp_critical_name * lck)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_int32 __kmpc_reduce_nowait
+                    (ident_t *loc,kmp_int32 global_tid,kmp_int32 num_vars,size_t reduce_size,
+                    void *reduce_data,_func_void_void_ptr_void_ptr *reduce_func,
+                    kmp_critical_name *lck)
+
+{
+  int *piVar1;
+  long lVar2;
+  ulong *puVar3;
+  int iVar4;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_88;
+  ompt_frame_t *local_80;
+  void *local_78;
+  ompt_team_info_t *local_70;
+  ompt_data_t *local_68;
+  int local_60;
+  int local_5c;
+  kmp_team_t *local_58;
+  kmp_info_t *local_50;
+  uint local_48;
+  uint local_44;
+  kmp_critical_name *local_40;
+  _func_void_void_ptr_void_ptr *local_38;
+  void *local_30;
+  size_t local_28;
+  kmp_int32 local_20;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+  puVar3 = __ompt_enabled;
+  lVar2 = __ompt_callbacks;
+                    /* Unresolved local var: int retval@[???]
+                       Unresolved local var: PACKED_REDUCTION_METHOD_T packed_reduction_method@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: int teams_swapped@[???]
+                       Unresolved local var: int task_state@[DW_OP_breg31(sp): +80]
+                       Unresolved local var: ompt_data_t * my_task_data@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: ompt_data_t * my_parallel_data@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: void * return_address@[DW_OP_breg31(sp): +56] */
+  piVar1 = ____kmp_env_consistency_check;
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +40] */
+  local_44 = 0;
+  local_5c = 0;
+  local_40 = lck;
+  local_38 = reduce_func;
+  local_30 = reduce_data;
+  local_28 = reduce_size;
+  local_20 = num_vars;
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  if (*piVar1 != 0) {
+    ___kmp_push_sync(local_1c,10,local_18,0,0);
+  }
+  local_50 = __kmp_thread_from_gtid(local_1c);
+  local_5c = __kmp_swap_teams_for_teams_reduction(local_50,&local_58,&local_60);
+  local_48 = ___kmp_determine_reduction_method
+                       (local_18,local_1c,local_20,local_28,local_30,local_38,local_40);
+  *(uint *)(*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x108) = local_48;
+  local_68 = &(((local_50->th).th_current_task)->ompt_task_info).task_data;
+  local_70 = &(((local_50->th).th_team)->t).ompt_team_info;
+  local_78 = __ompt_load_return_address(local_1c);
+  if (local_48 == 0x100) {
+    if (((*puVar3 & 1) != 0) && ((*puVar3 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar2 + 0xb0))(7,1,local_70,local_68,local_78);
+    }
+    __kmp_enter_critical_section_reduce_block(local_18,local_1c,local_40);
+    local_44 = 1;
+  }
+  else if (local_48 == 0x400) {
+    if (((*puVar3 & 1) != 0) && ((*puVar3 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar2 + 0xb0))(7,1,local_70,local_68,local_78);
+    }
+    local_44 = 1;
+  }
+  else if (local_48 == 0x200) {
+    local_44 = 2;
+    if (*piVar1 != 0) {
+      ___kmp_pop_sync(local_1c,10,local_18);
+    }
+  }
+  else if ((local_48 & 0xff00) == 0x300) {
+    if (((*puVar3 & 1) != 0) &&
+       (__ompt_get_task_info_internal
+                  (0,(int *)0x0,(ompt_data_t **)0x0,&local_80,(ompt_data_t **)0x0,(int *)0x0),
+       (local_80->enter_frame).value == 0)) {
+      (local_80->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_88,local_1c,unaff_x30);
+    iVar4 = ___kmp_barrier((undefined1)local_48,local_1c,0,local_28,local_30,local_38);
+    local_44 = (uint)(iVar4 == 0);
+    if ((*puVar3 & 1) != 0) {
+      (local_80->enter_frame).value = 0;
+    }
+    if ((*piVar1 != 0) && (local_44 == 0)) {
+      ___kmp_pop_sync(local_1c,10,local_18);
+    }
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_88);
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0xe5b);
+  }
+  if (local_5c != 0) {
+    __kmp_restore_swapped_teams(local_50,local_58,local_60);
+  }
+  return local_44;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_swap_teams_for_teams_reduction
+// Entry: 00004b6c
+// Signature: int __cdecl __kmp_swap_teams_for_teams_reduction(kmp_info_t * th, kmp_team_t * * team_p, int * task_state)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __kmp_swap_teams_for_teams_reduction(kmp_info_t *th,kmp_team_t **team_p,int *task_state)
+
+{
+  kmp_team_p *pkVar1;
+  
+                    /* Unresolved local var: kmp_team_t * team@[???] */
+  if ((th->th).th_teams_microtask != __kmpc_begin) {
+    pkVar1 = (th->th).th_team;
+    *team_p = pkVar1;
+    if ((pkVar1->t).t_level == (th->th).th_teams_level) {
+      *(int *)(th->th_pad + 0x20) = (pkVar1->t).t_master_tid;
+      (th->th).th_team = (pkVar1->t).t_parent;
+      (th->th).th_team_nproc = (((th->th).th_team)->t).t_nproc;
+      (th->th).th_task_team = (((th->th).th_team)->t).t_task_team[0];
+      *task_state = (uint)(th->th).th_task_state;
+      th->th_pad[0x1c0] = '\0';
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_enter_critical_section_reduce_block
+// Entry: 00004c4c
+// Signature: void __cdecl __kmp_enter_critical_section_reduce_block(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * crit)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_enter_critical_section_reduce_block
+               (ident_t *loc,kmp_int32 global_tid,kmp_critical_name *crit)
+
+{
+  int iVar1;
+  char cVar2;
+  bool bVar3;
+  int *piVar4;
+  undefined8 *puVar5;
+  undefined8 uVar6;
+  
+                    /* Unresolved local var: kmp_user_lock_p lck@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: kmp_dyna_lock_t * lk@[DW_OP_breg31(sp): +24] */
+  piVar4 = ____kmp_user_lock_seq;
+  if ((*crit)[0] == 0) {
+    if ((*____kmp_user_lock_seq < 1) || (1 < *____kmp_user_lock_seq)) {
+      __kmp_init_indirect_csptr(crit,loc,global_tid,*____kmp_user_lock_seq - locktag_drdpa);
+    }
+    else {
+      iVar1 = *____kmp_user_lock_seq;
+      do {
+        if ((*crit)[0] != 0) break;
+        cVar2 = '\x01';
+        bVar3 = (bool)ExclusiveMonitorPass(crit,0x10);
+        if (bVar3) {
+          (*crit)[0] = iVar1 << 1 | 1;
+          cVar2 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar2 != '\0');
+    }
+  }
+  if (((uint)(byte)(*crit)[0] & -((*crit)[0] & 1U)) == 0) {
+    puVar5 = *(undefined8 **)*crit;
+    uVar6 = *puVar5;
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_push_sync(global_tid,6,loc,uVar6,*piVar4);
+    }
+    (**(code **)(*____kmp_indirect_set + (ulong)*(uint *)(puVar5 + 1) * 8))(uVar6,global_tid);
+  }
+  else {
+                    /* Unresolved local var: kmp_indirect_lock_t * ilk@[DW_OP_breg31(sp): +16] */
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_push_sync(global_tid,6,loc,crit,*piVar4);
+    }
+    (**(code **)(*____kmp_direct_set + (ulong)((uint)(byte)(*crit)[0] & -((*crit)[0] & 1U)) * 8))
+              (crit,global_tid);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_restore_swapped_teams
+// Entry: 00004e4c
+// Signature: void __cdecl __kmp_restore_swapped_teams(kmp_info_t * th, kmp_team_t * team, int task_state)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_restore_swapped_teams(kmp_info_t *th,kmp_team_t *team,int task_state)
+
+{
+  *(char *)((long)th + 0x20) = '\0';
+  *(char *)((long)th + 0x21) = '\0';
+  *(char *)((long)th + 0x22) = '\0';
+  *(char *)((long)th + 0x23) = '\0';
+  (th->th).th_team = team;
+  (th->th).th_team_nproc = (team->t).t_nproc;
+  (th->th).th_task_team = *(kmp_task_team_t **)((long)team + (long)task_state * 8 + 0x1a8);
+  __kmp_type_convert<int,_unsigned_char>(task_state,&(th->th).th_task_state);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_reduce_nowait
+// Entry: 00004ebc
+// Signature: void __cdecl __kmpc_end_reduce_nowait(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * lck)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_end_reduce_nowait(ident_t *loc,kmp_int32 global_tid,kmp_critical_name *lck)
+
+{
+  ompt_data_t *poVar1;
+  ompt_team_info_t *poVar2;
+  uint uVar3;
+  long lVar4;
+  ulong *puVar5;
+  kmp_info_t *pkVar6;
+  void *pvVar7;
+  
+  puVar5 = __ompt_enabled;
+                    /* Unresolved local var: PACKED_REDUCTION_METHOD_T packed_reduction_method@[???]
+                       Unresolved local var: ompt_data_t * my_task_data@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: ompt_data_t * my_parallel_data@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: void * return_address@[DW_OP_breg31(sp): +24] */
+  lVar4 = __ompt_callbacks;
+  __kmp_assert_valid_gtid(global_tid);
+  uVar3 = *(uint *)(*(long *)(*____kmp_threads + (long)global_tid * 8) + 0x108);
+  pkVar6 = __kmp_thread_from_gtid(global_tid);
+  poVar1 = &(((pkVar6->th).th_current_task)->ompt_task_info).task_data;
+  pkVar6 = __kmp_thread_from_gtid(global_tid);
+  poVar2 = &(((pkVar6->th).th_team)->t).ompt_team_info;
+  pvVar7 = __ompt_load_return_address(global_tid);
+  if (uVar3 == 0x100) {
+    __kmp_end_critical_section_reduce_block(loc,global_tid,lck);
+    if (((*puVar5 & 1) != 0) && ((*puVar5 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar4 + 0xb0))(7,2,poVar2,poVar1,pvVar7);
+    }
+  }
+  else if (uVar3 == 0x400) {
+    if (((*puVar5 & 1) != 0) && ((*puVar5 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar4 + 0xb0))(7,2,poVar2,poVar1,pvVar7);
+    }
+  }
+  else if ((uVar3 != 0x200) && ((uVar3 & 0xff00) != 0x300)) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0xe98);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_pop_sync(global_tid,10,loc);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_end_critical_section_reduce_block
+// Entry: 000050dc
+// Signature: void __cdecl __kmp_end_critical_section_reduce_block(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * crit)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_end_critical_section_reduce_block
+               (ident_t *loc,kmp_int32 global_tid,kmp_critical_name *crit)
+
+{
+  undefined8 *puVar1;
+  
+                    /* Unresolved local var: kmp_user_lock_p lck@[DW_OP_breg31(sp): +16] */
+  if ((*____kmp_user_lock_seq < 1) || (1 < *____kmp_user_lock_seq)) {
+    puVar1 = *(undefined8 **)*crit;
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_pop_sync(global_tid,6,loc);
+    }
+    (**(code **)(*____kmp_indirect_unset + (ulong)*(uint *)(puVar1 + 1) * 8))(*puVar1,global_tid);
+  }
+  else {
+                    /* Unresolved local var: kmp_indirect_lock_t * ilk@[DW_OP_breg31(sp): +8] */
+    if (*____kmp_env_consistency_check != 0) {
+      ___kmp_pop_sync(global_tid,6,loc);
+    }
+    (**(code **)(*____kmp_direct_unset + (ulong)((uint)(byte)(*crit)[0] & -((*crit)[0] & 1U)) * 8))
+              (crit,global_tid);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_reduce
+// Entry: 00005218
+// Signature: kmp_int32 __cdecl __kmpc_reduce(ident_t * loc, kmp_int32 global_tid, kmp_int32 num_vars, size_t reduce_size, void * reduce_data, _func_void_void_ptr_void_ptr * reduce_func, kmp_critical_name * lck)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_int32 __kmpc_reduce(ident_t *loc,kmp_int32 global_tid,kmp_int32 num_vars,size_t reduce_size,
+                       void *reduce_data,_func_void_void_ptr_void_ptr *reduce_func,
+                       kmp_critical_name *lck)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  int iVar3;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_88;
+  ompt_frame_t *local_80;
+  void *local_78;
+  ompt_team_info_t *local_70;
+  ompt_data_t *local_68;
+  int local_60;
+  int local_5c;
+  kmp_team_t *local_58;
+  kmp_info_t *local_50;
+  uint local_48;
+  uint local_44;
+  kmp_critical_name *local_40;
+  _func_void_void_ptr_void_ptr *local_38;
+  void *local_30;
+  size_t local_28;
+  kmp_int32 local_20;
+  kmp_int32 local_1c;
+  ident_t *local_18;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: int retval@[???]
+                       Unresolved local var: PACKED_REDUCTION_METHOD_T packed_reduction_method@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: int teams_swapped@[???]
+                       Unresolved local var: int task_state@[DW_OP_breg31(sp): +80]
+                       Unresolved local var: ompt_data_t * my_task_data@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: ompt_data_t * my_parallel_data@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: void * return_address@[DW_OP_breg31(sp): +56] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +40] */
+  local_44 = 0;
+  local_5c = 0;
+  local_40 = lck;
+  local_38 = reduce_func;
+  local_30 = reduce_data;
+  local_28 = reduce_size;
+  local_20 = num_vars;
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  if (*____kmp_init_parallel == 0) {
+    ___kmp_parallel_initialize();
+  }
+  ___kmp_resume_if_soft_paused();
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_push_sync(local_1c,10,local_18,0,0);
+  }
+  local_50 = __kmp_thread_from_gtid(local_1c);
+  local_5c = __kmp_swap_teams_for_teams_reduction(local_50,&local_58,&local_60);
+  local_48 = ___kmp_determine_reduction_method
+                       (local_18,local_1c,local_20,local_28,local_30,local_38,local_40);
+  *(uint *)(*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x108) = local_48;
+  local_68 = &(((local_50->th).th_current_task)->ompt_task_info).task_data;
+  local_70 = &(((local_50->th).th_team)->t).ompt_team_info;
+  local_78 = __ompt_load_return_address(local_1c);
+  if (local_48 == 0x100) {
+    if (((*puVar2 & 1) != 0) && ((*puVar2 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar1 + 0xb0))(7,1,local_70,local_68,local_78);
+    }
+    __kmp_enter_critical_section_reduce_block(local_18,local_1c,local_40);
+    local_44 = 1;
+  }
+  else if (local_48 == 0x400) {
+    if (((*puVar2 & 1) != 0) && ((*puVar2 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar1 + 0xb0))(7,1,local_70,local_68,local_78);
+    }
+    local_44 = 1;
+  }
+  else if (local_48 == 0x200) {
+    local_44 = 2;
+  }
+  else if ((local_48 & 0xff00) == 0x300) {
+    if (((*puVar2 & 1) != 0) &&
+       (__ompt_get_task_info_internal
+                  (0,(int *)0x0,(ompt_data_t **)0x0,&local_80,(ompt_data_t **)0x0,(int *)0x0),
+       (local_80->enter_frame).value == 0)) {
+      (local_80->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_88,local_1c,unaff_x30);
+    iVar3 = ___kmp_barrier((undefined1)local_48,local_1c,1,local_28,local_30,local_38);
+    local_44 = (uint)(iVar3 == 0);
+    if ((*puVar2 & 1) != 0) {
+      (local_80->enter_frame).value = 0;
+    }
+    if ((*____kmp_env_consistency_check != 0) && (local_44 == 0)) {
+      ___kmp_pop_sync(local_1c,10,local_18);
+    }
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_88);
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0xf19);
+  }
+  if (local_5c != 0) {
+    __kmp_restore_swapped_teams(local_50,local_58,local_60);
+  }
+  return local_44;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_reduce
+// Entry: 00005634
+// Signature: void __cdecl __kmpc_end_reduce(ident_t * loc, kmp_int32 global_tid, kmp_critical_name * lck)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmpc_end_reduce(ident_t *loc,kmp_int32 global_tid,kmp_critical_name *lck)
+
+{
+  long lVar1;
+  ulong *puVar2;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_a0;
+  ompt_frame_t *local_98;
+  undefined8 local_90;
+  OmptReturnAddressGuard OStack_88;
+  ompt_frame_t *local_80;
+  undefined8 local_78;
+  OmptReturnAddressGuard OStack_70;
+  ompt_frame_t *local_68;
+  void *local_60;
+  ompt_team_info_t *local_58;
+  ompt_data_t *local_50;
+  int local_48;
+  int local_44;
+  kmp_team_t *local_40;
+  kmp_info_t *local_38;
+  uint local_2c;
+  kmp_critical_name *local_28;
+  int local_1c;
+  ident_t *local_18;
+  
+  puVar2 = __ompt_enabled;
+                    /* Unresolved local var: PACKED_REDUCTION_METHOD_T packed_reduction_method@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: int teams_swapped@[???]
+                       Unresolved local var: int task_state@[???]
+                       Unresolved local var: ompt_data_t * my_task_data@[???]
+                       Unresolved local var: ompt_data_t * my_parallel_data@[???]
+                       Unresolved local var: void * return_address@[???] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +32] */
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +56] */
+  local_44 = 0;
+  local_28 = lck;
+  local_1c = global_tid;
+  local_18 = loc;
+  __kmp_assert_valid_gtid(global_tid);
+  local_38 = __kmp_thread_from_gtid(local_1c);
+  local_44 = __kmp_swap_teams_for_teams_reduction(local_38,&local_40,&local_48);
+  local_2c = *(uint *)(*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x108);
+  local_50 = &(((local_38->th).th_current_task)->ompt_task_info).task_data;
+  local_58 = &(((local_38->th).th_team)->t).ompt_team_info;
+  local_60 = __ompt_load_return_address(local_1c);
+  if (local_2c == 0x100) {
+                    /* Unresolved local var: ompt_frame_t * ompt_frame@[DW_OP_breg31(sp): +88]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +80] */
+    __kmp_end_critical_section_reduce_block(local_18,local_1c,local_28);
+    if (((*puVar2 & 1) != 0) && ((*puVar2 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar1 + 0xb0))(7,2,local_58,local_50,local_60);
+    }
+    if (((*puVar2 & 1) != 0) &&
+       (__ompt_get_task_info_internal
+                  (0,(int *)0x0,(ompt_data_t **)0x0,&local_68,(ompt_data_t **)0x0,(int *)0x0),
+       (local_68->enter_frame).value == 0)) {
+      (local_68->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_70,local_1c,unaff_x30);
+    ___kmp_barrier(0,local_1c,0,0,0);
+    if ((*puVar2 & 1) != 0) {
+      local_78 = 0;
+      (local_68->enter_frame).value = 0;
+    }
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_70);
+  }
+  else if (local_2c == 0x400) {
+    if (((*puVar2 & 1) != 0) && ((*puVar2 >> 0x17 & 1) != 0)) {
+      (**(code **)(lVar1 + 0xb0))(7,2,local_58,local_50,local_60);
+    }
+    if (((*puVar2 & 1) != 0) &&
+       (__ompt_get_task_info_internal
+                  (0,(int *)0x0,(ompt_data_t **)0x0,&local_80,(ompt_data_t **)0x0,(int *)0x0),
+       (local_80->enter_frame).value == 0)) {
+      (local_80->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_88,local_1c,unaff_x30);
+    ___kmp_barrier(0,local_1c,0,0,0);
+    if ((*puVar2 & 1) != 0) {
+      local_90 = 0;
+      (local_80->enter_frame).value = 0;
+    }
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_88);
+  }
+  else if (local_2c == 0x200) {
+    if (((*puVar2 & 1) != 0) &&
+       (__ompt_get_task_info_internal
+                  (0,(int *)0x0,(ompt_data_t **)0x0,&local_98,(ompt_data_t **)0x0,(int *)0x0),
+       (local_98->enter_frame).value == 0)) {
+      (local_98->enter_frame).ptr = &stack0xfffffffffffffff0;
+    }
+    OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_a0,local_1c,unaff_x30);
+    ___kmp_barrier(0,local_1c,0,0,0);
+    if ((*puVar2 & 1) != 0) {
+      (local_98->enter_frame).value = 0;
+    }
+    OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_a0);
+  }
+  else if ((local_2c & 0xff00) == 0x300) {
+    ___kmp_end_split_barrier((undefined1)local_2c,local_1c);
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0xf96);
+  }
+  if (local_44 != 0) {
+    __kmp_restore_swapped_teams(local_38,local_40,local_48);
+  }
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_pop_sync(local_1c,10,local_18);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_get_taskid
+// Entry: 00005b00
+// Signature: kmp_uint64 __kmpc_get_taskid(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_uint64 __kmpc_get_taskid(void)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  kmp_uint64 local_18;
+  
+                    /* Unresolved local var: kmp_int32 gtid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id();
+  if (gtid < 0) {
+    local_18 = 0;
+  }
+  else {
+    pkVar1 = __kmp_thread_from_gtid(gtid);
+    local_18 = (kmp_uint64)((pkVar1->th).th_current_task)->td_task_id;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_get_parent_taskid
+// Entry: 00005b60
+// Signature: kmp_uint64 __kmpc_get_parent_taskid(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_uint64 __kmpc_get_parent_taskid(void)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  kmp_taskdata_t *pkVar2;
+  int local_34;
+  kmp_uint64 local_18;
+  
+                    /* Unresolved local var: kmp_int32 gtid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: kmp_taskdata_t * parent_task@[DW_OP_breg31(sp): +16] */
+  gtid = ___kmp_get_global_thread_id();
+  if (gtid < 0) {
+    local_18 = 0;
+  }
+  else {
+    pkVar1 = __kmp_thread_from_gtid(gtid);
+    pkVar2 = ((pkVar1->th).th_current_task)->td_parent;
+    if (pkVar2 == (kmp_taskdata_t *)0x0) {
+      local_34 = 0;
+    }
+    else {
+      local_34 = pkVar2->td_task_id;
+    }
+    local_18 = (kmp_uint64)local_34;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_doacross_init
+// Entry: 00005c00
+// Signature: void __cdecl __kmpc_doacross_init(ident_t * loc, int gtid, int num_dims, kmp_dim * dims)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_doacross_init(ident_t *loc,int gtid,int num_dims,kmp_dim *dims)
+
+{
+  long *plVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  bool bVar6;
+  ulong uVar7;
+  undefined8 uVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  int local_84;
+  long local_70;
+  ulong local_40;
+  long local_38;
+  int local_2c;
+  
+                    /* Unresolved local var: int j@[???]
+                       Unresolved local var: int idx@[???]
+                       Unresolved local var: kmp_int64 last@[???]
+                       Unresolved local var: kmp_int64 trace_count@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: kmp_uint32 * flags@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: kmp_disp_t * pr_buf@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: dispatch_shared_info_t * sh_buf@[DW_OP_breg31(sp): +40]
+                        */
+  __kmp_assert_valid_gtid(gtid);
+  lVar9 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  lVar10 = *(long *)(lVar9 + 0x40);
+  lVar11 = *(long *)(lVar9 + 0x58);
+  if (*(int *)(lVar10 + 0x2c8) == 0) {
+    iVar2 = *(int *)(lVar11 + 0x2c);
+    *(int *)(lVar11 + 0x2c) = iVar2 + 1;
+    iVar3 = *____kmp_dispatch_num_buffers;
+    iVar4 = 0;
+    if (iVar3 != 0) {
+      iVar4 = iVar2 / iVar3;
+    }
+    lVar10 = *(long *)(lVar10 + 0x2d0) + (long)(iVar2 - iVar4 * iVar3) * 0x58;
+    uVar8 = ____kmp_thread_malloc(lVar9,(long)(num_dims * 4 + 1) * 8);
+    *(undefined8 *)(lVar11 + 0x38) = uVar8;
+    **(long **)(lVar11 + 0x38) = (long)num_dims;
+    *(long *)(*(long *)(lVar11 + 0x38) + 8) = lVar10 + 0x50;
+    *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + 0x10) = dims->lo;
+    *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + 0x18) = dims->up;
+    *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + 0x20) = dims->st;
+    local_38 = 5;
+    for (local_2c = 1; local_2c < num_dims; local_2c = local_2c + 1) {
+                    /* Unresolved local var: kmp_int64 range_length@[DW_OP_breg31(sp): +32] */
+      if (dims[local_2c].st == 1) {
+        uVar7 = dims[local_2c].up - dims[local_2c].lo;
+      }
+      else if (dims[local_2c].st < 1) {
+        uVar7 = 0;
+        if (-dims[local_2c].st != 0) {
+          uVar7 = (ulong)(dims[local_2c].lo - dims[local_2c].up) / (ulong)-dims[local_2c].st;
+        }
+      }
+      else {
+        uVar7 = 0;
+        if (dims[local_2c].st != 0) {
+          uVar7 = (ulong)(dims[local_2c].up - dims[local_2c].lo) / (ulong)dims[local_2c].st;
+        }
+      }
+      local_70 = uVar7 + 1;
+      *(long *)(*(long *)(lVar11 + 0x38) + local_38 * 8) = local_70;
+      *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + (local_38 + 1) * 8) = dims[local_2c].lo;
+      lVar12 = local_38 + 3;
+      *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + (local_38 + 2) * 8) = dims[local_2c].up;
+      local_38 = local_38 + 4;
+      *(kmp_int64 *)(*(long *)(lVar11 + 0x38) + lVar12 * 8) = dims[local_2c].st;
+    }
+    if (dims->st == 1) {
+      local_40 = dims->up - dims->lo;
+    }
+    else if (dims->st < 1) {
+      local_40 = 0;
+      if (-dims->st != 0) {
+        local_40 = (ulong)(dims->lo - dims->up) / (ulong)-dims->st;
+      }
+    }
+    else {
+      local_40 = 0;
+      if (dims->st != 0) {
+        local_40 = (ulong)(dims->up - dims->lo) / (ulong)dims->st;
+      }
+    }
+    local_40 = local_40 + 1;
+    for (local_2c = 1; local_2c < num_dims; local_2c = local_2c + 1) {
+      local_40 = local_40 * *(long *)(*(long *)(lVar11 + 0x38) + (long)(local_2c * 4 + 1) * 8);
+    }
+    if (iVar2 != *(int *)(lVar10 + 0x44)) {
+      ___kmp_wait_4(lVar10 + 0x44,iVar2,____kmp_eq_4,0);
+    }
+    plVar1 = (long *)(lVar10 + 0x48);
+    do {
+      lVar12 = *plVar1;
+      if (lVar12 != 0) break;
+      cVar5 = '\x01';
+      bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar6) {
+        *plVar1 = 1;
+        cVar5 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar5 != '\0');
+    if (lVar12 == 0) {
+                    /* Unresolved local var: size_t size@[DW_OP_breg31(sp): +24] */
+      uVar8 = ____kmp_thread_calloc(lVar9,local_40 / 8 + 8,1);
+      DataMemoryBarrier(2,3);
+      *(undefined8 *)(lVar10 + 0x48) = uVar8;
+    }
+    else if (lVar12 == 1) {
+LAB_00006140:
+      if (*(long *)(lVar10 + 0x48) == 1) {
+        if (*____kmp_use_yield != 1) goto LAB_00006174;
+        goto LAB_000061fc;
+      }
+      DataMemoryBarrier(2,3);
+    }
+    else {
+      DataMemoryBarrier(2,3);
+    }
+    *(undefined8 *)(lVar11 + 0x30) = *(undefined8 *)(lVar10 + 0x48);
+  }
+  return;
+LAB_00006174:
+  if (*____kmp_use_yield == 2) {
+    if (*____kmp_avail_proc == 0) {
+      local_84 = *____kmp_xproc;
+    }
+    else {
+      local_84 = *____kmp_avail_proc;
+    }
+    if (local_84 < *____kmp_nth) {
+LAB_000061fc:
+      ___kmp_yield();
+    }
+  }
+  goto LAB_00006140;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_doacross_wait
+// Entry: 0000623c
+// Signature: void __cdecl __kmpc_doacross_wait(ident_t * loc, int gtid, kmp_int64 * vec)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_doacross_wait(ident_t *loc,int gtid,kmp_int64 *vec)
+
+{
+  long lVar1;
+  ulong uStack_e0;
+  int local_d8 [2];
+  long local_d0;
+  ulong *local_c8;
+  long local_c0;
+  long local_b8;
+  long local_b0;
+  ulong local_a8;
+  undefined4 local_9c;
+  undefined1 *local_90;
+  ulong local_88;
+  long local_80;
+  long local_78;
+  long local_70;
+  long local_68;
+  long local_60;
+  ulong local_58;
+  uint local_4c;
+  ulong local_48;
+  ulong local_40;
+  long local_38;
+  kmp_int64 *local_30;
+  int local_24;
+  ident_t *local_20;
+  long local_18;
+  
+                    /* Unresolved local var: kmp_int64 shft@[???]
+                       Unresolved local var: size_t num_dims@[???]
+                       Unresolved local var: size_t i@[???]
+                       Unresolved local var: kmp_uint32 flag@[???]
+                       Unresolved local var: kmp_int64 iter_number@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: kmp_disp_t * pr_buf@[???]
+                       Unresolved local var: kmp_int64 lo@[???]
+                       Unresolved local var: kmp_int64 up@[???]
+                       Unresolved local var: kmp_int64 st@[???]
+                       Unresolved local var: unsigned long __vla_expr0@[???]
+                       Unresolved local var: ompt_dependence_t[33153] deps@[???] */
+  local_c0 = __ompt_callbacks;
+  local_18 = *____stack_chk_guard;
+  local_30 = vec;
+  local_24 = gtid;
+  local_20 = loc;
+  __kmp_assert_valid_gtid(gtid);
+  local_60 = *(long *)(*____kmp_threads + (long)local_24 * 8);
+  local_68 = *(long *)(local_60 + 0x40);
+  if (*(int *)(local_68 + 0x2c8) == 0) {
+    local_70 = *(long *)(local_60 + 0x58);
+    local_40 = **(ulong **)(local_70 + 0x38);
+    local_78 = *(long *)(*(long *)(local_70 + 0x38) + 0x10);
+    local_80 = *(long *)(*(long *)(local_70 + 0x38) + 0x18);
+    local_88 = *(ulong *)(*(long *)(local_70 + 0x38) + 0x20);
+    local_d0 = local_40 * 0x10;
+    local_90 = (undefined1 *)&uStack_e0;
+    (*____chkstk_darwin)();
+    lVar1 = -local_d0;
+    local_c8 = (ulong *)((long)&uStack_e0 + lVar1);
+    if (local_88 == 1) {
+      if ((*local_30 < local_78) || (local_80 < *local_30)) {
+        local_9c = 1;
+        goto LAB_0000687c;
+      }
+      local_58 = *local_30 - local_78;
+    }
+    else if ((long)local_88 < 1) {
+      if ((local_78 < *local_30) || (*local_30 < local_80)) {
+        local_9c = 1;
+        goto LAB_0000687c;
+      }
+      local_58 = 0;
+      if (-local_88 != 0) {
+        local_58 = (ulong)(local_78 - *local_30) / -local_88;
+      }
+    }
+    else {
+      if ((*local_30 < local_78) || (local_80 < *local_30)) {
+        local_9c = 1;
+        goto LAB_0000687c;
+      }
+      local_58 = 0;
+      if (local_88 != 0) {
+        local_58 = (ulong)(*local_30 - local_78) / local_88;
+      }
+    }
+    *local_c8 = local_58;
+    *(undefined4 *)((long)local_d8 + lVar1) = 6;
+    for (local_48 = 1; local_48 < local_40; local_48 = local_48 + 1) {
+                    /* Unresolved local var: kmp_int64 iter@[???]
+                       Unresolved local var: kmp_int64 ln@[???]
+                       Unresolved local var: size_t j@[???] */
+      local_b8 = local_48 * 4;
+      lVar1 = *(long *)(*(long *)(local_70 + 0x38) + (local_b8 + 1) * 8);
+      local_78 = *(long *)(*(long *)(local_70 + 0x38) + (local_b8 + 2) * 8);
+      local_80 = *(long *)(*(long *)(local_70 + 0x38) + (local_b8 + 3) * 8);
+      local_88 = *(ulong *)(*(long *)(local_70 + 0x38) + (local_b8 + 4) * 8);
+      local_b0 = lVar1;
+      if (local_88 == 1) {
+        if ((local_30[local_48] < local_78) || (local_80 < local_30[local_48])) {
+          local_9c = 1;
+          goto LAB_0000687c;
+        }
+        local_a8 = local_30[local_48] - local_78;
+      }
+      else if ((long)local_88 < 1) {
+        if ((local_78 < local_30[local_48]) || (local_30[local_48] < local_80)) {
+          local_9c = 1;
+          goto LAB_0000687c;
+        }
+        local_a8 = 0;
+        if (-local_88 != 0) {
+          local_a8 = (ulong)(local_78 - local_30[local_48]) / -local_88;
+        }
+      }
+      else {
+        if ((local_30[local_48] < local_78) || (local_80 < local_30[local_48])) {
+          local_9c = 1;
+          goto LAB_0000687c;
+        }
+        local_a8 = 0;
+        if (local_88 != 0) {
+          local_a8 = (ulong)(local_30[local_48] - local_78) / local_88;
+        }
+      }
+      local_c8[local_48 * 2] = local_a8;
+      *(undefined4 *)(local_c8 + local_48 * 2 + 1) = 6;
+      local_58 = local_a8 + lVar1 * local_58;
+    }
+    local_38 = (long)local_58 % 0x20;
+    local_58 = (long)local_58 >> 5;
+    local_4c = 1 << (ulong)((uint)local_38 & 0x1f);
+LAB_00006748:
+    if ((local_4c & *(uint *)(*(long *)(local_70 + 0x30) + local_58 * 4)) == 0) {
+      if (*____kmp_use_yield != 1) goto LAB_00006788;
+      goto LAB_00006810;
+    }
+    DataMemoryBarrier(2,3);
+    if ((*__ompt_enabled >> 0xb & 1) != 0) {
+      (**(code **)(local_c0 + 0x50))(*(long *)(local_60 + 0x1b8) + 0x100,local_c8,local_40);
+    }
+    local_9c = 0;
+  }
+LAB_0000687c:
+  if (*____stack_chk_guard != local_18) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+LAB_00006788:
+  if (*____kmp_use_yield == 2) {
+    local_d8[1] = *____kmp_nth;
+    if (*____kmp_avail_proc == 0) {
+      local_d8[0] = *____kmp_xproc;
+    }
+    else {
+      local_d8[0] = *____kmp_avail_proc;
+    }
+    if (local_d8[0] < local_d8[1]) {
+LAB_00006810:
+      ___kmp_yield();
+    }
+  }
+  goto LAB_00006748;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_doacross_post
+// Entry: 000068ac
+// Signature: void __cdecl __kmpc_doacross_post(ident_t * loc, int gtid, kmp_int64 * vec)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_doacross_post(ident_t *loc,int gtid,kmp_int64 *vec)
+
+{
+  uint uVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long lVar5;
+  long lVar6;
+  ulong uVar7;
+  uint *local_d0;
+  uint local_c8 [2];
+  long local_c0;
+  ulong *local_b8;
+  long local_b0;
+  long local_a8;
+  long local_a0;
+  ulong local_98;
+  undefined1 *local_88;
+  ulong local_80;
+  long local_78;
+  long local_70;
+  long local_68;
+  long local_60;
+  ulong local_58;
+  uint local_4c;
+  ulong local_48;
+  ulong local_40;
+  long local_38;
+  kmp_int64 *local_30;
+  int local_24;
+  ident_t *local_20;
+  long local_18;
+  
+                    /* Unresolved local var: kmp_int64 shft@[???]
+                       Unresolved local var: size_t num_dims@[???]
+                       Unresolved local var: size_t i@[???]
+                       Unresolved local var: kmp_uint32 flag@[???]
+                       Unresolved local var: kmp_int64 iter_number@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: kmp_disp_t * pr_buf@[???]
+                       Unresolved local var: kmp_int64 lo@[???]
+                       Unresolved local var: kmp_int64 st@[???]
+                       Unresolved local var: unsigned long __vla_expr0@[???]
+                       Unresolved local var: ompt_dependence_t[33468] deps@[???] */
+  local_b0 = __ompt_callbacks;
+  local_18 = *____stack_chk_guard;
+  local_30 = vec;
+  local_24 = gtid;
+  local_20 = loc;
+  __kmp_assert_valid_gtid(gtid);
+  local_60 = *(long *)(*____kmp_threads + (long)local_24 * 8);
+  local_68 = *(long *)(local_60 + 0x40);
+  if (*(int *)(local_68 + 0x2c8) == 0) {
+    local_70 = *(long *)(local_60 + 0x58);
+    local_40 = **(ulong **)(local_70 + 0x38);
+    local_78 = *(long *)(*(long *)(local_70 + 0x38) + 0x10);
+    local_80 = *(ulong *)(*(long *)(local_70 + 0x38) + 0x20);
+    local_c0 = local_40 * 0x10;
+    local_88 = (undefined1 *)&local_d0;
+    (*____chkstk_darwin)();
+    lVar4 = -local_c0;
+    local_b8 = (ulong *)((long)&local_d0 + lVar4);
+    if (local_80 == 1) {
+      local_58 = *local_30 - local_78;
+    }
+    else if ((long)local_80 < 1) {
+      local_58 = 0;
+      if (-local_80 != 0) {
+        local_58 = (ulong)(local_78 - *local_30) / -local_80;
+      }
+    }
+    else {
+      local_58 = 0;
+      if (local_80 != 0) {
+        local_58 = (ulong)(*local_30 - local_78) / local_80;
+      }
+    }
+    *local_b8 = local_58;
+    *(undefined4 *)((long)local_c8 + lVar4) = 5;
+    for (local_48 = 1; local_48 < local_40; local_48 = local_48 + 1) {
+                    /* Unresolved local var: kmp_int64 iter@[???]
+                       Unresolved local var: kmp_int64 ln@[???]
+                       Unresolved local var: size_t j@[???] */
+      lVar4 = local_48 * 4;
+      lVar5 = *(long *)(*(long *)(local_70 + 0x38) + (lVar4 + 1) * 8);
+      lVar6 = *(long *)(*(long *)(local_70 + 0x38) + (lVar4 + 2) * 8);
+      uVar7 = *(ulong *)(*(long *)(local_70 + 0x38) + (lVar4 + 4) * 8);
+      if (uVar7 == 1) {
+        local_98 = local_30[local_48] - lVar6;
+      }
+      else if ((long)uVar7 < 1) {
+        local_98 = 0;
+        if (-uVar7 != 0) {
+          local_98 = (ulong)(lVar6 - local_30[local_48]) / -uVar7;
+        }
+      }
+      else {
+        local_98 = 0;
+        if (uVar7 != 0) {
+          local_98 = (ulong)(local_30[local_48] - lVar6) / uVar7;
+        }
+      }
+      local_b8[local_48 * 2] = local_98;
+      *(undefined4 *)(local_b8 + local_48 * 2 + 1) = 5;
+      local_a8 = lVar4;
+      local_a0 = lVar5;
+      local_80 = uVar7;
+      local_78 = lVar6;
+      local_58 = local_98 + lVar5 * local_58;
+    }
+    if ((*__ompt_enabled >> 0xb & 1) != 0) {
+      (**(code **)(local_b0 + 0x50))(*(long *)(local_60 + 0x1b8) + 0x100,local_b8,local_40);
+    }
+    local_38 = (long)local_58 % 0x20;
+    local_58 = (long)local_58 >> 5;
+    local_4c = 1 << (ulong)((uint)local_38 & 0x1f);
+    DataMemoryBarrier(2,3);
+    if ((local_4c & *(uint *)(*(long *)(local_70 + 0x30) + local_58 * 4)) == 0) {
+      local_d0 = (uint *)(*(long *)(local_70 + 0x30) + local_58 * 4);
+      local_c8[1] = *local_d0;
+      do {
+        do {
+          uVar1 = *local_d0;
+          if (uVar1 != local_c8[1]) break;
+          cVar2 = '\x01';
+          bVar3 = (bool)ExclusiveMonitorPass(local_d0,0x10);
+          if (bVar3) {
+            *local_d0 = local_c8[1] | local_4c;
+            cVar2 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar2 != '\0');
+        bVar3 = uVar1 != local_c8[1];
+        local_c8[0] = local_4c;
+        local_c8[1] = uVar1;
+      } while (bVar3);
+    }
+  }
+  if (*____stack_chk_guard != local_18) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_doacross_fini
+// Entry: 00006cf0
+// Signature: void __cdecl __kmpc_doacross_fini(ident_t * loc, int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_doacross_fini(ident_t *loc,int gtid)
+
+{
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  int iVar4;
+  int *piVar5;
+  bool bVar6;
+  long lVar7;
+  long lVar8;
+  long lVar9;
+  int *piVar10;
+  undefined4 local_4c;
+  
+                    /* Unresolved local var: kmp_int32 num_done@[???]
+                       Unresolved local var: kmp_info_t * th@[???]
+                       Unresolved local var: kmp_team_t * team@[???]
+                       Unresolved local var: kmp_disp_t * pr_buf@[???] */
+  __kmp_assert_valid_gtid(gtid);
+  lVar7 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  lVar8 = *(long *)(lVar7 + 0x40);
+  lVar9 = *(long *)(lVar7 + 0x58);
+  if (*(int *)(lVar8 + 0x2c8) == 0) {
+    piVar10 = *(int **)(*(long *)(lVar9 + 0x38) + 8);
+    local_4c = *piVar10;
+    do {
+      do {
+        iVar1 = *piVar10;
+        if (iVar1 != local_4c) break;
+        cVar3 = '\x01';
+        bVar6 = (bool)ExclusiveMonitorPass(piVar10,0x10);
+        if (bVar6) {
+          *piVar10 = local_4c + 1;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      piVar5 = ____kmp_dispatch_num_buffers;
+      bVar6 = iVar1 != local_4c;
+      local_4c = iVar1;
+    } while (bVar6);
+    if (iVar1 + 1 == *(int *)(lVar7 + 100)) {
+                    /* Unresolved local var: int idx@[???]
+                       Unresolved local var: dispatch_shared_info_t * sh_buf@[DW_OP_breg31(sp): +40]
+                        */
+      iVar4 = *(int *)(lVar9 + 0x2c) + -1;
+      iVar1 = *____kmp_dispatch_num_buffers;
+      iVar2 = 0;
+      if (iVar1 != 0) {
+        iVar2 = iVar4 / iVar1;
+      }
+      lVar8 = *(long *)(lVar8 + 0x2d0) + (long)(iVar4 - iVar2 * iVar1) * 0x58;
+      ____kmp_thread_free(lVar7,*(undefined8 *)(lVar8 + 0x48));
+      *(undefined8 *)(lVar8 + 0x48) = 0;
+      *(undefined4 *)(lVar8 + 0x50) = 0;
+      *(int *)(lVar8 + 0x44) = *(int *)(lVar8 + 0x44) + *piVar5;
+    }
+    *(undefined8 *)(lVar9 + 0x30) = 0;
+    ____kmp_thread_free(lVar7,*(undefined8 *)(lVar9 + 0x38));
+    *(undefined8 *)(lVar9 + 0x38) = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_alloc
+// Entry: 00006e84
+// Signature: void * __cdecl omp_alloc(size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * omp_alloc(size_t size,omp_allocator_handle_t allocator)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (void *)___kmp_alloc(uVar1,0,size,allocator);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_aligned_alloc
+// Entry: 00006eb8
+// Signature: void * __cdecl omp_aligned_alloc(size_t align, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * omp_aligned_alloc(size_t align,size_t size,omp_allocator_handle_t allocator)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (void *)___kmp_alloc(uVar1,align,size,allocator);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_calloc
+// Entry: 00006ef0
+// Signature: void * __cdecl omp_calloc(size_t nmemb, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * omp_calloc(size_t nmemb,size_t size,omp_allocator_handle_t allocator)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (void *)___kmp_calloc(uVar1,0,nmemb,size,allocator);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_aligned_calloc
+// Entry: 00006f2c
+// Signature: void * __cdecl omp_aligned_calloc(size_t align, size_t nmemb, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * omp_aligned_calloc(size_t align,size_t nmemb,size_t size,omp_allocator_handle_t allocator)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (void *)___kmp_calloc(uVar1,align,nmemb,size,allocator);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_realloc
+// Entry: 00006f6c
+// Signature: void * __cdecl omp_realloc(void * ptr, size_t size, omp_allocator_handle_t allocator, omp_allocator_handle_t free_allocator)
+// ========================================
+
+
+void * omp_realloc(void *ptr,size_t size,omp_allocator_handle_t allocator,
+                  omp_allocator_handle_t free_allocator)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (void *)___kmp_realloc(uVar1,ptr,size,allocator,free_allocator);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_free
+// Entry: 00006fac
+// Signature: void __cdecl omp_free(void * ptr, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void omp_free(void *ptr,omp_allocator_handle_t allocator)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ____kmpc_free(uVar1,ptr,allocator);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_get_target_offload
+// Entry: 00006fdc
+// Signature: int __kmpc_get_target_offload(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int __kmpc_get_target_offload(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_target_offload;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_pause_resource
+// Entry: 0000701c
+// Signature: int __cdecl __kmpc_pause_resource(kmp_pause_status_t level)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmpc_pause_resource(kmp_pause_status_t level)
+
+{
+  undefined4 local_14;
+  
+  if (*____kmp_init_serial == 0) {
+    local_14 = 1;
+  }
+  else {
+    local_14 = ___kmp_pause_resource(level);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_error
+// Entry: 00007074
+// Signature: void __cdecl __kmpc_error(ident_t * loc, int severity, char * message)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_error(ident_t *loc,int severity,char *message)
+
+{
+  undefined8 *puVar1;
+  long lVar2;
+  char *pcVar3;
+  int iVar4;
+  size_t sVar5;
+  code *pcVar6;
+  undefined8 unaff_x30;
+  undefined1 auStack_c8 [24];
+  undefined8 local_b0;
+  undefined8 uStack_a8;
+  undefined8 local_a0;
+  undefined1 auStack_90 [24];
+  undefined1 auStack_78 [56];
+  undefined8 local_40;
+  char *local_38;
+  int local_2c;
+  ident_t *local_28;
+  
+  lVar2 = __ompt_callbacks;
+                    /* Unresolved local var: char * src_loc@[???] */
+  puVar1 = ____kmp_msg_null;
+  local_38 = message;
+  local_2c = severity;
+  local_28 = loc;
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  if ((local_2c != 1) && (local_2c != 2)) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_csupport.cpp",
+                        0x115a);
+  }
+  iVar4 = local_2c;
+  pcVar3 = local_38;
+  if (((*__ompt_enabled & 1) != 0) && ((*__ompt_enabled >> 0x19 & 1) != 0)) {
+    pcVar6 = *(code **)(lVar2 + 0xc0);
+    sVar5 = _strlen(local_38);
+    (*pcVar6)(iVar4,pcVar3,sVar5,unaff_x30);
+  }
+  if ((local_28 == (ident_t *)0x0) || (local_28->psource == (char *)0x0)) {
+    local_40 = ___kmp_str_format("unknown");
+  }
+  else {
+                    /* Unresolved local var: kmp_str_loc_t str_loc@[???] */
+    ___kmp_str_loc_init(local_28->psource,0);
+    local_40 = ___kmp_str_format("%s:%d:%d");
+    ___kmp_str_loc_free(auStack_78);
+  }
+  if (local_2c == 1) {
+    ___kmp_msg_format(0x4011b);
+    uStack_a8 = puVar1[1];
+    local_b0 = *puVar1;
+    local_a0 = puVar1[2];
+    ___kmp_msg(1,auStack_90);
+  }
+  else {
+    ___kmp_msg_format(0x4011a);
+    ___kmp_fatal(auStack_c8);
+  }
+  ___kmp_str_free(&local_40);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_scope
+// Entry: 0000730c
+// Signature: void __cdecl __kmpc_scope(ident_t * loc, kmp_int32 gtid, void * reserved)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_scope(ident_t *loc,kmp_int32 gtid,void *reserved)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  if (((*__ompt_enabled & 1) != 0) && ((*__ompt_enabled >> 0xd & 1) != 0)) {
+    lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x40);
+    iVar2 = __kmp_tid_from_gtid(gtid);
+    (**(code **)(lVar1 + 0x60))
+              (8,1,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,1,unaff_x30)
+    ;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_end_scope
+// Entry: 000073f0
+// Signature: void __cdecl __kmpc_end_scope(ident_t * loc, kmp_int32 gtid, void * reserved)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_end_scope(ident_t *loc,kmp_int32 gtid,void *reserved)
+
+{
+  long lVar1;
+  int iVar2;
+  long lVar3;
+  undefined8 unaff_x30;
+  
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_team_t * team@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int tid@[DW_OP_breg31(sp): +28] */
+  if (((*__ompt_enabled & 1) != 0) && ((*__ompt_enabled >> 0xd & 1) != 0)) {
+    lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x40);
+    iVar2 = __kmp_tid_from_gtid(gtid);
+    (**(code **)(lVar1 + 0x60))
+              (8,2,lVar3 + 0x1e0,*(long *)(lVar3 + 0x288) + (long)iVar2 * 0x140 + 0x100,1,unaff_x30)
+    ;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 000074d4
+// Signature: void __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid, void * ReturnAddress)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid,
+   void * ReturnAddress) */
+
+void __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int Gtid,void *ReturnAddress)
+
+{
+  long *plVar1;
+  
+  plVar1 = ____kmp_threads;
+  this->SetAddress = false;
+  this->Gtid = Gtid;
+  if (((((*__ompt_enabled & 1) != 0) && (-1 < Gtid)) && (*(long *)(*plVar1 + (long)Gtid * 8) != 0))
+     && (*(long *)(*(long *)(*plVar1 + (long)Gtid * 8) + 0x158) == 0)) {
+    this->SetAddress = true;
+    *(void **)(*(long *)(*plVar1 + (long)Gtid * 8) + 0x158) = ReturnAddress;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 000075b8
+// Signature: void __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void ~OmptReturnAddressGuard(OmptReturnAddressGuard * this) */
+
+void __thiscall OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  if ((this->SetAddress & 1U) != 0) {
+    *(undefined8 *)(*(long *)(*____kmp_threads + (long)this->Gtid * 8) + 0x158) = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<int,_unsigned_char>
+// Entry: 00007608
+// Signature: void __cdecl __kmp_type_convert<int,_unsigned_char>(int src, uchar * dest)
+// ========================================
+
+
+/* DWARF original name: __kmp_type_convert<int, unsigned char> */
+
+void __kmp_type_convert<int,_unsigned_char>(int src,uchar *dest)
+
+{
+  uchar uVar1;
+  
+  uVar1 = kmp_convert<int,_unsigned_char,_false,_false,_true,_false>::to(src);
+  *dest = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 00007638
+// Signature: uchar __cdecl to(int src)
+// ========================================
+
+
+uchar kmp_convert<int,_unsigned_char,_false,_false,_true,_false>::to(int src)
+
+{
+  byte bVar1;
+  
+  if (src < 0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11ba);
+  }
+  bVar1 = std::__1::numeric_limits<unsigned_char>::max();
+  if ((int)(uint)bVar1 < src) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11bc);
+  }
+  return (uchar)src;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 000076c8
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::numeric_limits<unsigned_char>::max(void)
+
+{
+  type tVar1;
+  
+  tVar1 = __libcpp_numeric_limits<unsigned_char,_true>::max();
+  return tVar1;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 000076e0
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::__libcpp_numeric_limits<unsigned_char,_true>::max(void)
+
+{
+  return 0xff;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_teaminfo
+// Entry: 00028000
+// Signature: undefined __ompt_get_teaminfo(int param_1, int * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_teaminfo(int param_1,int *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __ompt_lw_taskteam_unlink
+// Entry: 00028100
+// Signature: undefined __ompt_lw_taskteam_unlink(kmp_info * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_lw_taskteam_unlink(kmp_info *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_object
+// Entry: 00028200
+// Signature: undefined __ompt_get_task_info_object(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_task_info_object(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_internal
+// Entry: 00028300
+// Signature: undefined __ompt_get_task_info_internal(int param_1, int * param_2, ompt_data_t * * param_3, ompt_frame_t * * param_4, ompt_data_t * * param_5, int * param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_task_info_internal
+               (int param_1,int *param_2,ompt_data_t **param_3,ompt_frame_t **param_4,
+               ompt_data_t **param_5,int *param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_thread_data_internal
+// Entry: 00028400
+// Signature: undefined __ompt_get_thread_data_internal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_thread_data_internal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_free
+// Entry: 00028500
+// Signature: undefined ____kmp_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_calloc
+// Entry: 00028600
+// Signature: undefined ____kmp_thread_calloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_calloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_free
+// Entry: 00028700
+// Signature: undefined ____kmp_thread_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_malloc
+// Entry: 00028800
+// Signature: undefined ____kmp_thread_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmpc_free
+// Entry: 00028900
+// Signature: undefined ____kmpc_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmpc_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_alloc
+// Entry: 00028d00
+// Signature: undefined ___kmp_alloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_alloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_allocate_indirect_lock
+// Entry: 00028e00
+// Signature: undefined ___kmp_allocate_indirect_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_allocate_indirect_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_capture_affinity
+// Entry: 00028f00
+// Signature: undefined ___kmp_aux_capture_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_capture_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_display_affinity
+// Entry: 00029000
+// Signature: undefined ___kmp_aux_display_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_display_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_blocktime
+// Entry: 00029100
+// Signature: undefined ___kmp_aux_set_blocktime(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_blocktime(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_defaults
+// Entry: 00029200
+// Signature: undefined ___kmp_aux_set_defaults(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_defaults(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_stacksize
+// Entry: 00029300
+// Signature: undefined ___kmp_aux_set_stacksize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_stacksize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_barrier
+// Entry: 00029500
+// Signature: undefined ___kmp_barrier(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_barrier(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_calloc
+// Entry: 00029600
+// Signature: undefined ___kmp_calloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_calloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_check_barrier
+// Entry: 00029700
+// Signature: undefined ___kmp_check_barrier(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_check_barrier(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_check_sync
+// Entry: 00029800
+// Signature: undefined ___kmp_check_sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_check_sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00029900
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_determine_reduction_method
+// Entry: 00029a00
+// Signature: undefined ___kmp_determine_reduction_method(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_determine_reduction_method(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_end_split_barrier
+// Entry: 0002a200
+// Signature: undefined ___kmp_end_split_barrier(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_end_split_barrier(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_enter_single
+// Entry: 0002a300
+// Signature: undefined ___kmp_enter_single(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_enter_single(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_exit_single
+// Entry: 0002a600
+// Signature: undefined ___kmp_exit_single(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_exit_single(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 0002a700
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fork_call
+// Entry: 0002a800
+// Signature: undefined ___kmp_fork_call(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fork_call(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_ancestor_thread_num
+// Entry: 0002a900
+// Signature: undefined ___kmp_get_ancestor_thread_num(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_ancestor_thread_num(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id
+// Entry: 0002aa00
+// Signature: undefined ___kmp_get_global_thread_id(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 0002ab00
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_team_size
+// Entry: 0002ac00
+// Signature: undefined ___kmp_get_team_size(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_team_size(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_ignore_mppbeg
+// Entry: 0002ad00
+// Signature: undefined ___kmp_ignore_mppbeg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_ignore_mppbeg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_ignore_mppend
+// Entry: 0002ae00
+// Signature: undefined ___kmp_ignore_mppend(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_ignore_mppend(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_internal_begin
+// Entry: 0002b700
+// Signature: undefined ___kmp_internal_begin(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_internal_begin(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_internal_end_thread
+// Entry: 0002b800
+// Signature: undefined ___kmp_internal_end_thread(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_internal_end_thread(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_invoke_task_func
+// Entry: 0002b900
+// Signature: undefined ___kmp_invoke_task_func(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_invoke_task_func(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_join_call
+// Entry: 0002bb00
+// Signature: undefined ___kmp_join_call(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_join_call(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_middle_initialize
+// Entry: 0002bc00
+// Signature: undefined ___kmp_middle_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_middle_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 0002bd00
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 0002be00
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_parallel_deo
+// Entry: 0002c100
+// Signature: undefined ___kmp_parallel_deo(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_parallel_deo(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_parallel_dxo
+// Entry: 0002c200
+// Signature: undefined ___kmp_parallel_dxo(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_parallel_dxo(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_parallel_initialize
+// Entry: 0002c300
+// Signature: undefined ___kmp_parallel_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_parallel_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_pause_resource
+// Entry: 0002c400
+// Signature: undefined ___kmp_pause_resource(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_pause_resource(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_pop_current_task_from_thread
+// Entry: 0002c500
+// Signature: undefined ___kmp_pop_current_task_from_thread(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_pop_current_task_from_thread(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_pop_parallel
+// Entry: 0002c600
+// Signature: undefined ___kmp_pop_parallel(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_pop_parallel(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_pop_sync
+// Entry: 0002c700
+// Signature: undefined ___kmp_pop_sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_pop_sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_pop_workshare
+// Entry: 0002c800
+// Signature: undefined ___kmp_pop_workshare(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_pop_workshare(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_num_teams
+// Entry: 0002c900
+// Signature: undefined ___kmp_push_num_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_num_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_num_teams_51
+// Entry: 0002ca00
+// Signature: undefined ___kmp_push_num_teams_51(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_num_teams_51(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_num_threads
+// Entry: 0002cb00
+// Signature: undefined ___kmp_push_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_proc_bind
+// Entry: 0002cc00
+// Signature: undefined ___kmp_push_proc_bind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_proc_bind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_sync
+// Entry: 0002cd00
+// Signature: undefined ___kmp_push_sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_realloc
+// Entry: 0002ce00
+// Signature: undefined ___kmp_realloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_realloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_resume_if_soft_paused
+// Entry: 0002cf00
+// Signature: undefined ___kmp_resume_if_soft_paused(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_resume_if_soft_paused(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_save_internal_controls
+// Entry: 0002d000
+// Signature: undefined ___kmp_save_internal_controls(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_save_internal_controls(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_serial_initialize
+// Entry: 0002d100
+// Signature: undefined ___kmp_serial_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_serial_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_serialized_parallel
+// Entry: 0002d200
+// Signature: undefined ___kmp_serialized_parallel(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_serialized_parallel(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_max_active_levels
+// Entry: 0002d300
+// Signature: undefined ___kmp_set_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_max_active_levels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_num_threads
+// Entry: 0002d400
+// Signature: undefined ___kmp_set_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_schedule
+// Entry: 0002d500
+// Signature: undefined ___kmp_set_schedule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_schedule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 0002d600
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_format
+// Entry: 0002d700
+// Signature: undefined ___kmp_str_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_free
+// Entry: 0002d800
+// Signature: undefined ___kmp_str_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_loc_free
+// Entry: 0002d900
+// Signature: undefined ___kmp_str_loc_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_loc_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_loc_init
+// Entry: 0002da00
+// Signature: undefined ___kmp_str_loc_init(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_loc_init(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_match_true
+// Entry: 0002db00
+// Signature: undefined ___kmp_str_match_true(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_match_true(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_task_team_wait
+// Entry: 0002dd00
+// Signature: undefined ___kmp_task_team_wait(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_task_team_wait(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_user_set_library
+// Entry: 0002e400
+// Signature: undefined ___kmp_user_set_library(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_user_set_library(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_wait_4
+// Entry: 0002e500
+// Signature: undefined ___kmp_wait_4(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_wait_4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_yield
+// Entry: 0002e700
+// Signature: undefined ___kmp_yield(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_yield(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 0002e800
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _getenv
+// Entry: 0002ea00
+// Signature: char * _getenv(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _getenv(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 0002eb00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 0002ee00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncpy
+// Entry: 0002ef00
+// Signature: char * _strncpy(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncpy(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 193
+// Failed: 0
+// Skipped external functions: 0

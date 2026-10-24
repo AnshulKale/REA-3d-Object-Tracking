@@ -1,0 +1,1111 @@
+Program: kmp_i18n.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmp_i18n_catopen
+// Entry: 00000000
+// Signature: void __kmp_i18n_catopen(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_i18n_catopen(void)
+
+{
+  if (status == KMP_I18N_CLOSED) {
+    __kmp_acquire_bootstrap_lock(&lock);
+    if (status == KMP_I18N_CLOSED) {
+      __kmp_i18n_do_catopen();
+    }
+    __kmp_release_bootstrap_lock(&lock);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_acquire_bootstrap_lock
+// Entry: 00000064
+// Signature: int __cdecl __kmp_acquire_bootstrap_lock(kmp_bootstrap_lock_t * lck)
+// ========================================
+
+
+int __kmp_acquire_bootstrap_lock(kmp_bootstrap_lock_t *lck)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_acquire_ticket_lock(lck,0xfffffffe);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_i18n_do_catopen
+// Entry: 0000008c
+// Signature: void __kmp_i18n_do_catopen(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Restarted to delay deadcode elimination for space: ram */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_i18n_do_catopen(void)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  uint local_3d4;
+  kmp_msg_t kStack_3b8;
+  kmp_msg_t local_3a0;
+  kmp_msg_t kStack_380;
+  kmp_msg_t kStack_368;
+  void *local_350;
+  char *local_348;
+  char *local_340;
+  undefined4 local_338;
+  undefined4 local_334;
+  kmp_msg_t local_330;
+  kmp_msg_t kStack_318;
+  kmp_msg_t local_300;
+  kmp_msg_t kStack_2e0;
+  kmp_msg_t kStack_2c8;
+  kmp_msg_t local_2b0;
+  kmp_msg_t kStack_298;
+  kmp_msg_t local_280;
+  void *local_268;
+  void *local_260;
+  int local_254;
+  undefined8 local_250;
+  char *local_248;
+  uint local_23c;
+  char *local_238;
+  undefined4 local_230;
+  undefined4 local_22c;
+  char local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: int english@[???]
+                       Unresolved local var: char * lang@[DW_OP_breg31(sp): +568] */
+  piVar1 = ____kmp_generate_warnings;
+                    /* Unresolved local var: int section@[DW_OP_breg31(sp): +332]
+                       Unresolved local var: int number@[DW_OP_breg31(sp): +328]
+                       Unresolved local var: char * expected@[DW_OP_breg31(sp): +320]
+                       Unresolved local var: kmp_str_buf_t version@[???] */
+  local_28 = *____stack_chk_guard;
+  local_23c = 0;
+  local_248 = (char *)___kmp_env_get("LANG");
+  local_3d4 = 1;
+  if (local_248 != (char *)0x0) {
+    iVar2 = _strcmp(local_248,"");
+    local_3d4 = 1;
+    if (iVar2 != 0) {
+      iVar2 = _strcmp(local_248," ");
+      local_3d4 = 1;
+      if (iVar2 != 0) {
+        iVar2 = _strcmp(local_248,"C");
+        local_3d4 = 1;
+        if (iVar2 != 0) {
+          iVar2 = _strcmp(local_248,"POSIX");
+          local_3d4 = (uint)(iVar2 == 0);
+        }
+      }
+    }
+  }
+  local_23c = local_3d4;
+  if (local_3d4 == 0) {
+                    /* Unresolved local var: char * tail@[DW_OP_breg31(sp): +560] */
+    local_250 = 0;
+    ___kmp_str_split(local_248,0x40);
+    ___kmp_str_split(local_248,0x2e,&local_248,&local_250);
+    ___kmp_str_split(local_248,0x5f,&local_248,&local_250);
+    iVar2 = _strcmp(local_248,"en");
+    local_23c = (uint)(iVar2 == 0);
+  }
+  _free(local_248);
+  if (local_23c == 0) {
+    cat = (nl_catd)_catopen(name,0);
+    status = KMP_I18N_ABSENT;
+    if (cat != (nl_catd)0xffffffffffffffff) {
+      status = KMP_I18N_OPENED;
+    }
+    if (status == KMP_I18N_ABSENT) {
+      if (1 < *piVar1) {
+                    /* Unresolved local var: int error@[DW_OP_breg31(sp): +556]
+                       Unresolved local var: char * nlspath@[DW_OP_breg31(sp): +544]
+                       Unresolved local var: char * lang@[DW_OP_breg31(sp): +536]
+                       Unresolved local var: kmp_msg_t err_code@[DW_OP_breg31(sp): +512] */
+        piVar3 = ___error();
+        local_254 = *piVar3;
+                    /* Unresolved local var: char * name@[DW_OP_breg31(sp): +312]
+                       Unresolved local var: char * nlspath@[DW_OP_breg31(sp): +304] */
+        local_260 = (void *)___kmp_env_get();
+        local_268 = (void *)___kmp_env_get();
+        __kmp_msg_error_code(&local_280,local_254);
+        __kmp_msg_format(&kStack_298,0x40002);
+        local_2b0.str = local_280.str;
+        local_2b0.type = local_280.type;
+        local_2b0.num = local_280.num;
+        local_2b0.len = local_280.len;
+        __kmp_msg_format(&kStack_2c8,0x50017);
+        __kmp_msg_format(&kStack_2e0,0x50017);
+        local_300.str = __kmp_msg_null.str;
+        local_300.type = __kmp_msg_null.type;
+        local_300.num = __kmp_msg_null.num;
+        local_300.len = __kmp_msg_null.len;
+        __kmp_msg(kmp_ms_warning,&kStack_298);
+        if (*piVar1 == 0) {
+          ___kmp_str_free(&local_280.str);
+        }
+        __kmp_msg_format(&kStack_318,0x40003);
+        local_330.str = __kmp_msg_null.str;
+        local_330.type = __kmp_msg_null.type;
+        local_330.num = __kmp_msg_null.num;
+        local_330.len = __kmp_msg_null.len;
+        __kmp_msg(kmp_ms_inform,&kStack_318);
+        _free(local_260);
+        _free(local_268);
+      }
+    }
+    else {
+      local_334 = 1;
+      local_338 = 4;
+      local_340 = __kmp_i18n_default_table.sect[1].str[4];
+      local_238 = local_228;
+      local_230 = 0x200;
+      local_22c = 0;
+      local_228[0] = '\0';
+      _catgets((nl_catd)cat,1,4,(char *)0x0);
+      ___kmp_str_buf_print(&local_238,"%s");
+      iVar2 = _strcmp(local_238,local_340);
+      if (iVar2 != 0) {
+        __kmp_i18n_catclose();
+        status = KMP_I18N_ABSENT;
+        if (1 < *piVar1) {
+          local_348 = "NLSPATH";
+          local_350 = (void *)___kmp_env_get("NLSPATH");
+          __kmp_msg_format(&kStack_368,0x400b5);
+          __kmp_msg_format(&kStack_380,0x50017);
+          local_3a0.str = __kmp_msg_null.str;
+          local_3a0.type = __kmp_msg_null.type;
+          local_3a0.num = __kmp_msg_null.num;
+          local_3a0.len = __kmp_msg_null.len;
+          __kmp_msg(kmp_ms_warning,&kStack_368);
+          __kmp_msg_format(&kStack_3b8,0x40003);
+          __kmp_msg(kmp_ms_inform,&kStack_3b8);
+          _free(local_350);
+        }
+      }
+      ___kmp_str_buf_free(&local_238);
+    }
+  }
+  else {
+    status = KMP_I18N_ABSENT;
+  }
+  if (*____stack_chk_guard == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_bootstrap_lock
+// Entry: 00000648
+// Signature: void __cdecl __kmp_release_bootstrap_lock(kmp_bootstrap_lock_t * lck)
+// ========================================
+
+
+void __kmp_release_bootstrap_lock(kmp_bootstrap_lock_t *lck)
+
+{
+  ___kmp_release_ticket_lock(lck,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_i18n_catclose
+// Entry: 00000670
+// Signature: void __kmp_i18n_catclose(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_i18n_catclose(void)
+
+{
+  if (status == KMP_I18N_OPENED) {
+    _catclose((nl_catd)cat);
+    cat = (nl_catd)0xffffffffffffffff;
+  }
+  status = KMP_I18N_CLOSED;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_i18n_catgets
+// Entry: 000006c8
+// Signature: char * __cdecl __kmp_i18n_catgets(kmp_i18n_id_t id)
+// ========================================
+
+
+char * __kmp_i18n_catgets(kmp_i18n_id_t id)
+
+{
+  int iVar1;
+  kmp_i18n_id_t kVar2;
+  char *local_28;
+  
+                    /* Unresolved local var: int section@[???]
+                       Unresolved local var: int number@[???]
+                       Unresolved local var: char * message@[DW_OP_breg31(sp): +8] */
+  iVar1 = (int)id >> 0x10;
+  kVar2 = id & 0xffff;
+  local_28 = (char *)0x0;
+  if ((((0 < iVar1) && (iVar1 <= __kmp_i18n_default_table.size)) && (kVar2 != kmp_i18n_null)) &&
+     ((int)kVar2 <= __kmp_i18n_default_table.sect[iVar1].size)) {
+    if (status == KMP_I18N_CLOSED) {
+      __kmp_i18n_catopen();
+    }
+    if (status == KMP_I18N_OPENED) {
+      local_28 = _catgets((nl_catd)cat,iVar1,kVar2,
+                          __kmp_i18n_default_table.sect[iVar1].str[(int)kVar2]);
+    }
+    if (local_28 == (char *)0x0) {
+      local_28 = __kmp_i18n_default_table.sect[iVar1].str[(int)kVar2];
+    }
+  }
+  if (local_28 == (char *)0x0) {
+    local_28 = no_message_available;
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_i18n_dump_catalog
+// Entry: 00000854
+// Signature: void __cdecl __kmp_i18n_dump_catalog(kmp_str_buf_t * buffer)
+// ========================================
+
+
+void __kmp_i18n_dump_catalog(kmp_str_buf_t *buffer)
+
+{
+  kmp_i18n_id_t local_24;
+  int local_20;
+  
+                    /* Unresolved local var: int num_of_ranges@[???]
+                       Unresolved local var: int range@[???]
+                       Unresolved local var: kmp_i18n_id_t id@[???] */
+  for (local_20 = 0; local_20 < 5; local_20 = local_20 + 1) {
+    ___kmp_str_buf_print(buffer,"*** Set #%d ***\n");
+    local_24 = __kmp_i18n_dump_catalog::ranges[local_20].first;
+    while (local_24 = local_24 + 1,
+          (int)local_24 < (int)__kmp_i18n_dump_catalog::ranges[local_20].last) {
+      __kmp_i18n_catgets(local_24);
+      ___kmp_str_buf_print(buffer,"%d: <<%s>>\n");
+    }
+  }
+  ___kmp_printf("%s");
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_msg_format
+// Entry: 00000988
+// Signature: kmp_msg_t __cdecl __kmp_msg_format(kmp_msg_t * __return_storage_ptr__, uint id_arg, ...)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_msg_format(kmp_msg_t *__return_storage_ptr__,uint id_arg,...)
+
+{
+  char *pcVar1;
+  char *local_238;
+  undefined4 local_230;
+  int local_22c;
+  char local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: va_list args@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: kmp_str_buf_t buffer@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: kmp_i18n_id_t id@[DW_OP_breg31(sp): +20]
+                       Unresolved local var: kmp_msg_t msg@[???] */
+  local_28 = *____stack_chk_guard;
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = '\0';
+  pcVar1 = __kmp_i18n_catgets(id_arg);
+  ___kmp_str_buf_vprint(&local_238,pcVar1,&stack0x00000000);
+  ___kmp_str_buf_detach(&local_238);
+  __return_storage_ptr__->type = (int)id_arg >> 0x10;
+  __return_storage_ptr__->num = id_arg & 0xffff;
+  __return_storage_ptr__->str = local_238;
+  __return_storage_ptr__->len = (long)local_22c;
+  if (*____stack_chk_guard != local_28) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_msg_error_code
+// Entry: 00000a60
+// Signature: kmp_msg_t __cdecl __kmp_msg_error_code(kmp_msg_t * __return_storage_ptr__, int code)
+// ========================================
+
+
+void __kmp_msg_error_code(kmp_msg_t *__return_storage_ptr__,int code)
+
+{
+  char *pcVar1;
+  size_t sVar2;
+  
+                    /* Unresolved local var: kmp_msg_t msg@[???] */
+  __return_storage_ptr__->type = kmp_mt_syserr;
+  __return_storage_ptr__->num = code;
+  pcVar1 = sys_error(code);
+  __return_storage_ptr__->str = pcVar1;
+  sVar2 = _strlen(__return_storage_ptr__->str);
+  __return_storage_ptr__->len = sVar2;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: sys_error
+// Entry: 00000ab4
+// Signature: char * __cdecl sys_error(int err)
+// ========================================
+
+
+char * sys_error(int err)
+
+{
+  int *piVar1;
+  kmp_msg_t kStack_88;
+  kmp_msg_t local_70;
+  kmp_msg_t kStack_50;
+  int local_34;
+  char *local_30;
+  int local_24;
+  char *local_20;
+  int local_14;
+  
+                    /* Unresolved local var: char * message@[???]
+                       Unresolved local var: int size@[???]
+                       Unresolved local var: char * buffer@[???]
+                       Unresolved local var: int rc@[???] */
+  local_20 = (char *)0x0;
+  local_24 = 0x800;
+  local_14 = err;
+  local_30 = _malloc(0x800);
+  if (local_30 == (char *)0x0) {
+    __kmp_msg_format(&kStack_50,0x4006f);
+    local_70.str = __kmp_msg_null.str;
+    local_70.type = __kmp_msg_null.type;
+    local_70.num = __kmp_msg_null.num;
+    local_70.len = __kmp_msg_null.len;
+                    /* WARNING: Subroutine does not return */
+    __kmp_fatal(&kStack_50);
+  }
+  local_34 = _strerror_r(local_14,local_30,(long)local_24);
+  if (local_34 == -1) {
+    piVar1 = ___error();
+    local_34 = *piVar1;
+  }
+  while( true ) {
+    if (local_34 != 0x22) {
+      if (local_34 == 0) {
+        local_20 = local_30;
+      }
+      else {
+        _free(local_30);
+      }
+      if (local_20 == (char *)0x0) {
+        local_20 = (char *)___kmp_str_format("%s");
+      }
+      return local_20;
+    }
+    _free(local_30);
+    local_24 = local_24 << 1;
+    local_30 = _malloc((long)local_24);
+    if (local_30 == (char *)0x0) break;
+    local_34 = _strerror_r(local_14,local_30,(long)local_24);
+    if (local_34 == -1) {
+      piVar1 = ___error();
+      local_34 = *piVar1;
+    }
+  }
+  __kmp_msg_format(&kStack_88,0x4006f);
+                    /* WARNING: Subroutine does not return */
+  __kmp_fatal(&kStack_88);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_msg_error_mesg
+// Entry: 00000ca4
+// Signature: kmp_msg_t __cdecl __kmp_msg_error_mesg(kmp_msg_t * __return_storage_ptr__, char * mesg)
+// ========================================
+
+
+void __kmp_msg_error_mesg(kmp_msg_t *__return_storage_ptr__,char *mesg)
+
+{
+  char *pcVar1;
+  size_t sVar2;
+  
+                    /* Unresolved local var: kmp_msg_t msg@[???] */
+  __return_storage_ptr__->type = kmp_mt_syserr;
+  __return_storage_ptr__->num = 0;
+  pcVar1 = (char *)___kmp_str_format("%s");
+  __return_storage_ptr__->str = pcVar1;
+  sVar2 = _strlen(__return_storage_ptr__->str);
+  __return_storage_ptr__->len = sVar2;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_msg
+// Entry: 00000d00
+// Signature: void __cdecl __kmp_msg(kmp_msg_severity_t severity, kmp_msg_t * message, ...)
+// ========================================
+
+
+void __kmp_msg(kmp_msg_severity_t severity,kmp_msg_t *message,...)
+
+{
+  kmp_msg_t local_40;
+  
+                    /* Unresolved local var: va_list args@[???] */
+  local_40.str = message->str;
+  local_40.type = message->type;
+  local_40.num = message->num;
+  local_40.len = message->len;
+  __kmp_msg(severity,&local_40,&stack0x00000000);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_msg
+// Entry: 00000d4c
+// Signature: void __cdecl __kmp_msg(kmp_msg_severity_t severity, kmp_msg_t * message, va_list args)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_msg(kmp_msg_severity_t severity,kmp_msg_t *message,va_list args)
+
+{
+  long *plVar1;
+  undefined8 *puVar2;
+  kmp_msg_t local_2d0;
+  kmp_msg_t local_2b8;
+  undefined8 local_2a0;
+  char *pcStack_298;
+  size_t local_290;
+  kmp_msg_t local_288;
+  kmp_msg_t local_270;
+  uint local_24c;
+  long *local_248;
+  kmp_msg_severity_t local_23c;
+  undefined1 *local_238;
+  undefined4 local_230;
+  undefined4 local_22c;
+  undefined1 local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: kmp_i18n_id_t format@[DW_OP_breg31(sp): +196]
+                       Unresolved local var: kmp_msg_t fmsg@[DW_OP_breg31(sp): +160]
+                       Unresolved local var: kmp_str_buf_t buffer@[DW_OP_breg31(sp): +216] */
+  local_28 = *____stack_chk_guard;
+  local_248 = (long *)args;
+  local_23c = severity;
+  if ((severity == kmp_ms_fatal) || (*____kmp_generate_warnings != 0)) {
+    local_238 = local_228;
+    local_230 = 0x200;
+    local_22c = 0;
+    local_228[0] = 0;
+    if (severity == kmp_ms_inform) {
+      local_24c = 0x30001;
+    }
+    else if (severity == kmp_ms_warning) {
+      local_24c = 0x30002;
+    }
+    else if (severity == kmp_ms_fatal) {
+      local_24c = 0x30003;
+    }
+    __kmp_msg_format(&local_288,local_24c);
+    local_270.str = local_288.str;
+    local_270.type = local_288.type;
+    local_270.num = local_288.num;
+    local_270.len = local_288.len;
+    ___kmp_str_free(&message->str);
+    ___kmp_str_buf_cat(&local_238,local_270.str,local_270.len);
+    ___kmp_str_free(&local_270.str);
+    while( true ) {
+      plVar1 = local_248 + 1;
+      puVar2 = (undefined8 *)*local_248;
+      pcStack_298 = (char *)puVar2[1];
+      local_2a0 = *puVar2;
+      local_290 = puVar2[2];
+      message->str = pcStack_298;
+      message->type = (int)local_2a0;
+      message->num = (int)((ulong)local_2a0 >> 0x20);
+      message->len = local_290;
+      local_248 = plVar1;
+      if ((message->type == kmp_mt_dummy) && (message->str == (char *)0x0)) break;
+      if (message->type == kmp_mt_syserr) {
+        local_24c = 0x30004;
+        __kmp_msg_format(&local_2d0,0x30004);
+        local_270.str = local_2d0.str;
+        local_270.type = local_2d0.type;
+        local_270.num = local_2d0.num;
+        local_270.len = local_2d0.len;
+      }
+      else if (message->type == kmp_mt_hint) {
+        local_24c = 0x30005;
+        __kmp_msg_format(&local_2b8,0x30005);
+        local_270.str = local_2b8.str;
+        local_270.type = local_2b8.type;
+        local_270.num = local_2b8.num;
+        local_270.len = local_2b8.len;
+      }
+      ___kmp_str_free(&message->str);
+      ___kmp_str_buf_cat(&local_238,local_270.str,local_270.len);
+      ___kmp_str_free(&local_270.str);
+    }
+    ___kmp_printf("%s");
+    ___kmp_str_buf_free(&local_238);
+  }
+  if (*____stack_chk_guard == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: __kmp_fatal
+// Entry: 00001054
+// Signature: noreturn void __cdecl __kmp_fatal(kmp_msg_t * message, ...)
+// ========================================
+
+
+void __kmp_fatal(kmp_msg_t *message,...)
+
+{
+  code *pcVar1;
+  kmp_msg_t local_30;
+  
+                    /* Unresolved local var: va_list args@[???] */
+  local_30.str = message->str;
+  local_30.type = message->type;
+  local_30.num = message->num;
+  local_30.len = message->len;
+  __kmp_msg(kmp_ms_fatal,&local_30,&stack0x00000000);
+  ___kmp_abort_process();
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)UndefinedInstructionException(0,0x1090);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: ___error
+// Entry: 00018000
+// Signature: int * ___error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int * ___error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_abort_process
+// Entry: 00018100
+// Signature: undefined ___kmp_abort_process(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_abort_process(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_acquire_ticket_lock
+// Entry: 00018200
+// Signature: undefined ___kmp_acquire_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_acquire_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_env_get
+// Entry: 00018300
+// Signature: undefined ___kmp_env_get(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_env_get(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_printf
+// Entry: 00018500
+// Signature: undefined ___kmp_printf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_printf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_release_ticket_lock
+// Entry: 00018600
+// Signature: undefined ___kmp_release_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_release_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_cat
+// Entry: 00018700
+// Signature: undefined ___kmp_str_buf_cat(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_cat(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_detach
+// Entry: 00018800
+// Signature: undefined ___kmp_str_buf_detach(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_detach(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 00018900
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_print
+// Entry: 00018a00
+// Signature: undefined ___kmp_str_buf_print(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_print(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_vprint
+// Entry: 00018b00
+// Signature: undefined ___kmp_str_buf_vprint(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_vprint(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_format
+// Entry: 00018c00
+// Signature: undefined ___kmp_str_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_free
+// Entry: 00018d00
+// Signature: undefined ___kmp_str_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_split
+// Entry: 00018e00
+// Signature: undefined ___kmp_str_split(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_split(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00018f00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _catclose
+// Entry: 00019100
+// Signature: int _catclose(nl_catd param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _catclose(nl_catd param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _catgets
+// Entry: 00019200
+// Signature: char * _catgets(nl_catd param_1, int param_2, int param_3, char * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _catgets(nl_catd param_1,int param_2,int param_3,char *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _catopen
+// Entry: 00019300
+// Signature: nl_catd _catopen(char * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+nl_catd _catopen(char *param_1,int param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00019400
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00019500
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00019600
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strerror_r
+// Entry: 00019700
+// Signature: int _strerror_r(int param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strerror_r(int param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00019800
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 37
+// Failed: 0
+// Skipped external functions: 0

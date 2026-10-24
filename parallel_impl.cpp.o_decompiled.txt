@@ -1,0 +1,5142 @@
+Program: parallel_impl.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: thread_body
+// Entry: 00000000
+// Signature: undefined __thiscall thread_body(WorkerThread * this)
+// ========================================
+
+
+/* cv::WorkerThread::thread_body() */
+
+ulong __thiscall cv::WorkerThread::thread_body(WorkerThread *this)
+
+{
+  pthread_mutex_t *ppVar1;
+  ParallelJob *pPVar2;
+  ParallelJob *pPVar3;
+  WorkerThread WVar4;
+  ParallelJob PVar5;
+  int iVar6;
+  ParallelJob *this_00;
+  long *plVar7;
+  char cVar8;
+  bool bVar9;
+  bool bVar10;
+  uint uVar11;
+  ulong uVar12;
+  long lVar13;
+  long *plVar14;
+  byte bVar15;
+  long *local_68;
+  
+  uVar12 = cv::utils::getThreadID();
+  if (((byte)this[0x19] & 1) == 0) {
+    ppVar1 = (pthread_mutex_t *)(this + 0x30);
+    bVar15 = 1;
+    do {
+      if ((bVar15 != 0) && (0 < DAT_0000475c)) {
+        uVar11 = 0;
+        do {
+          while( true ) {
+            if (((byte)this[0x1a] & 1) != 0) goto LAB_00000100;
+            if ((__MergedGlobals < 1) || (((uVar11 & 1) == 0 && (__MergedGlobals <= (int)uVar11))))
+            break;
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            Yield();
+            uVar11 = uVar11 + 1;
+            if (DAT_0000475c <= (int)uVar11) goto LAB_00000100;
+          }
+          _sched_yield();
+          uVar11 = uVar11 + 1;
+        } while ((int)uVar11 < DAT_0000475c);
+LAB_00000100:
+        bVar15 = 0;
+      }
+      _pthread_mutex_lock(ppVar1);
+      WVar4 = this[0x1a];
+      while (((byte)WVar4 & 1) == 0) {
+        this[0x70] = (WorkerThread)0x0;
+        _pthread_cond_wait((pthread_cond_t *)(this + 0x78),ppVar1);
+        this[0x70] = (WorkerThread)0x1;
+        WVar4 = this[0x1a];
+      }
+      bVar10 = DAT_00004764 == 0;
+      local_68 = (long *)0x0;
+      this_00 = *(ParallelJob **)(this + 0x20);
+      plVar7 = *(long **)(this + 0x28);
+      if (plVar7 == (long *)0x0) {
+        *(undefined8 *)(this + 0x20) = 0;
+        *(undefined8 *)(this + 0x28) = 0;
+      }
+      else {
+        plVar14 = plVar7 + 1;
+        do {
+          cVar8 = '\x01';
+          bVar9 = (bool)ExclusiveMonitorPass(plVar14,0x10);
+          if (bVar9) {
+            *plVar14 = *plVar14 + 1;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+        plVar14 = *(long **)(this + 0x28);
+        *(undefined8 *)(this + 0x20) = 0;
+        *(undefined8 *)(this + 0x28) = 0;
+        local_68 = plVar7;
+        if (plVar14 != (long *)0x0) {
+          plVar7 = plVar14 + 1;
+          do {
+            lVar13 = *plVar7;
+            cVar8 = '\x01';
+            bVar9 = (bool)ExclusiveMonitorPass(plVar7,0x10);
+            if (bVar9) {
+              *plVar7 = lVar13 + -1;
+              cVar8 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar8 != '\0');
+          if (lVar13 == 0) {
+            (**(code **)(*plVar14 + 0x10))(plVar14);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+      }
+      plVar7 = local_68;
+      this[0x1a] = (WorkerThread)0x0;
+      uVar11 = _pthread_mutex_unlock(ppVar1);
+      uVar12 = (ulong)uVar11;
+      bVar15 = bVar10 | bVar15;
+      if (((((byte)this[0x19] & 1) == 0) && (this_00 != (ParallelJob *)0x0)) &&
+         (*(int *)(this_00 + 0x1c) < *(int *)(this_00 + 0x14) - *(int *)(this_00 + 0x10))) {
+        pPVar2 = this_00 + 0x60;
+        do {
+          cVar8 = '\x01';
+          bVar10 = (bool)ExclusiveMonitorPass(pPVar2,0x10);
+          if (bVar10) {
+            *(int *)pPVar2 = *(int *)pPVar2 + 1;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+        uVar12 = ParallelJob::execute(this_00,true);
+        pPVar3 = this_00 + 0xa8;
+        do {
+          iVar6 = *(int *)pPVar3;
+          cVar8 = '\x01';
+          bVar10 = (bool)ExclusiveMonitorPass(pPVar3,0x10);
+          if (bVar10) {
+            *(int *)pPVar3 = iVar6 + 1;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+        if (0 < DAT_00004764) {
+          if (*(int *)pPVar2 < DAT_00004764) {
+            bVar15 = 1;
+          }
+          else {
+            bVar15 = (byte)this[8] & 1;
+          }
+        }
+        if (*(int *)pPVar2 == iVar6 + 1) {
+          PVar5 = this_00[0xf0];
+          this_00[0xf0] = (ParallelJob)0x1;
+          local_68 = (long *)0x0;
+          if (plVar7 != (long *)0x0) {
+            plVar14 = plVar7 + 1;
+            do {
+              lVar13 = *plVar14;
+              cVar8 = '\x01';
+              bVar10 = (bool)ExclusiveMonitorPass(plVar14,0x10);
+              if (bVar10) {
+                *plVar14 = lVar13 + -1;
+                cVar8 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar8 != '\0');
+            if (lVar13 == 0) {
+              (**(code **)(*plVar7 + 0x10))(plVar7);
+              uVar12 = std::__shared_weak_count::__release_weak();
+            }
+          }
+          if (((byte)PVar5 & 1) == 0) {
+            _pthread_mutex_lock((pthread_mutex_t *)(*(long *)this + 0x48));
+            _pthread_mutex_unlock((pthread_mutex_t *)(*(long *)this + 0x48));
+            uVar11 = _pthread_cond_broadcast((pthread_cond_t *)(*(long *)this + 0x88));
+            uVar12 = (ulong)uVar11;
+          }
+        }
+      }
+      if (local_68 != (long *)0x0) {
+        plVar7 = local_68 + 1;
+        do {
+          lVar13 = *plVar7;
+          cVar8 = '\x01';
+          bVar10 = (bool)ExclusiveMonitorPass(plVar7,0x10);
+          if (bVar10) {
+            *plVar7 = lVar13 + -1;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+        if (lVar13 == 0) {
+          (**(code **)(*local_68 + 0x10))(local_68);
+          uVar12 = std::__shared_weak_count::__release_weak();
+        }
+      }
+    } while (((byte)this[0x19] & 1) == 0);
+  }
+  return uVar12;
+}
+
+
+
+
+// ========================================
+// Function: execute
+// Entry: 00000378
+// Signature: undefined __thiscall execute(ParallelJob * this, bool param_1)
+// ========================================
+
+
+/* cv::ParallelJob::execute(bool) */
+
+int __thiscall cv::ParallelJob::execute(ParallelJob *this,bool param_1)
+
+{
+  ParallelJob *pPVar1;
+  undefined *puVar2;
+  long lVar3;
+  int iVar4;
+  undefined8 ***pppuVar5;
+  uint uVar6;
+  uint uVar7;
+  char cVar8;
+  bool bVar9;
+  int iVar10;
+  undefined *puVar11;
+  code *pcVar12;
+  undefined8 *puVar13;
+  ostream *poVar14;
+  int iVar15;
+  undefined8 uVar16;
+  int iVar17;
+  int iVar18;
+  undefined8 **local_198 [2];
+  char local_181;
+  undefined8 local_180;
+  undefined8 local_178;
+  undefined *local_170;
+  long local_168 [8];
+  void *local_128;
+  undefined8 uStack_120;
+  char local_111;
+  undefined8 uStack_110;
+  undefined4 local_108;
+  undefined *local_100 [17];
+  undefined8 local_78;
+  undefined4 local_70;
+  
+  iVar10 = *(int *)(this + 0x14) - *(int *)(this + 0x10);
+  uVar6 = **(int **)this << 2;
+  uVar7 = **(int **)this * 2;
+  if (99 < uVar6) {
+    uVar6 = 100;
+  }
+  if (uVar6 <= uVar7) {
+    uVar6 = uVar7;
+  }
+  if (*(uint *)(this + 0x18) <= uVar6) {
+    uVar6 = *(uint *)(this + 0x18);
+  }
+  pPVar1 = this + 0x1c;
+  iVar17 = 0;
+  if (uVar6 != 0) {
+    iVar17 = (iVar10 - *(int *)pPVar1) / (int)uVar6;
+  }
+  if (iVar17 < 2) {
+    iVar17 = 1;
+  }
+  do {
+    iVar18 = *(int *)pPVar1;
+    cVar8 = '\x01';
+    bVar9 = (bool)ExclusiveMonitorPass(pPVar1,0x10);
+    if (bVar9) {
+      *(int *)pPVar1 = iVar18 + iVar17;
+      cVar8 = ExclusiveMonitorsStatus();
+    }
+    puVar11 = std::stringstream::vtable;
+  } while (cVar8 != '\0');
+  if (iVar18 < iVar10) {
+    iVar15 = 0;
+    if (param_1) {
+      puVar2 = std::stringstream::vtable + 0x40;
+      lVar3 = std::stringbuf::vtable + 0x10;
+      do {
+        iVar4 = iVar18 + iVar17;
+        if (iVar10 <= iVar18 + iVar17) {
+          iVar4 = iVar10;
+        }
+        local_180 = (undefined *)
+                    CONCAT44(*(int *)(this + 0x10) + iVar4,*(int *)(this + 0x10) + iVar18);
+        (**(code **)(**(long **)(this + 8) + 0x10))(*(long **)(this + 8),&local_180);
+        if (((byte)this[0xf0] & 1) != 0) {
+          puVar13 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+          if ((puVar13 == (undefined8 *)0x0) || (1 < *(int *)(puVar13 + 1))) {
+            local_180 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+            local_100[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+            local_178 = 0;
+            local_170 = puVar2;
+            std::ios_base::init((ios *)local_100);
+            local_70 = 0xffffffff;
+            local_180 = puVar11 + 0x18;
+            local_100[0] = puVar11 + 0x68;
+            local_78 = 0;
+            local_170 = puVar11 + 0x40;
+            std::streambuf::streambuf((streambuf *)local_168);
+            uStack_120 = 0;
+            local_128 = (void *)0x0;
+            uStack_110 = 0;
+            local_111 = '\0';
+            local_108 = 0x18;
+            local_168[0] = lVar3;
+            poVar14 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                ((ostream *)&local_170,"\t\t\t\tBUG! Job: ",0xe);
+            poVar14 = (ostream *)std::ostream::operator<<(poVar14,this);
+            poVar14 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                (poVar14," ",1);
+            poVar14 = (ostream *)std::ostream::operator<<(poVar14,iVar18);
+            poVar14 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                (poVar14," ",1);
+            poVar14 = (ostream *)std::ostream::operator<<(poVar14,*(int *)(this + 0x60));
+            poVar14 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                (poVar14," ",1);
+            std::ostream::operator<<(poVar14,*(int *)(this + 0xa8));
+            uVar16 = 0;
+            if (puVar13 != (undefined8 *)0x0) {
+              uVar16 = *puVar13;
+            }
+            std::stringbuf::str();
+            pppuVar5 = (undefined8 ***)local_198[0];
+            if (-1 < local_181) {
+              pppuVar5 = local_198;
+            }
+            cv::utils::logging::internal::writeLogMessageEx
+                      (2,uVar16,
+                       "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                       ,0x150,"execute",pppuVar5);
+            if (local_181 < '\0') {
+              operator_delete(local_198[0]);
+            }
+            local_180 = puVar11 + 0x18;
+            local_100[0] = puVar11 + 0x68;
+            local_170 = puVar11 + 0x40;
+            local_168[0] = std::stringbuf::vtable + 0x10;
+            if (local_111 < '\0') {
+              operator_delete(local_128);
+            }
+            std::streambuf::~streambuf((streambuf *)local_168);
+            std::iostream::~iostream((iostream *)&local_180);
+            std::ios::~ios((ios *)local_100);
+          }
+          if (((byte)this[0xf0] & 1) != 0) {
+            __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                      (&local_180,"!is_completed");
+            cv::error(-0xd7,(string *)&local_180,"execute",
+                      "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                      ,0x151);
+                    /* WARNING: Does not return */
+            pcVar12 = (code *)SoftwareBreakpoint(1,0x734);
+            (*pcVar12)();
+          }
+        }
+        iVar15 = iVar17 + iVar15;
+        iVar17 = 0;
+        if (uVar6 != 0) {
+          iVar17 = (iVar10 - *(int *)pPVar1) / (int)uVar6;
+        }
+        if (iVar17 < 2) {
+          iVar17 = 1;
+        }
+        do {
+          iVar18 = *(int *)pPVar1;
+          cVar8 = '\x01';
+          bVar9 = (bool)ExclusiveMonitorPass(pPVar1,0x10);
+          if (bVar9) {
+            *(int *)pPVar1 = iVar18 + iVar17;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+      } while (iVar18 < iVar10);
+    }
+    else {
+      do {
+        iVar15 = iVar17 + iVar15;
+        iVar4 = iVar18 + iVar17;
+        if (iVar10 <= iVar18 + iVar17) {
+          iVar4 = iVar10;
+        }
+        local_180 = (undefined *)
+                    CONCAT44(*(int *)(this + 0x10) + iVar4,*(int *)(this + 0x10) + iVar18);
+        (**(code **)(**(long **)(this + 8) + 0x10))(*(long **)(this + 8),&local_180);
+        iVar17 = 0;
+        if (uVar6 != 0) {
+          iVar17 = (iVar10 - *(int *)(this + 0x1c)) / (int)uVar6;
+        }
+        if (iVar17 < 2) {
+          iVar17 = 1;
+        }
+        do {
+          iVar18 = *(int *)pPVar1;
+          cVar8 = '\x01';
+          bVar9 = (bool)ExclusiveMonitorPass(pPVar1,0x10);
+          if (bVar9) {
+            *(int *)pPVar1 = iVar18 + iVar17;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+      } while (iVar18 < iVar10);
+    }
+  }
+  else {
+    iVar15 = 0;
+  }
+  return iVar15;
+}
+
+
+
+
+// ========================================
+// Function: ~Ptr
+// Entry: 000007bc
+// Signature: undefined __thiscall ~Ptr(Ptr<cv::ParallelJob> * this)
+// ========================================
+
+
+/* cv::Ptr<cv::ParallelJob>::~Ptr() */
+
+Ptr<cv::ParallelJob> * __thiscall cv::Ptr<cv::ParallelJob>::~Ptr(Ptr<cv::ParallelJob> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ThreadPool
+// Entry: 00000824
+// Signature: undefined __thiscall ThreadPool(ThreadPool * this)
+// ========================================
+
+
+/* cv::ThreadPool::ThreadPool() */
+
+ThreadPool * __thiscall cv::ThreadPool::ThreadPool(ThreadPool *this)
+
+{
+  undefined *puVar1;
+  undefined1 **ppuVar2;
+  undefined *puVar3;
+  long lVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined4 uVar8;
+  undefined8 *puVar9;
+  undefined8 uVar10;
+  undefined1 *local_190 [2];
+  char local_179;
+  undefined *local_178;
+  undefined8 local_170;
+  undefined *local_168;
+  long local_160 [8];
+  void *local_120;
+  undefined8 uStack_118;
+  long lStack_110;
+  undefined8 uStack_108;
+  undefined4 local_100;
+  undefined *local_f8 [17];
+  undefined8 local_70;
+  undefined4 local_68;
+  
+  *(undefined8 *)(this + 0xc0) = 0;
+  *(undefined8 *)(this + 0xb8) = 0;
+  *(undefined8 *)(this + 0xd8) = 0;
+  *(undefined8 *)(this + 0xd0) = 0;
+  *(undefined8 *)(this + 200) = 0;
+  iVar5 = _pthread_mutex_init((pthread_mutex_t *)(this + 8),(pthread_mutexattr_t *)0x0);
+  iVar6 = _pthread_mutex_init((pthread_mutex_t *)(this + 0x48),(pthread_mutexattr_t *)0x0);
+  iVar7 = _pthread_cond_init((pthread_cond_t *)(this + 0x88),(pthread_condattr_t *)0x0);
+  if (((iVar6 != 0 || iVar5 != 0) || iVar7 != 0) &&
+     ((puVar9 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag(),
+      puVar3 = std::stringstream::vtable, puVar9 == (undefined8 *)0x0 || (0 < *(int *)(puVar9 + 1)))
+     )) {
+    puVar1 = std::stringstream::vtable + 0x40;
+    local_f8[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    local_170 = 0;
+    local_178 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    local_168 = puVar1;
+    std::ios_base::init((ios *)local_f8);
+    local_68 = 0xffffffff;
+    local_178 = puVar3 + 0x18;
+    local_f8[0] = puVar3 + 0x68;
+    local_70 = 0;
+    local_168 = puVar1;
+    std::streambuf::streambuf((streambuf *)local_160);
+    lVar4 = std::stringbuf::vtable;
+    local_160[0] = std::stringbuf::vtable + 0x10;
+    uStack_118 = 0;
+    local_120 = (void *)0x0;
+    uStack_108 = 0;
+    lStack_110 = 0;
+    local_100 = 0x18;
+    std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+              ((ostream *)&local_168,"Failed to initialize ThreadPool (pthreads)",0x2a);
+    uVar10 = 0;
+    if (puVar9 != (undefined8 *)0x0) {
+      uVar10 = *puVar9;
+    }
+    std::stringbuf::str();
+    ppuVar2 = (undefined1 **)local_190[0];
+    if (-1 < local_179) {
+      ppuVar2 = local_190;
+    }
+    cv::utils::logging::internal::writeLogMessageEx
+              (1,uVar10,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+               ,0x1f1,"ThreadPool",ppuVar2);
+    if (local_179 < '\0') {
+      operator_delete(local_190[0]);
+    }
+    local_178 = puVar3 + 0x18;
+    local_f8[0] = puVar3 + 0x68;
+    local_168 = puVar3 + 0x40;
+    local_160[0] = lVar4 + 0x10;
+    if (lStack_110 < 0) {
+      operator_delete(local_120);
+    }
+    std::streambuf::~streambuf((streambuf *)local_160);
+    std::iostream::~iostream((iostream *)&local_178);
+    std::ios::~ios((ios *)local_f8);
+  }
+  uVar8 = cv::defaultNumberOfThreads();
+  *(undefined4 *)this = uVar8;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00000abc
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* std::stringstream::~stringstream() */
+
+stringstream * __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)this = vtable + 0x18;
+  *(undefined **)(this + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this + 0x10) = puVar1 + 0x40;
+  *(long *)(this + 0x18) = lVar2 + 0x10;
+  if ((char)this[0x6f] < '\0') {
+    operator_delete(*(void **)(this + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x18));
+  std::iostream::~iostream((iostream *)this);
+  std::ios::~ios((ios *)(this + 0x80));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 00000b50
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * this)
+// ========================================
+
+
+/* std::vector<cv::Ptr<cv::WorkerThread>, std::allocator<cv::Ptr<cv::WorkerThread> >
+   >::~vector[abi:ne180100]() */
+
+vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * __thiscall
+std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::
+~vector_abi_ne180100_
+          (vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  long lVar5;
+  long *plVar6;
+  void *pvVar7;
+  void *pvVar8;
+  
+  pvVar7 = *(void **)this;
+  if (pvVar7 != (void *)0x0) {
+    pvVar8 = *(void **)(this + 8);
+    pvVar4 = pvVar7;
+    if (pvVar8 != pvVar7) {
+      do {
+        plVar6 = *(long **)((long)pvVar8 + -8);
+        if (plVar6 != (long *)0x0) {
+          plVar1 = plVar6 + 1;
+          do {
+            lVar5 = *plVar1;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = lVar5 + -1;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar5 == 0) {
+            (**(code **)(*plVar6 + 0x10))(plVar6);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        pvVar8 = (void *)((long)pvVar8 + -0x10);
+      } while (pvVar8 != pvVar7);
+      pvVar4 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar7;
+    operator_delete(pvVar4);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ThreadPool
+// Entry: 00000be8
+// Signature: undefined __thiscall ThreadPool(ThreadPool * this)
+// ========================================
+
+
+/* cv::ThreadPool::ThreadPool() */
+
+ThreadPool * __thiscall cv::ThreadPool::ThreadPool(ThreadPool *this)
+
+{
+  undefined *puVar1;
+  undefined1 **ppuVar2;
+  undefined *puVar3;
+  long lVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined4 uVar8;
+  undefined8 *puVar9;
+  undefined8 uVar10;
+  undefined1 *apuStack_190 [2];
+  char cStack_179;
+  undefined *puStack_178;
+  undefined8 uStack_170;
+  undefined *puStack_168;
+  long alStack_160 [8];
+  void *pvStack_120;
+  undefined8 uStack_118;
+  long lStack_110;
+  undefined8 uStack_108;
+  undefined4 uStack_100;
+  undefined *apuStack_f8 [17];
+  undefined8 uStack_70;
+  undefined4 uStack_68;
+  
+  *(undefined8 *)(this + 0xc0) = 0;
+  *(undefined8 *)(this + 0xb8) = 0;
+  *(undefined8 *)(this + 0xd8) = 0;
+  *(undefined8 *)(this + 0xd0) = 0;
+  *(undefined8 *)(this + 200) = 0;
+  iVar5 = _pthread_mutex_init((pthread_mutex_t *)(this + 8),(pthread_mutexattr_t *)0x0);
+  iVar6 = _pthread_mutex_init((pthread_mutex_t *)(this + 0x48),(pthread_mutexattr_t *)0x0);
+  iVar7 = _pthread_cond_init((pthread_cond_t *)(this + 0x88),(pthread_condattr_t *)0x0);
+  if (((iVar6 != 0 || iVar5 != 0) || iVar7 != 0) &&
+     ((puVar9 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag(),
+      puVar3 = std::stringstream::vtable, puVar9 == (undefined8 *)0x0 || (0 < *(int *)(puVar9 + 1)))
+     )) {
+    puVar1 = std::stringstream::vtable + 0x40;
+    apuStack_f8[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    uStack_170 = 0;
+    puStack_178 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    puStack_168 = puVar1;
+    std::ios_base::init((ios *)apuStack_f8);
+    uStack_68 = 0xffffffff;
+    puStack_178 = puVar3 + 0x18;
+    apuStack_f8[0] = puVar3 + 0x68;
+    uStack_70 = 0;
+    puStack_168 = puVar1;
+    std::streambuf::streambuf((streambuf *)alStack_160);
+    lVar4 = std::stringbuf::vtable;
+    alStack_160[0] = std::stringbuf::vtable + 0x10;
+    uStack_118 = 0;
+    pvStack_120 = (void *)0x0;
+    uStack_108 = 0;
+    lStack_110 = 0;
+    uStack_100 = 0x18;
+    std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+              ((ostream *)&puStack_168,"Failed to initialize ThreadPool (pthreads)",0x2a);
+    uVar10 = 0;
+    if (puVar9 != (undefined8 *)0x0) {
+      uVar10 = *puVar9;
+    }
+    std::stringbuf::str();
+    ppuVar2 = (undefined1 **)apuStack_190[0];
+    if (-1 < cStack_179) {
+      ppuVar2 = apuStack_190;
+    }
+    cv::utils::logging::internal::writeLogMessageEx
+              (1,uVar10,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+               ,0x1f1,"ThreadPool",ppuVar2);
+    if (cStack_179 < '\0') {
+      operator_delete(apuStack_190[0]);
+    }
+    puStack_178 = puVar3 + 0x18;
+    apuStack_f8[0] = puVar3 + 0x68;
+    puStack_168 = puVar3 + 0x40;
+    alStack_160[0] = lVar4 + 0x10;
+    if (lStack_110 < 0) {
+      operator_delete(pvStack_120);
+    }
+    std::streambuf::~streambuf((streambuf *)alStack_160);
+    std::iostream::~iostream((iostream *)&puStack_178);
+    std::ios::~ios((ios *)apuStack_f8);
+  }
+  uVar8 = cv::defaultNumberOfThreads();
+  *(undefined4 *)this = uVar8;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: reconfigure_
+// Entry: 00000bec
+// Signature: undefined __thiscall reconfigure_(ThreadPool * this, uint param_1)
+// ========================================
+
+
+/* cv::ThreadPool::reconfigure_(unsigned int) */
+
+undefined8 __thiscall cv::ThreadPool::reconfigure_(ThreadPool *this,uint param_1)
+
+{
+  long *plVar1;
+  undefined8 *puVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  char cVar5;
+  bool bVar6;
+  WorkerThread *pWVar7;
+  WorkerThread *pWVar8;
+  WorkerThread *pWVar9;
+  WorkerThread *pWVar10;
+  Ptr *pPVar11;
+  ulong uVar12;
+  long lVar13;
+  long lVar14;
+  vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *this_00;
+  long *plVar15;
+  ulong uVar16;
+  long lVar17;
+  long *plVar18;
+  ulong uVar19;
+  WorkerThread *local_78;
+  WorkerThread *local_70;
+  
+  uVar19 = (ulong)param_1;
+  this_00 = (vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *)
+            (this + 0xb8);
+  uVar16 = *(long *)(this + 0xc0) - *(long *)this_00 >> 4;
+  if (uVar16 - uVar19 != 0) {
+    if (uVar16 < uVar19) {
+      if (uVar16 < uVar19) {
+        do {
+          pWVar10 = operator_new(0xa8);
+          WorkerThread::WorkerThread(pWVar10,this,(uint)uVar16);
+          local_78 = pWVar10;
+          local_70 = operator_new(0x20);
+          *(undefined ***)local_70 = &PTR____shared_ptr_pointer_00003d68;
+          *(undefined8 *)(local_70 + 8) = 0;
+          *(undefined8 *)(local_70 + 0x10) = 0;
+          *(WorkerThread **)(local_70 + 0x18) = pWVar10;
+          puVar2 = *(undefined8 **)(this + 0xc0);
+          if (puVar2 < *(undefined8 **)(this + 200)) {
+            *puVar2 = pWVar10;
+            puVar2[1] = local_70;
+            *(undefined8 **)(this + 0xc0) = puVar2 + 2;
+          }
+          else {
+            pPVar11 = std::
+                      vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::
+                      __push_back_slow_path<cv::Ptr<cv::WorkerThread>>(this_00,(Ptr *)&local_78);
+            *(Ptr **)(this + 0xc0) = pPVar11;
+            if (local_70 != (WorkerThread *)0x0) {
+              pWVar10 = local_70 + 8;
+              do {
+                lVar13 = *(long *)pWVar10;
+                cVar5 = '\x01';
+                bVar6 = (bool)ExclusiveMonitorPass(pWVar10,0x10);
+                if (bVar6) {
+                  *(long *)pWVar10 = lVar13 + -1;
+                  cVar5 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar5 != '\0');
+              if (lVar13 == 0) {
+                (**(code **)(*(long *)local_70 + 0x10))(local_70);
+                std::__shared_weak_count::__release_weak();
+              }
+            }
+          }
+          uVar16 = uVar16 + 1;
+        } while (uVar16 != uVar19);
+      }
+    }
+    else {
+      std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::vector
+                ((vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *)
+                 &local_78,uVar16 - uVar19);
+      lVar13 = *(long *)(this + 0xb8);
+      lVar17 = *(long *)(this + 0xc0);
+      uVar12 = lVar17 - lVar13 >> 4;
+      uVar16 = uVar19;
+      if (uVar19 < uVar12) {
+        do {
+          lVar17 = uVar16 * 0x10;
+          _pthread_mutex_lock((pthread_mutex_t *)(*(long *)(lVar13 + lVar17) + 0x30));
+          *(undefined1 *)(*(long *)(*(long *)this_00 + lVar17) + 0x19) = 1;
+          *(undefined1 *)(*(long *)(*(long *)this_00 + lVar17) + 0x1a) = 1;
+          _pthread_mutex_unlock((pthread_mutex_t *)(*(long *)(*(long *)this_00 + lVar17) + 0x30));
+          _pthread_cond_broadcast((pthread_cond_t *)(*(long *)(*(long *)this_00 + lVar17) + 0x78));
+          puVar2 = (undefined8 *)(*(long *)this_00 + uVar16 * 0x10);
+          pWVar10 = local_78 + (uVar16 - uVar19) * 0x10;
+          uVar3 = *puVar2;
+          plVar15 = (long *)puVar2[1];
+          *puVar2 = 0;
+          puVar2[1] = 0;
+          uVar4 = *(undefined8 *)pWVar10;
+          lVar13 = *(long *)(pWVar10 + 8);
+          if (lVar13 == 0) {
+            *puVar2 = uVar4;
+            puVar2[1] = 0;
+          }
+          else {
+            plVar18 = (long *)(lVar13 + 8);
+            do {
+              cVar5 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+              if (bVar6) {
+                *plVar18 = *plVar18 + 1;
+                cVar5 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar5 != '\0');
+            plVar18 = (long *)puVar2[1];
+            *puVar2 = uVar4;
+            puVar2[1] = lVar13;
+            if (plVar18 != (long *)0x0) {
+              plVar1 = plVar18 + 1;
+              do {
+                lVar13 = *plVar1;
+                cVar5 = '\x01';
+                bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+                if (bVar6) {
+                  *plVar1 = lVar13 + -1;
+                  cVar5 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar5 != '\0');
+              if (lVar13 == 0) {
+                (**(code **)(*plVar18 + 0x10))(plVar18);
+                std::__shared_weak_count::__release_weak();
+              }
+            }
+          }
+          if (plVar15 != (long *)0x0) {
+            plVar18 = plVar15 + 1;
+            do {
+              cVar5 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+              if (bVar6) {
+                *plVar18 = *plVar18 + 1;
+                cVar5 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar5 != '\0');
+          }
+          plVar18 = *(long **)(pWVar10 + 8);
+          *(undefined8 *)pWVar10 = uVar3;
+          *(long **)(pWVar10 + 8) = plVar15;
+          if (plVar18 != (long *)0x0) {
+            plVar1 = plVar18 + 1;
+            do {
+              lVar13 = *plVar1;
+              cVar5 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+              if (bVar6) {
+                *plVar1 = lVar13 + -1;
+                cVar5 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar5 != '\0');
+            if (lVar13 == 0) {
+              (**(code **)(*plVar18 + 0x10))(plVar18);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          if (plVar15 != (long *)0x0) {
+            plVar18 = plVar15 + 1;
+            do {
+              lVar13 = *plVar18;
+              cVar5 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+              if (bVar6) {
+                *plVar18 = lVar13 + -1;
+                cVar5 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar5 != '\0');
+            if (lVar13 == 0) {
+              (**(code **)(*plVar15 + 0x10))(plVar15);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          uVar16 = uVar16 + 1;
+          lVar13 = *(long *)(this + 0xb8);
+          lVar17 = *(long *)(this + 0xc0);
+          uVar12 = lVar17 - lVar13 >> 4;
+        } while (uVar16 < uVar12);
+      }
+      if (uVar19 < uVar12 || uVar19 - uVar12 == 0) {
+        pWVar10 = local_78;
+        pWVar9 = local_70;
+        if (uVar19 < uVar12) {
+          lVar13 = lVar13 + uVar19 * 0x10;
+          for (; lVar17 != lVar13; lVar17 = lVar17 + -0x10) {
+            plVar15 = *(long **)(lVar17 + -8);
+            if (plVar15 != (long *)0x0) {
+              plVar18 = plVar15 + 1;
+              do {
+                lVar14 = *plVar18;
+                cVar5 = '\x01';
+                bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+                if (bVar6) {
+                  *plVar18 = lVar14 + -1;
+                  cVar5 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar5 != '\0');
+              if (lVar14 == 0) {
+                (**(code **)(*plVar15 + 0x10))(plVar15);
+                std::__shared_weak_count::__release_weak();
+              }
+            }
+          }
+          *(long *)(this + 0xc0) = lVar13;
+          pWVar10 = local_78;
+          pWVar9 = local_70;
+        }
+      }
+      else {
+        std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::__append
+                  (this_00,uVar19 - uVar12);
+        pWVar10 = local_78;
+        pWVar9 = local_70;
+      }
+      for (; pWVar7 = local_78, local_70 != local_78; local_70 = local_70 + -0x10) {
+        plVar15 = *(long **)(local_70 + -8);
+        local_78 = pWVar10;
+        if (plVar15 != (long *)0x0) {
+          plVar18 = plVar15 + 1;
+          do {
+            lVar13 = *plVar18;
+            cVar5 = '\x01';
+            bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+            if (bVar6) {
+              *plVar18 = lVar13 + -1;
+              cVar5 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar5 != '\0');
+          if (lVar13 == 0) {
+            (**(code **)(*plVar15 + 0x10))(plVar15);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        pWVar10 = local_78;
+        pWVar9 = local_78;
+        local_78 = pWVar7;
+      }
+      pWVar8 = local_78;
+      local_78 = pWVar10;
+      if (pWVar9 != (WorkerThread *)0x0) {
+        for (; pWVar7 != pWVar9; pWVar7 = pWVar7 + -0x10) {
+          plVar15 = *(long **)(pWVar7 + -8);
+          if (plVar15 != (long *)0x0) {
+            plVar18 = plVar15 + 1;
+            do {
+              lVar13 = *plVar18;
+              cVar5 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar18,0x10);
+              if (bVar6) {
+                *plVar18 = lVar13 + -1;
+                cVar5 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar5 != '\0');
+            if (lVar13 == 0) {
+              (**(code **)(*plVar15 + 0x10))(plVar15);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          pWVar8 = local_78;
+        }
+        operator_delete(pWVar8);
+      }
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 00001048
+// Signature: undefined __thiscall vector(vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Ptr<cv::WorkerThread>, std::allocator<cv::Ptr<cv::WorkerThread> >
+   >::vector(unsigned long) */
+
+vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * __thiscall
+std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::vector
+          (vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *this,
+          ulong param_1)
+
+{
+  code *pcVar1;
+  void *pvVar2;
+  ulong uVar3;
+  
+  *(undefined8 *)this = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  if (param_1 != 0) {
+    if (param_1 >> 0x3c != 0) {
+      __throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar1 = (code *)SoftwareBreakpoint(1,0x10c0);
+      (*pcVar1)();
+    }
+    uVar3 = param_1 * 0x10;
+    pvVar2 = operator_new(uVar3);
+    *(void **)this = pvVar2;
+    *(void **)(this + 0x10) = (void *)((long)pvVar2 + param_1 * 0x10);
+    _bzero(pvVar2,uVar3);
+    *(void **)(this + 8) = (void *)((long)pvVar2 + uVar3);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~Ptr
+// Entry: 000010e0
+// Signature: undefined __thiscall ~Ptr(Ptr<cv::WorkerThread> * this)
+// ========================================
+
+
+/* cv::Ptr<cv::WorkerThread>::~Ptr() */
+
+Ptr<cv::WorkerThread> * __thiscall cv::Ptr<cv::WorkerThread>::~Ptr(Ptr<cv::WorkerThread> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~ThreadPool
+// Entry: 00001148
+// Signature: undefined __thiscall ~ThreadPool(ThreadPool * this)
+// ========================================
+
+
+/* cv::ThreadPool::~ThreadPool() */
+
+ThreadPool * __thiscall cv::ThreadPool::~ThreadPool(ThreadPool *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  long lVar5;
+  long *plVar6;
+  void *pvVar7;
+  void *pvVar8;
+  
+  if (*(long *)(this + 0xc0) != *(long *)(this + 0xb8)) {
+    _pthread_mutex_lock((pthread_mutex_t *)(this + 8));
+    reconfigure_(this,0);
+    _pthread_mutex_unlock((pthread_mutex_t *)(this + 8));
+  }
+  _pthread_cond_destroy((pthread_cond_t *)(this + 0x88));
+  _pthread_mutex_destroy((pthread_mutex_t *)(this + 8));
+  _pthread_mutex_destroy((pthread_mutex_t *)(this + 0x48));
+  plVar6 = *(long **)(this + 0xd8);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  pvVar7 = *(void **)(this + 0xb8);
+  if (pvVar7 != (void *)0x0) {
+    pvVar8 = *(void **)(this + 0xc0);
+    pvVar4 = pvVar7;
+    if (pvVar8 != pvVar7) {
+      do {
+        plVar6 = *(long **)((long)pvVar8 + -8);
+        if (plVar6 != (long *)0x0) {
+          plVar1 = plVar6 + 1;
+          do {
+            lVar5 = *plVar1;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = lVar5 + -1;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar5 == 0) {
+            (**(code **)(*plVar6 + 0x10))(plVar6);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        pvVar8 = (void *)((long)pvVar8 + -0x10);
+      } while (pvVar8 != pvVar7);
+      pvVar4 = *(void **)(this + 0xb8);
+    }
+    *(void **)(this + 0xc0) = pvVar7;
+    operator_delete(pvVar4);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00001260
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ThreadPool *this;
+  
+  ___cxa_begin_catch();
+  this = (ThreadPool *)std::terminate();
+  cv::ThreadPool::~ThreadPool(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ThreadPool
+// Entry: 00001270
+// Signature: undefined __thiscall ~ThreadPool(ThreadPool * this)
+// ========================================
+
+
+/* cv::ThreadPool::~ThreadPool() */
+
+void __thiscall cv::ThreadPool::~ThreadPool(ThreadPool *this)
+
+{
+  ~ThreadPool(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: run
+// Entry: 00001274
+// Signature: undefined __thiscall run(ThreadPool * this, Range * param_1, ParallelLoopBody * param_2, double param_3)
+// ========================================
+
+
+/* cv::ThreadPool::run(cv::Range const&, cv::ParallelLoopBody const&, double) */
+
+ulong __thiscall
+cv::ThreadPool::run(ThreadPool *this,Range *param_1,ParallelLoopBody *param_2,double param_3)
+
+{
+  pthread_mutex_t *ppVar1;
+  long *plVar2;
+  int *piVar3;
+  pthread_mutex_t *ppVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int iVar7;
+  char cVar8;
+  bool bVar9;
+  int iVar10;
+  code *pcVar11;
+  uint uVar12;
+  uint uVar13;
+  ulong uVar14;
+  undefined8 *puVar15;
+  long *plVar16;
+  ulong uVar17;
+  long lVar18;
+  long lVar19;
+  long *plVar20;
+  ulong uVar21;
+  long *plVar22;
+  int local_78;
+  int iStack_74;
+  
+  if (((1 < *(uint *)this) && (*(long *)(this + 0xd0) == 0)) &&
+     ((2.0 <= (double)(*(int *)(param_1 + 4) - *(int *)param_1) * param_3 ||
+      ((param_3 <= 0.0 && (1 < *(int *)(param_1 + 4) - *(int *)param_1)))))) {
+    ppVar1 = (pthread_mutex_t *)(this + 8);
+    _pthread_mutex_lock(ppVar1);
+    if (*(long *)(this + 0xd0) == 0) {
+      reconfigure_(this,*(int *)this - 1);
+      puVar15 = operator_new(0xf8);
+      *puVar15 = this;
+      puVar15[1] = param_2;
+      puVar15[2] = *(undefined8 *)param_1;
+      *(int *)(puVar15 + 3) = (int)param_3;
+      *(undefined1 *)(puVar15 + 0x1e) = 0;
+      *(undefined4 *)((long)puVar15 + 0x1c) = 0;
+      *(undefined4 *)(puVar15 + 0xc) = 0;
+      *(undefined4 *)(puVar15 + 0x15) = 0;
+      puVar15[4] = 0;
+      puVar15[0xd] = 0;
+      puVar15[0x16] = 0;
+      plVar16 = operator_new(0x20);
+      plVar22 = plVar16 + 1;
+      *plVar22 = 0;
+      *plVar16 = (long)&PTR____shared_ptr_pointer_00003db8;
+      plVar16[2] = 0;
+      plVar16[3] = (long)puVar15;
+      do {
+        cVar8 = '\x01';
+        bVar9 = (bool)ExclusiveMonitorPass(plVar22,0x10);
+        if (bVar9) {
+          *plVar22 = *plVar22 + 1;
+          cVar8 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar8 != '\0');
+      plVar20 = *(long **)(this + 0xd8);
+      *(undefined8 **)(this + 0xd0) = puVar15;
+      *(long **)(this + 0xd8) = plVar16;
+      if (plVar20 != (long *)0x0) {
+        plVar2 = plVar20 + 1;
+        do {
+          lVar18 = *plVar2;
+          cVar8 = '\x01';
+          bVar9 = (bool)ExclusiveMonitorPass(plVar2,0x10);
+          if (bVar9) {
+            *plVar2 = lVar18 + -1;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+        if (lVar18 == 0) {
+          (**(code **)(*plVar20 + 0x10))(plVar20);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      do {
+        lVar18 = *plVar22;
+        cVar8 = '\x01';
+        bVar9 = (bool)ExclusiveMonitorPass(plVar22,0x10);
+        if (bVar9) {
+          *plVar22 = lVar18 + -1;
+          cVar8 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar8 != '\0');
+      if (lVar18 == 0) {
+        (**(code **)(*plVar16 + 0x10))(plVar16);
+        std::__shared_weak_count::__release_weak();
+      }
+      uVar12 = _pthread_mutex_unlock(ppVar1);
+      uVar17 = (ulong)uVar12;
+      uVar14 = *(long *)(this + 0xc0) - *(long *)(this + 0xb8) >> 4;
+      if ((ulong)((long)*(int *)(param_1 + 4) - (long)*(int *)param_1) <= uVar14) {
+        uVar14 = (long)*(int *)(param_1 + 4) - (long)*(int *)param_1;
+      }
+      if (uVar14 != 0) {
+        uVar21 = 0;
+        do {
+          while( true ) {
+            if (*(int *)(*(long *)(this + 0xd0) + 0x14) - *(int *)(*(long *)(this + 0xd0) + 0x10) <=
+                *(int *)(*(long *)(this + 0xd0) + 0x1c)) goto LAB_00001594;
+            lVar18 = *(long *)(*(long *)(this + 0xb8) + uVar21 * 0x10);
+            if (((*(char *)(lVar18 + 0x70) != '\0') || ((*(byte *)(lVar18 + 0x1a) & 1) != 0)) ||
+               (*(long *)(lVar18 + 0x20) != 0)) break;
+            uVar6 = *(undefined8 *)(this + 0xd0);
+            lVar19 = *(long *)(this + 0xd8);
+            if (lVar19 != 0) {
+              plVar16 = (long *)(lVar19 + 8);
+              do {
+                cVar8 = '\x01';
+                bVar9 = (bool)ExclusiveMonitorPass(plVar16,0x10);
+                if (bVar9) {
+                  *plVar16 = *plVar16 + 1;
+                  cVar8 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar8 != '\0');
+            }
+            plVar16 = *(long **)(lVar18 + 0x28);
+            *(undefined8 *)(lVar18 + 0x20) = uVar6;
+            *(long *)(lVar18 + 0x28) = lVar19;
+            if (plVar16 != (long *)0x0) {
+              plVar22 = plVar16 + 1;
+              do {
+                lVar19 = *plVar22;
+                cVar8 = '\x01';
+                bVar9 = (bool)ExclusiveMonitorPass(plVar22,0x10);
+                if (bVar9) {
+                  *plVar22 = lVar19 + -1;
+                  cVar8 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar8 != '\0');
+              if (lVar19 == 0) {
+                (**(code **)(*plVar16 + 0x10))(plVar16);
+                std::__shared_weak_count::__release_weak();
+              }
+            }
+            *(undefined1 *)(lVar18 + 0x1a) = 1;
+LAB_00001580:
+            uVar12 = _pthread_cond_broadcast((pthread_cond_t *)(lVar18 + 0x78));
+            uVar17 = (ulong)uVar12;
+            uVar21 = uVar21 + 1;
+            if (uVar21 == uVar14) goto LAB_00001594;
+          }
+          _pthread_mutex_lock((pthread_mutex_t *)(lVar18 + 0x30));
+          uVar6 = *(undefined8 *)(this + 0xd0);
+          lVar19 = *(long *)(this + 0xd8);
+          if (lVar19 != 0) {
+            plVar16 = (long *)(lVar19 + 8);
+            do {
+              cVar8 = '\x01';
+              bVar9 = (bool)ExclusiveMonitorPass(plVar16,0x10);
+              if (bVar9) {
+                *plVar16 = *plVar16 + 1;
+                cVar8 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar8 != '\0');
+          }
+          plVar16 = *(long **)(lVar18 + 0x28);
+          *(undefined8 *)(lVar18 + 0x20) = uVar6;
+          *(long *)(lVar18 + 0x28) = lVar19;
+          if (plVar16 != (long *)0x0) {
+            plVar22 = plVar16 + 1;
+            do {
+              lVar19 = *plVar22;
+              cVar8 = '\x01';
+              bVar9 = (bool)ExclusiveMonitorPass(plVar22,0x10);
+              if (bVar9) {
+                *plVar22 = lVar19 + -1;
+                cVar8 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar8 != '\0');
+            if (lVar19 == 0) {
+              (**(code **)(*plVar16 + 0x10))(plVar16);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          cVar8 = *(char *)(lVar18 + 0x70);
+          *(undefined1 *)(lVar18 + 0x1a) = 1;
+          uVar12 = _pthread_mutex_unlock((pthread_mutex_t *)(lVar18 + 0x30));
+          uVar17 = (ulong)uVar12;
+          if (cVar8 == '\0') goto LAB_00001580;
+          uVar21 = uVar21 + 1;
+        } while (uVar21 != uVar14);
+      }
+LAB_00001594:
+      puVar15 = *(undefined8 **)(this + 0xd0);
+      iVar10 = *(int *)((long)puVar15 + 0x14) - *(int *)(puVar15 + 2);
+      uVar12 = *(int *)*puVar15 << 2;
+      uVar13 = *(int *)*puVar15 * 2;
+      if (99 < uVar12) {
+        uVar12 = 100;
+      }
+      if (uVar12 <= uVar13) {
+        uVar12 = uVar13;
+      }
+      if (*(uint *)(puVar15 + 3) <= uVar12) {
+        uVar12 = *(uint *)(puVar15 + 3);
+      }
+      piVar3 = (int *)((long)puVar15 + 0x1c);
+      iVar7 = 0;
+      if (uVar12 != 0) {
+        iVar7 = (iVar10 - *piVar3) / (int)uVar12;
+      }
+      if (iVar7 < 2) {
+        iVar7 = 1;
+      }
+      do {
+        iVar5 = *piVar3;
+        cVar8 = '\x01';
+        bVar9 = (bool)ExclusiveMonitorPass(piVar3,0x10);
+        if (bVar9) {
+          *piVar3 = iVar5 + iVar7;
+          cVar8 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar8 != '\0');
+      while (iVar5 < iVar10) {
+        iStack_74 = iVar7 + iVar5;
+        if (iVar10 <= iVar7 + iVar5) {
+          iStack_74 = iVar10;
+        }
+        local_78 = *(int *)(puVar15 + 2) + iVar5;
+        iStack_74 = *(int *)(puVar15 + 2) + iStack_74;
+        uVar17 = (**(code **)(*(long *)puVar15[1] + 0x10))((long *)puVar15[1],&local_78);
+        iVar7 = 0;
+        if (uVar12 != 0) {
+          iVar7 = (iVar10 - *(int *)((long)puVar15 + 0x1c)) / (int)uVar12;
+        }
+        if (iVar7 < 2) {
+          iVar7 = 1;
+        }
+        do {
+          iVar5 = *piVar3;
+          cVar8 = '\x01';
+          bVar9 = (bool)ExclusiveMonitorPass(piVar3,0x10);
+          if (bVar9) {
+            *piVar3 = iVar5 + iVar7;
+            cVar8 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar8 != '\0');
+      }
+      if (*(int *)((long)puVar15 + 0x1c) < *(int *)((long)puVar15 + 0x14) - *(int *)(puVar15 + 2)) {
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (&local_78,"j.current_task >= j.range.size()");
+        cv::error(-0xd7,(string *)&local_78,"run",
+                  "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                  ,0x28c);
+LAB_0000188c:
+                    /* WARNING: Does not return */
+        pcVar11 = (code *)SoftwareBreakpoint(1,0x1890);
+        (*pcVar11)();
+      }
+      if (((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) == 0) && (*(int *)(puVar15 + 0xc) != 0)) {
+        if (0 < DAT_00004760) {
+          uVar12 = 0;
+          do {
+            while( true ) {
+              if ((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) != 0) goto LAB_0000173c;
+              if ((__MergedGlobals < 1) || (((uVar12 & 1) == 0 && (__MergedGlobals <= (int)uVar12)))
+                 ) break;
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              Yield();
+              uVar12 = uVar12 + 1;
+              if (DAT_00004760 <= (int)uVar12) goto LAB_0000173c;
+            }
+            uVar13 = _sched_yield();
+            uVar17 = (ulong)uVar13;
+            uVar12 = uVar12 + 1;
+          } while ((int)uVar12 < DAT_00004760);
+        }
+LAB_0000173c:
+        if ((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) == 0) {
+          ppVar4 = (pthread_mutex_t *)(this + 0x48);
+          _pthread_mutex_lock(ppVar4);
+          if ((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) == 0) {
+            do {
+              _pthread_cond_wait((pthread_cond_t *)(this + 0x88),ppVar4);
+            } while ((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) == 0);
+          }
+          uVar12 = _pthread_mutex_unlock(ppVar4);
+          uVar17 = (ulong)uVar12;
+        }
+      }
+      else {
+        *(undefined1 *)(*(long *)(this + 0xd0) + 0xf0) = 1;
+      }
+      if (*(long *)(this + 0xd0) != 0) {
+        _pthread_mutex_lock(ppVar1);
+        if ((*(byte *)(*(long *)(this + 0xd0) + 0xf0) & 1) == 0) {
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (&local_78,"job->is_completed");
+          cv::error(-0xd7,(string *)&local_78,"run",
+                    "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                    ,0x2c3);
+          goto LAB_0000188c;
+        }
+        plVar16 = *(long **)(this + 0xd8);
+        *(undefined8 *)(this + 0xd0) = 0;
+        *(undefined8 *)(this + 0xd8) = 0;
+        if (plVar16 != (long *)0x0) {
+          plVar22 = plVar16 + 1;
+          do {
+            lVar18 = *plVar22;
+            cVar8 = '\x01';
+            bVar9 = (bool)ExclusiveMonitorPass(plVar22,0x10);
+            if (bVar9) {
+              *plVar22 = lVar18 + -1;
+              cVar8 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar8 != '\0');
+          if (lVar18 == 0) {
+            (**(code **)(*plVar16 + 0x10))(plVar16);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        uVar12 = _pthread_mutex_unlock(ppVar1);
+        uVar17 = (ulong)uVar12;
+      }
+      return uVar17;
+    }
+    _pthread_mutex_unlock(ppVar1);
+  }
+                    /* WARNING: Could not recover jumptable at 0x0000132c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar14 = (**(code **)(*(long *)param_2 + 0x10))(param_2,param_1);
+  return uVar14;
+}
+
+
+
+
+// ========================================
+// Function: getNumOfThreads
+// Entry: 000018c0
+// Signature: undefined __thiscall getNumOfThreads(ThreadPool * this)
+// ========================================
+
+
+/* cv::ThreadPool::getNumOfThreads() */
+
+undefined4 __thiscall cv::ThreadPool::getNumOfThreads(ThreadPool *this)
+
+{
+  return *(undefined4 *)this;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 000018c8
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00001954;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00001954:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: setNumOfThreads
+// Entry: 00001978
+// Signature: undefined __thiscall setNumOfThreads(ThreadPool * this, uint param_1)
+// ========================================
+
+
+/* cv::ThreadPool::setNumOfThreads(unsigned int) */
+
+ThreadPool * __thiscall cv::ThreadPool::setNumOfThreads(ThreadPool *this,uint param_1)
+
+{
+  uint uVar1;
+  
+  if ((((*(uint *)this != param_1) && (*(uint *)this = param_1, param_1 == 1)) &&
+      (*(long *)(this + 0xd0) == 0)) && (*(long *)(this + 0xc0) != *(long *)(this + 0xb8))) {
+    _pthread_mutex_lock((pthread_mutex_t *)(this + 8));
+    reconfigure_(this,0);
+    uVar1 = _pthread_mutex_unlock((pthread_mutex_t *)(this + 8));
+    return (ThreadPool *)(ulong)uVar1;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: parallel_pthreads_get_threads_num
+// Entry: 000019e8
+// Signature: undefined __cdecl parallel_pthreads_get_threads_num(void)
+// ========================================
+
+
+/* cv::parallel_pthreads_get_threads_num() */
+
+undefined4 cv::parallel_pthreads_get_threads_num(void)
+
+{
+  int iVar1;
+  ThreadPool *this;
+  
+  if (((ThreadPool::instance()::instance & 1) == 0) &&
+     (iVar1 = ___cxa_guard_acquire(&ThreadPool::instance()::instance), iVar1 != 0)) {
+    this = operator_new(0xe0);
+    ThreadPool::ThreadPool(this);
+    ThreadPool::instance()::instance = this;
+    ___cxa_guard_release(&ThreadPool::instance()::instance);
+    return *(undefined4 *)ThreadPool::instance()::instance;
+  }
+  return *(undefined4 *)ThreadPool::instance()::instance;
+}
+
+
+
+
+// ========================================
+// Function: parallel_pthreads_set_threads_num
+// Entry: 00001a98
+// Signature: undefined __cdecl parallel_pthreads_set_threads_num(int param_1)
+// ========================================
+
+
+/* cv::parallel_pthreads_set_threads_num(int) */
+
+ulong cv::parallel_pthreads_set_threads_num(int param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ThreadPool *pTVar3;
+  
+  uVar2 = (ulong)(uint)param_1;
+  if (param_1 < 0) {
+    if (((ThreadPool::instance()::instance & 1) == 0) &&
+       (uVar2 = ___cxa_guard_acquire(&ThreadPool::instance()::instance), (int)uVar2 != 0)) {
+      pTVar3 = operator_new(0xe0);
+      ThreadPool::ThreadPool(pTVar3);
+      ThreadPool::instance()::instance = pTVar3;
+      uVar2 = ___cxa_guard_release(&ThreadPool::instance()::instance);
+    }
+    if (*(int *)ThreadPool::instance()::instance != 0) {
+      *(int *)ThreadPool::instance()::instance = 0;
+      return uVar2;
+    }
+  }
+  else {
+    if (((ThreadPool::instance()::instance & 1) == 0) &&
+       (uVar2 = ___cxa_guard_acquire(&ThreadPool::instance()::instance), (int)uVar2 != 0)) {
+      pTVar3 = operator_new(0xe0);
+      ThreadPool::ThreadPool(pTVar3);
+      ThreadPool::instance()::instance = pTVar3;
+      uVar2 = ___cxa_guard_release(&ThreadPool::instance()::instance);
+    }
+    pTVar3 = ThreadPool::instance()::instance;
+    if ((((*(int *)ThreadPool::instance()::instance != param_1) &&
+         (*(int *)ThreadPool::instance()::instance = param_1, param_1 == 1)) &&
+        (*(long *)(pTVar3 + 0xd0) == 0)) && (*(long *)(pTVar3 + 0xc0) != *(long *)(pTVar3 + 0xb8)))
+    {
+      _pthread_mutex_lock((pthread_mutex_t *)(pTVar3 + 8));
+      ThreadPool::reconfigure_(pTVar3,0);
+      uVar1 = _pthread_mutex_unlock((pthread_mutex_t *)(pTVar3 + 8));
+      return (ulong)uVar1;
+    }
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: parallel_for_pthreads
+// Entry: 00001c18
+// Signature: undefined __cdecl parallel_for_pthreads(Range * param_1, ParallelLoopBody * param_2, double param_3)
+// ========================================
+
+
+/* cv::parallel_for_pthreads(cv::Range const&, cv::ParallelLoopBody const&, double) */
+
+void cv::parallel_for_pthreads(Range *param_1,ParallelLoopBody *param_2,double param_3)
+
+{
+  int iVar1;
+  ThreadPool *this;
+  
+  if (((ThreadPool::instance()::instance & 1) == 0) &&
+     (iVar1 = ___cxa_guard_acquire(&ThreadPool::instance()::instance), iVar1 != 0)) {
+    this = operator_new(0xe0);
+    ThreadPool::ThreadPool(this);
+    ThreadPool::instance()::instance = this;
+    ___cxa_guard_release(&ThreadPool::instance()::instance);
+  }
+  ThreadPool::run(ThreadPool::instance()::instance,param_1,param_2,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001cdc
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* non-virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)(this + -0x10) = vtable + 0x18;
+  *(undefined **)(this + 0x70) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1 + 0x40;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::iostream::~iostream((iostream *)(this + -0x10));
+  std::ios::~ios((ios *)(this + 0x70));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001d68
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  iostream *this_00;
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + *(long *)(*(long *)this + -0x18));
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this_00 + 0x10) = puVar1 + 0x40;
+  *(long *)(this_00 + 0x18) = lVar2 + 0x10;
+  if ((char)this_00[0x6f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x18));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x80));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001dfc
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)this = vtable + 0x18;
+  *(undefined **)(this + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this + 0x10) = puVar1 + 0x40;
+  *(long *)(this + 0x18) = lVar2 + 0x10;
+  if ((char)this[0x6f] < '\0') {
+    operator_delete(*(void **)(this + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x18));
+  std::iostream::~iostream((iostream *)this);
+  std::ios::~ios((ios *)(this + 0x80));
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001e90
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* non-virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  iostream *this_00;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + -0x10);
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this + 0x70) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1 + 0x40;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this + 0x70));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001f24
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  iostream *this_00;
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + *(long *)(*(long *)this + -0x18));
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this_00 + 0x10) = puVar1 + 0x40;
+  *(long *)(this_00 + 0x18) = lVar2 + 0x10;
+  if ((char)this_00[0x6f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x18));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x80));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 00001fc0
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    std::streambuf::~streambuf((streambuf *)this);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  std::streambuf::~streambuf((streambuf *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 00002010
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  void *pvVar1;
+  
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+    operator_delete(pvVar1);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekoff
+// Entry: 00002068
+// Signature: undefined __cdecl seekoff(longlong param_1, seekdir param_2, uint param_3)
+// ========================================
+
+
+/* std::stringbuf::seekoff(long long, std::ios_base::seekdir, unsigned int) */
+
+void std::stringbuf::seekoff
+               (undefined8 *param_1_00,long param_1,long param_3,uint param_4,uint param_5)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  undefined8 *puVar4;
+  ulong uVar5;
+  long lVar6;
+  
+  uVar3 = *(ulong *)(param_1 + 0x30);
+  uVar2 = *(ulong *)(param_1 + 0x58);
+  if (*(ulong *)(param_1 + 0x58) < uVar3) {
+    *(ulong *)(param_1 + 0x58) = uVar3;
+    uVar2 = uVar3;
+  }
+  if (((param_5 & 0x18) == 0) || ((param_4 == 1 && ((param_5 & 0x18) == 0x18)))) {
+LAB_000020e0:
+    lVar6 = -1;
+  }
+  else {
+    if (uVar2 == 0) {
+      uVar5 = 0;
+      if (param_4 == 0) goto LAB_00002108;
+LAB_000020b4:
+      uVar1 = uVar5;
+      if (param_4 != 2) {
+        if (param_4 != 1) goto LAB_000020e0;
+        if ((param_5 >> 3 & 1) == 0) {
+          uVar1 = uVar3 - *(long *)(param_1 + 0x28);
+        }
+        else {
+          uVar1 = *(long *)(param_1 + 0x18) - *(long *)(param_1 + 0x10);
+        }
+      }
+    }
+    else {
+      puVar4 = (undefined8 *)(param_1 + 0x40);
+      if (*(char *)(param_1 + 0x57) < '\0') {
+        puVar4 = (undefined8 *)*puVar4;
+      }
+      uVar5 = uVar2 - (long)puVar4;
+      if (param_4 != 0) goto LAB_000020b4;
+LAB_00002108:
+      uVar1 = (ulong)param_4;
+    }
+    param_3 = uVar1 + param_3;
+    lVar6 = -1;
+    if (((-1 < param_3) && (lVar6 = -1, param_3 <= (long)uVar5)) &&
+       ((param_3 == 0 ||
+        ((((param_5 >> 3 & 1) == 0 || (*(long *)(param_1 + 0x18) != 0)) &&
+         (((param_5 >> 4 & 1) == 0 || (uVar3 != 0)))))))) {
+      if ((param_5 >> 3 & 1) != 0) {
+        *(long *)(param_1 + 0x18) = *(long *)(param_1 + 0x10) + param_3;
+        *(ulong *)(param_1 + 0x20) = uVar2;
+      }
+      lVar6 = param_3;
+      if ((param_5 >> 4 & 1) != 0) {
+        *(long *)(param_1 + 0x30) = *(long *)(param_1 + 0x28) + param_3;
+      }
+    }
+  }
+  param_1_00[0xd] = 0;
+  param_1_00[0xc] = 0;
+  param_1_00[0xf] = 0;
+  param_1_00[0xe] = 0;
+  param_1_00[9] = 0;
+  param_1_00[8] = 0;
+  param_1_00[0xb] = 0;
+  param_1_00[10] = 0;
+  param_1_00[5] = 0;
+  param_1_00[4] = 0;
+  param_1_00[7] = 0;
+  param_1_00[6] = 0;
+  param_1_00[1] = 0;
+  *param_1_00 = 0;
+  param_1_00[3] = 0;
+  param_1_00[2] = 0;
+  param_1_00[0x10] = lVar6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekpos
+// Entry: 0000218c
+// Signature: undefined __thiscall seekpos(stringbuf * this, fpos param_1, uint param_2)
+// ========================================
+
+
+/* std::stringbuf::seekpos(std::fpos<__mbstate_t>, unsigned int) */
+
+void __thiscall std::stringbuf::seekpos(stringbuf *this,long param_2,undefined8 param_3)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x000021a0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*(long *)this + 0x20))(this,*(undefined8 *)(param_2 + 0x80),0,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: underflow
+// Entry: 000021a4
+// Signature: undefined __thiscall underflow(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::underflow() */
+
+ulong __thiscall std::stringbuf::underflow(stringbuf *this)
+
+{
+  byte *pbVar1;
+  byte *pbVar2;
+  
+  pbVar2 = *(byte **)(this + 0x30);
+  pbVar1 = *(byte **)(this + 0x58);
+  if (*(byte **)(this + 0x58) < pbVar2) {
+    *(byte **)(this + 0x58) = pbVar2;
+    pbVar1 = pbVar2;
+  }
+  if (((byte)this[0x60] >> 3 & 1) != 0) {
+    pbVar2 = *(byte **)(this + 0x20);
+    if (*(byte **)(this + 0x20) < pbVar1) {
+      *(byte **)(this + 0x20) = pbVar1;
+      pbVar2 = pbVar1;
+    }
+    if (*(byte **)(this + 0x18) < pbVar2) {
+      return (ulong)**(byte **)(this + 0x18);
+    }
+  }
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: pbackfail
+// Entry: 000021f4
+// Signature: undefined __thiscall pbackfail(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::pbackfail(int) */
+
+int __thiscall std::stringbuf::pbackfail(stringbuf *this,int param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  
+  uVar2 = *(ulong *)(this + 0x30);
+  uVar1 = *(ulong *)(this + 0x58);
+  if (*(ulong *)(this + 0x58) < uVar2) {
+    *(ulong *)(this + 0x58) = uVar2;
+    uVar1 = uVar2;
+  }
+  uVar2 = *(ulong *)(this + 0x18);
+  if (*(ulong *)(this + 0x10) < uVar2) {
+    if (param_1 == -1) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      return 0;
+    }
+    if ((((byte)this[0x60] >> 4 & 1) != 0) || ((uint)*(byte *)(uVar2 - 1) == (param_1 & 0xffU))) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      *(char *)(uVar2 - 1) = (char)param_1;
+      return param_1;
+    }
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: overflow
+// Entry: 00002260
+// Signature: undefined __thiscall overflow(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::overflow(int) */
+
+ulong __thiscall std::stringbuf::overflow(stringbuf *this,int param_1)
+
+{
+  stringbuf *psVar1;
+  stringbuf *psVar2;
+  long lVar3;
+  stringbuf *psVar4;
+  long lVar5;
+  stringbuf *psVar6;
+  stringbuf sVar7;
+  ulong uVar8;
+  char cVar9;
+  stringbuf *psVar10;
+  long lVar11;
+  long lVar12;
+  
+  if (param_1 == -1) {
+    return 0;
+  }
+  lVar3 = *(long *)(this + 0x10);
+  lVar5 = *(long *)(this + 0x18);
+  psVar4 = *(stringbuf **)(this + 0x30);
+  psVar6 = *(stringbuf **)(this + 0x38);
+  if (psVar4 == psVar6) {
+    if (((byte)this[0x60] >> 4 & 1) == 0) {
+      return 0xffffffff;
+    }
+    lVar11 = *(long *)(this + 0x28);
+    lVar12 = *(long *)(this + 0x58);
+    psVar10 = this + 0x40;
+    std::string::push_back((char)psVar10);
+    if ((char)this[0x57] < '\0') {
+      cVar9 = (char)*(undefined8 *)(this + 0x50) + -1;
+    }
+    else {
+      cVar9 = '\x16';
+    }
+    std::string::resize((ulong)psVar10,cVar9);
+    if ((char)this[0x57] < '\0') {
+      psVar10 = *(stringbuf **)(this + 0x40);
+      uVar8 = *(ulong *)(this + 0x48);
+    }
+    else {
+      uVar8 = (ulong)(byte)this[0x57];
+    }
+    psVar6 = psVar10 + uVar8;
+    psVar4 = psVar10 + ((long)psVar4 - lVar11);
+    *(stringbuf **)(this + 0x28) = psVar10;
+    *(stringbuf **)(this + 0x30) = psVar4;
+    *(stringbuf **)(this + 0x38) = psVar6;
+    psVar10 = psVar10 + (lVar12 - lVar11);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  else {
+    psVar10 = *(stringbuf **)(this + 0x58);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  if (((byte)sVar7 >> 3 & 1) != 0) {
+    psVar2 = this + 0x40;
+    if ((char)this[0x57] < '\0') {
+      *(long *)(this + 0x10) = *(long *)psVar2;
+      *(long *)(this + 0x18) = *(long *)psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+    else {
+      *(stringbuf **)(this + 0x10) = psVar2;
+      *(stringbuf **)(this + 0x18) = psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+  }
+  if (psVar4 == psVar6) {
+                    /* WARNING: Could not recover jumptable at 0x000023f0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    uVar8 = (**(code **)(*(long *)this + 0x68))(this,param_1 & 0xff);
+    return uVar8;
+  }
+  *(stringbuf **)(this + 0x30) = psVar1;
+  *psVar4 = SUB41(param_1,0);
+  return (ulong)(param_1 & 0xff);
+}
+
+
+
+
+// ========================================
+// Function: WorkerThread
+// Entry: 0000241c
+// Signature: undefined __thiscall WorkerThread(WorkerThread * this, ThreadPool * param_1, uint param_2)
+// ========================================
+
+
+/* cv::WorkerThread::WorkerThread(cv::ThreadPool&, unsigned int) */
+
+WorkerThread * __thiscall
+cv::WorkerThread::WorkerThread(WorkerThread *this,ThreadPool *param_1,uint param_2)
+
+{
+  undefined *puVar1;
+  undefined8 ***pppuVar2;
+  int iVar3;
+  undefined8 *puVar4;
+  ostream *poVar5;
+  undefined8 uVar6;
+  undefined *puVar7;
+  long lVar8;
+  undefined8 **local_198 [2];
+  char local_181;
+  undefined *local_180;
+  undefined8 local_178;
+  undefined *local_170;
+  long local_168 [8];
+  void *local_128;
+  undefined8 uStack_120;
+  long local_118;
+  undefined8 uStack_110;
+  undefined4 local_108;
+  undefined *local_100 [17];
+  undefined8 local_78;
+  undefined4 local_70;
+  
+  *(ThreadPool **)this = param_1;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(undefined8 *)(this + 0x20) = 0;
+  *(uint *)(this + 8) = param_2;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined4 *)(this + 0x17) = 0;
+  this[0x70] = (WorkerThread)0x1;
+  iVar3 = _pthread_mutex_init((pthread_mutex_t *)(this + 0x30),(pthread_mutexattr_t *)0x0);
+  if (iVar3 == 0) {
+    iVar3 = _pthread_cond_init((pthread_cond_t *)(this + 0x78),(pthread_condattr_t *)0x0);
+    if (iVar3 == 0) {
+      iVar3 = _pthread_create((pthread_t *)(this + 0x10),(pthread_attr_t *)0x0,
+                              (void **)thread_loop_wrapper,this);
+      if (iVar3 == 0) {
+        this[0x18] = (WorkerThread)0x1;
+        return this;
+      }
+      puVar4 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+      puVar7 = std::stringstream::vtable;
+      if ((puVar4 != (undefined8 *)0x0) && (*(int *)(puVar4 + 1) < 2)) {
+        return this;
+      }
+      puVar1 = std::stringstream::vtable + 0x40;
+      local_100[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      local_178 = 0;
+      local_180 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+      local_170 = puVar1;
+      std::ios_base::init(local_100);
+      local_70 = 0xffffffff;
+      local_180 = puVar7 + 0x18;
+      local_100[0] = puVar7 + 0x68;
+      local_78 = 0;
+      local_170 = puVar1;
+      std::streambuf::streambuf((streambuf *)local_168);
+      lVar8 = std::stringbuf::vtable;
+      local_168[0] = std::stringbuf::vtable + 0x10;
+      uStack_120 = 0;
+      local_128 = (void *)0x0;
+      uStack_110 = 0;
+      local_118 = 0;
+      local_108 = 0x18;
+      poVar5 = (ostream *)std::ostream::operator<<((ostream *)&local_170,*(uint *)(this + 8));
+      poVar5 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                         (poVar5,": Can\'t spawn new thread: res = ",0x20);
+      std::ostream::operator<<(poVar5,iVar3);
+      if (puVar4 == (undefined8 *)0x0) {
+        uVar6 = 0;
+      }
+      else {
+        uVar6 = *puVar4;
+      }
+      std::stringbuf::str();
+      pppuVar2 = (undefined8 ***)local_198[0];
+      if (-1 < local_181) {
+        pppuVar2 = local_198;
+      }
+      cv::utils::logging::internal::writeLogMessageEx
+                (2,uVar6,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                 ,0xf4,"WorkerThread",pppuVar2);
+    }
+    else {
+      puVar4 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+      puVar7 = std::stringstream::vtable;
+      if ((puVar4 != (undefined8 *)0x0) && (*(int *)(puVar4 + 1) < 2)) {
+        return this;
+      }
+      puVar1 = std::stringstream::vtable + 0x40;
+      local_100[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      local_178 = 0;
+      local_180 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+      local_170 = puVar1;
+      std::ios_base::init(local_100);
+      local_70 = 0xffffffff;
+      local_180 = puVar7 + 0x18;
+      local_100[0] = puVar7 + 0x68;
+      local_78 = 0;
+      local_170 = puVar1;
+      std::streambuf::streambuf((streambuf *)local_168);
+      lVar8 = std::stringbuf::vtable;
+      local_168[0] = std::stringbuf::vtable + 0x10;
+      uStack_120 = 0;
+      local_128 = (void *)0x0;
+      uStack_110 = 0;
+      local_118 = 0;
+      local_108 = 0x18;
+      poVar5 = (ostream *)std::ostream::operator<<((ostream *)&local_170,*(uint *)(this + 8));
+      poVar5 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                         (poVar5,": Can\'t create thread condition variable: res = ",0x30);
+      std::ostream::operator<<(poVar5,iVar3);
+      if (puVar4 == (undefined8 *)0x0) {
+        uVar6 = 0;
+      }
+      else {
+        uVar6 = *puVar4;
+      }
+      std::stringbuf::str();
+      pppuVar2 = (undefined8 ***)local_198[0];
+      if (-1 < local_181) {
+        pppuVar2 = local_198;
+      }
+      cv::utils::logging::internal::writeLogMessageEx
+                (2,uVar6,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+                 ,0xed,"WorkerThread",pppuVar2);
+    }
+  }
+  else {
+    puVar4 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    puVar7 = std::stringstream::vtable;
+    if ((puVar4 != (undefined8 *)0x0) && (*(int *)(puVar4 + 1) < 2)) {
+      return this;
+    }
+    puVar1 = std::stringstream::vtable + 0x40;
+    local_100[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    local_178 = 0;
+    local_180 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    local_170 = puVar1;
+    std::ios_base::init(local_100);
+    local_70 = 0xffffffff;
+    local_180 = puVar7 + 0x18;
+    local_100[0] = puVar7 + 0x68;
+    local_78 = 0;
+    local_170 = puVar1;
+    std::streambuf::streambuf((streambuf *)local_168);
+    lVar8 = std::stringbuf::vtable;
+    local_168[0] = std::stringbuf::vtable + 0x10;
+    uStack_120 = 0;
+    local_128 = (void *)0x0;
+    uStack_110 = 0;
+    local_118 = 0;
+    local_108 = 0x18;
+    poVar5 = (ostream *)std::ostream::operator<<((ostream *)&local_170,*(uint *)(this + 8));
+    poVar5 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                       (poVar5,": Can\'t create thread mutex: res = ",0x23);
+    std::ostream::operator<<(poVar5,iVar3);
+    if (puVar4 == (undefined8 *)0x0) {
+      uVar6 = 0;
+    }
+    else {
+      uVar6 = *puVar4;
+    }
+    std::stringbuf::str();
+    pppuVar2 = (undefined8 ***)local_198[0];
+    if (-1 < local_181) {
+      pppuVar2 = local_198;
+    }
+    cv::utils::logging::internal::writeLogMessageEx
+              (2,uVar6,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/parallel_impl.cpp"
+               ,0xe6,"WorkerThread",pppuVar2);
+  }
+  if (local_181 < '\0') {
+    operator_delete(local_198[0]);
+  }
+  local_180 = puVar7 + 0x18;
+  local_100[0] = puVar7 + 0x68;
+  local_170 = puVar7 + 0x40;
+  local_168[0] = lVar8 + 0x10;
+  if (local_118 < 0) {
+    operator_delete(local_128);
+  }
+  std::streambuf::~streambuf((streambuf *)local_168);
+  std::iostream::~iostream((iostream *)&local_180);
+  std::ios::~ios((ios *)local_100);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: thread_loop_wrapper
+// Entry: 000029a4
+// Signature: undefined __cdecl thread_loop_wrapper(void * param_1)
+// ========================================
+
+
+/* cv::WorkerThread::thread_loop_wrapper(void*) */
+
+undefined8 cv::WorkerThread::thread_loop_wrapper(void *param_1)
+
+{
+  thread_body(param_1);
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000029bc
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000029d0
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00002a20
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 00002a44
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 00002a6c
+// Signature: ostream * __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>(ostream * param_1, char * param_2, ulong param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ostream& std::__put_character_sequence[abi:ne180100]<char, std::char_traits<char>
+   >(std::ostream&, char const*, unsigned long) */
+
+ostream * std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                    (ostream *param_1,char *param_2,ulong param_3)
+
+{
+  ostream *poVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  long *plVar5;
+  long lVar6;
+  undefined8 uVar7;
+  sentry local_68 [16];
+  id aiStack_58 [8];
+  
+  std::ostream::sentry::sentry(local_68,param_1);
+  if (local_68[0] != (sentry)0x0) {
+    poVar1 = param_1 + *(long *)(*(long *)param_1 + -0x18);
+    uVar7 = *(undefined8 *)(poVar1 + 0x28);
+    uVar3 = *(uint *)(poVar1 + 8);
+    iVar4 = *(int *)(poVar1 + 0x90);
+    if (iVar4 == -1) {
+      std::ios_base::getloc();
+      plVar5 = (long *)std::locale::use_facet(aiStack_58);
+      iVar4 = (**(code **)(*plVar5 + 0x38))(plVar5,0x20);
+      std::locale::~locale((locale *)aiStack_58);
+      *(int *)(poVar1 + 0x90) = iVar4;
+    }
+    pcVar2 = param_2 + param_3;
+    if ((uVar3 & 0xb0) != 0x20) {
+      pcVar2 = param_2;
+    }
+    lVar6 = __pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                      (uVar7,param_2,pcVar2,param_2 + param_3,poVar1,(int)(char)iVar4);
+    if (lVar6 == 0) {
+      std::ios_base::clear((int)param_1 + (int)*(undefined8 *)(*(long *)param_1 + -0x18));
+    }
+  }
+  std::ostream::sentry::~sentry(local_68);
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __pad_and_output[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 00002bd0
+// Signature: ostreambuf_iterator __pad_and_output[abi:ne180100]<char,std::char_traits<char>>(ostreambuf_iterator param_1, char * param_2, char * param_3, char * param_4, ios_base * param_5, char param_6)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* std::ostreambuf_iterator<char, std::char_traits<char> > std::__pad_and_output[abi:ne180100]<char,
+   std::char_traits<char> >(std::ostreambuf_iterator<char, std::char_traits<char> >, char const*,
+   char const*, char const*, std::ios_base&, char) */
+
+long * std::__pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                 (long *param_1,long param_2,long param_3,long param_4,long param_5,int param_6)
+
+{
+  ulong uVar1;
+  long lVar2;
+  undefined8 *******pppppppuVar3;
+  ulong uVar4;
+  long lVar5;
+  undefined8 *******local_68;
+  ulong local_60;
+  undefined8 uStack_58;
+  
+  if (param_1 == (long *)0x0) {
+    return (long *)0x0;
+  }
+  uVar1 = *(long *)(param_5 + 0x18) - (param_4 - param_2);
+  if (uVar1 == 0 || *(long *)(param_5 + 0x18) < param_4 - param_2) {
+    uVar1 = 0;
+  }
+  lVar5 = param_3 - param_2;
+  if ((lVar5 < 1) || (lVar2 = (**(code **)(*param_1 + 0x60))(param_1,param_2,lVar5), lVar2 == lVar5)
+     ) {
+    if (0 < (long)uVar1) {
+      if (0x7ffffffffffffff7 < uVar1) {
+                    /* WARNING: Subroutine does not return */
+        string::__throw_length_error_abi_ne180100_();
+      }
+      if (uVar1 < 0x17) {
+        uStack_58 = CONCAT17((char)uVar1,(undefined7)uStack_58);
+        pppppppuVar3 = &local_68;
+      }
+      else {
+        uVar4 = (uVar1 & 0xfffffffffffffff8) + 8;
+        if ((uVar1 | 7) != 0x17) {
+          uVar4 = uVar1 | 7;
+        }
+        pppppppuVar3 = operator_new(uVar4 + 1);
+        uStack_58 = uVar4 + 1 | 0x8000000000000000;
+        local_68 = pppppppuVar3;
+        local_60 = uVar1;
+      }
+      _memset(pppppppuVar3,param_6,uVar1);
+      *(undefined1 *)((long)pppppppuVar3 + uVar1) = 0;
+      pppppppuVar3 = local_68;
+      if (-1 < (long)uStack_58) {
+        pppppppuVar3 = &local_68;
+      }
+      uVar4 = (**(code **)(*param_1 + 0x60))(param_1,pppppppuVar3,uVar1);
+      if ((long)uStack_58 < 0) {
+        operator_delete(local_68);
+      }
+      if (uVar4 != uVar1) {
+        return (long *)0x0;
+      }
+    }
+    param_4 = param_4 - param_3;
+    if ((param_4 < 1) ||
+       (lVar5 = (**(code **)(*param_1 + 0x60))(param_1,param_3,param_4), lVar5 == param_4)) {
+      *(undefined8 *)(param_5 + 0x18) = 0;
+      return param_1;
+    }
+  }
+  return (long *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: str
+// Entry: 00002d74
+// Signature: undefined __cdecl str(void)
+// ========================================
+
+
+/* std::stringbuf::str() const */
+
+void std::stringbuf::str(void)
+
+{
+  long in_x0;
+  undefined8 *puVar1;
+  undefined8 *in_x8;
+  undefined8 *puVar2;
+  undefined1 *puVar3;
+  ulong uVar4;
+  undefined8 *puVar5;
+  ulong uVar6;
+  undefined1 *puVar7;
+  undefined1 *puVar8;
+  ulong uVar9;
+  undefined1 *puVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  
+  if ((*(uint *)(in_x0 + 0x60) >> 4 & 1) == 0) {
+    if ((*(uint *)(in_x0 + 0x60) >> 3 & 1) == 0) {
+      *in_x8 = 0;
+      in_x8[1] = 0;
+      in_x8[2] = 0;
+      return;
+    }
+    puVar10 = *(undefined1 **)(in_x0 + 0x10);
+    puVar7 = *(undefined1 **)(in_x0 + 0x20);
+    uVar9 = (long)puVar7 - (long)puVar10;
+    if (0x7ffffffffffffff7 < uVar9) {
+LAB_00002fc4:
+                    /* WARNING: Subroutine does not return */
+      string::__throw_length_error_abi_ne180100_();
+    }
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar10 == puVar7) {
+LAB_00002f74:
+      *(undefined1 *)in_x8 = 0;
+      return;
+    }
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar10))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar10 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar10 = puVar10 + uVar4;
+      if (uVar9 == uVar4) goto LAB_00002fa8;
+    }
+    do {
+      puVar3 = puVar10 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar10;
+      in_x8 = puVar2;
+      puVar10 = puVar3;
+    } while (puVar3 != puVar7);
+  }
+  else {
+    puVar10 = *(undefined1 **)(in_x0 + 0x58);
+    puVar3 = *(undefined1 **)(in_x0 + 0x30);
+    puVar7 = puVar10;
+    if (puVar10 < puVar3) {
+      *(undefined1 **)(in_x0 + 0x58) = puVar3;
+      puVar7 = puVar3;
+    }
+    puVar8 = *(undefined1 **)(in_x0 + 0x28);
+    uVar9 = (long)puVar7 - (long)puVar8;
+    if (0x7ffffffffffffff7 < uVar9) goto LAB_00002fc4;
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar8 == puVar7) goto LAB_00002f74;
+    if (puVar10 <= puVar3) {
+      puVar10 = puVar3;
+    }
+    uVar9 = (long)puVar10 - (long)puVar8;
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar8))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar8 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar8 = puVar8 + uVar4;
+      if (uVar9 == uVar4) goto LAB_00002fa8;
+    }
+    do {
+      puVar10 = puVar8 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar8;
+      in_x8 = puVar2;
+      puVar8 = puVar10;
+    } while (puVar10 != puVar7);
+  }
+LAB_00002fa8:
+  *(undefined1 *)puVar2 = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002fcc
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::Ptr<cv::WorkerThread>, std::allocator<cv::Ptr<cv::WorkerThread> >
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::
+     __throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __append
+// Entry: 00002fe0
+// Signature: undefined __thiscall __append(vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Ptr<cv::WorkerThread>, std::allocator<cv::Ptr<cv::WorkerThread> >
+   >::__append(unsigned long) */
+
+void __thiscall
+std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::__append
+          (vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *this,
+          ulong param_1)
+
+{
+  long *plVar1;
+  ulong uVar2;
+  undefined8 *puVar3;
+  char cVar4;
+  bool bVar5;
+  void *pvVar6;
+  __shared_weak_count *this_00;
+  ulong uVar7;
+  ulong uVar8;
+  undefined8 *puVar9;
+  long *plVar11;
+  long lVar12;
+  undefined8 *puVar13;
+  undefined8 *puVar14;
+  undefined8 *puVar15;
+  undefined8 uVar16;
+  undefined8 *puVar10;
+  
+  puVar9 = *(undefined8 **)(this + 8);
+  if (param_1 <= (ulong)(*(long *)(this + 0x10) - (long)puVar9 >> 4)) {
+    if (param_1 != 0) {
+      _bzero(puVar9,param_1 * 0x10);
+      puVar9 = puVar9 + param_1 * 2;
+    }
+    *(undefined8 **)(this + 8) = puVar9;
+    return;
+  }
+  puVar15 = *(undefined8 **)this;
+  lVar12 = (long)puVar9 - (long)puVar15 >> 4;
+  uVar2 = lVar12 + param_1;
+  if (uVar2 >> 0x3c == 0) {
+    uVar7 = *(long *)(this + 0x10) - (long)puVar15;
+    uVar8 = (long)uVar7 >> 3;
+    if (uVar8 <= uVar2) {
+      uVar8 = uVar2;
+    }
+    if (0x7fffffffffffffef < uVar7) {
+      uVar8 = 0xfffffffffffffff;
+    }
+    if (uVar8 == 0) {
+      pvVar6 = (void *)0x0;
+    }
+    else {
+      if (uVar8 >> 0x3c != 0) goto LAB_00003170;
+      pvVar6 = operator_new(uVar8 << 4);
+    }
+    puVar3 = (undefined8 *)((long)pvVar6 + lVar12 * 0x10);
+    pvVar6 = (void *)((long)pvVar6 + uVar8 * 0x10);
+    _bzero(puVar3,param_1 * 0x10);
+    puVar13 = puVar3;
+    if (puVar9 == puVar15) {
+      *(undefined8 **)this = puVar3;
+      *(undefined8 **)(this + 8) = puVar3 + param_1 * 2;
+      *(void **)(this + 0x10) = pvVar6;
+    }
+    else {
+      do {
+        puVar10 = puVar9 + -2;
+        uVar16 = *puVar10;
+        puVar14 = puVar13 + -2;
+        puVar13[-1] = puVar9[-1];
+        *puVar14 = uVar16;
+        *puVar10 = 0;
+        puVar9[-1] = 0;
+        puVar9 = puVar10;
+        puVar13 = puVar14;
+      } while (puVar10 != puVar15);
+      puVar15 = *(undefined8 **)this;
+      puVar13 = *(undefined8 **)(this + 8);
+      *(undefined8 **)this = puVar14;
+      *(undefined8 **)(this + 8) = puVar3 + param_1 * 2;
+      *(void **)(this + 0x10) = pvVar6;
+      puVar9 = puVar13;
+      for (; puVar13 != puVar15; puVar13 = puVar13 + -2) {
+        plVar11 = (long *)puVar13[-1];
+        if (plVar11 != (long *)0x0) {
+          plVar1 = plVar11 + 1;
+          do {
+            lVar12 = *plVar1;
+            cVar4 = '\x01';
+            bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar5) {
+              *plVar1 = lVar12 + -1;
+              cVar4 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar4 != '\0');
+          if (lVar12 == 0) {
+            (**(code **)(*plVar11 + 0x10))(plVar11);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        puVar9 = puVar15;
+      }
+    }
+    if (puVar9 != (undefined8 *)0x0) {
+      operator_delete(puVar9);
+      return;
+    }
+    return;
+  }
+  __throw_length_error_abi_ne180100_();
+LAB_00003170:
+  this_00 = (__shared_weak_count *)__throw_bad_array_new_length_abi_ne180100_();
+  std::__shared_weak_count::~__shared_weak_count(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_pointer
+// Entry: 00003174
+// Signature: undefined __thiscall ~__shared_ptr_pointer(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::WorkerThread*,
+   std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,
+   cv::WorkerThread>, std::allocator<cv::WorkerThread> >::~__shared_ptr_pointer() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+::~__shared_ptr_pointer
+          (__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+           *this)
+
+{
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_pointer
+// Entry: 00003178
+// Signature: undefined __thiscall ~__shared_ptr_pointer(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::WorkerThread*,
+   std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,
+   cv::WorkerThread>, std::allocator<cv::WorkerThread> >::~__shared_ptr_pointer() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+::~__shared_ptr_pointer
+          (__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+           *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 0000318c
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::WorkerThread*,
+   std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,
+   cv::WorkerThread>, std::allocator<cv::WorkerThread> >::__on_zero_shared() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+::__on_zero_shared(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+                   *this)
+
+{
+  void *pvVar1;
+  
+  if (*(WorkerThread **)(this + 0x18) != (WorkerThread *)0x0) {
+    pvVar1 = (void *)cv::WorkerThread::~WorkerThread(*(WorkerThread **)(this + 0x18));
+    operator_delete(pvVar1);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __get_deleter
+// Entry: 000031b0
+// Signature: undefined __thiscall __get_deleter(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>> * this, type_info * param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000031fc) */
+/* WARNING: Removing unreachable block (ram,0x0000320c) */
+/* std::__shared_ptr_pointer<cv::WorkerThread*,
+   std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,
+   cv::WorkerThread>, std::allocator<cv::WorkerThread> >::__get_deleter(std::type_info const&) const
+    */
+
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+* __thiscall
+std::
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+::__get_deleter(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+                *this,type_info *param_1)
+
+{
+  if (*(char **)(param_1 + 8) ==
+      "NSt3__110shared_ptrIN2cv12WorkerThreadEE27__shared_ptr_default_deleteIS2_S2_EE") {
+    return this + 0x18;
+  }
+  return (__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+          *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 0000321c
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::WorkerThread*,
+   std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,
+   cv::WorkerThread>, std::allocator<cv::WorkerThread> >::__on_zero_shared_weak() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+::__on_zero_shared_weak
+          (__shared_ptr_pointer<cv::WorkerThread*,std::shared_ptr<cv::WorkerThread>::__shared_ptr_default_delete<cv::WorkerThread,cv::WorkerThread>,std::allocator<cv::WorkerThread>>
+           *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~WorkerThread
+// Entry: 00003220
+// Signature: undefined __thiscall ~WorkerThread(WorkerThread * this)
+// ========================================
+
+
+/* cv::WorkerThread::~WorkerThread() */
+
+WorkerThread * __thiscall cv::WorkerThread::~WorkerThread(WorkerThread *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  if (this[0x18] != (WorkerThread)0x0) {
+    if (((byte)this[0x19] & 1) == 0) {
+      _pthread_mutex_lock((pthread_mutex_t *)(this + 0x30));
+      this[0x19] = (WorkerThread)0x1;
+      _pthread_mutex_unlock((pthread_mutex_t *)(this + 0x30));
+      _pthread_cond_signal((pthread_cond_t *)(this + 0x78));
+    }
+    _pthread_join(*(pthread_t *)(this + 0x10),(void **)0x0);
+  }
+  _pthread_cond_destroy((pthread_cond_t *)(this + 0x78));
+  _pthread_mutex_destroy((pthread_mutex_t *)(this + 0x30));
+  plVar5 = *(long **)(this + 0x28);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __push_back_slow_path<cv::Ptr<cv::WorkerThread>>
+// Entry: 000032e4
+// Signature: Ptr * __thiscall __push_back_slow_path<cv::Ptr<cv::WorkerThread>>(vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> * this, Ptr * param_1)
+// ========================================
+
+
+/* cv::Ptr<cv::WorkerThread>* std::vector<cv::Ptr<cv::WorkerThread>,
+   std::allocator<cv::Ptr<cv::WorkerThread> > >::__push_back_slow_path<cv::Ptr<cv::WorkerThread>
+   >(cv::Ptr<cv::WorkerThread>&&) */
+
+Ptr * __thiscall
+std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::
+__push_back_slow_path<cv::Ptr<cv::WorkerThread>>
+          (vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>> *this,
+          Ptr *param_1)
+
+{
+  ulong uVar1;
+  long *plVar2;
+  char cVar3;
+  bool bVar4;
+  void *pvVar5;
+  __shared_weak_count *this_00;
+  Ptr *pPVar6;
+  ulong uVar7;
+  undefined8 *puVar8;
+  undefined8 *puVar9;
+  ulong uVar10;
+  long lVar11;
+  undefined8 *puVar12;
+  undefined8 *puVar14;
+  long *plVar15;
+  undefined8 uVar16;
+  undefined8 *puVar13;
+  
+  lVar11 = *(long *)(this + 8) - *(long *)this >> 4;
+  uVar1 = lVar11 + 1;
+  if (uVar1 >> 0x3c != 0) {
+    __throw_length_error_abi_ne180100_();
+LAB_00003428:
+    this_00 = (__shared_weak_count *)__throw_bad_array_new_length_abi_ne180100_();
+    pPVar6 = (Ptr *)std::__shared_weak_count::~__shared_weak_count(this_00);
+    return pPVar6;
+  }
+  uVar7 = *(long *)(this + 0x10) - *(long *)this;
+  uVar10 = (long)uVar7 >> 3;
+  if (uVar10 <= uVar1) {
+    uVar10 = uVar1;
+  }
+  if (0x7fffffffffffffef < uVar7) {
+    uVar10 = 0xfffffffffffffff;
+  }
+  if (uVar10 == 0) {
+    pvVar5 = (void *)0x0;
+  }
+  else {
+    if (uVar10 >> 0x3c != 0) goto LAB_00003428;
+    pvVar5 = operator_new(uVar10 << 4);
+  }
+  puVar8 = (undefined8 *)((long)pvVar5 + lVar11 * 0x10);
+  uVar16 = *(undefined8 *)param_1;
+  pPVar6 = (Ptr *)(puVar8 + 2);
+  puVar8[1] = *(undefined8 *)(param_1 + 8);
+  *puVar8 = uVar16;
+  pvVar5 = (void *)((long)pvVar5 + uVar10 * 0x10);
+  *(undefined8 *)param_1 = 0;
+  *(undefined8 *)(param_1 + 8) = 0;
+  puVar14 = *(undefined8 **)this;
+  puVar12 = *(undefined8 **)(this + 8);
+  if (puVar12 == puVar14) {
+    *(undefined8 **)this = puVar8;
+    *(Ptr **)(this + 8) = pPVar6;
+    *(void **)(this + 0x10) = pvVar5;
+  }
+  else {
+    do {
+      puVar13 = puVar12 + -2;
+      uVar16 = *puVar13;
+      puVar9 = puVar8 + -2;
+      puVar8[-1] = puVar12[-1];
+      *puVar9 = uVar16;
+      *puVar13 = 0;
+      puVar12[-1] = 0;
+      puVar8 = puVar9;
+      puVar12 = puVar13;
+    } while (puVar13 != puVar14);
+    puVar8 = *(undefined8 **)this;
+    puVar14 = *(undefined8 **)(this + 8);
+    *(undefined8 **)this = puVar9;
+    *(Ptr **)(this + 8) = pPVar6;
+    *(void **)(this + 0x10) = pvVar5;
+    puVar12 = puVar14;
+    for (; puVar14 != puVar8; puVar14 = puVar14 + -2) {
+      plVar15 = (long *)puVar14[-1];
+      if (plVar15 != (long *)0x0) {
+        plVar2 = plVar15 + 1;
+        do {
+          lVar11 = *plVar2;
+          cVar3 = '\x01';
+          bVar4 = (bool)ExclusiveMonitorPass(plVar2,0x10);
+          if (bVar4) {
+            *plVar2 = lVar11 + -1;
+            cVar3 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar3 != '\0');
+        if (lVar11 == 0) {
+          (**(code **)(*plVar15 + 0x10))(plVar15);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      puVar12 = puVar8;
+    }
+  }
+  if (puVar12 != (undefined8 *)0x0) {
+    operator_delete(puVar12);
+  }
+  return pPVar6;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_pointer
+// Entry: 0000342c
+// Signature: undefined __thiscall ~__shared_ptr_pointer(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::ParallelJob*,
+   std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob, cv::ParallelJob>,
+   std::allocator<cv::ParallelJob> >::~__shared_ptr_pointer() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+::~__shared_ptr_pointer
+          (__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+           *this)
+
+{
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_pointer
+// Entry: 00003430
+// Signature: undefined __thiscall ~__shared_ptr_pointer(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::ParallelJob*,
+   std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob, cv::ParallelJob>,
+   std::allocator<cv::ParallelJob> >::~__shared_ptr_pointer() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+::~__shared_ptr_pointer
+          (__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+           *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 00003444
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::ParallelJob*,
+   std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob, cv::ParallelJob>,
+   std::allocator<cv::ParallelJob> >::__on_zero_shared() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+::__on_zero_shared(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+                   *this)
+
+{
+  if (*(void **)(this + 0x18) != (void *)0x0) {
+    operator_delete(*(void **)(this + 0x18));
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __get_deleter
+// Entry: 00003454
+// Signature: undefined __thiscall __get_deleter(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>> * this, type_info * param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000034a0) */
+/* WARNING: Removing unreachable block (ram,0x000034b0) */
+/* std::__shared_ptr_pointer<cv::ParallelJob*,
+   std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob, cv::ParallelJob>,
+   std::allocator<cv::ParallelJob> >::__get_deleter(std::type_info const&) const */
+
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+* __thiscall
+std::
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+::__get_deleter(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+                *this,type_info *param_1)
+
+{
+  if (*(char **)(param_1 + 8) ==
+      "NSt3__110shared_ptrIN2cv11ParallelJobEE27__shared_ptr_default_deleteIS2_S2_EE") {
+    return this + 0x18;
+  }
+  return (__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+          *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 000034c0
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_pointer<cv::ParallelJob*,
+   std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob, cv::ParallelJob>,
+   std::allocator<cv::ParallelJob> >::__on_zero_shared_weak() */
+
+void __thiscall
+std::
+__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+::__on_zero_shared_weak
+          (__shared_ptr_pointer<cv::ParallelJob*,std::shared_ptr<cv::ParallelJob>::__shared_ptr_default_delete<cv::ParallelJob,cv::ParallelJob>,std::allocator<cv::ParallelJob>>
+           *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 000034c4
+// Signature: undefined __cdecl vector(ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Ptr<cv::WorkerThread>, std::allocator<cv::Ptr<cv::WorkerThread> >
+   >::vector(unsigned long) [clone .cold.1] */
+
+void std::vector<cv::Ptr<cv::WorkerThread>,std::allocator<cv::Ptr<cv::WorkerThread>>>::vector
+               (ulong param_1)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  void *in_x1;
+  undefined8 *in_x2;
+  long lVar5;
+  long *plVar6;
+  void *pvVar7;
+  
+  pvVar7 = *(void **)param_1;
+  pvVar4 = in_x1;
+  if (pvVar7 != in_x1) {
+    do {
+      plVar6 = *(long **)((long)pvVar7 + -8);
+      if (plVar6 != (long *)0x0) {
+        plVar1 = plVar6 + 1;
+        do {
+          lVar5 = *plVar1;
+          cVar2 = '\x01';
+          bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+          if (bVar3) {
+            *plVar1 = lVar5 + -1;
+            cVar2 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar2 != '\0');
+        if (lVar5 == 0) {
+          (**(code **)(*plVar6 + 0x10))(plVar6);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      pvVar7 = (void *)((long)pvVar7 + -0x10);
+    } while (pvVar7 != in_x1);
+    pvVar4 = (void *)*in_x2;
+  }
+  *(void **)param_1 = in_x1;
+  operator_delete(pvVar4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ltmp2
+// Entry: 00003814
+// Signature: undefined ltmp2(void)
+// ========================================
+
+
+void ltmp2(void)
+
+{
+  __MergedGlobals =
+       cv::utils::getConfigurationParameterSizeT("OPENCV_THREAD_POOL_ACTIVE_WAIT_PAUSE_LIMIT",0x10);
+  DAT_0000475c = cv::utils::getConfigurationParameterSizeT
+                           ("OPENCV_THREAD_POOL_ACTIVE_WAIT_WORKER",2000);
+  DAT_00004760 = cv::utils::getConfigurationParameterSizeT
+                           ("OPENCV_THREAD_POOL_ACTIVE_WAIT_MAIN",10000);
+  DAT_00004764 = cv::utils::getConfigurationParameterSizeT
+                           ("OPENCV_THREAD_POOL_ACTIVE_WAIT_THREADS_LIMIT",0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: defaultNumberOfThreads
+// Entry: 00005100
+// Signature: undefined defaultNumberOfThreads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::defaultNumberOfThreads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00005200
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getThreadID
+// Entry: 00005300
+// Signature: undefined getThreadID(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::getThreadID(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getConfigurationParameterSizeT
+// Entry: 00005400
+// Signature: undefined getConfigurationParameterSizeT(char * param_1, ulong param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::getConfigurationParameterSizeT(char *param_1,ulong param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getGlobalLogTag
+// Entry: 00005500
+// Signature: undefined getGlobalLogTag(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::internal::getGlobalLogTag(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: writeLogMessageEx
+// Entry: 00005600
+// Signature: undefined writeLogMessageEx(LogLevel param_1, char * param_2, char * param_3, int param_4, char * param_5, char * param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::utils::logging::internal::writeLogMessageEx(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: use_facet
+// Entry: 00005700
+// Signature: undefined use_facet(id * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::locale::use_facet(id *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getloc
+// Entry: 00005800
+// Signature: undefined getloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::getloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00005900
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00005a00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00005b00
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00005c00
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 00005d00
+// Signature: undefined resize(ulong param_1, char param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::resize(ulong param_1,char param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: push_back
+// Entry: 00005e00
+// Signature: undefined push_back(char param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::push_back(char param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00005f00
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00006000
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sentry
+// Entry: 00006100
+// Signature: undefined __thiscall sentry(sentry * this, ostream * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::sentry(sentry *this,ostream *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~sentry
+// Entry: 00006200
+// Signature: undefined __thiscall ~sentry(sentry * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::~sentry(sentry *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00006300
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00006400
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator<<
+// Entry: 00006500
+// Signature: undefined __thiscall operator<<(ostream * this, void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::operator<<(ostream *this,void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator<<
+// Entry: 00006600
+// Signature: undefined __thiscall operator<<(ostream * this, int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::operator<<(ostream *this,int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator<<
+// Entry: 00006700
+// Signature: undefined __thiscall operator<<(ostream * this, uint param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::operator<<(ostream *this,uint param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00006800
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::iostream::~iostream() */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00006900
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::iostream::~iostream() */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00006a00
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sync
+// Entry: 00006b00
+// Signature: undefined sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::sync() */
+
+void std::streambuf::sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: imbue
+// Entry: 00006c00
+// Signature: undefined imbue(locale * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::imbue(std::locale const&) */
+
+void std::streambuf::imbue(locale *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: uflow
+// Entry: 00006d00
+// Signature: undefined uflow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::uflow() */
+
+void std::streambuf::uflow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: setbuf
+// Entry: 00006e00
+// Signature: undefined setbuf(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::setbuf(char*, long) */
+
+void std::streambuf::setbuf(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsgetn
+// Entry: 00006f00
+// Signature: undefined xsgetn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsgetn(char*, long) */
+
+void std::streambuf::xsgetn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsputn
+// Entry: 00007000
+// Signature: undefined xsputn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsputn(char const*, long) */
+
+void std::streambuf::xsputn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: showmanyc
+// Entry: 00007100
+// Signature: undefined showmanyc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::showmanyc() */
+
+void std::streambuf::showmanyc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: streambuf
+// Entry: 00007200
+// Signature: undefined __thiscall streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~streambuf
+// Entry: 00007300
+// Signature: undefined __thiscall ~streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::~streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __release_weak
+// Entry: 00007400
+// Signature: undefined __release_weak(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__shared_weak_count::__release_weak(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_weak_count
+// Entry: 00007500
+// Signature: undefined __thiscall ~__shared_weak_count(__shared_weak_count * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::__shared_weak_count::~__shared_weak_count(__shared_weak_count *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~locale
+// Entry: 00007700
+// Signature: undefined __thiscall ~locale(locale * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::locale::~locale(locale *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __set_badbit_and_consider_rethrow
+// Entry: 00007800
+// Signature: undefined __set_badbit_and_consider_rethrow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ios_base::__set_badbit_and_consider_rethrow() */
+
+void std::ios_base::__set_badbit_and_consider_rethrow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: init
+// Entry: 00007900
+// Signature: undefined init(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::init(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 00007a00
+// Signature: undefined clear(uint param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::clear(uint param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ios
+// Entry: 00007b00
+// Signature: undefined __thiscall ~ios(ios * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ios::~ios(ios *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00007c00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008600
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* non-virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008700
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* non-virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00008800
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00008900
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00008a00
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00008b00
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008c00
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008d00
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00008e00
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00008f00
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00009000
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00009100
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_acquire
+// Entry: 00009500
+// Signature: undefined ___cxa_guard_acquire(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_acquire(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_release
+// Entry: 00009600
+// Signature: undefined ___cxa_guard_release(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_release(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00009700
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00009900
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00009a00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00009b00
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_cond_broadcast
+// Entry: 00009c00
+// Signature: int _pthread_cond_broadcast(pthread_cond_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_cond_broadcast(pthread_cond_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_cond_destroy
+// Entry: 00009d00
+// Signature: int _pthread_cond_destroy(pthread_cond_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_cond_destroy(pthread_cond_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_cond_init
+// Entry: 00009e00
+// Signature: int _pthread_cond_init(pthread_cond_t * param_1, pthread_condattr_t * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_cond_init(pthread_cond_t *param_1,pthread_condattr_t *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_cond_signal
+// Entry: 00009f00
+// Signature: int _pthread_cond_signal(pthread_cond_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_cond_signal(pthread_cond_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_cond_wait
+// Entry: 0000a000
+// Signature: int _pthread_cond_wait(pthread_cond_t * param_1, pthread_mutex_t * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_cond_wait(pthread_cond_t *param_1,pthread_mutex_t *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_create
+// Entry: 0000a100
+// Signature: int _pthread_create(pthread_t * param_1, pthread_attr_t * param_2, void * * param_3, void * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_create(pthread_t *param_1,pthread_attr_t *param_2,void **param_3,void *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_join
+// Entry: 0000a200
+// Signature: int _pthread_join(pthread_t param_1, void * * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_join(pthread_t param_1,void **param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_mutex_destroy
+// Entry: 0000a300
+// Signature: int _pthread_mutex_destroy(pthread_mutex_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_mutex_destroy(pthread_mutex_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_mutex_init
+// Entry: 0000a400
+// Signature: int _pthread_mutex_init(pthread_mutex_t * param_1, pthread_mutexattr_t * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_mutex_init(pthread_mutex_t *param_1,pthread_mutexattr_t *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_mutex_lock
+// Entry: 0000a500
+// Signature: int _pthread_mutex_lock(pthread_mutex_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_mutex_lock(pthread_mutex_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _pthread_mutex_unlock
+// Entry: 0000a600
+// Signature: int _pthread_mutex_unlock(pthread_mutex_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _pthread_mutex_unlock(pthread_mutex_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _sched_yield
+// Entry: 0000a700
+// Signature: int _sched_yield(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _sched_yield(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 0000a800
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 0000a900
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 132
+// Failed: 0
+// Skipped external functions: 0

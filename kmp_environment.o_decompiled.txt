@@ -1,0 +1,795 @@
+Program: kmp_environment.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmp_env_get
+// Entry: 00000000
+// Signature: char * __cdecl __kmp_env_get(char * name)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+char * __kmp_env_get(char *name)
+
+{
+  undefined1 auStack_48 [24];
+  size_t local_30;
+  char *local_28;
+  char *local_20;
+  char *local_18;
+  
+                    /* Unresolved local var: char * result@[???]
+                       Unresolved local var: char * value@[???] */
+  local_20 = (char *)0x0;
+  local_18 = name;
+  local_28 = _getenv(name);
+  if (local_28 != (char *)0x0) {
+                    /* Unresolved local var: size_t len@[???] */
+    local_30 = _strlen(local_28);
+    local_30 = local_30 + 1;
+    local_20 = _malloc(local_30);
+    if (local_20 == (char *)0x0) {
+      ___kmp_msg_format(0x4006f);
+      ___kmp_fatal(auStack_48);
+    }
+    _strncpy(local_20,local_28,local_30);
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_free
+// Entry: 000000c8
+// Signature: void __cdecl __kmp_env_free(char * * value)
+// ========================================
+
+
+void __kmp_env_free(char **value)
+
+{
+  _free(*value);
+  *value = (char *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_exists
+// Entry: 000000f8
+// Signature: int __cdecl __kmp_env_exists(char * name)
+// ========================================
+
+
+int __kmp_env_exists(char *name)
+
+{
+  char *pcVar1;
+  
+                    /* Unresolved local var: char * value@[DW_OP_breg31(sp): 0] */
+  pcVar1 = _getenv(name);
+  return (int)(pcVar1 != (char *)0x0);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_set
+// Entry: 00000138
+// Signature: void __cdecl __kmp_env_set(char * name, char * value, int overwrite)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_env_set(char *name,char *value,int overwrite)
+
+{
+  undefined1 auStack_40 [24];
+  int local_28;
+  int local_24;
+  char *local_20;
+  char *local_18;
+  
+  local_24 = overwrite;
+  local_20 = value;
+  local_18 = name;
+                    /* Unresolved local var: int rc@[???] */
+  local_28 = _setenv(name,value,overwrite);
+  if (local_28 != 0) {
+    ___kmp_msg_format(0x40012);
+    ___kmp_msg_format(0x50009);
+    ___kmp_fatal(auStack_40);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_unset
+// Entry: 000001ec
+// Signature: void __cdecl __kmp_env_unset(char * name)
+// ========================================
+
+
+void __kmp_env_unset(char *name)
+
+{
+  _unsetenv(name);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_blk_init
+// Entry: 00000210
+// Signature: void __cdecl __kmp_env_blk_init(kmp_env_blk_t * block, char * bulk)
+// ========================================
+
+
+void __kmp_env_blk_init(kmp_env_blk_t *block,char *bulk)
+
+{
+  undefined8 *puVar1;
+  
+  if (bulk == (char *)0x0) {
+    puVar1 = (undefined8 *)__NSGetEnviron();
+    ___kmp_env_blk_parse_unix(block,(char **)*puVar1);
+  }
+  else {
+    ___kmp_env_blk_parse_string(block,bulk);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_env_blk_parse_string
+// Entry: 00000274
+// Signature: void __cdecl ___kmp_env_blk_parse_string(kmp_env_blk_t * block, char * env)
+// ========================================
+
+
+void ___kmp_env_blk_parse_string(kmp_env_blk_t *block,char *env)
+
+{
+  undefined1 auStack_68 [8];
+  char *local_60;
+  char *local_58;
+  long local_50;
+  char *local_48;
+  int local_40;
+  int local_3c;
+  kmp_env_var_t *local_38;
+  char *local_30;
+  char local_24 [2];
+  undefined1 local_21;
+  char *local_20;
+  kmp_env_blk_t *local_18;
+  
+                    /* Unresolved local var: char chr_delimiter@[???]
+                       Unresolved local var: char[2] str_delimiter@[???]
+                       Unresolved local var: char * bulk@[???]
+                       Unresolved local var: kmp_env_var_t * vars@[???]
+                       Unresolved local var: int count@[???]
+                       Unresolved local var: int delimiters@[DW_OP_breg31(sp): +48] */
+  local_21 = 0x7c;
+  local_24 = l___const__ZL27___kmp_env_blk_parse_stringP13__kmp_env_blkPKc_str_delimiter;
+  local_30 = (char *)0x0;
+  local_38 = (kmp_env_var_t *)0x0;
+  local_3c = 0;
+  local_40 = 0;
+  local_20 = env;
+  local_18 = block;
+  local_48 = (char *)___kmp_str_format(0x7a6);
+  local_30 = local_48;
+                    /* Unresolved local var: char * ptr@[DW_OP_breg31(sp): +40] */
+  while( true ) {
+    local_48 = strchr(local_48,0x7c);
+    if (local_48 == (char *)0x0) break;
+    local_40 = local_40 + 1;
+    local_48 = local_48 + 1;
+  }
+  local_38 = allocate((long)(local_40 + 1) << 4);
+                    /* Unresolved local var: char * var@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: char * name@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: char * value@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: char * buf@[DW_OP_breg31(sp): +8] */
+  local_50 = ___kmp_str_token(local_30,local_24,auStack_68);
+  while (local_50 != 0) {
+    ___kmp_str_split(local_50,0x3d,&local_58,&local_60);
+    local_38[local_3c].name = local_58;
+    local_38[local_3c].value = local_60;
+    local_3c = local_3c + 1;
+    local_50 = ___kmp_str_token(0,local_24,auStack_68);
+  }
+  local_18->bulk = local_30;
+  local_18->vars = local_38;
+  local_18->count = local_3c;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_env_blk_parse_unix
+// Entry: 000003f4
+// Signature: void __cdecl ___kmp_env_blk_parse_unix(kmp_env_blk_t * block, char * * env)
+// ========================================
+
+
+void ___kmp_env_blk_parse_unix(kmp_env_blk_t *block,char **env)
+
+{
+  size_t sVar1;
+  int local_64;
+  char *local_58;
+  char *local_50;
+  char *local_48;
+  size_t local_40;
+  int local_34;
+  kmp_env_var_t *local_30;
+  char *local_28;
+  char **local_20;
+  kmp_env_blk_t *local_18;
+  
+                    /* Unresolved local var: char * bulk@[???]
+                       Unresolved local var: kmp_env_var_t * vars@[???]
+                       Unresolved local var: int count@[???]
+                       Unresolved local var: size_t size@[DW_OP_breg31(sp): +48] */
+  local_28 = (char *)0x0;
+  local_30 = (kmp_env_var_t *)0x0;
+  local_40 = 0;
+  local_20 = env;
+  local_18 = block;
+  for (local_34 = 0; local_20[local_34] != (char *)0x0; local_34 = local_34 + 1) {
+    sVar1 = _strlen(local_20[local_34]);
+    local_40 = local_40 + sVar1 + 1;
+  }
+  local_28 = allocate(local_40);
+  local_30 = allocate((long)local_34 << 4);
+                    /* Unresolved local var: char * var@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: char * name@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: char * value@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: size_t len@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int i@[DW_OP_breg31(sp): +12] */
+  local_48 = local_28;
+  for (local_64 = 0; local_64 < local_34; local_64 = local_64 + 1) {
+    sVar1 = _strlen(local_20[local_64]);
+    _memcpy(local_48,local_20[local_64],sVar1 + 1);
+    ___kmp_str_split(local_48,0x3d,&local_50,&local_58);
+    local_30[local_64].name = local_50;
+    local_30[local_64].value = local_58;
+    local_48 = local_48 + sVar1 + 1;
+  }
+  local_18->bulk = local_28;
+  local_18->vars = local_30;
+  local_18->count = local_34;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_blk_sort
+// Entry: 00000570
+// Signature: void __cdecl __kmp_env_blk_sort(kmp_env_blk_t * block)
+// ========================================
+
+
+void __kmp_env_blk_sort(kmp_env_blk_t *block)
+
+{
+  _qsort(block->vars,(long)block->count,0x10,(int *)___kmp_env_var_cmp);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_env_var_cmp
+// Entry: 000005ac
+// Signature: int __cdecl ___kmp_env_var_cmp(kmp_env_var_t * lhs, kmp_env_var_t * rhs)
+// ========================================
+
+
+int ___kmp_env_var_cmp(kmp_env_var_t *lhs,kmp_env_var_t *rhs)
+
+{
+  int iVar1;
+  
+  iVar1 = _strcmp(lhs->name,rhs->name);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_blk_free
+// Entry: 000005e0
+// Signature: void __cdecl __kmp_env_blk_free(kmp_env_blk_t * block)
+// ========================================
+
+
+void __kmp_env_blk_free(kmp_env_blk_t *block)
+
+{
+  _free(block->vars);
+  ___kmp_str_free(block);
+  block->count = 0;
+  block->vars = (kmp_env_var_t *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_env_blk_var
+// Entry: 00000620
+// Signature: char * __cdecl __kmp_env_blk_var(kmp_env_blk_t * block, char * name)
+// ========================================
+
+
+char * __kmp_env_blk_var(kmp_env_blk_t *block,char *name)
+
+{
+  int iVar1;
+  int local_2c;
+  
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +4] */
+  local_2c = 0;
+  while( true ) {
+    if (block->count <= local_2c) {
+      return (char *)0x0;
+    }
+    iVar1 = _strcmp(block->vars[local_2c].name,name);
+    if (iVar1 == 0) break;
+    local_2c = local_2c + 1;
+  }
+  return block->vars[local_2c].value;
+}
+
+
+
+
+// ========================================
+// Function: strchr
+// Entry: 000006cc
+// Signature: char * __cdecl strchr(char * __s, int __c)
+// ========================================
+
+
+char * strchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = __libcpp_strchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: allocate
+// Entry: 000006f8
+// Signature: void * __cdecl allocate(size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * allocate(size_t size)
+
+{
+  undefined1 auStack_38 [24];
+  void *local_20;
+  size_t local_18;
+  
+  local_18 = size;
+                    /* Unresolved local var: void * ptr@[???] */
+  local_20 = _malloc(size);
+  if (local_20 == (void *)0x0) {
+    ___kmp_msg_format(0x4006f);
+    ___kmp_fatal(auStack_38);
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strchr
+// Entry: 00000778
+// Signature: char * __cdecl __libcpp_strchr(char * __s, int __c)
+// ========================================
+
+
+char * __libcpp_strchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = (char *)_strchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __NSGetEnviron
+// Entry: 00009000
+// Signature: undefined __NSGetEnviron(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __NSGetEnviron(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00009100
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00009200
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_format
+// Entry: 00009400
+// Signature: undefined ___kmp_str_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_free
+// Entry: 00009500
+// Signature: undefined ___kmp_str_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_split
+// Entry: 00009600
+// Signature: undefined ___kmp_str_split(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_split(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_token
+// Entry: 00009700
+// Signature: undefined ___kmp_str_token(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_token(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00009800
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _getenv
+// Entry: 00009900
+// Signature: char * _getenv(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _getenv(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00009a00
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00009b00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _qsort
+// Entry: 00009c00
+// Signature: void _qsort(void * param_1, size_t param_2, size_t param_3, int * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _qsort(void *param_1,size_t param_2,size_t param_3,int *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _setenv
+// Entry: 00009d00
+// Signature: int _setenv(char * param_1, char * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _setenv(char *param_1,char *param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strchr
+// Entry: 00009e00
+// Signature: undefined _strchr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _strchr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00009f00
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 0000a000
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncpy
+// Entry: 0000a100
+// Signature: char * _strncpy(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncpy(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _unsetenv
+// Entry: 0000a200
+// Signature: int _unsetenv(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _unsetenv(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 33
+// Failed: 0
+// Skipped external functions: 0

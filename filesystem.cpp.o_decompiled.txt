@@ -1,0 +1,5774 @@
+Program: filesystem.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: join
+// Entry: 00000000
+// Signature: undefined __thiscall join(fs * this, string * param_1, string * param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::utils::fs::join(std::string const&, std::string const&) */
+
+void __thiscall cv::utils::fs::join(fs *this,string *param_1,string *param_2)
+
+{
+  size_t sVar1;
+  size_t sVar2;
+  fs *pfVar3;
+  string *psVar4;
+  fs fVar5;
+  string sVar6;
+  string sVar7;
+  code *pcVar8;
+  undefined1 **ppuVar9;
+  undefined1 **ppuVar10;
+  undefined1 **ppuVar11;
+  undefined8 *puVar12;
+  char *pcVar13;
+  ulong uVar14;
+  string *in_x8;
+  ulong uVar15;
+  long lVar16;
+  string *psVar17;
+  undefined1 **ppuVar18;
+  undefined8 uVar19;
+  undefined1 *local_80;
+  ulong uStack_78;
+  undefined8 local_70;
+  undefined7 local_68;
+  undefined1 uStack_61;
+  undefined7 uStack_60;
+  long local_58;
+  
+  ppuVar9 = &local_80;
+  ppuVar18 = &local_80;
+  ppuVar10 = &local_80;
+  ppuVar11 = &local_80;
+  local_58 = *____stack_chk_guard;
+  fVar5 = this[0x17];
+  uVar14 = *(ulong *)(this + 8);
+  sVar1 = uVar14;
+  if (-1 < (char)fVar5) {
+    sVar1 = (ulong)(byte)fVar5;
+  }
+  sVar6 = param_1[0x17];
+  if (sVar1 == 0) {
+    if ((char)sVar6 < '\0') {
+      pcVar13 = *(char **)param_1;
+      uVar14 = *(ulong *)(param_1 + 8);
+      lVar16 = *____stack_chk_guard;
+joined_r0x0000016c:
+      if (lVar16 == local_58) {
+        std::string::__init_copy_ctor_external(in_x8,pcVar13,uVar14);
+        return;
+      }
+      goto LAB_000003b4;
+    }
+    uVar19 = *(undefined8 *)param_1;
+    *(undefined8 *)(in_x8 + 8) = *(undefined8 *)(param_1 + 8);
+    *(undefined8 *)in_x8 = uVar19;
+    uVar14 = *(ulong *)(param_1 + 0x10);
+LAB_000002c0:
+    *(ulong *)(in_x8 + 0x10) = uVar14;
+  }
+  else {
+    uVar15 = *(ulong *)(param_1 + 8);
+    sVar2 = uVar15;
+    if (-1 < (char)sVar6) {
+      sVar2 = (ulong)(byte)sVar6;
+    }
+    if (sVar2 == 0) {
+      if ((char)fVar5 < '\0') {
+        pcVar13 = *(char **)this;
+        lVar16 = *____stack_chk_guard;
+        goto joined_r0x0000016c;
+      }
+      uVar19 = *(undefined8 *)this;
+      *(undefined8 *)(in_x8 + 8) = *(undefined8 *)(this + 8);
+      *(undefined8 *)in_x8 = uVar19;
+      uVar14 = *(ulong *)(this + 0x10);
+      goto LAB_000002c0;
+    }
+    pfVar3 = *(fs **)this;
+    if (-1 < (char)fVar5) {
+      pfVar3 = this;
+    }
+    fVar5 = pfVar3[sVar1 - 1];
+    psVar17 = *(string **)param_1;
+    psVar4 = psVar17;
+    if (-1 < (char)sVar6) {
+      psVar4 = param_1;
+    }
+    sVar7 = *psVar4;
+    *(undefined8 *)(in_x8 + 8) = 0;
+    *(undefined8 *)(in_x8 + 0x10) = 0;
+    *(undefined8 *)in_x8 = 0;
+    if ((fVar5 == (fs)0x2f || fVar5 == (fs)0x5c) && (sVar7 == (string)0x2f || sVar7 == (string)0x5c)
+       ) {
+      if ((char)sVar6 < '\0') {
+        if (uVar15 == 0) goto LAB_00000250;
+      }
+      else {
+        uVar15 = (ulong)(byte)sVar6;
+        psVar17 = param_1;
+        if (sVar6 == (string)0x0) {
+LAB_00000250:
+          std::string::__throw_out_of_range_abi_ne180100_();
+                    /* WARNING: Does not return */
+          pcVar8 = (code *)SoftwareBreakpoint(1,0x3dc);
+          (*pcVar8)();
+        }
+      }
+      uVar15 = uVar15 - 1;
+      if (0x7ffffffffffffff7 < uVar15) {
+                    /* WARNING: Subroutine does not return */
+        std::string::__throw_length_error_abi_ne180100_();
+      }
+      if (uVar15 < 0x17) {
+        local_70 = CONCAT17((char)uVar15,(undefined7)local_70);
+        if (uVar15 != 0) goto LAB_000001cc;
+      }
+      else {
+        uVar14 = (uVar15 & 0xfffffffffffffff8) + 8;
+        if ((uVar15 | 7) != 0x17) {
+          uVar14 = uVar15 | 7;
+        }
+        ppuVar9 = operator_new(uVar14 + 1);
+        local_70 = uVar14 + 1 | 0x8000000000000000;
+        local_80 = (undefined1 *)ppuVar9;
+        uStack_78 = uVar15;
+LAB_000001cc:
+        _memmove(ppuVar9,psVar17 + 1,uVar15);
+        ppuVar18 = ppuVar9;
+      }
+      *(undefined1 *)((long)ppuVar18 + uVar15) = 0;
+      pfVar3 = *(fs **)this;
+      if (-1 < (char)this[0x17]) {
+        pfVar3 = this;
+      }
+      puVar12 = (undefined8 *)std::string::insert((ulong)&local_80,(char *)0x0,(ulong)pfVar3);
+    }
+    else {
+      if ((fVar5 == (fs)0x2f || fVar5 == (fs)0x5c) ||
+          (sVar7 == (string)0x2f || sVar7 == (string)0x5c)) {
+        uVar14 = sVar2 + sVar1;
+        if (0x7ffffffffffffff7 < uVar14) {
+                    /* WARNING: Subroutine does not return */
+          std::string::__throw_length_error_abi_ne180100_();
+        }
+        if (uVar14 < 0x17) {
+          uStack_78 = 0;
+          local_80 = (undefined1 *)0x0;
+          local_70 = uVar14 << 0x38;
+        }
+        else {
+          uVar15 = (uVar14 & 0xfffffffffffffff8) + 8;
+          if ((uVar14 | 7) != 0x17) {
+            uVar15 = uVar14 | 7;
+          }
+          ppuVar10 = operator_new(uVar15 + 1);
+          local_70 = uVar15 + 1 | 0x8000000000000000;
+          local_80 = (undefined1 *)ppuVar10;
+          uStack_78 = uVar14;
+        }
+        _memmove(ppuVar10,pfVar3,sVar1);
+        _memmove((undefined1 *)((long)ppuVar10 + sVar1),psVar4,sVar2);
+        ((undefined1 *)((long)ppuVar10 + sVar1))[sVar2] = 0;
+        *(ulong *)(in_x8 + 8) = uStack_78;
+        *(undefined1 **)in_x8 = local_80;
+        uVar14 = local_70;
+        goto LAB_000002c0;
+      }
+      uVar14 = sVar1 + 1;
+      if (0x7ffffffffffffff7 < uVar14) {
+                    /* WARNING: Subroutine does not return */
+        std::string::__throw_length_error_abi_ne180100_();
+      }
+      if (uVar14 < 0x17) {
+        uStack_78 = 0;
+        local_80 = (undefined1 *)0x0;
+        local_70 = uVar14 << 0x38;
+      }
+      else {
+        uVar15 = (uVar14 & 0xfffffffffffffff8) + 8;
+        if ((uVar14 | 7) != 0x17) {
+          uVar15 = uVar14 | 7;
+        }
+        ppuVar11 = operator_new(uVar15 + 1);
+        local_70 = uVar15 + 1 | 0x8000000000000000;
+        local_80 = (undefined1 *)ppuVar11;
+        uStack_78 = uVar14;
+      }
+      _memmove(ppuVar11,pfVar3,sVar1);
+      *(undefined2 *)((long)ppuVar11 + sVar1) = 0x2f;
+      psVar4 = *(string **)param_1;
+      if (-1 < (char)param_1[0x17]) {
+        psVar4 = param_1;
+      }
+      puVar12 = (undefined8 *)std::string::append((char *)&local_80,(ulong)psVar4);
+    }
+    uVar19 = *puVar12;
+    local_68 = (undefined7)puVar12[1];
+    uStack_61 = (undefined1)*(undefined8 *)((long)puVar12 + 0xf);
+    uStack_60 = (undefined7)((ulong)*(undefined8 *)((long)puVar12 + 0xf) >> 8);
+    sVar6 = *(string *)((long)puVar12 + 0x17);
+    puVar12[1] = 0;
+    puVar12[2] = 0;
+    *puVar12 = 0;
+    if ((char)in_x8[0x17] < '\0') {
+      operator_delete(*(void **)in_x8);
+    }
+    *(undefined8 *)in_x8 = uVar19;
+    *(ulong *)(in_x8 + 8) = CONCAT17(uStack_61,local_68);
+    *(ulong *)(in_x8 + 0xf) = CONCAT71(uStack_60,uStack_61);
+    in_x8[0x17] = sVar6;
+    if ((long)local_70 < 0) {
+      operator_delete(local_80);
+    }
+  }
+  if (*____stack_chk_guard == local_58) {
+    return;
+  }
+LAB_000003b4:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: substr[abi:ne180100]
+// Entry: 00000434
+// Signature: undefined __cdecl substr[abi:ne180100](ulong param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::substr[abi:ne180100](unsigned long, unsigned long) const */
+
+void std::string::substr_abi_ne180100_(ulong param_1,ulong param_2)
+
+{
+  ulong *puVar1;
+  byte bVar2;
+  char cVar3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  ulong in_x2;
+  undefined8 *in_x8;
+  ulong uVar6;
+  undefined8 *extraout_x8;
+  ulong uVar7;
+  
+  bVar2 = *(byte *)(param_1 + 0x17);
+  if ((char)bVar2 < '\0') {
+    puVar1 = (ulong *)(param_1 + 8);
+    if (param_2 <= *puVar1) {
+      param_1 = *(ulong *)param_1;
+      uVar6 = *puVar1 - param_2;
+      if (in_x2 <= uVar6) {
+        uVar6 = in_x2;
+      }
+      goto joined_r0x00000524;
+    }
+  }
+  else if (param_2 <= bVar2) {
+    uVar6 = bVar2 - param_2;
+    if (in_x2 <= uVar6) {
+      uVar6 = in_x2;
+    }
+joined_r0x00000524:
+    if (0x7ffffffffffffff7 < uVar6) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    if (uVar6 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar6;
+      puVar4 = in_x8;
+      if (uVar6 == 0) {
+        *(undefined1 *)in_x8 = 0;
+        return;
+      }
+    }
+    else {
+      uVar7 = (uVar6 & 0xfffffffffffffff8) + 8;
+      if ((uVar6 | 7) != 0x17) {
+        uVar7 = uVar6 | 7;
+      }
+      puVar4 = operator_new(uVar7 + 1);
+      in_x8[1] = uVar6;
+      in_x8[2] = uVar7 + 1 | 0x8000000000000000;
+      *in_x8 = puVar4;
+    }
+    _memmove(puVar4,(void *)(param_1 + param_2),uVar6);
+    *(undefined1 *)((long)puVar4 + uVar6) = 0;
+    return;
+  }
+  puVar5 = (undefined8 *)__throw_out_of_range_abi_ne180100_();
+  bVar2 = *(byte *)((long)puVar5 + 0x17);
+  puVar4 = (void *)*puVar5;
+  if (-1 < (char)bVar2) {
+    puVar4 = puVar5;
+  }
+  uVar7 = puVar5[1];
+  uVar6 = puVar5[1];
+  if (-1 < (char)bVar2) {
+    uVar7 = (ulong)bVar2;
+    uVar6 = (ulong)bVar2;
+  }
+  do {
+    if (uVar7 == 0) goto LAB_000005b8;
+    cVar3 = *(char *)((long)puVar4 + (uVar7 - 1));
+    uVar7 = uVar7 - 1;
+  } while ((cVar3 != '\\') && (cVar3 != '/'));
+  if (uVar7 == 0xffffffffffffffff) {
+LAB_000005b8:
+    *extraout_x8 = 0;
+    extraout_x8[1] = 0;
+    extraout_x8[2] = 0;
+    return;
+  }
+  if (uVar7 <= uVar6) {
+    uVar6 = uVar7;
+  }
+  if (0x7ffffffffffffff7 < uVar6) {
+                    /* WARNING: Subroutine does not return */
+    __throw_length_error_abi_ne180100_();
+  }
+  if (uVar6 < 0x17) {
+    *(char *)((long)extraout_x8 + 0x17) = (char)uVar6;
+    puVar5 = extraout_x8;
+    if (uVar6 == 0) goto LAB_00000610;
+  }
+  else {
+    uVar7 = (uVar6 & 0xfffffffffffffff8) + 8;
+    if ((uVar6 | 7) != 0x17) {
+      uVar7 = uVar6 | 7;
+    }
+    puVar5 = operator_new(uVar7 + 1);
+    extraout_x8[1] = uVar6;
+    extraout_x8[2] = uVar7 + 1 | 0x8000000000000000;
+    *extraout_x8 = puVar5;
+  }
+  _memmove(puVar5,puVar4,uVar6);
+LAB_00000610:
+  *(undefined1 *)((long)puVar5 + uVar6) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getParent
+// Entry: 00000538
+// Signature: undefined __thiscall getParent(fs * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::getParent(std::string const&) */
+
+void __thiscall cv::utils::fs::getParent(fs *this,string *param_1)
+
+{
+  fs *pfVar1;
+  ulong uVar2;
+  fs fVar3;
+  long lVar4;
+  undefined8 *puVar5;
+  undefined8 *in_x8;
+  ulong uVar6;
+  
+  fVar3 = this[0x17];
+  pfVar1 = *(fs **)this;
+  if (-1 < (char)fVar3) {
+    pfVar1 = this;
+  }
+  uVar6 = *(ulong *)(this + 8);
+  uVar2 = *(ulong *)(this + 8);
+  if (-1 < (char)fVar3) {
+    uVar6 = (ulong)(byte)fVar3;
+    uVar2 = (ulong)(byte)fVar3;
+  }
+  do {
+    if (uVar6 == 0) goto LAB_000005b8;
+    lVar4 = uVar6 - 1;
+    uVar6 = uVar6 - 1;
+  } while ((pfVar1[lVar4] != (fs)0x5c) && (pfVar1[lVar4] != (fs)0x2f));
+  if (uVar6 == 0xffffffffffffffff) {
+LAB_000005b8:
+    *in_x8 = 0;
+    in_x8[1] = 0;
+    in_x8[2] = 0;
+    return;
+  }
+  if (uVar6 <= uVar2) {
+    uVar2 = uVar6;
+  }
+  if (0x7ffffffffffffff7 < uVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (uVar2 < 0x17) {
+    *(char *)((long)in_x8 + 0x17) = (char)uVar2;
+    puVar5 = in_x8;
+    if (uVar2 == 0) goto LAB_00000610;
+  }
+  else {
+    uVar6 = (uVar2 & 0xfffffffffffffff8) + 8;
+    if ((uVar2 | 7) != 0x17) {
+      uVar6 = uVar2 | 7;
+    }
+    puVar5 = operator_new(uVar6 + 1);
+    in_x8[1] = uVar2;
+    in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+    *in_x8 = puVar5;
+  }
+  _memmove(puVar5,pfVar1,uVar2);
+  in_x8 = puVar5;
+LAB_00000610:
+  *(undefined1 *)((long)in_x8 + uVar2) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getParent
+// Entry: 0000062c
+// Signature: undefined __thiscall getParent(fs * this, wstring * param_1)
+// ========================================
+
+
+/* cv::utils::fs::getParent(std::wstring const&) */
+
+void __thiscall cv::utils::fs::getParent(fs *this,wstring *param_1)
+
+{
+  uint uVar1;
+  fs *pfVar2;
+  ulong uVar3;
+  undefined8 **ppuVar4;
+  undefined8 **ppuVar5;
+  ulong uVar6;
+  fs fVar7;
+  wchar_t *pwVar8;
+  undefined8 *puVar9;
+  undefined8 ***pppuVar10;
+  char *pcVar11;
+  undefined8 **ppuVar12;
+  undefined8 ***pppuVar13;
+  undefined8 *in_x8;
+  string *this_00;
+  undefined8 **ppuVar14;
+  long lVar15;
+  undefined8 **ppuStack_b8;
+  undefined8 *puStack_b0;
+  undefined8 uStack_a8;
+  undefined8 **ppuStack_a0;
+  undefined8 *puStack_98;
+  ulong uStack_90;
+  
+  fVar7 = this[0x17];
+  pfVar2 = *(fs **)this;
+  if (-1 < (char)fVar7) {
+    pfVar2 = this;
+  }
+  uVar6 = *(ulong *)(this + 8);
+  if (-1 < (char)fVar7) {
+    uVar6 = (ulong)(byte)fVar7;
+  }
+  lVar15 = uVar6 << 2;
+  do {
+    if (lVar15 == 0) goto LAB_00000694;
+    pwVar8 = _wmemchr(L"/\\",*(wchar_t *)(pfVar2 + lVar15 + -4),2);
+    lVar15 = lVar15 + -4;
+  } while (pwVar8 == (wchar_t *)0x0);
+  if (lVar15 == -4) {
+LAB_00000694:
+    *in_x8 = 0;
+    in_x8[1] = 0;
+    in_x8[2] = 0;
+    return;
+  }
+  pfVar2 = *(fs **)this;
+  uVar6 = *(ulong *)(this + 8);
+  if (-1 < (char)this[0x17]) {
+    pfVar2 = this;
+    uVar6 = (ulong)(byte)this[0x17];
+  }
+  if ((ulong)(lVar15 >> 2) <= uVar6) {
+    uVar6 = lVar15 >> 2;
+  }
+  if (uVar6 < 0x3ffffffffffffff8) {
+    if (uVar6 < 5) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar6;
+      puVar9 = in_x8;
+      if (uVar6 == 0) {
+        *(undefined4 *)in_x8 = 0;
+        return;
+      }
+LAB_00000744:
+      _memmove(puVar9,pfVar2,uVar6 << 2);
+      *(undefined4 *)((long)puVar9 + uVar6 * 4) = 0;
+      return;
+    }
+    uVar3 = (uVar6 & 0xfffffffffffffffe) + 2;
+    if ((uVar6 | 1) != 5) {
+      uVar3 = uVar6 | 1;
+    }
+    if (uVar3 < 0x3fffffffffffffff) {
+      puVar9 = operator_new((uVar3 + 1) * 4);
+      in_x8[1] = uVar6;
+      in_x8[2] = uVar3 + 1 | 0x8000000000000000;
+      *in_x8 = puVar9;
+      goto LAB_00000744;
+    }
+  }
+  else {
+    std::wstring::__throw_length_error_abi_ne180100_();
+  }
+  pppuVar10 = (undefined8 ***)std::__throw_bad_array_new_length_abi_ne180100_();
+  ppuStack_a0 = (undefined8 ***)0x0;
+  puStack_98 = (undefined8 **)0x0;
+  uStack_90 = 0;
+  pppuVar13 = (undefined8 ***)*pppuVar10;
+  if (-1 < *(char *)((long)pppuVar10 + 0x17)) {
+    pppuVar13 = pppuVar10;
+  }
+  pcVar11 = (char *)_realpath_DARWIN_EXTSN(pppuVar13,0);
+  if (pcVar11 == (char *)0x0) {
+    ppuVar14 = (undefined8 **)0x0;
+    ppuVar12 = (undefined8 **)0x0;
+    goto LAB_00000820;
+  }
+  ppuVar12 = (undefined8 **)_strlen(pcVar11);
+  if ((undefined8 **)0x7ffffffffffffff7 < ppuVar12) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (ppuVar12 < (undefined8 **)0x17) {
+    uStack_a8 = CONCAT17((char)ppuVar12,(undefined7)uStack_a8);
+    pppuVar13 = &ppuStack_b8;
+    if (ppuVar12 != (undefined8 **)0x0) goto LAB_000008dc;
+                    /* WARNING: Ignoring partial resolution of indirect */
+    ppuStack_b8._0_1_ = 0;
+  }
+  else {
+    uVar6 = ((ulong)ppuVar12 & 0xfffffffffffffff8) + 8;
+    if (((ulong)ppuVar12 | 7) != 0x17) {
+      uVar6 = (ulong)ppuVar12 | 7;
+    }
+    pppuVar13 = operator_new(uVar6 + 1);
+    uStack_a8 = uVar6 + 1 | 0x8000000000000000;
+    ppuStack_b8 = pppuVar13;
+    puStack_b0 = ppuVar12;
+LAB_000008dc:
+    _memmove(pppuVar13,pcVar11,(size_t)ppuVar12);
+    *(undefined1 *)((long)pppuVar13 + (long)ppuVar12) = 0;
+  }
+  if ((long)uStack_90 < 0) {
+    operator_delete(ppuStack_a0);
+  }
+  puStack_98 = puStack_b0;
+  ppuStack_a0 = ppuStack_b8;
+  uStack_90 = uStack_a8;
+  _free(pcVar11);
+  ppuVar12 = (undefined8 **)(uStack_90 >> 0x38);
+  ppuVar14 = (undefined8 **)puStack_98;
+LAB_00000820:
+  ppuVar4 = ppuVar14;
+  if (-1 < (char)ppuVar12) {
+    ppuVar4 = ppuVar12;
+  }
+  pppuVar13 = pppuVar10;
+  if (ppuVar4 != (undefined8 **)0x0) {
+    pppuVar13 = &ppuStack_a0;
+  }
+  uVar1 = (uint)*(byte *)((long)pppuVar10 + 0x17);
+  if (ppuVar4 != (undefined8 **)0x0) {
+    uVar1 = (uint)ppuVar12;
+  }
+  if (uVar1 >> 7 == 0) {
+    ppuVar14 = *pppuVar13;
+    *(undefined8 ***)(this_00 + 8) = pppuVar13[1];
+    *(undefined8 ***)this_00 = ppuVar14;
+    *(undefined8 ***)(this_00 + 0x10) = pppuVar13[2];
+  }
+  else {
+    ppuVar5 = pppuVar10[1];
+    if (ppuVar4 != (undefined8 **)0x0) {
+      ppuVar5 = ppuVar14;
+    }
+    std::string::__init_copy_ctor_external(this_00,(char *)*pppuVar13,(ulong)ppuVar5);
+  }
+  if ((uint)ppuVar12 >> 7 == 0) {
+    return;
+  }
+  operator_delete(ppuStack_a0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: canonical
+// Entry: 00000778
+// Signature: undefined __thiscall canonical(fs * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::canonical(std::string const&) */
+
+void __thiscall cv::utils::fs::canonical(fs *this,string *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  fs *pfVar3;
+  ulong uVar4;
+  char *pcVar5;
+  size_t sVar6;
+  undefined8 ***pppuVar7;
+  string *in_x8;
+  ulong uVar8;
+  ulong uVar9;
+  undefined8 **ppuVar10;
+  undefined8 **local_78;
+  ulong uStack_70;
+  undefined8 local_68;
+  undefined8 **local_60;
+  ulong uStack_58;
+  ulong local_50;
+  
+  local_60 = (undefined8 ***)0x0;
+  uStack_58 = 0;
+  local_50 = 0;
+  pfVar3 = *(fs **)this;
+  if (-1 < (char)this[0x17]) {
+    pfVar3 = this;
+  }
+  pcVar5 = (char *)_realpath_DARWIN_EXTSN(pfVar3,0);
+  if (pcVar5 == (char *)0x0) {
+    uVar8 = 0;
+    uVar9 = 0;
+    goto LAB_00000820;
+  }
+  sVar6 = _strlen(pcVar5);
+  if (0x7ffffffffffffff7 < sVar6) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar6 < 0x17) {
+    local_68 = CONCAT17((char)sVar6,(undefined7)local_68);
+    pppuVar7 = &local_78;
+    if (sVar6 != 0) goto LAB_000008dc;
+                    /* WARNING: Ignoring partial resolution of indirect */
+    local_78._0_1_ = 0;
+  }
+  else {
+    uVar9 = (sVar6 & 0xfffffffffffffff8) + 8;
+    if ((sVar6 | 7) != 0x17) {
+      uVar9 = sVar6 | 7;
+    }
+    pppuVar7 = operator_new(uVar9 + 1);
+    local_68 = uVar9 + 1 | 0x8000000000000000;
+    local_78 = pppuVar7;
+    uStack_70 = sVar6;
+LAB_000008dc:
+    _memmove(pppuVar7,pcVar5,sVar6);
+    *(undefined1 *)((long)pppuVar7 + sVar6) = 0;
+  }
+  if ((long)local_50 < 0) {
+    operator_delete(local_60);
+  }
+  uStack_58 = uStack_70;
+  local_60 = local_78;
+  local_50 = local_68;
+  _free(pcVar5);
+  uVar9 = local_50 >> 0x38;
+  uVar8 = uStack_58;
+LAB_00000820:
+  uVar2 = uVar8;
+  if (-1 < (char)uVar9) {
+    uVar2 = uVar9;
+  }
+  pfVar3 = this;
+  if (uVar2 != 0) {
+    pfVar3 = (fs *)&local_60;
+  }
+  uVar1 = (uint)(byte)this[0x17];
+  if (uVar2 != 0) {
+    uVar1 = (uint)uVar9;
+  }
+  if (uVar1 >> 7 == 0) {
+    ppuVar10 = *(undefined8 ***)pfVar3;
+    *(undefined8 ***)(in_x8 + 8) = *(undefined8 ***)(pfVar3 + 8);
+    *(undefined8 ***)in_x8 = ppuVar10;
+    *(undefined8 ***)(in_x8 + 0x10) = *(undefined8 ***)(pfVar3 + 0x10);
+  }
+  else {
+    uVar4 = *(ulong *)(this + 8);
+    if (uVar2 != 0) {
+      uVar4 = uVar8;
+    }
+    std::string::__init_copy_ctor_external(in_x8,(char *)*(undefined8 ***)pfVar3,uVar4);
+  }
+  if ((uint)uVar9 >> 7 != 0) {
+    operator_delete(local_60);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000924
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_000009b0;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_000009b0:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: exists
+// Entry: 000009d4
+// Signature: undefined __cdecl exists(string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::exists(std::string const&) */
+
+bool cv::utils::fs::exists(string *param_1)
+
+{
+  string *psVar1;
+  int iVar2;
+  stat sStack_c0;
+  Region aRStack_30 [8];
+  int local_28;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_30,
+             (LocationStaticStorage *)&exists(std::string_const&)::__cv_trace_location_fn123);
+  psVar1 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar1 = param_1;
+  }
+  iVar2 = _stat((char *)psVar1,&sStack_c0);
+  if (local_28 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return iVar2 == 0;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00000a54
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: remove_all
+// Entry: 00000a88
+// Signature: undefined __cdecl remove_all(string * param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00000f14) */
+/* WARNING: Removing unreachable block (ram,0x00000de4) */
+/* WARNING: Type propagation algorithm not settling */
+/* cv::utils::fs::remove_all(std::string const&) */
+
+void cv::utils::fs::remove_all(string *param_1)
+
+{
+  undefined *puVar1;
+  string *psVar2;
+  undefined8 *******pppppppuVar3;
+  undefined *puVar4;
+  int iVar5;
+  undefined8 *puVar6;
+  ostream *poVar7;
+  undefined8 uVar8;
+  long lVar9;
+  ulong uVar10;
+  undefined8 *******local_1a8 [2];
+  char local_191;
+  undefined1 local_190 [16];
+  undefined *local_180;
+  long local_178 [8];
+  void *local_138;
+  off_t oStack_130;
+  long local_128;
+  undefined8 uStack_120;
+  __uint32_t local_118;
+  undefined *local_110 [17];
+  undefined8 local_88;
+  undefined4 local_80;
+  void *local_78;
+  void *local_70;
+  undefined8 local_68;
+  
+  cv::utils::trace::details::Region::Region
+            ((Region *)&local_78,
+             (LocationStaticStorage *)&exists(std::string_const&)::__cv_trace_location_fn123);
+  psVar2 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar2 = param_1;
+  }
+  iVar5 = _stat((char *)psVar2,(stat *)local_190);
+  if ((int)local_70 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  if (iVar5 != 0) {
+    return;
+  }
+  iVar5 = cv::utils::fs::isDirectory(param_1);
+  if (iVar5 == 0) {
+    psVar2 = *(string **)param_1;
+    if (-1 < (char)param_1[0x17]) {
+      psVar2 = param_1;
+    }
+    iVar5 = _unlink((char *)psVar2);
+    if (iVar5 == 0) {
+      return;
+    }
+    puVar6 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    puVar4 = std::stringstream::vtable;
+    if ((puVar6 != (undefined8 *)0x0) && (*(int *)(puVar6 + 1) < 2)) {
+      return;
+    }
+    puVar1 = std::stringstream::vtable + 0x40;
+    local_110[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    local_190._8_8_ = 0;
+    local_190._0_8_ = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    local_180 = puVar1;
+    std::ios_base::init((ios *)local_110);
+    local_80 = 0xffffffff;
+    local_190._0_8_ = puVar4 + 0x18;
+    local_110[0] = puVar4 + 0x68;
+    local_88 = 0;
+    local_180 = puVar1;
+    std::streambuf::streambuf((streambuf *)local_178);
+    lVar9 = std::stringbuf::vtable;
+    local_178[0] = std::stringbuf::vtable + 0x10;
+    oStack_130 = 0;
+    local_138 = (void *)0x0;
+    uStack_120._0_4_ = 0;
+    uStack_120._4_4_ = 0;
+    local_128 = 0;
+    local_118 = 0x18;
+    poVar7 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                       ((ostream *)&local_180,"Can\'t remove file: ",0x13);
+    uVar10 = *(ulong *)(param_1 + 8);
+    psVar2 = *(string **)param_1;
+    if (-1 < (char)param_1[0x17]) {
+      uVar10 = (ulong)(byte)param_1[0x17];
+      psVar2 = param_1;
+    }
+    std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+              (poVar7,(char *)psVar2,uVar10);
+    if (puVar6 == (undefined8 *)0x0) {
+      uVar8 = 0;
+    }
+    else {
+      uVar8 = *puVar6;
+    }
+    std::stringbuf::str();
+    cv::utils::logging::internal::writeLogMessageEx
+              (2,uVar8,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+               ,0xb2,"remove_all",&local_78);
+    local_190._0_8_ = puVar4 + 0x18;
+    local_110[0] = puVar4 + 0x68;
+    local_180 = puVar4 + 0x40;
+    local_178[0] = lVar9 + 0x10;
+    if (local_128 < 0) {
+      operator_delete(local_138);
+    }
+    std::streambuf::~streambuf((streambuf *)local_178);
+    std::iostream::~iostream((iostream *)local_190);
+    std::ios::~ios((ios *)local_110);
+    return;
+  }
+  local_78 = (void *)0x0;
+  local_70 = (void *)0x0;
+  local_68 = 0;
+  local_190._0_8_ = (undefined *)0x0;
+  local_190._8_8_ = 0;
+  local_180 = (undefined *)0x0;
+  cv::utils::fs::glob(param_1,(string *)local_190,(vector *)&local_78,false,true);
+  if ((long)local_180 < 0) {
+    operator_delete((void *)local_190._0_8_);
+    if (local_70 == local_78) goto LAB_00000ca0;
+  }
+  else if (local_70 == local_78) goto LAB_00000ca0;
+  lVar9 = 0;
+  uVar10 = 0;
+  do {
+    remove_all((string *)((long)local_78 + lVar9));
+    uVar10 = uVar10 + 1;
+    lVar9 = lVar9 + 0x18;
+  } while (uVar10 < (ulong)(((long)local_70 - (long)local_78 >> 3) * -0x5555555555555555));
+LAB_00000ca0:
+  psVar2 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar2 = param_1;
+  }
+  iVar5 = _rmdir((char *)psVar2);
+  if ((iVar5 != 0) &&
+     ((puVar6 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag(),
+      puVar4 = std::stringstream::vtable, puVar6 == (undefined8 *)0x0 || (1 < *(int *)(puVar6 + 1)))
+     )) {
+    puVar1 = std::stringstream::vtable + 0x40;
+    local_110[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    local_190._8_8_ = 0;
+    local_190._0_8_ = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    local_180 = puVar1;
+    std::ios_base::init((ios *)local_110);
+    local_80 = 0xffffffff;
+    local_190._0_8_ = puVar4 + 0x18;
+    local_110[0] = puVar4 + 0x68;
+    local_88 = 0;
+    local_180 = puVar1;
+    std::streambuf::streambuf((streambuf *)local_178);
+    lVar9 = std::stringbuf::vtable;
+    local_178[0] = std::stringbuf::vtable + 0x10;
+    oStack_130 = 0;
+    local_138 = (void *)0x0;
+    uStack_120._0_4_ = 0;
+    uStack_120._4_4_ = 0;
+    local_128 = 0;
+    local_118 = 0x18;
+    poVar7 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                       ((ostream *)&local_180,"Can\'t remove directory: ",0x18);
+    uVar10 = *(ulong *)(param_1 + 8);
+    psVar2 = *(string **)param_1;
+    if (-1 < (char)param_1[0x17]) {
+      uVar10 = (ulong)(byte)param_1[0x17];
+      psVar2 = param_1;
+    }
+    std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+              (poVar7,(char *)psVar2,uVar10);
+    if (puVar6 == (undefined8 *)0x0) {
+      uVar8 = 0;
+    }
+    else {
+      uVar8 = *puVar6;
+    }
+    std::stringbuf::str();
+    pppppppuVar3 = local_1a8[0];
+    if (-1 < local_191) {
+      pppppppuVar3 = local_1a8;
+    }
+    cv::utils::logging::internal::writeLogMessageEx
+              (2,uVar8,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+               ,0xa6,"remove_all",pppppppuVar3);
+    if (local_191 < '\0') {
+      operator_delete(local_1a8[0]);
+    }
+    local_190._0_8_ = puVar4 + 0x18;
+    local_110[0] = puVar4 + 0x68;
+    local_180 = puVar4 + 0x40;
+    local_178[0] = lVar9 + 0x10;
+    if (local_128 < 0) {
+      operator_delete(local_138);
+    }
+    std::streambuf::~streambuf((streambuf *)local_178);
+    std::iostream::~iostream((iostream *)local_190);
+    std::ios::~ios((ios *)local_110);
+  }
+  if (local_78 != (void *)0x0) {
+    for (; local_70 != local_78; local_70 = (void *)((long)local_70 + -0x18)) {
+    }
+    local_70 = local_78;
+    operator_delete(local_78);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: stringstream[abi:ne180100]
+// Entry: 000010a4
+// Signature: undefined __thiscall stringstream[abi:ne180100](stringstream * this)
+// ========================================
+
+
+/* std::stringstream::stringstream[abi:ne180100]() */
+
+stringstream * __thiscall std::stringstream::stringstream_abi_ne180100_(stringstream *this)
+
+{
+  undefined *puVar1;
+  undefined *puVar2;
+  undefined *puVar3;
+  
+  puVar3 = istream-in-std::stringstream::construction_vtable;
+  *(undefined **)(this + 0x80) = istream-in-std::stringstream::construction_vtable + 0x40;
+  puVar2 = vtable;
+  puVar1 = vtable + 0x40;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined **)(this + 0x10) = puVar1;
+  *(undefined **)this = puVar3 + 0x18;
+  std::ios_base::init(this + 0x80);
+  *(undefined8 *)(this + 0x108) = 0;
+  *(undefined4 *)(this + 0x110) = 0xffffffff;
+  *(undefined **)this = puVar2 + 0x18;
+  *(undefined **)(this + 0x80) = puVar2 + 0x68;
+  *(undefined **)(this + 0x10) = puVar1;
+  std::streambuf::streambuf((streambuf *)(this + 0x18));
+  *(long *)(this + 0x18) = stringbuf::vtable + 0x10;
+  *(undefined8 *)(this + 0x60) = 0;
+  *(undefined8 *)(this + 0x58) = 0;
+  *(undefined8 *)(this + 0x70) = 0;
+  *(undefined8 *)(this + 0x68) = 0;
+  *(undefined4 *)(this + 0x78) = 0x18;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00001198
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* std::stringstream::~stringstream() */
+
+stringstream * __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)this = vtable + 0x18;
+  *(undefined **)(this + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this + 0x10) = puVar1 + 0x40;
+  *(long *)(this + 0x18) = lVar2 + 0x10;
+  if ((char)this[0x6f] < '\0') {
+    operator_delete(*(void **)(this + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x18));
+  std::iostream::~iostream((iostream *)this);
+  std::ios::~ios((ios *)(this + 0x80));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 0000122c
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<std::string,std::allocator<std::string>> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001270) */
+/* std::vector<std::string, std::allocator<std::string > >::~vector[abi:ne180100]() */
+
+vector<std::string,std::allocator<std::string>> * __thiscall
+std::vector<std::string,std::allocator<std::string>>::~vector_abi_ne180100_
+          (vector<std::string,std::allocator<std::string>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar2 = *(void **)this;
+  if (pvVar2 != (void *)0x0) {
+    pvVar3 = *(void **)(this + 8);
+    pvVar1 = pvVar2;
+    if (pvVar3 != pvVar2) {
+      do {
+        pvVar3 = (void *)((long)pvVar3 + -0x18);
+      } while (pvVar3 != pvVar2);
+      pvVar1 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar2;
+    operator_delete(pvVar1);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: getcwd
+// Entry: 0000129c
+// Signature: undefined __cdecl getcwd(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::utils::fs::getcwd() */
+
+void cv::utils::fs::getcwd(void)
+
+{
+  ulong uVar1;
+  char *pcVar2;
+  char *pcVar3;
+  int *piVar4;
+  undefined8 *puVar5;
+  undefined8 *extraout_x8;
+  size_t sVar6;
+  Region aRStack_1068 [8];
+  int local_1060;
+  char *local_1058;
+  ulong local_1050;
+  char acStack_1048 [4096];
+  long local_48;
+  
+  (*____chkstk_darwin)();
+  local_48 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_1068,(LocationStaticStorage *)&getcwd()::__cv_trace_location_fn186);
+  sVar6 = 0x1000;
+  local_1050 = 0x1000;
+  pcVar2 = acStack_1048;
+  local_1058 = acStack_1048;
+  uVar1 = local_1050;
+  while (local_1050 = uVar1, pcVar3 = _getcwd(pcVar2,sVar6), pcVar2 = local_1058,
+        pcVar3 == (char *)0x0) {
+    piVar4 = ___error();
+    if (*piVar4 != 0x22) {
+      *extraout_x8 = 0;
+      extraout_x8[1] = 0;
+      extraout_x8[2] = 0;
+      if (local_1058 == acStack_1048) goto LAB_00001410;
+      goto LAB_00001408;
+    }
+    sVar6 = local_1050 * 2;
+    pcVar2 = local_1058;
+    uVar1 = sVar6;
+    if (0 < (long)local_1050) {
+      if ((local_1058 != acStack_1048) && (pcVar2 = acStack_1048, local_1058 != (char *)0x0)) {
+        operator_delete__(local_1058);
+      }
+      local_1058 = pcVar2;
+      pcVar2 = acStack_1048;
+      if (0x1000 < sVar6) {
+        local_1050 = sVar6;
+        local_1058 = operator_new__(sVar6);
+        pcVar2 = local_1058;
+        uVar1 = local_1050;
+      }
+    }
+  }
+  sVar6 = _strlen(local_1058);
+  if (0x7ffffffffffffff7 < sVar6) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar6 < 0x17) {
+    *(char *)((long)extraout_x8 + 0x17) = (char)sVar6;
+    puVar5 = extraout_x8;
+    if (sVar6 == 0) goto LAB_000013f8;
+  }
+  else {
+    uVar1 = (sVar6 & 0xfffffffffffffff8) + 8;
+    if ((sVar6 | 7) != 0x17) {
+      uVar1 = sVar6 | 7;
+    }
+    puVar5 = operator_new(uVar1 + 1);
+    extraout_x8[1] = sVar6;
+    extraout_x8[2] = uVar1 + 1 | 0x8000000000000000;
+    *extraout_x8 = puVar5;
+  }
+  _memmove(puVar5,pcVar2,sVar6);
+LAB_000013f8:
+  *(undefined1 *)((long)puVar5 + sVar6) = 0;
+  if (local_1058 != acStack_1048) {
+LAB_00001408:
+    if (local_1058 != (char *)0x0) {
+      operator_delete__(local_1058);
+    }
+  }
+LAB_00001410:
+  if (local_1060 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  if (*____stack_chk_guard != local_48) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: createDirectory
+// Entry: 000014ac
+// Signature: undefined __cdecl createDirectory(string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::createDirectory(std::string const&) */
+
+undefined8 cv::utils::fs::createDirectory(string *param_1)
+
+{
+  string *psVar1;
+  int iVar2;
+  undefined8 uVar3;
+  Region aRStack_30 [8];
+  int local_28;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_30,
+             (LocationStaticStorage *)
+             &createDirectory(std::string_const&)::__cv_trace_location_fn221);
+  psVar1 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar1 = param_1;
+  }
+  iVar2 = _mkdir((char *)psVar1,0x1ff);
+  if (iVar2 == -1) {
+    uVar3 = cv::utils::fs::isDirectory(param_1);
+  }
+  else {
+    uVar3 = 1;
+  }
+  if (local_28 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return uVar3;
+}
+
+
+
+
+// ========================================
+// Function: createDirectories
+// Entry: 00001548
+// Signature: undefined __cdecl createDirectories(string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::createDirectories(std::string const&) */
+
+undefined8 cv::utils::fs::createDirectories(string *param_1)
+
+{
+  string sVar1;
+  string *psVar2;
+  long lVar3;
+  byte bVar4;
+  ulong uVar5;
+  string *psVar6;
+  ulong uVar7;
+  undefined8 uVar8;
+  string *local_78;
+  ulong uStack_70;
+  undefined8 local_68;
+  string *local_60;
+  ulong uStack_58;
+  undefined8 local_50;
+  
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)&local_60,*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uStack_58 = *(ulong *)(param_1 + 8);
+    local_60 = *(string **)param_1;
+    local_50 = *(ulong *)(param_1 + 0x10);
+  }
+  do {
+    uVar5 = (ulong)local_50._7_1_;
+    if ((long)local_50 < 0) {
+      uVar7 = uStack_58;
+      if (uStack_58 == 0) {
+        uVar8 = 1;
+        goto LAB_00001784;
+      }
+    }
+    else {
+      uVar7 = uVar5;
+      if (local_50._7_1_ == 0) {
+        return 1;
+      }
+    }
+    psVar6 = local_60;
+    if (-1 < (long)local_50) {
+      psVar6 = (string *)&local_60;
+    }
+    if ((psVar6[uVar7 - 1] != (string)0x5c) && (psVar6[uVar7 - 1] != (string)0x2f)) {
+      bVar4 = local_50._7_1_;
+      if ((long)local_50 < 0) {
+        if (uStack_58 != 0) {
+          psVar6 = local_60;
+          if (uStack_58 == 2) goto LAB_000016e0;
+LAB_000016f8:
+          if ((uStack_58 != 2) || (*(short *)local_60 != 0x5c2e)) {
+            if (uStack_58 != 1) goto LAB_0000176c;
+            sVar1 = *local_60;
+            goto joined_r0x0000172c;
+          }
+        }
+LAB_00001778:
+        uVar8 = 1;
+      }
+      else {
+        if (local_50._7_1_ == 2) {
+          psVar6 = (string *)&local_60;
+          bVar4 = 2;
+LAB_000016e0:
+          if (*(short *)psVar6 == 0x2f2e) goto LAB_00001778;
+          if ((long)local_50 < 0) goto LAB_000016f8;
+        }
+        if (bVar4 == 1) {
+          sVar1 = local_60._0_1_;
+joined_r0x0000172c:
+          if (sVar1 != (string)0x2e) goto LAB_0000176c;
+          goto LAB_00001778;
+        }
+        if ((bVar4 == 2) && ((short)local_60 == 0x5c2e)) goto LAB_00001778;
+LAB_0000176c:
+        uVar5 = cv::utils::fs::isDirectory((string *)&local_60);
+        if ((uVar5 & 1) != 0) goto LAB_00001778;
+        lVar3 = std::string::rfind((char)&local_60,0x2f);
+        if ((lVar3 == -1) && (lVar3 = std::string::rfind((char)&local_60,0x5c), lVar3 == -1)) {
+LAB_00001820:
+          uVar8 = createDirectory((string *)&local_60);
+        }
+        else {
+          std::string::substr_abi_ne180100_((ulong)&local_60,0);
+          uVar5 = uStack_70;
+          if (-1 < (long)local_68) {
+            uVar5 = (ulong)local_68._7_1_;
+          }
+          if (uVar5 == 0) {
+LAB_00001814:
+            if ((char)local_68._7_1_ < '\0') {
+              operator_delete(local_78);
+            }
+            goto LAB_00001820;
+          }
+          uVar5 = createDirectories((string *)&local_78);
+          if ((uVar5 & 1) != 0) goto LAB_00001814;
+          if ((long)local_68 < 0) {
+            operator_delete(local_78);
+          }
+          uVar8 = 0;
+        }
+      }
+      if (-1 < (long)local_50) {
+        return uVar8;
+      }
+LAB_00001784:
+      operator_delete(local_60);
+      return uVar8;
+    }
+    if ((long)local_50 < 0) {
+      uVar5 = uStack_58;
+      psVar6 = local_60;
+      if (uStack_58 - 1 <= uStack_58) {
+        uVar5 = uStack_58 - 1;
+      }
+    }
+    else {
+      psVar6 = (string *)&local_60;
+      if (uVar5 - 1 <= uVar5) {
+        uVar5 = uVar5 - 1;
+      }
+    }
+    if (0x7ffffffffffffff7 < uVar5) {
+                    /* WARNING: Subroutine does not return */
+      std::string::__throw_length_error_abi_ne180100_();
+    }
+    if (uVar5 < 0x17) {
+      local_68 = CONCAT17((char)uVar5,(undefined7)local_68);
+      psVar2 = (string *)&local_78;
+      if (uVar5 != 0) goto LAB_0000167c;
+                    /* WARNING: Ignoring partial resolution of indirect */
+      local_78._0_1_ = (string)0x0;
+    }
+    else {
+      uVar7 = (uVar5 & 0xfffffffffffffff8) + 8;
+      if ((uVar5 | 7) != 0x17) {
+        uVar7 = uVar5 | 7;
+      }
+      psVar2 = operator_new(uVar7 + 1);
+      local_68 = uVar7 + 1 | 0x8000000000000000;
+      local_78 = psVar2;
+      uStack_70 = uVar5;
+LAB_0000167c:
+      _memmove(psVar2,psVar6,uVar5);
+      psVar2[uVar5] = (string)0x0;
+    }
+    if ((long)local_50 < 0) {
+      operator_delete(local_60);
+    }
+    uStack_58 = uStack_70;
+    local_60 = local_78;
+    local_50 = local_68;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: FileLock
+// Entry: 000018ac
+// Signature: undefined __thiscall FileLock(FileLock * this, char * param_1)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::FileLock(char const*) */
+
+FileLock * __thiscall cv::utils::fs::FileLock::FileLock(FileLock *this,char *param_1)
+
+{
+  code *pcVar1;
+  int iVar2;
+  int *piVar3;
+  string local_48 [8];
+  undefined4 local_40;
+  undefined1 local_3c;
+  undefined1 local_31;
+  
+  piVar3 = operator_new(4);
+  iVar2 = _open(param_1,2);
+  *piVar3 = iVar2;
+  if (iVar2 != -1) {
+    *(int **)this = piVar3;
+    return this;
+  }
+  local_31 = 0xc;
+  local_40 = 0x312d203d;
+  local_48[0] = (string)l__str_40[0];
+  local_48[1] = (string)l__str_40[1];
+  local_48[2] = (string)l__str_40[2];
+  local_48[3] = (string)l__str_40[3];
+  local_48[4] = (string)l__str_40[4];
+  local_48[5] = (string)l__str_40[5];
+  local_48[6] = (string)l__str_40[6];
+  local_48[7] = (string)l__str_40[7];
+  local_3c = 0;
+  cv::error(-0xd7,local_48,"Impl",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x161);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1954);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: FileLock
+// Entry: 0000198c
+// Signature: undefined __thiscall FileLock(FileLock * this, char * param_1)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::FileLock(char const*) */
+
+FileLock * __thiscall cv::utils::fs::FileLock::FileLock(FileLock *this,char *param_1)
+
+{
+  code *pcVar1;
+  int iVar2;
+  int *piVar3;
+  string local_48 [8];
+  undefined4 local_40;
+  undefined1 local_3c;
+  undefined1 local_31;
+  
+  piVar3 = operator_new(4);
+  iVar2 = _open(param_1,2);
+  *piVar3 = iVar2;
+  if (iVar2 != -1) {
+    *(int **)this = piVar3;
+    return this;
+  }
+  local_31 = 0xc;
+  local_40 = 0x312d203d;
+  local_48[0] = (string)l__str_40[0];
+  local_48[1] = (string)l__str_40[1];
+  local_48[2] = (string)l__str_40[2];
+  local_48[3] = (string)l__str_40[3];
+  local_48[4] = (string)l__str_40[4];
+  local_48[5] = (string)l__str_40[5];
+  local_48[6] = (string)l__str_40[6];
+  local_48[7] = (string)l__str_40[7];
+  local_3c = 0;
+  cv::error(-0xd7,local_48,"Impl",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x161);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1a34);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: ~FileLock
+// Entry: 00001a6c
+// Signature: undefined __thiscall ~FileLock(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::~FileLock() */
+
+FileLock * __thiscall cv::utils::fs::FileLock::~FileLock(FileLock *this)
+
+{
+  int *piVar1;
+  
+  piVar1 = *(int **)this;
+  if (piVar1 != (int *)0x0) {
+    if (-1 < *piVar1) {
+      _close(*piVar1);
+    }
+    operator_delete(piVar1);
+  }
+  *(undefined8 *)this = 0;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~FileLock
+// Entry: 00001ab0
+// Signature: undefined __thiscall ~FileLock(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::~FileLock() */
+
+FileLock * __thiscall cv::utils::fs::FileLock::~FileLock(FileLock *this)
+
+{
+  int *piVar1;
+  
+  piVar1 = *(int **)this;
+  if (piVar1 != (int *)0x0) {
+    if (-1 < *piVar1) {
+      _close(*piVar1);
+    }
+    operator_delete(piVar1);
+  }
+  *(undefined8 *)this = 0;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: lock
+// Entry: 00001af4
+// Signature: undefined __thiscall lock(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::lock() */
+
+void __thiscall cv::utils::fs::FileLock::lock(FileLock *this)
+
+{
+  code *pcVar1;
+  int iVar2;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 uStack_28;
+  
+  local_30 = 0;
+  uStack_28 = 0x300000000;
+  local_38 = 0;
+  iVar2 = _fcntl(**(int **)this,9);
+  if (iVar2 != -1) {
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_38,"pImpl->lock()");
+  cv::error(-0xd7,(string *)&local_38,"lock",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x1a7);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1b74);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: unlock
+// Entry: 00001b90
+// Signature: undefined __thiscall unlock(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::unlock() */
+
+void __thiscall cv::utils::fs::FileLock::unlock(FileLock *this)
+
+{
+  code *pcVar1;
+  int iVar2;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 uStack_28;
+  
+  local_30 = 0;
+  uStack_28 = 0x200000000;
+  local_38 = 0;
+  iVar2 = _fcntl(**(int **)this,8);
+  if (iVar2 != -1) {
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_38,"pImpl->unlock()");
+  cv::error(-0xd7,(string *)&local_38,"unlock",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x1a8);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1c10);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: lock_shared
+// Entry: 00001c2c
+// Signature: undefined __thiscall lock_shared(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::lock_shared() */
+
+void __thiscall cv::utils::fs::FileLock::lock_shared(FileLock *this)
+
+{
+  code *pcVar1;
+  int iVar2;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 uStack_28;
+  
+  local_30 = 0;
+  uStack_28 = 0x100000000;
+  local_38 = 0;
+  iVar2 = _fcntl(**(int **)this,9);
+  if (iVar2 != -1) {
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_38,"pImpl->lock_shared()");
+  cv::error(-0xd7,(string *)&local_38,"lock_shared",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x1a9);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1cac);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: unlock_shared
+// Entry: 00001cc8
+// Signature: undefined __thiscall unlock_shared(FileLock * this)
+// ========================================
+
+
+/* cv::utils::fs::FileLock::unlock_shared() */
+
+void __thiscall cv::utils::fs::FileLock::unlock_shared(FileLock *this)
+
+{
+  code *pcVar1;
+  int iVar2;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 uStack_28;
+  
+  local_30 = 0;
+  uStack_28 = 0x200000000;
+  local_38 = 0;
+  iVar2 = _fcntl(**(int **)this,8);
+  if (iVar2 != -1) {
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_38,"pImpl->unlock_shared()");
+  cv::error(-0xd7,(string *)&local_38,"unlock_shared",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+            ,0x1aa);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1d48);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: getCacheDirectory
+// Entry: 00001d64
+// Signature: undefined __cdecl getCacheDirectory(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00002b60) */
+/* WARNING: Removing unreachable block (ram,0x00002c3c) */
+/* WARNING: Removing unreachable block (ram,0x00001fc4) */
+/* WARNING: Removing unreachable block (ram,0x00002a74) */
+/* WARNING: Removing unreachable block (ram,0x00002cec) */
+/* WARNING: Removing unreachable block (ram,0x00002144) */
+/* WARNING: Removing unreachable block (ram,0x00002464) */
+/* WARNING: Type propagation algorithm not settling */
+/* cv::utils::fs::getCacheDirectory(char const*, char const*) */
+
+void cv::utils::fs::getCacheDirectory(char *param_1,char *param_2)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  bool bVar3;
+  ulong uVar4;
+  undefined8 *******pppppppuVar5;
+  undefined *puVar6;
+  code *pcVar7;
+  int iVar8;
+  char *pcVar9;
+  ulong uVar10;
+  undefined8 *puVar11;
+  ostream *poVar12;
+  char *******pppppppcVar13;
+  vector *pvVar14;
+  vector *pvVar15;
+  char *in_x2;
+  uint uVar16;
+  string *in_x8;
+  string *psVar17;
+  string *psVar18;
+  undefined8 uVar19;
+  long lVar20;
+  vector *local_1f8;
+  vector *pvStack_1f0;
+  undefined8 local_1e8;
+  vector *local_1e0;
+  vector *pvStack_1d8;
+  undefined8 local_1d0;
+  undefined8 *******local_1c0 [2];
+  char local_1a9;
+  char *******local_1a8;
+  string *psStack_1a0;
+  undefined8 local_198;
+  long local_190 [8];
+  void *local_150;
+  undefined8 uStack_148;
+  long local_140;
+  undefined8 uStack_138;
+  undefined4 local_130;
+  undefined *local_128 [17];
+  undefined8 local_a0;
+  undefined4 local_98;
+  char *******local_90;
+  string *psStack_88;
+  undefined *local_80;
+  
+  *(undefined8 *)in_x8 = 0;
+  *(undefined8 *)(in_x8 + 8) = 0;
+  *(undefined8 *)(in_x8 + 0x10) = 0;
+  if (param_2 == (char *)0x0) {
+LAB_00001df4:
+    local_90 = (char *******)0x0;
+    psStack_88 = (string *)0x0;
+    local_80 = (undefined *)0x0;
+    pcVar9 = _getenv("TMPDIR");
+    if (pcVar9 == (char *)0x0) {
+LAB_00002238:
+      std::string::assign((char *)&local_90);
+      puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+      puVar6 = std::stringstream::vtable;
+      if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+        puVar1 = std::stringstream::vtable + 0x40;
+        local_128[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+        psStack_1a0 = (string *)0x0;
+        local_1a8 = (char *******)(std::istream-in-std::stringstream::construction_vtable + 0x18);
+        local_198 = puVar1;
+        std::ios_base::init((ios *)local_128);
+        local_98 = 0xffffffff;
+        local_1a8 = (char *******)(puVar6 + 0x18);
+        local_128[0] = puVar6 + 0x68;
+        local_a0 = 0;
+        local_198 = puVar1;
+        std::streambuf::streambuf((streambuf *)local_190);
+        lVar2 = std::stringbuf::vtable;
+        local_190[0] = std::stringbuf::vtable + 0x10;
+        uStack_148 = 0;
+        local_150 = (void *)0x0;
+        uStack_138 = 0;
+        local_140 = 0;
+        local_130 = 0x18;
+        poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                            ((ostream *)&local_198,
+                             "Using world accessible cache directory. This may be not secure: ",0x40
+                            );
+        psVar18 = psStack_88;
+        pppppppcVar13 = local_90;
+        if (-1 < (long)local_80) {
+          psVar18 = (string *)((ulong)local_80 >> 0x38);
+          pppppppcVar13 = (char *******)&local_90;
+        }
+        std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                  (poVar12,(char *)pppppppcVar13,(ulong)psVar18);
+        uVar19 = 0;
+        if (puVar11 != (undefined8 *)0x0) {
+          uVar19 = *puVar11;
+        }
+        std::stringbuf::str();
+        pppppppuVar5 = local_1c0[0];
+        if (-1 < local_1a9) {
+          pppppppuVar5 = local_1c0;
+        }
+        in_x2 = 
+        "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+        ;
+        cv::utils::logging::internal::writeLogMessageEx
+                  (3,uVar19,
+                   "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                   ,0x1ca,"getCacheDirectory",pppppppuVar5);
+        if (local_1a9 < '\0') {
+          operator_delete(local_1c0[0]);
+        }
+        local_1a8 = (char *******)(puVar6 + 0x18);
+        local_128[0] = puVar6 + 0x68;
+        local_198 = puVar6 + 0x40;
+        local_190[0] = lVar2 + 0x10;
+        if (local_140 < 0) {
+          operator_delete(local_150);
+        }
+        std::streambuf::~streambuf((streambuf *)local_190);
+        std::iostream::~iostream((iostream *)&local_1a8);
+        std::ios::~ios((ios *)local_128);
+      }
+    }
+    else {
+      psVar18 = (string *)_strlen(pcVar9);
+      if ((string *)0x7ffffffffffffff7 < psVar18) {
+                    /* WARNING: Subroutine does not return */
+        std::string::__throw_length_error_abi_ne180100_();
+      }
+      if (psVar18 < (string *)0x17) {
+        local_198 = (undefined *)CONCAT17((char)psVar18,(undefined7)local_198);
+        pppppppcVar13 = (char *******)&local_1a8;
+        if (psVar18 != (string *)0x0) goto LAB_000021f0;
+      }
+      else {
+        uVar10 = ((ulong)psVar18 & 0xfffffffffffffff8) + 8;
+        if (((ulong)psVar18 | 7) != 0x17) {
+          uVar10 = (ulong)psVar18 | 7;
+        }
+        pppppppcVar13 = operator_new(uVar10 + 1);
+        local_198 = (undefined *)(uVar10 + 1 | 0x8000000000000000);
+        local_1a8 = pppppppcVar13;
+        psStack_1a0 = psVar18;
+LAB_000021f0:
+        in_x2 = (char *)psVar18;
+        _memmove(pppppppcVar13,pcVar9,(size_t)psVar18);
+      }
+      *(string *)((long)pppppppcVar13 + (long)psVar18) = (string)0x0;
+      iVar8 = cv::utils::fs::isDirectory((string *)&local_1a8);
+      if ((long)local_198 < 0) {
+        operator_delete(local_1a8);
+      }
+      if (iVar8 == 0) goto LAB_00002238;
+      std::string::assign((char *)&local_90);
+    }
+    psVar18 = psStack_88;
+    if (-1 < (long)local_80) {
+      psVar18 = (string *)((ulong)local_80 >> 0x38);
+    }
+    if (psVar18 != (string *)0x0) {
+      iVar8 = cv::utils::fs::isDirectory((string *)&local_90);
+      if (iVar8 == 0) {
+        puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+        puVar6 = std::stringstream::vtable;
+        if ((puVar11 == (undefined8 *)0x0) || (3 < *(int *)(puVar11 + 1))) {
+          puVar1 = std::stringstream::vtable + 0x40;
+          local_128[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+          psStack_1a0 = (string *)0x0;
+          local_1a8 = (char *******)(std::istream-in-std::stringstream::construction_vtable + 0x18);
+          local_198 = puVar1;
+          std::ios_base::init((ios *)local_128);
+          local_98 = 0xffffffff;
+          local_1a8 = (char *******)(puVar6 + 0x18);
+          local_128[0] = puVar6 + 0x68;
+          local_a0 = 0;
+          local_198 = puVar1;
+          std::streambuf::streambuf((streambuf *)local_190);
+          lVar2 = std::stringbuf::vtable;
+          local_190[0] = std::stringbuf::vtable + 0x10;
+          uStack_148 = 0;
+          local_150 = (void *)0x0;
+          uStack_138 = 0;
+          local_140 = 0;
+          local_130 = 0x18;
+          poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                              ((ostream *)&local_198,
+                               "Can\'t find default cache directory (does it exist?): ",0x35);
+          psVar18 = psStack_88;
+          pppppppcVar13 = local_90;
+          if (-1 < (long)local_80) {
+            psVar18 = (string *)((ulong)local_80 >> 0x38);
+            pppppppcVar13 = (char *******)&local_90;
+          }
+          std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                    (poVar12,(char *)pppppppcVar13,(ulong)psVar18);
+          uVar19 = 0;
+          if (puVar11 != (undefined8 *)0x0) {
+            uVar19 = *puVar11;
+          }
+          std::stringbuf::str();
+          pppppppuVar5 = local_1c0[0];
+          if (-1 < local_1a9) {
+            pppppppuVar5 = local_1c0;
+          }
+          cv::utils::logging::internal::writeLogMessageEx
+                    (4,uVar19,
+                     "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                     ,0x220,"getCacheDirectory",pppppppuVar5);
+          if (local_1a9 < '\0') {
+            operator_delete(local_1c0[0]);
+          }
+          local_1a8 = (char *******)(puVar6 + 0x18);
+          local_128[0] = puVar6 + 0x68;
+          local_198 = puVar6 + 0x40;
+          local_190[0] = lVar2 + 0x10;
+          if (local_140 < 0) {
+            operator_delete(local_150);
+          }
+          std::streambuf::~streambuf((streambuf *)local_190);
+          std::iostream::~iostream((iostream *)&local_1a8);
+          std::ios::~ios((ios *)local_128);
+        }
+      }
+      else {
+        local_198 = (undefined *)CONCAT17(6,(undefined7)local_198);
+        local_1a8 = (char *******)CONCAT17(local_1a8._7_1_,0x76636e65706f);
+        join((fs *)&local_90,(string *)&local_1a8,(string *)in_x2);
+        if ((long)local_198 < 0) {
+          operator_delete(local_1a8);
+        }
+        local_1d0 = CONCAT17(3,(undefined7)local_1d0);
+        local_1e0 = (vector *)CONCAT44(local_1e0._4_4_,0x782e34);
+        join((fs *)local_1c0,(string *)&local_1e0,(string *)in_x2);
+        psStack_88 = psStack_1a0;
+        local_90 = local_1a8;
+        local_80 = local_198;
+        local_198 = (undefined *)((ulong)local_198 & 0xffffffffffffff);
+        local_1a8 = (char *******)((ulong)local_1a8 & 0xffffffffffffff00);
+        if ((long)local_1d0 < 0) {
+          operator_delete(local_1e0);
+        }
+        iVar8 = cv::utils::getConfigurationParameterBool("OPENCV_CACHE_SHOW_CLEANUP_MESSAGE",true);
+        if ((iVar8 != 0) &&
+           (uVar10 = cv::utils::fs::isDirectory((string *)&local_90), (uVar10 & 1) == 0)) {
+          local_1e0 = (vector *)0x0;
+          pvStack_1d8 = (vector *)0x0;
+          local_1d0 = 0;
+          local_198 = (undefined *)CONCAT17(1,(undefined7)local_198);
+          local_1a8 = (char *******)CONCAT62(local_1a8._2_6_,0x2a);
+          in_x2 = (char *)&local_1e0;
+          cv::utils::fs::glob_relative
+                    ((string *)local_1c0,(string *)&local_1a8,(vector *)in_x2,false,true);
+          if ((long)local_198 < 0) {
+            operator_delete(local_1a8);
+          }
+          if (local_1e0 != pvStack_1d8) {
+            puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+            if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+              std::stringstream::stringstream_abi_ne180100_((stringstream *)&local_1a8);
+              poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                  ((ostream *)&local_198,"Creating new OpenCV cache directory: ",
+                                   0x25);
+              psVar18 = psStack_88;
+              pppppppcVar13 = local_90;
+              if (-1 < (long)local_80) {
+                psVar18 = (string *)((ulong)local_80 >> 0x38);
+                pppppppcVar13 = (char *******)&local_90;
+              }
+              std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        (poVar12,(char *)pppppppcVar13,(ulong)psVar18);
+              uVar19 = 0;
+              if (puVar11 != (undefined8 *)0x0) {
+                uVar19 = *puVar11;
+              }
+              std::stringbuf::str();
+              pvVar14 = local_1f8;
+              if (-1 < (long)local_1e8) {
+                pvVar14 = (vector *)&local_1f8;
+              }
+              in_x2 = 
+              "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+              ;
+              cv::utils::logging::internal::writeLogMessageEx
+                        (3,uVar19,
+                         "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                         ,0x209,"getCacheDirectory",pvVar14);
+              if ((long)local_1e8 < 0) {
+                operator_delete(local_1f8);
+              }
+              std::stringstream::~stringstream((stringstream *)&local_1a8);
+            }
+            puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+            if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+              std::stringstream::stringstream_abi_ne180100_((stringstream *)&local_1a8);
+              std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        ((ostream *)&local_198,
+                         "There are several neighbour directories, probably created by old OpenCV versions."
+                         ,0x51);
+              uVar19 = 0;
+              if (puVar11 != (undefined8 *)0x0) {
+                uVar19 = *puVar11;
+              }
+              std::stringbuf::str();
+              pvVar14 = local_1f8;
+              if (-1 < (long)local_1e8) {
+                pvVar14 = (vector *)&local_1f8;
+              }
+              in_x2 = 
+              "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+              ;
+              cv::utils::logging::internal::writeLogMessageEx
+                        (3,uVar19,
+                         "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                         ,0x20a,"getCacheDirectory",pvVar14);
+              if ((long)local_1e8 < 0) {
+                operator_delete(local_1f8);
+              }
+              std::stringstream::~stringstream((stringstream *)&local_1a8);
+            }
+            puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+            if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+              std::stringstream::stringstream_abi_ne180100_((stringstream *)&local_1a8);
+              std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        ((ostream *)&local_198,"Feel free to cleanup these unused directories:",0x2e
+                        );
+              uVar19 = 0;
+              if (puVar11 != (undefined8 *)0x0) {
+                uVar19 = *puVar11;
+              }
+              std::stringbuf::str();
+              pvVar14 = local_1f8;
+              if (-1 < (long)local_1e8) {
+                pvVar14 = (vector *)&local_1f8;
+              }
+              in_x2 = 
+              "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+              ;
+              cv::utils::logging::internal::writeLogMessageEx
+                        (3,uVar19,
+                         "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                         ,0x20b,"getCacheDirectory",pvVar14);
+              if ((long)local_1e8 < 0) {
+                operator_delete(local_1f8);
+              }
+              std::stringstream::~stringstream((stringstream *)&local_1a8);
+            }
+            puVar6 = std::stringstream::vtable;
+            if (pvStack_1d8 != local_1e0) {
+              lVar20 = 0;
+              uVar10 = 0;
+              puVar1 = std::stringstream::vtable + 0x40;
+              lVar2 = std::stringbuf::vtable + 0x10;
+              do {
+                puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+                if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+                  local_1a8 = (char *******)
+                              (std::istream-in-std::stringstream::construction_vtable + 0x18);
+                  local_128[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+                  psStack_1a0 = (string *)0x0;
+                  local_198 = puVar1;
+                  std::ios_base::init((ios *)local_128);
+                  local_98 = 0xffffffff;
+                  local_1a8 = (char *******)(puVar6 + 0x18);
+                  local_128[0] = puVar6 + 0x68;
+                  local_a0 = 0;
+                  local_198 = puVar6 + 0x40;
+                  std::streambuf::streambuf((streambuf *)local_190);
+                  uStack_148 = 0;
+                  local_150 = (void *)0x0;
+                  uStack_138 = 0;
+                  local_140 = 0;
+                  local_130 = 0x18;
+                  local_190[0] = lVar2;
+                  poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                                      ((ostream *)&local_198,"  - ",4);
+                  pvVar14 = local_1e0 + lVar20;
+                  uVar4 = *(ulong *)(pvVar14 + 8);
+                  pvVar15 = *(vector **)pvVar14;
+                  if (-1 < (char)pvVar14[0x17]) {
+                    uVar4 = (ulong)(byte)pvVar14[0x17];
+                    pvVar15 = pvVar14;
+                  }
+                  std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                            (poVar12,(char *)pvVar15,uVar4);
+                  uVar19 = 0;
+                  if (puVar11 != (undefined8 *)0x0) {
+                    uVar19 = *puVar11;
+                  }
+                  std::stringbuf::str();
+                  pvVar14 = local_1f8;
+                  if (-1 < (long)local_1e8) {
+                    pvVar14 = (vector *)&local_1f8;
+                  }
+                  in_x2 = 
+                  "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                  ;
+                  cv::utils::logging::internal::writeLogMessageEx
+                            (3,uVar19,
+                             "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                             ,0x20e,"getCacheDirectory",pvVar14);
+                  if ((long)local_1e8 < 0) {
+                    operator_delete(local_1f8);
+                  }
+                  local_1a8 = (char *******)(puVar6 + 0x18);
+                  local_128[0] = puVar6 + 0x68;
+                  local_198 = puVar6 + 0x40;
+                  local_190[0] = std::stringbuf::vtable + 0x10;
+                  if (local_140 < 0) {
+                    operator_delete(local_150);
+                  }
+                  std::streambuf::~streambuf((streambuf *)local_190);
+                  std::iostream::~iostream((iostream *)&local_1a8);
+                  std::ios::~ios((ios *)local_128);
+                }
+                uVar10 = uVar10 + 1;
+                lVar20 = lVar20 + 0x18;
+              } while (uVar10 < (ulong)(((long)pvStack_1d8 - (long)local_1e0 >> 3) *
+                                       -0x5555555555555555));
+            }
+            puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+            if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+              std::stringstream::stringstream_abi_ne180100_((stringstream *)&local_1a8);
+              std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        ((ostream *)&local_198,"Note: This message is showed only once.",0x27);
+              uVar19 = 0;
+              if (puVar11 != (undefined8 *)0x0) {
+                uVar19 = *puVar11;
+              }
+              std::stringbuf::str();
+              pvVar14 = local_1f8;
+              if (-1 < (long)local_1e8) {
+                pvVar14 = (vector *)&local_1f8;
+              }
+              in_x2 = 
+              "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+              ;
+              cv::utils::logging::internal::writeLogMessageEx
+                        (3,uVar19,
+                         "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                         ,0x210,"getCacheDirectory",pvVar14);
+              if ((long)local_1e8 < 0) {
+                operator_delete(local_1f8);
+              }
+              std::stringstream::~stringstream((stringstream *)&local_1a8);
+            }
+          }
+          if (local_1e0 != (vector *)0x0) {
+            for (; pvStack_1d8 != local_1e0; pvStack_1d8 = pvStack_1d8 + -0x18) {
+            }
+            pvStack_1d8 = local_1e0;
+            operator_delete(local_1e0);
+          }
+        }
+        if ((param_1 != (char *)0x0) && (*param_1 != '\0')) {
+          pvVar14 = (vector *)_strlen(param_1);
+          if ((vector *)0x7ffffffffffffff7 < pvVar14) {
+                    /* WARNING: Subroutine does not return */
+            std::string::__throw_length_error_abi_ne180100_();
+          }
+          if (pvVar14 < (vector *)0x17) {
+            local_1e8 = CONCAT17((char)pvVar14,(undefined7)local_1e8);
+            pvVar15 = (vector *)&local_1f8;
+            if (pvVar14 != (vector *)0x0) goto LAB_00002bec;
+          }
+          else {
+            uVar10 = ((ulong)pvVar14 & 0xfffffffffffffff8) + 8;
+            if (((ulong)pvVar14 | 7) != 0x17) {
+              uVar10 = (ulong)pvVar14 | 7;
+            }
+            pvVar15 = operator_new(uVar10 + 1);
+            local_1e8 = uVar10 + 1 | 0x8000000000000000;
+            local_1f8 = pvVar15;
+            pvStack_1f0 = pvVar14;
+LAB_00002bec:
+            in_x2 = (char *)pvVar14;
+            _memcpy(pvVar15,param_1,(size_t)pvVar14);
+          }
+          pvVar15[(long)pvVar14] = (vector)0x0;
+          std::string::push_back((char)&local_1f8);
+          pvStack_1d8 = pvStack_1f0;
+          local_1e0 = local_1f8;
+          local_1d0 = local_1e8;
+          pvStack_1f0 = (vector *)0x0;
+          local_1e8 = 0;
+          local_1f8 = (vector *)0x0;
+          join((fs *)&local_90,(string *)&local_1e0,(string *)in_x2);
+          psStack_88 = psStack_1a0;
+          local_90 = local_1a8;
+          local_80 = local_198;
+          local_198 = (undefined *)((ulong)local_198 & 0xffffffffffffff);
+          local_1a8 = (char *******)((ulong)local_1a8 & 0xffffffffffffff00);
+          if ((long)local_1d0 < 0) {
+            operator_delete(local_1e0);
+          }
+          if ((long)local_1e8 < 0) {
+            operator_delete(local_1f8);
+          }
+        }
+        iVar8 = createDirectories((string *)&local_90);
+        if (iVar8 != 0) {
+          std::string::operator=(in_x8,(string *)&local_90);
+        }
+        if (local_1a9 < '\0') {
+          operator_delete(local_1c0[0]);
+        }
+      }
+    }
+LAB_00002ca8:
+    uVar16 = (uint)(byte)in_x8[0x17];
+    if ((char)in_x8[0x17] < '\0') goto LAB_00002d00;
+LAB_00002cb4:
+    bVar3 = uVar16 == 0;
+    uVar16 = 0;
+    if (bVar3) goto LAB_00002d08;
+LAB_00002cbc:
+    iVar8 = cv::utils::fs::isDirectory(in_x8);
+    if (iVar8 == 0) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_1a8,"cache_path.empty() || utils::fs::isDirectory(cache_path)");
+      cv::error(-0xd7,(string *)&local_1a8,"getCacheDirectory",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                ,0x236);
+                    /* WARNING: Does not return */
+      pcVar7 = (code *)SoftwareBreakpoint(1,0x2db4);
+      (*pcVar7)();
+    }
+    uVar16 = (uint)(byte)in_x8[0x17];
+    if (-1 < (char)in_x8[0x17]) {
+LAB_00002d0c:
+      if (uVar16 == 0) {
+        return;
+      }
+      uVar10 = (ulong)uVar16;
+      goto LAB_00002d14;
+    }
+  }
+  else {
+    cv::utils::getConfigurationParameterString(param_2,"");
+    psVar18 = in_x8 + 0x17;
+    if ((char)*psVar18 < '\0') {
+      operator_delete(*(void **)in_x8);
+      *(string **)(in_x8 + 8) = psStack_1a0;
+      *(char ********)in_x8 = local_1a8;
+      *(undefined **)(in_x8 + 0x10) = local_198;
+      uVar16 = (uint)(char)in_x8[0x17];
+      if ((int)uVar16 < 0) goto LAB_00001e60;
+LAB_00001dd8:
+      psVar17 = in_x8;
+      if ((uVar16 & 0xff) == 8) goto LAB_00001e74;
+      if ((uVar16 & 0xff) == 0) goto LAB_00001df4;
+    }
+    else {
+      *(string **)(in_x8 + 8) = psStack_1a0;
+      *(char ********)in_x8 = local_1a8;
+      *(undefined **)(in_x8 + 0x10) = local_198;
+      uVar16 = (uint)(char)in_x8[0x17];
+      if (-1 < (char)in_x8[0x17]) goto LAB_00001dd8;
+LAB_00001e60:
+      if (*(long *)(in_x8 + 8) == 0) goto LAB_00001df4;
+      if (*(long *)(in_x8 + 8) != 8) goto LAB_00001e90;
+      psVar17 = *(string **)in_x8;
+LAB_00001e74:
+      if (*(long *)psVar17 == 0x64656c6261736964) {
+        return;
+      }
+    }
+LAB_00001e90:
+    uVar10 = cv::utils::fs::isDirectory(in_x8);
+    if ((uVar10 & 1) != 0) goto LAB_00002ca8;
+    puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    lVar2 = std::stringbuf::vtable;
+    puVar6 = std::stringstream::vtable;
+    if ((puVar11 == (undefined8 *)0x0) || (2 < *(int *)(puVar11 + 1))) {
+      puVar1 = std::stringstream::vtable + 0x40;
+      local_128[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      psStack_1a0 = (string *)0x0;
+      local_1a8 = (char *******)(std::istream-in-std::stringstream::construction_vtable + 0x18);
+      local_198 = puVar1;
+      std::ios_base::init((ios *)local_128);
+      local_98 = 0xffffffff;
+      local_1a8 = (char *******)(puVar6 + 0x18);
+      local_128[0] = puVar6 + 0x68;
+      local_a0 = 0;
+      local_198 = puVar1;
+      std::streambuf::streambuf((streambuf *)local_190);
+      local_190[0] = lVar2 + 0x10;
+      uStack_148 = 0;
+      local_150 = (void *)0x0;
+      uStack_138 = 0;
+      local_140 = 0;
+      local_130 = 0x18;
+      poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                          ((ostream *)&local_198,
+                           "Specified non-existed directory, creating OpenCV sub-directory for caching purposes: "
+                           ,0x55);
+      uVar10 = *(ulong *)(in_x8 + 8);
+      psVar17 = *(string **)in_x8;
+      if (-1 < (char)in_x8[0x17]) {
+        uVar10 = (ulong)(byte)in_x8[0x17];
+        psVar17 = in_x8;
+      }
+      std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                (poVar12,(char *)psVar17,uVar10);
+      uVar19 = 0;
+      if (puVar11 != (undefined8 *)0x0) {
+        uVar19 = *puVar11;
+      }
+      std::stringbuf::str();
+      cv::utils::logging::internal::writeLogMessageEx
+                (3,uVar19,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                 ,0x22e,"getCacheDirectory",&local_90);
+      local_1a8 = (char *******)(puVar6 + 0x18);
+      local_128[0] = puVar6 + 0x68;
+      local_198 = puVar6 + 0x40;
+      local_190[0] = lVar2 + 0x10;
+      if (local_140 < 0) {
+        operator_delete(local_150);
+      }
+      std::streambuf::~streambuf((streambuf *)local_190);
+      std::iostream::~iostream((iostream *)&local_1a8);
+      std::ios::~ios((ios *)local_128);
+    }
+    uVar10 = createDirectories(in_x8);
+    if ((uVar10 & 1) != 0) goto LAB_00002ca8;
+    puVar11 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    if ((puVar11 == (undefined8 *)0x0) || (1 < *(int *)(puVar11 + 1))) {
+      local_128[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      psStack_1a0 = (string *)0x0;
+      local_1a8 = (char *******)(std::istream-in-std::stringstream::construction_vtable + 0x18);
+      local_198 = puVar6 + 0x40;
+      std::ios_base::init((ios *)local_128);
+      local_98 = 0xffffffff;
+      local_1a8 = (char *******)(puVar6 + 0x18);
+      local_128[0] = puVar6 + 0x68;
+      local_a0 = 0;
+      local_198 = puVar6 + 0x40;
+      std::streambuf::streambuf((streambuf *)local_190);
+      local_190[0] = lVar2 + 0x10;
+      uStack_148 = 0;
+      local_150 = (void *)0x0;
+      uStack_138 = 0;
+      local_140 = 0;
+      local_130 = 0x18;
+      poVar12 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                          ((ostream *)&local_198,"Can\'t create OpenCV cache sub-directory: ",0x29);
+      uVar10 = *(ulong *)(in_x8 + 8);
+      psVar17 = *(string **)in_x8;
+      if (-1 < (char)in_x8[0x17]) {
+        uVar10 = (ulong)(byte)in_x8[0x17];
+        psVar17 = in_x8;
+      }
+      std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                (poVar12,(char *)psVar17,uVar10);
+      uVar19 = 0;
+      if (puVar11 != (undefined8 *)0x0) {
+        uVar19 = *puVar11;
+      }
+      std::stringbuf::str();
+      cv::utils::logging::internal::writeLogMessageEx
+                (2,uVar19,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/filesystem.cpp"
+                 ,0x231,"getCacheDirectory",&local_90);
+      local_1a8 = (char *******)(puVar6 + 0x18);
+      local_128[0] = puVar6 + 0x68;
+      local_198 = puVar6 + 0x40;
+      local_190[0] = lVar2 + 0x10;
+      if (local_140 < 0) {
+        operator_delete(local_150);
+      }
+      std::streambuf::~streambuf((streambuf *)local_190);
+      std::iostream::~iostream((iostream *)&local_1a8);
+      std::ios::~ios((ios *)local_128);
+    }
+    if (-1 < (char)*psVar18) {
+      uVar16 = 0;
+      *in_x8 = (string)0x0;
+      in_x8[0x17] = (string)0x0;
+      goto LAB_00002d08;
+    }
+    **(undefined1 **)in_x8 = 0;
+    *(undefined8 *)(in_x8 + 8) = 0;
+    uVar16 = (uint)(byte)*psVar18;
+    if (-1 < (char)*psVar18) goto LAB_00002cb4;
+LAB_00002d00:
+    if (*(long *)(in_x8 + 8) != 0) goto LAB_00002cbc;
+LAB_00002d08:
+    if (uVar16 >> 7 == 0) goto LAB_00002d0c;
+  }
+  uVar10 = *(ulong *)(in_x8 + 8);
+  if (uVar10 == 0) {
+    return;
+  }
+LAB_00002d14:
+  psVar18 = *(string **)in_x8;
+  if (-1 < (char)uVar16) {
+    psVar18 = in_x8;
+  }
+  if ((psVar18[uVar10 - 1] != (string)0x2f) && (psVar18[uVar10 - 1] != (string)0x5c)) {
+    std::string::push_back((char)in_x8);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: DynamicLib
+// Entry: 00003054
+// Signature: undefined __thiscall DynamicLib(DynamicLib * this, string * param_1)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::DynamicLib(std::string const&) */
+
+DynamicLib * __thiscall cv::plugin::impl::DynamicLib::DynamicLib(DynamicLib *this,string *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  *(undefined8 *)this = 0;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)(param_1 + 8);
+    uVar1 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar2;
+    *(undefined8 *)(this + 8) = uVar1;
+  }
+  this[0x20] = (DynamicLib)0x0;
+  libraryLoad(this,param_1);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: libraryLoad
+// Entry: 000030dc
+// Signature: undefined __thiscall libraryLoad(DynamicLib * this, string * param_1)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::libraryLoad(std::string const&) */
+
+void __thiscall cv::plugin::impl::DynamicLib::libraryLoad(DynamicLib *this,string *param_1)
+
+{
+  undefined *puVar1;
+  string *psVar2;
+  char *pcVar3;
+  ulong uVar4;
+  char **ppcVar5;
+  undefined *puVar6;
+  long lVar7;
+  undefined8 uVar8;
+  undefined8 *puVar9;
+  ostream *poVar10;
+  char *local_190;
+  ulong uStack_188;
+  ulong local_180;
+  undefined *local_178;
+  undefined8 local_170;
+  undefined *local_168;
+  long local_160 [8];
+  void *local_120;
+  undefined8 uStack_118;
+  long lStack_110;
+  undefined8 uStack_108;
+  undefined4 local_100;
+  undefined *local_f8 [17];
+  undefined8 local_70;
+  undefined4 local_68;
+  
+  psVar2 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar2 = param_1;
+  }
+  uVar8 = _dlopen(psVar2,2);
+  *(undefined8 *)this = uVar8;
+  puVar9 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+  puVar6 = std::stringstream::vtable;
+  if ((puVar9 == (undefined8 *)0x0) || (3 < *(int *)(puVar9 + 1))) {
+    puVar1 = std::stringstream::vtable + 0x40;
+    local_f8[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+    local_170 = 0;
+    local_178 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+    local_168 = puVar1;
+    std::ios_base::init((ios *)local_f8);
+    local_68 = 0xffffffff;
+    local_178 = puVar6 + 0x18;
+    local_f8[0] = puVar6 + 0x68;
+    local_70 = 0;
+    local_168 = puVar1;
+    std::streambuf::streambuf((streambuf *)local_160);
+    lVar7 = std::stringbuf::vtable;
+    local_160[0] = std::stringbuf::vtable + 0x10;
+    uStack_118 = 0;
+    local_120 = (void *)0x0;
+    uStack_108 = 0;
+    lStack_110 = 0;
+    local_100 = 0x18;
+    poVar10 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        ((ostream *)&local_168,"load ",5);
+    if ((char)param_1[0x17] < '\0') {
+      std::string::__init_copy_ctor_external
+                ((string *)&local_190,*(char **)param_1,*(ulong *)(param_1 + 8));
+    }
+    else {
+      uStack_188 = *(ulong *)(param_1 + 8);
+      local_190 = *(char **)param_1;
+      local_180 = *(ulong *)(param_1 + 0x10);
+    }
+    uVar4 = uStack_188;
+    ppcVar5 = (char **)local_190;
+    if (-1 < (long)local_180) {
+      uVar4 = local_180 >> 0x38;
+      ppcVar5 = &local_190;
+    }
+    poVar10 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        (poVar10,(char *)ppcVar5,uVar4);
+    poVar10 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                        (poVar10," => ",4);
+    pcVar3 = "FAILED";
+    if (*(long *)this != 0) {
+      pcVar3 = "OK";
+    }
+    uVar4 = 6;
+    if (*(long *)this != 0) {
+      uVar4 = 2;
+    }
+    std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>(poVar10,pcVar3,uVar4);
+    if ((long)local_180 < 0) {
+      operator_delete(local_190);
+    }
+    uVar8 = 0;
+    if (puVar9 != (undefined8 *)0x0) {
+      uVar8 = *puVar9;
+    }
+    std::stringbuf::str();
+    ppcVar5 = (char **)local_190;
+    if (-1 < (long)local_180) {
+      ppcVar5 = &local_190;
+    }
+    cv::utils::logging::internal::writeLogMessageEx
+              (4,uVar8,
+               "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/plugin_loader.impl.hpp"
+               ,0x43,"libraryLoad",ppcVar5);
+    if ((long)local_180 < 0) {
+      operator_delete(local_190);
+    }
+    local_178 = puVar6 + 0x18;
+    local_f8[0] = puVar6 + 0x68;
+    local_168 = puVar6 + 0x40;
+    local_160[0] = lVar7 + 0x10;
+    if (lStack_110 < 0) {
+      operator_delete(local_120);
+    }
+    std::streambuf::~streambuf((streambuf *)local_160);
+    std::iostream::~iostream((iostream *)&local_178);
+    std::ios::~ios((ios *)local_f8);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: DynamicLib
+// Entry: 000033d8
+// Signature: undefined __thiscall DynamicLib(DynamicLib * this, string * param_1)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::DynamicLib(std::string const&) */
+
+DynamicLib * __thiscall cv::plugin::impl::DynamicLib::DynamicLib(DynamicLib *this,string *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  *(undefined8 *)this = 0;
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)(this + 8),*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uVar2 = *(undefined8 *)(param_1 + 8);
+    uVar1 = *(undefined8 *)param_1;
+    *(undefined8 *)(this + 0x18) = *(undefined8 *)(param_1 + 0x10);
+    *(undefined8 *)(this + 0x10) = uVar2;
+    *(undefined8 *)(this + 8) = uVar1;
+  }
+  this[0x20] = (DynamicLib)0x0;
+  libraryLoad(this,param_1);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~DynamicLib
+// Entry: 00003460
+// Signature: undefined __thiscall ~DynamicLib(DynamicLib * this)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::~DynamicLib() */
+
+DynamicLib * __thiscall cv::plugin::impl::DynamicLib::~DynamicLib(DynamicLib *this)
+
+{
+  undefined *puVar1;
+  ulong uVar2;
+  char **ppcVar3;
+  DynamicLib DVar4;
+  undefined *puVar5;
+  long lVar6;
+  undefined8 *puVar7;
+  ostream *poVar8;
+  undefined8 uVar9;
+  char *local_180;
+  ulong uStack_178;
+  ulong local_170;
+  undefined *local_168;
+  undefined8 local_160;
+  undefined *local_158;
+  long local_150 [8];
+  void *local_110;
+  undefined8 uStack_108;
+  long lStack_100;
+  undefined8 uStack_f8;
+  undefined4 local_f0;
+  undefined *local_e8 [17];
+  undefined8 local_60;
+  undefined4 local_58;
+  
+  if (this[0x20] == (DynamicLib)0x0) {
+    libraryRelease(this);
+  }
+  else if (*(long *)this != 0) {
+    puVar7 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    puVar5 = std::stringstream::vtable;
+    if ((puVar7 == (undefined8 *)0x0) || (3 < *(int *)(puVar7 + 1))) {
+      puVar1 = std::stringstream::vtable + 0x40;
+      local_e8[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      local_160 = 0;
+      local_168 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+      local_158 = puVar1;
+      std::ios_base::init((ios *)local_e8);
+      local_58 = 0xffffffff;
+      local_168 = puVar5 + 0x18;
+      local_e8[0] = puVar5 + 0x68;
+      local_60 = 0;
+      local_158 = puVar1;
+      std::streambuf::streambuf((streambuf *)local_150);
+      lVar6 = std::stringbuf::vtable;
+      local_150[0] = std::stringbuf::vtable + 0x10;
+      uStack_108 = 0;
+      local_110 = (void *)0x0;
+      uStack_f8 = 0;
+      lStack_100 = 0;
+      local_f0 = 0x18;
+      poVar8 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                         ((ostream *)&local_158,"skip auto unloading (disabled): ",0x20);
+      if ((char)this[0x1f] < '\0') {
+        std::string::__init_copy_ctor_external
+                  ((string *)&local_180,*(char **)(this + 8),*(ulong *)(this + 0x10));
+      }
+      else {
+        uStack_178 = *(ulong *)(this + 0x10);
+        local_180 = *(char **)(this + 8);
+        local_170 = *(ulong *)(this + 0x18);
+      }
+      uVar2 = uStack_178;
+      ppcVar3 = (char **)local_180;
+      if (-1 < (long)local_170) {
+        uVar2 = local_170 >> 0x38;
+        ppcVar3 = &local_180;
+      }
+      std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                (poVar8,(char *)ppcVar3,uVar2);
+      if ((long)local_170 < 0) {
+        operator_delete(local_180);
+      }
+      uVar9 = 0;
+      if (puVar7 != (undefined8 *)0x0) {
+        uVar9 = *puVar7;
+      }
+      std::stringbuf::str();
+      ppcVar3 = (char **)local_180;
+      if (-1 < (long)local_170) {
+        ppcVar3 = &local_180;
+      }
+      cv::utils::logging::internal::writeLogMessageEx
+                (4,uVar9,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/plugin_loader.impl.hpp"
+                 ,0x28,"~DynamicLib",ppcVar3);
+      if ((long)local_170 < 0) {
+        operator_delete(local_180);
+      }
+      local_168 = puVar5 + 0x18;
+      local_e8[0] = puVar5 + 0x68;
+      local_158 = puVar5 + 0x40;
+      local_150[0] = lVar6 + 0x10;
+      if (lStack_100 < 0) {
+        operator_delete(local_110);
+      }
+      std::streambuf::~streambuf((streambuf *)local_150);
+      std::iostream::~iostream((iostream *)&local_168);
+      std::ios::~ios((ios *)local_e8);
+    }
+    *(undefined8 *)this = 0;
+    DVar4 = this[0x1f];
+    goto joined_r0x00003574;
+  }
+  DVar4 = this[0x1f];
+joined_r0x00003574:
+  if ((char)DVar4 < '\0') {
+    operator_delete(*(void **)(this + 8));
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: libraryRelease
+// Entry: 000036d8
+// Signature: undefined __thiscall libraryRelease(DynamicLib * this)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::libraryRelease() */
+
+void __thiscall cv::plugin::impl::DynamicLib::libraryRelease(DynamicLib *this)
+
+{
+  undefined *puVar1;
+  ulong uVar2;
+  char **ppcVar3;
+  undefined *puVar4;
+  long lVar5;
+  undefined8 *puVar6;
+  ostream *poVar7;
+  undefined8 uVar8;
+  char *local_180;
+  ulong uStack_178;
+  ulong local_170;
+  undefined *local_168;
+  undefined8 local_160;
+  undefined *local_158;
+  long local_150 [8];
+  void *local_110;
+  undefined8 uStack_108;
+  long lStack_100;
+  undefined8 uStack_f8;
+  undefined4 local_f0;
+  undefined *local_e8 [17];
+  undefined8 local_60;
+  undefined4 local_58;
+  
+  if (*(long *)this != 0) {
+    puVar6 = (undefined8 *)cv::utils::logging::internal::getGlobalLogTag();
+    puVar4 = std::stringstream::vtable;
+    if ((puVar6 == (undefined8 *)0x0) || (3 < *(int *)(puVar6 + 1))) {
+      puVar1 = std::stringstream::vtable + 0x40;
+      local_e8[0] = std::istream-in-std::stringstream::construction_vtable + 0x40;
+      local_160 = 0;
+      local_168 = std::istream-in-std::stringstream::construction_vtable + 0x18;
+      local_158 = puVar1;
+      std::ios_base::init((ios *)local_e8);
+      local_58 = 0xffffffff;
+      local_168 = puVar4 + 0x18;
+      local_e8[0] = puVar4 + 0x68;
+      local_60 = 0;
+      local_158 = puVar1;
+      std::streambuf::streambuf((streambuf *)local_150);
+      lVar5 = std::stringbuf::vtable;
+      local_150[0] = std::stringbuf::vtable + 0x10;
+      uStack_108 = 0;
+      local_110 = (void *)0x0;
+      uStack_f8 = 0;
+      lStack_100 = 0;
+      local_f0 = 0x18;
+      poVar7 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                         ((ostream *)&local_158,"unload ",7);
+      if ((char)this[0x1f] < '\0') {
+        std::string::__init_copy_ctor_external
+                  ((string *)&local_180,*(char **)(this + 8),*(ulong *)(this + 0x10));
+      }
+      else {
+        uStack_178 = *(ulong *)(this + 0x10);
+        local_180 = *(char **)(this + 8);
+        local_170 = *(ulong *)(this + 0x18);
+      }
+      uVar2 = uStack_178;
+      ppcVar3 = (char **)local_180;
+      if (-1 < (long)local_170) {
+        uVar2 = local_170 >> 0x38;
+        ppcVar3 = &local_180;
+      }
+      std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                (poVar7,(char *)ppcVar3,uVar2);
+      if ((long)local_170 < 0) {
+        operator_delete(local_180);
+      }
+      uVar8 = 0;
+      if (puVar6 != (undefined8 *)0x0) {
+        uVar8 = *puVar6;
+      }
+      std::stringbuf::str();
+      ppcVar3 = (char **)local_180;
+      if (-1 < (long)local_170) {
+        ppcVar3 = &local_180;
+      }
+      cv::utils::logging::internal::writeLogMessageEx
+                (4,uVar8,
+                 "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/utils/plugin_loader.impl.hpp"
+                 ,0x4a,"libraryRelease",ppcVar3);
+      if ((long)local_170 < 0) {
+        operator_delete(local_180);
+      }
+      local_168 = puVar4 + 0x18;
+      local_e8[0] = puVar4 + 0x68;
+      local_158 = puVar4 + 0x40;
+      local_150[0] = lVar5 + 0x10;
+      if (lStack_100 < 0) {
+        operator_delete(local_110);
+      }
+      std::streambuf::~streambuf((streambuf *)local_150);
+      std::iostream::~iostream((iostream *)&local_168);
+      std::ios::~ios((ios *)local_e8);
+    }
+    _dlclose(*(undefined8 *)this);
+    *(undefined8 *)this = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00003988
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  DynamicLib *this;
+  
+  ___cxa_begin_catch();
+  this = (DynamicLib *)std::terminate();
+  cv::plugin::impl::DynamicLib::~DynamicLib(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~DynamicLib
+// Entry: 00003998
+// Signature: undefined __thiscall ~DynamicLib(DynamicLib * this)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::~DynamicLib() */
+
+void __thiscall cv::plugin::impl::DynamicLib::~DynamicLib(DynamicLib *this)
+
+{
+  ~DynamicLib(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getSymbol
+// Entry: 0000399c
+// Signature: undefined __cdecl getSymbol(char * param_1)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::getSymbol(char const*) const */
+
+void cv::plugin::impl::DynamicLib::getSymbol(char *param_1)
+
+{
+  if (*(long *)param_1 != 0) {
+    _dlsym();
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getName
+// Entry: 000039ac
+// Signature: undefined __cdecl getName(void)
+// ========================================
+
+
+/* cv::plugin::impl::DynamicLib::getName() const */
+
+void cv::plugin::impl::DynamicLib::getName(void)
+
+{
+  long in_x0;
+  string *in_x8;
+  undefined8 uVar1;
+  
+  if (-1 < *(char *)(in_x0 + 0x1f)) {
+    uVar1 = *(undefined8 *)(in_x0 + 8);
+    *(undefined8 *)(in_x8 + 8) = *(undefined8 *)(in_x0 + 0x10);
+    *(undefined8 *)in_x8 = uVar1;
+    *(undefined8 *)(in_x8 + 0x10) = *(undefined8 *)(in_x0 + 0x18);
+    return;
+  }
+  std::string::__init_copy_ctor_external(in_x8,*(char **)(in_x0 + 8),*(ulong *)(in_x0 + 0x10));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 000039d8
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* non-virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)(this + -0x10) = vtable + 0x18;
+  *(undefined **)(this + 0x70) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1 + 0x40;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::iostream::~iostream((iostream *)(this + -0x10));
+  std::ios::~ios((ios *)(this + 0x70));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00003a64
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  iostream *this_00;
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + *(long *)(*(long *)this + -0x18));
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this_00 + 0x10) = puVar1 + 0x40;
+  *(long *)(this_00 + 0x18) = lVar2 + 0x10;
+  if ((char)this_00[0x6f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x18));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x80));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00003af8
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  *(undefined **)this = vtable + 0x18;
+  *(undefined **)(this + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this + 0x10) = puVar1 + 0x40;
+  *(long *)(this + 0x18) = lVar2 + 0x10;
+  if ((char)this[0x6f] < '\0') {
+    operator_delete(*(void **)(this + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x18));
+  std::iostream::~iostream((iostream *)this);
+  std::ios::~ios((ios *)(this + 0x80));
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00003b8c
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* non-virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  iostream *this_00;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + -0x10);
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this + 0x70) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1 + 0x40;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this + 0x70));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringstream
+// Entry: 00003c20
+// Signature: undefined __thiscall ~stringstream(stringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::stringstream::~stringstream() */
+
+void __thiscall std::stringstream::~stringstream(stringstream *this)
+
+{
+  iostream *this_00;
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable;
+  this_00 = (iostream *)(this + *(long *)(*(long *)this + -0x18));
+  *(undefined **)this_00 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x80) = puVar1 + 0x68;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)(this_00 + 0x10) = puVar1 + 0x40;
+  *(long *)(this_00 + 0x18) = lVar2 + 0x10;
+  if ((char)this_00[0x6f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x58));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x18));
+  std::iostream::~iostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x80));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 00003cbc
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    std::streambuf::~streambuf((streambuf *)this);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  std::streambuf::~streambuf((streambuf *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 00003d0c
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  void *pvVar1;
+  
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+    operator_delete(pvVar1);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekoff
+// Entry: 00003d64
+// Signature: undefined __cdecl seekoff(longlong param_1, seekdir param_2, uint param_3)
+// ========================================
+
+
+/* std::stringbuf::seekoff(long long, std::ios_base::seekdir, unsigned int) */
+
+void std::stringbuf::seekoff
+               (undefined8 *param_1_00,long param_1,long param_3,uint param_4,uint param_5)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  undefined8 *puVar4;
+  ulong uVar5;
+  long lVar6;
+  
+  uVar3 = *(ulong *)(param_1 + 0x30);
+  uVar2 = *(ulong *)(param_1 + 0x58);
+  if (*(ulong *)(param_1 + 0x58) < uVar3) {
+    *(ulong *)(param_1 + 0x58) = uVar3;
+    uVar2 = uVar3;
+  }
+  if (((param_5 & 0x18) == 0) || ((param_4 == 1 && ((param_5 & 0x18) == 0x18)))) {
+LAB_00003ddc:
+    lVar6 = -1;
+  }
+  else {
+    if (uVar2 == 0) {
+      uVar5 = 0;
+      if (param_4 == 0) goto LAB_00003e04;
+LAB_00003db0:
+      uVar1 = uVar5;
+      if (param_4 != 2) {
+        if (param_4 != 1) goto LAB_00003ddc;
+        if ((param_5 >> 3 & 1) == 0) {
+          uVar1 = uVar3 - *(long *)(param_1 + 0x28);
+        }
+        else {
+          uVar1 = *(long *)(param_1 + 0x18) - *(long *)(param_1 + 0x10);
+        }
+      }
+    }
+    else {
+      puVar4 = (undefined8 *)(param_1 + 0x40);
+      if (*(char *)(param_1 + 0x57) < '\0') {
+        puVar4 = (undefined8 *)*puVar4;
+      }
+      uVar5 = uVar2 - (long)puVar4;
+      if (param_4 != 0) goto LAB_00003db0;
+LAB_00003e04:
+      uVar1 = (ulong)param_4;
+    }
+    param_3 = uVar1 + param_3;
+    lVar6 = -1;
+    if (((-1 < param_3) && (lVar6 = -1, param_3 <= (long)uVar5)) &&
+       ((param_3 == 0 ||
+        ((((param_5 >> 3 & 1) == 0 || (*(long *)(param_1 + 0x18) != 0)) &&
+         (((param_5 >> 4 & 1) == 0 || (uVar3 != 0)))))))) {
+      if ((param_5 >> 3 & 1) != 0) {
+        *(long *)(param_1 + 0x18) = *(long *)(param_1 + 0x10) + param_3;
+        *(ulong *)(param_1 + 0x20) = uVar2;
+      }
+      lVar6 = param_3;
+      if ((param_5 >> 4 & 1) != 0) {
+        *(long *)(param_1 + 0x30) = *(long *)(param_1 + 0x28) + param_3;
+      }
+    }
+  }
+  param_1_00[0xd] = 0;
+  param_1_00[0xc] = 0;
+  param_1_00[0xf] = 0;
+  param_1_00[0xe] = 0;
+  param_1_00[9] = 0;
+  param_1_00[8] = 0;
+  param_1_00[0xb] = 0;
+  param_1_00[10] = 0;
+  param_1_00[5] = 0;
+  param_1_00[4] = 0;
+  param_1_00[7] = 0;
+  param_1_00[6] = 0;
+  param_1_00[1] = 0;
+  *param_1_00 = 0;
+  param_1_00[3] = 0;
+  param_1_00[2] = 0;
+  param_1_00[0x10] = lVar6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekpos
+// Entry: 00003e88
+// Signature: undefined __thiscall seekpos(stringbuf * this, fpos param_1, uint param_2)
+// ========================================
+
+
+/* std::stringbuf::seekpos(std::fpos<__mbstate_t>, unsigned int) */
+
+void __thiscall std::stringbuf::seekpos(stringbuf *this,long param_2,undefined8 param_3)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00003e9c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*(long *)this + 0x20))(this,*(undefined8 *)(param_2 + 0x80),0,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: underflow
+// Entry: 00003ea0
+// Signature: undefined __thiscall underflow(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::underflow() */
+
+ulong __thiscall std::stringbuf::underflow(stringbuf *this)
+
+{
+  byte *pbVar1;
+  byte *pbVar2;
+  
+  pbVar2 = *(byte **)(this + 0x30);
+  pbVar1 = *(byte **)(this + 0x58);
+  if (*(byte **)(this + 0x58) < pbVar2) {
+    *(byte **)(this + 0x58) = pbVar2;
+    pbVar1 = pbVar2;
+  }
+  if (((byte)this[0x60] >> 3 & 1) != 0) {
+    pbVar2 = *(byte **)(this + 0x20);
+    if (*(byte **)(this + 0x20) < pbVar1) {
+      *(byte **)(this + 0x20) = pbVar1;
+      pbVar2 = pbVar1;
+    }
+    if (*(byte **)(this + 0x18) < pbVar2) {
+      return (ulong)**(byte **)(this + 0x18);
+    }
+  }
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: pbackfail
+// Entry: 00003ef0
+// Signature: undefined __thiscall pbackfail(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::pbackfail(int) */
+
+int __thiscall std::stringbuf::pbackfail(stringbuf *this,int param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  
+  uVar2 = *(ulong *)(this + 0x30);
+  uVar1 = *(ulong *)(this + 0x58);
+  if (*(ulong *)(this + 0x58) < uVar2) {
+    *(ulong *)(this + 0x58) = uVar2;
+    uVar1 = uVar2;
+  }
+  uVar2 = *(ulong *)(this + 0x18);
+  if (*(ulong *)(this + 0x10) < uVar2) {
+    if (param_1 == -1) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      return 0;
+    }
+    if ((((byte)this[0x60] >> 4 & 1) != 0) || ((uint)*(byte *)(uVar2 - 1) == (param_1 & 0xffU))) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      *(char *)(uVar2 - 1) = (char)param_1;
+      return param_1;
+    }
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: overflow
+// Entry: 00003f5c
+// Signature: undefined __thiscall overflow(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::overflow(int) */
+
+ulong __thiscall std::stringbuf::overflow(stringbuf *this,int param_1)
+
+{
+  stringbuf *psVar1;
+  stringbuf *psVar2;
+  long lVar3;
+  stringbuf *psVar4;
+  long lVar5;
+  stringbuf *psVar6;
+  stringbuf sVar7;
+  ulong uVar8;
+  char cVar9;
+  stringbuf *psVar10;
+  long lVar11;
+  long lVar12;
+  
+  if (param_1 == -1) {
+    return 0;
+  }
+  lVar3 = *(long *)(this + 0x10);
+  lVar5 = *(long *)(this + 0x18);
+  psVar4 = *(stringbuf **)(this + 0x30);
+  psVar6 = *(stringbuf **)(this + 0x38);
+  if (psVar4 == psVar6) {
+    if (((byte)this[0x60] >> 4 & 1) == 0) {
+      return 0xffffffff;
+    }
+    lVar11 = *(long *)(this + 0x28);
+    lVar12 = *(long *)(this + 0x58);
+    psVar10 = this + 0x40;
+    std::string::push_back((char)psVar10);
+    if ((char)this[0x57] < '\0') {
+      cVar9 = (char)*(undefined8 *)(this + 0x50) + -1;
+    }
+    else {
+      cVar9 = '\x16';
+    }
+    std::string::resize((ulong)psVar10,cVar9);
+    if ((char)this[0x57] < '\0') {
+      psVar10 = *(stringbuf **)(this + 0x40);
+      uVar8 = *(ulong *)(this + 0x48);
+    }
+    else {
+      uVar8 = (ulong)(byte)this[0x57];
+    }
+    psVar6 = psVar10 + uVar8;
+    psVar4 = psVar10 + ((long)psVar4 - lVar11);
+    *(stringbuf **)(this + 0x28) = psVar10;
+    *(stringbuf **)(this + 0x30) = psVar4;
+    *(stringbuf **)(this + 0x38) = psVar6;
+    psVar10 = psVar10 + (lVar12 - lVar11);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  else {
+    psVar10 = *(stringbuf **)(this + 0x58);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  if (((byte)sVar7 >> 3 & 1) != 0) {
+    psVar2 = this + 0x40;
+    if ((char)this[0x57] < '\0') {
+      *(long *)(this + 0x10) = *(long *)psVar2;
+      *(long *)(this + 0x18) = *(long *)psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+    else {
+      *(stringbuf **)(this + 0x10) = psVar2;
+      *(stringbuf **)(this + 0x18) = psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+  }
+  if (psVar4 == psVar6) {
+                    /* WARNING: Could not recover jumptable at 0x000040ec. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    uVar8 = (**(code **)(*(long *)this + 0x68))(this,param_1 & 0xff);
+    return uVar8;
+  }
+  *(stringbuf **)(this + 0x30) = psVar1;
+  *psVar4 = SUB41(param_1,0);
+  return (ulong)(param_1 & 0xff);
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 00004118
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000041a4
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000041b8
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00004208
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 0000422c
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 00004254
+// Signature: ostream * __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>(ostream * param_1, char * param_2, ulong param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ostream& std::__put_character_sequence[abi:ne180100]<char, std::char_traits<char>
+   >(std::ostream&, char const*, unsigned long) */
+
+ostream * std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                    (ostream *param_1,char *param_2,ulong param_3)
+
+{
+  ostream *poVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  long *plVar5;
+  long lVar6;
+  undefined8 uVar7;
+  sentry local_68 [16];
+  id aiStack_58 [8];
+  
+  std::ostream::sentry::sentry(local_68,param_1);
+  if (local_68[0] != (sentry)0x0) {
+    poVar1 = param_1 + *(long *)(*(long *)param_1 + -0x18);
+    uVar7 = *(undefined8 *)(poVar1 + 0x28);
+    uVar3 = *(uint *)(poVar1 + 8);
+    iVar4 = *(int *)(poVar1 + 0x90);
+    if (iVar4 == -1) {
+      std::ios_base::getloc();
+      plVar5 = (long *)std::locale::use_facet(aiStack_58);
+      iVar4 = (**(code **)(*plVar5 + 0x38))(plVar5,0x20);
+      std::locale::~locale((locale *)aiStack_58);
+      *(int *)(poVar1 + 0x90) = iVar4;
+    }
+    pcVar2 = param_2 + param_3;
+    if ((uVar3 & 0xb0) != 0x20) {
+      pcVar2 = param_2;
+    }
+    lVar6 = __pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                      (uVar7,param_2,pcVar2,param_2 + param_3,poVar1,(int)(char)iVar4);
+    if (lVar6 == 0) {
+      std::ios_base::clear((int)param_1 + (int)*(undefined8 *)(*(long *)param_1 + -0x18));
+    }
+  }
+  std::ostream::sentry::~sentry(local_68);
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __pad_and_output[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 000043b8
+// Signature: ostreambuf_iterator __pad_and_output[abi:ne180100]<char,std::char_traits<char>>(ostreambuf_iterator param_1, char * param_2, char * param_3, char * param_4, ios_base * param_5, char param_6)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* std::ostreambuf_iterator<char, std::char_traits<char> > std::__pad_and_output[abi:ne180100]<char,
+   std::char_traits<char> >(std::ostreambuf_iterator<char, std::char_traits<char> >, char const*,
+   char const*, char const*, std::ios_base&, char) */
+
+long * std::__pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                 (long *param_1,long param_2,long param_3,long param_4,long param_5,int param_6)
+
+{
+  ulong uVar1;
+  long lVar2;
+  undefined8 *******pppppppuVar3;
+  ulong uVar4;
+  long lVar5;
+  undefined8 *******local_68;
+  ulong local_60;
+  undefined8 uStack_58;
+  
+  if (param_1 == (long *)0x0) {
+    return (long *)0x0;
+  }
+  uVar1 = *(long *)(param_5 + 0x18) - (param_4 - param_2);
+  if (uVar1 == 0 || *(long *)(param_5 + 0x18) < param_4 - param_2) {
+    uVar1 = 0;
+  }
+  lVar5 = param_3 - param_2;
+  if ((lVar5 < 1) || (lVar2 = (**(code **)(*param_1 + 0x60))(param_1,param_2,lVar5), lVar2 == lVar5)
+     ) {
+    if (0 < (long)uVar1) {
+      if (0x7ffffffffffffff7 < uVar1) {
+                    /* WARNING: Subroutine does not return */
+        string::__throw_length_error_abi_ne180100_();
+      }
+      if (uVar1 < 0x17) {
+        uStack_58 = CONCAT17((char)uVar1,(undefined7)uStack_58);
+        pppppppuVar3 = &local_68;
+      }
+      else {
+        uVar4 = (uVar1 & 0xfffffffffffffff8) + 8;
+        if ((uVar1 | 7) != 0x17) {
+          uVar4 = uVar1 | 7;
+        }
+        pppppppuVar3 = operator_new(uVar4 + 1);
+        uStack_58 = uVar4 + 1 | 0x8000000000000000;
+        local_68 = pppppppuVar3;
+        local_60 = uVar1;
+      }
+      _memset(pppppppuVar3,param_6,uVar1);
+      *(undefined1 *)((long)pppppppuVar3 + uVar1) = 0;
+      pppppppuVar3 = local_68;
+      if (-1 < (long)uStack_58) {
+        pppppppuVar3 = &local_68;
+      }
+      uVar4 = (**(code **)(*param_1 + 0x60))(param_1,pppppppuVar3,uVar1);
+      if ((long)uStack_58 < 0) {
+        operator_delete(local_68);
+      }
+      if (uVar4 != uVar1) {
+        return (long *)0x0;
+      }
+    }
+    param_4 = param_4 - param_3;
+    if ((param_4 < 1) ||
+       (lVar5 = (**(code **)(*param_1 + 0x60))(param_1,param_3,param_4), lVar5 == param_4)) {
+      *(undefined8 *)(param_5 + 0x18) = 0;
+      return param_1;
+    }
+  }
+  return (long *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 0000455c
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_out_of_range[abi:ne180100]() const */
+
+void std::string::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 00004570
+// Signature: noreturn undefined __throw_out_of_range[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_out_of_range[abi:ne180100](char const*) */
+
+void std::__throw_out_of_range_abi_ne180100_(char *param_1)
+
+{
+  out_of_range *this;
+  
+  this = (out_of_range *)___cxa_allocate_exception(0x10);
+  out_of_range::out_of_range_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__out_of_range);
+}
+
+
+
+
+// ========================================
+// Function: out_of_range[abi:ne180100]
+// Entry: 000045c0
+// Signature: undefined __thiscall out_of_range[abi:ne180100](out_of_range * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::out_of_range::out_of_range[abi:ne180100](char const*) */
+
+void __thiscall std::out_of_range::out_of_range_abi_ne180100_(out_of_range *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000045e4
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::wstring::__throw_length_error[abi:ne180100]() const */
+
+void std::wstring::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: str
+// Entry: 000045f8
+// Signature: undefined __cdecl str(void)
+// ========================================
+
+
+/* std::stringbuf::str() const */
+
+void std::stringbuf::str(void)
+
+{
+  long in_x0;
+  undefined8 *puVar1;
+  undefined8 *in_x8;
+  undefined8 *puVar2;
+  undefined1 *puVar3;
+  ulong uVar4;
+  undefined8 *puVar5;
+  ulong uVar6;
+  undefined1 *puVar7;
+  undefined1 *puVar8;
+  ulong uVar9;
+  undefined1 *puVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  
+  if ((*(uint *)(in_x0 + 0x60) >> 4 & 1) == 0) {
+    if ((*(uint *)(in_x0 + 0x60) >> 3 & 1) == 0) {
+      *in_x8 = 0;
+      in_x8[1] = 0;
+      in_x8[2] = 0;
+      return;
+    }
+    puVar10 = *(undefined1 **)(in_x0 + 0x10);
+    puVar7 = *(undefined1 **)(in_x0 + 0x20);
+    uVar9 = (long)puVar7 - (long)puVar10;
+    if (0x7ffffffffffffff7 < uVar9) {
+LAB_00004848:
+                    /* WARNING: Subroutine does not return */
+      string::__throw_length_error_abi_ne180100_();
+    }
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar10 == puVar7) {
+LAB_000047f8:
+      *(undefined1 *)in_x8 = 0;
+      return;
+    }
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar10))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar10 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar10 = puVar10 + uVar4;
+      if (uVar9 == uVar4) goto LAB_0000482c;
+    }
+    do {
+      puVar3 = puVar10 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar10;
+      in_x8 = puVar2;
+      puVar10 = puVar3;
+    } while (puVar3 != puVar7);
+  }
+  else {
+    puVar10 = *(undefined1 **)(in_x0 + 0x58);
+    puVar3 = *(undefined1 **)(in_x0 + 0x30);
+    puVar7 = puVar10;
+    if (puVar10 < puVar3) {
+      *(undefined1 **)(in_x0 + 0x58) = puVar3;
+      puVar7 = puVar3;
+    }
+    puVar8 = *(undefined1 **)(in_x0 + 0x28);
+    uVar9 = (long)puVar7 - (long)puVar8;
+    if (0x7ffffffffffffff7 < uVar9) goto LAB_00004848;
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar8 == puVar7) goto LAB_000047f8;
+    if (puVar10 <= puVar3) {
+      puVar10 = puVar3;
+    }
+    uVar9 = (long)puVar10 - (long)puVar8;
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar8))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar8 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar8 = puVar8 + uVar4;
+      if (uVar9 == uVar4) goto LAB_0000482c;
+    }
+    do {
+      puVar10 = puVar8 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar8;
+      in_x8 = puVar2;
+      puVar8 = puVar10;
+    } while (puVar10 != puVar7);
+  }
+LAB_0000482c:
+  *(undefined1 *)puVar2 = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00006100
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getConfigurationParameterBool
+// Entry: 00006200
+// Signature: undefined getConfigurationParameterBool(char * param_1, bool param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::getConfigurationParameterBool(char *param_1,bool param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: isDirectory
+// Entry: 00006300
+// Signature: undefined isDirectory(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::fs::isDirectory(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: glob_relative
+// Entry: 00006400
+// Signature: undefined glob_relative(string * param_1, string * param_2, vector * param_3, bool param_4, bool param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::fs::glob_relative
+               (string *param_1,string *param_2,vector *param_3,bool param_4,bool param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: glob
+// Entry: 00006500
+// Signature: undefined glob(string * param_1, string * param_2, vector * param_3, bool param_4, bool param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::fs::glob(string *param_1,string *param_2,vector *param_3,bool param_4,bool param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getConfigurationParameterString
+// Entry: 00006600
+// Signature: undefined getConfigurationParameterString(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::getConfigurationParameterString(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00006700
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00006800
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getGlobalLogTag
+// Entry: 00006900
+// Signature: undefined getGlobalLogTag(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::internal::getGlobalLogTag(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: writeLogMessageEx
+// Entry: 00006a00
+// Signature: undefined writeLogMessageEx(LogLevel param_1, char * param_2, char * param_3, int param_4, char * param_5, char * param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::utils::logging::internal::writeLogMessageEx(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: rfind
+// Entry: 00006b00
+// Signature: undefined rfind(char param_1, ulong param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::rfind(char param_1,ulong param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: use_facet
+// Entry: 00006c00
+// Signature: undefined use_facet(id * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::locale::use_facet(id *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getloc
+// Entry: 00006d00
+// Signature: undefined getloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::getloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00006e00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00006f00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~out_of_range
+// Entry: 00007000
+// Signature: undefined __thiscall ~out_of_range(out_of_range * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::out_of_range::~out_of_range() */
+
+void __thiscall std::out_of_range::~out_of_range(out_of_range *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00007100
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00007200
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: append
+// Entry: 00007300
+// Signature: undefined append(char * param_1, ulong param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::append(char *param_1,ulong param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 00007400
+// Signature: undefined assign(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::assign(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: insert
+// Entry: 00007500
+// Signature: undefined insert(ulong param_1, char * param_2, ulong param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::insert(ulong param_1,char *param_2,ulong param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 00007600
+// Signature: undefined resize(ulong param_1, char param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::resize(ulong param_1,char param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: push_back
+// Entry: 00007700
+// Signature: undefined push_back(char param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::push_back(char param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00007800
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00007900
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00007a00
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sentry
+// Entry: 00007b00
+// Signature: undefined __thiscall sentry(sentry * this, ostream * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::sentry(sentry *this,ostream *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~sentry
+// Entry: 00007c00
+// Signature: undefined __thiscall ~sentry(sentry * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::~sentry(sentry *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00007d00
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00007e00
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00007f00
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::iostream::~iostream() */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008000
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::iostream::~iostream() */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00008100
+// Signature: undefined __thiscall ~iostream(iostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::iostream::~iostream(iostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sync
+// Entry: 00008200
+// Signature: undefined sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::sync() */
+
+void std::streambuf::sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: imbue
+// Entry: 00008300
+// Signature: undefined imbue(locale * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::imbue(std::locale const&) */
+
+void std::streambuf::imbue(locale *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: uflow
+// Entry: 00008400
+// Signature: undefined uflow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::uflow() */
+
+void std::streambuf::uflow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: setbuf
+// Entry: 00008500
+// Signature: undefined setbuf(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::setbuf(char*, long) */
+
+void std::streambuf::setbuf(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsgetn
+// Entry: 00008600
+// Signature: undefined xsgetn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsgetn(char*, long) */
+
+void std::streambuf::xsgetn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsputn
+// Entry: 00008700
+// Signature: undefined xsputn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsputn(char const*, long) */
+
+void std::streambuf::xsputn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: showmanyc
+// Entry: 00008800
+// Signature: undefined showmanyc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::showmanyc() */
+
+void std::streambuf::showmanyc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: streambuf
+// Entry: 00008900
+// Signature: undefined __thiscall streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~streambuf
+// Entry: 00008a00
+// Signature: undefined __thiscall ~streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::~streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~locale
+// Entry: 00008c00
+// Signature: undefined __thiscall ~locale(locale * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::locale::~locale(locale *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __set_badbit_and_consider_rethrow
+// Entry: 00008d00
+// Signature: undefined __set_badbit_and_consider_rethrow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ios_base::__set_badbit_and_consider_rethrow() */
+
+void std::ios_base::__set_badbit_and_consider_rethrow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: init
+// Entry: 00008e00
+// Signature: undefined init(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::init(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 00008f00
+// Signature: undefined clear(uint param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::clear(uint param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ios
+// Entry: 00009000
+// Signature: undefined __thiscall ~ios(ios * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ios::~ios(ios *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00009100
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00009c00
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* non-virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 00009d00
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* non-virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00009e00
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00009f00
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 0000a000
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 0000a100
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 0000a200
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~iostream
+// Entry: 0000a300
+// Signature: undefined ~iostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::iostream::~iostream() */
+
+void std::iostream::~iostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete[]
+// Entry: 0000a400
+// Signature: void operator.delete[](void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete__(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 0000a500
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new[]
+// Entry: 0000a600
+// Signature: void * operator.new[](ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new__(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 0000a700
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 0000a900
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 0000aa00
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 0000ad00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___error
+// Entry: 0000ae00
+// Signature: int * ___error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int * ___error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 0000b000
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _close
+// Entry: 0000b200
+// Signature: int _close(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _close(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlclose
+// Entry: 0000b300
+// Signature: undefined _dlclose(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlclose(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlopen
+// Entry: 0000b400
+// Signature: undefined _dlopen(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlopen(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlsym
+// Entry: 0000b500
+// Signature: undefined _dlsym(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlsym(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fcntl
+// Entry: 0000b600
+// Signature: int _fcntl(int param_1, int param_2, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _fcntl(int param_1,int param_2,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 0000b700
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _getcwd
+// Entry: 0000b800
+// Signature: char * _getcwd(char * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _getcwd(char *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _getenv
+// Entry: 0000b900
+// Signature: char * _getenv(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _getenv(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 0000ba00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 0000bb00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 0000bc00
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mkdir
+// Entry: 0000bd00
+// Signature: int _mkdir(char * param_1, mode_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _mkdir(char *param_1,mode_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _open
+// Entry: 0000be00
+// Signature: int _open(char * param_1, int param_2, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _open(char *param_1,int param_2,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _realpath$DARWIN_EXTSN
+// Entry: 0000bf00
+// Signature: undefined _realpath$DARWIN_EXTSN(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _realpath_DARWIN_EXTSN(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _rmdir
+// Entry: 0000c000
+// Signature: int _rmdir(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _rmdir(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _stat
+// Entry: 0000c100
+// Signature: int _stat(char * param_1, stat * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _stat(char *param_1,stat *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 0000c200
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _unlink
+// Entry: 0000c300
+// Signature: int _unlink(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _unlink(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _wmemchr
+// Entry: 0000c400
+// Signature: wchar_t * _wmemchr(wchar_t * param_1, wchar_t param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+wchar_t * _wmemchr(wchar_t *param_1,wchar_t param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 141
+// Failed: 0
+// Skipped external functions: 0

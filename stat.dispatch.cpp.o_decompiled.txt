@@ -1,0 +1,492 @@
+Program: stat.dispatch.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: normHamming
+// Entry: 00000000
+// Signature: undefined __cdecl normHamming(uchar * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::hal::cpu_baseline::normHamming(unsigned char const*, int) */
+
+ulong cv::hal::cpu_baseline::normHamming(uchar *param_1,int param_2)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  byte bVar3;
+  undefined8 uVar4;
+  ulong uVar5;
+  byte *pbVar6;
+  int iVar7;
+  ulong uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  ulong uVar11;
+  long lVar12;
+  long lVar13;
+  
+  if (param_2 < 0x10) {
+    uVar5 = 0;
+    uVar11 = 0;
+    if (param_2 + -4 < 0) goto LAB_000000d0;
+  }
+  else {
+    uVar5 = 0;
+    lVar12 = 0;
+    lVar13 = 0;
+    do {
+      uVar4 = *(undefined8 *)(param_1 + uVar5 + 8);
+      uVar2 = *(undefined8 *)(param_1 + uVar5);
+      bVar3 = POPCOUNT((char)((ulong)uVar2 >> 0x10)) + POPCOUNT((char)((ulong)uVar2 >> 0x18));
+      lVar12 = lVar12 + (ulong)((CONCAT12(bVar3,(ushort)(byte)POPCOUNT((char)uVar2) +
+                                                (ushort)(byte)POPCOUNT((char)((ulong)uVar2 >> 8))) &
+                                0xffff) + (uint)bVar3) +
+                        (ulong)((uint)(byte)(POPCOUNT((char)((ulong)uVar2 >> 0x20)) +
+                                            POPCOUNT((char)((ulong)uVar2 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar2 >> 0x30)) +
+                                           POPCOUNT((char)((ulong)uVar2 >> 0x38))));
+      lVar13 = lVar13 + (ulong)((uint)(byte)(POPCOUNT((char)uVar4) +
+                                            POPCOUNT((char)((ulong)uVar4 >> 8))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x10)) +
+                                           POPCOUNT((char)((ulong)uVar4 >> 0x18)))) +
+                        (ulong)((uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x20)) +
+                                            POPCOUNT((char)((ulong)uVar4 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x30)) +
+                                           POPCOUNT((char)((ulong)uVar4 >> 0x38))));
+      uVar5 = uVar5 + 0x10;
+    } while (uVar5 <= param_2 - 0x10U);
+    uVar1 = (param_2 - 0x10U & 0xfffffff0) + 0x10;
+    uVar5 = (ulong)uVar1;
+    uVar11 = lVar12 + lVar13;
+    if (param_2 + -4 < (int)uVar1) goto LAB_000000d0;
+  }
+  do {
+    uVar11 = (ulong)((int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)param_1[uVar5]) +
+                     (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffe) + 1]) +
+                     (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffd) + 2]) +
+                    (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffc) + 3]));
+    uVar5 = uVar5 + 4;
+  } while ((int)uVar5 <= param_2 + -4);
+LAB_000000d0:
+  if ((int)(uint)uVar5 < param_2) {
+    uVar9 = uVar5 & 0xffffffff;
+    uVar1 = ~(uint)uVar5 + param_2;
+    if (uVar1 != 0) {
+      iVar7 = 0;
+      uVar5 = (ulong)uVar1 + 1;
+      uVar8 = uVar5 & 0x1fffffffe;
+      pbVar6 = param_1 + uVar9 + 1;
+      uVar10 = uVar8;
+      do {
+        uVar1 = (int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)pbVar6[-1]);
+        uVar11 = (ulong)uVar1;
+        iVar7 = iVar7 + (uint)*(byte *)(_popCountTable + (ulong)*pbVar6);
+        uVar10 = uVar10 - 2;
+        pbVar6 = pbVar6 + 2;
+      } while (uVar10 != 0);
+      uVar11 = (ulong)(iVar7 + uVar1);
+      uVar9 = uVar8 + uVar9;
+      if (uVar5 == uVar8) {
+        return uVar11;
+      }
+    }
+    pbVar6 = param_1 + uVar9;
+    do {
+      uVar11 = (ulong)((int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)*pbVar6));
+      uVar1 = (int)uVar9 + 1;
+      uVar9 = (ulong)uVar1;
+      pbVar6 = pbVar6 + 1;
+    } while ((int)uVar1 < param_2);
+  }
+  return uVar11;
+}
+
+
+
+
+// ========================================
+// Function: normHamming
+// Entry: 0000016c
+// Signature: undefined __cdecl normHamming(uchar * param_1, uchar * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::hal::cpu_baseline::normHamming(unsigned char const*, unsigned char const*, int) */
+
+ulong cv::hal::cpu_baseline::normHamming(uchar *param_1,uchar *param_2,int param_3)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  byte bVar3;
+  undefined8 uVar4;
+  ulong uVar5;
+  byte *pbVar6;
+  int iVar7;
+  byte *pbVar8;
+  ulong uVar9;
+  ulong uVar10;
+  ulong uVar11;
+  ulong uVar12;
+  long lVar13;
+  long lVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  
+  if (param_3 < 0x10) {
+    uVar5 = 0;
+    uVar12 = 0;
+    if (param_3 + -4 < 0) goto LAB_00000270;
+  }
+  else {
+    uVar5 = 0;
+    lVar13 = 0;
+    lVar14 = 0;
+    do {
+      uVar4 = *(undefined8 *)(param_1 + uVar5 + 8);
+      uVar2 = *(undefined8 *)(param_1 + uVar5);
+      uVar16 = *(undefined8 *)(param_2 + uVar5 + 8);
+      uVar15 = *(undefined8 *)(param_2 + uVar5);
+      bVar3 = POPCOUNT((byte)((ulong)uVar15 >> 0x10) ^ (byte)((ulong)uVar2 >> 0x10)) +
+              POPCOUNT((byte)((ulong)uVar15 >> 0x18) ^ (byte)((ulong)uVar2 >> 0x18));
+      lVar13 = lVar13 + (ulong)((CONCAT12(bVar3,(ushort)(byte)POPCOUNT((byte)uVar15 ^ (byte)uVar2) +
+                                                (ushort)(byte)POPCOUNT((byte)((ulong)uVar15 >> 8) ^
+                                                                       (byte)((ulong)uVar2 >> 8))) &
+                                0xffff) + (uint)bVar3) +
+                        (ulong)((uint)(byte)(POPCOUNT((byte)((ulong)uVar15 >> 0x20) ^
+                                                      (byte)((ulong)uVar2 >> 0x20)) +
+                                            POPCOUNT((byte)((ulong)uVar15 >> 0x28) ^
+                                                     (byte)((ulong)uVar2 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((byte)((ulong)uVar15 >> 0x30) ^
+                                                     (byte)((ulong)uVar2 >> 0x30)) +
+                                           POPCOUNT((byte)((ulong)uVar15 >> 0x38) ^
+                                                    (byte)((ulong)uVar2 >> 0x38))));
+      lVar14 = lVar14 + (ulong)((uint)(byte)(POPCOUNT((byte)uVar16 ^ (byte)uVar4) +
+                                            POPCOUNT((byte)((ulong)uVar16 >> 8) ^
+                                                     (byte)((ulong)uVar4 >> 8))) +
+                               (uint)(byte)(POPCOUNT((byte)((ulong)uVar16 >> 0x10) ^
+                                                     (byte)((ulong)uVar4 >> 0x10)) +
+                                           POPCOUNT((byte)((ulong)uVar16 >> 0x18) ^
+                                                    (byte)((ulong)uVar4 >> 0x18)))) +
+                        (ulong)((uint)(byte)(POPCOUNT((byte)((ulong)uVar16 >> 0x20) ^
+                                                      (byte)((ulong)uVar4 >> 0x20)) +
+                                            POPCOUNT((byte)((ulong)uVar16 >> 0x28) ^
+                                                     (byte)((ulong)uVar4 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((byte)((ulong)uVar16 >> 0x30) ^
+                                                     (byte)((ulong)uVar4 >> 0x30)) +
+                                           POPCOUNT((byte)((ulong)uVar16 >> 0x38) ^
+                                                    (byte)((ulong)uVar4 >> 0x38))));
+      uVar5 = uVar5 + 0x10;
+    } while (uVar5 <= param_3 - 0x10U);
+    uVar1 = (param_3 - 0x10U & 0xfffffff0) + 0x10;
+    uVar5 = (ulong)uVar1;
+    uVar12 = lVar13 + lVar14;
+    if (param_3 + -4 < (int)uVar1) goto LAB_00000270;
+  }
+  do {
+    uVar10 = uVar5 & 0xfffffffe | 1;
+    uVar11 = uVar5 & 0xffffffff | 2;
+    uVar9 = uVar5 & 0xfffffffc | 3;
+    uVar12 = (ulong)((int)uVar12 +
+                     (uint)*(byte *)(_popCountTable + (ulong)(param_2[uVar5] ^ param_1[uVar5])) +
+                     (uint)*(byte *)(_popCountTable + (ulong)(param_2[uVar10] ^ param_1[uVar10])) +
+                    (uint)*(byte *)(_popCountTable + (ulong)(param_2[uVar11] ^ param_1[uVar11])) +
+                    (uint)*(byte *)(_popCountTable + (ulong)(param_2[uVar9] ^ param_1[uVar9])));
+    uVar5 = uVar5 + 4;
+  } while ((int)uVar5 <= param_3 + -4);
+LAB_00000270:
+  if ((int)(uint)uVar5 < param_3) {
+    uVar10 = uVar5 & 0xffffffff;
+    uVar1 = ~(uint)uVar5 + param_3;
+    if (uVar1 != 0) {
+      iVar7 = 0;
+      uVar5 = (ulong)uVar1 + 1;
+      uVar9 = uVar5 & 0x1fffffffe;
+      pbVar6 = param_1 + uVar10 + 1;
+      pbVar8 = param_2 + uVar10 + 1;
+      uVar11 = uVar9;
+      do {
+        uVar1 = (int)uVar12 + (uint)*(byte *)(_popCountTable + (ulong)(pbVar8[-1] ^ pbVar6[-1]));
+        uVar12 = (ulong)uVar1;
+        iVar7 = iVar7 + (uint)*(byte *)(_popCountTable + (ulong)(*pbVar8 ^ *pbVar6));
+        uVar11 = uVar11 - 2;
+        pbVar6 = pbVar6 + 2;
+        pbVar8 = pbVar8 + 2;
+      } while (uVar11 != 0);
+      uVar12 = (ulong)(iVar7 + uVar1);
+      uVar10 = uVar9 + uVar10;
+      if (uVar5 == uVar9) {
+        return uVar12;
+      }
+    }
+    pbVar6 = param_2 + uVar10;
+    pbVar8 = param_1 + uVar10;
+    do {
+      uVar12 = (ulong)((int)uVar12 + (uint)*(byte *)(_popCountTable + (ulong)(*pbVar6 ^ *pbVar8)));
+      uVar1 = (int)uVar10 + 1;
+      uVar10 = (ulong)uVar1;
+      pbVar6 = pbVar6 + 1;
+      pbVar8 = pbVar8 + 1;
+    } while ((int)uVar1 < param_3);
+  }
+  return uVar12;
+}
+
+
+
+
+// ========================================
+// Function: normHamming
+// Entry: 00000338
+// Signature: undefined __cdecl normHamming(uchar * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::hal::normHamming(unsigned char const*, int) */
+
+ulong cv::hal::normHamming(uchar *param_1,int param_2)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  byte bVar3;
+  undefined8 uVar4;
+  ulong uVar5;
+  byte *pbVar6;
+  int iVar7;
+  ulong uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  ulong uVar11;
+  long lVar12;
+  long lVar13;
+  Region aRStack_40 [8];
+  int local_38;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_40,
+             (LocationStaticStorage *)
+             &normHamming(unsigned_char_const*,int)::__cv_trace_location_fn14);
+  if (param_2 < 0x10) {
+    uVar5 = 0;
+    uVar11 = 0;
+    if (-1 < param_2 + -4) {
+LAB_000003d0:
+      do {
+        uVar11 = (ulong)((int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)param_1[uVar5]) +
+                         (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffe) + 1])
+                         + (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffd) + 2]
+                                          ) +
+                        (uint)*(byte *)(_popCountTable + (ulong)param_1[(uVar5 & 0xfffffffc) + 3]));
+        uVar5 = uVar5 + 4;
+      } while ((int)uVar5 <= param_2 + -4);
+    }
+  }
+  else {
+    uVar5 = 0;
+    lVar12 = 0;
+    lVar13 = 0;
+    do {
+      uVar4 = *(undefined8 *)(param_1 + uVar5 + 8);
+      uVar2 = *(undefined8 *)(param_1 + uVar5);
+      bVar3 = POPCOUNT((char)((ulong)uVar2 >> 0x10)) + POPCOUNT((char)((ulong)uVar2 >> 0x18));
+      lVar12 = lVar12 + (ulong)((CONCAT12(bVar3,(ushort)(byte)POPCOUNT((char)uVar2) +
+                                                (ushort)(byte)POPCOUNT((char)((ulong)uVar2 >> 8))) &
+                                0xffff) + (uint)bVar3) +
+                        (ulong)((uint)(byte)(POPCOUNT((char)((ulong)uVar2 >> 0x20)) +
+                                            POPCOUNT((char)((ulong)uVar2 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar2 >> 0x30)) +
+                                           POPCOUNT((char)((ulong)uVar2 >> 0x38))));
+      lVar13 = lVar13 + (ulong)((uint)(byte)(POPCOUNT((char)uVar4) +
+                                            POPCOUNT((char)((ulong)uVar4 >> 8))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x10)) +
+                                           POPCOUNT((char)((ulong)uVar4 >> 0x18)))) +
+                        (ulong)((uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x20)) +
+                                            POPCOUNT((char)((ulong)uVar4 >> 0x28))) +
+                               (uint)(byte)(POPCOUNT((char)((ulong)uVar4 >> 0x30)) +
+                                           POPCOUNT((char)((ulong)uVar4 >> 0x38))));
+      uVar5 = uVar5 + 0x10;
+    } while (uVar5 <= param_2 - 0x10U);
+    uVar1 = (param_2 - 0x10U & 0xfffffff0) + 0x10;
+    uVar5 = (ulong)uVar1;
+    uVar11 = lVar12 + lVar13;
+    if ((int)uVar1 <= param_2 + -4) goto LAB_000003d0;
+  }
+  if ((int)(uint)uVar5 < param_2) {
+    uVar9 = uVar5 & 0xffffffff;
+    uVar1 = ~(uint)uVar5 + param_2;
+    if (uVar1 != 0) {
+      iVar7 = 0;
+      uVar5 = (ulong)uVar1 + 1;
+      uVar8 = uVar5 & 0x1fffffffe;
+      pbVar6 = param_1 + uVar9 + 1;
+      uVar10 = uVar8;
+      do {
+        uVar1 = (int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)pbVar6[-1]);
+        uVar11 = (ulong)uVar1;
+        iVar7 = iVar7 + (uint)*(byte *)(_popCountTable + (ulong)*pbVar6);
+        uVar10 = uVar10 - 2;
+        pbVar6 = pbVar6 + 2;
+      } while (uVar10 != 0);
+      uVar11 = (ulong)(iVar7 + uVar1);
+      uVar9 = uVar8 + uVar9;
+      if (uVar5 == uVar8) goto LAB_000004c8;
+    }
+    pbVar6 = param_1 + uVar9;
+    do {
+      uVar11 = (ulong)((int)uVar11 + (uint)*(byte *)(_popCountTable + (ulong)*pbVar6));
+      uVar1 = (int)uVar9 + 1;
+      uVar9 = (ulong)uVar1;
+      pbVar6 = pbVar6 + 1;
+    } while ((int)uVar1 < param_2);
+  }
+LAB_000004c8:
+  if (local_38 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return uVar11;
+}
+
+
+
+
+// ========================================
+// Function: normHamming
+// Entry: 000004f4
+// Signature: undefined __cdecl normHamming(uchar * param_1, uchar * param_2, int param_3)
+// ========================================
+
+
+/* cv::hal::normHamming(unsigned char const*, unsigned char const*, int) */
+
+undefined8 cv::hal::normHamming(uchar *param_1,uchar *param_2,int param_3)
+
+{
+  undefined8 uVar1;
+  Region aRStack_40 [8];
+  int local_38;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_40,
+             (LocationStaticStorage *)
+             &normHamming(unsigned_char_const*,unsigned_char_const*,int)::__cv_trace_location_fn22);
+  uVar1 = cpu_baseline::normHamming(param_1,param_2,param_3);
+  if (local_38 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00000564
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00001100
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00001200
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00001300
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00001400
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 9
+// Failed: 0
+// Skipped external functions: 0

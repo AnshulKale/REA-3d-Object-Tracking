@@ -1,0 +1,3081 @@
+Program: kmp_alloc.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmp_initialize_bget
+// Entry: 00000000
+// Signature: void __cdecl __kmp_initialize_bget(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_initialize_bget(kmp_info_t *th)
+
+{
+  set_thr_data(th);
+  bectl(th,__kmp_initialize_bget,__malloc,__free,*____kmp_malloc_pool_incr);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_thr_data
+// Entry: 0000004c
+// Signature: void __cdecl set_thr_data(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void set_thr_data(kmp_info_t *th)
+
+{
+  void *local_30;
+  int local_1c;
+  
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: thr_data_t * data@[DW_OP_breg31(sp): +8] */
+  if (*(long *)(th->th_pad + 0xf8) == 0) {
+    local_30 = ___kmp_allocate(0x438);
+  }
+  else {
+    local_30 = *(void **)(th->th_pad + 0xf8);
+  }
+  _bzero(local_30,0x438);
+  for (local_1c = 0; local_1c < 0x14; local_1c = local_1c + 1) {
+    *(void **)((long)local_30 + (long)local_1c * 0x30 + 0x20) =
+         (void *)((long)local_30 + (long)local_1c * 0x30);
+    *(void **)((long)local_30 + (long)local_1c * 0x30 + 0x28) =
+         (void *)((long)local_30 + (long)local_1c * 0x30);
+  }
+  *(void **)(th->th_pad + 0xf8) = local_30;
+  *(char *)((long)th + 0x100) = '\0';
+  *(char *)((long)th + 0x101) = '\0';
+  *(char *)((long)th + 0x102) = '\0';
+  *(char *)((long)th + 0x103) = '\0';
+  *(char *)((long)th + 0x104) = '\0';
+  *(char *)((long)th + 0x105) = '\0';
+  *(char *)((long)th + 0x106) = '\0';
+  *(char *)((long)th + 0x107) = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: bectl
+// Entry: 00000144
+// Signature: void __cdecl bectl(kmp_info_t * th, bget_compact_t compact, bget_acquire_t acquire, bget_release_t release, bufsize pool_incr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void bectl(kmp_info_t *th,bget_compact_t compact,bget_acquire_t acquire,bget_release_t release,
+          bufsize pool_incr)
+
+{
+  thr_data_t *ptVar1;
+  
+                    /* Unresolved local var: thr_data_t * thr@[DW_OP_breg31(sp): 0] */
+  ptVar1 = get_thr_data(th);
+  ptVar1->compfcn = compact;
+  ptVar1->acqfcn = acquire;
+  ptVar1->relfcn = release;
+  ptVar1->exp_incr = pool_incr;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_finalize_bget
+// Entry: 000001ac
+// Signature: void __cdecl __kmp_finalize_bget(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_finalize_bget(kmp_info_t *th)
+
+{
+  long lVar1;
+  bfhead_t *b;
+  
+                    /* Unresolved local var: thr_data_t * thr@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +8] */
+  lVar1 = *(long *)(th->th_pad + 0xf8);
+  b = *(bfhead_t **)(lVar1 + 0x430);
+  if ((((*(long *)(lVar1 + 0x410) != 0) && (b != (bfhead_t *)0x0)) &&
+      (*(long *)(lVar1 + 0x3d8) != 0)) && ((b->bh).bb.bsize == *(long *)(lVar1 + 0x428) + -0x20)) {
+    __kmp_bget_remove_from_freelist(b);
+    (**(code **)(lVar1 + 0x410))(b);
+    *(long *)(lVar1 + 1000) = *(long *)(lVar1 + 1000) + 1;
+    *(long *)(lVar1 + 0x3d8) = *(long *)(lVar1 + 0x3d8) + -1;
+  }
+  if (*(long *)(th->th_pad + 0xf8) != 0) {
+    ___kmp_free(*(void **)(th->th_pad + 0xf8));
+    *(char *)((long)th + 0xf8) = '\0';
+    *(char *)((long)th + 0xf9) = '\0';
+    *(char *)((long)th + 0xfa) = '\0';
+    *(char *)((long)th + 0xfb) = '\0';
+    *(char *)((long)th + 0xfc) = '\0';
+    *(char *)((long)th + 0xfd) = '\0';
+    *(char *)((long)th + 0xfe) = '\0';
+    *(char *)((long)th + 0xff) = '\0';
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_bget_remove_from_freelist
+// Entry: 000002b4
+// Signature: void __cdecl __kmp_bget_remove_from_freelist(bfhead_t * b)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_bget_remove_from_freelist(bfhead_t *b)
+
+{
+  (((b->ql).blink)->ql).flink = (b->ql).flink;
+  (((b->ql).flink)->ql).blink = (b->ql).blink;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_free
+// Entry: 000002ec
+// Signature: void __cdecl ___kmp_free(void * ptr)
+// ========================================
+
+
+void ___kmp_free(void *ptr)
+
+{
+                    /* Unresolved local var: kmp_mem_descr_t descr@[DW_OP_breg31(sp): 0] */
+  if (ptr == (void *)0x0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",0x7e9
+                       );
+  }
+  _free(*(void **)((long)ptr + -0x20));
+  DataMemoryBarrier(2,3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_poolsize
+// Entry: 0000035c
+// Signature: void __cdecl kmpc_set_poolsize(size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_set_poolsize(size_t size)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  
+  gtid = ___kmp_get_global_thread_id();
+  th = __kmp_thread_from_gtid(gtid);
+  bectl(th,__kmp_initialize_bget,__malloc,__free,size);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_thread_from_gtid
+// Entry: 0000039c
+// Signature: kmp_info_t * __cdecl __kmp_thread_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_thread_from_gtid(int gtid)
+
+{
+  return *(kmp_info_t **)(*____kmp_threads + (long)gtid * 8);
+}
+
+
+
+
+// ========================================
+// Function: kmpc_get_poolsize
+// Entry: 000003c0
+// Signature: size_t kmpc_get_poolsize(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+size_t kmpc_get_poolsize(void)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  thr_data_t *ptVar1;
+  
+                    /* Unresolved local var: thr_data_t * p@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id();
+  th = __kmp_thread_from_gtid(gtid);
+  ptVar1 = get_thr_data(th);
+  return ptVar1->exp_incr;
+}
+
+
+
+
+// ========================================
+// Function: get_thr_data
+// Entry: 000003f0
+// Signature: thr_data_t * __cdecl get_thr_data(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+thr_data_t * get_thr_data(kmp_info_t *th)
+
+{
+                    /* Unresolved local var: thr_data_t * data@[???] */
+  return *(thr_data_t **)(th->th_pad + 0xf8);
+}
+
+
+
+
+// ========================================
+// Function: kmpc_set_poolmode
+// Entry: 00000410
+// Signature: void __cdecl kmpc_set_poolmode(int mode)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_set_poolmode(int mode)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  thr_data_t *ptVar1;
+  
+                    /* Unresolved local var: thr_data_t * p@[DW_OP_breg31(sp): 0] */
+  if (((mode == 0) || (mode == 1)) || (mode == 2)) {
+    gtid = ___kmp_get_global_thread_id();
+    th = __kmp_thread_from_gtid(gtid);
+    ptVar1 = get_thr_data(th);
+    ptVar1->mode = mode;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_get_poolmode
+// Entry: 00000488
+// Signature: int kmpc_get_poolmode(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int kmpc_get_poolmode(void)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  thr_data_t *ptVar1;
+  
+                    /* Unresolved local var: thr_data_t * p@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id();
+  th = __kmp_thread_from_gtid(gtid);
+  ptVar1 = get_thr_data(th);
+  return ptVar1->mode;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_get_poolstat
+// Entry: 000004b8
+// Signature: void __cdecl kmpc_get_poolstat(size_t * maxmem, size_t * allmem)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_get_poolstat(size_t *maxmem,size_t *allmem)
+
+{
+  int gtid;
+  size_t local_38;
+  size_t local_30;
+  kmp_info_t *local_28;
+  size_t *local_20;
+  size_t *local_18;
+  
+  local_20 = allmem;
+  local_18 = maxmem;
+                    /* Unresolved local var: kmp_info_t * th@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: bufsize a@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bufsize b@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id();
+  local_28 = __kmp_thread_from_gtid(gtid);
+  __kmp_bget_dequeue(local_28);
+  bcheck(local_28,(bufsize *)&local_30,(bufsize *)&local_38);
+  *local_18 = local_30;
+  *local_20 = local_38;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_bget_dequeue
+// Entry: 00000514
+// Signature: void __cdecl __kmp_bget_dequeue(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_bget_dequeue(kmp_info_t *th)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  undefined8 *puVar4;
+  undefined8 *local_28;
+  undefined8 *local_20;
+  
+                    /* Unresolved local var: void * p@[???] */
+  if (*(long *)(th->th_pad + 0x100) == 0) {
+    return;
+  }
+                    /* Unresolved local var: void * old_value@[DW_OP_breg31(sp): +24] */
+  local_28 = *(undefined8 **)(th->th_pad + 0x100);
+  do {
+    plVar1 = (long *)(th->th_pad + 0x100);
+    do {
+      puVar4 = (undefined8 *)*plVar1;
+      if (puVar4 != local_28) break;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = 0;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (puVar4 == local_28) {
+      local_20 = local_28;
+      while (local_20 != (undefined8 *)0x0) {
+                    /* Unresolved local var: void * buf@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +8] */
+        puVar4 = (undefined8 *)*local_20;
+        brel(th,local_20);
+        local_20 = puVar4;
+      }
+      return;
+    }
+    local_28 = *(undefined8 **)(th->th_pad + 0x100);
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: bcheck
+// Entry: 000005f8
+// Signature: void __cdecl bcheck(kmp_info_t * th, bufsize * max_free, bufsize * total_free)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void bcheck(kmp_info_t *th,bufsize *max_free,bufsize *total_free)
+
+{
+  thr_data_t *ptVar1;
+  bfhead *local_48;
+  bfhead *local_40;
+  int local_34;
+  
+                    /* Unresolved local var: thr_data_t * thr@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int bin@[DW_OP_breg31(sp): +28] */
+  ptVar1 = get_thr_data(th);
+  *max_free = 0;
+  *total_free = 0;
+  for (local_34 = 0; local_34 < 0x14; local_34 = local_34 + 1) {
+                    /* Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bfhead_t * best@[DW_OP_breg31(sp): +8] */
+    local_48 = ptVar1->freelist + local_34;
+    for (local_40 = (local_48->ql).flink; local_40 != ptVar1->freelist + local_34;
+        local_40 = (local_40->ql).flink) {
+      *total_free = *total_free + (local_40->bh).bb.bsize + -0x20;
+      if ((local_48 == ptVar1->freelist + local_34) ||
+         ((local_40->bh).bb.bsize < (local_48->bh).bb.bsize)) {
+        local_48 = local_40;
+      }
+    }
+    if (*max_free < (local_48->bh).bb.bsize) {
+      *max_free = (local_48->bh).bb.bsize;
+    }
+  }
+  if (0x20 < *max_free) {
+    *max_free = *max_free + -0x20;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_poolprint
+// Entry: 00000798
+// Signature: void kmpc_poolprint(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_poolprint(void)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  
+                    /* Unresolved local var: kmp_info_t * th@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id();
+  th = __kmp_thread_from_gtid(gtid);
+  __kmp_bget_dequeue(th);
+  bfreed(th);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: bfreed
+// Entry: 000007cc
+// Signature: void __cdecl bfreed(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void bfreed(kmp_info_t *th)
+
+{
+  ulong local_90;
+  bfhead *local_88;
+  bufsize local_80;
+  long local_78;
+  long local_70;
+  long local_68;
+  long local_60;
+  long local_58;
+  long local_50;
+  undefined1 *local_48;
+  bufsize local_40;
+  bfhead *local_38;
+  thr_data_t *local_30;
+  uint local_24;
+  int local_20;
+  int local_1c;
+  kmp_info_t *local_18;
+  
+                    /* Unresolved local var: int bin@[???]
+                       Unresolved local var: int count@[???]
+                       Unresolved local var: int gtid@[???]
+                       Unresolved local var: thr_data_t * thr@[???] */
+  local_1c = 0;
+  local_20 = 0;
+  local_18 = th;
+  local_24 = __kmp_gtid_from_thread(th);
+  local_30 = get_thr_data(local_18);
+  local_90 = (ulong)local_24;
+  local_88 = (bfhead *)local_30->totalloc;
+  local_80 = local_30->numget;
+  local_78 = local_30->numrel;
+  local_70 = local_30->numpblk;
+  local_68 = local_30->numpget;
+  local_60 = local_30->numprel;
+  local_58 = local_30->numdget;
+  local_50 = local_30->numdrel;
+  local_48 = (undefined1 *)&local_90;
+  ___kmp_printf_no_lock
+            (
+            "__kmp_printpool: T#%d total=%llu get=%lld rel=%lld pblk=%lld pget=%lld prel=%lld dget=%lld drel=%lld\n"
+            );
+  for (local_1c = 0; local_1c < 0x14; local_1c = local_1c + 1) {
+                    /* Unresolved local var: bfhead_t * b@[???] */
+    for (local_38 = local_30->freelist[local_1c].ql.flink; local_38 != local_30->freelist + local_1c
+        ; local_38 = (local_38->ql).flink) {
+                    /* Unresolved local var: bufsize bs@[???] */
+      local_80 = (local_38->bh).bb.bsize;
+      local_20 = local_20 + 1;
+      local_90 = (ulong)local_24;
+      local_88 = local_38;
+      local_40 = local_80;
+      ___kmp_printf_no_lock("__kmp_printpool: T#%d Free block: 0x%p size %6ld bytes.\n");
+    }
+  }
+  if (local_20 == 0) {
+    local_90 = (ulong)local_24;
+    ___kmp_printf_no_lock("__kmp_printpool: T#%d No free blocks\n");
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_malloc
+// Entry: 0000098c
+// Signature: void * __cdecl kmpc_malloc(size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * kmpc_malloc(size_t size)
+
+{
+  kmp_info_t *th;
+  undefined8 local_20;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): 0] */
+  th = __kmp_entry_thread();
+  local_20 = bget(th,size + 8);
+  if (local_20 != (void *)0x0) {
+    *(void **)local_20 = local_20;
+    local_20 = (void *)((long)local_20 + 8);
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: bget
+// Entry: 000009f0
+// Signature: void * __cdecl bget(kmp_info_t * th, bufsize requested_size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * bget(kmp_info_t *th,bufsize requested_size)
+
+{
+  size_t sVar1;
+  undefined8 *puVar2;
+  bool bVar3;
+  int iVar4;
+  thr_data_t *thr;
+  size_t *psVar5;
+  void *pvVar6;
+  ulong uVar7;
+  bfhead *local_a0;
+  bfhead *local_98;
+  bfhead *local_90;
+  int local_5c;
+  bfhead *local_58;
+  int local_4c;
+  bfhead *local_40;
+  long local_38;
+  
+                    /* Unresolved local var: thr_data_t * thr@[???]
+                       Unresolved local var: bufsize size@[???]
+                       Unresolved local var: bfhead_t * b@[???]
+                       Unresolved local var: void * buf@[???]
+                       Unresolved local var: int compactseq@[???]
+                       Unresolved local var: int use_blink@[???]
+                       Unresolved local var: bfhead_t * best@[DW_OP_breg31(sp): +72] */
+  thr = get_thr_data(th);
+  local_4c = 0;
+  if ((requested_size < 0) || (0x7ffffffffffffff8 < requested_size + 0x20U)) {
+    return (void *)0x0;
+  }
+  __kmp_bget_dequeue(th);
+  local_38 = requested_size;
+  if (requested_size < 0x10) {
+    local_38 = 0x10;
+  }
+  uVar7 = local_38 + 7U & 0xfffffffffffffff8;
+  sVar1 = uVar7 + 0x20;
+  bVar3 = thr->mode != bget_mode_lifo;
+  do {
+                    /* Unresolved local var: int bin@[DW_OP_breg31(sp): +68] */
+    for (local_5c = bget_get_bin(sVar1); local_5c < 0x14; local_5c = local_5c + 1) {
+      if (bVar3) {
+        local_90 = thr->freelist[local_5c].ql.flink;
+      }
+      else {
+        local_90 = thr->freelist[local_5c].ql.blink;
+      }
+      local_40 = local_90;
+      if (thr->mode == bget_mode_best) {
+        local_58 = thr->freelist + local_5c;
+        while (local_40 != thr->freelist + local_5c) {
+          if (((long)sVar1 <= (local_40->bh).bb.bsize) &&
+             ((local_58 == thr->freelist + local_5c ||
+              ((local_40->bh).bb.bsize < (local_58->bh).bb.bsize)))) {
+            local_58 = local_40;
+          }
+          if (bVar3) {
+            local_98 = (local_40->ql).flink;
+          }
+          else {
+            local_98 = (local_40->ql).blink;
+          }
+          local_40 = local_98;
+        }
+        local_40 = local_58;
+      }
+      while (local_40 != thr->freelist + local_5c) {
+        if ((long)sVar1 <= (local_40->bh).bb.bsize) {
+          if (0x30 < (long)((local_40->bh).bb.bsize - sVar1)) {
+                    /* Unresolved local var: bhead_t * ba@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: bhead_t * bn@[DW_OP_breg31(sp): +48] */
+            puVar2 = (undefined8 *)((long)local_40 + ((local_40->bh).bb.bsize - sVar1));
+            (local_40->bh).bb.bsize = (local_40->bh).bb.bsize - sVar1;
+            puVar2[1] = (local_40->bh).bb.bsize;
+            puVar2[2] = -sVar1;
+            *puVar2 = th;
+            *(undefined8 *)((long)puVar2 + uVar7 + 0x28) = 0;
+            __kmp_bget_remove_from_freelist(local_40);
+            __kmp_bget_insert_into_freelist(thr,local_40);
+            thr->totalloc = thr->totalloc + sVar1;
+            thr->numget = thr->numget + 1;
+            return puVar2 + 4;
+          }
+                    /* Unresolved local var: bhead_t * ba@[DW_OP_breg31(sp): +40] */
+          puVar2 = (undefined8 *)((long)&local_40->bh + (local_40->bh).bb.bsize);
+          __kmp_bget_remove_from_freelist(local_40);
+          thr->totalloc = thr->totalloc + (local_40->bh).bb.bsize;
+          thr->numget = thr->numget + 1;
+          (local_40->bh).bb.bsize = -(local_40->bh).bb.bsize;
+          *puVar2 = th;
+          puVar2[1] = 0;
+          return &local_40->ql;
+        }
+        if (bVar3) {
+          local_a0 = (local_40->ql).flink;
+        }
+        else {
+          local_a0 = (local_40->ql).blink;
+        }
+        local_40 = local_a0;
+      }
+    }
+    if (thr->compfcn == __kmp_initialize_bget) break;
+    local_4c = local_4c + 1;
+    iVar4 = (*thr->compfcn)(sVar1,local_4c);
+  } while (iVar4 != 0);
+  if (thr->acqfcn != __kmp_initialize_bget) {
+    if (thr->exp_incr + -0x20 < (long)sVar1) {
+                    /* Unresolved local var: bdhead_t * bdh@[DW_OP_breg31(sp): +32] */
+      sVar1 = uVar7 + 0x28;
+      psVar5 = (*thr->acqfcn)(sVar1);
+      if (psVar5 != (size_t *)0x0) {
+        psVar5[3] = 0;
+        psVar5[1] = (size_t)th;
+        psVar5[2] = 0;
+        *psVar5 = sVar1;
+        thr->totalloc = thr->totalloc + sVar1;
+        thr->numget = thr->numget + 1;
+        thr->numdget = thr->numdget + 1;
+        return psVar5 + 5;
+      }
+    }
+    else {
+                    /* Unresolved local var: void * newpool@[DW_OP_breg31(sp): +24] */
+      pvVar6 = (*thr->acqfcn)(thr->exp_incr);
+      if (pvVar6 != (void *)0x0) {
+        bpool(th,pvVar6,thr->exp_incr);
+        pvVar6 = bget(th,requested_size);
+        return pvVar6;
+      }
+    }
+  }
+  return (void *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_entry_thread
+// Entry: 0000100c
+// Signature: kmp_info_t * __kmp_entry_thread(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_entry_thread(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(kmp_info_t **)(*____kmp_threads + (long)iVar1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: kmpc_aligned_malloc
+// Entry: 00001040
+// Signature: void * __cdecl kmpc_aligned_malloc(size_t size, size_t alignment)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * kmpc_aligned_malloc(size_t size,size_t alignment)
+
+{
+  int *piVar1;
+  kmp_info_t *th;
+  void *pvVar2;
+  void *local_30;
+  void *local_18;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: void * ptr_allocated@[DW_OP_breg31(sp): +8] */
+  if ((alignment & alignment - 1) == 0) {
+    th = __kmp_entry_thread();
+    pvVar2 = bget(th,size + 8 + alignment);
+    if (pvVar2 == (void *)0x0) {
+      local_30 = (void *)0x0;
+    }
+    else {
+      local_30 = (void *)((long)pvVar2 + alignment + 8 & (alignment - 1 ^ 0xffffffffffffffff));
+      *(void **)((long)local_30 + -8) = pvVar2;
+    }
+    local_18 = local_30;
+  }
+  else {
+    piVar1 = ___error();
+    *piVar1 = 0x16;
+    local_18 = (void *)0x0;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_calloc
+// Entry: 00001110
+// Signature: void * __cdecl kmpc_calloc(size_t nelem, size_t elsize)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * kmpc_calloc(size_t nelem,size_t elsize)
+
+{
+  kmp_info_t *th;
+  undefined8 local_28;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8] */
+  th = __kmp_entry_thread();
+  local_28 = bgetz(th,nelem * elsize + 8);
+  if (local_28 != (void *)0x0) {
+    *(void **)local_28 = local_28;
+    local_28 = (void *)((long)local_28 + 8);
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: bgetz
+// Entry: 00001180
+// Signature: void * __cdecl bgetz(kmp_info_t * th, bufsize size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * bgetz(kmp_info_t *th,bufsize size)
+
+{
+  void *pvVar1;
+  undefined8 local_38;
+  
+                    /* Unresolved local var: char * buf@[DW_OP_breg31(sp): +24] */
+  pvVar1 = bget(th,size);
+  if (pvVar1 != (void *)0x0) {
+                    /* Unresolved local var: bhead_t * b@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bufsize rsize@[DW_OP_breg31(sp): +8] */
+    if (-*(long *)((long)pvVar1 + -0x10) == 0) {
+                    /* Unresolved local var: bdhead_t * bd@[DW_OP_breg31(sp): 0] */
+      local_38 = *(long *)((long)pvVar1 + -0x28) - 0x28;
+    }
+    else {
+      local_38 = -*(long *)((long)pvVar1 + -0x10) - 0x20;
+    }
+    _bzero(pvVar1,local_38);
+  }
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_realloc
+// Entry: 0000123c
+// Signature: void * __cdecl kmpc_realloc(void * ptr, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * kmpc_realloc(void *ptr,size_t size)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  void *local_28;
+  
+                    /* Unresolved local var: void * result@[DW_OP_breg31(sp): +8] */
+  local_28 = (void *)0x0;
+  if (ptr == (void *)0x0) {
+    pkVar1 = __kmp_entry_thread();
+    local_28 = bget(pkVar1,size + 8);
+    if (local_28 != (void *)0x0) {
+      *(void **)local_28 = local_28;
+      local_28 = (void *)((long)local_28 + 8);
+    }
+  }
+  else if (size == 0) {
+    if (*(long *)((long)ptr + -8) == 0) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                          0x486);
+    }
+    gtid = ___kmp_get_global_thread_id();
+    pkVar1 = __kmp_thread_from_gtid(gtid);
+    brel(pkVar1,*(void **)((long)ptr + -8));
+  }
+  else {
+    pkVar1 = __kmp_entry_thread();
+    local_28 = bgetr(pkVar1,*(void **)((long)ptr + -8),size + 8);
+    if (local_28 != (void *)0x0) {
+      *(void **)local_28 = local_28;
+      local_28 = (void *)((long)local_28 + 8);
+    }
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: brel
+// Entry: 00001374
+// Signature: void __cdecl brel(kmp_info_t * th, void * buf)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void brel(kmp_info_t *th,void *buf)
+
+{
+  thr_data_t *thr;
+  kmp_info_t *th_00;
+  bfhead_t *local_38;
+  bfhead_t *local_30;
+  
+                    /* Unresolved local var: thr_data_t * thr@[???]
+                       Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: bfhead_t * bn@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: kmp_info_t * bth@[DW_OP_breg31(sp): +16] */
+  thr = get_thr_data(th);
+  local_30 = (bfhead_t *)((long)buf + -0x20);
+  if (*(long *)((long)buf + -0x10) == 0) {
+                    /* Unresolved local var: bdhead_t * bdh@[DW_OP_breg31(sp): +8] */
+    thr->totalloc = thr->totalloc - *(long *)((long)buf + -0x28);
+    thr->numdrel = thr->numdrel + 1;
+    thr->numrel = thr->numrel + 1;
+    (*thr->relfcn)((long *)((long)buf + -0x28));
+  }
+  else {
+    th_00 = (kmp_info_t *)((ulong)(local_30->bh).bb.bthr & 0xfffffffffffffffe);
+    if (th_00 == th) {
+      thr->numrel = thr->numrel + 1;
+      thr->totalloc = thr->totalloc + *(long *)((long)buf + -0x10);
+      if (*(long *)((long)buf + -0x18) == 0) {
+        *(long *)((long)buf + -0x10) = -*(long *)((long)buf + -0x10);
+      }
+      else {
+                    /* Unresolved local var: bufsize size@[DW_OP_breg31(sp): 0] */
+        local_30 = (bfhead_t *)((long)local_30 - *(long *)((long)buf + -0x18));
+        (local_30->bh).bb.bsize = (local_30->bh).bb.bsize - *(long *)((long)buf + -0x10);
+        __kmp_bget_remove_from_freelist(local_30);
+      }
+      __kmp_bget_insert_into_freelist(thr,local_30);
+      local_38 = (bfhead_t *)((long)&local_30->bh + (local_30->bh).bb.bsize);
+      if (0 < (local_38->bh).bb.bsize) {
+        __kmp_bget_remove_from_freelist(local_38);
+        (local_30->bh).bb.bsize = (local_30->bh).bb.bsize + (local_38->bh).bb.bsize;
+        __kmp_bget_remove_from_freelist(local_30);
+        __kmp_bget_insert_into_freelist(thr,local_30);
+        local_38 = (bfhead_t *)((long)&local_30->bh + (local_30->bh).bb.bsize);
+      }
+      (local_38->bh).bb.prevfree = (local_30->bh).bb.bsize;
+      if ((thr->relfcn != __kmp_initialize_bget) &&
+         ((local_30->bh).bb.bsize == thr->pool_len + -0x20)) {
+        if (thr->numpblk == 1) {
+          thr->last_pool = local_30;
+        }
+        else {
+          __kmp_bget_remove_from_freelist(local_30);
+          (*thr->relfcn)(local_30);
+          thr->numprel = thr->numprel + 1;
+          thr->numpblk = thr->numpblk + -1;
+          if (thr->last_pool == local_30) {
+            thr->last_pool = (bfhead_t *)0x0;
+          }
+        }
+      }
+    }
+    else {
+      __kmp_bget_enqueue(th_00,buf);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: bgetr
+// Entry: 00001670
+// Signature: void * __cdecl bgetr(kmp_info_t * th, void * buf, bufsize size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * bgetr(kmp_info_t *th,void *buf,bufsize size)
+
+{
+  undefined8 local_68;
+  undefined8 local_40;
+  undefined8 local_18;
+  
+                    /* Unresolved local var: void * nbuf@[???]
+                       Unresolved local var: bufsize osize@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: bhead_t * b@[DW_OP_breg31(sp): +40] */
+  local_18 = bget(th,size);
+  if (local_18 == (void *)0x0) {
+    local_18 = (void *)0x0;
+  }
+  else if (buf != (void *)0x0) {
+    if (-*(long *)((long)buf + -0x10) == 0) {
+                    /* Unresolved local var: bdhead_t * bd@[DW_OP_breg31(sp): +32] */
+      local_40 = *(long *)((long)buf + -0x28) - 0x28;
+    }
+    else {
+      local_40 = -*(long *)((long)buf + -0x10) - 0x20;
+    }
+    local_68 = size;
+    if ((long)local_40 <= size) {
+      local_68 = local_40;
+    }
+    _memcpy(local_18,buf,local_68);
+    brel(th,buf);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: kmpc_free
+// Entry: 000017b0
+// Signature: void __cdecl kmpc_free(void * ptr)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmpc_free(void *ptr)
+
+{
+  int gtid;
+  kmp_info_t *th;
+  
+  if ((*____kmp_init_serial != 0) && (ptr != (void *)0x0)) {
+                    /* Unresolved local var: kmp_info_t * th@[DW_OP_breg31(sp): 0] */
+    gtid = ___kmp_get_global_thread_id();
+    th = __kmp_thread_from_gtid(gtid);
+    __kmp_bget_dequeue(th);
+    if (*(long *)((long)ptr + -8) == 0) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                          0x49c);
+    }
+    brel(th,*(void **)((long)ptr + -8));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_thread_malloc
+// Entry: 0000185c
+// Signature: void * __cdecl ___kmp_thread_malloc(kmp_info_t * th, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * ___kmp_thread_malloc(kmp_info_t *th,size_t size)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8] */
+  pvVar1 = bget(th,size);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_thread_calloc
+// Entry: 00001890
+// Signature: void * __cdecl ___kmp_thread_calloc(kmp_info_t * th, size_t nelem, size_t elsize)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * ___kmp_thread_calloc(kmp_info_t *th,size_t nelem,size_t elsize)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): 0] */
+  pvVar1 = bgetz(th,nelem * elsize);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_thread_realloc
+// Entry: 000018d0
+// Signature: void * __cdecl ___kmp_thread_realloc(kmp_info_t * th, void * ptr, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * ___kmp_thread_realloc(kmp_info_t *th,void *ptr,size_t size)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = bgetr(th,ptr,size);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_thread_free
+// Entry: 0000190c
+// Signature: void __cdecl ___kmp_thread_free(kmp_info_t * th, void * ptr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ___kmp_thread_free(kmp_info_t *th,void *ptr)
+
+{
+  if (ptr != (void *)0x0) {
+    __kmp_bget_dequeue(th);
+    brel(th,ptr);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_memkind
+// Entry: 00001958
+// Signature: void __kmp_init_memkind(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_init_memkind(void)
+
+{
+  kmp_mk_lib_name = "";
+  h_memkind = (void *)0x0;
+  kmp_mk_check = __kmp_initialize_bget;
+  kmp_mk_alloc = __kmp_initialize_bget;
+  kmp_mk_free = __kmp_initialize_bget;
+  mk_default = (void **)0x0;
+  mk_interleave = (void **)0x0;
+  mk_hbw = (void **)0x0;
+  mk_hbw_interleave = (void **)0x0;
+  mk_hbw_preferred = (void **)0x0;
+  mk_hugetlb = (void **)0x0;
+  mk_hbw_hugetlb = (void **)0x0;
+  mk_hbw_preferred_hugetlb = (void **)0x0;
+  mk_dax_kmem = (void **)0x0;
+  mk_dax_kmem_all = (void **)0x0;
+  mk_dax_kmem_preferred = (void **)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_fini_memkind
+// Entry: 000019e4
+// Signature: void __kmp_fini_memkind(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_fini_memkind(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_target_mem
+// Entry: 000019e8
+// Signature: void __kmp_init_target_mem(void)
+// ========================================
+
+
+/* WARNING: Restarted to delay deadcode elimination for space: ram */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_init_target_mem(void)
+
+{
+  kmp_target_alloc_host =
+       (_func_void_ptr_size_t_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_alloc_host");
+  kmp_target_alloc_shared =
+       (_func_void_ptr_size_t_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_alloc_shared");
+  kmp_target_alloc_device =
+       (_func_void_ptr_size_t_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_alloc_device");
+  kmp_target_free_host =
+       (_func_void_ptr_void_ptr_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_free_host");
+  kmp_target_free_shared =
+       (_func_void_ptr_void_ptr_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_free_shared");
+  kmp_target_free_device =
+       (_func_void_ptr_void_ptr_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_free_device");
+  __kmp_target_mem_available = false;
+  if ((((kmp_target_alloc_host != __kmp_initialize_bget) &&
+       (__kmp_target_mem_available = false, kmp_target_alloc_shared != __kmp_initialize_bget)) &&
+      (__kmp_target_mem_available = false, kmp_target_alloc_device != __kmp_initialize_bget)) &&
+     ((__kmp_target_mem_available = false, kmp_target_free_host != __kmp_initialize_bget &&
+      (__kmp_target_mem_available = false, kmp_target_free_shared != __kmp_initialize_bget)))) {
+    __kmp_target_mem_available = kmp_target_free_device != __kmp_initialize_bget;
+  }
+  kmp_target_lock_mem =
+       (_func_void_ptr_void_ptr_size_t_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_lock_mem");
+  kmp_target_unlock_mem =
+       (_func_void_ptr_void_ptr_int *)_dlsym(0xfffffffffffffffe,"llvm_omp_target_unlock_mem");
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_init_allocator
+// Entry: 00001bac
+// Signature: omp_allocator_handle_t __cdecl __kmpc_init_allocator(int gtid, omp_memspace_handle_t ms, int ntraits, omp_alloctrait_t * traits)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+omp_allocator_handle_t
+__kmpc_init_allocator(int gtid,omp_memspace_handle_t ms,int ntraits,omp_alloctrait_t *traits)
+
+{
+  undefined8 *puVar1;
+  int local_44;
+  undefined8 *local_18;
+  
+                    /* Unresolved local var: kmp_allocator_t * al@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int i@[DW_OP_breg31(sp): +28] */
+  puVar1 = __omp_null_allocator;
+  local_18 = ___kmp_allocate(0x40);
+  *local_18 = ms;
+  for (local_44 = 0; local_44 < ntraits; local_44 = local_44 + 1) {
+    switch(traits[local_44].key) {
+    case omp_atk_sync_hint:
+    case omp_atk_access:
+      break;
+    case omp_atk_alignment:
+      __kmp_type_convert<unsigned_long,_unsigned_long>(traits[local_44].value,local_18 + 2);
+      if ((local_18[2] & local_18[2] - 1) != 0) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                            0x578);
+      }
+      break;
+    case omp_atk_pool_size:
+      local_18[5] = traits[local_44].value;
+      break;
+    case omp_atk_fallback:
+      *(int *)(local_18 + 3) = (int)traits[local_44].value;
+      break;
+    case omp_atk_fb_data:
+      local_18[4] = traits[local_44].value;
+      break;
+    case omp_atk_pinned:
+      *(undefined1 *)(local_18 + 7) = 1;
+      break;
+    case omp_atk_partition:
+      local_18[1] = traits[local_44].value;
+      break;
+    default:
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                          0x58a);
+    }
+  }
+  if (*(int *)(local_18 + 3) == 0) {
+    *(undefined4 *)(local_18 + 3) = 0xb;
+    local_18[4] = *__omp_default_mem_alloc;
+  }
+  else if (*(int *)(local_18 + 3) == 0xe) {
+    if (local_18[4] == 0) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                          0x592);
+    }
+  }
+  else if (*(int *)(local_18 + 3) == 0xb) {
+    local_18[4] = *__omp_default_mem_alloc;
+  }
+  if (*____kmp_memkind_available == 0) {
+    if ((((ms == (omp_memspace_handle_t)*__llvm_omp_target_host_mem_space) ||
+         (ms == (omp_memspace_handle_t)*__llvm_omp_target_shared_mem_space)) ||
+        (ms == (omp_memspace_handle_t)*__llvm_omp_target_device_mem_space)) &&
+       ((__kmp_target_mem_available & 1U) == 0)) {
+      ___kmp_free(local_18);
+      local_18 = (undefined8 *)*puVar1;
+    }
+    else if (ms == (omp_memspace_handle_t)*__omp_high_bw_mem_space) {
+      ___kmp_free(local_18);
+      local_18 = (undefined8 *)*puVar1;
+    }
+  }
+  else if (ms == (omp_memspace_handle_t)*__omp_high_bw_mem_space) {
+    if ((local_18[1] == 0x12) && (mk_hbw_interleave != (void **)0x0)) {
+      local_18[1] = mk_hbw_interleave;
+    }
+    else if (mk_hbw_preferred == (void **)0x0) {
+      ___kmp_free(local_18);
+      local_18 = (undefined8 *)*puVar1;
+    }
+    else {
+      local_18[1] = mk_hbw_preferred;
+    }
+  }
+  else if (ms == (omp_memspace_handle_t)*__omp_large_cap_mem_space) {
+    if (mk_dax_kmem_all == (void **)0x0) {
+      if (mk_dax_kmem == (void **)0x0) {
+        ___kmp_free(local_18);
+        local_18 = (undefined8 *)*puVar1;
+      }
+      else {
+        local_18[1] = mk_dax_kmem;
+      }
+    }
+    else {
+      local_18[1] = mk_dax_kmem_all;
+    }
+  }
+  else if ((local_18[1] == 0x12) && (mk_interleave != (void **)0x0)) {
+    local_18[1] = mk_interleave;
+  }
+  else {
+    local_18[1] = mk_default;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_allocate
+// Entry: 000020f0
+// Signature: void * __cdecl ___kmp_allocate(size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * ___kmp_allocate(size_t size)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): 0] */
+  pvVar1 = ___kmp_allocate_align(size,*____kmp_align_alloc);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<unsigned_long,_unsigned_long>
+// Entry: 00002128
+// Signature: void __cdecl __kmp_type_convert<unsigned_long,_unsigned_long>(unsigned long src, unsigned long * dest)
+// ========================================
+
+
+/* DWARF original name: __kmp_type_convert<unsigned long, unsigned long> */
+
+void __kmp_type_convert<unsigned_long,_unsigned_long>(unsigned_long src,unsigned_long *dest)
+
+{
+  unsigned_long uVar1;
+  
+  uVar1 = kmp_convert<unsigned_long,_unsigned_long,_false,_true,_false,_false>::to(src);
+  *dest = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_destroy_allocator
+// Entry: 00002158
+// Signature: void __cdecl __kmpc_destroy_allocator(int gtid, omp_allocator_handle_t allocator)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_destroy_allocator(int gtid,omp_allocator_handle_t allocator)
+
+{
+  if ((omp_allocator_handle_t)*__kmp_max_mem_alloc < allocator) {
+    ___kmp_free(allocator);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_set_default_allocator
+// Entry: 000021a4
+// Signature: void __cdecl __kmpc_set_default_allocator(int gtid, omp_allocator_handle_t allocator)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmpc_set_default_allocator(int gtid,omp_allocator_handle_t allocator)
+
+{
+  undefined8 local_10;
+  
+  local_10 = allocator;
+  if (allocator == (omp_allocator_handle_t)*__omp_null_allocator) {
+    local_10 = (omp_allocator_handle_t)*__omp_default_mem_alloc;
+  }
+  *(omp_allocator_handle_t *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x90) = local_10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_get_default_allocator
+// Entry: 00002208
+// Signature: omp_allocator_handle_t __cdecl __kmpc_get_default_allocator(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+omp_allocator_handle_t __kmpc_get_default_allocator(int gtid)
+
+{
+  return *(omp_allocator_handle_t *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x90);
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_alloc
+// Entry: 00002230
+// Signature: void * __cdecl __kmpc_alloc(int gtid, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * __kmpc_alloc(int gtid,size_t size,omp_allocator_handle_t allocator)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): 0] */
+  pvVar1 = __kmp_alloc(gtid,0,size,allocator);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_alloc
+// Entry: 00002270
+// Signature: void * __cdecl __kmp_alloc(int gtid, size_t algn, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * __kmp_alloc(int gtid,size_t algn,size_t size,omp_allocator_handle_t allocator)
+
+{
+  long *plVar1;
+  int iVar2;
+  char cVar3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  bool bVar6;
+  kmp_info_t *pkVar7;
+  long lVar8;
+  long local_2e0;
+  long local_2c0;
+  long local_270;
+  long local_250;
+  undefined1 auStack_1f8 [24];
+  undefined8 local_1e0;
+  undefined8 uStack_1d8;
+  undefined8 local_1d0;
+  undefined1 auStack_1c8 [24];
+  undefined8 local_1b0;
+  undefined8 uStack_1a8;
+  undefined8 local_1a0;
+  undefined1 auStack_198 [24];
+  undefined8 local_180;
+  undefined8 uStack_178;
+  undefined8 local_170;
+  undefined1 auStack_168 [24];
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  undefined1 auStack_138 [24];
+  undefined8 local_120;
+  undefined8 uStack_118;
+  undefined8 local_110;
+  undefined1 auStack_108 [24];
+  undefined8 local_f0;
+  undefined8 uStack_e8;
+  undefined8 local_e0;
+  undefined1 auStack_d8 [28];
+  int local_bc;
+  long local_b8;
+  uint local_b0;
+  byte local_a9;
+  ulong local_a8;
+  void *local_a0;
+  void *local_98;
+  void *local_90;
+  void *local_88;
+  size_t local_80;
+  size_t local_78;
+  void *local_70;
+  long *local_68;
+  int local_60;
+  int local_5c;
+  long *local_58;
+  void *local_50;
+  long *local_48;
+  size_t local_40;
+  size_t local_38;
+  int local_2c;
+  void *local_28;
+  
+  puVar5 = __omp_default_mem_alloc;
+                    /* Unresolved local var: void * ptr@[???]
+                       Unresolved local var: kmp_allocator_t * al@[???]
+                       Unresolved local var: kmp_int32 default_device@[???]
+                       Unresolved local var: int sz_desc@[???]
+                       Unresolved local var: kmp_mem_desc_t desc@[???]
+                       Unresolved local var: kmp_uintptr_t addr@[???]
+                       Unresolved local var: kmp_uintptr_t addr_align@[???]
+                       Unresolved local var: kmp_uintptr_t addr_descr@[???]
+                       Unresolved local var: size_t align@[???]
+                       Unresolved local var: bool is_pinned@[???]
+                       Unresolved local var: int use_default_allocator@[???] */
+  puVar4 = ____kmp_msg_null;
+                    /* Unresolved local var: kmp_uint64 used@[DW_OP_breg31(sp): +224] */
+  local_50 = (void *)0x0;
+  if (size == 0) {
+    return (void *)0x0;
+  }
+  local_48 = allocator;
+  if (allocator == (omp_allocator_handle_t)*__omp_null_allocator) {
+    local_48 = *(long **)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x90);
+  }
+  local_5c = *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x1b8) + 100);
+  local_58 = local_48;
+  local_60 = 0x28;
+  local_a8 = (ulong)alignment;
+  if (((long *)*__kmp_max_mem_alloc < local_48) && (local_a8 < (ulong)local_48[2])) {
+    local_a8 = local_48[2];
+  }
+  if (local_a8 < algn) {
+    local_a8 = algn;
+  }
+  local_80 = size + 0x28 + local_a8;
+  local_a9 = 0;
+  if ((long *)*__kmp_max_mem_alloc < local_48) {
+    local_a9 = *(byte *)(local_48 + 7) & 1;
+  }
+  local_b0 = (uint)(*____kmp_memkind_available == 0);
+  local_78 = size;
+  local_40 = size;
+  local_38 = algn;
+  local_2c = gtid;
+  if (*____kmp_memkind_available == 0) {
+    if (local_48 < (long *)*__kmp_max_mem_alloc) {
+      if (((local_48 == (long *)*__llvm_omp_target_host_mem_alloc) ||
+          (local_48 == (long *)*__llvm_omp_target_shared_mem_alloc)) ||
+         (local_48 == (long *)*__llvm_omp_target_device_mem_alloc)) {
+        if (__kmp_target_mem_available) {
+                    /* Unresolved local var: kmp_int32 device@[???] */
+          local_bc = *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x1b8) + 100)
+          ;
+          if (local_48 == (long *)*__llvm_omp_target_host_mem_alloc) {
+                    /* Unresolved local var: kmp_int32 device@[DW_OP_breg31(sp): +236] */
+            local_50 = (*kmp_target_alloc_host)(size,local_bc);
+          }
+          else if (local_48 == (long *)*__llvm_omp_target_shared_mem_alloc) {
+            local_50 = (*kmp_target_alloc_shared)(size,local_bc);
+          }
+          else {
+            local_50 = (*kmp_target_alloc_device)(size,local_bc);
+          }
+        }
+        return local_50;
+      }
+      if (local_48 == (long *)*__omp_high_bw_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_e8 = puVar4[1];
+        local_f0 = *puVar4;
+        local_e0 = puVar4[2];
+        ___kmp_msg(1,auStack_d8);
+      }
+      else if (local_48 == (long *)*__omp_large_cap_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_118 = puVar4[1];
+        local_120 = *puVar4;
+        local_110 = puVar4[2];
+        ___kmp_msg(1,auStack_108);
+      }
+      else if (local_48 == (long *)*__omp_const_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_148 = puVar4[1];
+        local_150 = *puVar4;
+        local_140 = puVar4[2];
+        ___kmp_msg(1,auStack_138);
+      }
+      else if (local_48 == (long *)*__omp_low_lat_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_178 = puVar4[1];
+        local_180 = *puVar4;
+        local_170 = puVar4[2];
+        ___kmp_msg(1,auStack_168);
+      }
+      else if (local_48 == (long *)*__omp_cgroup_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_1a8 = puVar4[1];
+        local_1b0 = *puVar4;
+        local_1a0 = puVar4[2];
+        ___kmp_msg(1,auStack_198);
+      }
+      else if (local_48 == (long *)*__omp_pteam_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        uStack_1d8 = puVar4[1];
+        local_1e0 = *puVar4;
+        local_1d0 = puVar4[2];
+        ___kmp_msg(1,auStack_1c8);
+      }
+      else if (local_48 == (long *)*__omp_thread_mem_alloc) {
+        ___kmp_msg_format(0x400be);
+        ___kmp_msg(1,auStack_1f8);
+      }
+      else {
+        local_b0 = 1;
+      }
+      if (local_b0 != 0) {
+        pkVar7 = __kmp_thread_from_gtid(local_2c);
+        local_50 = ___kmp_thread_malloc(pkVar7,local_80);
+        local_b0 = 0;
+      }
+    }
+    else {
+      if (((*local_48 == *__llvm_omp_target_host_mem_space) ||
+          (*local_48 == *__llvm_omp_target_shared_mem_space)) ||
+         (*local_48 == *__llvm_omp_target_device_mem_space)) {
+        if (__kmp_target_mem_available) {
+          iVar2 = *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x1b8) + 100);
+          if (*local_48 == *__llvm_omp_target_host_mem_space) {
+            local_50 = (*kmp_target_alloc_host)(size,iVar2);
+          }
+          else if (*local_48 == *__llvm_omp_target_shared_mem_space) {
+            local_50 = (*kmp_target_alloc_shared)(size,iVar2);
+          }
+          else {
+            local_50 = (*kmp_target_alloc_device)(size,iVar2);
+          }
+        }
+        return local_50;
+      }
+      if (local_48[5] == 0) {
+        pkVar7 = __kmp_thread_from_gtid(gtid);
+        local_50 = ___kmp_thread_malloc(pkVar7,local_80);
+        if ((local_50 == (void *)0x0) && ((int)local_58[3] == 0xd)) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                              ,0x6c1);
+        }
+      }
+      else {
+        plVar1 = local_48 + 6;
+        local_2c0 = local_48[6];
+        do {
+          do {
+            lVar8 = *plVar1;
+            if (lVar8 != local_2c0) break;
+            cVar3 = '\x01';
+            bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar6) {
+              *plVar1 = local_2c0 + local_80;
+              cVar3 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar3 != '\0');
+          bVar6 = lVar8 != local_2c0;
+          local_2c0 = lVar8;
+        } while (bVar6);
+        if ((ulong)local_48[5] < lVar8 + local_80) {
+          plVar1 = local_48 + 6;
+          local_2e0 = local_48[6];
+          do {
+            do {
+              lVar8 = *plVar1;
+              if (lVar8 != local_2e0) break;
+              cVar3 = '\x01';
+              bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+              if (bVar6) {
+                *plVar1 = local_2e0 - local_80;
+                cVar3 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar3 != '\0');
+            bVar6 = lVar8 != local_2e0;
+            local_2e0 = lVar8;
+          } while (bVar6);
+          if ((int)local_48[3] == 0xb) {
+            local_58 = (long *)*puVar5;
+            pkVar7 = __kmp_thread_from_gtid(gtid);
+            local_50 = ___kmp_thread_malloc(pkVar7,local_80);
+          }
+          else if ((int)local_48[3] == 0xd) {
+            ___kmp_debug_assert("assertion failure",
+                                "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                                ,0x6ad);
+          }
+          else if ((int)local_48[3] == 0xe) {
+            if (local_48 == (long *)local_48[4]) {
+              ___kmp_debug_assert("assertion failure",
+                                  "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                                  ,0x6af);
+            }
+            local_58 = (long *)local_58[4];
+            local_50 = __kmp_alloc(local_2c,local_38,local_40,local_58);
+            if (((local_a9 & 1) != 0) && (kmp_target_lock_mem != __kmp_initialize_bget)) {
+              (*kmp_target_lock_mem)(local_50,local_40,local_5c);
+            }
+            return local_50;
+          }
+        }
+        else {
+          pkVar7 = __kmp_thread_from_gtid(gtid);
+          local_50 = ___kmp_thread_malloc(pkVar7,local_80);
+          if ((local_50 == (void *)0x0) && ((int)local_58[3] == 0xd)) {
+            ___kmp_debug_assert("assertion failure",
+                                "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                                ,0x6ba);
+          }
+        }
+      }
+    }
+  }
+  else if (local_48 < (long *)*__kmp_max_mem_alloc) {
+    if ((local_48 == (long *)*__omp_high_bw_mem_alloc) && (mk_hbw_preferred != (void **)0x0)) {
+      local_50 = (*kmp_mk_alloc)(*mk_hbw_preferred,local_80);
+    }
+    else if ((local_48 == (long *)*__omp_large_cap_mem_alloc) && (mk_dax_kmem_all != (void **)0x0))
+    {
+      local_50 = (*kmp_mk_alloc)(*mk_dax_kmem_all,local_80);
+    }
+    else {
+      local_50 = (*kmp_mk_alloc)(*mk_default,local_80);
+    }
+  }
+  else if (local_48[5] == 0) {
+    local_50 = (*kmp_mk_alloc)(*(void **)local_48[1],local_80);
+    if (local_50 == (void *)0x0) {
+      if ((int)local_58[3] == 0xb) {
+        local_58 = (long *)*puVar5;
+        local_50 = (*kmp_mk_alloc)(*mk_default,local_80);
+      }
+      else if ((int)local_58[3] == 0xd) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                            0x664);
+      }
+      else if ((int)local_58[3] == 0xe) {
+        if (local_58 == (long *)local_58[4]) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                              ,0x666);
+        }
+        local_58 = (long *)local_58[4];
+        local_50 = __kmp_alloc(local_2c,local_38,local_40,local_58);
+        if (((local_a9 & 1) != 0) && (kmp_target_lock_mem != __kmp_initialize_bget)) {
+          (*kmp_target_lock_mem)(local_50,local_40,local_5c);
+        }
+        return local_50;
+      }
+    }
+  }
+  else {
+                    /* Unresolved local var: kmp_uint64 used@[???] */
+    plVar1 = local_48 + 6;
+    local_250 = local_48[6];
+    do {
+      do {
+        local_b8 = *plVar1;
+        if (local_b8 != local_250) break;
+        cVar3 = '\x01';
+        bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+        if (bVar6) {
+          *plVar1 = local_250 + local_80;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      bVar6 = local_b8 != local_250;
+      local_250 = local_b8;
+    } while (bVar6);
+    if ((ulong)local_48[5] < local_b8 + local_80) {
+      plVar1 = local_48 + 6;
+      local_270 = local_48[6];
+      do {
+        do {
+          lVar8 = *plVar1;
+          if (lVar8 != local_270) break;
+          cVar3 = '\x01';
+          bVar6 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+          if (bVar6) {
+            *plVar1 = local_270 - local_80;
+            cVar3 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar3 != '\0');
+        bVar6 = lVar8 != local_270;
+        local_270 = lVar8;
+      } while (bVar6);
+      if ((int)local_48[3] == 0xb) {
+        local_58 = (long *)*puVar5;
+        local_50 = (*kmp_mk_alloc)(*mk_default,local_80);
+      }
+      else if ((int)local_48[3] == 0xd) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                            0x640);
+      }
+      else if ((int)local_48[3] == 0xe) {
+        if (local_48 == (long *)local_48[4]) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                              ,0x642);
+        }
+        local_58 = (long *)local_58[4];
+        local_50 = __kmp_alloc(local_2c,local_38,local_40,local_58);
+        if (((local_a9 & 1) != 0) && (kmp_target_lock_mem != __kmp_initialize_bget)) {
+          (*kmp_target_lock_mem)(local_50,local_40,local_5c);
+        }
+        return local_50;
+      }
+    }
+    else {
+      local_50 = (*kmp_mk_alloc)(*(void **)local_48[1],local_80);
+      if (local_50 == (void *)0x0) {
+        if ((int)local_58[3] == 0xb) {
+          local_58 = (long *)*puVar5;
+          local_50 = (*kmp_mk_alloc)(*mk_default,local_80);
+        }
+        else if ((int)local_58[3] == 0xd) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                              ,0x651);
+        }
+        else if ((int)local_58[3] == 0xe) {
+          if (local_58 == (long *)local_58[4]) {
+            ___kmp_debug_assert("assertion failure",
+                                "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp"
+                                ,0x653);
+          }
+          local_58 = (long *)local_58[4];
+          local_50 = __kmp_alloc(local_2c,local_38,local_40,local_58);
+          if (((local_a9 & 1) != 0) && (kmp_target_lock_mem != __kmp_initialize_bget)) {
+            (*kmp_target_lock_mem)(local_50,local_40,local_5c);
+          }
+          return local_50;
+        }
+      }
+    }
+  }
+  if (local_50 == (void *)0x0) {
+    local_28 = (void *)0x0;
+  }
+  else {
+    if (((local_a9 & 1) != 0) && (kmp_target_lock_mem != __kmp_initialize_bget)) {
+      (*kmp_target_lock_mem)(local_50,local_80,local_5c);
+    }
+    local_90 = local_50;
+    local_98 = (void *)((long)local_50 + local_a8 + (long)local_60 + -1 &
+                       (local_a8 - 1 ^ 0xffffffffffffffff));
+    local_a0 = (void *)((long)local_98 - (long)local_60);
+    local_88 = local_50;
+    local_68 = local_58;
+    local_70 = local_98;
+    _memcpy(local_a0,&local_88,0x28);
+    DataMemoryBarrier(2,3);
+    local_28 = local_70;
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_aligned_alloc
+// Entry: 000034a4
+// Signature: void * __cdecl __kmpc_aligned_alloc(int gtid, size_t algn, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * __kmpc_aligned_alloc(int gtid,size_t algn,size_t size,omp_allocator_handle_t allocator)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8] */
+  pvVar1 = __kmp_alloc(gtid,algn,size,allocator);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_calloc
+// Entry: 000034e8
+// Signature: void * __cdecl __kmpc_calloc(int gtid, size_t nmemb, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void * __kmpc_calloc(int gtid,size_t nmemb,size_t size,omp_allocator_handle_t allocator)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8] */
+  pvVar1 = __kmp_calloc(gtid,0,nmemb,size,allocator);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_calloc
+// Entry: 00003530
+// Signature: void * __cdecl __kmp_calloc(int gtid, size_t algn, size_t nmemb, size_t size, omp_allocator_handle_t allocator)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * __kmp_calloc(int gtid,size_t algn,size_t nmemb,size_t size,omp_allocator_handle_t allocator)
+
+{
+  ulong uVar1;
+  omp_allocator_handle_t local_40;
+  void *local_18;
+  
+                    /* Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: kmp_allocator_t * al@[DW_OP_breg31(sp): 0] */
+  local_40 = allocator;
+  if (allocator == (omp_allocator_handle_t)*__omp_null_allocator) {
+    local_40 = *(omp_allocator_handle_t *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x90);
+  }
+  if ((nmemb == 0) || (size == 0)) {
+    local_18 = (void *)0x0;
+  }
+  else {
+    uVar1 = 0;
+    if (size != 0) {
+      uVar1 = 0xffffffffffffffd7 / size;
+    }
+    if (uVar1 < nmemb) {
+      if (*(int *)((long)local_40 + 0x18) == 0xd) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",
+                            0x6e8);
+      }
+      local_18 = (void *)0x0;
+    }
+    else {
+      local_18 = __kmp_alloc(gtid,algn,nmemb * size,local_40);
+      if (local_18 != (void *)0x0) {
+        _bzero(local_18,nmemb * size);
+      }
+    }
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_realloc
+// Entry: 00003698
+// Signature: void * __cdecl __kmpc_realloc(int gtid, void * ptr, size_t size, omp_allocator_handle_t allocator, omp_allocator_handle_t free_allocator)
+// ========================================
+
+
+void * __kmpc_realloc(int gtid,void *ptr,size_t size,omp_allocator_handle_t allocator,
+                     omp_allocator_handle_t free_allocator)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: void * nptr@[DW_OP_breg31(sp): 0] */
+  pvVar1 = __kmp_realloc(gtid,ptr,size,allocator,free_allocator);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_realloc
+// Entry: 000036e4
+// Signature: void * __cdecl __kmp_realloc(int gtid, void * ptr, size_t size, omp_allocator_handle_t allocator, omp_allocator_handle_t free_allocator)
+// ========================================
+
+
+void * __kmp_realloc(int gtid,void *ptr,size_t size,omp_allocator_handle_t allocator,
+                    omp_allocator_handle_t free_allocator)
+
+{
+  size_t local_98;
+  undefined1 auStack_70 [16];
+  ulong local_60;
+  void *local_48;
+  omp_allocator_handle_t local_40;
+  omp_allocator_handle_t local_38;
+  size_t local_30;
+  void *local_28;
+  int local_1c;
+  void *local_18;
+  
+                    /* Unresolved local var: void * nptr@[???] */
+  local_48 = (void *)0x0;
+  local_40 = free_allocator;
+  local_38 = allocator;
+  local_30 = size;
+  local_28 = ptr;
+  local_1c = gtid;
+  if (size == 0) {
+    if (ptr != (void *)0x0) {
+      ___kmpc_free(gtid,ptr,free_allocator);
+    }
+    local_18 = local_48;
+  }
+  else {
+    local_48 = __kmp_alloc(gtid,0,size,allocator);
+    if ((local_48 != (void *)0x0) && (local_28 != (void *)0x0)) {
+                    /* Unresolved local var: kmp_mem_desc_t desc@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: kmp_uintptr_t addr_align@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: kmp_uintptr_t addr_descr@[DW_OP_breg31(sp): +32] */
+      _memcpy(auStack_70,(void *)((long)local_28 + -0x28),0x28);
+      if (local_30 < local_60) {
+        local_98 = local_30;
+      }
+      else {
+        local_98 = local_60;
+      }
+      _memcpy(local_48,local_28,local_98);
+    }
+    if (local_48 != (void *)0x0) {
+      ___kmpc_free(local_1c,local_28,local_40);
+    }
+    local_18 = local_48;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_free
+// Entry: 0000384c
+// Signature: void __cdecl __kmpc_free(int gtid, void * ptr, omp_allocator_handle_t allocator)
+// ========================================
+
+
+void __kmpc_free(int gtid,void *ptr,omp_allocator_handle_t allocator)
+
+{
+  ___kmpc_free(gtid,ptr,allocator);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_free
+// Entry: 00003880
+// Signature: void __cdecl ___kmpc_free(int gtid, void * ptr, omp_allocator_handle_t allocator)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ___kmpc_free(int gtid,void *ptr,omp_allocator_handle_t allocator)
+
+{
+  long *plVar1;
+  int iVar2;
+  char cVar3;
+  ulong *puVar4;
+  bool bVar5;
+  kmp_info_t *th;
+  long lVar6;
+  long local_b8;
+  long local_98;
+  void *local_60;
+  long local_58;
+  ulong local_40;
+  ulong local_38;
+  omp_allocator_handle_t local_30;
+  omp_allocator_handle_t local_28;
+  void *local_20;
+  int local_14;
+  
+                    /* Unresolved local var: kmp_allocator_t * al@[???]
+                       Unresolved local var: omp_allocator_handle_t oal@[???]
+                       Unresolved local var: kmp_mem_desc_t desc@[???]
+                       Unresolved local var: kmp_uintptr_t addr_align@[???]
+                       Unresolved local var: kmp_uintptr_t addr_descr@[DW_OP_breg31(sp): +96] */
+  puVar4 = __kmp_max_mem_alloc;
+  if (ptr != (void *)0x0) {
+    local_30 = allocator;
+    local_28 = allocator;
+    local_20 = ptr;
+    local_14 = gtid;
+    if ((__kmp_target_mem_available) &&
+       ((((allocator == (omp_allocator_handle_t)*__llvm_omp_target_host_mem_alloc ||
+          (allocator == (omp_allocator_handle_t)*__llvm_omp_target_shared_mem_alloc)) ||
+         (allocator == (omp_allocator_handle_t)*__llvm_omp_target_device_mem_alloc)) ||
+        (((omp_allocator_handle_t)*__kmp_max_mem_alloc < allocator &&
+         (((*(long *)allocator == *__llvm_omp_target_host_mem_space ||
+           (*(long *)allocator == *__llvm_omp_target_shared_mem_space)) ||
+          (*(long *)allocator == *__llvm_omp_target_device_mem_space)))))))) {
+                    /* Unresolved local var: kmp_int32 device@[DW_OP_breg31(sp): +88] */
+                    /* Unresolved local var: kmp_int32 device@[DW_OP_breg31(sp): +92] */
+      iVar2 = *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x1b8) + 100);
+      if (allocator == (omp_allocator_handle_t)*__llvm_omp_target_host_mem_alloc) {
+        (*kmp_target_free_host)(ptr,iVar2);
+      }
+      else if (allocator == (omp_allocator_handle_t)*__llvm_omp_target_shared_mem_alloc) {
+        (*kmp_target_free_shared)(ptr,iVar2);
+      }
+      else if (allocator == (omp_allocator_handle_t)*__llvm_omp_target_device_mem_alloc) {
+        (*kmp_target_free_device)(ptr,iVar2);
+      }
+    }
+    else {
+      _memcpy(&local_60,(void *)((long)ptr + -0x28),0x28);
+      local_30 = (omp_allocator_handle_t)local_40;
+      local_38 = local_40;
+      if ((((omp_allocator_handle_t)*puVar4 < local_28) &&
+          (kmp_target_unlock_mem != __kmp_initialize_bget)) &&
+         ((*(byte *)(local_40 + 0x38) & 1) != 0)) {
+        (*kmp_target_unlock_mem)
+                  (local_60,*(int *)(*(long *)(*(long *)(*____kmp_threads + (long)local_14 * 8) +
+                                              0x1b8) + 100));
+      }
+      if (*____kmp_memkind_available == 0) {
+        if ((*puVar4 < local_38) && (*(long *)((long)local_30 + 0x28) != 0)) {
+                    /* Unresolved local var: kmp_uint64 used@[DW_OP_breg31(sp): +72] */
+          plVar1 = (long *)((long)local_30 + 0x30);
+          local_b8 = *(long *)((long)local_30 + 0x30);
+          do {
+            do {
+              lVar6 = *plVar1;
+              if (lVar6 != local_b8) break;
+              cVar3 = '\x01';
+              bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+              if (bVar5) {
+                *plVar1 = local_b8 - local_58;
+                cVar3 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar3 != '\0');
+            bVar5 = lVar6 != local_b8;
+            local_b8 = lVar6;
+          } while (bVar5);
+        }
+        th = __kmp_thread_from_gtid(local_14);
+        ___kmp_thread_free(th,local_60);
+      }
+      else if (local_38 < *puVar4) {
+        if ((local_38 == *__omp_high_bw_mem_alloc) && (mk_hbw_preferred != (void **)0x0)) {
+          (*kmp_mk_free)(*mk_hbw_preferred,local_60);
+        }
+        else if ((local_38 == *__omp_large_cap_mem_alloc) && (mk_dax_kmem_all != (void **)0x0)) {
+          (*kmp_mk_free)(*mk_dax_kmem_all,local_60);
+        }
+        else {
+          (*kmp_mk_free)(*mk_default,local_60);
+        }
+      }
+      else {
+        if (*(long *)((long)local_30 + 0x28) != 0) {
+                    /* Unresolved local var: kmp_uint64 used@[DW_OP_breg31(sp): +80] */
+          plVar1 = (long *)((long)local_30 + 0x30);
+          local_98 = *(long *)((long)local_30 + 0x30);
+          do {
+            do {
+              lVar6 = *plVar1;
+              if (lVar6 != local_98) break;
+              cVar3 = '\x01';
+              bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+              if (bVar5) {
+                *plVar1 = local_98 - local_58;
+                cVar3 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar3 != '\0');
+            bVar5 = lVar6 != local_98;
+            local_98 = lVar6;
+          } while (bVar5);
+        }
+        (*kmp_mk_free)((void *)**(undefined8 **)((long)local_30 + 8),local_60);
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_allocate_align
+// Entry: 00003dd8
+// Signature: void * __cdecl ___kmp_allocate_align(size_t size, size_t alignment)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * ___kmp_allocate_align(size_t size,size_t alignment)
+
+{
+  undefined1 auStack_70 [24];
+  undefined8 *local_58;
+  void *local_50;
+  void *local_48;
+  void *local_40;
+  size_t sStack_38;
+  void *local_30;
+  size_t sStack_28;
+  size_t local_20;
+  size_t local_18;
+  
+                    /* Unresolved local var: kmp_mem_descr_t descr@[???]
+                       Unresolved local var: kmp_uintptr_t addr_allocated@[???]
+                       Unresolved local var: kmp_uintptr_t addr_aligned@[???]
+                       Unresolved local var: kmp_uintptr_t addr_descr@[DW_OP_breg31(sp): +72] */
+  sStack_38 = size + 0x20 + alignment;
+  sStack_28 = size;
+  local_20 = alignment;
+  local_18 = size;
+  local_40 = _malloc(sStack_38);
+  if (local_40 == (void *)0x0) {
+    ___kmp_msg_format(0x40065);
+    ___kmp_fatal(auStack_70);
+  }
+  local_48 = local_40;
+  local_50 = (void *)((long)local_40 + local_20 + 0x20 & (local_20 - 1 ^ 0xffffffffffffffff));
+  local_58 = (undefined8 *)((long)local_50 + -0x20);
+  local_30 = local_50;
+  _bzero(local_50,sStack_28);
+  local_58[1] = sStack_38;
+  *local_58 = local_40;
+  local_58[3] = sStack_28;
+  local_58[2] = local_30;
+  DataMemoryBarrier(2,3);
+  return local_30;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_page_allocate
+// Entry: 00003ed8
+// Signature: void * __cdecl ___kmp_page_allocate(size_t size)
+// ========================================
+
+
+void * ___kmp_page_allocate(size_t size)
+
+{
+  void *pvVar1;
+  
+                    /* Unresolved local var: int page_size@[???]
+                       Unresolved local var: void * ptr@[DW_OP_breg31(sp): +8] */
+  pvVar1 = ___kmp_allocate_align(size,0x2000);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fast_allocate
+// Entry: 00003f10
+// Signature: void * __cdecl ___kmp_fast_allocate(kmp_info_t * this_thr, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void * ___kmp_fast_allocate(kmp_info_t *this_thr,size_t size)
+
+{
+  char cVar1;
+  bool bVar2;
+  ulong uVar3;
+  void *pvVar4;
+  undefined8 *puVar5;
+  undefined8 *puVar6;
+  void *pvVar7;
+  int local_3c;
+  ulong local_30;
+  undefined8 *local_28;
+  
+                    /* Unresolved local var: void * ptr@[???]
+                       Unresolved local var: size_t num_lines@[???]
+                       Unresolved local var: size_t idx@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: int index@[DW_OP_breg31(sp): +36]
+                       Unresolved local var: void * alloc_ptr@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: size_t alloc_size@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: kmp_mem_descr_t * descr@[DW_OP_breg31(sp): +8] */
+  local_30 = (size + 0x7f) / 0x80;
+  uVar3 = local_30 - 1;
+  if (uVar3 < 2) {
+    local_3c = 0;
+    local_30 = 2;
+  }
+  else if (uVar3 >> 2 == 0) {
+    local_3c = 1;
+    local_30 = 4;
+  }
+  else if (uVar3 >> 4 == 0) {
+    local_3c = 2;
+    local_30 = 0x10;
+  }
+  else {
+    if (uVar3 >> 6 != 0) goto LAB_0000412c;
+    local_3c = 3;
+    local_30 = 0x40;
+  }
+  puVar5 = *(undefined8 **)((long)this_thr + (long)local_3c * 0x18 + 0x448);
+  if (puVar5 != (undefined8 *)0x0) {
+    *(undefined8 *)((long)this_thr + (long)local_3c * 0x18 + 0x448) = *puVar5;
+    return puVar5;
+  }
+  local_28 = *(undefined8 **)((long)this_thr + (long)local_3c * 0x18 + 0x450);
+  if (local_28 != (undefined8 *)0x0) {
+    do {
+      puVar5 = (undefined8 *)((long)this_thr + (long)local_3c * 0x18 + 0x450);
+      do {
+        puVar6 = (undefined8 *)*puVar5;
+        if (puVar6 != local_28) break;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(puVar5,0x10);
+        if (bVar2) {
+          *puVar5 = 0;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      if (puVar6 == local_28) {
+        *(undefined8 *)((long)this_thr + (long)local_3c * 0x18 + 0x448) = *local_28;
+        return local_28;
+      }
+      local_28 = *(undefined8 **)((long)this_thr + (long)local_3c * 0x18 + 0x450);
+    } while( true );
+  }
+LAB_0000412c:
+  pvVar4 = bget(this_thr,local_30 * 0x80 + 0xa0);
+  pvVar7 = (void *)((long)pvVar4 + 0xa0U & 0xffffffffffffff80);
+  *(void **)((long)pvVar7 + -0x20) = pvVar4;
+  *(kmp_info_t **)((long)pvVar7 + -0x10) = this_thr;
+  *(ulong *)((long)pvVar7 + -8) = local_30 * 0x80;
+  return pvVar7;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fast_free
+// Entry: 000041ac
+// Signature: void __cdecl ___kmp_fast_free(kmp_info_t * this_thr, void * ptr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ___kmp_fast_free(kmp_info_t *this_thr,void *ptr)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  kmp_info_t *pkVar6;
+  long *local_80;
+  long *local_78;
+  long local_70;
+  int local_44;
+  
+                    /* Unresolved local var: kmp_mem_descr_t * descr@[???]
+                       Unresolved local var: kmp_info_t * alloc_thr@[???]
+                       Unresolved local var: size_t size@[???]
+                       Unresolved local var: size_t idx@[???]
+                       Unresolved local var: int index@[???] */
+  if (ptr == (void *)0x0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_alloc.cpp",0x878
+                       );
+  }
+  lVar4 = *(long *)((long)ptr + -8);
+  if (lVar4 == 0x100) {
+    local_44 = 0;
+  }
+  else if (lVar4 == 0x200) {
+    local_44 = 1;
+  }
+  else if (lVar4 == 0x800) {
+    local_44 = 2;
+  }
+  else {
+    if (lVar4 != 0x2000) {
+      __kmp_bget_dequeue(this_thr);
+      brel(this_thr,*(void **)((long)ptr + -0x20));
+      return;
+    }
+    local_44 = 3;
+  }
+  if (*(kmp_info_t **)((long)ptr + -0x10) == this_thr) {
+    *(undefined8 *)ptr = *(undefined8 *)((long)this_thr + (long)local_44 * 0x18 + 0x448);
+    *(void **)((long)this_thr + (long)local_44 * 0x18 + 0x448) = ptr;
+  }
+  else {
+                    /* Unresolved local var: void * head@[DW_OP_breg31(sp): +48] */
+    plVar5 = *(long **)((long)this_thr + (long)local_44 * 0x18 + 0x458);
+    if (plVar5 == (long *)0x0) {
+      *(void **)((long)this_thr + (long)local_44 * 0x18 + 0x458) = ptr;
+      *(undefined8 *)ptr = 0;
+      *(undefined8 *)((long)ptr + -0x18) = 1;
+    }
+    else {
+                    /* Unresolved local var: kmp_mem_descr_t * dsc@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: kmp_info_t * q_th@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: size_t q_sz@[DW_OP_breg31(sp): +24] */
+      pkVar6 = (kmp_info_t *)plVar5[-2];
+      lVar4 = plVar5[-3];
+      if ((pkVar6 != *(kmp_info_t **)((long)ptr + -0x10)) || (0x10 < lVar4 + 1U)) {
+        local_78 = plVar5;
+                    /* Unresolved local var: void * old_ptr@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: void * tail@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: void * next@[DW_OP_breg31(sp): 0] */
+        for (local_80 = (long *)*plVar5; local_80 != (long *)0x0; local_80 = (long *)*local_80) {
+          local_78 = local_80;
+        }
+        local_70 = *(long *)((long)pkVar6 + (long)local_44 * 0x18 + 0x450);
+        *local_78 = local_70;
+        do {
+          plVar1 = (long *)((long)pkVar6 + (long)local_44 * 0x18 + 0x450);
+          do {
+            lVar4 = *plVar1;
+            if (lVar4 != local_70) break;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = (long)plVar5;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar4 == local_70) {
+            *(void **)((long)this_thr + (long)local_44 * 0x18 + 0x458) = ptr;
+            *(undefined8 *)ptr = 0;
+            *(undefined8 *)((long)ptr + -0x18) = 1;
+            return;
+          }
+          local_70 = *(long *)((long)pkVar6 + (long)local_44 * 0x18 + 0x450);
+          *local_78 = local_70;
+        } while( true );
+      }
+      *(long **)ptr = plVar5;
+      *(ulong *)((long)ptr + -0x18) = lVar4 + 1U;
+      *(void **)((long)this_thr + (long)local_44 * 0x18 + 0x458) = ptr;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_initialize_fast_memory
+// Entry: 00004578
+// Signature: void __cdecl __kmp_initialize_fast_memory(kmp_info_t * this_thr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_initialize_fast_memory(kmp_info_t *this_thr)
+
+{
+  _memset(this_thr->th_pad + 0x448,0,0x60);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_free_fast_memory
+// Entry: 000045a8
+// Signature: void __cdecl __kmp_free_fast_memory(kmp_info_t * th)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_free_fast_memory(kmp_info_t *th)
+
+{
+  thr_data_t *ptVar1;
+  kmp_info_t *pkVar2;
+  kmp_info_t *local_38;
+  kmp_info_t *local_30;
+  int local_1c;
+  
+                    /* Unresolved local var: int bin@[???]
+                       Unresolved local var: thr_data_t * thr@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: void * * lst@[DW_OP_breg31(sp): +16] */
+  ptVar1 = get_thr_data(th);
+  local_30 = (kmp_info_t *)0x0;
+  __kmp_bget_dequeue(th);
+  for (local_1c = 0; local_1c < 0x14; local_1c = local_1c + 1) {
+                    /* Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +8] */
+    for (local_38 = (kmp_info_t *)ptVar1->freelist[local_1c].ql.flink;
+        local_38 != (kmp_info_t *)(ptVar1->freelist + local_1c);
+        local_38 = *(kmp_info_t **)(local_38->th_pad + 0x20)) {
+      if (((ulong)(local_38->th).th_info.ds.ds_stackbase & 1) != 0) {
+        (local_38->th).th_info.ds.ds_stackbase = local_30;
+        local_30 = local_38;
+      }
+    }
+  }
+  while (local_30 != (kmp_info_t *)0x0) {
+                    /* Unresolved local var: void * next@[DW_OP_breg31(sp): 0] */
+    pkVar2 = (local_30->th).th_info.ds.ds_stackbase;
+    (*ptVar1->relfcn)(local_30);
+    ptVar1->numprel = ptVar1->numprel + 1;
+    ptVar1->numpblk = ptVar1->numpblk + -1;
+    local_30 = pkVar2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_gtid_from_thread
+// Entry: 000046f4
+// Signature: int __cdecl __kmp_gtid_from_thread(kmp_info_t * thr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __kmp_gtid_from_thread(kmp_info_t *thr)
+
+{
+  return *(int *)(thr->th_pad + 0x24);
+}
+
+
+
+
+// ========================================
+// Function: bget_get_bin
+// Entry: 0000470c
+// Signature: int __cdecl bget_get_bin(bufsize size)
+// ========================================
+
+
+int bget_get_bin(bufsize size)
+
+{
+  int iVar1;
+  int local_10;
+  int local_c;
+  
+                    /* Unresolved local var: int lo@[???]
+                       Unresolved local var: int hi@[???] */
+  local_c = 0;
+  local_10 = 0x13;
+  iVar1 = local_c;
+  while (local_c = iVar1, 1 < local_10 - local_c) {
+                    /* Unresolved local var: int mid@[???] */
+    iVar1 = local_c + local_10 >> 1;
+    if (size < bget_bin_size[iVar1]) {
+      local_10 = iVar1 + -1;
+      iVar1 = local_c;
+    }
+  }
+  return local_c;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_bget_insert_into_freelist
+// Entry: 000047a4
+// Signature: void __cdecl __kmp_bget_insert_into_freelist(thr_data_t * thr, bfhead_t * b)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_bget_insert_into_freelist(thr_data_t *thr,bfhead_t *b)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int bin@[DW_OP_breg31(sp): +12] */
+  iVar1 = bget_get_bin((b->bh).bb.bsize);
+  (b->ql).flink = thr->freelist + iVar1;
+  (b->ql).blink = thr->freelist[iVar1].ql.blink;
+  thr->freelist[iVar1].ql.blink = b;
+  (((b->ql).blink)->ql).flink = b;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: bpool
+// Entry: 00004834
+// Signature: void __cdecl bpool(kmp_info_t * th, void * buf, bufsize len)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void bpool(kmp_info_t *th,void *buf,bufsize len)
+
+{
+  thr_data_t *thr;
+  ulong uVar1;
+  
+                    /* Unresolved local var: thr_data_t * thr@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: bfhead_t * b@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: bhead_t * bn@[DW_OP_breg31(sp): 0] */
+  thr = get_thr_data(th);
+  __kmp_bget_dequeue(th);
+  uVar1 = len & 0xfffffffffffffff8;
+  if (thr->pool_len == 0) {
+    thr->pool_len = uVar1;
+  }
+  else if (uVar1 != thr->pool_len) {
+    thr->pool_len = -1;
+  }
+  thr->numpget = thr->numpget + 1;
+  thr->numpblk = thr->numpblk + 1;
+  *(undefined8 *)((long)buf + 8) = 0;
+  *(ulong *)((long)buf + 0x10) = uVar1 - 0x20;
+  *(ulong *)buf = (ulong)th | 1;
+  __kmp_bget_insert_into_freelist(thr,buf);
+  *(ulong *)((long)buf + (uVar1 - 0x18)) = uVar1 - 0x20;
+  *(undefined8 *)((long)buf + (uVar1 - 0x10)) = 0x8000000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_bget_enqueue
+// Entry: 0000495c
+// Signature: void __cdecl __kmp_bget_enqueue(kmp_info_t * th, void * buf)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_bget_enqueue(kmp_info_t *th,void *buf)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long local_20;
+  
+                    /* Unresolved local var: bfhead_t * b@[???] */
+  *(undefined8 *)((long)buf + 8) = 0;
+                    /* Unresolved local var: void * old_value@[???] */
+  local_20 = *(long *)(th->th_pad + 0x100);
+  *(long *)buf = local_20;
+  do {
+    plVar1 = (long *)(th->th_pad + 0x100);
+    do {
+      lVar4 = *plVar1;
+      if (lVar4 != local_20) break;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = (long)buf;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == local_20) {
+      return;
+    }
+    local_20 = *(long *)(th->th_pad + 0x100);
+    *(long *)buf = local_20;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 000049f0
+// Signature: unsigned long __cdecl to(unsigned long src)
+// ========================================
+
+
+unsigned_long
+kmp_convert<unsigned_long,_unsigned_long,_false,_true,_false,_false>::to(unsigned_long src)
+
+{
+  return src;
+}
+
+
+
+
+// ========================================
+// Function: ___error
+// Entry: 00022000
+// Signature: int * ___error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int * ___error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00022200
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00022300
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id
+// Entry: 00022400
+// Signature: undefined ___kmp_get_global_thread_id(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 00022500
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 00022900
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00022a00
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_printf_no_lock
+// Entry: 00022c00
+// Signature: undefined ___kmp_printf_no_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_printf_no_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00022e00
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlsym
+// Entry: 00022f00
+// Signature: undefined _dlsym(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlsym(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00023000
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00023800
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00023900
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00023a00
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 75
+// Failed: 0
+// Skipped external functions: 0

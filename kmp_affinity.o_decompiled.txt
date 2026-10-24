@@ -1,0 +1,3960 @@
+Program: kmp_affinity.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: hierarchy_info
+// Entry: 00000000
+// Signature: void __thiscall hierarchy_info(hierarchy_info * this)
+// ========================================
+
+
+/* DWARF original prototype: void hierarchy_info(hierarchy_info * this) */
+
+void __thiscall hierarchy_info::hierarchy_info(hierarchy_info *this)
+
+{
+  hierarchy_info(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_cleanup_hierarchy
+// Entry: 0000002c
+// Signature: void __kmp_cleanup_hierarchy(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_cleanup_hierarchy(void)
+
+{
+  hierarchy_info::fini(&machine_hierarchy);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: fini
+// Entry: 00000048
+// Signature: void __thiscall fini(hierarchy_info * this)
+// ========================================
+
+
+/* DWARF original prototype: void fini(hierarchy_info * this) */
+
+void __thiscall hierarchy_info::fini(hierarchy_info *this)
+
+{
+  if ((this->uninitialized == '\0') && (this->numPerLevel != (kmp_uint32 *)0x0)) {
+    ____kmp_free(this->numPerLevel);
+    this->numPerLevel = (kmp_uint32 *)0x0;
+    this->uninitialized = '\x01';
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_get_hierarchy
+// Entry: 000000b8
+// Signature: void __cdecl __kmp_get_hierarchy(kmp_uint32 nproc, kmp_bstate_t * thr_bar)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __kmp_get_hierarchy(kmp_uint32 nproc,kmp_bstate_t *thr_bar)
+
+{
+                    /* Unresolved local var: kmp_uint32 depth@[DW_OP_breg31(sp): +12] */
+  if (machine_hierarchy.uninitialized != '\0') {
+    hierarchy_info::init(&machine_hierarchy,nproc);
+  }
+  if (machine_hierarchy.base_num_threads < nproc) {
+    hierarchy_info::resize(&machine_hierarchy,nproc);
+  }
+  thr_bar->depth = machine_hierarchy.depth;
+  __kmp_type_convert<unsigned_int,_unsigned_char>
+            (*machine_hierarchy.numPerLevel - 1,&thr_bar->base_leaf_kids);
+  thr_bar->skip_per_level = machine_hierarchy.skipPerLevel;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: init
+// Entry: 0000017c
+// Signature: void __thiscall init(hierarchy_info * this, int num_addrs)
+// ========================================
+
+
+/* DWARF original prototype: void init(hierarchy_info * this, int num_addrs) */
+
+void __thiscall hierarchy_info::init(hierarchy_info *this,int num_addrs)
+
+{
+  kmp_int8 *pkVar1;
+  char cVar2;
+  char cVar3;
+  bool bVar4;
+  int iVar5;
+  kmp_uint32 *pkVar6;
+  uint local_38;
+  uint local_34;
+  uint local_30;
+  uint local_2c;
+  kmp_uint32 local_28;
+  uint local_24;
+  
+                    /* Unresolved local var: kmp_int8 bool_result@[???]
+                       Unresolved local var: kmp_uint32 branch@[???] */
+  pkVar1 = &this->uninitialized;
+  do {
+    cVar2 = *pkVar1;
+    if (cVar2 != '\x01') break;
+    cVar3 = '\x01';
+    bVar4 = (bool)ExclusiveMonitorPass(pkVar1,0x10);
+    if (bVar4) {
+      *pkVar1 = '\x02';
+      cVar3 = ExclusiveMonitorsStatus();
+    }
+  } while (cVar3 != '\0');
+  if (cVar2 == '\x01') {
+    this->depth = 1;
+    this->resizing = '\0';
+    this->maxLevels = 7;
+    pkVar6 = (kmp_uint32 *)____kmp_allocate((ulong)(this->maxLevels << 1) << 2);
+    this->numPerLevel = pkVar6;
+    this->skipPerLevel = this->numPerLevel + this->maxLevels;
+                    /* Unresolved local var: kmp_uint32 i@[???] */
+    for (local_24 = 0; local_24 < this->maxLevels; local_24 = local_24 + 1) {
+      this->numPerLevel[local_24] = 1;
+      this->skipPerLevel[local_24] = 1;
+    }
+    if ((__kmp_topology == (kmp_topology_t *)0x0) ||
+       (iVar5 = kmp_topology_t::get_depth(__kmp_topology), iVar5 < 1)) {
+      *this->numPerLevel = 4;
+      this->numPerLevel[1] = (uint)num_addrs / 4;
+      if ((uint)num_addrs % 4 != 0) {
+        this->numPerLevel[1] = this->numPerLevel[1] + 1;
+      }
+    }
+    else {
+      deriveLevels(this);
+    }
+    this->base_num_threads = num_addrs;
+                    /* Unresolved local var: int i@[???] */
+    local_28 = this->maxLevels;
+    while (local_28 = local_28 - 1, -1 < (int)local_28) {
+      if ((this->numPerLevel[(int)local_28] != 1) || (1 < this->depth)) {
+        this->depth = this->depth + 1;
+      }
+    }
+    local_2c = 4;
+    if (*this->numPerLevel == 1) {
+      local_2c = (uint)num_addrs / 4;
+    }
+    if (local_2c < 4) {
+      local_2c = 4;
+    }
+                    /* Unresolved local var: kmp_uint32 d@[DW_OP_breg31(sp): +32] */
+    for (local_30 = 0; local_30 < this->depth - 1; local_30 = local_30 + 1) {
+      while( true ) {
+        bVar4 = true;
+        if ((this->numPerLevel[local_30] <= local_2c) && (bVar4 = false, local_30 == 0)) {
+          bVar4 = 4 < *this->numPerLevel;
+        }
+        if (!bVar4) break;
+        if ((this->numPerLevel[local_30] & 1) != 0) {
+          this->numPerLevel[local_30] = this->numPerLevel[local_30] + 1;
+        }
+        this->numPerLevel[local_30] = this->numPerLevel[local_30] >> 1;
+        if (this->numPerLevel[local_30 + 1] == 1) {
+          this->depth = this->depth + 1;
+        }
+        this->numPerLevel[local_30 + 1] = this->numPerLevel[local_30 + 1] << 1;
+      }
+      if ((*this->numPerLevel == 1) && (local_2c = local_2c >> 1, local_2c < 4)) {
+        local_2c = 4;
+      }
+    }
+                    /* Unresolved local var: kmp_uint32 i@[DW_OP_breg31(sp): +28] */
+    for (local_34 = 1; local_34 < this->depth; local_34 = local_34 + 1) {
+      this->skipPerLevel[local_34] =
+           this->numPerLevel[local_34 - 1] * this->skipPerLevel[local_34 - 1];
+    }
+                    /* Unresolved local var: kmp_uint32 i@[DW_OP_breg31(sp): +24] */
+    for (local_38 = this->depth; local_38 < this->maxLevels; local_38 = local_38 + 1) {
+      this->skipPerLevel[local_38] = this->skipPerLevel[local_38 - 1] * 2;
+    }
+    this->uninitialized = '\0';
+  }
+  else {
+    do {
+    } while (this->uninitialized != '\0');
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 000006e0
+// Signature: void __thiscall resize(hierarchy_info * this, kmp_uint32 nproc)
+// ========================================
+
+
+/* DWARF original prototype: void resize(hierarchy_info * this, kmp_uint32 nproc) */
+
+void __thiscall hierarchy_info::resize(hierarchy_info *this,kmp_uint32 nproc)
+
+{
+  kmp_int8 *pkVar1;
+  char cVar2;
+  char cVar3;
+  bool bVar4;
+  kmp_uint32 *pkVar5;
+  kmp_uint32 *pkVar6;
+  kmp_uint32 *pkVar7;
+  uint local_4c;
+  uint local_48;
+  uint local_44;
+  uint local_30;
+  int local_28;
+  uint local_24;
+  
+                    /* Unresolved local var: kmp_int8 bool_result@[???]
+                       Unresolved local var: kmp_uint32 old_sz@[???]
+                       Unresolved local var: kmp_uint32 incs@[???]
+                       Unresolved local var: kmp_uint32 old_maxLevels@[???] */
+  pkVar1 = &this->resizing;
+  do {
+    cVar2 = *pkVar1;
+    if (cVar2 != '\0') break;
+    cVar3 = '\x01';
+    bVar4 = (bool)ExclusiveMonitorPass(pkVar1,0x10);
+    if (bVar4) {
+      *pkVar1 = '\x01';
+      cVar3 = ExclusiveMonitorsStatus();
+    }
+  } while (cVar3 != '\0');
+  do {
+    if (cVar2 == '\0') {
+      if (this->base_num_threads < nproc) {
+        local_24 = this->skipPerLevel[this->depth - 1];
+        local_28 = 0;
+        local_4c = this->maxLevels;
+                    /* Unresolved local var: kmp_uint32 i@[???] */
+        for (local_30 = this->depth; local_30 < this->maxLevels && local_24 < nproc;
+            local_30 = local_30 + 1) {
+          this->skipPerLevel[local_30] = this->skipPerLevel[local_30 - 1] * 2;
+          this->numPerLevel[local_30 - 1] = this->numPerLevel[local_30 - 1] << 1;
+          local_24 = local_24 << 1;
+          this->depth = this->depth + 1;
+        }
+        if (local_24 < nproc) {
+          while (local_24 < nproc) {
+            local_24 = local_24 << 1;
+            local_28 = local_28 + 1;
+            this->depth = this->depth + 1;
+          }
+          this->maxLevels = this->maxLevels + local_28;
+          pkVar6 = this->numPerLevel;
+          pkVar7 = this->skipPerLevel;
+          this->skipPerLevel = (kmp_uint32 *)0x0;
+          this->numPerLevel = (kmp_uint32 *)0x0;
+          pkVar5 = (kmp_uint32 *)____kmp_allocate((ulong)(this->maxLevels << 1) << 2);
+          this->numPerLevel = pkVar5;
+          this->skipPerLevel = this->numPerLevel + this->maxLevels;
+                    /* Unresolved local var: kmp_uint32 i@[DW_OP_breg31(sp): +28] */
+          for (local_44 = 0; local_48 = local_4c, local_44 < local_4c; local_44 = local_44 + 1) {
+            this->numPerLevel[local_44] = pkVar6[local_44];
+            this->skipPerLevel[local_44] = pkVar7[local_44];
+          }
+          for (; local_48 < this->maxLevels; local_48 = local_48 + 1) {
+            this->numPerLevel[local_48] = 1;
+            this->skipPerLevel[local_48] = 1;
+          }
+          ____kmp_free(pkVar6);
+        }
+        for (; local_4c < this->maxLevels; local_4c = local_4c + 1) {
+          this->skipPerLevel[local_4c] = this->skipPerLevel[local_4c - 1] * 2;
+        }
+        this->base_num_threads = nproc;
+        this->resizing = '\0';
+      }
+      return;
+    }
+    if (nproc <= this->base_num_threads) {
+      return;
+    }
+    pkVar1 = &this->resizing;
+    do {
+      cVar2 = *pkVar1;
+      if (cVar2 != '\0') break;
+      cVar3 = '\x01';
+      bVar4 = (bool)ExclusiveMonitorPass(pkVar1,0x10);
+      if (bVar4) {
+        *pkVar1 = '\x01';
+        cVar3 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar3 != '\0');
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<unsigned_int,_unsigned_char>
+// Entry: 00000ab4
+// Signature: void __cdecl __kmp_type_convert<unsigned_int,_unsigned_char>(uint src, uchar * dest)
+// ========================================
+
+
+/* DWARF original name: __kmp_type_convert<unsigned int, unsigned char> */
+
+void __kmp_type_convert<unsigned_int,_unsigned_char>(uint src,uchar *dest)
+
+{
+  uchar uVar1;
+  
+  uVar1 = kmp_convert<unsigned_int,_unsigned_char,_false,_false,_false,_false>::to(src);
+  *dest = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_hw_get_catalog_string
+// Entry: 00000ae4
+// Signature: char * __cdecl __kmp_hw_get_catalog_string(kmp_hw_t type, bool plural)
+// ========================================
+
+
+char * __kmp_hw_get_catalog_string(kmp_hw_t type,bool plural)
+
+{
+  char *local_88;
+  char *local_80;
+  char *local_78;
+  char *local_70;
+  char *local_68;
+  char *local_60;
+  char *local_58;
+  char *local_50;
+  char *local_48;
+  char *local_40;
+  char *local_38;
+  char *local_30;
+  char *local_18;
+  
+  switch(type) {
+  case KMP_HW_SOCKET:
+    if (plural) {
+      local_30 = (char *)___kmp_i18n_catgets(&DAT_0002003c);
+    }
+    else {
+      local_30 = (char *)___kmp_i18n_catgets(&DAT_0002003b);
+    }
+    local_18 = local_30;
+    break;
+  case KMP_HW_PROC_GROUP:
+    if (plural) {
+      local_88 = (char *)___kmp_i18n_catgets(&DAT_0002004a);
+    }
+    else {
+      local_88 = (char *)___kmp_i18n_catgets(&DAT_00020049);
+    }
+    local_18 = local_88;
+    break;
+  case KMP_HW_NUMA:
+    if (plural) {
+      local_50 = (char *)___kmp_i18n_catgets(&DAT_00020048);
+    }
+    else {
+      local_50 = (char *)___kmp_i18n_catgets(&DAT_00020047);
+    }
+    local_18 = local_50;
+    break;
+  case KMP_HW_DIE:
+    if (plural) {
+      local_38 = (char *)___kmp_i18n_catgets(&DAT_0002003e);
+    }
+    else {
+      local_38 = (char *)___kmp_i18n_catgets(&DAT_0002003d);
+    }
+    local_18 = local_38;
+    break;
+  case KMP_HW_LLC:
+    if (plural) {
+      local_70 = (char *)___kmp_i18n_catgets(&DAT_0002004f);
+    }
+    else {
+      local_70 = (char *)___kmp_i18n_catgets(&DAT_0002004e);
+    }
+    local_18 = local_70;
+    break;
+  case KMP_HW_L3:
+    if (plural) {
+      local_58 = (char *)___kmp_i18n_catgets(&DAT_00020046);
+    }
+    else {
+      local_58 = (char *)___kmp_i18n_catgets(&DAT_00020045);
+    }
+    local_18 = local_58;
+    break;
+  case KMP_HW_TILE:
+    if (plural) {
+      local_48 = (char *)___kmp_i18n_catgets(&DAT_00020038);
+    }
+    else {
+      local_48 = (char *)___kmp_i18n_catgets(&DAT_00020037);
+    }
+    local_18 = local_48;
+    break;
+  case KMP_HW_MODULE:
+    if (plural) {
+      local_40 = (char *)___kmp_i18n_catgets(&DAT_00020040);
+    }
+    else {
+      local_40 = (char *)___kmp_i18n_catgets(&DAT_0002003f);
+    }
+    local_18 = local_40;
+    break;
+  case KMP_HW_L2:
+    if (plural) {
+      local_60 = (char *)___kmp_i18n_catgets(&DAT_00020044);
+    }
+    else {
+      local_60 = (char *)___kmp_i18n_catgets(&DAT_00020043);
+    }
+    local_18 = local_60;
+    break;
+  case KMP_HW_L1:
+    if (plural) {
+      local_68 = (char *)___kmp_i18n_catgets(&DAT_00020042);
+    }
+    else {
+      local_68 = (char *)___kmp_i18n_catgets(&DAT_00020041);
+    }
+    local_18 = local_68;
+    break;
+  case KMP_HW_CORE:
+    if (plural) {
+      local_78 = (char *)___kmp_i18n_catgets(&DAT_0002003a);
+    }
+    else {
+      local_78 = (char *)___kmp_i18n_catgets(&DAT_0002001c);
+    }
+    local_18 = local_78;
+    break;
+  case KMP_HW_THREAD:
+    if (plural) {
+      local_80 = (char *)___kmp_i18n_catgets(&DAT_00020039);
+    }
+    else {
+      local_80 = (char *)___kmp_i18n_catgets(&DAT_0002001d);
+    }
+    local_18 = local_80;
+    break;
+  default:
+    local_18 = (char *)___kmp_i18n_catgets(&DAT_0002004b);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_hw_get_keyword
+// Entry: 00000e88
+// Signature: char * __cdecl __kmp_hw_get_keyword(kmp_hw_t type, bool plural)
+// ========================================
+
+
+char * __kmp_hw_get_keyword(kmp_hw_t type,bool plural)
+
+{
+  char *local_8;
+  
+  switch(type) {
+  case KMP_HW_SOCKET:
+    local_8 = "sockets";
+    if (!plural) {
+      local_8 = "socket";
+    }
+    break;
+  case KMP_HW_PROC_GROUP:
+    local_8 = "proc_groups";
+    if (!plural) {
+      local_8 = "proc_group";
+    }
+    break;
+  case KMP_HW_NUMA:
+    local_8 = "numa_domains";
+    if (!plural) {
+      local_8 = "numa_domain";
+    }
+    break;
+  case KMP_HW_DIE:
+    local_8 = "dice";
+    if (!plural) {
+      local_8 = "die";
+    }
+    break;
+  case KMP_HW_LLC:
+    local_8 = "ll_caches";
+    if (!plural) {
+      local_8 = "ll_cache";
+    }
+    break;
+  case KMP_HW_L3:
+    local_8 = "l3_caches";
+    if (!plural) {
+      local_8 = "l3_cache";
+    }
+    break;
+  case KMP_HW_TILE:
+    local_8 = "tiles";
+    if (!plural) {
+      local_8 = "tile";
+    }
+    break;
+  case KMP_HW_MODULE:
+    local_8 = "modules";
+    if (!plural) {
+      local_8 = "module";
+    }
+    break;
+  case KMP_HW_L2:
+    local_8 = "l2_caches";
+    if (!plural) {
+      local_8 = "l2_cache";
+    }
+    break;
+  case KMP_HW_L1:
+    local_8 = "l1_caches";
+    if (!plural) {
+      local_8 = "l1_cache";
+    }
+    break;
+  case KMP_HW_CORE:
+    local_8 = "cores";
+    if (!plural) {
+      local_8 = "core";
+    }
+    break;
+  case KMP_HW_THREAD:
+    local_8 = "threads";
+    if (!plural) {
+      local_8 = "thread";
+    }
+    break;
+  default:
+    local_8 = "unknowns";
+    if (!plural) {
+      local_8 = "unknown";
+    }
+  }
+  return local_8;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_hw_get_core_type_string
+// Entry: 00001114
+// Signature: char * __cdecl __kmp_hw_get_core_type_string(kmp_hw_core_type_t type)
+// ========================================
+
+
+char * __kmp_hw_get_core_type_string(kmp_hw_core_type_t type)
+
+{
+  return "unknown";
+}
+
+
+
+
+// ========================================
+// Function: compare_ids
+// Entry: 0000115c
+// Signature: int __cdecl compare_ids(void * a, void * b)
+// ========================================
+
+
+int kmp_hw_thread_t::compare_ids(void *a,void *b)
+
+{
+  int iVar1;
+  int local_40;
+  int local_14;
+  
+                    /* Unresolved local var: kmp_hw_thread_t * ahwthread@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: kmp_hw_thread_t * bhwthread@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: int depth@[DW_OP_breg31(sp): +4] */
+  iVar1 = kmp_topology_t::get_depth(__kmp_topology);
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): 0] */
+  local_40 = 0;
+  while( true ) {
+    if (iVar1 <= local_40) {
+      if (*(int *)((long)a + 100) < *(int *)((long)b + 100)) {
+        local_14 = -1;
+      }
+      else if (*(int *)((long)b + 100) < *(int *)((long)a + 100)) {
+        local_14 = 1;
+      }
+      else {
+        local_14 = 0;
+      }
+      return local_14;
+    }
+    if (*(int *)((long)a + (long)local_40 * 4) < *(int *)((long)b + (long)local_40 * 4)) break;
+    if (*(int *)((long)b + (long)local_40 * 4) < *(int *)((long)a + (long)local_40 * 4)) {
+      return 1;
+    }
+    local_40 = local_40 + 1;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: get_depth
+// Entry: 000012a4
+// Signature: int __thiscall get_depth(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: int get_depth(kmp_topology_t * this) */
+
+int __thiscall kmp_topology_t::get_depth(kmp_topology_t *this)
+
+{
+  return this->depth;
+}
+
+
+
+
+// ========================================
+// Function: print
+// Entry: 000012bc
+// Signature: void __thiscall print(kmp_hw_thread_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void print(kmp_hw_thread_t * this) */
+
+void __thiscall kmp_hw_thread_t::print(kmp_hw_thread_t *this)
+
+{
+  bool bVar1;
+  int iVar2;
+  kmp_hw_core_type_t type;
+  int local_20;
+  
+                    /* Unresolved local var: int depth@[???] */
+  iVar2 = kmp_topology_t::get_depth(__kmp_topology);
+  _printf("%4d ");
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +16] */
+  for (local_20 = 0; local_20 < iVar2; local_20 = local_20 + 1) {
+    _printf("%4d ");
+  }
+  bVar1 = kmp_hw_attr_t::operator_bool(&this->attrs);
+  if (bVar1) {
+    bVar1 = kmp_hw_attr_t::is_core_type_valid(&this->attrs);
+    if (bVar1) {
+      type = kmp_hw_attr_t::get_core_type(&this->attrs);
+      __kmp_hw_get_core_type_string(type);
+      _printf(" (%s)");
+    }
+    bVar1 = kmp_hw_attr_t::is_core_eff_valid(&this->attrs);
+    if (bVar1) {
+      kmp_hw_attr_t::get_core_eff(&this->attrs);
+      _printf(" (eff=%d)");
+    }
+  }
+  _printf("\n");
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator_bool
+// Entry: 00001404
+// Signature: bool __thiscall operator_bool(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original name: operator bool
+   DWARF original prototype: bool operator_bool(kmp_hw_attr_t * this) */
+
+bool __thiscall kmp_hw_attr_t::operator_bool(kmp_hw_attr_t *this)
+
+{
+  return this->valid != 0;
+}
+
+
+
+
+// ========================================
+// Function: is_core_type_valid
+// Entry: 0000142c
+// Signature: bool __thiscall is_core_type_valid(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: bool is_core_type_valid(kmp_hw_attr_t * this) */
+
+bool __thiscall kmp_hw_attr_t::is_core_type_valid(kmp_hw_attr_t *this)
+
+{
+  return (*this).core_type != '\0';
+}
+
+
+
+
+// ========================================
+// Function: get_core_type
+// Entry: 00001458
+// Signature: kmp_hw_core_type_t __thiscall get_core_type(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: kmp_hw_core_type_t get_core_type(kmp_hw_attr_t * this) */
+
+kmp_hw_core_type_t __thiscall kmp_hw_attr_t::get_core_type(kmp_hw_attr_t *this)
+
+{
+  return (int)(*this).core_type;
+}
+
+
+
+
+// ========================================
+// Function: is_core_eff_valid
+// Entry: 00001478
+// Signature: bool __thiscall is_core_eff_valid(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: bool is_core_eff_valid(kmp_hw_attr_t * this) */
+
+bool __thiscall kmp_hw_attr_t::is_core_eff_valid(kmp_hw_attr_t *this)
+
+{
+  return ((int)*this << 0x10) >> 0x18 != -1;
+}
+
+
+
+
+// ========================================
+// Function: get_core_eff
+// Entry: 000014a4
+// Signature: int __thiscall get_core_eff(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: int get_core_eff(kmp_hw_attr_t * this) */
+
+int __thiscall kmp_hw_attr_t::get_core_eff(kmp_hw_attr_t *this)
+
+{
+  return ((int)*this << 0x10) >> 0x18;
+}
+
+
+
+
+// ========================================
+// Function: _insert_layer
+// Entry: 000014c4
+// Signature: void __thiscall _insert_layer(kmp_topology_t * this, kmp_hw_t type, int * ids)
+// ========================================
+
+
+/* DWARF original prototype: void _insert_layer(kmp_topology_t * this, kmp_hw_t type, int * ids) */
+
+void __thiscall kmp_topology_t::_insert_layer(kmp_topology_t *this,kmp_hw_t type,int *ids)
+
+{
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  bool bVar4;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_2c;
+  int local_24;
+  int local_20;
+  int local_1c;
+  
+                    /* Unresolved local var: int target_layer@[???]
+                       Unresolved local var: int previous_id@[???]
+                       Unresolved local var: int previous_new_id@[???] */
+  local_20 = -1;
+  local_24 = -1;
+  for (local_1c = 0; local_1c < this->depth; local_1c = local_1c + 1) {
+                    /* Unresolved local var: bool layers_equal@[???]
+                       Unresolved local var: bool strictly_above_target_layer@[???] */
+    bVar4 = true;
+    bVar3 = false;
+                    /* Unresolved local var: int i@[???] */
+    for (local_2c = 0; local_2c < this->num_hw_threads; local_2c = local_2c + 1) {
+                    /* Unresolved local var: int id@[???]
+                       Unresolved local var: int new_id@[???] */
+      iVar1 = this->hw_threads[local_2c].ids[local_1c];
+      iVar2 = ids[local_2c];
+      if ((iVar1 != local_20) && (iVar2 == local_24)) {
+        bVar3 = true;
+        bVar4 = false;
+        break;
+      }
+      if ((iVar1 == local_20) && (iVar2 != local_24)) {
+        bVar4 = false;
+        break;
+      }
+      local_24 = iVar2;
+      local_20 = iVar1;
+    }
+    if ((bVar3) || (bVar4)) break;
+  }
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: int j@[???] */
+  local_38 = this->depth;
+  local_3c = this->depth;
+  while (local_38 = local_38 + -1, local_1c <= local_38) {
+    this->types[local_3c] = this->types[local_38];
+    local_3c = local_3c + -1;
+  }
+  this->types[local_1c] = type;
+                    /* Unresolved local var: int k@[???] */
+  for (local_40 = 0; local_40 < this->num_hw_threads; local_40 = local_40 + 1) {
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: int j@[???] */
+    local_44 = this->depth;
+    local_48 = this->depth;
+    while (local_44 = local_44 + -1, local_1c <= local_44) {
+      this->hw_threads[local_40].ids[local_48] = this->hw_threads[local_40].ids[local_44];
+      local_48 = local_48 + -1;
+    }
+    this->hw_threads[local_40].ids[local_1c] = ids[local_40];
+  }
+  this->equivalent[type] = type;
+  this->depth = this->depth + 1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _remove_radix1_layers
+// Entry: 000017dc
+// Signature: void __thiscall _remove_radix1_layers(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void _remove_radix1_layers(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_remove_radix1_layers(kmp_topology_t *this)
+
+{
+  bool bVar1;
+  kmp_hw_t kVar2;
+  bool bVar3;
+  kmp_hw_thread_t *pkVar4;
+  int local_a0;
+  int local_9c;
+  int local_8c;
+  int local_88;
+  int local_84;
+  kmp_hw_t local_80;
+  kmp_hw_t local_7c;
+  int local_78;
+  int local_6c;
+  int local_68;
+  int local_58;
+  int local_54;
+  int local_48 [12];
+  long local_18;
+  
+                    /* Unresolved local var: int[12] preference@[???]
+                       Unresolved local var: int top_index1@[???]
+                       Unresolved local var: int top_index2@[???] */
+  local_18 = *____stack_chk_guard;
+  local_48[0] = 0x6e;
+  local_48[1] = 100;
+  local_48[10] = 0x5f;
+  local_48[0xb] = 0x5a;
+  local_48[2] = 0x55;
+  local_48[3] = 0x50;
+  local_48[6] = 0x4b;
+  local_48[7] = 0x49;
+  local_48[5] = 0x46;
+  local_48[8] = 0x41;
+  local_48[9] = 0x3c;
+  local_48[4] = 5;
+  local_54 = 0;
+  local_58 = 1;
+  do {
+    while( true ) {
+      bVar1 = false;
+      if (local_54 < this->depth + -1) {
+        bVar1 = local_58 < this->depth;
+      }
+      if (!bVar1) {
+        if (this->depth < 1) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                              ,0x16f);
+        }
+        if (*____stack_chk_guard == local_18) {
+          return;
+        }
+                    /* WARNING: Subroutine does not return */
+        ___stack_chk_fail();
+      }
+                    /* Unresolved local var: kmp_hw_t type1@[???]
+                       Unresolved local var: kmp_hw_t type2@[DW_OP_breg31(sp): +80]
+                       Unresolved local var: bool radix1@[DW_OP_breg31(sp): +79]
+                       Unresolved local var: bool all_same@[DW_OP_breg31(sp): +78]
+                       Unresolved local var: int id1@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: int id2@[DW_OP_breg31(sp): +68]
+                       Unresolved local var: int pref1@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: int pref2@[DW_OP_breg31(sp): +60] */
+      local_7c = this->types[local_54];
+      kVar2 = this->types[local_58];
+      if ((local_7c < KMP_HW_SOCKET) || (KMP_HW_THREAD < local_7c)) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                            ,0x133);
+      }
+      if ((kVar2 < KMP_HW_SOCKET) || (KMP_HW_THREAD < kVar2)) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                            ,0x134);
+      }
+      if ((((local_7c != KMP_HW_THREAD) && (local_7c != KMP_HW_CORE)) && (local_7c != KMP_HW_SOCKET)
+          ) || (((kVar2 != KMP_HW_THREAD && (kVar2 != KMP_HW_CORE)) && (kVar2 != KMP_HW_SOCKET))))
+      break;
+      local_54 = local_58;
+      local_58 = local_58 + 1;
+    }
+    bVar1 = true;
+    bVar3 = true;
+    local_68 = this->hw_threads->ids[local_54];
+    local_6c = this->hw_threads->ids[local_58];
+                    /* Unresolved local var: int hwidx@[DW_OP_breg31(sp): +56] */
+    for (local_78 = 1; local_78 < this->num_hw_threads; local_78 = local_78 + 1) {
+      if ((this->hw_threads[local_78].ids[local_54] == local_68) &&
+         (this->hw_threads[local_78].ids[local_58] != local_6c)) {
+        bVar1 = false;
+        break;
+      }
+      if (this->hw_threads[local_78].ids[local_58] != local_6c) {
+        bVar3 = false;
+      }
+      local_68 = this->hw_threads[local_78].ids[local_54];
+      local_6c = this->hw_threads[local_78].ids[local_58];
+    }
+    if (bVar1) {
+                    /* Unresolved local var: kmp_hw_t remove_type@[DW_OP_breg31(sp): +52]
+                       Unresolved local var: kmp_hw_t keep_type@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: int remove_layer@[DW_OP_breg31(sp): +44]
+                       Unresolved local var: int remove_layer_ids@[DW_OP_breg31(sp): +40] */
+      if (local_48[kVar2] < local_48[local_7c]) {
+        local_84 = local_58;
+        local_80 = local_7c;
+        local_7c = kVar2;
+      }
+      else {
+        local_84 = local_54;
+        local_80 = kVar2;
+      }
+      local_88 = local_84;
+      if (bVar3) {
+        local_88 = local_58;
+      }
+      set_equivalent_type(this,local_7c,local_80);
+                    /* Unresolved local var: int idx@[DW_OP_breg31(sp): +36] */
+      for (local_8c = 0; local_8c < this->num_hw_threads; local_8c = local_8c + 1) {
+                    /* Unresolved local var: kmp_hw_thread_t * hw_thread@[DW_OP_breg31(sp): +24] */
+        pkVar4 = this->hw_threads;
+                    /* Unresolved local var: int d@[DW_OP_breg31(sp): +20] */
+        for (local_9c = local_88; local_9c < this->depth + -1; local_9c = local_9c + 1) {
+          pkVar4[local_8c].ids[local_9c] = pkVar4[local_8c].ids[local_9c + 1];
+        }
+      }
+                    /* Unresolved local var: int idx@[DW_OP_breg31(sp): +16] */
+      for (local_a0 = local_84; local_a0 < this->depth + -1; local_a0 = local_a0 + 1) {
+        this->types[local_a0] = this->types[local_a0 + 1];
+      }
+      this->depth = this->depth + -1;
+    }
+    else {
+      local_54 = local_58;
+      local_58 = local_58 + 1;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: set_equivalent_type
+// Entry: 00001d9c
+// Signature: void __thiscall set_equivalent_type(kmp_topology_t * this, kmp_hw_t type1, kmp_hw_t type2)
+// ========================================
+
+
+/* DWARF original prototype: void set_equivalent_type(kmp_topology_t * this, kmp_hw_t type1,
+   kmp_hw_t type2) */
+
+void __thiscall
+kmp_topology_t::set_equivalent_type(kmp_topology_t *this,kmp_hw_t type1,kmp_hw_t type2)
+
+{
+  int local_18;
+  kmp_hw_t local_14;
+  
+                    /* Unresolved local var: kmp_hw_t real_type2@[???] */
+  local_14 = this->equivalent[type2];
+  if (local_14 == KMP_HW_UNKNOWN) {
+    local_14 = type2;
+  }
+  this->equivalent[type1] = local_14;
+                    /* Unresolved local var: kmp_hw_t type@[???] */
+  for (local_18 = 0; local_18 < 0xc; local_18 = local_18 + 1) {
+    if (this->equivalent[local_18] == type1) {
+      this->equivalent[local_18] = local_14;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _set_last_level_cache
+// Entry: 00001e6c
+// Signature: void __thiscall _set_last_level_cache(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void _set_last_level_cache(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_set_last_level_cache(kmp_topology_t *this)
+
+{
+  kmp_hw_t kVar1;
+  
+  kVar1 = get_equivalent_type(this,KMP_HW_L3);
+  if (kVar1 == KMP_HW_UNKNOWN) {
+    kVar1 = get_equivalent_type(this,KMP_HW_L2);
+    if (kVar1 == KMP_HW_UNKNOWN) {
+      kVar1 = get_equivalent_type(this,KMP_HW_L1);
+      if (kVar1 != KMP_HW_UNKNOWN) {
+        set_equivalent_type(this,KMP_HW_LLC,KMP_HW_L1);
+      }
+    }
+    else {
+      set_equivalent_type(this,KMP_HW_LLC,KMP_HW_L2);
+    }
+  }
+  else {
+    set_equivalent_type(this,KMP_HW_LLC,KMP_HW_L3);
+  }
+  kVar1 = get_equivalent_type(this,KMP_HW_LLC);
+  if (kVar1 == KMP_HW_UNKNOWN) {
+    kVar1 = get_equivalent_type(this,KMP_HW_SOCKET);
+    if (kVar1 == KMP_HW_UNKNOWN) {
+      kVar1 = get_equivalent_type(this,KMP_HW_CORE);
+      if (kVar1 != KMP_HW_UNKNOWN) {
+        set_equivalent_type(this,KMP_HW_LLC,KMP_HW_CORE);
+      }
+    }
+    else {
+      set_equivalent_type(this,KMP_HW_LLC,KMP_HW_SOCKET);
+    }
+  }
+  kVar1 = get_equivalent_type(this,KMP_HW_LLC);
+  if (kVar1 == KMP_HW_UNKNOWN) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x18b);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_equivalent_type
+// Entry: 00001fe0
+// Signature: kmp_hw_t __thiscall get_equivalent_type(kmp_topology_t * this, kmp_hw_t type)
+// ========================================
+
+
+/* DWARF original prototype: kmp_hw_t get_equivalent_type(kmp_topology_t * this, kmp_hw_t type) */
+
+kmp_hw_t __thiscall kmp_topology_t::get_equivalent_type(kmp_topology_t *this,kmp_hw_t type)
+
+{
+  return this->equivalent[type];
+}
+
+
+
+
+// ========================================
+// Function: _gather_enumeration_information
+// Entry: 00002004
+// Signature: void __thiscall _gather_enumeration_information(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void _gather_enumeration_information(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_gather_enumeration_information(kmp_topology_t *this)
+
+{
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  kmp_hw_core_type_t kVar4;
+  kmp_hw_thread_t *pkVar5;
+  int local_b8;
+  int local_b4;
+  int local_b0;
+  int local_a8;
+  int local_a4;
+  int local_9c;
+  int local_8c;
+  int local_84;
+  int aiStack_78 [12];
+  int aiStack_48 [12];
+  long local_18;
+  
+                    /* Unresolved local var: int[12] previous_id@[???]
+                       Unresolved local var: int[12] max@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: int core_level@[DW_OP_breg31(sp): +56] */
+  local_18 = *____stack_chk_guard;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +60] */
+  for (local_84 = 0; local_84 < this->depth; local_84 = local_84 + 1) {
+    aiStack_48[local_84] = -1;
+    aiStack_78[local_84] = 0;
+    this->count[local_84] = 0;
+    this->ratio[local_84] = 0;
+  }
+  iVar3 = get_level(this,KMP_HW_CORE);
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +52] */
+  local_8c = 0;
+  do {
+    if (this->num_hw_threads <= local_8c) {
+                    /* Unresolved local var: int layer@[DW_OP_breg31(sp): +8] */
+      for (local_b8 = 0; local_b8 < this->depth; local_b8 = local_b8 + 1) {
+        if (this->ratio[local_b8] < aiStack_78[local_b8]) {
+          this->ratio[local_b8] = aiStack_78[local_b8];
+        }
+      }
+      if (*____stack_chk_guard == local_18) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+                    /* Unresolved local var: kmp_hw_thread_t * hw_thread@[DW_OP_breg31(sp): +40] */
+    pkVar5 = this->hw_threads;
+                    /* Unresolved local var: int layer@[DW_OP_breg31(sp): +36] */
+    local_9c = 0;
+    while( true ) {
+      if (this->depth <= local_9c) goto LAB_000023f4;
+                    /* Unresolved local var: int id@[DW_OP_breg31(sp): +32] */
+      if (pkVar5[local_8c].ids[local_9c] != aiStack_48[local_9c]) break;
+      local_9c = local_9c + 1;
+    }
+                    /* Unresolved local var: int l@[DW_OP_breg31(sp): +28] */
+    for (local_a4 = local_9c; local_a4 < this->depth; local_a4 = local_a4 + 1) {
+      this->count[local_a4] = this->count[local_a4] + 1;
+    }
+    aiStack_78[local_9c] = aiStack_78[local_9c] + 1;
+    local_a8 = local_9c;
+                    /* Unresolved local var: int l@[DW_OP_breg31(sp): +24] */
+    while (local_a8 = local_a8 + 1, local_a8 < this->depth) {
+      if (this->ratio[local_a8] < aiStack_78[local_a8]) {
+        this->ratio[local_a8] = aiStack_78[local_a8];
+      }
+      aiStack_78[local_a8] = 1;
+    }
+    bVar2 = __kmp_is_hybrid_cpu();
+    if (((bVar2) && (-1 < iVar3)) && (local_9c <= iVar3)) {
+      bVar2 = kmp_hw_attr_t::is_core_eff_valid(&pkVar5[local_8c].attrs);
+      if ((bVar2) && (this->num_core_efficiencies <= ((int)pkVar5[local_8c].attrs << 0x10) >> 0x18))
+      {
+        this->num_core_efficiencies = (((int)pkVar5[local_8c].attrs << 0x10) >> 0x18) + 1;
+      }
+      bVar2 = kmp_hw_attr_t::is_core_type_valid(&pkVar5[local_8c].attrs);
+      if (bVar2) {
+                    /* Unresolved local var: bool found@[DW_OP_breg31(sp): +23] */
+        bVar2 = false;
+                    /* Unresolved local var: int j@[DW_OP_breg31(sp): +16] */
+        for (local_b0 = 0; local_b0 < this->num_core_types; local_b0 = local_b0 + 1) {
+          kVar4 = kmp_hw_attr_t::get_core_type(&pkVar5[local_8c].attrs);
+          if (kVar4 == this->core_types[local_b0]) {
+            bVar2 = true;
+            break;
+          }
+        }
+        if (!bVar2) {
+          if (0 < this->num_core_types) {
+            ___kmp_debug_assert("assertion failure",
+                                "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                                ,0x1bb);
+          }
+          kVar4 = kmp_hw_attr_t::get_core_type(&pkVar5[local_8c].attrs);
+          iVar1 = this->num_core_types;
+          this->num_core_types = iVar1 + 1;
+          this->core_types[iVar1] = kVar4;
+        }
+      }
+    }
+LAB_000023f4:
+                    /* Unresolved local var: int layer@[DW_OP_breg31(sp): +12] */
+    for (local_b4 = 0; local_b4 < this->depth; local_b4 = local_b4 + 1) {
+      aiStack_48[local_b4] = pkVar5[local_8c].ids[local_b4];
+    }
+    local_8c = local_8c + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: get_level
+// Entry: 0000250c
+// Signature: int __thiscall get_level(kmp_topology_t * this, kmp_hw_t type)
+// ========================================
+
+
+/* DWARF original prototype: int get_level(kmp_topology_t * this, kmp_hw_t type) */
+
+int __thiscall kmp_topology_t::get_level(kmp_topology_t *this,kmp_hw_t type)
+
+{
+  int local_1c;
+  
+                    /* Unresolved local var: int eq_type@[???] */
+  if (this->equivalent[type] != KMP_HW_UNKNOWN) {
+                    /* Unresolved local var: int i@[???] */
+    for (local_1c = 0; local_1c < this->depth; local_1c = local_1c + 1) {
+      if (this->types[local_1c] == this->equivalent[type]) {
+        return local_1c;
+      }
+    }
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_is_hybrid_cpu
+// Entry: 000025d0
+// Signature: bool __kmp_is_hybrid_cpu(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool __kmp_is_hybrid_cpu(void)
+
+{
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: _get_ncores_with_attr
+// Entry: 000025dc
+// Signature: int __thiscall _get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * attr, int above_level, bool find_all)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: int _get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * attr,
+   int above_level, bool find_all) */
+
+int __thiscall
+kmp_topology_t::_get_ncores_with_attr
+          (kmp_topology_t *this,kmp_hw_attr_t *attr,int above_level,bool find_all)
+
+{
+  bool bVar1;
+  int iVar2;
+  kmp_hw_thread_t *pkVar3;
+  int local_88;
+  int local_84;
+  int local_74;
+  int local_6c;
+  uint local_68;
+  uint local_64;
+  int local_5c;
+  int aiStack_48 [12];
+  long local_18;
+  
+                    /* Unresolved local var: int current@[DW_OP_breg31(sp): +60]
+                       Unresolved local var: int current_max@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: int[12] previous_id@[???]
+                       Unresolved local var: int core_level@[DW_OP_breg31(sp): +48] */
+  local_18 = *____stack_chk_guard;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +52] */
+  for (local_6c = 0; local_6c < this->depth; local_6c = local_6c + 1) {
+    aiStack_48[local_6c] = -1;
+  }
+  iVar2 = get_level(this,KMP_HW_CORE);
+  local_5c = above_level;
+  if (find_all) {
+    local_5c = -1;
+  }
+  if (iVar2 <= local_5c) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x1d7);
+  }
+  local_68 = 0;
+  local_64 = 0;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +44] */
+  local_74 = 0;
+  do {
+    if (this->num_hw_threads <= local_74) {
+      if ((int)local_68 < (int)local_64) {
+        local_68 = local_64;
+      }
+      if (*____stack_chk_guard == local_18) {
+        return local_68;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+                    /* Unresolved local var: kmp_hw_thread_t * hw_thread@[DW_OP_breg31(sp): +32] */
+    pkVar3 = this->hw_threads;
+    local_84 = local_5c;
+    if ((find_all) || (pkVar3[local_74].ids[local_5c] == aiStack_48[local_5c])) {
+      do {
+        local_84 = local_84 + 1;
+        if (iVar2 < local_84) goto LAB_0000280c;
+      } while (pkVar3[local_74].ids[local_84] == aiStack_48[local_84]);
+      bVar1 = kmp_hw_attr_t::contains(&pkVar3[local_74].attrs,attr);
+      if (bVar1) {
+        local_64 = local_64 + 1;
+      }
+    }
+    else {
+      if ((int)local_68 < (int)local_64) {
+        local_68 = local_64;
+      }
+      bVar1 = kmp_hw_attr_t::contains(&pkVar3[local_74].attrs,attr);
+      local_64 = (uint)bVar1;
+    }
+LAB_0000280c:
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +24] */
+    for (local_88 = 0; local_88 < this->depth; local_88 = local_88 + 1) {
+      aiStack_48[local_88] = pkVar3[local_74].ids[local_88];
+    }
+    local_74 = local_74 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: contains
+// Entry: 000028d0
+// Signature: bool __thiscall contains(kmp_hw_attr_t * this, kmp_hw_attr_t * other)
+// ========================================
+
+
+/* DWARF original prototype: bool contains(kmp_hw_attr_t * this, kmp_hw_attr_t * other) */
+
+bool __thiscall kmp_hw_attr_t::contains(kmp_hw_attr_t *this,kmp_hw_attr_t *other)
+
+{
+  bool bVar1;
+  kmp_hw_core_type_t kVar2;
+  kmp_hw_core_type_t kVar3;
+  int iVar4;
+  int iVar5;
+  bool local_11;
+  
+  if ((this->valid == 0) && (other->valid == 0)) {
+    return true;
+  }
+  if ((this->valid == 0) || (other->valid == 0)) {
+    return false;
+  }
+  bVar1 = is_core_type_valid(other);
+  if (bVar1) {
+    bVar1 = is_core_type_valid(this);
+    if (!bVar1) {
+      return false;
+    }
+    kVar2 = get_core_type(this);
+    kVar3 = get_core_type(other);
+    if (kVar2 != kVar3) {
+      return false;
+    }
+  }
+  bVar1 = is_core_eff_valid(other);
+  if (bVar1) {
+    bVar1 = is_core_eff_valid(this);
+    if (bVar1) {
+      iVar4 = get_core_eff(this);
+      iVar5 = get_core_eff(other);
+      if (iVar4 == iVar5) goto LAB_00002a34;
+    }
+    local_11 = false;
+  }
+  else {
+LAB_00002a34:
+    local_11 = true;
+  }
+  return local_11;
+}
+
+
+
+
+// ========================================
+// Function: _discover_uniformity
+// Entry: 00002a70
+// Signature: void __thiscall _discover_uniformity(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void _discover_uniformity(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_discover_uniformity(kmp_topology_t *this)
+
+{
+  int local_10;
+  int local_c;
+  
+                    /* Unresolved local var: int num@[???] */
+  local_c = 1;
+                    /* Unresolved local var: int level@[???] */
+  for (local_10 = 0; local_10 < this->depth; local_10 = local_10 + 1) {
+    local_c = local_c * this->ratio[local_10];
+  }
+  (this->flags).uniform = local_c == this->count[this->depth + -1];
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _set_sub_ids
+// Entry: 00002b1c
+// Signature: void __thiscall _set_sub_ids(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void _set_sub_ids(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_set_sub_ids(kmp_topology_t *this)
+
+{
+  kmp_hw_thread_t *pkVar1;
+  int local_a0;
+  int local_9c;
+  int local_98;
+  int local_94;
+  int local_88;
+  int local_84;
+  int aiStack_78 [12];
+  int aiStack_48 [12];
+  long local_18;
+  
+                    /* Unresolved local var: int[12] previous_id@[???]
+                       Unresolved local var: int[12] sub_id@[DW_OP_breg31(sp): +56] */
+  local_18 = *____stack_chk_guard;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +44] */
+  for (local_84 = 0; local_84 < this->depth; local_84 = local_84 + 1) {
+    aiStack_48[local_84] = -1;
+    aiStack_78[local_84] = -1;
+  }
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +40] */
+  local_88 = 0;
+  do {
+    if (this->num_hw_threads <= local_88) {
+      if (*____stack_chk_guard == local_18) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+                    /* Unresolved local var: kmp_hw_thread_t * hw_thread@[DW_OP_breg31(sp): +32] */
+    pkVar1 = this->hw_threads;
+                    /* Unresolved local var: int j@[DW_OP_breg31(sp): +28] */
+    local_94 = 0;
+    while( true ) {
+      if (this->depth <= local_94) goto LAB_00002ca4;
+      if (pkVar1[local_88].ids[local_94] != aiStack_48[local_94]) break;
+      local_94 = local_94 + 1;
+    }
+    aiStack_78[local_94] = aiStack_78[local_94] + 1;
+                    /* Unresolved local var: int k@[DW_OP_breg31(sp): +24] */
+    while (local_98 = local_94 + 1, local_98 < this->depth) {
+      aiStack_78[local_98] = 0;
+      local_94 = local_98;
+    }
+LAB_00002ca4:
+                    /* Unresolved local var: int j@[DW_OP_breg31(sp): +20] */
+    for (local_9c = 0; local_9c < this->depth; local_9c = local_9c + 1) {
+      aiStack_48[local_9c] = pkVar1[local_88].ids[local_9c];
+    }
+                    /* Unresolved local var: int j@[DW_OP_breg31(sp): +16] */
+    for (local_a0 = 0; local_a0 < this->depth; local_a0 = local_a0 + 1) {
+      pkVar1[local_88].sub_ids[local_a0] = aiStack_78[local_a0];
+    }
+    local_88 = local_88 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _set_globals
+// Entry: 00002d8c
+// Signature: void __thiscall _set_globals(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void _set_globals(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::_set_globals(kmp_topology_t *this)
+
+{
+  int level2;
+  int level2_00;
+  int level1;
+  
+                    /* Unresolved local var: int core_level@[???]
+                       Unresolved local var: int thread_level@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int package_level@[DW_OP_breg31(sp): +12] */
+  level2 = get_level(this,KMP_HW_SOCKET);
+  level2_00 = get_level(this,KMP_HW_CORE);
+  level1 = get_level(this,KMP_HW_THREAD);
+  if (level2_00 == -1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x224);
+  }
+  if (level1 == -1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x225);
+  }
+  __kmp_nThreadsPerCore = calculate_ratio(this,level1,level2_00);
+  if (level2 == -1) {
+    nCoresPerPkg = get_count(this,level2_00);
+    nPackages = 1;
+  }
+  else {
+    nCoresPerPkg = calculate_ratio(this,level2_00,level2);
+    nPackages = get_count(this,level2);
+  }
+  __kmp_ncores = get_count(this,level2_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: calculate_ratio
+// Entry: 00002edc
+// Signature: int __thiscall calculate_ratio(kmp_topology_t * this, int level1, int level2)
+// ========================================
+
+
+/* DWARF original prototype: int calculate_ratio(kmp_topology_t * this, int level1, int level2) */
+
+int __thiscall kmp_topology_t::calculate_ratio(kmp_topology_t *this,int level1,int level2)
+
+{
+  int local_18;
+  int local_14;
+  
+                    /* Unresolved local var: int r@[???] */
+  local_14 = 1;
+                    /* Unresolved local var: int level@[???] */
+  for (local_18 = level1; level2 < local_18; local_18 = local_18 + -1) {
+    local_14 = local_14 * this->ratio[local_18];
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: get_count
+// Entry: 00002f5c
+// Signature: int __thiscall get_count(kmp_topology_t * this, int level)
+// ========================================
+
+
+/* DWARF original prototype: int get_count(kmp_topology_t * this, int level) */
+
+int __thiscall kmp_topology_t::get_count(kmp_topology_t *this,int level)
+
+{
+  return this->count[level];
+}
+
+
+
+
+// ========================================
+// Function: allocate
+// Entry: 00002f80
+// Signature: kmp_topology_t * __cdecl allocate(int nproc, int ndepth, kmp_hw_t * types)
+// ========================================
+
+
+kmp_topology_t * kmp_topology_t::allocate(int nproc,int ndepth,kmp_hw_t *types)
+
+{
+  kmp_hw_core_type_t *pkVar1;
+  kmp_topology_t *pkVar2;
+  int local_4c;
+  int local_48;
+  int local_44;
+  
+                    /* Unresolved local var: kmp_topology_t * retval@[???]
+                       Unresolved local var: size_t size@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: char * bytes@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: int * arr@[DW_OP_breg31(sp): +16] */
+  pkVar2 = (kmp_topology_t *)____kmp_allocate((long)nproc * 0x6c + 0x100);
+  if (nproc < 1) {
+    pkVar2->hw_threads = (kmp_hw_thread_t *)0x0;
+  }
+  else {
+    pkVar2->hw_threads = (kmp_hw_thread_t *)(pkVar2 + 1);
+  }
+  pkVar2->num_hw_threads = nproc;
+  pkVar2->depth = ndepth;
+  pkVar1 = pkVar2[1].core_types + (long)nproc * 0x1b + -10;
+  pkVar2->types = (kmp_hw_t *)pkVar1;
+  pkVar2->ratio = (int *)(pkVar1 + 0xc);
+  pkVar2->count = (int *)(pkVar1 + 0x18);
+  pkVar2->num_core_efficiencies = 0;
+  pkVar2->num_core_types = 0;
+  pkVar2->compact = 0;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +12] */
+  for (local_44 = 0; local_44 < 1; local_44 = local_44 + 1) {
+    pkVar2->core_types[local_44] = KMP_HW_CORE_TYPE_UNKNOWN;
+  }
+                    /* Unresolved local var: kmp_hw_t type@[DW_OP_breg31(sp): +8] */
+  for (local_48 = 0; local_48 < 0xc; local_48 = local_48 + 1) {
+    pkVar2->equivalent[local_48] = KMP_HW_UNKNOWN;
+  }
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +4] */
+  for (local_4c = 0; local_4c < ndepth; local_4c = local_4c + 1) {
+    pkVar2->types[local_4c] = types[local_4c];
+    pkVar2->equivalent[types[local_4c]] = types[local_4c];
+  }
+  return pkVar2;
+}
+
+
+
+
+// ========================================
+// Function: deallocate
+// Entry: 0000317c
+// Signature: void __cdecl deallocate(kmp_topology_t * topology)
+// ========================================
+
+
+void kmp_topology_t::deallocate(kmp_topology_t *topology)
+
+{
+  if (topology != (kmp_topology_t *)0x0) {
+    ____kmp_free(topology);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: check_ids
+// Entry: 000031b8
+// Signature: bool __thiscall check_ids(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: bool check_ids(kmp_topology_t * this) */
+
+bool __thiscall kmp_topology_t::check_ids(kmp_topology_t *this)
+
+{
+  bool bVar1;
+  int local_30;
+  int local_14;
+  
+  if (this->num_hw_threads != 0) {
+                    /* Unresolved local var: int i@[???] */
+    for (local_14 = 1; local_14 < this->num_hw_threads; local_14 = local_14 + 1) {
+                    /* Unresolved local var: kmp_hw_thread_t * current_thread@[???]
+                       Unresolved local var: kmp_hw_thread_t * previous_thread@[???]
+                       Unresolved local var: bool unique@[???] */
+      bVar1 = false;
+                    /* Unresolved local var: int j@[???] */
+      for (local_30 = 0; local_30 < this->depth; local_30 = local_30 + 1) {
+        if (this->hw_threads[local_14 + -1].ids[local_30] !=
+            this->hw_threads[local_14].ids[local_30]) {
+          bVar1 = true;
+          break;
+        }
+      }
+      if (!bVar1) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: dump
+// Entry: 00003314
+// Signature: void __thiscall dump(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void dump(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::dump(kmp_topology_t *this)
+
+{
+  int local_44;
+  kmp_hw_t local_2c;
+  int local_28;
+  int local_24;
+  int local_20;
+  int local_1c;
+  
+  _printf("***********************\n");
+  _printf("*** __kmp_topology: ***\n");
+  _printf("***********************\n");
+  _printf("* depth: %d\n");
+  _printf("* types: ");
+                    /* Unresolved local var: int i@[???] */
+  for (local_1c = 0; local_1c < this->depth; local_1c = local_1c + 1) {
+    __kmp_hw_get_keyword(this->types[local_1c],false);
+    _printf("%15s ");
+  }
+  _printf("\n");
+  _printf("* ratio: ");
+                    /* Unresolved local var: int i@[???] */
+  for (local_20 = 0; local_20 < this->depth; local_20 = local_20 + 1) {
+                    /* Unresolved local var: int i@[???] */
+    _printf("%15d ");
+  }
+  _printf("\n");
+  _printf("* count: ");
+  for (local_24 = 0; local_24 < this->depth; local_24 = local_24 + 1) {
+    _printf("%15d ");
+  }
+  _printf("\n");
+  _printf("* num_core_eff: %d\n");
+  _printf("* num_core_types: %d\n");
+  _printf("* core_types: ");
+                    /* Unresolved local var: int i@[???] */
+  for (local_28 = 0; local_28 < this->num_core_types; local_28 = local_28 + 1) {
+    _printf("%3d ");
+  }
+  _printf("\n");
+  _printf("* equivalent map:\n");
+                    /* Unresolved local var: kmp_hw_t i@[???] */
+  for (local_2c = KMP_HW_SOCKET; local_2c < KMP_HW_LAST; local_2c = local_2c + KMP_HW_PROC_GROUP) {
+                    /* Unresolved local var: char * key@[???]
+                       Unresolved local var: char * value@[DW_OP_breg31(sp): +48] */
+    __kmp_hw_get_keyword(local_2c,false);
+    __kmp_hw_get_keyword(this->equivalent[local_2c],false);
+    _printf("%-15s -> %-15s\n");
+  }
+  is_uniform(this);
+  _printf("* uniform: %s\n");
+  _printf("* num_hw_threads: %d\n");
+  _printf("* hw_threads:\n");
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +44] */
+  for (local_44 = 0; local_44 < this->num_hw_threads; local_44 = local_44 + 1) {
+    kmp_hw_thread_t::print(this->hw_threads + local_44);
+  }
+  _printf("***********************\n");
+  return;
+}
+
+
+
+
+// ========================================
+// Function: is_uniform
+// Entry: 000036fc
+// Signature: bool __thiscall is_uniform(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: bool is_uniform(kmp_topology_t * this) */
+
+bool __thiscall kmp_topology_t::is_uniform(kmp_topology_t *this)
+
+{
+  return (bool)(this->flags).uniform;
+}
+
+
+
+
+// ========================================
+// Function: print
+// Entry: 00003728
+// Signature: void __thiscall print(kmp_topology_t * this, char * env_var)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void print(kmp_topology_t * this, char * env_var) */
+
+void __thiscall kmp_topology_t::print(kmp_topology_t *this,char *env_var)
+
+{
+  undefined8 *puVar1;
+  int level;
+  bool bVar2;
+  kmp_hw_core_type_t type;
+  long lVar3;
+  undefined1 auStack_4c8 [28];
+  kmp_hw_t local_4ac;
+  int local_4a8;
+  int local_4a4;
+  undefined8 local_4a0;
+  undefined8 uStack_498;
+  undefined8 local_490;
+  undefined1 auStack_488 [24];
+  undefined8 local_470;
+  undefined8 uStack_468;
+  undefined8 local_460;
+  undefined1 auStack_450 [24];
+  int local_438;
+  int local_434;
+  undefined8 local_430;
+  undefined8 uStack_428;
+  undefined8 local_420;
+  undefined1 auStack_418 [24];
+  int local_400;
+  kmp_hw_attr_t kStack_3fc;
+  kmp_hw_core_type_t local_3f8;
+  int local_3f4;
+  undefined8 local_3f0;
+  undefined8 uStack_3e8;
+  undefined8 local_3e0;
+  undefined1 auStack_3d0 [31];
+  undefined1 local_3b1;
+  int local_3b0;
+  int local_3ac;
+  int local_3a8;
+  int local_3a4;
+  int local_3a0;
+  kmp_hw_t local_39c;
+  kmp_hw_t local_398;
+  int local_394;
+  undefined8 local_390;
+  undefined8 uStack_388;
+  undefined8 local_380;
+  undefined1 auStack_370 [24];
+  kmp_hw_t local_358;
+  kmp_hw_t local_354;
+  undefined8 local_350;
+  undefined8 uStack_348;
+  undefined8 local_340;
+  undefined1 auStack_338 [24];
+  undefined8 local_320;
+  undefined8 uStack_318;
+  undefined8 local_310;
+  undefined1 auStack_308 [24];
+  undefined8 local_2f0;
+  undefined8 uStack_2e8;
+  undefined8 local_2e0;
+  undefined1 auStack_2d8 [24];
+  undefined8 local_2c0;
+  undefined8 uStack_2b8;
+  undefined8 local_2b0;
+  undefined1 auStack_2a0 [28];
+  int local_284;
+  char *local_280;
+  undefined8 local_278;
+  kmp_hw_t akStack_270 [14];
+  undefined1 *local_238;
+  undefined4 local_230;
+  undefined4 local_22c;
+  undefined1 local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: kmp_str_buf_t buf@[???]
+                       Unresolved local var: int print_types_depth@[???]
+                       Unresolved local var: kmp_hw_t[14] print_types@[???]
+                       Unresolved local var: kmp_hw_t numerator_type@[DW_OP_breg31(sp): +536]
+                       Unresolved local var: kmp_hw_t denominator_type@[DW_OP_breg31(sp): +532]
+                       Unresolved local var: int core_level@[DW_OP_breg31(sp): +528]
+                       Unresolved local var: int ncores@[DW_OP_breg31(sp): +524] */
+  puVar1 = ____kmp_msg_null;
+  local_28 = *____stack_chk_guard;
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = 0;
+  local_280 = env_var;
+  local_278 = this;
+  if (this->num_hw_threads == 0) {
+    ___kmp_msg_format(0x4009d);
+    uStack_2e8 = puVar1[1];
+    local_2f0 = *puVar1;
+    local_2e0 = puVar1[2];
+    ___kmp_msg(0,auStack_2d8);
+  }
+  else {
+    ___kmp_msg_format(0x4009d);
+    uStack_2b8 = puVar1[1];
+    local_2c0 = *puVar1;
+    local_2b0 = puVar1[2];
+    ___kmp_msg(0,auStack_2a0);
+  }
+  bVar2 = is_uniform(this);
+  if (bVar2) {
+    ___kmp_msg_format(0x4009e);
+    uStack_318 = puVar1[1];
+    local_320 = *puVar1;
+    local_310 = puVar1[2];
+    ___kmp_msg(0,auStack_308);
+  }
+  else {
+    ___kmp_msg_format(0x4009f);
+    uStack_348 = puVar1[1];
+    local_350 = *puVar1;
+    local_340 = puVar1[2];
+    ___kmp_msg(0,auStack_338);
+  }
+                    /* Unresolved local var: kmp_hw_t type@[DW_OP_breg31(sp): +604] */
+  for (local_354 = KMP_HW_SOCKET; local_354 < KMP_HW_LAST; local_354 = local_354 + KMP_HW_PROC_GROUP
+      ) {
+                    /* Unresolved local var: kmp_hw_t eq_type@[DW_OP_breg31(sp): +600] */
+    local_358 = this->equivalent[local_354];
+    if ((local_358 != KMP_HW_UNKNOWN) && (local_358 != local_354)) {
+      __kmp_hw_get_catalog_string(local_354,false);
+      __kmp_hw_get_catalog_string(local_358,false);
+      ___kmp_msg_format(0x40121);
+      uStack_388 = puVar1[1];
+      local_390 = *puVar1;
+      local_380 = puVar1[2];
+      ___kmp_msg(0,auStack_370);
+    }
+  }
+  if ((this->depth < 1) || (0xc < this->depth)) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x2be);
+  }
+  local_284 = 0;
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +540] */
+  for (local_394 = 0; local_394 < this->depth; local_394 = local_394 + 1) {
+    lVar3 = (long)local_284;
+                    /* Unresolved local var: int plevel@[DW_OP_breg31(sp): +520]
+                       Unresolved local var: int level@[DW_OP_breg31(sp): +516]
+                       Unresolved local var: int c@[DW_OP_breg31(sp): +512]
+                       Unresolved local var: bool plural@[DW_OP_breg31(sp): +511] */
+    local_284 = local_284 + 1;
+    akStack_270[lVar3] = this->types[local_394];
+  }
+  if (this->equivalent[10] != KMP_HW_CORE) {
+    if (akStack_270[local_284 + -1] == KMP_HW_THREAD) {
+      akStack_270[local_284 + -1] = KMP_HW_CORE;
+      akStack_270[local_284] = KMP_HW_THREAD;
+    }
+    else {
+      akStack_270[local_284] = KMP_HW_CORE;
+    }
+    local_284 = local_284 + 1;
+  }
+  if (this->equivalent[0xb] != KMP_HW_THREAD) {
+    lVar3 = (long)local_284;
+    local_284 = local_284 + 1;
+    akStack_270[lVar3] = KMP_HW_THREAD;
+  }
+  ___kmp_str_buf_clear(&local_238);
+  local_39c = KMP_HW_UNKNOWN;
+  local_3a0 = get_level(this,KMP_HW_CORE);
+  local_3a4 = get_count(this,local_3a0);
+  local_3ac = 0;
+  for (local_3a8 = 0; local_3a8 < local_284; local_3a8 = local_3a8 + 1) {
+    local_398 = akStack_270[local_3a8];
+    if ((local_398 < KMP_HW_SOCKET) || (KMP_HW_THREAD < local_398)) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x2dd);
+    }
+    level = local_3ac;
+    if (this->equivalent[local_398] == local_398) {
+      local_3ac = local_3ac + 1;
+      local_3b0 = get_ratio(this,level);
+    }
+    else {
+      local_3b0 = 1;
+    }
+    local_3b1 = 1 < local_3b0;
+    if (local_3a8 == 0) {
+      __kmp_hw_get_catalog_string(local_398,(bool)local_3b1);
+      ___kmp_str_buf_print(&local_238,"%d %s");
+    }
+    else {
+      __kmp_hw_get_catalog_string(local_398,(bool)local_3b1);
+      __kmp_hw_get_catalog_string(local_39c,false);
+      ___kmp_str_buf_print(&local_238," x %d %s/%s");
+    }
+    local_39c = local_398;
+  }
+  ___kmp_msg_format(0x400bf);
+  uStack_3e8 = puVar1[1];
+  local_3f0 = *puVar1;
+  local_3e0 = puVar1[2];
+  ___kmp_msg(0,auStack_3d0);
+  bVar2 = __kmp_is_hybrid_cpu();
+  if (bVar2) {
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +444] */
+    for (local_3f4 = 0; local_3f4 < this->num_core_types; local_3f4 = local_3f4 + 1) {
+                    /* Unresolved local var: kmp_hw_core_type_t core_type@[DW_OP_breg31(sp): +440]
+                       Unresolved local var: kmp_hw_attr_t attr@[DW_OP_breg31(sp): +436]
+                       Unresolved local var: int ncores@[DW_OP_breg31(sp): +432] */
+      local_3f8 = this->core_types[local_3f4];
+      kmp_hw_attr_t::kmp_hw_attr_t(&kStack_3fc);
+      kmp_hw_attr_t::clear(&kStack_3fc);
+      kmp_hw_attr_t::set_core_type(&kStack_3fc,local_3f8);
+      local_400 = get_ncores_with_attr(this,&kStack_3fc);
+      if (0 < local_400) {
+        __kmp_hw_get_core_type_string(local_3f8);
+        ___kmp_msg_format(0x400c1);
+        uStack_428 = puVar1[1];
+        local_430 = *puVar1;
+        local_420 = puVar1[2];
+        ___kmp_msg(0,auStack_418);
+        if (8 < this->num_core_efficiencies) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                              ,0x2fa);
+        }
+                    /* Unresolved local var: int eff@[DW_OP_breg31(sp): +380] */
+        for (local_434 = 0; local_434 < this->num_core_efficiencies; local_434 = local_434 + 1) {
+                    /* Unresolved local var: int ncores_with_eff@[DW_OP_breg31(sp): +376] */
+          kmp_hw_attr_t::set_core_eff(&kStack_3fc,local_434);
+          local_438 = get_ncores_with_attr(this,&kStack_3fc);
+          if (0 < local_438) {
+            ___kmp_msg_format(0x400c2);
+            uStack_468 = puVar1[1];
+            local_470 = *puVar1;
+            local_460 = puVar1[2];
+            ___kmp_msg(0,auStack_450);
+          }
+        }
+      }
+    }
+  }
+  if (this->num_hw_threads < 1) {
+    ___kmp_str_buf_free(&local_238);
+  }
+  else {
+    ___kmp_msg_format(0x400da);
+    uStack_498 = puVar1[1];
+    local_4a0 = *puVar1;
+    local_490 = puVar1[2];
+    ___kmp_msg(0,auStack_488);
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +268] */
+    for (local_4a4 = 0; local_4a4 < this->num_hw_threads; local_4a4 = local_4a4 + 1) {
+      ___kmp_str_buf_clear(&local_238);
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +264] */
+      for (local_4a8 = 0; local_4a8 < this->depth; local_4a8 = local_4a8 + 1) {
+                    /* Unresolved local var: kmp_hw_t type@[DW_OP_breg31(sp): +260] */
+        local_4ac = this->types[local_4a8];
+        __kmp_hw_get_catalog_string(local_4ac,false);
+        ___kmp_str_buf_print(&local_238,"%s ");
+        ___kmp_str_buf_print(&local_238,"%d ");
+      }
+      bVar2 = __kmp_is_hybrid_cpu();
+      if (bVar2) {
+        type = kmp_hw_attr_t::get_core_type(&this->hw_threads[local_4a4].attrs);
+        __kmp_hw_get_core_type_string(type);
+        ___kmp_str_buf_print(&local_238,"(%s)");
+      }
+      ___kmp_msg_format(0x400ac);
+      ___kmp_msg(0,auStack_4c8);
+    }
+    ___kmp_str_buf_free(&local_238);
+  }
+  if (*____stack_chk_guard == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: get_ratio
+// Entry: 0000423c
+// Signature: int __thiscall get_ratio(kmp_topology_t * this, int level)
+// ========================================
+
+
+/* DWARF original prototype: int get_ratio(kmp_topology_t * this, int level) */
+
+int __thiscall kmp_topology_t::get_ratio(kmp_topology_t *this,int level)
+
+{
+  return this->ratio[level];
+}
+
+
+
+
+// ========================================
+// Function: kmp_hw_attr_t
+// Entry: 00004260
+// Signature: void __thiscall kmp_hw_attr_t(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_hw_attr_t(kmp_hw_attr_t * this) */
+
+void __thiscall kmp_hw_attr_t::kmp_hw_attr_t(kmp_hw_attr_t *this)
+
+{
+  kmp_hw_attr_t(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 0000428c
+// Signature: void __thiscall clear(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void clear(kmp_hw_attr_t * this) */
+
+void __thiscall kmp_hw_attr_t::clear(kmp_hw_attr_t *this)
+
+{
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffffff00);
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffff00ff | 0xff00);
+  this->valid = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_core_type
+// Entry: 000042d4
+// Signature: void __thiscall set_core_type(kmp_hw_attr_t * this, kmp_hw_core_type_t type)
+// ========================================
+
+
+/* DWARF original prototype: void set_core_type(kmp_hw_attr_t * this, kmp_hw_core_type_t type) */
+
+void __thiscall kmp_hw_attr_t::set_core_type(kmp_hw_attr_t *this,kmp_hw_core_type_t type)
+
+{
+  this->valid = 1;
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffffff00 | type & 0xff);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_ncores_with_attr
+// Entry: 00004310
+// Signature: int __thiscall get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * attr)
+// ========================================
+
+
+/* DWARF original prototype: int get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * attr)
+    */
+
+int __thiscall kmp_topology_t::get_ncores_with_attr(kmp_topology_t *this,kmp_hw_attr_t *attr)
+
+{
+  int iVar1;
+  
+  iVar1 = _get_ncores_with_attr(this,attr,-1,true);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: set_core_eff
+// Entry: 00004348
+// Signature: void __thiscall set_core_eff(kmp_hw_attr_t * this, int eff)
+// ========================================
+
+
+/* DWARF original prototype: void set_core_eff(kmp_hw_attr_t * this, int eff) */
+
+void __thiscall kmp_hw_attr_t::set_core_eff(kmp_hw_attr_t *this,int eff)
+
+{
+  this->valid = 1;
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffff00ff | (eff & 0xffU) << 8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: canonicalize
+// Entry: 00004384
+// Signature: void __thiscall canonicalize(kmp_topology_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void canonicalize(kmp_topology_t * this) */
+
+void __thiscall kmp_topology_t::canonicalize(kmp_topology_t *this)
+
+{
+  int local_1c;
+  
+  _remove_radix1_layers(this);
+  _gather_enumeration_information(this);
+  _discover_uniformity(this);
+  _set_sub_ids(this);
+  _set_globals(this);
+  _set_last_level_cache(this);
+  if (this->depth < 1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x365);
+  }
+                    /* Unresolved local var: int level@[???] */
+  for (local_1c = 0; local_1c < this->depth; local_1c = local_1c + 1) {
+    if ((this->count[local_1c] < 1) || (this->ratio[local_1c] < 1)) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x368);
+    }
+    if ((this->types[local_1c] < KMP_HW_SOCKET) || (KMP_HW_THREAD < this->types[local_1c])) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x369);
+    }
+    if (this->equivalent[this->types[local_1c]] != this->types[local_1c]) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x36b);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: canonicalize
+// Entry: 00004548
+// Signature: void __thiscall canonicalize(kmp_topology_t * this, int npackages, int ncores_per_pkg, int nthreads_per_core, int ncores)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void canonicalize(kmp_topology_t * this, int npackages, int
+   ncores_per_pkg, int nthreads_per_core, int ncores) */
+
+void __thiscall
+kmp_topology_t::canonicalize
+          (kmp_topology_t *this,int npackages,int ncores_per_pkg,int nthreads_per_core,int ncores)
+
+{
+  int local_34;
+  int local_30;
+  
+                    /* Unresolved local var: int ndepth@[DW_OP_breg31(sp): +20] */
+  this->depth = 3;
+                    /* Unresolved local var: kmp_hw_t i@[DW_OP_breg31(sp): +16] */
+  for (local_30 = 0; local_30 < 0xc; local_30 = local_30 + 1) {
+    this->equivalent[local_30] = KMP_HW_UNKNOWN;
+  }
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +12] */
+  for (local_34 = 0; local_34 < this->depth; local_34 = local_34 + 1) {
+    this->count[local_34] = 0;
+    this->ratio[local_34] = 0;
+  }
+  *this->count = npackages;
+  this->count[1] = ncores;
+  this->count[2] = *____kmp_xproc;
+  *this->ratio = npackages;
+  this->ratio[1] = ncores_per_pkg;
+  this->ratio[2] = nthreads_per_core;
+  this->equivalent[0] = KMP_HW_SOCKET;
+  this->equivalent[10] = KMP_HW_CORE;
+  this->equivalent[0xb] = KMP_HW_THREAD;
+  *this->types = KMP_HW_SOCKET;
+  this->types[1] = KMP_HW_CORE;
+  this->types[2] = KMP_HW_THREAD;
+  _discover_uniformity(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: filter_hw_subset
+// Entry: 000046ac
+// Signature: bool __thiscall filter_hw_subset(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: bool filter_hw_subset(kmp_topology_t * this) */
+
+bool __thiscall kmp_topology_t::filter_hw_subset(kmp_topology_t *this)
+
+{
+  long lVar1;
+  undefined1 *puVar2;
+  undefined4 uVar3;
+  undefined1 **ppuVar4;
+  bool bVar5;
+  int iVar6;
+  uint uVar7;
+  kmp_hw_core_type_t kVar8;
+  item_t *piVar9;
+  char *pcVar10;
+  undefined8 uVar11;
+  ulong auStack_d90 [2];
+  undefined1 auStack_d80 [4];
+  uint local_d7c;
+  undefined1 *local_d78;
+  undefined1 *local_d70;
+  kmp_str_buf_t *local_d68;
+  undefined1 *local_d60;
+  kmp_str_buf_t *local_d58;
+  undefined4 local_d4c;
+  undefined1 *local_d48;
+  kmp_str_buf_t *local_d40;
+  undefined1 *local_d38;
+  undefined4 local_d2c;
+  undefined1 *local_d28;
+  undefined1 **local_d20;
+  undefined1 *local_d18;
+  undefined1 *local_d10;
+  undefined1 *local_d08;
+  undefined1 *local_d00;
+  undefined4 local_cf4;
+  undefined1 *local_cf0;
+  char *local_ce8;
+  undefined1 *local_ce0;
+  undefined4 local_cd4;
+  undefined1 *local_cd0;
+  undefined4 local_cc8;
+  kmp_hw_t local_cc4;
+  undefined *local_cc0;
+  ulong local_cb8;
+  undefined8 *local_cb0;
+  undefined8 *local_ca8;
+  kmp_topology_t *local_ca0;
+  int local_c98;
+  int local_c94;
+  undefined8 local_c90;
+  undefined8 uStack_c88;
+  undefined8 local_c80;
+  undefined1 auStack_c70 [28];
+  int local_c54;
+  int local_c50;
+  int local_c4c;
+  int local_c48;
+  int local_c44;
+  int local_c40;
+  kmp_hw_core_type_t local_c3c;
+  int local_c38;
+  int local_c34;
+  item_t *local_c30;
+  int local_c28;
+  byte local_c21;
+  kmp_hw_thread_t *local_c20;
+  int local_c14;
+  long local_c10;
+  int local_c08;
+  kmp_sub_ids_t<8UL,_core_eff_indexer> kStack_c04;
+  kmp_sub_ids_t<1UL,_core_type_indexer> kStack_bac;
+  undefined8 local_b70 [2];
+  undefined8 local_b60;
+  undefined1 auStack_b50 [28];
+  int local_b34;
+  undefined1 local_b30 [16];
+  undefined8 local_b20;
+  undefined1 auStack_b18 [28];
+  int local_afc;
+  kmp_hw_attr_t local_af8;
+  int local_af4;
+  undefined1 local_af0 [16];
+  undefined8 local_ae0;
+  undefined1 auStack_ad8 [24];
+  int local_ac0;
+  int local_abc;
+  int local_ab8;
+  int local_ab4;
+  undefined1 local_ab0 [16];
+  undefined8 local_aa0;
+  undefined1 auStack_a98 [24];
+  undefined1 auStack_a80 [24];
+  int local_a68;
+  int local_a64;
+  undefined1 local_a60 [16];
+  undefined8 local_a50;
+  undefined1 auStack_a48 [24];
+  undefined1 local_a30 [16];
+  undefined8 local_a20;
+  undefined1 auStack_a18 [24];
+  undefined1 local_a00 [16];
+  undefined8 local_9f0;
+  undefined1 auStack_9e8 [24];
+  undefined1 local_9d0 [16];
+  undefined8 local_9c0;
+  undefined1 auStack_9b0 [28];
+  int local_994;
+  undefined1 local_990 [16];
+  undefined8 local_980;
+  undefined1 auStack_970 [31];
+  undefined1 local_951;
+  undefined1 local_950 [16];
+  undefined8 local_940;
+  undefined1 auStack_938 [24];
+  undefined1 local_920 [16];
+  undefined8 local_910;
+  undefined1 auStack_900 [28];
+  int local_8e4;
+  kmp_hw_t local_8e0;
+  kmp_hw_t local_8dc;
+  int local_8d8;
+  int local_8d4;
+  item_t *local_8d0;
+  int local_8c8;
+  int local_8c4;
+  int local_8c0;
+  int local_8bc;
+  undefined1 *local_8b8;
+  int local_8b0;
+  byte local_8aa;
+  byte local_8a9;
+  kmp_topology_t *local_8a8;
+  bool local_899;
+  kmp_str_buf_t local_898;
+  kmp_str_buf_t local_688;
+  kmp_str_buf_t local_478;
+  undefined1 *local_268;
+  undefined4 local_260;
+  undefined4 local_25c;
+  undefined1 local_258 [512];
+  kmp_hw_t akStack_58 [12];
+  long local_28;
+  
+                    /* Unresolved local var: bool using_core_types@[DW_OP_breg19(x19): +1239]
+                       Unresolved local var: bool using_core_effs@[DW_OP_breg19(x19): +1238]
+                       Unresolved local var: int hw_subset_depth@[DW_OP_breg19(x19): +1232]
+                       Unresolved local var: kmp_hw_t[12] specified@[???]
+                       Unresolved local var: int * topology_levels@[DW_OP_breg19(x19): +1224]
+                       Unresolved local var: int core_level@[DW_OP_breg19(x19): +1216]
+                       Unresolved local var: kmp_sub_ids_t<1UL,_core_type_indexer>
+                       core_type_sub_ids@[DW_OP_breg19(x19): +468]
+                       Unresolved local var: kmp_sub_ids_t<8UL,_core_eff_indexer>
+                       core_eff_sub_ids@[DW_OP_breg19(x19): +380]
+                       Unresolved local var: int num_filtered@[DW_OP_breg19(x19): +376]
+                       Unresolved local var: bool * filtered@[DW_OP_breg19(x19): +368]
+                       Unresolved local var: int new_index@[DW_OP_breg19(x19): +236] */
+  local_cb0 = local_b70;
+  local_ca8 = ____kmp_msg_null;
+  local_28 = *____stack_chk_guard;
+  local_ca0 = this;
+  local_8a8 = this;
+  if (__kmp_hw_subset == (kmp_hw_subset_t *)0x0) {
+    local_899 = false;
+  }
+  else {
+    local_cc0 = &DAT_00025000;
+    kmp_hw_subset_t::sort(__kmp_hw_subset);
+    local_8a9 = 0;
+    local_8aa = 0;
+    local_8b0 = kmp_hw_subset_t::get_depth(*(kmp_hw_subset_t **)(local_cc0 + 0xc68));
+    local_cb8 = (long)local_8b0 * 4 + 0xfU & 0xfffffffffffffff0;
+    (*____chkstk_darwin)();
+    lVar1 = -local_cb8;
+    local_8b8 = auStack_d80 + lVar1;
+    if (local_8b0 < 1) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x3cc);
+    }
+                    /* Unresolved local var: kmp_hw_t i@[DW_OP_breg19(x19): +1220] */
+    for (local_8bc = 0; local_8bc < 0xc; local_8bc = local_8bc + 1) {
+      akStack_58[local_8bc] = KMP_HW_UNKNOWN;
+    }
+    local_8c0 = get_level(local_ca0,KMP_HW_CORE);
+                    /* Unresolved local var: int i@[DW_OP_breg19(x19): +1212] */
+    for (local_8c4 = 0; local_8c4 < local_8b0; local_8c4 = local_8c4 + 1) {
+                    /* Unresolved local var: int max_count@[DW_OP_breg19(x19): +1208]
+                       Unresolved local var: item_t * item@[DW_OP_breg19(x19): +1200]
+                       Unresolved local var: int num@[DW_OP_breg19(x19): +1196]
+                       Unresolved local var: int offset@[DW_OP_breg19(x19): +1192]
+                       Unresolved local var: kmp_hw_t type@[DW_OP_breg19(x19): +1188]
+                       Unresolved local var: kmp_hw_t equivalent_type@[DW_OP_breg19(x19): +1184]
+                       Unresolved local var: int level@[DW_OP_breg19(x19): +1180] */
+      local_8d0 = kmp_hw_subset_t::at(__kmp_hw_subset,local_8c4);
+      local_8d4 = local_8d0->num[0];
+      local_8d8 = local_8d0->offset[0];
+      local_8dc = local_8d0->type;
+      local_8e0 = local_ca0->equivalent[local_8dc];
+      iVar6 = get_level(local_ca0,local_8dc);
+      *(int *)(local_8b8 + (long)local_8c4 * 4) = iVar6;
+      local_8e4 = iVar6;
+      if (local_8e0 == KMP_HW_UNKNOWN) {
+        local_cc8 = 0;
+        pcVar10 = __kmp_hw_get_catalog_string(local_8dc,false);
+        *(char **)((long)auStack_d90 + lVar1) = pcVar10;
+        local_cd0 = auStack_900;
+        ___kmp_msg_format(0x4011e);
+        puVar2 = local_cd0;
+        uVar11 = *local_ca8;
+        local_cb0[0x4b] = local_ca8[1];
+        local_cb0[0x4a] = uVar11;
+        local_910 = local_ca8[2];
+        *(undefined1 **)((long)auStack_d90 + lVar1) = local_920;
+        ___kmp_msg(1,puVar2);
+        local_899 = (bool)((byte)local_cc8 & 1);
+        goto LAB_00005a00;
+      }
+      local_cc4 = local_8e0;
+      piVar9 = kmp_hw_subset_t::at(__kmp_hw_subset,local_8c4);
+      piVar9->type = local_cc4;
+      if (akStack_58[local_8e0] != KMP_HW_UNKNOWN) {
+        local_cd4 = 0;
+        local_ce8 = __kmp_hw_get_catalog_string(local_8dc,false);
+        pcVar10 = __kmp_hw_get_catalog_string(akStack_58[local_8e0],(bool)((byte)local_cd4 & 1));
+        *(char **)((long)auStack_d90 + lVar1) = local_ce8;
+        *(char **)((long)auStack_d90 + lVar1 + 8) = pcVar10;
+        local_ce0 = auStack_938;
+        ___kmp_msg_format(0x4011f);
+        puVar2 = local_ce0;
+        uVar11 = *local_ca8;
+        local_cb0[0x45] = local_ca8[1];
+        local_cb0[0x44] = uVar11;
+        local_940 = local_ca8[2];
+        *(undefined1 **)((long)auStack_d90 + lVar1) = local_950;
+        ___kmp_msg(1,puVar2);
+        local_899 = (bool)((byte)local_cd4 & 1);
+        goto LAB_00005a00;
+      }
+      akStack_58[local_8e0] = local_8dc;
+      local_8c8 = get_ratio(local_ca0,local_8e4);
+      if ((local_8c8 < 0) || ((local_8d4 != 0x7fffffff && (local_8c8 < local_8d4 + local_8d8)))) {
+                    /* Unresolved local var: bool plural@[DW_OP_breg19(x19): +1071] */
+        local_cf4 = 1;
+        local_951 = 1 < local_8d4;
+        pcVar10 = __kmp_hw_get_catalog_string(local_8dc,(bool)local_951);
+        *(char **)((long)auStack_d90 + lVar1) = pcVar10;
+        local_cf0 = auStack_970;
+        ___kmp_msg_format(0x4011d);
+        puVar2 = local_cf0;
+        uVar3 = local_cf4;
+        uVar11 = *local_ca8;
+        local_cb0[0x3d] = local_ca8[1];
+        local_cb0[0x3c] = uVar11;
+        local_980 = local_ca8[2];
+        *(undefined1 **)((long)auStack_d90 + lVar1) = local_990;
+        ___kmp_msg(uVar3,puVar2);
+        local_899 = false;
+        goto LAB_00005a00;
+      }
+      if (local_8c0 == local_8e4) {
+                    /* Unresolved local var: int j@[DW_OP_breg19(x19): +1004] */
+        for (local_994 = 0; local_994 < local_8d0->num_attrs; local_994 = local_994 + 1) {
+          bVar5 = kmp_hw_attr_t::is_core_type_valid(local_8d0->attr + local_994);
+          if (bVar5) {
+            local_8a9 = 1;
+          }
+          bVar5 = kmp_hw_attr_t::is_core_eff_valid(local_8d0->attr + local_994);
+          if (bVar5) {
+            local_8aa = 1;
+          }
+        }
+        if ((((local_8aa & 1) != 0) || ((local_8a9 & 1) != 0)) &&
+           (bVar5 = __kmp_is_hybrid_cpu(), !bVar5)) {
+          if (local_8d0->num_attrs != 1) {
+            local_d10 = auStack_a18;
+            ___kmp_msg_format(0x40129);
+            puVar2 = local_d10;
+            uVar11 = *local_ca8;
+            local_cb0[0x29] = local_ca8[1];
+            local_cb0[0x28] = uVar11;
+            local_a20 = local_ca8[2];
+            *(undefined1 **)((long)auStack_d90 + lVar1) = local_a30;
+            ___kmp_msg(1,puVar2);
+            local_899 = false;
+            goto LAB_00005a00;
+          }
+          if ((local_8aa & 1) == 0) {
+            *(char **)((long)auStack_d90 + lVar1) = "core_type";
+            local_d08 = auStack_9e8;
+            ___kmp_msg_format(0x4012a);
+            puVar2 = local_d08;
+            uVar11 = *local_ca8;
+            local_cb0[0x2f] = local_ca8[1];
+            local_cb0[0x2e] = uVar11;
+            local_9f0 = local_ca8[2];
+            *(undefined1 **)((long)auStack_d90 + lVar1) = local_a00;
+            ___kmp_msg(1,puVar2);
+          }
+          else {
+            *(char **)((long)auStack_d90 + lVar1) = "efficiency";
+            local_d00 = auStack_9b0;
+            ___kmp_msg_format(0x4012a);
+            puVar2 = local_d00;
+            uVar11 = *local_ca8;
+            local_cb0[0x35] = local_ca8[1];
+            local_cb0[0x34] = uVar11;
+            local_9c0 = local_ca8[2];
+            *(undefined1 **)((long)auStack_d90 + lVar1) = local_9d0;
+            ___kmp_msg(1,puVar2);
+          }
+          local_8aa = 0;
+          local_8a9 = 0;
+        }
+        if (((local_8a9 & 1) != 0) && ((local_8aa & 1) != 0)) {
+          *(char **)((long)auStack_d90 + lVar1) = "core_type";
+          *(char **)((long)auStack_d90 + lVar1 + 8) = "efficiency";
+          local_d18 = auStack_a48;
+          ___kmp_msg_format(0x40125);
+          puVar2 = local_d18;
+          uVar11 = *local_ca8;
+          local_cb0[0x23] = local_ca8[1];
+          local_cb0[0x22] = uVar11;
+          local_a50 = local_ca8[2];
+          *(undefined1 **)((long)auStack_d90 + lVar1) = local_a60;
+          ___kmp_msg(1,puVar2);
+          local_899 = false;
+          goto LAB_00005a00;
+        }
+        if ((local_8aa & 1) != 0) {
+                    /* Unresolved local var: int j@[DW_OP_breg19(x19): +796] */
+          for (local_a64 = 0; local_a64 < local_8d0->num_attrs; local_a64 = local_a64 + 1) {
+            bVar5 = kmp_hw_attr_t::is_core_eff_valid(local_8d0->attr + local_a64);
+                    /* Unresolved local var: int core_eff@[DW_OP_breg19(x19): +792] */
+            if ((bVar5) &&
+               ((local_a68 = kmp_hw_attr_t::get_core_eff(local_8d0->attr + local_a64), local_a68 < 0
+                || (local_ca0->num_core_efficiencies <= local_a68)))) {
+              local_d20 = &local_268;
+                    /* Unresolved local var: kmp_str_buf_t buf@[???] */
+              local_268 = local_258;
+              local_260 = 0x200;
+              local_25c = 0;
+              local_258[0] = 0;
+              uVar7 = kmp_hw_attr_t::get_core_eff(local_8d0->attr + local_a64);
+              ppuVar4 = local_d20;
+              *(ulong *)((long)auStack_d90 + lVar1) = (ulong)uVar7;
+              ___kmp_str_buf_print(ppuVar4,"%d");
+              puVar2 = local_268;
+              *(char **)((long)auStack_d90 + lVar1) = "efficiency";
+              *(undefined1 **)((long)auStack_d90 + lVar1 + 8) = puVar2;
+              local_d28 = auStack_a80;
+              ___kmp_msg_format(0x40127);
+              iVar6 = local_ca0->num_core_efficiencies;
+              local_d2c = 1;
+              *(undefined8 *)((long)auStack_d90 + lVar1) = 0;
+              *(ulong *)((long)auStack_d90 + lVar1 + 8) = (ulong)(iVar6 - 1);
+              local_d38 = auStack_a98;
+              ___kmp_msg_format(0x5001d);
+              puVar2 = local_d28;
+              uVar3 = local_d2c;
+              uVar11 = *local_ca8;
+              local_cb0[0x19] = local_ca8[1];
+              local_cb0[0x18] = uVar11;
+              local_aa0 = local_ca8[2];
+              *(undefined1 **)((long)auStack_d90 + lVar1) = local_d38;
+              *(undefined1 **)((long)auStack_d90 + lVar1 + 8) = local_ab0;
+              ___kmp_msg(uVar3,puVar2);
+              ___kmp_str_buf_free(local_d20);
+              local_899 = false;
+              goto LAB_00005a00;
+            }
+          }
+        }
+        if (((local_8a9 & 1) != 0) || ((local_8aa & 1) != 0)) {
+                    /* Unresolved local var: int j@[DW_OP_breg19(x19): +716] */
+          for (local_ab4 = 0; local_ab4 < local_8d0->num_attrs; local_ab4 = local_ab4 + 1) {
+                    /* Unresolved local var: int num@[DW_OP_breg19(x19): +712]
+                       Unresolved local var: int offset@[DW_OP_breg19(x19): +708]
+                       Unresolved local var: int level_above@[DW_OP_breg19(x19): +704] */
+            local_ab8 = local_8d0->num[local_ab4];
+            local_abc = local_8d0->offset[local_ab4];
+            local_ac0 = local_8c0 + -1;
+            if ((-1 < local_ac0) &&
+               ((local_8c8 = get_ncores_with_attr_per
+                                       (local_ca0,local_8d0->attr + local_ab4,local_ac0),
+                local_8c8 < 1 || ((local_ab8 != 0x7fffffff && (local_8c8 < local_ab8 + local_abc))))
+               )) {
+                    /* Unresolved local var: kmp_str_buf_t buf@[???] */
+              local_d40 = &local_478;
+              __kmp_hw_get_catalog_core_string(local_8d0->attr + local_ab4,local_d40,0 < local_ab8);
+              *(char **)((long)auStack_d90 + lVar1) = local_478.str;
+              local_d48 = auStack_ad8;
+              ___kmp_msg_format(0x4011d);
+              puVar2 = local_d48;
+              uVar11 = *local_ca8;
+              local_cb0[0x11] = local_ca8[1];
+              local_cb0[0x10] = uVar11;
+              local_ae0 = local_ca8[2];
+              *(undefined1 **)((long)auStack_d90 + lVar1) = local_af0;
+              ___kmp_msg(1,puVar2);
+              ___kmp_str_buf_free(local_d40);
+              local_899 = false;
+              goto LAB_00005a00;
+            }
+          }
+        }
+        if ((((local_8a9 & 1) != 0) || ((local_8aa & 1) != 0)) && (1 < local_8d0->num_attrs)) {
+                    /* Unresolved local var: int j@[DW_OP_breg19(x19): +652] */
+          for (local_af4 = 0; local_af4 < local_8d0->num_attrs; local_af4 = local_af4 + 1) {
+            bVar5 = kmp_hw_attr_t::operator_bool(local_8d0->attr + local_af4);
+            if (!bVar5) {
+                    /* Unresolved local var: kmp_hw_attr_t other_attr@[DW_OP_breg19(x19): +648]
+                       Unresolved local var: kmp_str_buf_t buf@[???] */
+              kmp_hw_attr_t::kmp_hw_attr_t(&local_af8);
+                    /* Unresolved local var: int k@[DW_OP_breg19(x19): +644] */
+              local_afc = 0;
+              goto LAB_000051ec;
+            }
+                    /* Unresolved local var: int k@[DW_OP_breg19(x19): +588] */
+            for (local_b34 = 0; local_b34 < local_af4; local_b34 = local_b34 + 1) {
+              bVar5 = kmp_hw_attr_t::operator_bool(local_8d0->attr + local_af4);
+              if (((bVar5) &&
+                  (bVar5 = kmp_hw_attr_t::operator_bool(local_8d0->attr + local_b34), bVar5)) &&
+                 (bVar5 = kmp_hw_attr_t::operator==
+                                    (local_8d0->attr + local_b34,local_8d0->attr + local_af4), bVar5
+                 )) {
+                    /* Unresolved local var: kmp_str_buf_t buf@[DW_OP_breg19(x19): +1256] */
+                local_d68 = &local_898;
+                __kmp_hw_get_catalog_core_string
+                          (local_8d0->attr + local_af4,local_d68,0 < local_8d0->num[local_af4]);
+                *(char **)((long)auStack_d90 + lVar1) = local_898.str;
+                local_d70 = auStack_b50;
+                ___kmp_msg_format(0x40126);
+                puVar2 = local_d70;
+                uVar11 = *local_ca8;
+                local_cb0[1] = local_ca8[1];
+                *local_cb0 = uVar11;
+                local_b60 = local_ca8[2];
+                *(undefined8 **)((long)auStack_d90 + lVar1) = local_b70;
+                ___kmp_msg(1,puVar2);
+                ___kmp_str_buf_free(local_d68);
+                local_899 = false;
+                goto LAB_00005a00;
+              }
+            }
+          }
+        }
+      }
+    }
+    kmp_sub_ids_t<1UL,_core_type_indexer>::kmp_sub_ids_t(&kStack_bac,local_8c0);
+    kmp_sub_ids_t<8UL,_core_eff_indexer>::kmp_sub_ids_t(&kStack_c04,local_8c0);
+    local_c08 = 0;
+    local_c10 = ____kmp_allocate((long)local_ca0->num_hw_threads);
+                    /* Unresolved local var: int i@[DW_OP_breg19(x19): +364] */
+    for (local_c14 = 0; local_c14 < local_ca0->num_hw_threads; local_c14 = local_c14 + 1) {
+                    /* Unresolved local var: kmp_hw_thread_t * hw_thread@[DW_OP_breg19(x19): +352]
+                       Unresolved local var: bool should_be_filtered@[DW_OP_breg19(x19): +351] */
+      local_c20 = local_ca0->hw_threads + local_c14;
+      if ((local_8a9 & 1) != 0) {
+        kmp_sub_ids_t<1UL,_core_type_indexer>::update(&kStack_bac,local_c20);
+      }
+      if ((local_8aa & 1) != 0) {
+        kmp_sub_ids_t<8UL,_core_eff_indexer>::update(&kStack_c04,local_c20);
+      }
+      local_c21 = 0;
+                    /* Unresolved local var: int hw_subset_index@[DW_OP_breg19(x19): +344] */
+      for (local_c28 = 0; local_c28 < local_8b0; local_c28 = local_c28 + 1) {
+                    /* Unresolved local var: item_t * hw_subset_item@[DW_OP_breg19(x19): +336]
+                       Unresolved local var: int level@[DW_OP_breg19(x19): +332] */
+        local_c30 = kmp_hw_subset_t::at(__kmp_hw_subset,local_c28);
+        local_c34 = *(int *)(local_8b8 + (long)local_c28 * 4);
+        if (local_c34 != -1) {
+          if ((((local_8aa & 1) == 0) && ((local_8a9 & 1) == 0)) || (local_c34 != local_8c0)) {
+                    /* Unresolved local var: int num@[DW_OP_breg19(x19): +304]
+                       Unresolved local var: int offset@[DW_OP_breg19(x19): +300] */
+            local_c50 = local_c30->num[0];
+            local_c54 = local_c30->offset[0];
+            if ((local_c20->sub_ids[local_c34] < local_c54) ||
+               ((local_c50 != 0x7fffffff && (local_c54 + local_c50 <= local_c20->sub_ids[local_c34])
+                ))) {
+              local_c21 = 1;
+              break;
+            }
+          }
+          else {
+                    /* Unresolved local var: int attr_idx@[DW_OP_breg19(x19): +328]
+                       Unresolved local var: kmp_hw_core_type_t core_type@[DW_OP_breg19(x19): +324]
+                       Unresolved local var: int core_eff@[DW_OP_breg19(x19): +320]
+                       Unresolved local var: int sub_id@[DW_OP_breg19(x19): +316]
+                       Unresolved local var: int num@[DW_OP_breg19(x19): +312]
+                       Unresolved local var: int offset@[DW_OP_breg19(x19): +308] */
+            local_c3c = kmp_hw_attr_t::get_core_type(&local_c20->attrs);
+            local_c40 = kmp_hw_attr_t::get_core_eff(&local_c20->attrs);
+            local_c38 = 0;
+            while (((local_c38 < local_c30->num_attrs &&
+                    (((local_8a9 & 1) == 0 ||
+                     (kVar8 = kmp_hw_attr_t::get_core_type(local_c30->attr + local_c38),
+                     kVar8 != local_c3c)))) &&
+                   (((local_8aa & 1) == 0 ||
+                    (iVar6 = kmp_hw_attr_t::get_core_eff(local_c30->attr + local_c38),
+                    iVar6 != local_c40))))) {
+              local_c38 = local_c38 + 1;
+            }
+            if (local_c38 == local_c30->num_attrs) {
+              local_c21 = 1;
+              break;
+            }
+            local_c48 = local_c30->num[local_c38];
+            local_c4c = local_c30->offset[local_c38];
+            if ((local_8a9 & 1) == 0) {
+              local_c44 = kmp_sub_ids_t<8UL,_core_eff_indexer>::get_sub_id(&kStack_c04,local_c20);
+            }
+            else {
+              local_c44 = kmp_sub_ids_t<1UL,_core_type_indexer>::get_sub_id(&kStack_bac,local_c20);
+            }
+            if ((local_c44 < local_c4c) ||
+               ((local_c48 != 0x7fffffff && (local_c4c + local_c48 <= local_c44)))) {
+              local_c21 = 1;
+              break;
+            }
+          }
+        }
+      }
+      *(byte *)(local_c10 + local_c14) = local_c21 & 1;
+      if ((local_c21 & 1) != 0) {
+        local_c08 = local_c08 + 1;
+      }
+    }
+    if (local_c08 == local_ca0->num_hw_threads) {
+      local_d78 = auStack_c70;
+      ___kmp_msg_format(0x40128);
+      puVar2 = local_d78;
+      uStack_c88 = local_ca8[1];
+      local_c90 = *local_ca8;
+      local_c80 = local_ca8[2];
+      *(undefined8 **)((long)auStack_d90 + lVar1) = &local_c90;
+      ___kmp_msg(1,puVar2);
+      ____kmp_free(local_c10);
+      local_899 = false;
+    }
+    else {
+      local_c94 = 0;
+                    /* Unresolved local var: int i@[DW_OP_breg19(x19): +232] */
+      for (local_c98 = 0; local_c98 < local_ca0->num_hw_threads; local_c98 = local_c98 + 1) {
+        if ((*(byte *)(local_c10 + local_c98) & 1) == 0) {
+          if (local_c98 != local_c94) {
+            _memcpy(local_ca0->hw_threads + local_c94,local_ca0->hw_threads + local_c98,0x6c);
+          }
+          local_c94 = local_c94 + 1;
+        }
+        else {
+          *____kmp_avail_proc = *____kmp_avail_proc + -1;
+        }
+      }
+      local_ca0->num_hw_threads = local_c94;
+      _gather_enumeration_information(local_ca0);
+      _discover_uniformity(local_ca0);
+      _set_globals(local_ca0);
+      _set_last_level_cache(local_ca0);
+      ____kmp_free(local_c10);
+      local_899 = true;
+    }
+  }
+LAB_00005a00:
+  local_d7c = (uint)local_899;
+  if (*____stack_chk_guard == local_28) {
+    return local_899;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+LAB_000051ec:
+  if (local_8d0->num_attrs <= local_afc) goto LAB_00005260;
+  bVar5 = kmp_hw_attr_t::operator!=(local_8d0->attr + local_afc,local_8d0->attr + local_af4);
+  if (bVar5) {
+    local_af8 = local_8d0->attr[local_afc];
+    goto LAB_00005260;
+  }
+  local_afc = local_afc + 1;
+  goto LAB_000051ec;
+LAB_00005260:
+  local_d58 = &local_688;
+  __kmp_hw_get_catalog_core_string(&local_af8,local_d58,0 < local_8d0->num[local_af4]);
+  local_d4c = 0;
+  pcVar10 = __kmp_hw_get_catalog_string(KMP_HW_CORE,false);
+  *(char **)((long)auStack_d90 + lVar1) = pcVar10;
+  *(char **)((long)auStack_d90 + lVar1 + 8) = local_688.str;
+  local_d60 = auStack_b18;
+  ___kmp_msg_format(0x40125);
+  puVar2 = local_d60;
+  uVar11 = *local_ca8;
+  local_cb0[9] = local_ca8[1];
+  local_cb0[8] = uVar11;
+  local_b20 = local_ca8[2];
+  *(undefined1 **)((long)auStack_d90 + lVar1) = local_b30;
+  ___kmp_msg(1,puVar2);
+  ___kmp_str_buf_free(local_d58);
+  local_899 = (bool)((byte)local_d4c & 1);
+  goto LAB_00005a00;
+}
+
+
+
+
+// ========================================
+// Function: sort
+// Entry: 00005a44
+// Signature: void __thiscall sort(kmp_hw_subset_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void sort(kmp_hw_subset_t * this) */
+
+void __thiscall kmp_hw_subset_t::sort(kmp_hw_subset_t *this)
+
+{
+  _qsort(this->items,(long)this->depth,0x68,_hw_subset_compare);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_depth
+// Entry: 00005a7c
+// Signature: int __thiscall get_depth(kmp_hw_subset_t * this)
+// ========================================
+
+
+/* DWARF original prototype: int get_depth(kmp_hw_subset_t * this) */
+
+int __thiscall kmp_hw_subset_t::get_depth(kmp_hw_subset_t *this)
+
+{
+  return this->depth;
+}
+
+
+
+
+// ========================================
+// Function: at
+// Entry: 00005a94
+// Signature: item_t * __thiscall at(kmp_hw_subset_t * this, int index)
+// ========================================
+
+
+/* DWARF original prototype: item_t * at(kmp_hw_subset_t * this, int index) */
+
+item_t * __thiscall kmp_hw_subset_t::at(kmp_hw_subset_t *this,int index)
+
+{
+  return this->items + index;
+}
+
+
+
+
+// ========================================
+// Function: get_ncores_with_attr_per
+// Entry: 00005ac0
+// Signature: int __thiscall get_ncores_with_attr_per(kmp_topology_t * this, kmp_hw_attr_t * attr, int above)
+// ========================================
+
+
+/* DWARF original prototype: int get_ncores_with_attr_per(kmp_topology_t * this, kmp_hw_attr_t *
+   attr, int above) */
+
+int __thiscall
+kmp_topology_t::get_ncores_with_attr_per(kmp_topology_t *this,kmp_hw_attr_t *attr,int above)
+
+{
+  int iVar1;
+  
+  iVar1 = _get_ncores_with_attr(this,attr,above,false);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_hw_get_catalog_core_string
+// Entry: 00005afc
+// Signature: kmp_str_buf_t * __cdecl __kmp_hw_get_catalog_core_string(kmp_hw_attr_t * attr, kmp_str_buf_t * buf, bool plural)
+// ========================================
+
+
+kmp_str_buf_t * __kmp_hw_get_catalog_core_string(kmp_hw_attr_t *attr,kmp_str_buf_t *buf,bool plural)
+
+{
+  bool bVar1;
+  kmp_hw_core_type_t type;
+  
+  buf->str = buf->bulk;
+  buf->size = 0x200;
+  buf->used = 0;
+  buf->bulk[0] = '\0';
+  bVar1 = kmp_hw_attr_t::is_core_type_valid(attr);
+  if (bVar1) {
+    type = kmp_hw_attr_t::get_core_type(attr);
+    __kmp_hw_get_core_type_string(type);
+    __kmp_hw_get_catalog_string(KMP_HW_CORE,plural);
+    ___kmp_str_buf_print(buf,"%s %s");
+  }
+  else {
+    __kmp_hw_get_catalog_string(KMP_HW_CORE,plural);
+    kmp_hw_attr_t::get_core_eff(attr);
+    ___kmp_str_buf_print(buf,"%s eff=%d");
+  }
+  return buf;
+}
+
+
+
+
+// ========================================
+// Function: operator!=
+// Entry: 00005c08
+// Signature: bool __thiscall operator!=(kmp_hw_attr_t * this, kmp_hw_attr_t * rhs)
+// ========================================
+
+
+/* DWARF original prototype: bool operator!=(kmp_hw_attr_t * this, kmp_hw_attr_t * rhs) */
+
+bool __thiscall kmp_hw_attr_t::operator!=(kmp_hw_attr_t *this,kmp_hw_attr_t *rhs)
+
+{
+  bool bVar1;
+  
+  bVar1 = operator==(this,rhs);
+  return !bVar1;
+}
+
+
+
+
+// ========================================
+// Function: operator==
+// Entry: 00005c3c
+// Signature: bool __thiscall operator==(kmp_hw_attr_t * this, kmp_hw_attr_t * rhs)
+// ========================================
+
+
+/* DWARF original prototype: bool operator==(kmp_hw_attr_t * this, kmp_hw_attr_t * rhs) */
+
+bool __thiscall kmp_hw_attr_t::operator==(kmp_hw_attr_t *this,kmp_hw_attr_t *rhs)
+
+{
+  bool bVar1;
+  
+  bVar1 = false;
+  if ((rhs->valid == this->valid) &&
+     (bVar1 = false, ((int)*rhs << 0x10) >> 0x18 == ((int)*this << 0x10) >> 0x18)) {
+    bVar1 = (*rhs).core_type == (*this).core_type;
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00005cf4
+// Signature: void __thiscall kmp_sub_ids_t(kmp_sub_ids_t<1UL,_core_type_indexer> * this, int last_level)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_sub_ids_t(kmp_sub_ids_t<1UL,_core_type_indexer> * this, int
+   last_level) */
+
+void __thiscall
+kmp_sub_ids_t<1UL,_core_type_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<1UL,_core_type_indexer> *this,int last_level)
+
+{
+  kmp_sub_ids_t(this,last_level);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00005d28
+// Signature: void __thiscall kmp_sub_ids_t(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, int last_level)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_sub_ids_t(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, int
+   last_level) */
+
+void __thiscall
+kmp_sub_ids_t<8UL,_core_eff_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<8UL,_core_eff_indexer> *this,int last_level)
+
+{
+  kmp_sub_ids_t(this,last_level);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: update
+// Entry: 00005d5c
+// Signature: void __thiscall update(kmp_sub_ids_t<1UL,_core_type_indexer> * this, kmp_hw_thread_t * hw_thread)
+// ========================================
+
+
+/* DWARF original prototype: void update(kmp_sub_ids_t<1UL,_core_type_indexer> * this,
+   kmp_hw_thread_t * hw_thread) */
+
+void __thiscall
+kmp_sub_ids_t<1UL,_core_type_indexer>::update
+          (kmp_sub_ids_t<1UL,_core_type_indexer> *this,kmp_hw_thread_t *hw_thread)
+
+{
+  int iVar1;
+  int local_2c;
+  int local_28;
+  
+                    /* Unresolved local var: int idx@[???] */
+  iVar1 = kmp_topology_t::filter_hw_subset::core_type_indexer::operator()(&this->indexer,hw_thread);
+  if (0 < iVar1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x39b);
+  }
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +24] */
+  local_28 = 0;
+  do {
+    if (this->last_level < local_28) {
+LAB_00005e74:
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +20] */
+      for (local_2c = 0; local_2c <= this->last_level; local_2c = local_2c + 1) {
+        this->prev_sub_id[local_2c] = hw_thread->sub_ids[local_2c];
+      }
+      return;
+    }
+    if (hw_thread->sub_ids[local_28] != this->prev_sub_id[local_28]) {
+      if (local_28 < this->last_level) {
+        this->sub_id[iVar1] = -1;
+      }
+      this->sub_id[iVar1] = this->sub_id[iVar1] + 1;
+      goto LAB_00005e74;
+    }
+    local_28 = local_28 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: update
+// Entry: 00005ed8
+// Signature: void __thiscall update(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, kmp_hw_thread_t * hw_thread)
+// ========================================
+
+
+/* DWARF original prototype: void update(kmp_sub_ids_t<8UL,_core_eff_indexer> * this,
+   kmp_hw_thread_t * hw_thread) */
+
+void __thiscall
+kmp_sub_ids_t<8UL,_core_eff_indexer>::update
+          (kmp_sub_ids_t<8UL,_core_eff_indexer> *this,kmp_hw_thread_t *hw_thread)
+
+{
+  int iVar1;
+  int local_2c;
+  int local_28;
+  
+                    /* Unresolved local var: int idx@[???] */
+  iVar1 = kmp_topology_t::filter_hw_subset::core_eff_indexer::operator()(&this->indexer,hw_thread);
+  if (7 < iVar1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x39b);
+  }
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +24] */
+  local_28 = 0;
+  do {
+    if (this->last_level < local_28) {
+LAB_00005ff0:
+                    /* Unresolved local var: int level@[DW_OP_breg31(sp): +20] */
+      for (local_2c = 0; local_2c <= this->last_level; local_2c = local_2c + 1) {
+        this->prev_sub_id[local_2c] = hw_thread->sub_ids[local_2c];
+      }
+      return;
+    }
+    if (hw_thread->sub_ids[local_28] != this->prev_sub_id[local_28]) {
+      if (local_28 < this->last_level) {
+        this->sub_id[iVar1] = -1;
+      }
+      this->sub_id[iVar1] = this->sub_id[iVar1] + 1;
+      goto LAB_00005ff0;
+    }
+    local_28 = local_28 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: get_sub_id
+// Entry: 00006054
+// Signature: int __thiscall get_sub_id(kmp_sub_ids_t<1UL,_core_type_indexer> * this, kmp_hw_thread_t * hw_thread)
+// ========================================
+
+
+/* DWARF original prototype: int get_sub_id(kmp_sub_ids_t<1UL,_core_type_indexer> * this,
+   kmp_hw_thread_t * hw_thread) */
+
+int __thiscall
+kmp_sub_ids_t<1UL,_core_type_indexer>::get_sub_id
+          (kmp_sub_ids_t<1UL,_core_type_indexer> *this,kmp_hw_thread_t *hw_thread)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset::core_type_indexer::operator()(&this->indexer,hw_thread);
+  return this->sub_id[iVar1];
+}
+
+
+
+
+// ========================================
+// Function: get_sub_id
+// Entry: 00006098
+// Signature: int __thiscall get_sub_id(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, kmp_hw_thread_t * hw_thread)
+// ========================================
+
+
+/* DWARF original prototype: int get_sub_id(kmp_sub_ids_t<8UL,_core_eff_indexer> * this,
+   kmp_hw_thread_t * hw_thread) */
+
+int __thiscall
+kmp_sub_ids_t<8UL,_core_eff_indexer>::get_sub_id
+          (kmp_sub_ids_t<8UL,_core_eff_indexer> *this,kmp_hw_thread_t *hw_thread)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset::core_eff_indexer::operator()(&this->indexer,hw_thread);
+  return this->sub_id[iVar1];
+}
+
+
+
+
+// ========================================
+// Function: is_close
+// Entry: 000060dc
+// Signature: bool __thiscall is_close(kmp_topology_t * this, int hwt1, int hwt2, int hw_level)
+// ========================================
+
+
+/* DWARF original prototype: bool is_close(kmp_topology_t * this, int hwt1, int hwt2, int hw_level)
+    */
+
+bool __thiscall kmp_topology_t::is_close(kmp_topology_t *this,int hwt1,int hwt2,int hw_level)
+
+{
+  int local_34;
+  
+                    /* Unresolved local var: bool retval@[???]
+                       Unresolved local var: kmp_hw_thread_t * t1@[???]
+                       Unresolved local var: kmp_hw_thread_t * t2@[???] */
+  if (hw_level < this->depth) {
+                    /* Unresolved local var: int i@[???] */
+    for (local_34 = 0; local_34 < this->depth - hw_level; local_34 = local_34 + 1) {
+      if (this->hw_threads[hwt1].ids[local_34] != this->hw_threads[hwt2].ids[local_34]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: hierarchy_info
+// Entry: 000061fc
+// Signature: void __thiscall hierarchy_info(hierarchy_info * this)
+// ========================================
+
+
+/* DWARF original prototype: void hierarchy_info(hierarchy_info * this) */
+
+void __thiscall hierarchy_info::hierarchy_info(hierarchy_info *this)
+
+{
+  this->maxLevels = 7;
+  this->depth = 1;
+  this->uninitialized = '\x01';
+  this->resizing = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: deriveLevels
+// Entry: 0000622c
+// Signature: void __thiscall deriveLevels(hierarchy_info * this)
+// ========================================
+
+
+/* DWARF original prototype: void deriveLevels(hierarchy_info * this) */
+
+void __thiscall hierarchy_info::deriveLevels(hierarchy_info *this)
+
+{
+  kmp_uint32 kVar1;
+  int local_24;
+  int local_20;
+  
+                    /* Unresolved local var: int hier_depth@[???] */
+  local_20 = kmp_topology_t::get_depth(__kmp_topology);
+  local_24 = 0;
+                    /* Unresolved local var: int i@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int level@[DW_OP_breg31(sp): +12] */
+  while (local_20 = local_20 + -1, -1 < local_20) {
+    kVar1 = kmp_topology_t::get_ratio(__kmp_topology,local_20);
+    this->numPerLevel[local_24] = kVar1;
+    local_24 = local_24 + 1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_hw_attr_t
+// Entry: 000062c8
+// Signature: void __thiscall kmp_hw_attr_t(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_hw_attr_t(kmp_hw_attr_t * this) */
+
+void __thiscall kmp_hw_attr_t::kmp_hw_attr_t(kmp_hw_attr_t *this)
+
+{
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffffff00);
+  *this = (kmp_hw_attr_t)((uint)*this & 0xffff00ff | 0xff00);
+  this->valid = 0;
+  this->reserved = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: hw_subset_compare
+// Entry: 00006320
+// Signature: int __cdecl hw_subset_compare(void * i1, void * i2)
+// ========================================
+
+
+int kmp_hw_subset_t::hw_subset_compare(void *i1,void *i2)
+
+{
+  kmp_hw_t type;
+  int iVar1;
+  int iVar2;
+  
+                    /* Unresolved local var: kmp_hw_t type1@[???]
+                       Unresolved local var: kmp_hw_t type2@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: int level1@[DW_OP_breg31(sp): +20]
+                       Unresolved local var: int level2@[DW_OP_breg31(sp): +16] */
+  type = *(kmp_hw_t *)i2;
+  iVar1 = kmp_topology_t::get_level(__kmp_topology,*(kmp_hw_t *)i1);
+  iVar2 = kmp_topology_t::get_level(__kmp_topology,type);
+  return iVar1 - iVar2;
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 00006390
+// Signature: uchar __cdecl to(uint src)
+// ========================================
+
+
+uchar kmp_convert<unsigned_int,_unsigned_char,_false,_false,_false,_false>::to(uint src)
+
+{
+  byte bVar1;
+  
+  bVar1 = std::__1::numeric_limits<unsigned_char>::max();
+  if (bVar1 < src) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11ea);
+  }
+  return (uchar)src;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 000063f0
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::numeric_limits<unsigned_char>::max(void)
+
+{
+  type tVar1;
+  
+  tVar1 = __libcpp_numeric_limits<unsigned_char,_true>::max();
+  return tVar1;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 00006408
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::__libcpp_numeric_limits<unsigned_char,_true>::max(void)
+
+{
+  return 0xff;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00006410
+// Signature: void __thiscall kmp_sub_ids_t(kmp_sub_ids_t<1UL,_core_type_indexer> * this, int last_level)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_sub_ids_t(kmp_sub_ids_t<1UL,_core_type_indexer> * this, int
+   last_level) */
+
+void __thiscall
+kmp_sub_ids_t<1UL,_core_type_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<1UL,_core_type_indexer> *this,int last_level)
+
+{
+  bool bVar1;
+  ulong local_38;
+  
+  this->last_level = last_level;
+  if (0xb < last_level) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x393);
+  }
+                    /* Unresolved local var: size_t i@[DW_OP_breg31(sp): +16] */
+  bVar1 = false;
+  while (!bVar1) {
+    this->sub_id[0] = -1;
+    bVar1 = true;
+  }
+                    /* Unresolved local var: size_t i@[DW_OP_breg31(sp): +8] */
+  for (local_38 = 0; local_38 < 0xc; local_38 = local_38 + 1) {
+    this->prev_sub_id[local_38] = -1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00006504
+// Signature: void __thiscall kmp_sub_ids_t(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, int last_level)
+// ========================================
+
+
+/* DWARF original prototype: void kmp_sub_ids_t(kmp_sub_ids_t<8UL,_core_eff_indexer> * this, int
+   last_level) */
+
+void __thiscall
+kmp_sub_ids_t<8UL,_core_eff_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<8UL,_core_eff_indexer> *this,int last_level)
+
+{
+  ulong local_38;
+  ulong local_30;
+  
+  this->last_level = last_level;
+  if (0xb < last_level) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x393);
+  }
+                    /* Unresolved local var: size_t i@[DW_OP_breg31(sp): +16] */
+  for (local_30 = 0; local_30 < 8; local_30 = local_30 + 1) {
+    this->sub_id[local_30] = -1;
+  }
+                    /* Unresolved local var: size_t i@[DW_OP_breg31(sp): +8] */
+  for (local_38 = 0; local_38 < 0xc; local_38 = local_38 + 1) {
+    this->prev_sub_id[local_38] = -1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 000065f8
+// Signature: int __thiscall operator()(core_type_indexer * this, kmp_hw_thread_t * t)
+// ========================================
+
+
+/* DWARF original prototype: int operator()(core_type_indexer * this, kmp_hw_thread_t * t) */
+
+int __thiscall
+kmp_topology_t::filter_hw_subset::core_type_indexer::operator()
+          (core_type_indexer *this,kmp_hw_thread_t *t)
+
+{
+  kmp_hw_core_type_t kVar1;
+  
+  kVar1 = kmp_hw_attr_t::get_core_type(&t->attrs);
+  if (kVar1 != KMP_HW_CORE_TYPE_UNKNOWN) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x476);
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 00006660
+// Signature: int __thiscall operator()(core_eff_indexer * this, kmp_hw_thread_t * t)
+// ========================================
+
+
+/* DWARF original prototype: int operator()(core_eff_indexer * this, kmp_hw_thread_t * t) */
+
+int __thiscall
+kmp_topology_t::filter_hw_subset::core_eff_indexer::operator()
+          (core_eff_indexer *this,kmp_hw_thread_t *t)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_hw_attr_t::get_core_eff(&t->attrs);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_global_var_init
+// Entry: 0000668c
+// Signature: void __cxx_global_var_init(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __cxx_global_var_init(void)
+
+{
+  hierarchy_info::hierarchy_info(&machine_hierarchy);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _GLOBAL__sub_I_kmp_affinity.cpp
+// Entry: 000066a8
+// Signature: void _GLOBAL__sub_I_kmp_affinity.cpp(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _GLOBAL__sub_I_kmp_affinity_cpp(void)
+
+{
+  __cxx_global_var_init();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_allocate
+// Entry: 00026000
+// Signature: undefined ____kmp_allocate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_allocate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_free
+// Entry: 00026100
+// Signature: undefined ____kmp_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00026400
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 00026500
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 00026600
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00026700
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_clear
+// Entry: 00026900
+// Signature: undefined ___kmp_str_buf_clear(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_clear(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 00026a00
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_print
+// Entry: 00026b00
+// Signature: undefined ___kmp_str_buf_print(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_print(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00026d00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00026f00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _printf
+// Entry: 00027000
+// Signature: int _printf(char * param_1, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _printf(char *param_1,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _qsort
+// Entry: 00027100
+// Signature: void _qsort(void * param_1, size_t param_2, size_t param_3, int * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _qsort(void *param_1,size_t param_2,size_t param_3,int *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 88
+// Failed: 0
+// Skipped external functions: 0

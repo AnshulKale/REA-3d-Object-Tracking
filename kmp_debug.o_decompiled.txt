@@ -1,0 +1,448 @@
+Program: kmp_debug.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmp_debug_printf
+// Entry: 00000000
+// Signature: void __cdecl __kmp_debug_printf(char * format, ...)
+// ========================================
+
+
+void __kmp_debug_printf(char *format,...)
+
+{
+                    /* Unresolved local var: va_list ap@[DW_OP_breg31(sp): 0] */
+  ___kmp_vprintf(1,format,&stack0x00000000);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_debug_assert
+// Entry: 00000038
+// Signature: int __cdecl __kmp_debug_assert(char * msg, char * file, int line)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmp_debug_assert(char *msg,char *file,int line)
+
+{
+  char *pcVar1;
+  undefined1 auVar2 [12];
+  undefined1 auStack_48 [24];
+  char *local_30;
+  int local_24;
+  char *local_20;
+  char *local_18;
+  
+  local_24 = line;
+  local_20 = file;
+  local_18 = msg;
+  if (file == (char *)0x0) {
+    local_20 = (char *)___kmp_i18n_catgets(0x20002);
+  }
+  else {
+                    /* Unresolved local var: char * slash@[???] */
+    local_30 = strrchr(file,0x2f);
+    if (local_30 != (char *)0x0) {
+      local_20 = local_30 + 1;
+    }
+  }
+  ___kmp_msg_format(0x4000d);
+  ___kmp_msg_format(0x50001);
+  auVar2 = ___kmp_fatal(auStack_48);
+  pcVar1 = __libcpp_strrchr(auVar2._0_8_,auVar2._8_4_);
+  return (int)pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: strrchr
+// Entry: 00000120
+// Signature: char * __cdecl strrchr(char * __s, int __c)
+// ========================================
+
+
+char * strrchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = __libcpp_strrchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_dump_debug_buffer
+// Entry: 0000014c
+// Signature: void __kmp_dump_debug_buffer(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_dump_debug_buffer(void)
+
+{
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  int *piVar4;
+  int *piVar5;
+  long *plVar6;
+  char *pcVar7;
+  int iVar8;
+  long lVar9;
+  char *local_30;
+  char *local_20;
+  int local_14;
+  
+  plVar6 = ____kmp_debug_buffer;
+  piVar5 = ____kmp_debug_buf_lines;
+  piVar4 = ____kmp_debug_buf_chars;
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: int dc@[???]
+                       Unresolved local var: char * db@[???]
+                       Unresolved local var: char * db_end@[???]
+                       Unresolved local var: char * db2@[???] */
+  if (*____kmp_debug_buffer != 0) {
+    iVar8 = std::__1::__atomic_base<int,_false>::operator_int(____kmp_debug_count);
+    iVar1 = *piVar5;
+    iVar2 = 0;
+    if (iVar1 != 0) {
+      iVar2 = iVar8 / iVar1;
+    }
+    local_20 = (char *)(*plVar6 + (long)((iVar8 - iVar2 * iVar1) * *piVar4));
+    lVar9 = *plVar6;
+    iVar1 = *piVar5;
+    iVar2 = *piVar4;
+    __kmp_acquire_bootstrap_lock(____kmp_stdio_lock);
+    ___kmp_printf_no_lock(0x5a0);
+    for (local_14 = 0; local_14 < *piVar5; local_14 = local_14 + 1) {
+      pcVar7 = local_20;
+      if (*local_20 != '\0') {
+        do {
+          pcVar3 = pcVar7;
+          local_30 = pcVar3 + 1;
+          if (local_20 + (long)*piVar4 + -1 <= local_30) goto LAB_000002fc;
+          pcVar7 = local_30;
+        } while (*local_30 != '\0');
+        if (*pcVar3 != '\n') {
+          *local_30 = '\n';
+          pcVar3[2] = '\0';
+        }
+LAB_000002fc:
+        if (((local_30 == local_20 + (long)*piVar4 + -1) && (*local_30 == '\0')) &&
+           (*pcVar3 != '\n')) {
+          *pcVar3 = '\n';
+        }
+        ___kmp_printf_no_lock(0x5cd);
+        *local_20 = '\0';
+      }
+      local_20 = local_20 + *piVar4;
+      if ((char *)(lVar9 + iVar1 * iVar2) <= local_20) {
+        local_20 = (char *)*plVar6;
+      }
+    }
+    ___kmp_printf_no_lock(0x5d7);
+    __kmp_release_bootstrap_lock(____kmp_stdio_lock);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator_int
+// Entry: 00000450
+// Signature: int __thiscall operator_int(__atomic_base<int,_false> * this)
+// ========================================
+
+
+/* DWARF original name: operator int
+   DWARF original prototype: int operator_int(__atomic_base<int,_false> * this) */
+
+int __thiscall std::__1::__atomic_base<int,_false>::operator_int(__atomic_base<int,_false> *this)
+
+{
+  int iVar1;
+  
+  iVar1 = load(this,memory_order_seq_cst);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_acquire_bootstrap_lock
+// Entry: 00000478
+// Signature: int __cdecl __kmp_acquire_bootstrap_lock(kmp_bootstrap_lock_t * lck)
+// ========================================
+
+
+int __kmp_acquire_bootstrap_lock(kmp_bootstrap_lock_t *lck)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_acquire_ticket_lock(lck,0xfffffffe);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_bootstrap_lock
+// Entry: 000004a0
+// Signature: void __cdecl __kmp_release_bootstrap_lock(kmp_bootstrap_lock_t * lck)
+// ========================================
+
+
+void __kmp_release_bootstrap_lock(kmp_bootstrap_lock_t *lck)
+
+{
+  ___kmp_release_ticket_lock(lck,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strrchr
+// Entry: 000004c8
+// Signature: char * __cdecl __libcpp_strrchr(char * __s, int __c)
+// ========================================
+
+
+char * __libcpp_strrchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = (char *)_strrchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: load
+// Entry: 000004f4
+// Signature: int __thiscall load(__atomic_base<int,_false> * this, memory_order __m)
+// ========================================
+
+
+/* DWARF original prototype: int load(__atomic_base<int,_false> * this, memory_order __m) */
+
+int __thiscall
+std::__1::__atomic_base<int,_false>::load(__atomic_base<int,_false> *this,memory_order __m)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load<int>((__cxx_atomic_base_impl<int> *)this,__m);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load<int>
+// Entry: 00000520
+// Signature: int __cdecl __cxx_atomic_load<int>(__cxx_atomic_base_impl<int> * __a, memory_order __order)
+// ========================================
+
+
+int std::__1::__cxx_atomic_load<int>(__cxx_atomic_base_impl<int> *__a,memory_order __order)
+
+{
+  int local_10;
+  
+  if (__order - memory_order_consume < 2) {
+    local_10 = __a->__a_value;
+  }
+  else if (__order == memory_order_seq_cst) {
+    local_10 = __a->__a_value;
+  }
+  else {
+    local_10 = __a->__a_value;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_acquire_ticket_lock
+// Entry: 00010000
+// Signature: undefined ___kmp_acquire_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_acquire_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00010500
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 00010600
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00010700
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_printf_no_lock
+// Entry: 00010900
+// Signature: undefined ___kmp_printf_no_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_printf_no_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_release_ticket_lock
+// Entry: 00010a00
+// Signature: undefined ___kmp_release_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_release_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_vprintf
+// Entry: 00010c00
+// Signature: undefined ___kmp_vprintf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_vprintf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strrchr
+// Entry: 00010d00
+// Signature: undefined _strrchr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _strrchr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 18
+// Failed: 0
+// Skipped external functions: 0

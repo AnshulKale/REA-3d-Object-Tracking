@@ -1,0 +1,841 @@
+Program: gzlib.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: gzFile __cdecl ltmp0(char * param_1, char * param_2)
+// ========================================
+
+
+gzFile ltmp0(char *param_1,char *param_2)
+
+{
+  gzFile pvVar1;
+  
+  pvVar1 = (gzFile)_gz_open(param_1,0xffffffff,param_2);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: _gz_open
+// Entry: 0000000c
+// Signature: undefined _gz_open(void)
+// ========================================
+
+
+undefined4 * _gz_open(char *param_1,int param_2,char *param_3)
+
+{
+  off_t oVar1;
+  char cVar2;
+  bool bVar3;
+  byte bVar4;
+  bool bVar5;
+  undefined4 *puVar6;
+  size_t sVar7;
+  char *pcVar8;
+  off_t oVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar12;
+  
+  if (param_1 == (char *)0x0) {
+    return (undefined4 *)0x0;
+  }
+  puVar6 = _malloc(0xf0);
+  if (puVar6 == (undefined4 *)0x0) {
+    return (undefined4 *)0x0;
+  }
+  *(double *)(puVar6 + 10) = ltmp1;
+  *(undefined8 *)(puVar6 + 0x1e) = 0;
+  puVar6[6] = 0;
+  *(undefined8 *)(puVar6 + 0x16) = 0xffffffff;
+  puVar6[0x10] = 0;
+  cVar2 = *param_3;
+  if (cVar2 == '\0') goto switchD_000000dc_caseD_2b;
+  bVar3 = false;
+  iVar12 = 0;
+  bVar5 = false;
+  bVar4 = 0;
+  do {
+    param_3 = param_3 + 1;
+    if ((byte)(cVar2 - 0x30U) < 10) {
+      puVar6[0x16] = cVar2 + -0x30;
+    }
+    else {
+      switch((int)cVar2) {
+      case 0x2b:
+        goto switchD_000000dc_caseD_2b;
+      case 0x46:
+        puVar6[0x17] = 4;
+        break;
+      case 0x52:
+        puVar6[0x17] = 3;
+        break;
+      case 0x54:
+        bVar3 = true;
+        puVar6[0x10] = 1;
+        break;
+      case 0x61:
+        iVar12 = 1;
+        puVar6[6] = 1;
+        break;
+      case 0x65:
+        bVar4 = 1;
+        break;
+      case 0x66:
+        puVar6[0x17] = 1;
+        break;
+      case 0x68:
+        puVar6[0x17] = 2;
+        break;
+      case 0x72:
+        iVar12 = 0x1c4f;
+        puVar6[6] = 0x1c4f;
+        break;
+      case 0x77:
+        iVar12 = 0x79b1;
+        puVar6[6] = 0x79b1;
+        break;
+      case 0x78:
+        bVar5 = true;
+      }
+    }
+    cVar2 = *param_3;
+  } while (cVar2 != '\0');
+  if (iVar12 == 0x1c4f) {
+    if (bVar3) goto switchD_000000dc_caseD_2b;
+    puVar6[0x10] = 1;
+  }
+  else if (iVar12 == 0) goto switchD_000000dc_caseD_2b;
+  sVar7 = _strlen(param_1);
+  pcVar8 = _malloc(sVar7 + 1);
+  *(char **)(puVar6 + 8) = pcVar8;
+  if (pcVar8 == (char *)0x0) goto switchD_000000dc_caseD_2b;
+  _snprintf(pcVar8,sVar7 + 1,"%s");
+  if (iVar12 == 0x1c4f) {
+    uVar11 = 0;
+    if (param_2 < 0) goto LAB_000001b0;
+LAB_00000238:
+    puVar6[7] = param_2;
+  }
+  else {
+    uVar10 = 0x201;
+    if (bVar5) {
+      uVar10 = 0xa01;
+    }
+    uVar11 = 0x400;
+    if (iVar12 != 0x79b1) {
+      uVar11 = 8;
+    }
+    uVar11 = uVar11 | uVar10;
+    if (-1 < param_2) goto LAB_00000238;
+LAB_000001b0:
+    param_2 = _open(param_1,uVar11 | (uint)bVar4 << 0x18);
+    puVar6[7] = param_2;
+    if (param_2 == -1) {
+      _free(pcVar8);
+switchD_000000dc_caseD_2b:
+      _free(puVar6);
+      return (undefined4 *)0x0;
+    }
+  }
+  if (iVar12 == 1) {
+    _lseek(param_2,0,2);
+    puVar6[6] = 0x79b1;
+  }
+  else if (iVar12 == 0x1c4f) {
+    oVar9 = _lseek(param_2,0,1);
+    oVar1 = 0;
+    if (oVar9 != -1) {
+      oVar1 = oVar9;
+    }
+    *(off_t *)(puVar6 + 0x12) = oVar1;
+    *(undefined8 *)(puVar6 + 0x14) = 0;
+    *puVar6 = 0;
+    puVar6[0x11] = 0;
+    goto LAB_0000029c;
+  }
+  *puVar6 = 0;
+  puVar6[0x18] = 0;
+LAB_0000029c:
+  *(undefined8 *)(puVar6 + 0x1c) = 0;
+  *(undefined8 *)(puVar6 + 4) = 0;
+  puVar6[0x22] = 0;
+  return puVar6;
+}
+
+
+
+
+// ========================================
+// Function: _gzopen64
+// Entry: 000002ac
+// Signature: undefined _gzopen64(void)
+// ========================================
+
+
+void _gzopen64(undefined8 param_1,undefined8 param_2)
+
+{
+  _gz_open(param_1,0xffffffff,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _gzdopen
+// Entry: 000002b8
+// Signature: gzFile __cdecl _gzdopen(int fd, char * mode)
+// ========================================
+
+
+gzFile _gzdopen(int fd,char *mode)
+
+{
+  char *pcVar1;
+  gzFile pvVar2;
+  
+  if ((fd != -1) && (pcVar1 = _malloc(0x13), pcVar1 != (char *)0x0)) {
+    _snprintf(pcVar1,0x13,"<fd:%d>");
+    pvVar2 = (gzFile)_gz_open(pcVar1,fd,mode);
+    _free(pcVar1);
+    return pvVar2;
+  }
+  return (gzFile)0x0;
+}
+
+
+
+
+// ========================================
+// Function: _gzbuffer
+// Entry: 0000034c
+// Signature: int __cdecl _gzbuffer(gzFile file, uint size)
+// ========================================
+
+
+int _gzbuffer(gzFile file,uint size)
+
+{
+  if ((((file != (gzFile)0x0) &&
+       (*(int *)((long)file + 0x18) == 0x79b1 || *(int *)((long)file + 0x18) == 0x1c4f)) &&
+      (-1 < (int)size)) && (*(int *)((long)file + 0x28) == 0)) {
+    if (size < 9) {
+      size = 8;
+    }
+    *(uint *)((long)file + 0x2c) = size;
+    return 0;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzrewind
+// Entry: 0000039c
+// Signature: int __cdecl _gzrewind(gzFile file)
+// ========================================
+
+
+int _gzrewind(gzFile file)
+
+{
+  off_t oVar1;
+  void *pvVar2;
+  
+  if (file == (gzFile)0x0) {
+    return -1;
+  }
+  if (((*(int *)((long)file + 0x18) == 0x1c4f) &&
+      (*(int *)((long)file + 0x74) == 0 || *(int *)((long)file + 0x74) == -5)) &&
+     (oVar1 = _lseek(*(int *)((long)file + 0x1c),*(off_t *)((long)file + 0x48),0), oVar1 != -1)) {
+    *(undefined4 *)file = 0;
+    if (*(int *)((long)file + 0x18) == 0x1c4f) {
+      *(undefined8 *)((long)file + 0x50) = 0;
+      *(undefined4 *)((long)file + 0x44) = 0;
+      *(undefined4 *)((long)file + 0x70) = 0;
+      pvVar2 = *(void **)((long)file + 0x78);
+    }
+    else {
+      *(undefined4 *)((long)file + 0x60) = 0;
+      *(undefined4 *)((long)file + 0x70) = 0;
+      pvVar2 = *(void **)((long)file + 0x78);
+    }
+    if (pvVar2 != (void *)0x0) {
+      if (*(int *)((long)file + 0x74) != -4) {
+        _free(pvVar2);
+      }
+      *(undefined8 *)((long)file + 0x78) = 0;
+    }
+    *(undefined4 *)((long)file + 0x74) = 0;
+    *(undefined8 *)((long)file + 0x10) = 0;
+    *(undefined4 *)((long)file + 0x88) = 0;
+    return 0;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzseek64
+// Entry: 0000046c
+// Signature: long __cdecl _gzseek64(gzFile param_1, long param_2, int param_3)
+// ========================================
+
+
+long _gzseek64(gzFile param_1,long param_2,int param_3)
+
+{
+  long lVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  off_t oVar5;
+  ulong uVar6;
+  
+  if (param_1 == (gzFile)0x0) {
+    return -1;
+  }
+  iVar4 = *(int *)((long)param_1 + 0x18);
+  if ((iVar4 != 0x79b1 && iVar4 != 0x1c4f) ||
+     (*(int *)((long)param_1 + 0x74) != 0 && *(int *)((long)param_1 + 0x74) != -5)) {
+    return -1;
+  }
+  if (1 < (uint)param_3) {
+    return -1;
+  }
+  if (param_3 == 0) {
+    param_2 = param_2 - *(long *)((long)param_1 + 0x10);
+    *(undefined4 *)((long)param_1 + 0x70) = 0;
+  }
+  else {
+    if (*(int *)((long)param_1 + 0x70) != 0) {
+      param_2 = *(long *)((long)param_1 + 0x68) + param_2;
+    }
+    *(undefined4 *)((long)param_1 + 0x70) = 0;
+  }
+  if (iVar4 == 0x1c4f) {
+    if ((*(int *)((long)param_1 + 0x44) == 1) && (-1 < *(long *)((long)param_1 + 0x10) + param_2)) {
+      oVar5 = _lseek(*(int *)((long)param_1 + 0x1c),param_2 - (ulong)*(uint *)param_1,1);
+      if (oVar5 == -1) {
+        return -1;
+      }
+      *(undefined4 *)param_1 = 0;
+      *(undefined8 *)((long)param_1 + 0x50) = 0;
+      *(undefined4 *)((long)param_1 + 0x70) = 0;
+      if (*(void **)((long)param_1 + 0x78) != (void *)0x0) {
+        if (*(int *)((long)param_1 + 0x74) != -4) {
+          _free(*(void **)((long)param_1 + 0x78));
+        }
+        *(undefined8 *)((long)param_1 + 0x78) = 0;
+      }
+      *(undefined4 *)((long)param_1 + 0x74) = 0;
+      *(undefined4 *)((long)param_1 + 0x88) = 0;
+      lVar1 = *(long *)((long)param_1 + 0x10) + param_2;
+      *(long *)((long)param_1 + 0x10) = lVar1;
+      return lVar1;
+    }
+    if (param_2 < 0) {
+      param_2 = *(long *)((long)param_1 + 0x10) + param_2;
+      if (param_2 < 0) {
+        return -1;
+      }
+      iVar4 = _gzrewind(param_1);
+      if (iVar4 == -1) {
+        return -1;
+      }
+      if (*(int *)((long)param_1 + 0x18) != 0x1c4f) goto LAB_000005b8;
+    }
+    uVar3 = *(uint *)param_1;
+    uVar2 = (uint)param_2;
+    if ((ulong)uVar3 <= (ulong)param_2) {
+      uVar2 = uVar3;
+    }
+    uVar6 = (ulong)uVar2;
+    *(uint *)param_1 = uVar3 - uVar2;
+    *(ulong *)((long)param_1 + 8) = *(long *)((long)param_1 + 8) + uVar6;
+    *(ulong *)((long)param_1 + 0x10) = *(long *)((long)param_1 + 0x10) + uVar6;
+    param_2 = param_2 - uVar6;
+  }
+  else if (param_2 < 0) {
+    return -1;
+  }
+LAB_000005b8:
+  if (param_2 != 0) {
+    *(undefined4 *)((long)param_1 + 0x70) = 1;
+    *(long *)((long)param_1 + 0x68) = param_2;
+  }
+  return *(long *)((long)param_1 + 0x10) + param_2;
+}
+
+
+
+
+// ========================================
+// Function: _gz_error
+// Entry: 0000061c
+// Signature: undefined _gz_error(void)
+// ========================================
+
+
+void _gz_error(undefined4 *param_1,int param_2,char *param_3)
+
+{
+  size_t sVar1;
+  size_t sVar2;
+  char *pcVar3;
+  char *pcVar4;
+  
+  if (*(void **)(param_1 + 0x1e) != (void *)0x0) {
+    if (param_1[0x1d] != -4) {
+      _free(*(void **)(param_1 + 0x1e));
+    }
+    *(undefined8 *)(param_1 + 0x1e) = 0;
+  }
+  if ((param_2 != -5) && (param_2 != 0)) {
+    *param_1 = 0;
+  }
+  param_1[0x1d] = param_2;
+  if ((param_2 != -4) && (param_3 != (char *)0x0)) {
+    pcVar4 = *(char **)(param_1 + 8);
+    sVar1 = _strlen(pcVar4);
+    sVar2 = _strlen(param_3);
+    pcVar3 = _malloc(sVar1 + sVar2 + 3);
+    *(char **)(param_1 + 0x1e) = pcVar3;
+    if (pcVar3 == (char *)0x0) {
+      param_1[0x1d] = 0xfffffffc;
+      return;
+    }
+    sVar1 = _strlen(pcVar4);
+    sVar2 = _strlen(param_3);
+    _snprintf(pcVar3,sVar1 + sVar2 + 3,"%s%s%s");
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _gzseek
+// Entry: 00000714
+// Signature: long __cdecl _gzseek(gzFile param_1, long param_2, int param_3)
+// ========================================
+
+
+long _gzseek(gzFile param_1,long param_2,int param_3)
+
+{
+  long lVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  off_t oVar5;
+  ulong uVar6;
+  
+  if (param_1 == (gzFile)0x0) {
+    return -1;
+  }
+  iVar4 = *(int *)((long)param_1 + 0x18);
+  if ((iVar4 != 0x79b1 && iVar4 != 0x1c4f) ||
+     (*(int *)((long)param_1 + 0x74) != 0 && *(int *)((long)param_1 + 0x74) != -5)) {
+    return -1;
+  }
+  if (1 < (uint)param_3) {
+    return -1;
+  }
+  if (param_3 == 0) {
+    param_2 = param_2 - *(long *)((long)param_1 + 0x10);
+    *(undefined4 *)((long)param_1 + 0x70) = 0;
+  }
+  else {
+    if (*(int *)((long)param_1 + 0x70) != 0) {
+      param_2 = *(long *)((long)param_1 + 0x68) + param_2;
+    }
+    *(undefined4 *)((long)param_1 + 0x70) = 0;
+  }
+  if (iVar4 == 0x1c4f) {
+    if ((*(int *)((long)param_1 + 0x44) == 1) && (-1 < *(long *)((long)param_1 + 0x10) + param_2)) {
+      oVar5 = _lseek(*(int *)((long)param_1 + 0x1c),param_2 - (ulong)*(uint *)param_1,1);
+      if (oVar5 == -1) {
+        return -1;
+      }
+      *(undefined4 *)param_1 = 0;
+      *(undefined8 *)((long)param_1 + 0x50) = 0;
+      *(undefined4 *)((long)param_1 + 0x70) = 0;
+      if (*(void **)((long)param_1 + 0x78) != (void *)0x0) {
+        if (*(int *)((long)param_1 + 0x74) != -4) {
+          _free(*(void **)((long)param_1 + 0x78));
+        }
+        *(undefined8 *)((long)param_1 + 0x78) = 0;
+      }
+      *(undefined4 *)((long)param_1 + 0x74) = 0;
+      *(undefined4 *)((long)param_1 + 0x88) = 0;
+      lVar1 = *(long *)((long)param_1 + 0x10) + param_2;
+      *(long *)((long)param_1 + 0x10) = lVar1;
+      return lVar1;
+    }
+    if (param_2 < 0) {
+      param_2 = *(long *)((long)param_1 + 0x10) + param_2;
+      if (param_2 < 0) {
+        return -1;
+      }
+      iVar4 = _gzrewind(param_1);
+      if (iVar4 == -1) {
+        return -1;
+      }
+      if (*(int *)((long)param_1 + 0x18) != 0x1c4f) goto LAB_000005b8;
+    }
+    uVar3 = *(uint *)param_1;
+    uVar2 = (uint)param_2;
+    if ((ulong)uVar3 <= (ulong)param_2) {
+      uVar2 = uVar3;
+    }
+    uVar6 = (ulong)uVar2;
+    *(uint *)param_1 = uVar3 - uVar2;
+    *(ulong *)((long)param_1 + 8) = *(long *)((long)param_1 + 8) + uVar6;
+    *(ulong *)((long)param_1 + 0x10) = *(long *)((long)param_1 + 0x10) + uVar6;
+    param_2 = param_2 - uVar6;
+  }
+  else if (param_2 < 0) {
+    return -1;
+  }
+LAB_000005b8:
+  if (param_2 != 0) {
+    *(undefined4 *)((long)param_1 + 0x70) = 1;
+    *(long *)((long)param_1 + 0x68) = param_2;
+  }
+  return *(long *)((long)param_1 + 0x10) + param_2;
+}
+
+
+
+
+// ========================================
+// Function: _gztell64
+// Entry: 00000718
+// Signature: undefined _gztell64(void)
+// ========================================
+
+
+long _gztell64(long param_1)
+
+{
+  if ((param_1 != 0) && (*(int *)(param_1 + 0x18) == 0x79b1 || *(int *)(param_1 + 0x18) == 0x1c4f))
+  {
+    if (*(int *)(param_1 + 0x70) != 0) {
+      return *(long *)(param_1 + 0x68) + *(long *)(param_1 + 0x10);
+    }
+    return *(long *)(param_1 + 0x10);
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gztell
+// Entry: 0000075c
+// Signature: long __cdecl _gztell(gzFile param_1)
+// ========================================
+
+
+long _gztell(gzFile param_1)
+
+{
+  if ((param_1 != (gzFile)0x0) &&
+     (*(int *)((long)param_1 + 0x18) == 0x79b1 || *(int *)((long)param_1 + 0x18) == 0x1c4f)) {
+    if (*(int *)((long)param_1 + 0x70) != 0) {
+      return *(long *)((long)param_1 + 0x68) + *(long *)((long)param_1 + 0x10);
+    }
+    return *(long *)((long)param_1 + 0x10);
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzoffset64
+// Entry: 000007a0
+// Signature: undefined _gzoffset64(void)
+// ========================================
+
+
+off_t _gzoffset64(long param_1)
+
+{
+  off_t oVar1;
+  
+  if (param_1 == 0) {
+    return -1;
+  }
+  if (*(int *)(param_1 + 0x18) == 0x79b1 || *(int *)(param_1 + 0x18) == 0x1c4f) {
+    oVar1 = _lseek(*(int *)(param_1 + 0x1c),0,1);
+    if ((oVar1 != -1) && (*(int *)(param_1 + 0x18) == 0x1c4f)) {
+      oVar1 = oVar1 - (ulong)*(uint *)(param_1 + 0x88);
+    }
+    return oVar1;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzoffset
+// Entry: 00000820
+// Signature: long __cdecl _gzoffset(gzFile param_1)
+// ========================================
+
+
+long _gzoffset(gzFile param_1)
+
+{
+  long lVar1;
+  
+  if (param_1 == (gzFile)0x0) {
+    return -1;
+  }
+  if (*(int *)((long)param_1 + 0x18) == 0x79b1 || *(int *)((long)param_1 + 0x18) == 0x1c4f) {
+    lVar1 = _lseek(*(int *)((long)param_1 + 0x1c),0,1);
+    if ((lVar1 != -1) && (*(int *)((long)param_1 + 0x18) == 0x1c4f)) {
+      lVar1 = lVar1 - (ulong)*(uint *)((long)param_1 + 0x88);
+    }
+    return lVar1;
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: _gzeof
+// Entry: 000008a0
+// Signature: int __cdecl _gzeof(gzFile file)
+// ========================================
+
+
+int _gzeof(gzFile file)
+
+{
+  int iVar1;
+  
+  iVar1 = 0;
+  if (file != (gzFile)0x0) {
+    if (*(int *)((long)file + 0x18) != 0x1c4f) {
+      return 0;
+    }
+    iVar1 = *(int *)((long)file + 0x54);
+  }
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _gzerror
+// Entry: 000008c4
+// Signature: char * __cdecl _gzerror(gzFile file, int * errnum)
+// ========================================
+
+
+char * _gzerror(gzFile file,int *errnum)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = (char *)0x0;
+  if (file != (gzFile)0x0) {
+    if (*(int *)((long)file + 0x18) != 0x79b1 && *(int *)((long)file + 0x18) != 0x1c4f) {
+      return (char *)0x0;
+    }
+    if (errnum != (int *)0x0) {
+      *errnum = *(int *)((long)file + 0x74);
+    }
+    if (*(int *)((long)file + 0x74) == -4) {
+      return "out of memory";
+    }
+    pcVar1 = "";
+    if (*(char **)((long)file + 0x78) != (char *)0x0) {
+      pcVar1 = *(char **)((long)file + 0x78);
+    }
+  }
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: _gzclearerr
+// Entry: 00000924
+// Signature: void __cdecl _gzclearerr(gzFile file)
+// ========================================
+
+
+void _gzclearerr(gzFile file)
+
+{
+  if (file != (gzFile)0x0) {
+    if (*(int *)((long)file + 0x18) != 0x79b1) {
+      if (*(int *)((long)file + 0x18) != 0x1c4f) {
+        return;
+      }
+      *(undefined8 *)((long)file + 0x50) = 0;
+    }
+    if (*(void **)((long)file + 0x78) != (void *)0x0) {
+      if (*(int *)((long)file + 0x74) != -4) {
+        _free(*(void **)((long)file + 0x78));
+      }
+      *(undefined8 *)((long)file + 0x78) = 0;
+    }
+    *(undefined4 *)((long)file + 0x74) = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001000
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _lseek
+// Entry: 00001100
+// Signature: off_t _lseek(int param_1, off_t param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+off_t _lseek(int param_1,off_t param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00001200
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _open
+// Entry: 00001300
+// Signature: int _open(char * param_1, int param_2, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _open(char *param_1,int param_2,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _snprintf
+// Entry: 00001400
+// Signature: int _snprintf(char * param_1, size_t param_2, char * param_3, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _snprintf(char *param_1,size_t param_2,char *param_3,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00001500
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 22
+// Failed: 0
+// Skipped external functions: 0

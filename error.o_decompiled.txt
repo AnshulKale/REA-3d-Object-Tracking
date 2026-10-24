@@ -1,0 +1,228 @@
+Program: error.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: undefined ltmp0(void)
+// ========================================
+
+
+undefined8 ltmp0(uint param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = -param_1;
+  if (-1 < (int)param_1) {
+    uVar1 = param_1;
+  }
+  uVar1 = (uVar1 & 0xff80) - 0x3880;
+  if (uVar1 >> 9 < 0xd) {
+    return *(undefined8 *)((ulong)(uVar1 >> 7) * 8 + 0xca8);
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_low_level_strerr
+// Entry: 0000003c
+// Signature: undefined _mbedtls_low_level_strerr(void)
+// ========================================
+
+
+undefined8 _mbedtls_low_level_strerr(uint param_1)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = -param_1;
+  if (-1 < (int)param_1) {
+    uVar1 = param_1;
+  }
+  uVar2 = 0x83d;
+  switch(uVar1 & 0x7fff007f) {
+  case 1:
+    return 0xb7e;
+  case 2:
+    return 0x9ca;
+  default:
+    uVar2 = 0;
+switchD_00000074_caseD_60:
+    return uVar2;
+  case 4:
+    return 0xa0d;
+  case 6:
+    return 0xa37;
+  case 8:
+    return 0xa72;
+  case 10:
+    return 0xa9f;
+  case 0xb:
+    return 0xc39;
+  case 0xc:
+    return 0xae5;
+  case 0xe:
+    return 0xb2c;
+  case 0x10:
+    return 0xb5c;
+  case 0x2a:
+    return 0x985;
+  case 0x2c:
+    return 0x9a6;
+  case 0x2e:
+    return 0xc22;
+  case 0x60:
+    goto switchD_00000074_caseD_60;
+  case 0x62:
+    return 0x874;
+  case 100:
+    return 0x89f;
+  case 0x66:
+    return 0x8e2;
+  case 0x68:
+    return 0x914;
+  case 0x6a:
+    return 0x92b;
+  case 0x6c:
+    return 0x94b;
+  case 0x6e:
+    return 0xb94;
+  case 0x70:
+    return 0xbb9;
+  case 0x72:
+    return 0xbe0;
+  case 0x74:
+    return 0xc5a;
+  }
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_strerror
+// Entry: 00000194
+// Signature: undefined _mbedtls_strerror(void)
+// ========================================
+
+
+void _mbedtls_strerror(uint param_1,char *param_2,size_t param_3)
+
+{
+  uint uVar1;
+  long lVar2;
+  size_t sVar3;
+  char *pcVar4;
+  
+  if (param_3 != 0) {
+    _bzero(param_2,param_3);
+    uVar1 = -param_1;
+    if (-1 < (int)param_1) {
+      uVar1 = param_1;
+    }
+    if ((uVar1 & 0xff80) != 0) {
+      lVar2 = ltmp0(uVar1);
+      if (lVar2 == 0) {
+        pcVar4 = "UNKNOWN ERROR CODE (%04X)";
+      }
+      else {
+        pcVar4 = "%s";
+      }
+      _snprintf(param_2,param_3,pcVar4);
+    }
+    if ((uVar1 & 0x7fff007f) != 0) {
+      sVar3 = _strlen(param_2);
+      if (sVar3 != 0) {
+        if (param_3 - sVar3 < 5) {
+          return;
+        }
+        _snprintf(param_2 + sVar3,param_3 - sVar3," : ");
+        param_2 = param_2 + sVar3 + 3;
+        param_3 = param_3 - (sVar3 + 3);
+      }
+      lVar2 = _mbedtls_low_level_strerr(uVar1);
+      if (lVar2 == 0) {
+        pcVar4 = "UNKNOWN ERROR CODE (%04X)";
+      }
+      else {
+        pcVar4 = "%s";
+      }
+      _snprintf(param_2,param_3,pcVar4);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00001000
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _snprintf
+// Entry: 00001100
+// Signature: int _snprintf(char * param_1, size_t param_2, char * param_3, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _snprintf(char *param_1,size_t param_2,char *param_3,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00001200
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 6
+// Failed: 0
+// Skipped external functions: 0

@@ -1,0 +1,591 @@
+Program: fed.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: fed_tau_by_process_time
+// Entry: 00000000
+// Signature: undefined __cdecl fed_tau_by_process_time(float * param_1, int * param_2, float * param_3, bool * param_4, vector * param_5)
+// ========================================
+
+
+/* fed_tau_by_process_time(float const&, int const&, float const&, bool const&, std::vector<float,
+   std::allocator<float> >&) */
+
+void fed_tau_by_process_time
+               (float *param_1,int *param_2,float *param_3,bool *param_4,vector *param_5)
+
+{
+  float fVar1;
+  float local_18;
+  int local_14;
+  
+  local_18 = (*param_1 / (float)*param_2) * 3.0;
+  fVar1 = SQRT(local_18 / *param_3 + 0.25) + -0.5 + -1e-08;
+  local_14 = (int)fVar1;
+  if ((float)(int)fVar1 < fVar1) {
+    local_14 = local_14 + 1;
+  }
+  local_18 = local_18 / (*param_3 * (float)(local_14 + local_14 * local_14));
+  fed_tau_internal(&local_14,&local_18,param_3,param_4,param_5);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: fed_tau_by_cycle_time
+// Entry: 00000094
+// Signature: undefined __cdecl fed_tau_by_cycle_time(float * param_1, float * param_2, bool * param_3, vector * param_4)
+// ========================================
+
+
+/* fed_tau_by_cycle_time(float const&, float const&, bool const&, std::vector<float,
+   std::allocator<float> >&) */
+
+void fed_tau_by_cycle_time(float *param_1,float *param_2,bool *param_3,vector *param_4)
+
+{
+  float fVar1;
+  float local_18;
+  int local_14;
+  
+  fVar1 = SQRT((*param_1 * 3.0) / *param_2 + 0.25) + -0.5 + -1e-08;
+  local_14 = (int)fVar1;
+  if ((float)(int)fVar1 < fVar1) {
+    local_14 = local_14 + 1;
+  }
+  local_18 = (*param_1 * 3.0) / (*param_2 * (float)(local_14 + local_14 * local_14));
+  fed_tau_internal(&local_14,&local_18,param_2,param_3,param_4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: fed_tau_internal
+// Entry: 00000128
+// Signature: undefined __cdecl fed_tau_internal(int * param_1, float * param_2, float * param_3, bool * param_4, vector * param_5)
+// ========================================
+
+
+/* fed_tau_internal(int const&, float const&, float const&, bool const&, std::vector<float,
+   std::allocator<float> >&) */
+
+ulong fed_tau_internal(int *param_1,float *param_2,float *param_3,bool *param_4,vector *param_5)
+
+{
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  code *pcVar7;
+  float *pfVar8;
+  void *pvVar9;
+  uint uVar10;
+  long lVar11;
+  int iVar12;
+  int iVar13;
+  uint uVar14;
+  float *pfVar15;
+  ulong uVar16;
+  ulong uVar17;
+  char cVar18;
+  ulong uVar19;
+  float *pfVar20;
+  float fVar21;
+  float fVar22;
+  float fVar23;
+  float fVar24;
+  float fVar25;
+  int iVar27;
+  int iVar28;
+  undefined1 auVar26 [16];
+  int iVar29;
+  float fVar30;
+  undefined1 auVar31 [16];
+  
+  uVar19 = (ulong)(uint)*param_1;
+  if (*param_1 < 1) {
+    return 0;
+  }
+  pfVar8 = operator_new(uVar19 * 4);
+  pfVar15 = pfVar8 + uVar19;
+  _bzero(pfVar8,uVar19 * 4);
+  pvVar9 = *(void **)param_5;
+  if (pvVar9 == (void *)0x0) {
+    *(float **)param_5 = pfVar8;
+    *(float **)(param_5 + 8) = pfVar15;
+    *(float **)(param_5 + 0x10) = pfVar15;
+    cVar18 = *param_4;
+    if ((bool)cVar18 != false) goto LAB_000001d4;
+LAB_00000210:
+    pfVar15 = (float *)0x0;
+    iVar13 = (int)uVar19;
+    iVar12 = iRam0000000000007a00;
+    iVar27 = iRam0000000000007a04;
+    iVar28 = iRam0000000000007a08;
+    iVar29 = iRam0000000000007a0c;
+  }
+  else {
+    *(void **)(param_5 + 8) = pvVar9;
+    operator_delete(pvVar9);
+    *(undefined8 *)param_5 = 0;
+    *(undefined8 *)(param_5 + 8) = 0;
+    *(undefined8 *)(param_5 + 0x10) = 0;
+    uVar19 = (ulong)(uint)*param_1;
+    *(float **)param_5 = pfVar8;
+    *(float **)(param_5 + 8) = pfVar15;
+    *(float **)(param_5 + 0x10) = pfVar15;
+    cVar18 = *param_4;
+    if ((bool)cVar18 == false) goto LAB_00000210;
+LAB_000001d4:
+    iVar13 = (int)uVar19;
+    if (iVar13 == 0) goto LAB_00000210;
+    if (iVar13 < 0) {
+      std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar7 = (code *)SoftwareBreakpoint(1,0x624);
+      (*pcVar7)();
+    }
+    pfVar15 = operator_new((long)iVar13 << 2);
+    _bzero(pfVar15,(long)iVar13 << 2);
+    iVar12 = iRam0000000000007a00;
+    iVar27 = iRam0000000000007a04;
+    iVar28 = iRam0000000000007a08;
+    iVar29 = iRam0000000000007a0c;
+  }
+  uVar14 = (uint)uVar19;
+  iRam0000000000007a00 = iVar12;
+  iRam0000000000007a04 = iVar27;
+  iRam0000000000007a08 = iVar28;
+  iRam0000000000007a0c = iVar29;
+  if (0 < iVar13) {
+    fVar30 = 1.0 / ((float)(int)uVar14 * 4.0 + 2.0);
+    fVar21 = *param_2 * *param_3 * 0.5;
+    if (cVar18 == '\0') {
+      if (3 < uVar14) {
+        uVar16 = uVar19 & 0xfffffffc;
+        auVar31 = NEON_fmov(0x3f800000,4);
+        uVar17 = uVar16;
+        pfVar20 = pfVar8;
+        do {
+          auVar26._4_4_ = iVar27;
+          auVar26._0_4_ = iVar12;
+          auVar26._8_4_ = iVar28;
+          auVar26._12_4_ = iVar29;
+          auVar26 = NEON_scvtf(auVar26,4);
+          fVar25 = (float)_cosf();
+          auVar6._4_4_ = (auVar31._4_4_ + auVar26._4_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar6._0_4_ = (auVar31._0_4_ + auVar26._0_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar6._8_4_ = (auVar31._8_4_ + auVar26._8_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar6._12_4_ = (auVar31._12_4_ + auVar26._12_4_ * 2.0) * 3.1415927 * fVar30;
+          fVar22 = (float)_cosf(auVar6);
+          fVar23 = (float)_cosf();
+          fVar24 = (float)_cosf();
+          pfVar20[2] = fVar21 / (fVar23 * fVar23);
+          pfVar20[3] = fVar21 / (fVar24 * fVar24);
+          *pfVar20 = fVar21 / (fVar22 * fVar22);
+          pfVar20[1] = fVar21 / (fVar25 * fVar25);
+          iVar12 = iVar12 + 4;
+          iVar27 = iVar27 + 4;
+          iVar28 = iVar28 + 4;
+          iVar29 = iVar29 + 4;
+          uVar17 = uVar17 - 4;
+          pfVar20 = pfVar20 + 4;
+        } while (uVar17 != 0);
+        if (uVar16 == uVar19) goto LAB_000004b0;
+      }
+      else {
+        uVar16 = 0;
+      }
+      do {
+        fVar25 = (float)_cosf(fVar30 * ((float)(int)uVar16 * 2.0 + 1.0) * 3.1415927,0x40490fdb,
+                              fVar30);
+        pfVar8[uVar16] = fVar21 / (fVar25 * fVar25);
+        uVar16 = uVar16 + 1;
+      } while (uVar19 != uVar16);
+    }
+    else {
+      if (3 < uVar14) {
+        uVar16 = uVar19 & 0xfffffffc;
+        auVar31 = NEON_fmov(0x3f800000,4);
+        uVar17 = uVar16;
+        pfVar8 = pfVar15;
+        do {
+          auVar4._4_4_ = iVar27;
+          auVar4._0_4_ = iVar12;
+          auVar4._8_4_ = iVar28;
+          auVar4._12_4_ = iVar29;
+          auVar26 = NEON_scvtf(auVar4,4);
+          fVar25 = (float)_cosf();
+          auVar5._4_4_ = (auVar31._4_4_ + auVar26._4_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar5._0_4_ = (auVar31._0_4_ + auVar26._0_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar5._8_4_ = (auVar31._8_4_ + auVar26._8_4_ * 2.0) * 3.1415927 * fVar30;
+          auVar5._12_4_ = (auVar31._12_4_ + auVar26._12_4_ * 2.0) * 3.1415927 * fVar30;
+          fVar22 = (float)_cosf(auVar5);
+          fVar23 = (float)_cosf();
+          fVar24 = (float)_cosf();
+          pfVar8[2] = fVar21 / (fVar23 * fVar23);
+          pfVar8[3] = fVar21 / (fVar24 * fVar24);
+          *pfVar8 = fVar21 / (fVar22 * fVar22);
+          pfVar8[1] = fVar21 / (fVar25 * fVar25);
+          iVar12 = iVar12 + 4;
+          iVar27 = iVar27 + 4;
+          iVar28 = iVar28 + 4;
+          iVar29 = iVar29 + 4;
+          uVar17 = uVar17 - 4;
+          pfVar8 = pfVar8 + 4;
+        } while (uVar17 != 0);
+        if (uVar16 == uVar19) goto LAB_000004b0;
+      }
+      else {
+        uVar16 = 0;
+      }
+      do {
+        fVar25 = (float)_cosf(fVar30 * ((float)(int)uVar16 * 2.0 + 1.0) * 3.1415927,0x40490fdb,
+                              fVar30);
+        pfVar15[uVar16] = fVar21 / (fVar25 * fVar25);
+        uVar16 = uVar16 + 1;
+      } while (uVar19 != uVar16);
+    }
+  }
+LAB_000004b0:
+  if (cVar18 != '\0') {
+    uVar2 = uVar14;
+    if ((int)uVar14 < 0) {
+      uVar2 = uVar14 + 1;
+    }
+    uVar16 = uVar19;
+    do {
+      do {
+        do {
+          uVar10 = (uint)uVar16;
+          uVar1 = uVar10 + 1;
+          uVar16 = (ulong)uVar1;
+        } while ((int)uVar10 < 1);
+        if ((uVar10 < 7) && ((1 << (ulong)(uVar10 & 0x1f) & 0x56U) != 0)) goto LAB_00000598;
+      } while ((uVar1 * -0x49249249 < 0x24924925) ||
+              ((uVar1 % 5 == 0 || (uVar1 & 1) == 0) || uVar1 % 3 == 0));
+      if ((int)SQRT((float)(int)uVar1 + 1.0) < 0xb) break;
+      bVar3 = true;
+      iVar13 = 0xb;
+      do {
+        iVar12 = 0;
+        if (iVar13 != 0) {
+          iVar12 = (int)uVar1 / iVar13;
+        }
+        bVar3 = (bool)(uVar1 != iVar12 * iVar13 & bVar3);
+        iVar13 = iVar13 + 2;
+      } while (iVar13 <= (int)SQRT((float)(int)uVar1 + 1.0));
+    } while (!bVar3);
+LAB_00000598:
+    if (0 < (int)uVar14) {
+      uVar16 = 0;
+      iVar13 = 0;
+      lVar11 = *(long *)param_5;
+      do {
+        iVar12 = ((int)uVar2 >> 1) * iVar13;
+        do {
+          iVar12 = ((int)uVar2 >> 1) + iVar12;
+          iVar13 = iVar13 + 1;
+          iVar27 = 0;
+          if (uVar1 != 0) {
+            iVar27 = iVar12 / (int)uVar1;
+          }
+          iVar27 = iVar12 - iVar27 * uVar1;
+        } while ((int)uVar14 < iVar27);
+        *(float *)(lVar11 + uVar16 * 4) = pfVar15[iVar27 + -1];
+        uVar16 = uVar16 + 1;
+      } while (uVar16 != uVar19);
+      goto LAB_000005e8;
+    }
+  }
+  if (pfVar15 == (float *)0x0) {
+    return uVar19;
+  }
+LAB_000005e8:
+  operator_delete(pfVar15);
+  return uVar19;
+}
+
+
+
+
+// ========================================
+// Function: fed_is_prime_internal
+// Entry: 00000640
+// Signature: undefined __cdecl fed_is_prime_internal(int * param_1)
+// ========================================
+
+
+/* fed_is_prime_internal(int const&) */
+
+byte fed_is_prime_internal(int *param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  byte bVar3;
+  int iVar4;
+  
+  uVar1 = *param_1;
+  if ((int)uVar1 < 2) {
+    return 0;
+  }
+  if ((5 < uVar1 - 2) || ((0x2bU >> (ulong)(uVar1 - 2 & 0x1f) & 1) == 0)) {
+    if (((uVar1 * -0x49249249 < 0x24924925 || uVar1 % 5 == 0) || (uVar1 & 1) == 0) || uVar1 % 3 == 0
+       ) {
+      return 0;
+    }
+    if (10 < (int)SQRT((float)(int)uVar1 + 1.0)) {
+      bVar3 = 1;
+      iVar4 = 0xb;
+      do {
+        iVar2 = 0;
+        if (iVar4 != 0) {
+          iVar2 = (int)uVar1 / iVar4;
+        }
+        bVar3 = uVar1 != iVar2 * iVar4 & bVar3;
+        iVar4 = iVar4 + 2;
+      } while (iVar4 <= (int)SQRT((float)(int)uVar1 + 1.0));
+      return bVar3;
+    }
+  }
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000714
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<float, std::allocator<float> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000728
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000778
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00001100
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00001200
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00001500
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00001600
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00001700
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00001900
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00001b00
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cosf
+// Entry: 00001c00
+// Signature: undefined _cosf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cosf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 15
+// Failed: 0
+// Skipped external functions: 0

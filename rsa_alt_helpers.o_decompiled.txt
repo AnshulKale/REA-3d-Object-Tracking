@@ -1,0 +1,649 @@
+Program: rsa_alt_helpers.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: undefined ltmp0(void)
+// ========================================
+
+
+undefined8
+ltmp0(undefined8 *param_1,undefined8 param_2,undefined8 param_3,long *param_4,long *param_5)
+
+{
+  undefined1 *puVar1;
+  ushort uVar2;
+  int iVar3;
+  ulong uVar4;
+  undefined8 uVar5;
+  ushort uVar6;
+  ushort uVar7;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [16];
+  
+  uVar5 = 0xfffffffc;
+  if (((((param_4 != (long *)0x0) && (param_5 != (long *)0x0)) && (*param_4 == 0)) &&
+      (((*param_5 == 0 && (iVar3 = _mbedtls_mpi_cmp_int(param_1,0), 0 < iVar3)) &&
+       ((iVar3 = _mbedtls_mpi_cmp_int(param_3,1), 0 < iVar3 &&
+        ((iVar3 = _mbedtls_mpi_cmp_mpi(param_3,param_1), iVar3 < 0 &&
+         (iVar3 = _mbedtls_mpi_cmp_int(param_2,1), 0 < iVar3)))))))) &&
+     (iVar3 = _mbedtls_mpi_cmp_mpi(param_2,param_1), iVar3 < 0)) {
+    _mbedtls_mpi_init(auStack_70);
+    _mbedtls_mpi_init(auStack_60);
+    uVar5 = _mbedtls_mpi_mul_mpi(auStack_60,param_3,param_2);
+    if (((int)uVar5 == 0) &&
+       (uVar5 = _mbedtls_mpi_sub_int(auStack_60,auStack_60,1), (int)uVar5 == 0)) {
+      uVar2 = _mbedtls_mpi_lsb(auStack_60);
+      if (uVar2 == 0) {
+LAB_000002b8:
+        uVar5 = 0xfffffffc;
+      }
+      else {
+        uVar5 = _mbedtls_mpi_shift_r(auStack_60,uVar2);
+        if ((int)uVar5 == 0) {
+          uVar4 = *(ulong *)*param_1;
+          puVar1 = &l___const_mbedtls_rsa_deduce_primes_primes;
+          if ((uVar4 & 7) == 1) {
+            puVar1 = &DAT_0000093d;
+          }
+          uVar5 = _mbedtls_mpi_lset(auStack_70,*puVar1);
+          if ((int)uVar5 == 0) {
+            uVar6 = (ushort)((uVar4 & 7) == 1);
+            while (uVar5 = _mbedtls_mpi_gcd(param_4,auStack_70,param_1), (int)uVar5 == 0) {
+              iVar3 = _mbedtls_mpi_cmp_int(param_4,1);
+              if (iVar3 == 0) {
+                uVar5 = _mbedtls_mpi_exp_mod(auStack_70,auStack_70,auStack_60,param_1,param_5);
+                if ((int)uVar5 != 0) break;
+                uVar7 = 1;
+                do {
+                  iVar3 = _mbedtls_mpi_cmp_int(auStack_70,1);
+                  if (iVar3 == 0) break;
+                  uVar5 = _mbedtls_mpi_add_int(auStack_70,auStack_70,1);
+                  if (((int)uVar5 != 0) ||
+                     (uVar5 = _mbedtls_mpi_gcd(param_4,auStack_70,param_1), (int)uVar5 != 0))
+                  goto LAB_00000104;
+                  iVar3 = _mbedtls_mpi_cmp_int(param_4,1);
+                  if ((iVar3 == 1) && (iVar3 = _mbedtls_mpi_cmp_mpi(param_4,param_1), iVar3 == -1))
+                  {
+                    uVar5 = _mbedtls_mpi_div_mpi(param_5,0,param_1,param_4);
+                    goto LAB_00000104;
+                  }
+                  uVar5 = _mbedtls_mpi_sub_int(auStack_70,auStack_70,1);
+                  if ((((int)uVar5 != 0) ||
+                      (uVar5 = _mbedtls_mpi_mul_mpi(auStack_70,auStack_70,auStack_70),
+                      (int)uVar5 != 0)) ||
+                     (uVar5 = _mbedtls_mpi_mod_mpi(auStack_70,auStack_70,param_1), (int)uVar5 != 0))
+                  goto LAB_00000104;
+                  uVar7 = uVar7 + 1;
+                } while (uVar7 <= uVar2);
+                iVar3 = _mbedtls_mpi_cmp_int(auStack_70,1);
+                uVar5 = 0xfffffffc;
+                if ((iVar3 != 0) || (0x35 < (ushort)(uVar6 + 1))) break;
+              }
+              else if (0x35 < (ushort)(uVar6 + 1)) goto LAB_000002b8;
+              uVar6 = uVar6 + 1;
+              uVar5 = _mbedtls_mpi_lset(auStack_70,*(undefined1 *)((ulong)uVar6 + 0x93c));
+              if ((int)uVar5 != 0) break;
+            }
+          }
+        }
+      }
+    }
+LAB_00000104:
+    _mbedtls_mpi_free(auStack_70);
+    _mbedtls_mpi_free(auStack_60);
+  }
+  return uVar5;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_deduce_private_exponent
+// Entry: 000002dc
+// Signature: undefined _mbedtls_rsa_deduce_private_exponent(void)
+// ========================================
+
+
+undefined8
+_mbedtls_rsa_deduce_private_exponent
+          (undefined8 param_1,undefined8 param_2,undefined8 param_3,long param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [16];
+  
+  if ((((param_4 != 0) && (iVar1 = _mbedtls_mpi_cmp_int(param_4,0), iVar1 == 0)) &&
+      (iVar1 = _mbedtls_mpi_cmp_int(param_1,1), 0 < iVar1)) &&
+     ((iVar1 = _mbedtls_mpi_cmp_int(param_2,1), 0 < iVar1 &&
+      (iVar1 = _mbedtls_mpi_cmp_int(param_3,0), iVar1 != 0)))) {
+    _mbedtls_mpi_init(auStack_40);
+    _mbedtls_mpi_init(auStack_50);
+    uVar2 = _mbedtls_mpi_sub_int(auStack_40,param_1,1);
+    if (((((int)uVar2 == 0) &&
+         ((uVar2 = _mbedtls_mpi_sub_int(auStack_50,param_2,1), (int)uVar2 == 0 &&
+          (uVar2 = _mbedtls_mpi_gcd(param_4,auStack_40,auStack_50), (int)uVar2 == 0)))) &&
+        (uVar2 = _mbedtls_mpi_mul_mpi(auStack_40,auStack_40,auStack_50), (int)uVar2 == 0)) &&
+       (uVar2 = _mbedtls_mpi_div_mpi(auStack_40,0,auStack_40,param_4), (int)uVar2 == 0)) {
+      uVar2 = _mbedtls_mpi_inv_mod(param_4,param_3,auStack_40);
+    }
+    _mbedtls_mpi_free(auStack_40);
+    _mbedtls_mpi_free(auStack_50);
+    return uVar2;
+  }
+  return 0xfffffffc;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_deduce_crt
+// Entry: 00000430
+// Signature: undefined _mbedtls_rsa_deduce_crt(void)
+// ========================================
+
+
+undefined8
+_mbedtls_rsa_deduce_crt
+          (undefined8 param_1,undefined8 param_2,undefined8 param_3,long param_4,long param_5,
+          long param_6)
+
+{
+  undefined8 uVar1;
+  undefined1 auStack_60 [16];
+  
+  _mbedtls_mpi_init(auStack_60);
+  if ((param_4 == 0) ||
+     ((uVar1 = _mbedtls_mpi_sub_int(auStack_60,param_1,1), (int)uVar1 == 0 &&
+      (uVar1 = _mbedtls_mpi_mod_mpi(param_4,param_3,auStack_60), (int)uVar1 == 0)))) {
+    if (param_5 == 0) {
+      if (param_6 == 0) {
+        uVar1 = 0;
+        goto LAB_000004fc;
+      }
+    }
+    else {
+      uVar1 = _mbedtls_mpi_sub_int(auStack_60,param_2,1);
+      if ((((int)uVar1 != 0) ||
+          (uVar1 = _mbedtls_mpi_mod_mpi(param_5,param_3,auStack_60), param_6 == 0)) ||
+         ((int)uVar1 != 0)) goto LAB_000004fc;
+    }
+    uVar1 = _mbedtls_mpi_inv_mod(param_6,param_2,param_1);
+  }
+LAB_000004fc:
+  _mbedtls_mpi_free(auStack_60);
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_validate_params
+// Entry: 00000524
+// Signature: undefined _mbedtls_rsa_validate_params(void)
+// ========================================
+
+
+int _mbedtls_rsa_validate_params(long param_1,long param_2,long param_3,long param_4,long param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [16];
+  
+  _mbedtls_mpi_init(auStack_60);
+  _mbedtls_mpi_init(auStack_70);
+  if ((param_1 == 0) || (param_2 == 0 || param_3 == 0)) {
+LAB_000005d8:
+    if (((param_1 == 0) || ((param_4 == 0 || (param_5 == 0)))) ||
+       ((iVar1 = _mbedtls_mpi_cmp_int(param_4,1), 0 < iVar1 &&
+        (((iVar1 = _mbedtls_mpi_cmp_int(param_5,1), 0 < iVar1 &&
+          (iVar1 = _mbedtls_mpi_cmp_mpi(param_4,param_1), iVar1 < 0)) &&
+         (iVar1 = _mbedtls_mpi_cmp_mpi(param_5,param_1), iVar1 < 0)))))) {
+      iVar1 = 0;
+      if ((param_4 == 0 || (param_2 == 0 || param_3 == 0)) || (param_5 == 0)) goto LAB_000006e0;
+      iVar1 = _mbedtls_mpi_cmp_int(param_2,1);
+      if ((0 < iVar1) && (iVar1 = _mbedtls_mpi_cmp_int(param_3,1), 0 < iVar1)) {
+        iVar1 = _mbedtls_mpi_mul_mpi(auStack_60,param_4,param_5);
+        if ((((iVar1 != 0) || (iVar1 = _mbedtls_mpi_sub_int(auStack_60,auStack_60,1), iVar1 != 0))
+            || (iVar1 = _mbedtls_mpi_sub_int(auStack_70,param_2,1), iVar1 != 0)) ||
+           (iVar1 = _mbedtls_mpi_mod_mpi(auStack_60,auStack_60,auStack_70), iVar1 != 0)) {
+LAB_00000590:
+          _mbedtls_mpi_free(auStack_60);
+          _mbedtls_mpi_free(auStack_70);
+          if (iVar1 == -0x4200) {
+            return -0x4200;
+          }
+          return iVar1 + -0x4200;
+        }
+        iVar1 = _mbedtls_mpi_cmp_int(auStack_60,0);
+        if (iVar1 == 0) {
+          iVar1 = _mbedtls_mpi_mul_mpi(auStack_60,param_4,param_5);
+          if ((((iVar1 == 0) && (iVar1 = _mbedtls_mpi_sub_int(auStack_60,auStack_60,1), iVar1 == 0))
+              && (iVar1 = _mbedtls_mpi_sub_int(auStack_70,param_3,1), iVar1 == 0)) &&
+             (iVar1 = _mbedtls_mpi_mod_mpi(auStack_60,auStack_60,auStack_70), iVar1 == 0)) {
+            iVar2 = _mbedtls_mpi_cmp_int(auStack_60,0);
+            iVar1 = 0;
+            if (iVar2 != 0) {
+              iVar1 = -0x4200;
+            }
+            goto LAB_000006e0;
+          }
+          goto LAB_00000590;
+        }
+      }
+    }
+  }
+  else {
+    iVar1 = _mbedtls_mpi_mul_mpi(auStack_60,param_2,param_3);
+    if (iVar1 != 0) goto LAB_00000590;
+    iVar1 = _mbedtls_mpi_cmp_int(param_1,1);
+    if ((0 < iVar1) && (iVar1 = _mbedtls_mpi_cmp_mpi(auStack_60,param_1), iVar1 == 0))
+    goto LAB_000005d8;
+  }
+  iVar1 = -0x4200;
+LAB_000006e0:
+  _mbedtls_mpi_free(auStack_60);
+  _mbedtls_mpi_free(auStack_70);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_validate_crt
+// Entry: 0000078c
+// Signature: undefined _mbedtls_rsa_validate_crt(void)
+// ========================================
+
+
+int _mbedtls_rsa_validate_crt
+              (long param_1,long param_2,undefined8 param_3,long param_4,long param_5,long param_6)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined1 auStack_60 [16];
+  undefined1 auStack_50 [16];
+  
+  _mbedtls_mpi_init(auStack_50);
+  _mbedtls_mpi_init(auStack_60);
+  if (param_4 == 0) {
+LAB_00000820:
+    if (param_5 != 0) {
+      if (param_2 == 0) goto LAB_0000087c;
+      iVar1 = _mbedtls_mpi_sub_int(auStack_50,param_2,1);
+      if (((iVar1 != 0) || (iVar1 = _mbedtls_mpi_sub_mpi(auStack_60,param_5,param_3), iVar1 != 0))
+         || (iVar1 = _mbedtls_mpi_mod_mpi(auStack_60,auStack_60,auStack_50), iVar1 != 0))
+      goto LAB_000008d0;
+      iVar1 = _mbedtls_mpi_cmp_int(auStack_60,0);
+      if (iVar1 != 0) goto LAB_00000874;
+    }
+    if (param_6 == 0) {
+      iVar1 = 0;
+      goto LAB_000008ec;
+    }
+    iVar1 = -0x4080;
+    if ((param_1 == 0) || (param_2 == 0)) goto LAB_000008ec;
+    iVar1 = _mbedtls_mpi_mul_mpi(auStack_50,param_6,param_2);
+    if ((iVar1 == 0) &&
+       ((iVar1 = _mbedtls_mpi_sub_int(auStack_50,auStack_50,1), iVar1 == 0 &&
+        (iVar1 = _mbedtls_mpi_mod_mpi(auStack_50,auStack_50,param_1), iVar1 == 0)))) {
+      iVar2 = _mbedtls_mpi_cmp_int(auStack_50,0);
+      iVar1 = 0;
+      if (iVar2 != 0) {
+        iVar1 = -0x4200;
+      }
+      goto LAB_000008ec;
+    }
+  }
+  else {
+    if (param_1 == 0) {
+LAB_0000087c:
+      iVar1 = -0x4080;
+      goto LAB_000008ec;
+    }
+    iVar1 = _mbedtls_mpi_sub_int(auStack_50,param_1,1);
+    if (((iVar1 == 0) && (iVar1 = _mbedtls_mpi_sub_mpi(auStack_60,param_4,param_3), iVar1 == 0)) &&
+       (iVar1 = _mbedtls_mpi_mod_mpi(auStack_60,auStack_60,auStack_50), iVar1 == 0)) {
+      iVar1 = _mbedtls_mpi_cmp_int(auStack_60,0);
+      if (iVar1 == 0) goto LAB_00000820;
+LAB_00000874:
+      iVar1 = -0x4200;
+      goto LAB_000008ec;
+    }
+  }
+LAB_000008d0:
+  iVar2 = iVar1;
+  if (iVar1 != -0x4080) {
+    iVar2 = iVar1 + -0x4200;
+  }
+  if (iVar1 != -0x4200) {
+    iVar1 = iVar2;
+  }
+LAB_000008ec:
+  _mbedtls_mpi_free(auStack_50);
+  _mbedtls_mpi_free(auStack_60);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_add_int
+// Entry: 00001000
+// Signature: undefined _mbedtls_mpi_add_int(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_add_int(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_cmp_int
+// Entry: 00001100
+// Signature: undefined _mbedtls_mpi_cmp_int(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_cmp_int(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_cmp_mpi
+// Entry: 00001200
+// Signature: undefined _mbedtls_mpi_cmp_mpi(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_cmp_mpi(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_div_mpi
+// Entry: 00001300
+// Signature: undefined _mbedtls_mpi_div_mpi(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_div_mpi(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_exp_mod
+// Entry: 00001400
+// Signature: undefined _mbedtls_mpi_exp_mod(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_exp_mod(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_free
+// Entry: 00001500
+// Signature: undefined _mbedtls_mpi_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_gcd
+// Entry: 00001600
+// Signature: undefined _mbedtls_mpi_gcd(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_gcd(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_init
+// Entry: 00001700
+// Signature: undefined _mbedtls_mpi_init(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_init(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_inv_mod
+// Entry: 00001800
+// Signature: undefined _mbedtls_mpi_inv_mod(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_inv_mod(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_lsb
+// Entry: 00001900
+// Signature: undefined _mbedtls_mpi_lsb(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_lsb(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_lset
+// Entry: 00001a00
+// Signature: undefined _mbedtls_mpi_lset(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_lset(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_mod_mpi
+// Entry: 00001b00
+// Signature: undefined _mbedtls_mpi_mod_mpi(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_mod_mpi(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_mul_mpi
+// Entry: 00001c00
+// Signature: undefined _mbedtls_mpi_mul_mpi(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_mul_mpi(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_shift_r
+// Entry: 00001d00
+// Signature: undefined _mbedtls_mpi_shift_r(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_shift_r(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_sub_int
+// Entry: 00001e00
+// Signature: undefined _mbedtls_mpi_sub_int(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_sub_int(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_mpi_sub_mpi
+// Entry: 00001f00
+// Signature: undefined _mbedtls_mpi_sub_mpi(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_mpi_sub_mpi(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 21
+// Failed: 0
+// Skipped external functions: 0

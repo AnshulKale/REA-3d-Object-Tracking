@@ -1,0 +1,1634 @@
+Program: license.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: VerifySignature
+// Entry: 00000000
+// Signature: undefined __thiscall VerifySignature(LicenseValidator * this, uchar * param_1, ulong param_2, uchar * param_3, ulong param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::LicenseValidator::VerifySignature(unsigned char const*, unsigned long, unsigned char const*,
+   unsigned long) */
+
+void __thiscall
+m3t::LicenseValidator::VerifySignature
+          (LicenseValidator *this,uchar *param_1,ulong param_2,uchar *param_3,ulong param_4)
+
+{
+  bool bVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined1 auStack_68 [16];
+  undefined1 auStack_58 [32];
+  long local_38;
+  
+  local_38 = *____stack_chk_guard;
+  _mbedtls_pk_init(auStack_68);
+  iVar2 = _mbedtls_pk_parse_public_key(auStack_68,0xd00,0x126);
+  if (iVar2 == 0) {
+    uVar3 = _mbedtls_md_info_from_type(9);
+    iVar2 = _mbedtls_md(uVar3,param_1,param_2,auStack_58);
+    if (iVar2 == 0) {
+      iVar2 = _mbedtls_pk_verify(auStack_68,9,auStack_58,0x20,param_3,param_4);
+      _mbedtls_pk_free(auStack_68);
+      bVar1 = iVar2 == 0;
+      if (*____stack_chk_guard == local_38) {
+        return;
+      }
+      goto LAB_000000f0;
+    }
+  }
+  _mbedtls_pk_free(auStack_68);
+  bVar1 = false;
+  if (*____stack_chk_guard == local_38) {
+    return;
+  }
+LAB_000000f0:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(bVar1);
+}
+
+
+
+
+// ========================================
+// Function: ParsePayload
+// Entry: 000000f4
+// Signature: undefined __thiscall ParsePayload(LicenseValidator * this, char * param_1, int param_2, char * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::LicenseValidator::ParsePayload(char const*, int, char const*) */
+
+void __thiscall
+m3t::LicenseValidator::ParsePayload(LicenseValidator *this,char *param_1,int param_2,char *param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined4 uVar5;
+  ulong uVar6;
+  char *pcVar7;
+  ulong uVar8;
+  undefined8 local_180;
+  undefined8 uStack_178;
+  undefined8 uStack_170;
+  undefined8 uStack_168;
+  undefined8 local_160;
+  undefined8 uStack_158;
+  undefined8 uStack_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  undefined8 uStack_138;
+  undefined8 uStack_130;
+  undefined8 uStack_128;
+  undefined8 local_120;
+  undefined8 uStack_118;
+  undefined8 uStack_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 uStack_f8;
+  undefined8 uStack_f0;
+  undefined8 uStack_e8;
+  undefined8 local_e0;
+  undefined8 uStack_d8;
+  undefined8 uStack_d0;
+  undefined8 uStack_c8;
+  undefined8 local_c0;
+  undefined8 uStack_b8;
+  undefined8 uStack_b0;
+  undefined8 uStack_a8;
+  undefined8 local_a0;
+  undefined8 uStack_98;
+  undefined8 uStack_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 uStack_70;
+  undefined8 uStack_68;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  uStack_78 = 0;
+  local_80 = 0;
+  uStack_68 = 0;
+  uStack_70 = 0;
+  iVar1 = JsonGetString(param_1,param_2,"licenseType",(char *)&local_80,0x20);
+  if (iVar1 < 0) {
+LAB_000001dc:
+    uVar4 = 0;
+    if (*____stack_chk_guard != local_58) goto LAB_000003f4;
+  }
+  else {
+    if ((int)local_80 == 0x65657266 && local_80._4_1_ == '\0') {
+      uVar5 = 1;
+    }
+    else if ((int)local_80 == 0x61697274 && local_80._4_2_ == 0x6c) {
+      uVar5 = 2;
+    }
+    else if (local_80 == 0x65706f6c65766564 && (short)uStack_78 == 0x72) {
+      uVar5 = 3;
+    }
+    else if ((int)local_80 == 0x6f7270) {
+      uVar5 = 4;
+    }
+    else {
+      if ((int)local_80 != 0x6d656f) goto LAB_000001dc;
+      uVar5 = 5;
+    }
+    *(undefined4 *)this = uVar5;
+    JsonGetString(param_1,param_2,"licenseId",(char *)(this + 0x3a),0x40);
+    JsonGetString(param_1,param_2,"licenseeName",(char *)(this + 0x7a),0x80);
+    JsonGetString(param_1,param_2,"expiresAt",(char *)(this + 0x19),0x20);
+    uVar2 = _snprintf((char *)&local_180,0x80,"\"%s\":");
+    if (0xffffff80 < uVar2 - 0x80) {
+      uVar8 = (ulong)param_2;
+      uVar6 = (ulong)uVar2;
+      pcVar7 = param_1;
+      if (param_1 < param_1 + (uVar8 - uVar6)) {
+LAB_000002dc:
+        iVar1 = _memcmp(pcVar7,&local_180,uVar6);
+        if (iVar1 != 0) goto code_r0x000002f0;
+        if (pcVar7 != (char *)0x0) {
+          pcVar7 = pcVar7 + uVar6;
+          if (*pcVar7 == ' ' || *pcVar7 == '\t') {
+            do {
+              pcVar7 = pcVar7 + 1;
+            } while (*pcVar7 == ' ' || *pcVar7 == '\t');
+          }
+          iVar3 = _strncmp(pcVar7,"null",4);
+          iVar1 = 0;
+          if (iVar3 != 0) {
+            iVar1 = _atoi(pcVar7);
+          }
+          *(int *)(this + 0xfc) = iVar1;
+          iVar1 = *(int *)this;
+          goto joined_r0x00000358;
+        }
+      }
+    }
+LAB_00000360:
+    *(undefined4 *)(this + 0xfc) = 0;
+    iVar1 = *(int *)this;
+joined_r0x00000358:
+    if (iVar1 == 4) {
+      uStack_98 = 0;
+      local_a0 = 0;
+      uStack_88 = 0;
+      uStack_90 = 0;
+      uStack_b8 = 0;
+      local_c0 = 0;
+      uStack_a8 = 0;
+      uStack_b0 = 0;
+      uStack_d8 = 0;
+      local_e0 = 0;
+      uStack_c8 = 0;
+      uStack_d0 = 0;
+      uStack_f8 = 0;
+      local_100 = 0;
+      uStack_e8 = 0;
+      uStack_f0 = 0;
+      uStack_118 = 0;
+      local_120 = 0;
+      uStack_108 = 0;
+      uStack_110 = 0;
+      uStack_138 = 0;
+      local_140 = 0;
+      uStack_128 = 0;
+      uStack_130 = 0;
+      uStack_158 = 0;
+      local_160 = 0;
+      uStack_148 = 0;
+      uStack_150 = 0;
+      uStack_178 = 0;
+      local_180 = 0;
+      uStack_168 = 0;
+      uStack_170 = 0;
+      iVar1 = JsonGetString(param_1,param_2,"machineId",(char *)&local_180,0x100);
+      if (((iVar1 < 1) || (param_3 == (char *)0x0)) ||
+         (iVar1 = _strcmp((char *)&local_180,param_3), iVar1 != 0)) {
+        uVar4 = 0;
+        *(undefined4 *)(this + 4) = 4;
+        if (*____stack_chk_guard == local_58) {
+          return;
+        }
+        goto LAB_000003f4;
+      }
+    }
+    uVar4 = 1;
+    if (*____stack_chk_guard != local_58) {
+LAB_000003f4:
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail(uVar4);
+    }
+  }
+  return;
+code_r0x000002f0:
+  uVar8 = uVar8 - 1;
+  pcVar7 = pcVar7 + 1;
+  if (uVar6 == uVar8) goto LAB_00000360;
+  goto LAB_000002dc;
+}
+
+
+
+
+// ========================================
+// Function: JsonGetString
+// Entry: 00000418
+// Signature: undefined __cdecl JsonGetString(char * param_1, int param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::JsonGetString(char const*, int, char const*, char*, int) */
+
+void m3t::JsonGetString(char *param_1,int param_2,char *param_3,char *param_4,int param_5)
+
+{
+  char *pcVar1;
+  uint uVar2;
+  int iVar3;
+  long lVar4;
+  ulong uVar5;
+  char *pcVar6;
+  size_t sVar7;
+  size_t sVar8;
+  char acStack_e8 [128];
+  long local_68;
+  
+  local_68 = *____stack_chk_guard;
+  uVar2 = _snprintf(acStack_e8,0x80,"\"%s\":\"");
+  if (0xffffff80 < uVar2 - 0x80) {
+    sVar7 = (size_t)param_2;
+    pcVar1 = param_1 + sVar7;
+    uVar5 = (ulong)uVar2;
+    pcVar6 = param_1;
+    sVar8 = sVar7;
+    if (param_1 < pcVar1 + -uVar5) {
+      do {
+        iVar3 = _memcmp(pcVar6,acStack_e8,uVar5);
+        if (iVar3 == 0) {
+          if (pcVar6 != (char *)0x0) {
+            pcVar6 = pcVar6 + uVar5;
+            goto joined_r0x000004d0;
+          }
+          break;
+        }
+        sVar8 = sVar8 - 1;
+        pcVar6 = pcVar6 + 1;
+      } while (uVar5 != sVar8);
+    }
+    iVar3 = _snprintf(acStack_e8,0x80,"\"%s\": \"");
+    sVar8 = (size_t)iVar3;
+    if (param_1 < pcVar1 + -sVar8) {
+LAB_00000500:
+      iVar3 = _memcmp(param_1,acStack_e8,sVar8);
+      if (iVar3 != 0) goto code_r0x00000514;
+      pcVar6 = param_1 + sVar8;
+joined_r0x000004d0:
+      if (pcVar6 == (char *)0x0) goto LAB_00000560;
+      lVar4 = 0;
+      if ((pcVar6 < pcVar1) && (1 < param_5)) {
+        if (*pcVar6 == '\"') {
+          lVar4 = 0;
+        }
+        else {
+          *param_4 = *pcVar6;
+          lVar4 = 1;
+          if ((pcVar6 + 1 < pcVar1) && (2 < (uint)param_5)) {
+            lVar4 = 0;
+            while ((pcVar6[lVar4 + 1] != '\"' || (pcVar6[lVar4] == '\\'))) {
+              param_4[lVar4 + 1] = pcVar6[lVar4 + 1];
+              uVar5 = lVar4 + 2;
+              lVar4 = lVar4 + 1;
+              if ((pcVar1 <= pcVar6 + uVar5) || (param_5 - 1 <= uVar5)) break;
+            }
+            lVar4 = lVar4 + 1;
+          }
+        }
+      }
+      param_4[lVar4] = '\0';
+      if (*____stack_chk_guard == local_68) {
+        return;
+      }
+      goto LAB_00000628;
+    }
+  }
+LAB_00000560:
+  lVar4 = 0xffffffff;
+  if (*____stack_chk_guard == local_68) {
+    return;
+  }
+LAB_00000628:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(lVar4);
+code_r0x00000514:
+  param_1 = param_1 + 1;
+  sVar7 = sVar7 - 1;
+  if (sVar8 == sVar7) goto LAB_00000560;
+  goto LAB_00000500;
+}
+
+
+
+
+// ========================================
+// Function: CheckExpiry
+// Entry: 0000062c
+// Signature: undefined __thiscall CheckExpiry(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::CheckExpiry() */
+
+bool __thiscall m3t::LicenseValidator::CheckExpiry(LicenseValidator *this)
+
+{
+  bool bVar1;
+  int iVar2;
+  long lVar3;
+  time_t tVar4;
+  LicenseValidator LVar5;
+  LicenseValidator *pLVar6;
+  int local_90;
+  int iStack_8c;
+  int local_88;
+  int local_80;
+  int iStack_7c;
+  tm local_78;
+  
+  pLVar6 = this + 0x19;
+  if (*pLVar6 == (LicenseValidator)0x0) {
+    this[0x39] = (LicenseValidator)0x0;
+    return true;
+  }
+  local_78.tm_isdst = 0;
+  local_78._36_4_ = 0;
+  local_78.tm_wday = 0;
+  local_78.tm_yday = 0;
+  local_78.tm_zone = (char *)0x0;
+  local_78.tm_gmtoff = 0;
+  iVar2 = _sscanf((char *)pLVar6,"%d-%d-%dT%d:%d:%dZ");
+  if (iVar2 == 6) {
+  }
+  else {
+    iVar2 = _sscanf((char *)pLVar6,"%d-%d-%d");
+    if (iVar2 != 3) {
+      bVar1 = false;
+      LVar5 = (LicenseValidator)0x1;
+      goto LAB_00000758;
+    }
+    local_90 = 0;
+    iStack_8c = 0;
+    local_88 = 0;
+  }
+  local_78.tm_year = iStack_7c + -0x76c;
+  local_78.tm_mon = local_80 + -1;
+  local_78.tm_sec = local_90;
+  local_78.tm_min = iStack_8c;
+  local_78.tm_hour = local_88;
+  lVar3 = _timegm(&local_78);
+  tVar4 = _time((time_t *)0x0);
+  if (lVar3 <= tVar4 && *(int *)this == 4) {
+    lVar3 = lVar3 + 0x93a80;
+  }
+  bVar1 = tVar4 < lVar3;
+  LVar5 = (LicenseValidator)(lVar3 <= tVar4);
+LAB_00000758:
+  this[0x39] = LVar5;
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: SetLicenseData
+// Entry: 00000774
+// Signature: undefined __thiscall SetLicenseData(LicenseValidator * this, char * param_1, int param_2, char * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::LicenseValidator::SetLicenseData(char const*, int, char const*) */
+
+void __thiscall
+m3t::LicenseValidator::SetLicenseData
+          (LicenseValidator *this,char *param_1,int param_2,char *param_3)
+
+{
+  LicenseValidator LVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  LicenseValidator *this_00;
+  ulong uVar5;
+  char *pcVar6;
+  undefined1 auVar7 [16];
+  ulong local_2360;
+  long local_2358;
+  uchar auStack_2350 [256];
+  char local_2250 [520];
+  char acStack_2048 [4096];
+  uchar auStack_1048 [4096];
+  long local_48;
+  
+  auVar7 = (*____chkstk_darwin)();
+  pcVar6 = auVar7._8_8_;
+  this_00 = auVar7._0_8_;
+  local_48 = *____stack_chk_guard;
+  LVar1 = this_00[0x18];
+  *(undefined8 *)this_00 = 0;
+  *(undefined8 *)(this_00 + 0x10) = 0x404e000000000000;
+  *(undefined8 *)(this_00 + 0x30) = 0;
+  *(undefined8 *)(this_00 + 0x28) = 0;
+  *(undefined8 *)(this_00 + 0x40) = 0;
+  *(undefined8 *)(this_00 + 0x38) = 0;
+  *(undefined8 *)(this_00 + 0x50) = 0;
+  *(undefined8 *)(this_00 + 0x48) = 0;
+  *(undefined8 *)(this_00 + 0x60) = 0;
+  *(undefined8 *)(this_00 + 0x58) = 0;
+  *(undefined8 *)(this_00 + 0x70) = 0;
+  *(undefined8 *)(this_00 + 0x68) = 0;
+  *(undefined8 *)(this_00 + 0x80) = 0;
+  *(undefined8 *)(this_00 + 0x78) = 0;
+  *(undefined8 *)(this_00 + 0x90) = 0;
+  *(undefined8 *)(this_00 + 0x88) = 0;
+  *(undefined8 *)(this_00 + 0xa0) = 0;
+  *(undefined8 *)(this_00 + 0x98) = 0;
+  *(undefined8 *)(this_00 + 0xb0) = 0;
+  *(undefined8 *)(this_00 + 0xa8) = 0;
+  *(undefined8 *)(this_00 + 0xc0) = 0;
+  *(undefined8 *)(this_00 + 0xb8) = 0;
+  *(undefined8 *)(this_00 + 0xd0) = 0;
+  *(undefined8 *)(this_00 + 200) = 0;
+  *(undefined8 *)(this_00 + 0xe0) = 0;
+  *(undefined8 *)(this_00 + 0xd8) = 0;
+  *(undefined8 *)(this_00 + 0xf0) = 0;
+  *(undefined8 *)(this_00 + 0xe8) = 0;
+  *(undefined2 *)(this_00 + 0xf8) = 0;
+  *(undefined8 *)(this_00 + 0x20) = 0;
+  *(undefined8 *)(this_00 + 0x18) = 0;
+  *(undefined4 *)(this_00 + 0xfc) = 0;
+  this_00[0x18] = LVar1;
+  if ((pcVar6 == (char *)0x0) || (param_2 < 1)) {
+LAB_00000994:
+    uVar4 = 6;
+  }
+  else {
+    _bzero(auStack_1048,0x1000);
+    uVar2 = JsonGetString(pcVar6,param_2,"payload",(char *)auStack_1048,0x1000);
+    if ((int)uVar2 < 1) goto LAB_00000994;
+    local_2358 = 0;
+    iVar3 = _mbedtls_base64_decode(acStack_2048,0x1000,&local_2358,auStack_1048,(ulong)uVar2);
+    if ((iVar3 != 0) || (local_2358 == 0)) goto LAB_00000994;
+    acStack_2048[local_2358] = '\0';
+    local_2250[0x1e8] = '\0';
+    local_2250[0x1e9] = '\0';
+    local_2250[0x1ea] = '\0';
+    local_2250[0x1eb] = '\0';
+    local_2250[0x1ec] = '\0';
+    local_2250[0x1ed] = '\0';
+    local_2250[0x1ee] = '\0';
+    local_2250[0x1ef] = '\0';
+    local_2250[0x1e0] = '\0';
+    local_2250[0x1e1] = '\0';
+    local_2250[0x1e2] = '\0';
+    local_2250[0x1e3] = '\0';
+    local_2250[0x1e4] = '\0';
+    local_2250[0x1e5] = '\0';
+    local_2250[0x1e6] = '\0';
+    local_2250[0x1e7] = '\0';
+    local_2250[0x1f8] = '\0';
+    local_2250[0x1f9] = '\0';
+    local_2250[0x1fa] = '\0';
+    local_2250[0x1fb] = '\0';
+    local_2250[0x1fc] = '\0';
+    local_2250[0x1fd] = '\0';
+    local_2250[0x1fe] = '\0';
+    local_2250[0x1ff] = '\0';
+    local_2250[0x1f0] = '\0';
+    local_2250[0x1f1] = '\0';
+    local_2250[0x1f2] = '\0';
+    local_2250[499] = '\0';
+    local_2250[500] = '\0';
+    local_2250[0x1f5] = '\0';
+    local_2250[0x1f6] = '\0';
+    local_2250[0x1f7] = '\0';
+    local_2250[0x1c8] = '\0';
+    local_2250[0x1c9] = '\0';
+    local_2250[0x1ca] = '\0';
+    local_2250[0x1cb] = '\0';
+    local_2250[0x1cc] = '\0';
+    local_2250[0x1cd] = '\0';
+    local_2250[0x1ce] = '\0';
+    local_2250[0x1cf] = '\0';
+    local_2250[0x1c0] = '\0';
+    local_2250[0x1c1] = '\0';
+    local_2250[0x1c2] = '\0';
+    local_2250[0x1c3] = '\0';
+    local_2250[0x1c4] = '\0';
+    local_2250[0x1c5] = '\0';
+    local_2250[0x1c6] = '\0';
+    local_2250[0x1c7] = '\0';
+    local_2250[0x1d8] = '\0';
+    local_2250[0x1d9] = '\0';
+    local_2250[0x1da] = '\0';
+    local_2250[0x1db] = '\0';
+    local_2250[0x1dc] = '\0';
+    local_2250[0x1dd] = '\0';
+    local_2250[0x1de] = '\0';
+    local_2250[0x1df] = '\0';
+    local_2250[0x1d0] = '\0';
+    local_2250[0x1d1] = '\0';
+    local_2250[0x1d2] = '\0';
+    local_2250[0x1d3] = '\0';
+    local_2250[0x1d4] = '\0';
+    local_2250[0x1d5] = '\0';
+    local_2250[0x1d6] = '\0';
+    local_2250[0x1d7] = '\0';
+    local_2250[0x1a8] = '\0';
+    local_2250[0x1a9] = '\0';
+    local_2250[0x1aa] = '\0';
+    local_2250[0x1ab] = '\0';
+    local_2250[0x1ac] = '\0';
+    local_2250[0x1ad] = '\0';
+    local_2250[0x1ae] = '\0';
+    local_2250[0x1af] = '\0';
+    local_2250[0x1a0] = '\0';
+    local_2250[0x1a1] = '\0';
+    local_2250[0x1a2] = '\0';
+    local_2250[0x1a3] = '\0';
+    local_2250[0x1a4] = '\0';
+    local_2250[0x1a5] = '\0';
+    local_2250[0x1a6] = '\0';
+    local_2250[0x1a7] = '\0';
+    local_2250[0x1b8] = '\0';
+    local_2250[0x1b9] = '\0';
+    local_2250[0x1ba] = '\0';
+    local_2250[0x1bb] = '\0';
+    local_2250[0x1bc] = '\0';
+    local_2250[0x1bd] = '\0';
+    local_2250[0x1be] = '\0';
+    local_2250[0x1bf] = '\0';
+    local_2250[0x1b0] = '\0';
+    local_2250[0x1b1] = '\0';
+    local_2250[0x1b2] = '\0';
+    local_2250[0x1b3] = '\0';
+    local_2250[0x1b4] = '\0';
+    local_2250[0x1b5] = '\0';
+    local_2250[0x1b6] = '\0';
+    local_2250[0x1b7] = '\0';
+    local_2250[0x188] = '\0';
+    local_2250[0x189] = '\0';
+    local_2250[0x18a] = '\0';
+    local_2250[0x18b] = '\0';
+    local_2250[0x18c] = '\0';
+    local_2250[0x18d] = '\0';
+    local_2250[0x18e] = '\0';
+    local_2250[399] = '\0';
+    local_2250[0x180] = '\0';
+    local_2250[0x181] = '\0';
+    local_2250[0x182] = '\0';
+    local_2250[0x183] = '\0';
+    local_2250[0x184] = '\0';
+    local_2250[0x185] = '\0';
+    local_2250[0x186] = '\0';
+    local_2250[0x187] = '\0';
+    local_2250[0x198] = '\0';
+    local_2250[0x199] = '\0';
+    local_2250[0x19a] = '\0';
+    local_2250[0x19b] = '\0';
+    local_2250[0x19c] = '\0';
+    local_2250[0x19d] = '\0';
+    local_2250[0x19e] = '\0';
+    local_2250[0x19f] = '\0';
+    local_2250[400] = '\0';
+    local_2250[0x191] = '\0';
+    local_2250[0x192] = '\0';
+    local_2250[0x193] = '\0';
+    local_2250[0x194] = '\0';
+    local_2250[0x195] = '\0';
+    local_2250[0x196] = '\0';
+    local_2250[0x197] = '\0';
+    local_2250[0x168] = '\0';
+    local_2250[0x169] = '\0';
+    local_2250[0x16a] = '\0';
+    local_2250[0x16b] = '\0';
+    local_2250[0x16c] = '\0';
+    local_2250[0x16d] = '\0';
+    local_2250[0x16e] = '\0';
+    local_2250[0x16f] = '\0';
+    local_2250[0x160] = '\0';
+    local_2250[0x161] = '\0';
+    local_2250[0x162] = '\0';
+    local_2250[0x163] = '\0';
+    local_2250[0x164] = '\0';
+    local_2250[0x165] = '\0';
+    local_2250[0x166] = '\0';
+    local_2250[0x167] = '\0';
+    local_2250[0x178] = '\0';
+    local_2250[0x179] = '\0';
+    local_2250[0x17a] = '\0';
+    local_2250[0x17b] = '\0';
+    local_2250[0x17c] = '\0';
+    local_2250[0x17d] = '\0';
+    local_2250[0x17e] = '\0';
+    local_2250[0x17f] = '\0';
+    local_2250[0x170] = '\0';
+    local_2250[0x171] = '\0';
+    local_2250[0x172] = '\0';
+    local_2250[0x173] = '\0';
+    local_2250[0x174] = '\0';
+    local_2250[0x175] = '\0';
+    local_2250[0x176] = '\0';
+    local_2250[0x177] = '\0';
+    local_2250[0x148] = '\0';
+    local_2250[0x149] = '\0';
+    local_2250[0x14a] = '\0';
+    local_2250[0x14b] = '\0';
+    local_2250[0x14c] = '\0';
+    local_2250[0x14d] = '\0';
+    local_2250[0x14e] = '\0';
+    local_2250[0x14f] = '\0';
+    local_2250[0x140] = '\0';
+    local_2250[0x141] = '\0';
+    local_2250[0x142] = '\0';
+    local_2250[0x143] = '\0';
+    local_2250[0x144] = '\0';
+    local_2250[0x145] = '\0';
+    local_2250[0x146] = '\0';
+    local_2250[0x147] = '\0';
+    local_2250[0x158] = '\0';
+    local_2250[0x159] = '\0';
+    local_2250[0x15a] = '\0';
+    local_2250[0x15b] = '\0';
+    local_2250[0x15c] = '\0';
+    local_2250[0x15d] = '\0';
+    local_2250[0x15e] = '\0';
+    local_2250[0x15f] = '\0';
+    local_2250[0x150] = '\0';
+    local_2250[0x151] = '\0';
+    local_2250[0x152] = '\0';
+    local_2250[0x153] = '\0';
+    local_2250[0x154] = '\0';
+    local_2250[0x155] = '\0';
+    local_2250[0x156] = '\0';
+    local_2250[0x157] = '\0';
+    local_2250[0x128] = '\0';
+    local_2250[0x129] = '\0';
+    local_2250[0x12a] = '\0';
+    local_2250[299] = '\0';
+    local_2250[300] = '\0';
+    local_2250[0x12d] = '\0';
+    local_2250[0x12e] = '\0';
+    local_2250[0x12f] = '\0';
+    local_2250[0x120] = '\0';
+    local_2250[0x121] = '\0';
+    local_2250[0x122] = '\0';
+    local_2250[0x123] = '\0';
+    local_2250[0x124] = '\0';
+    local_2250[0x125] = '\0';
+    local_2250[0x126] = '\0';
+    local_2250[0x127] = '\0';
+    local_2250[0x138] = '\0';
+    local_2250[0x139] = '\0';
+    local_2250[0x13a] = '\0';
+    local_2250[0x13b] = '\0';
+    local_2250[0x13c] = '\0';
+    local_2250[0x13d] = '\0';
+    local_2250[0x13e] = '\0';
+    local_2250[0x13f] = '\0';
+    local_2250[0x130] = '\0';
+    local_2250[0x131] = '\0';
+    local_2250[0x132] = '\0';
+    local_2250[0x133] = '\0';
+    local_2250[0x134] = '\0';
+    local_2250[0x135] = '\0';
+    local_2250[0x136] = '\0';
+    local_2250[0x137] = '\0';
+    local_2250[0x108] = '\0';
+    local_2250[0x109] = '\0';
+    local_2250[0x10a] = '\0';
+    local_2250[0x10b] = '\0';
+    local_2250[0x10c] = '\0';
+    local_2250[0x10d] = '\0';
+    local_2250[0x10e] = '\0';
+    local_2250[0x10f] = '\0';
+    local_2250[0x100] = '\0';
+    local_2250[0x101] = '\0';
+    local_2250[0x102] = '\0';
+    local_2250[0x103] = '\0';
+    local_2250[0x104] = '\0';
+    local_2250[0x105] = '\0';
+    local_2250[0x106] = '\0';
+    local_2250[0x107] = '\0';
+    local_2250[0x118] = '\0';
+    local_2250[0x119] = '\0';
+    local_2250[0x11a] = '\0';
+    local_2250[0x11b] = '\0';
+    local_2250[0x11c] = '\0';
+    local_2250[0x11d] = '\0';
+    local_2250[0x11e] = '\0';
+    local_2250[0x11f] = '\0';
+    local_2250[0x110] = '\0';
+    local_2250[0x111] = '\0';
+    local_2250[0x112] = '\0';
+    local_2250[0x113] = '\0';
+    local_2250[0x114] = '\0';
+    local_2250[0x115] = '\0';
+    local_2250[0x116] = '\0';
+    local_2250[0x117] = '\0';
+    local_2250[0xe8] = '\0';
+    local_2250[0xe9] = '\0';
+    local_2250[0xea] = '\0';
+    local_2250[0xeb] = '\0';
+    local_2250[0xec] = '\0';
+    local_2250[0xed] = '\0';
+    local_2250[0xee] = '\0';
+    local_2250[0xef] = '\0';
+    local_2250[0xe0] = '\0';
+    local_2250[0xe1] = '\0';
+    local_2250[0xe2] = '\0';
+    local_2250[0xe3] = '\0';
+    local_2250[0xe4] = '\0';
+    local_2250[0xe5] = '\0';
+    local_2250[0xe6] = '\0';
+    local_2250[0xe7] = '\0';
+    local_2250[0xf8] = '\0';
+    local_2250[0xf9] = '\0';
+    local_2250[0xfa] = '\0';
+    local_2250[0xfb] = '\0';
+    local_2250[0xfc] = '\0';
+    local_2250[0xfd] = '\0';
+    local_2250[0xfe] = '\0';
+    local_2250[0xff] = '\0';
+    local_2250[0xf0] = '\0';
+    local_2250[0xf1] = '\0';
+    local_2250[0xf2] = '\0';
+    local_2250[0xf3] = '\0';
+    local_2250[0xf4] = '\0';
+    local_2250[0xf5] = '\0';
+    local_2250[0xf6] = '\0';
+    local_2250[0xf7] = '\0';
+    local_2250[200] = '\0';
+    local_2250[0xc9] = '\0';
+    local_2250[0xca] = '\0';
+    local_2250[0xcb] = '\0';
+    local_2250[0xcc] = '\0';
+    local_2250[0xcd] = '\0';
+    local_2250[0xce] = '\0';
+    local_2250[0xcf] = '\0';
+    local_2250[0xc0] = '\0';
+    local_2250[0xc1] = '\0';
+    local_2250[0xc2] = '\0';
+    local_2250[0xc3] = '\0';
+    local_2250[0xc4] = '\0';
+    local_2250[0xc5] = '\0';
+    local_2250[0xc6] = '\0';
+    local_2250[199] = '\0';
+    local_2250[0xd8] = '\0';
+    local_2250[0xd9] = '\0';
+    local_2250[0xda] = '\0';
+    local_2250[0xdb] = '\0';
+    local_2250[0xdc] = '\0';
+    local_2250[0xdd] = '\0';
+    local_2250[0xde] = '\0';
+    local_2250[0xdf] = '\0';
+    local_2250[0xd0] = '\0';
+    local_2250[0xd1] = '\0';
+    local_2250[0xd2] = '\0';
+    local_2250[0xd3] = '\0';
+    local_2250[0xd4] = '\0';
+    local_2250[0xd5] = '\0';
+    local_2250[0xd6] = '\0';
+    local_2250[0xd7] = '\0';
+    local_2250[0xa8] = '\0';
+    local_2250[0xa9] = '\0';
+    local_2250[0xaa] = '\0';
+    local_2250[0xab] = '\0';
+    local_2250[0xac] = '\0';
+    local_2250[0xad] = '\0';
+    local_2250[0xae] = '\0';
+    local_2250[0xaf] = '\0';
+    local_2250[0xa0] = '\0';
+    local_2250[0xa1] = '\0';
+    local_2250[0xa2] = '\0';
+    local_2250[0xa3] = '\0';
+    local_2250[0xa4] = '\0';
+    local_2250[0xa5] = '\0';
+    local_2250[0xa6] = '\0';
+    local_2250[0xa7] = '\0';
+    local_2250[0xb8] = '\0';
+    local_2250[0xb9] = '\0';
+    local_2250[0xba] = '\0';
+    local_2250[0xbb] = '\0';
+    local_2250[0xbc] = '\0';
+    local_2250[0xbd] = '\0';
+    local_2250[0xbe] = '\0';
+    local_2250[0xbf] = '\0';
+    local_2250[0xb0] = '\0';
+    local_2250[0xb1] = '\0';
+    local_2250[0xb2] = '\0';
+    local_2250[0xb3] = '\0';
+    local_2250[0xb4] = '\0';
+    local_2250[0xb5] = '\0';
+    local_2250[0xb6] = '\0';
+    local_2250[0xb7] = '\0';
+    local_2250[0x88] = '\0';
+    local_2250[0x89] = '\0';
+    local_2250[0x8a] = '\0';
+    local_2250[0x8b] = '\0';
+    local_2250[0x8c] = '\0';
+    local_2250[0x8d] = '\0';
+    local_2250[0x8e] = '\0';
+    local_2250[0x8f] = '\0';
+    local_2250[0x80] = '\0';
+    local_2250[0x81] = '\0';
+    local_2250[0x82] = '\0';
+    local_2250[0x83] = '\0';
+    local_2250[0x84] = '\0';
+    local_2250[0x85] = '\0';
+    local_2250[0x86] = '\0';
+    local_2250[0x87] = '\0';
+    local_2250[0x98] = '\0';
+    local_2250[0x99] = '\0';
+    local_2250[0x9a] = '\0';
+    local_2250[0x9b] = '\0';
+    local_2250[0x9c] = '\0';
+    local_2250[0x9d] = '\0';
+    local_2250[0x9e] = '\0';
+    local_2250[0x9f] = '\0';
+    local_2250[0x90] = '\0';
+    local_2250[0x91] = '\0';
+    local_2250[0x92] = '\0';
+    local_2250[0x93] = '\0';
+    local_2250[0x94] = '\0';
+    local_2250[0x95] = '\0';
+    local_2250[0x96] = '\0';
+    local_2250[0x97] = '\0';
+    local_2250[0x68] = '\0';
+    local_2250[0x69] = '\0';
+    local_2250[0x6a] = '\0';
+    local_2250[0x6b] = '\0';
+    local_2250[0x6c] = '\0';
+    local_2250[0x6d] = '\0';
+    local_2250[0x6e] = '\0';
+    local_2250[0x6f] = '\0';
+    local_2250[0x60] = '\0';
+    local_2250[0x61] = '\0';
+    local_2250[0x62] = '\0';
+    local_2250[99] = '\0';
+    local_2250[100] = '\0';
+    local_2250[0x65] = '\0';
+    local_2250[0x66] = '\0';
+    local_2250[0x67] = '\0';
+    local_2250[0x78] = '\0';
+    local_2250[0x79] = '\0';
+    local_2250[0x7a] = '\0';
+    local_2250[0x7b] = '\0';
+    local_2250[0x7c] = '\0';
+    local_2250[0x7d] = '\0';
+    local_2250[0x7e] = '\0';
+    local_2250[0x7f] = '\0';
+    local_2250[0x70] = '\0';
+    local_2250[0x71] = '\0';
+    local_2250[0x72] = '\0';
+    local_2250[0x73] = '\0';
+    local_2250[0x74] = '\0';
+    local_2250[0x75] = '\0';
+    local_2250[0x76] = '\0';
+    local_2250[0x77] = '\0';
+    local_2250[0x48] = '\0';
+    local_2250[0x49] = '\0';
+    local_2250[0x4a] = '\0';
+    local_2250[0x4b] = '\0';
+    local_2250[0x4c] = '\0';
+    local_2250[0x4d] = '\0';
+    local_2250[0x4e] = '\0';
+    local_2250[0x4f] = '\0';
+    local_2250[0x40] = '\0';
+    local_2250[0x41] = '\0';
+    local_2250[0x42] = '\0';
+    local_2250[0x43] = '\0';
+    local_2250[0x44] = '\0';
+    local_2250[0x45] = '\0';
+    local_2250[0x46] = '\0';
+    local_2250[0x47] = '\0';
+    local_2250[0x58] = '\0';
+    local_2250[0x59] = '\0';
+    local_2250[0x5a] = '\0';
+    local_2250[0x5b] = '\0';
+    local_2250[0x5c] = '\0';
+    local_2250[0x5d] = '\0';
+    local_2250[0x5e] = '\0';
+    local_2250[0x5f] = '\0';
+    local_2250[0x50] = '\0';
+    local_2250[0x51] = '\0';
+    local_2250[0x52] = '\0';
+    local_2250[0x53] = '\0';
+    local_2250[0x54] = '\0';
+    local_2250[0x55] = '\0';
+    local_2250[0x56] = '\0';
+    local_2250[0x57] = '\0';
+    local_2250[0x28] = '\0';
+    local_2250[0x29] = '\0';
+    local_2250[0x2a] = '\0';
+    local_2250[0x2b] = '\0';
+    local_2250[0x2c] = '\0';
+    local_2250[0x2d] = '\0';
+    local_2250[0x2e] = '\0';
+    local_2250[0x2f] = '\0';
+    local_2250[0x20] = '\0';
+    local_2250[0x21] = '\0';
+    local_2250[0x22] = '\0';
+    local_2250[0x23] = '\0';
+    local_2250[0x24] = '\0';
+    local_2250[0x25] = '\0';
+    local_2250[0x26] = '\0';
+    local_2250[0x27] = '\0';
+    local_2250[0x38] = '\0';
+    local_2250[0x39] = '\0';
+    local_2250[0x3a] = '\0';
+    local_2250[0x3b] = '\0';
+    local_2250[0x3c] = '\0';
+    local_2250[0x3d] = '\0';
+    local_2250[0x3e] = '\0';
+    local_2250[0x3f] = '\0';
+    local_2250[0x30] = '\0';
+    local_2250[0x31] = '\0';
+    local_2250[0x32] = '\0';
+    local_2250[0x33] = '\0';
+    local_2250[0x34] = '\0';
+    local_2250[0x35] = '\0';
+    local_2250[0x36] = '\0';
+    local_2250[0x37] = '\0';
+    local_2250[8] = '\0';
+    local_2250[9] = '\0';
+    local_2250[10] = '\0';
+    local_2250[0xb] = '\0';
+    local_2250[0xc] = '\0';
+    local_2250[0xd] = '\0';
+    local_2250[0xe] = '\0';
+    local_2250[0xf] = '\0';
+    local_2250[0] = '\0';
+    local_2250[1] = '\0';
+    local_2250[2] = '\0';
+    local_2250[3] = '\0';
+    local_2250[4] = '\0';
+    local_2250[5] = '\0';
+    local_2250[6] = '\0';
+    local_2250[7] = '\0';
+    local_2250[0x18] = '\0';
+    local_2250[0x19] = '\0';
+    local_2250[0x1a] = '\0';
+    local_2250[0x1b] = '\0';
+    local_2250[0x1c] = '\0';
+    local_2250[0x1d] = '\0';
+    local_2250[0x1e] = '\0';
+    local_2250[0x1f] = '\0';
+    local_2250[0x10] = '\0';
+    local_2250[0x11] = '\0';
+    local_2250[0x12] = '\0';
+    local_2250[0x13] = '\0';
+    local_2250[0x14] = '\0';
+    local_2250[0x15] = '\0';
+    local_2250[0x16] = '\0';
+    local_2250[0x17] = '\0';
+    iVar3 = JsonGetString(pcVar6,param_2,"signature",local_2250,0x200);
+    if (iVar3 < 1) goto LAB_00000994;
+    local_2360 = 0;
+    iVar3 = _mbedtls_base64_decode(auStack_2350,0x100,&local_2360,local_2250,iVar3);
+    uVar4 = 6;
+    if ((iVar3 == 0) && (local_2360 != 0)) {
+      uVar5 = VerifySignature((LicenseValidator *)0x6,auStack_1048,(ulong)uVar2,auStack_2350,
+                              local_2360);
+      if ((uVar5 & 1) == 0) {
+        uVar4 = 3;
+      }
+      else {
+        uVar5 = ParsePayload(this_00,acStack_2048,(int)local_2358,param_3);
+        if ((uVar5 & 1) == 0) {
+          if (*(int *)(this_00 + 4) != 0) goto LAB_0000099c;
+          goto LAB_00000994;
+        }
+        uVar5 = CheckExpiry(this_00);
+        if ((uVar5 & 1) == 0) {
+          uVar4 = 2;
+        }
+        else {
+          if (*(int *)this_00 != 1) {
+            *(undefined8 *)(this_00 + 8) = 0;
+            this_00[0x18] = (LicenseValidator)0x0;
+          }
+          uVar4 = 1;
+        }
+      }
+    }
+  }
+  *(undefined4 *)(this_00 + 4) = uVar4;
+LAB_0000099c:
+  if (*____stack_chk_guard == local_48) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: OnTrackStep
+// Entry: 000009dc
+// Signature: undefined __thiscall OnTrackStep(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::OnTrackStep() */
+
+void __thiscall m3t::LicenseValidator::OnTrackStep(LicenseValidator *this)
+
+{
+  int iVar1;
+  bool bVar2;
+  long lVar3;
+  double dVar4;
+  
+  lVar3 = std::chrono::steady_clock::now();
+  if (*(int *)(this + 0x110) == 0) {
+    *(long *)(this + 0x108) = lVar3;
+    *(undefined4 *)(this + 0x110) = 1;
+    iVar1 = *(int *)this;
+  }
+  else {
+    *(int *)(this + 0x110) = *(int *)(this + 0x110) + 1;
+    iVar1 = *(int *)this;
+  }
+  if ((iVar1 == 1) && (this[0x18] == (LicenseValidator)0x0)) {
+    if (*(long *)(this + 0x100) != 0) {
+      dVar4 = (double)(lVar3 - *(long *)(this + 0x100)) / 1000000000.0;
+      bVar2 = false;
+      if ((0.0 < dVar4) && (bVar2 = false, !NAN(dVar4))) {
+        bVar2 = dVar4 < 0.5;
+      }
+      if (bVar2) {
+        *(double *)(this + 8) = dVar4 + *(double *)(this + 8);
+      }
+    }
+    if (*(double *)(this + 0x10) <= *(double *)(this + 8)) {
+      this[0x18] = (LicenseValidator)0x1;
+      *(long *)(this + 0x100) = lVar3;
+      return;
+    }
+  }
+  *(long *)(this + 0x100) = lVar3;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: WatermarkHeartbeat
+// Entry: 00000a9c
+// Signature: undefined __thiscall WatermarkHeartbeat(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::WatermarkHeartbeat() */
+
+void __thiscall m3t::LicenseValidator::WatermarkHeartbeat(LicenseValidator *this)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = std::chrono::steady_clock::now();
+  *(undefined8 *)(this + 0x118) = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: CanUpdatePose
+// Entry: 00000ac0
+// Signature: undefined __thiscall CanUpdatePose(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::CanUpdatePose() const */
+
+undefined8 __thiscall m3t::LicenseValidator::CanUpdatePose(LicenseValidator *this)
+
+{
+  long lVar1;
+  
+  if ((((*(int *)(this + 4) != 0) && (this[0x39] == (LicenseValidator)0x0)) &&
+      (*(int *)(this + 4) == 1 && this[0x18] == (LicenseValidator)0x0)) &&
+     (((*(int *)this != 3 || (*(int *)(this + 0x110) < 1)) ||
+      ((lVar1 = std::chrono::steady_clock::now(),
+       (double)(lVar1 - *(long *)(this + 0x108)) / 1000000000.0 <= 5.0 ||
+       ((*(long *)(this + 0x118) != 0 &&
+        ((double)(lVar1 - *(long *)(this + 0x118)) / 1000000000.0 <= 2.0)))))))) {
+    return 1;
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: IsValid
+// Entry: 00000b80
+// Signature: undefined __thiscall IsValid(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::IsValid() const */
+
+bool __thiscall m3t::LicenseValidator::IsValid(LicenseValidator *this)
+
+{
+  if (*(int *)(this + 4) == 1) {
+    return this[0x39] == (LicenseValidator)0x0;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: SecondsRemaining
+// Entry: 00000ba4
+// Signature: undefined __thiscall SecondsRemaining(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::SecondsRemaining() const */
+
+undefined1  [16] __thiscall m3t::LicenseValidator::SecondsRemaining(LicenseValidator *this)
+
+{
+  double dVar1;
+  undefined1 auVar2 [16];
+  
+  dVar1 = -1.0;
+  if ((*(int *)this == 1) &&
+     (dVar1 = *(double *)(this + 0x10) - *(double *)(this + 8), dVar1 <= 0.0)) {
+    dVar1 = 0.0;
+  }
+  auVar2._8_8_ = 0;
+  auVar2._0_8_ = dVar1;
+  return auVar2;
+}
+
+
+
+
+// ========================================
+// Function: DaysUntilExpiry
+// Entry: 00000bc8
+// Signature: undefined __thiscall DaysUntilExpiry(LicenseValidator * this)
+// ========================================
+
+
+/* m3t::LicenseValidator::DaysUntilExpiry() const */
+
+int __thiscall m3t::LicenseValidator::DaysUntilExpiry(LicenseValidator *this)
+
+{
+  int iVar1;
+  time_t tVar2;
+  time_t tVar3;
+  LicenseValidator *pLVar4;
+  double dVar5;
+  int local_80;
+  int iStack_7c;
+  int local_78;
+  int local_70;
+  int iStack_6c;
+  tm local_68;
+  
+  pLVar4 = this + 0x19;
+  if (*pLVar4 == (LicenseValidator)0x0) {
+    return -1;
+  }
+  local_68.tm_isdst = 0;
+  local_68._36_4_ = 0;
+  local_68.tm_wday = 0;
+  local_68.tm_yday = 0;
+  local_68.tm_zone = (char *)0x0;
+  local_68.tm_gmtoff = 0;
+  iVar1 = _sscanf((char *)pLVar4,"%d-%d-%dT%d:%d:%dZ");
+  if (iVar1 == 6) {
+  }
+  else {
+    iVar1 = _sscanf((char *)pLVar4,"%d-%d-%d");
+    if (iVar1 != 3) {
+      return 0;
+    }
+    local_80 = 0;
+    iStack_7c = 0;
+    local_78 = 0;
+  }
+  local_68.tm_year = iStack_6c + -0x76c;
+  local_68.tm_mon = local_70 + -1;
+  local_68.tm_sec = local_80;
+  local_68.tm_min = iStack_7c;
+  local_68.tm_hour = local_78;
+  tVar2 = _timegm(&local_68);
+  tVar3 = _time((time_t *)0x0);
+  dVar5 = _difftime(tVar2,tVar3);
+  return (int)(dVar5 / 86400.0);
+}
+
+
+
+
+// ========================================
+// Function: now
+// Entry: 00002000
+// Signature: undefined now(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::chrono::steady_clock::now(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00002200
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _atoi
+// Entry: 00002400
+// Signature: int _atoi(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _atoi(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00002500
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _difftime
+// Entry: 00002600
+// Signature: double _difftime(time_t param_1, time_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+double _difftime(time_t param_1,time_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_base64_decode
+// Entry: 00002700
+// Signature: undefined _mbedtls_base64_decode(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_base64_decode(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md
+// Entry: 00002800
+// Signature: undefined _mbedtls_md(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_md(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_info_from_type
+// Entry: 00002900
+// Signature: undefined _mbedtls_md_info_from_type(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_md_info_from_type(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_pk_free
+// Entry: 00002a00
+// Signature: undefined _mbedtls_pk_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_pk_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_pk_init
+// Entry: 00002b00
+// Signature: undefined _mbedtls_pk_init(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_pk_init(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_pk_parse_public_key
+// Entry: 00002c00
+// Signature: undefined _mbedtls_pk_parse_public_key(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_pk_parse_public_key(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_pk_verify
+// Entry: 00002d00
+// Signature: undefined _mbedtls_pk_verify(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_pk_verify(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00002e00
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _snprintf
+// Entry: 00002f00
+// Signature: int _snprintf(char * param_1, size_t param_2, char * param_3, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _snprintf(char *param_1,size_t param_2,char *param_3,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _sscanf
+// Entry: 00003000
+// Signature: int _sscanf(char * param_1, char * param_2, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _sscanf(char *param_1,char *param_2,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00003100
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncmp
+// Entry: 00003200
+// Signature: int _strncmp(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strncmp(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _time
+// Entry: 00003300
+// Signature: time_t _time(time_t * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+time_t _time(time_t *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _timegm
+// Entry: 00003400
+// Signature: time_t _timegm(tm * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+time_t _timegm(tm *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 30
+// Failed: 0
+// Skipped external functions: 0

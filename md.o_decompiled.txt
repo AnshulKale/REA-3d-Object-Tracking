@@ -1,0 +1,1164 @@
+Program: md.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: undefined ltmp0(void)
+// ========================================
+
+
+undefined8 ltmp0(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = 0xa44;
+  if (param_1 != 9) {
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_init
+// Entry: 00000014
+// Signature: undefined _mbedtls_md_init(void)
+// ========================================
+
+
+void _mbedtls_md_init(undefined8 *param_1)
+
+{
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_free
+// Entry: 00000020
+// Signature: undefined _mbedtls_md_free(void)
+// ========================================
+
+
+void _mbedtls_md_free(long *param_1)
+
+{
+  void *pvVar1;
+  
+  if ((param_1 != (long *)0x0) && ((int *)*param_1 != (int *)0x0)) {
+    pvVar1 = (void *)param_1[1];
+    if (pvVar1 != (void *)0x0) {
+      if (*(int *)*param_1 == 9) {
+        _mbedtls_sha256_free();
+        pvVar1 = (void *)param_1[1];
+      }
+      _free(pvVar1);
+    }
+    if (param_1[2] != 0) {
+      _mbedtls_zeroize_and_free(param_1[2],(ulong)*(byte *)(*param_1 + 5) << 1);
+    }
+    _mbedtls_platform_zeroize(param_1,0x18);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_clone
+// Entry: 00000094
+// Signature: undefined _mbedtls_md_clone(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_clone(undefined8 *param_1,undefined8 *param_2)
+
+{
+  undefined8 uVar1;
+  int *piVar2;
+  
+  if ((param_1 != (undefined8 *)0x0) && (uVar1 = 0xffffaf00, param_2 != (undefined8 *)0x0)) {
+    piVar2 = (int *)*param_1;
+    if (piVar2 != (int *)0x0) {
+      uVar1 = 0xffffaf00;
+      if ((((int *)*param_2 != (int *)0x0) && (piVar2 == (int *)*param_2)) && (*piVar2 == 9)) {
+        _mbedtls_sha256_clone(param_1[1],param_2[1]);
+        uVar1 = 0;
+      }
+    }
+    return uVar1;
+  }
+  return 0xffffaf00;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_setup
+// Entry: 000000f4
+// Signature: undefined _mbedtls_md_setup(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_setup(long *param_1,int *param_2,int param_3)
+
+{
+  void *pvVar1;
+  long *plVar2;
+  
+  if ((param_1 != (long *)0x0) && (param_2 != (int *)0x0)) {
+    *param_1 = (long)param_2;
+    plVar2 = param_1 + 1;
+    *plVar2 = 0;
+    param_1[2] = 0;
+    if (*param_2 == 9) {
+      pvVar1 = _calloc(1,0x68);
+      *plVar2 = (long)pvVar1;
+      if (pvVar1 != (void *)0x0) {
+        _mbedtls_sha256_init();
+        if (param_3 == 0) {
+          return 0;
+        }
+        pvVar1 = _calloc(2,(ulong)*(byte *)((long)param_2 + 5));
+        param_1[2] = (long)pvVar1;
+        if (pvVar1 != (void *)0x0) {
+          return 0;
+        }
+        if ((int *)*param_1 != (int *)0x0) {
+          pvVar1 = (void *)*plVar2;
+          if (pvVar1 != (void *)0x0) {
+            if (*(int *)*param_1 == 9) {
+              _mbedtls_sha256_free();
+              pvVar1 = (void *)*plVar2;
+            }
+            _free(pvVar1);
+            if (param_1[2] != 0) {
+              _mbedtls_zeroize_and_free(param_1[2],(ulong)*(byte *)(*param_1 + 5) << 1);
+            }
+          }
+          _mbedtls_platform_zeroize(param_1,0x18);
+        }
+      }
+      return 0xffffae80;
+    }
+  }
+  return 0xffffaf00;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_get_size
+// Entry: 00000298
+// Signature: undefined _mbedtls_md_get_size(void)
+// ========================================
+
+
+undefined1 _mbedtls_md_get_size(long param_1)
+
+{
+  undefined1 uVar1;
+  
+  uVar1 = 0;
+  if (param_1 != 0) {
+    uVar1 = *(undefined1 *)(param_1 + 4);
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_get_type
+// Entry: 000002a4
+// Signature: undefined _mbedtls_md_get_type(void)
+// ========================================
+
+
+undefined4 _mbedtls_md_get_type(undefined4 *param_1)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = 0;
+  if (param_1 != (undefined4 *)0x0) {
+    uVar1 = *param_1;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_list
+// Entry: 000002b0
+// Signature: undefined _mbedtls_md_list(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_list(void)
+
+{
+  return 0xa4c;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_info_from_string
+// Entry: 000002bc
+// Signature: undefined _mbedtls_md_info_from_string(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_info_from_string(char *param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  uVar2 = 0;
+  if (param_1 != (char *)0x0) {
+    iVar1 = _strcmp("SHA256",param_1);
+    uVar2 = 0xa44;
+    if (iVar1 != 0) {
+      uVar2 = 0;
+    }
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_get_name
+// Entry: 000002f0
+// Signature: undefined _mbedtls_md_get_name(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_get_name(int *param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = 0;
+  if ((param_1 != (int *)0x0) && (uVar1 = 0xa54, *param_1 != 9)) {
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_info_from_ctx
+// Entry: 0000030c
+// Signature: undefined _mbedtls_md_info_from_ctx(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_info_from_ctx(undefined8 *param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = 0;
+  if (param_1 != (undefined8 *)0x0) {
+    uVar1 = *param_1;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_hmac_starts
+// Entry: 00000318
+// Signature: undefined _mbedtls_md_hmac_starts(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _mbedtls_md_hmac_starts(long *param_1,undefined1 *param_2,ulong param_3)
+
+{
+  void *pvVar1;
+  long lVar2;
+  undefined8 uVar3;
+  int *piVar4;
+  ulong uVar5;
+  byte *pbVar6;
+  long lVar7;
+  ulong uVar8;
+  byte *pbVar9;
+  ulong uVar10;
+  undefined8 *puVar11;
+  ulong uVar12;
+  undefined8 *puVar13;
+  void *pvVar14;
+  size_t sVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  undefined8 uVar19;
+  undefined8 uVar20;
+  undefined8 uVar21;
+  undefined8 uVar22;
+  undefined1 local_68 [32];
+  long local_48;
+  
+  local_48 = *____stack_chk_guard;
+  if (((param_1 == (long *)0x0) || (piVar4 = (int *)*param_1, piVar4 == (int *)0x0)) ||
+     (pvVar14 = (void *)param_1[2], pvVar14 == (void *)0x0)) {
+    if (*____stack_chk_guard == local_48) {
+      return 0xffffaf00;
+    }
+    goto LAB_000005f8;
+  }
+  sVar15 = (size_t)*(byte *)((long)piVar4 + 5);
+  if (sVar15 < param_3) {
+    if (*piVar4 == 9) {
+      uVar3 = _mbedtls_sha256_starts(param_1[1],0);
+      if ((int)uVar3 == 0) {
+        if (((int *)*param_1 == (int *)0x0) || (*(int *)*param_1 != 9)) goto LAB_000005d0;
+        uVar3 = _mbedtls_sha256_update(param_1[1],param_2,param_3);
+        if ((int)uVar3 == 0) {
+          if (((int *)*param_1 == (int *)0x0) || (*(int *)*param_1 != 9)) goto LAB_000005d0;
+          uVar3 = _mbedtls_sha256_finish(param_1[1],local_68);
+          if ((int)uVar3 == 0) {
+            param_3 = (ulong)*(byte *)(*param_1 + 4);
+            pvVar14 = (void *)param_1[2];
+            sVar15 = (size_t)*(byte *)(*param_1 + 5);
+            param_2 = local_68;
+            goto LAB_000003f4;
+          }
+        }
+      }
+      goto LAB_000005d4;
+    }
+LAB_000005d0:
+    uVar3 = 0xffffaf00;
+  }
+  else {
+LAB_000003f4:
+    pvVar1 = (void *)((long)pvVar14 + sVar15);
+    _memset(pvVar14,0x36,sVar15);
+    _memset(pvVar1,0x5c,(ulong)*(byte *)(*param_1 + 5));
+    if (param_3 < 0x10) {
+      uVar5 = 0;
+    }
+    else {
+      uVar8 = 0;
+      do {
+        uVar17 = ((undefined8 *)((long)pvVar14 + uVar8))[1];
+        uVar3 = *(undefined8 *)((long)pvVar14 + uVar8);
+        uVar18 = *(undefined8 *)((long)(param_2 + uVar8) + 8);
+        uVar16 = *(undefined8 *)(param_2 + uVar8);
+        ((undefined8 *)((long)pvVar14 + uVar8))[1] =
+             CONCAT17((byte)((ulong)uVar18 >> 0x38) ^ (byte)((ulong)uVar17 >> 0x38),
+                      CONCAT16((byte)((ulong)uVar18 >> 0x30) ^ (byte)((ulong)uVar17 >> 0x30),
+                               CONCAT15((byte)((ulong)uVar18 >> 0x28) ^
+                                        (byte)((ulong)uVar17 >> 0x28),
+                                        CONCAT14((byte)((ulong)uVar18 >> 0x20) ^
+                                                 (byte)((ulong)uVar17 >> 0x20),
+                                                 CONCAT13((byte)((ulong)uVar18 >> 0x18) ^
+                                                          (byte)((ulong)uVar17 >> 0x18),
+                                                          CONCAT12((byte)((ulong)uVar18 >> 0x10) ^
+                                                                   (byte)((ulong)uVar17 >> 0x10),
+                                                                   CONCAT11((byte)((ulong)uVar18 >>
+                                                                                  8) ^
+                                                                            (byte)((ulong)uVar17 >>
+                                                                                  8),(byte)uVar18 ^
+                                                                                     (byte)uVar17)))
+                                                ))));
+        *(undefined8 *)((long)pvVar14 + uVar8) =
+             CONCAT17((byte)((ulong)uVar16 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                      CONCAT16((byte)((ulong)uVar16 >> 0x30) ^ (byte)((ulong)uVar3 >> 0x30),
+                               CONCAT15((byte)((ulong)uVar16 >> 0x28) ^ (byte)((ulong)uVar3 >> 0x28)
+                                        ,CONCAT14((byte)((ulong)uVar16 >> 0x20) ^
+                                                  (byte)((ulong)uVar3 >> 0x20),
+                                                  CONCAT13((byte)((ulong)uVar16 >> 0x18) ^
+                                                           (byte)((ulong)uVar3 >> 0x18),
+                                                           CONCAT12((byte)((ulong)uVar16 >> 0x10) ^
+                                                                    (byte)((ulong)uVar3 >> 0x10),
+                                                                    CONCAT11((byte)((ulong)uVar16 >>
+                                                                                   8) ^
+                                                                             (byte)((ulong)uVar3 >>
+                                                                                   8),(byte)uVar16 ^
+                                                                                      (byte)uVar3)))
+                                                 ))));
+        uVar5 = uVar8 + 0x10;
+        uVar12 = uVar8 + 0x20;
+        uVar8 = uVar5;
+      } while (uVar12 <= param_3);
+    }
+    uVar8 = param_3 - uVar5;
+    if (uVar5 <= param_3 && uVar8 != 0) {
+      if ((7 < uVar8) &&
+         ((param_2 + param_3 <= (undefined1 *)((long)pvVar14 + uVar5) ||
+          ((undefined1 *)((long)pvVar14 + param_3) <= param_2 + uVar5)))) {
+        if (uVar8 < 0x20) {
+          uVar10 = 0;
+        }
+        else {
+          uVar10 = uVar8 & 0xffffffffffffffe0;
+          puVar11 = (undefined8 *)((long)pvVar14 + uVar5 + 0x10);
+          puVar13 = (undefined8 *)(param_2 + uVar5 + 0x10);
+          uVar12 = uVar10;
+          do {
+            uVar17 = puVar11[-1];
+            uVar3 = puVar11[-2];
+            uVar18 = puVar11[1];
+            uVar16 = *puVar11;
+            uVar20 = puVar13[-1];
+            uVar19 = puVar13[-2];
+            uVar22 = puVar13[1];
+            uVar21 = *puVar13;
+            puVar11[-1] = CONCAT17((byte)((ulong)uVar20 >> 0x38) ^ (byte)((ulong)uVar17 >> 0x38),
+                                   CONCAT16((byte)((ulong)uVar20 >> 0x30) ^
+                                            (byte)((ulong)uVar17 >> 0x30),
+                                            CONCAT15((byte)((ulong)uVar20 >> 0x28) ^
+                                                     (byte)((ulong)uVar17 >> 0x28),
+                                                     CONCAT14((byte)((ulong)uVar20 >> 0x20) ^
+                                                              (byte)((ulong)uVar17 >> 0x20),
+                                                              CONCAT13((byte)((ulong)uVar20 >> 0x18)
+                                                                       ^ (byte)((ulong)uVar17 >>
+                                                                               0x18),
+                                                                       CONCAT12((byte)((ulong)uVar20
+                                                                                      >> 0x10) ^
+                                                                                (byte)((ulong)uVar17
+                                                                                      >> 0x10),
+                                                                                CONCAT11((byte)((
+                                                  ulong)uVar20 >> 8) ^ (byte)((ulong)uVar17 >> 8),
+                                                  (byte)uVar20 ^ (byte)uVar17)))))));
+            puVar11[-2] = CONCAT17((byte)((ulong)uVar19 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                                   CONCAT16((byte)((ulong)uVar19 >> 0x30) ^
+                                            (byte)((ulong)uVar3 >> 0x30),
+                                            CONCAT15((byte)((ulong)uVar19 >> 0x28) ^
+                                                     (byte)((ulong)uVar3 >> 0x28),
+                                                     CONCAT14((byte)((ulong)uVar19 >> 0x20) ^
+                                                              (byte)((ulong)uVar3 >> 0x20),
+                                                              CONCAT13((byte)((ulong)uVar19 >> 0x18)
+                                                                       ^ (byte)((ulong)uVar3 >> 0x18
+                                                                               ),
+                                                                       CONCAT12((byte)((ulong)uVar19
+                                                                                      >> 0x10) ^
+                                                                                (byte)((ulong)uVar3
+                                                                                      >> 0x10),
+                                                                                CONCAT11((byte)((
+                                                  ulong)uVar19 >> 8) ^ (byte)((ulong)uVar3 >> 8),
+                                                  (byte)uVar19 ^ (byte)uVar3)))))));
+            puVar11[1] = CONCAT17((byte)((ulong)uVar22 >> 0x38) ^ (byte)((ulong)uVar18 >> 0x38),
+                                  CONCAT16((byte)((ulong)uVar22 >> 0x30) ^
+                                           (byte)((ulong)uVar18 >> 0x30),
+                                           CONCAT15((byte)((ulong)uVar22 >> 0x28) ^
+                                                    (byte)((ulong)uVar18 >> 0x28),
+                                                    CONCAT14((byte)((ulong)uVar22 >> 0x20) ^
+                                                             (byte)((ulong)uVar18 >> 0x20),
+                                                             CONCAT13((byte)((ulong)uVar22 >> 0x18)
+                                                                      ^ (byte)((ulong)uVar18 >> 0x18
+                                                                              ),
+                                                                      CONCAT12((byte)((ulong)uVar22
+                                                                                     >> 0x10) ^
+                                                                               (byte)((ulong)uVar18
+                                                                                     >> 0x10),
+                                                                               CONCAT11((byte)((
+                                                  ulong)uVar22 >> 8) ^ (byte)((ulong)uVar18 >> 8),
+                                                  (byte)uVar22 ^ (byte)uVar18)))))));
+            *puVar11 = CONCAT17((byte)((ulong)uVar21 >> 0x38) ^ (byte)((ulong)uVar16 >> 0x38),
+                                CONCAT16((byte)((ulong)uVar21 >> 0x30) ^
+                                         (byte)((ulong)uVar16 >> 0x30),
+                                         CONCAT15((byte)((ulong)uVar21 >> 0x28) ^
+                                                  (byte)((ulong)uVar16 >> 0x28),
+                                                  CONCAT14((byte)((ulong)uVar21 >> 0x20) ^
+                                                           (byte)((ulong)uVar16 >> 0x20),
+                                                           CONCAT13((byte)((ulong)uVar21 >> 0x18) ^
+                                                                    (byte)((ulong)uVar16 >> 0x18),
+                                                                    CONCAT12((byte)((ulong)uVar21 >>
+                                                                                   0x10) ^
+                                                                             (byte)((ulong)uVar16 >>
+                                                                                   0x10),
+                                                                             CONCAT11((byte)((ulong)
+                                                  uVar21 >> 8) ^ (byte)((ulong)uVar16 >> 8),
+                                                  (byte)uVar21 ^ (byte)uVar16)))))));
+            puVar11 = puVar11 + 4;
+            puVar13 = puVar13 + 4;
+            uVar12 = uVar12 - 0x20;
+          } while (uVar12 != 0);
+          if (uVar8 == uVar10) goto LAB_000004e4;
+          if ((uVar8 & 0x18) == 0) {
+            uVar5 = uVar5 + uVar10;
+            goto LAB_000004c0;
+          }
+        }
+        uVar12 = param_3 & 7;
+        lVar2 = uVar10 + uVar5;
+        lVar7 = (lVar2 + uVar12) - param_3;
+        puVar11 = (undefined8 *)((long)pvVar14 + lVar2);
+        puVar13 = (undefined8 *)(param_2 + lVar2);
+        do {
+          uVar3 = *puVar11;
+          uVar17 = *puVar13;
+          *puVar11 = CONCAT17((byte)((ulong)uVar17 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                              CONCAT16((byte)((ulong)uVar17 >> 0x30) ^ (byte)((ulong)uVar3 >> 0x30),
+                                       CONCAT15((byte)((ulong)uVar17 >> 0x28) ^
+                                                (byte)((ulong)uVar3 >> 0x28),
+                                                CONCAT14((byte)((ulong)uVar17 >> 0x20) ^
+                                                         (byte)((ulong)uVar3 >> 0x20),
+                                                         CONCAT13((byte)((ulong)uVar17 >> 0x18) ^
+                                                                  (byte)((ulong)uVar3 >> 0x18),
+                                                                  CONCAT12((byte)((ulong)uVar17 >>
+                                                                                 0x10) ^
+                                                                           (byte)((ulong)uVar3 >>
+                                                                                 0x10),
+                                                                           CONCAT11((byte)((ulong)
+                                                  uVar17 >> 8) ^ (byte)((ulong)uVar3 >> 8),
+                                                  (byte)uVar17 ^ (byte)uVar3)))))));
+          lVar7 = lVar7 + 8;
+          puVar11 = puVar11 + 1;
+          puVar13 = puVar13 + 1;
+        } while (lVar7 != 0);
+        uVar5 = uVar5 + (uVar8 - uVar12);
+        if (uVar12 == 0) goto LAB_000004e4;
+      }
+LAB_000004c0:
+      lVar7 = param_3 - uVar5;
+      pbVar6 = (byte *)((long)pvVar14 + uVar5);
+      pbVar9 = param_2 + uVar5;
+      do {
+        *pbVar6 = *pbVar9 ^ *pbVar6;
+        lVar7 = lVar7 + -1;
+        pbVar6 = pbVar6 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (lVar7 != 0);
+    }
+LAB_000004e4:
+    if (param_3 < 0x10) {
+      uVar5 = 0;
+    }
+    else {
+      uVar8 = 0;
+      do {
+        uVar17 = ((undefined8 *)((long)pvVar1 + uVar8))[1];
+        uVar3 = *(undefined8 *)((long)pvVar1 + uVar8);
+        uVar18 = *(undefined8 *)((long)(param_2 + uVar8) + 8);
+        uVar16 = *(undefined8 *)(param_2 + uVar8);
+        ((undefined8 *)((long)pvVar1 + uVar8))[1] =
+             CONCAT17((byte)((ulong)uVar18 >> 0x38) ^ (byte)((ulong)uVar17 >> 0x38),
+                      CONCAT16((byte)((ulong)uVar18 >> 0x30) ^ (byte)((ulong)uVar17 >> 0x30),
+                               CONCAT15((byte)((ulong)uVar18 >> 0x28) ^
+                                        (byte)((ulong)uVar17 >> 0x28),
+                                        CONCAT14((byte)((ulong)uVar18 >> 0x20) ^
+                                                 (byte)((ulong)uVar17 >> 0x20),
+                                                 CONCAT13((byte)((ulong)uVar18 >> 0x18) ^
+                                                          (byte)((ulong)uVar17 >> 0x18),
+                                                          CONCAT12((byte)((ulong)uVar18 >> 0x10) ^
+                                                                   (byte)((ulong)uVar17 >> 0x10),
+                                                                   CONCAT11((byte)((ulong)uVar18 >>
+                                                                                  8) ^
+                                                                            (byte)((ulong)uVar17 >>
+                                                                                  8),(byte)uVar18 ^
+                                                                                     (byte)uVar17)))
+                                                ))));
+        *(undefined8 *)((long)pvVar1 + uVar8) =
+             CONCAT17((byte)((ulong)uVar16 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                      CONCAT16((byte)((ulong)uVar16 >> 0x30) ^ (byte)((ulong)uVar3 >> 0x30),
+                               CONCAT15((byte)((ulong)uVar16 >> 0x28) ^ (byte)((ulong)uVar3 >> 0x28)
+                                        ,CONCAT14((byte)((ulong)uVar16 >> 0x20) ^
+                                                  (byte)((ulong)uVar3 >> 0x20),
+                                                  CONCAT13((byte)((ulong)uVar16 >> 0x18) ^
+                                                           (byte)((ulong)uVar3 >> 0x18),
+                                                           CONCAT12((byte)((ulong)uVar16 >> 0x10) ^
+                                                                    (byte)((ulong)uVar3 >> 0x10),
+                                                                    CONCAT11((byte)((ulong)uVar16 >>
+                                                                                   8) ^
+                                                                             (byte)((ulong)uVar3 >>
+                                                                                   8),(byte)uVar16 ^
+                                                                                      (byte)uVar3)))
+                                                 ))));
+        uVar5 = uVar8 + 0x10;
+        uVar12 = uVar8 + 0x20;
+        uVar8 = uVar5;
+      } while (uVar12 <= param_3);
+    }
+    uVar8 = param_3 - uVar5;
+    if (uVar5 <= param_3 && uVar8 != 0) {
+      if ((7 < uVar8) &&
+         ((param_2 + param_3 <= (undefined1 *)((long)pvVar14 + sVar15 + uVar5) ||
+          ((undefined1 *)((long)pvVar14 + sVar15 + param_3) <= param_2 + uVar5)))) {
+        if (uVar8 < 0x20) {
+          uVar10 = 0;
+        }
+        else {
+          uVar10 = uVar8 & 0xffffffffffffffe0;
+          puVar11 = (undefined8 *)(param_2 + uVar5 + 0x10);
+          puVar13 = (undefined8 *)((long)pvVar14 + sVar15 + uVar5 + 0x10);
+          uVar12 = uVar10;
+          do {
+            uVar17 = puVar13[-1];
+            uVar3 = puVar13[-2];
+            uVar18 = puVar13[1];
+            uVar16 = *puVar13;
+            uVar20 = puVar11[-1];
+            uVar19 = puVar11[-2];
+            uVar22 = puVar11[1];
+            uVar21 = *puVar11;
+            puVar13[-1] = CONCAT17((byte)((ulong)uVar20 >> 0x38) ^ (byte)((ulong)uVar17 >> 0x38),
+                                   CONCAT16((byte)((ulong)uVar20 >> 0x30) ^
+                                            (byte)((ulong)uVar17 >> 0x30),
+                                            CONCAT15((byte)((ulong)uVar20 >> 0x28) ^
+                                                     (byte)((ulong)uVar17 >> 0x28),
+                                                     CONCAT14((byte)((ulong)uVar20 >> 0x20) ^
+                                                              (byte)((ulong)uVar17 >> 0x20),
+                                                              CONCAT13((byte)((ulong)uVar20 >> 0x18)
+                                                                       ^ (byte)((ulong)uVar17 >>
+                                                                               0x18),
+                                                                       CONCAT12((byte)((ulong)uVar20
+                                                                                      >> 0x10) ^
+                                                                                (byte)((ulong)uVar17
+                                                                                      >> 0x10),
+                                                                                CONCAT11((byte)((
+                                                  ulong)uVar20 >> 8) ^ (byte)((ulong)uVar17 >> 8),
+                                                  (byte)uVar20 ^ (byte)uVar17)))))));
+            puVar13[-2] = CONCAT17((byte)((ulong)uVar19 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                                   CONCAT16((byte)((ulong)uVar19 >> 0x30) ^
+                                            (byte)((ulong)uVar3 >> 0x30),
+                                            CONCAT15((byte)((ulong)uVar19 >> 0x28) ^
+                                                     (byte)((ulong)uVar3 >> 0x28),
+                                                     CONCAT14((byte)((ulong)uVar19 >> 0x20) ^
+                                                              (byte)((ulong)uVar3 >> 0x20),
+                                                              CONCAT13((byte)((ulong)uVar19 >> 0x18)
+                                                                       ^ (byte)((ulong)uVar3 >> 0x18
+                                                                               ),
+                                                                       CONCAT12((byte)((ulong)uVar19
+                                                                                      >> 0x10) ^
+                                                                                (byte)((ulong)uVar3
+                                                                                      >> 0x10),
+                                                                                CONCAT11((byte)((
+                                                  ulong)uVar19 >> 8) ^ (byte)((ulong)uVar3 >> 8),
+                                                  (byte)uVar19 ^ (byte)uVar3)))))));
+            puVar13[1] = CONCAT17((byte)((ulong)uVar22 >> 0x38) ^ (byte)((ulong)uVar18 >> 0x38),
+                                  CONCAT16((byte)((ulong)uVar22 >> 0x30) ^
+                                           (byte)((ulong)uVar18 >> 0x30),
+                                           CONCAT15((byte)((ulong)uVar22 >> 0x28) ^
+                                                    (byte)((ulong)uVar18 >> 0x28),
+                                                    CONCAT14((byte)((ulong)uVar22 >> 0x20) ^
+                                                             (byte)((ulong)uVar18 >> 0x20),
+                                                             CONCAT13((byte)((ulong)uVar22 >> 0x18)
+                                                                      ^ (byte)((ulong)uVar18 >> 0x18
+                                                                              ),
+                                                                      CONCAT12((byte)((ulong)uVar22
+                                                                                     >> 0x10) ^
+                                                                               (byte)((ulong)uVar18
+                                                                                     >> 0x10),
+                                                                               CONCAT11((byte)((
+                                                  ulong)uVar22 >> 8) ^ (byte)((ulong)uVar18 >> 8),
+                                                  (byte)uVar22 ^ (byte)uVar18)))))));
+            *puVar13 = CONCAT17((byte)((ulong)uVar21 >> 0x38) ^ (byte)((ulong)uVar16 >> 0x38),
+                                CONCAT16((byte)((ulong)uVar21 >> 0x30) ^
+                                         (byte)((ulong)uVar16 >> 0x30),
+                                         CONCAT15((byte)((ulong)uVar21 >> 0x28) ^
+                                                  (byte)((ulong)uVar16 >> 0x28),
+                                                  CONCAT14((byte)((ulong)uVar21 >> 0x20) ^
+                                                           (byte)((ulong)uVar16 >> 0x20),
+                                                           CONCAT13((byte)((ulong)uVar21 >> 0x18) ^
+                                                                    (byte)((ulong)uVar16 >> 0x18),
+                                                                    CONCAT12((byte)((ulong)uVar21 >>
+                                                                                   0x10) ^
+                                                                             (byte)((ulong)uVar16 >>
+                                                                                   0x10),
+                                                                             CONCAT11((byte)((ulong)
+                                                  uVar21 >> 8) ^ (byte)((ulong)uVar16 >> 8),
+                                                  (byte)uVar21 ^ (byte)uVar16)))))));
+            puVar11 = puVar11 + 4;
+            puVar13 = puVar13 + 4;
+            uVar12 = uVar12 - 0x20;
+          } while (uVar12 != 0);
+          if (uVar8 == uVar10) goto LAB_00000580;
+          if ((uVar8 & 0x18) == 0) {
+            uVar5 = uVar5 + uVar10;
+            goto LAB_00000558;
+          }
+        }
+        uVar12 = param_3 & 7;
+        lVar2 = uVar10 + uVar5;
+        lVar7 = (lVar2 + uVar12) - param_3;
+        puVar11 = (undefined8 *)((long)pvVar14 + lVar2 + sVar15);
+        puVar13 = (undefined8 *)(param_2 + lVar2);
+        do {
+          uVar3 = *puVar11;
+          uVar17 = *puVar13;
+          *puVar11 = CONCAT17((byte)((ulong)uVar17 >> 0x38) ^ (byte)((ulong)uVar3 >> 0x38),
+                              CONCAT16((byte)((ulong)uVar17 >> 0x30) ^ (byte)((ulong)uVar3 >> 0x30),
+                                       CONCAT15((byte)((ulong)uVar17 >> 0x28) ^
+                                                (byte)((ulong)uVar3 >> 0x28),
+                                                CONCAT14((byte)((ulong)uVar17 >> 0x20) ^
+                                                         (byte)((ulong)uVar3 >> 0x20),
+                                                         CONCAT13((byte)((ulong)uVar17 >> 0x18) ^
+                                                                  (byte)((ulong)uVar3 >> 0x18),
+                                                                  CONCAT12((byte)((ulong)uVar17 >>
+                                                                                 0x10) ^
+                                                                           (byte)((ulong)uVar3 >>
+                                                                                 0x10),
+                                                                           CONCAT11((byte)((ulong)
+                                                  uVar17 >> 8) ^ (byte)((ulong)uVar3 >> 8),
+                                                  (byte)uVar17 ^ (byte)uVar3)))))));
+          lVar7 = lVar7 + 8;
+          puVar11 = puVar11 + 1;
+          puVar13 = puVar13 + 1;
+        } while (lVar7 != 0);
+        uVar5 = uVar5 + (uVar8 - uVar12);
+        if (uVar12 == 0) goto LAB_00000580;
+      }
+LAB_00000558:
+      lVar7 = param_3 - uVar5;
+      pbVar6 = (byte *)((long)pvVar14 + uVar5 + sVar15);
+      pbVar9 = param_2 + uVar5;
+      do {
+        *pbVar6 = *pbVar9 ^ *pbVar6;
+        lVar7 = lVar7 + -1;
+        pbVar6 = pbVar6 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (lVar7 != 0);
+    }
+LAB_00000580:
+    if (((int *)*param_1 == (int *)0x0) || (*(int *)*param_1 != 9)) goto LAB_000005d0;
+    uVar3 = _mbedtls_sha256_starts(param_1[1],0);
+    if ((int)uVar3 == 0) {
+      if (*(int *)*param_1 != 9) goto LAB_000005d0;
+      uVar3 = _mbedtls_sha256_update(param_1[1],pvVar14,*(undefined1 *)(*param_1 + 5));
+    }
+  }
+LAB_000005d4:
+  _mbedtls_platform_zeroize(local_68,0x20);
+  if (*____stack_chk_guard == local_48) {
+    return uVar3;
+  }
+LAB_000005f8:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_hmac_finish
+// Entry: 00000778
+// Signature: undefined _mbedtls_md_hmac_finish(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _mbedtls_md_hmac_finish(undefined8 *param_1,undefined8 param_2)
+
+{
+  byte bVar1;
+  undefined8 uVar2;
+  int *piVar3;
+  long lVar4;
+  undefined1 auStack_58 [32];
+  long local_38;
+  
+  local_38 = *____stack_chk_guard;
+  if ((((param_1 != (undefined8 *)0x0) && (piVar3 = (int *)*param_1, piVar3 != (int *)0x0)) &&
+      (lVar4 = param_1[2], lVar4 != 0)) && (*piVar3 == 9)) {
+    bVar1 = *(byte *)((long)piVar3 + 5);
+    uVar2 = _mbedtls_sha256_finish(param_1[1],auStack_58);
+    if ((int)uVar2 != 0) goto LAB_0000086c;
+    if (((int *)*param_1 != (int *)0x0) && (*(int *)*param_1 == 9)) {
+      uVar2 = _mbedtls_sha256_starts(param_1[1],0);
+      if ((int)uVar2 != 0) goto LAB_0000086c;
+      if (*(int *)*param_1 == 9) {
+        uVar2 = _mbedtls_sha256_update
+                          (param_1[1],lVar4 + (ulong)bVar1,*(undefined1 *)((long)*param_1 + 5));
+        if ((int)uVar2 != 0) goto LAB_0000086c;
+        if (*(int *)*param_1 == 9) {
+          uVar2 = _mbedtls_sha256_update(param_1[1],auStack_58,(char)((int *)*param_1)[1]);
+          if ((int)uVar2 != 0) goto LAB_0000086c;
+          if (((int *)*param_1 != (int *)0x0) && (*(int *)*param_1 == 9)) {
+            uVar2 = _mbedtls_sha256_finish(param_1[1],param_2);
+            goto LAB_0000086c;
+          }
+        }
+      }
+    }
+  }
+  uVar2 = 0xffffaf00;
+LAB_0000086c:
+  if (*____stack_chk_guard == local_38) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(uVar2);
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_hmac_reset
+// Entry: 0000089c
+// Signature: undefined _mbedtls_md_hmac_reset(void)
+// ========================================
+
+
+undefined8 _mbedtls_md_hmac_reset(undefined8 *param_1)
+
+{
+  undefined8 uVar1;
+  long lVar2;
+  
+  if ((((param_1 != (undefined8 *)0x0) && ((int *)*param_1 != (int *)0x0)) &&
+      (lVar2 = param_1[2], lVar2 != 0)) && (*(int *)*param_1 == 9)) {
+    uVar1 = _mbedtls_sha256_starts(param_1[1],0);
+    if ((int)uVar1 != 0) {
+      return uVar1;
+    }
+    if (*(int *)*param_1 == 9) {
+      uVar1 = _mbedtls_sha256_update(param_1[1],lVar2,*(undefined1 *)((long)*param_1 + 5));
+      return uVar1;
+    }
+  }
+  return 0xffffaf00;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_md_hmac
+// Entry: 00000920
+// Signature: undefined _mbedtls_md_hmac(void)
+// ========================================
+
+
+undefined8
+_mbedtls_md_hmac(long param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                undefined8 param_5,undefined8 param_6)
+
+{
+  undefined8 uVar1;
+  int *local_58;
+  void *local_50;
+  long local_48;
+  
+  if (param_1 == 0) {
+LAB_000009d0:
+    uVar1 = 0xffffaf00;
+  }
+  else {
+    local_58 = (int *)0x0;
+    local_50 = (void *)0x0;
+    local_48 = 0;
+    uVar1 = _mbedtls_md_setup(&local_58,param_1,1);
+    if (((int)uVar1 == 0) &&
+       (uVar1 = _mbedtls_md_hmac_starts(&local_58,param_2,param_3), (int)uVar1 == 0)) {
+      if (local_58 == (int *)0x0) goto LAB_000009d0;
+      if ((local_48 == 0) || (*local_58 != 9)) {
+        uVar1 = 0xffffaf00;
+      }
+      else {
+        uVar1 = _mbedtls_sha256_update(local_50,param_4,param_5);
+        if ((int)uVar1 == 0) {
+          uVar1 = _mbedtls_md_hmac_finish(&local_58,param_6);
+        }
+      }
+    }
+    if (local_58 != (int *)0x0) {
+      if (local_50 != (void *)0x0) {
+        if (*local_58 == 9) {
+          _mbedtls_sha256_free();
+        }
+        _free(local_50);
+      }
+      if (local_48 != 0) {
+        _mbedtls_zeroize_and_free(local_48,(ulong)*(byte *)((long)local_58 + 5) << 1);
+      }
+      _mbedtls_platform_zeroize(&local_58,0x18);
+    }
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00001000
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _calloc
+// Entry: 00001200
+// Signature: void * _calloc(size_t param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _calloc(size_t param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001300
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_platform_zeroize
+// Entry: 00001400
+// Signature: undefined _mbedtls_platform_zeroize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_platform_zeroize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_clone
+// Entry: 00001600
+// Signature: undefined _mbedtls_sha256_clone(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_clone(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_finish
+// Entry: 00001700
+// Signature: undefined _mbedtls_sha256_finish(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_finish(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_free
+// Entry: 00001800
+// Signature: undefined _mbedtls_sha256_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_init
+// Entry: 00001900
+// Signature: undefined _mbedtls_sha256_init(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_init(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_starts
+// Entry: 00001a00
+// Signature: undefined _mbedtls_sha256_starts(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_starts(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_sha256_update
+// Entry: 00001b00
+// Signature: undefined _mbedtls_sha256_update(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_sha256_update(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_zeroize_and_free
+// Entry: 00001c00
+// Signature: undefined _mbedtls_zeroize_and_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_zeroize_and_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00001d00
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00001e00
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 28
+// Failed: 0
+// Skipped external functions: 0

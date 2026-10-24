@@ -1,0 +1,4133 @@
+Program: kmp_ftn_cdecl.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: kmp_set_stacksize
+// Entry: 00000000
+// Signature: void __cdecl kmp_set_stacksize(int arg)
+// ========================================
+
+
+void kmp_set_stacksize(int arg)
+
+{
+  ___kmp_aux_set_stacksize((long)arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_stacksize_s
+// Entry: 00000024
+// Signature: void __cdecl kmp_set_stacksize_s(size_t arg)
+// ========================================
+
+
+void kmp_set_stacksize_s(size_t arg)
+
+{
+  ___kmp_aux_set_stacksize(arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_stacksize
+// Entry: 00000048
+// Signature: int kmp_get_stacksize(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int kmp_get_stacksize(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return (int)*____kmp_stksize;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_stacksize_s
+// Entry: 0000008c
+// Signature: size_t kmp_get_stacksize_s(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t kmp_get_stacksize_s(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_stksize;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_blocktime
+// Entry: 000000cc
+// Signature: void __cdecl kmp_set_blocktime(int arg)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void kmp_set_blocktime(int arg)
+
+{
+  int gtid;
+  int iVar1;
+  kmp_info_t *pkVar2;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: int tid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id_reg();
+  iVar1 = __kmp_tid_from_gtid(gtid);
+  pkVar2 = __kmp_thread_from_gtid(gtid);
+  ___kmp_aux_set_blocktime(arg,pkVar2,iVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_tid_from_gtid
+// Entry: 00000118
+// Signature: int __cdecl __kmp_tid_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmp_tid_from_gtid(int gtid)
+
+{
+  return *(int *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x20);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_thread_from_gtid
+// Entry: 00000140
+// Signature: kmp_info_t * __cdecl __kmp_thread_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_thread_from_gtid(int gtid)
+
+{
+  return *(kmp_info_t **)(*____kmp_threads + (long)gtid * 8);
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_blocktime
+// Entry: 00000164
+// Signature: int kmp_get_blocktime(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int kmp_get_blocktime(void)
+
+{
+  int gtid;
+  int iVar1;
+  long lVar2;
+  undefined4 local_14;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: int tid@[???]
+                       Unresolved local var: kmp_team_p * team@[DW_OP_breg31(sp): +8] */
+  gtid = ___kmp_get_global_thread_id_reg();
+  iVar1 = __kmp_tid_from_gtid(gtid);
+  lVar2 = *(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x40);
+  if (*____kmp_dflt_blocktime == 0x7fffffff) {
+    local_14 = 0x7fffffff;
+  }
+  else if ((*____kmp_zero_bt == 0) ||
+          (*(char *)(*(long *)(*(long *)(*(long *)(lVar2 + 0x280) + (long)iVar1 * 8) + 0x1b8) + 0x45
+                    ) != '\0')) {
+    local_14 = *(int *)(*(long *)(*(long *)(*(long *)(lVar2 + 0x280) + (long)iVar1 * 8) + 0x1b8) +
+                       0x48);
+  }
+  else {
+    local_14 = 0;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_library_serial
+// Entry: 00000248
+// Signature: void kmp_set_library_serial(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void kmp_set_library_serial(void)
+
+{
+  ___kmp_user_set_library(1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_library_turnaround
+// Entry: 00000260
+// Signature: void kmp_set_library_turnaround(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void kmp_set_library_turnaround(void)
+
+{
+  ___kmp_user_set_library(2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_library_throughput
+// Entry: 00000278
+// Signature: void kmp_set_library_throughput(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void kmp_set_library_throughput(void)
+
+{
+  ___kmp_user_set_library(3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_library
+// Entry: 00000290
+// Signature: void __cdecl kmp_set_library(int arg)
+// ========================================
+
+
+void kmp_set_library(int arg)
+
+{
+                    /* Unresolved local var: library_type lib@[DW_OP_breg31(sp): +8] */
+  ___kmp_user_set_library(arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_library
+// Entry: 000002bc
+// Signature: int kmp_get_library(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int kmp_get_library(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_library;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_disp_num_buffers
+// Entry: 000002fc
+// Signature: void __cdecl kmp_set_disp_num_buffers(int arg)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void kmp_set_disp_num_buffers(int arg)
+
+{
+                    /* Unresolved local var: int num_buffers@[???] */
+  if (((*____kmp_init_serial == 0) && (0 < arg)) && (arg < 0x1001)) {
+    *____kmp_dispatch_num_buffers = arg;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_affinity
+// Entry: 0000036c
+// Signature: int __cdecl kmp_set_affinity(void * * mask)
+// ========================================
+
+
+int kmp_set_affinity(void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_affinity
+// Entry: 00000380
+// Signature: int __cdecl kmp_get_affinity(void * * mask)
+// ========================================
+
+
+int kmp_get_affinity(void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_affinity_max_proc
+// Entry: 00000394
+// Signature: int kmp_get_affinity_max_proc(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int kmp_get_affinity_max_proc(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: kmp_create_affinity_mask
+// Entry: 0000039c
+// Signature: void __cdecl kmp_create_affinity_mask(void * * mask)
+// ========================================
+
+
+void kmp_create_affinity_mask(void **mask)
+
+{
+  *mask = (void *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_destroy_affinity_mask
+// Entry: 000003b4
+// Signature: void __cdecl kmp_destroy_affinity_mask(void * * mask)
+// ========================================
+
+
+void kmp_destroy_affinity_mask(void **mask)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_affinity_mask_proc
+// Entry: 000003c4
+// Signature: int __cdecl kmp_set_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmp_set_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_unset_affinity_mask_proc
+// Entry: 000003dc
+// Signature: int __cdecl kmp_unset_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmp_unset_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_affinity_mask_proc
+// Entry: 000003f4
+// Signature: int __cdecl kmp_get_affinity_mask_proc(int proc, void * * mask)
+// ========================================
+
+
+int kmp_get_affinity_mask_proc(int proc,void **mask)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_num_threads
+// Entry: 0000040c
+// Signature: void __cdecl omp_set_num_threads(int arg)
+// ========================================
+
+
+void omp_set_num_threads(int arg)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_num_threads(arg,uVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_threads
+// Entry: 00000440
+// Signature: int omp_get_num_threads(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_num_threads(void)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmpc_bound_num_threads(0);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_max_threads
+// Entry: 00000458
+// Signature: int omp_get_max_threads(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_max_threads(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): 0] */
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)iVar1 * 8) + 0x1b8) + 0x4c);
+}
+
+
+
+
+// ========================================
+// Function: omp_control_tool
+// Entry: 000004c0
+// Signature: int __cdecl omp_control_tool(int command, int modifier, void * arg)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int omp_control_tool(int command,int modifier,void *arg)
+
+{
+  int iVar1;
+  long lVar2;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_30;
+  void *local_28;
+  int local_1c;
+  int local_18;
+  int local_14;
+  
+                    /* Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???]
+                       Unresolved local var: kmp_info_t * this_thr@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: ompt_task_info_t * parent_task_info@[DW_OP_breg31(sp):
+                       +24]
+                       Unresolved local var: int ret@[DW_OP_breg31(sp): +20] */
+  local_28 = arg;
+  local_1c = modifier;
+  local_18 = command;
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_30,iVar1,unaff_x30);
+  if (*____kmp_init_middle == 0) {
+    local_14 = -2;
+  }
+  else {
+    lVar2 = *____kmp_threads;
+    iVar1 = ___kmp_get_global_thread_id_reg();
+    lVar2 = *(long *)(*(long *)(lVar2 + (long)iVar1 * 8) + 0x1b8);
+    *(undefined1 **)(lVar2 + 0xf0) = &stack0xfffffffffffffff0;
+    local_14 = ___kmp_control_tool((long)local_18,(long)local_1c,local_28);
+    *(undefined8 *)(lVar2 + 0xf0) = 0;
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_30);
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 000005a4
+// Signature: void __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid, void * ReturnAddress)
+// ========================================
+
+
+/* DWARF original prototype: void OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid,
+   void * ReturnAddress) */
+
+void __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int Gtid,void *ReturnAddress)
+
+{
+  OmptReturnAddressGuard(this,Gtid,ReturnAddress);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 000005e0
+// Signature: void __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* DWARF original prototype: void ~OmptReturnAddressGuard(OmptReturnAddressGuard * this) */
+
+void __thiscall OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  ~OmptReturnAddressGuard(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_init_allocator
+// Entry: 0000060c
+// Signature: omp_allocator_handle_t __cdecl omp_init_allocator(omp_memspace_handle_t m, int ntraits, omp_alloctrait_t * tr)
+// ========================================
+
+
+omp_allocator_handle_t omp_init_allocator(omp_memspace_handle_t m,int ntraits,omp_alloctrait_t *tr)
+
+{
+  undefined8 uVar1;
+  omp_allocator_handle_t pvVar2;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  pvVar2 = (omp_allocator_handle_t)___kmpc_init_allocator(uVar1,m,ntraits,tr);
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: omp_destroy_allocator
+// Entry: 00000644
+// Signature: void __cdecl omp_destroy_allocator(omp_allocator_handle_t al)
+// ========================================
+
+
+void omp_destroy_allocator(omp_allocator_handle_t al)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmpc_destroy_allocator(uVar1,al);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_default_allocator
+// Entry: 0000066c
+// Signature: void __cdecl omp_set_default_allocator(omp_allocator_handle_t al)
+// ========================================
+
+
+void omp_set_default_allocator(omp_allocator_handle_t al)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmpc_set_default_allocator(uVar1,al);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_default_allocator
+// Entry: 00000694
+// Signature: omp_allocator_handle_t omp_get_default_allocator(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+omp_allocator_handle_t omp_get_default_allocator(void)
+
+{
+  omp_allocator_handle_t pvVar1;
+  
+  ___kmp_get_global_thread_id_reg();
+  pvVar1 = (omp_allocator_handle_t)___kmpc_get_default_allocator();
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_affinity_format
+// Entry: 000006ac
+// Signature: void __cdecl omp_set_affinity_format(char * format, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void omp_set_affinity_format(char *format,size_t size)
+
+{
+  char *src;
+  char *pcVar1;
+  size_t src_size;
+  char *buffer;
+  ConvertedString CStack_30;
+  size_t local_20;
+  char *local_18;
+  
+                    /* Unresolved local var: ConvertedString cformat@[DW_OP_breg31(sp): +32] */
+  local_20 = size;
+  local_18 = format;
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ConvertedString::ConvertedString(&CStack_30,local_18,local_20);
+  buffer = (char *)*____kmp_affinity_format;
+  src = ConvertedString::get(&CStack_30);
+  pcVar1 = ConvertedString::get(&CStack_30);
+  src_size = _strlen(pcVar1);
+  __kmp_strncpy_truncate(buffer,0x200,src,src_size);
+  ConvertedString::~ConvertedString(&CStack_30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ConvertedString
+// Entry: 0000074c
+// Signature: void __thiscall ConvertedString(ConvertedString * this, char * fortran_str, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+/* DWARF original prototype: void ConvertedString(ConvertedString * this, char * fortran_str, size_t
+   size) */
+
+void __thiscall
+ConvertedString::ConvertedString(ConvertedString *this,char *fortran_str,size_t size)
+
+{
+  ConvertedString(this,fortran_str,size);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_strncpy_truncate
+// Entry: 00000788
+// Signature: void __cdecl __kmp_strncpy_truncate(char * buffer, size_t buf_size, char * src, size_t src_size)
+// ========================================
+
+
+void __kmp_strncpy_truncate(char *buffer,size_t buf_size,char *src,size_t src_size)
+
+{
+  size_t local_30;
+  
+  local_30 = src_size;
+  if (buf_size <= src_size) {
+    local_30 = buf_size - 1;
+  }
+  _strncpy(buffer,src,local_30);
+  buffer[local_30] = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get
+// Entry: 000007f8
+// Signature: char * __thiscall get(ConvertedString * this)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+/* DWARF original prototype: char * get(ConvertedString * this) */
+
+char * __thiscall ConvertedString::get(ConvertedString *this)
+
+{
+  return this->buf;
+}
+
+
+
+
+// ========================================
+// Function: ~ConvertedString
+// Entry: 00000810
+// Signature: void __thiscall ~ConvertedString(ConvertedString * this)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+/* DWARF original prototype: void ~ConvertedString(ConvertedString * this) */
+
+void __thiscall ConvertedString::~ConvertedString(ConvertedString *this)
+
+{
+  ~ConvertedString(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_affinity_format
+// Entry: 0000083c
+// Signature: size_t __cdecl omp_get_affinity_format(char * buffer, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+size_t omp_get_affinity_format(char *buffer,size_t size)
+
+{
+  size_t csrc_size;
+  
+                    /* Unresolved local var: size_t format_size@[DW_OP_breg31(sp): +8] */
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  csrc_size = _strlen((char *)*____kmp_affinity_format);
+  if ((buffer != (char *)0x0) && (size != 0)) {
+    __kmp_fortran_strncpy_truncate(buffer,size,(char *)*____kmp_affinity_format,csrc_size);
+  }
+  return csrc_size;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_fortran_strncpy_truncate
+// Entry: 000008e0
+// Signature: void __cdecl __kmp_fortran_strncpy_truncate(char * buffer, size_t buf_size, char * csrc, size_t csrc_size)
+// ========================================
+
+
+void __kmp_fortran_strncpy_truncate(char *buffer,size_t buf_size,char *csrc,size_t csrc_size)
+
+{
+  ulong local_40;
+  size_t local_38;
+  
+                    /* Unresolved local var: size_t capped_src_size@[DW_OP_breg31(sp): +8] */
+  local_38 = csrc_size;
+  if (buf_size <= csrc_size) {
+    local_38 = buf_size - 1;
+  }
+  _strncpy(buffer,csrc,local_38);
+  local_40 = csrc_size;
+  if (csrc_size < buf_size) {
+    for (; local_40 < buf_size; local_40 = local_40 + 1) {
+      buffer[local_40] = ' ';
+    }
+  }
+  else {
+    buffer[buf_size - 1] = csrc[buf_size - 1];
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_display_affinity
+// Entry: 000009dc
+// Signature: void __cdecl omp_display_affinity(char * format, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void omp_display_affinity(char *format,size_t size)
+
+{
+  undefined4 uVar1;
+  char *pcVar2;
+  ConvertedString CStack_38;
+  undefined4 local_24;
+  size_t local_20;
+  char *local_18;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: ConvertedString cformat@[DW_OP_breg31(sp): +24] */
+  local_20 = size;
+  local_18 = format;
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  local_24 = ___kmp_get_global_thread_id();
+  ConvertedString::ConvertedString(&CStack_38,local_18,local_20);
+  uVar1 = local_24;
+  pcVar2 = ConvertedString::get(&CStack_38);
+  ___kmp_aux_display_affinity(uVar1,pcVar2);
+  ConvertedString::~ConvertedString(&CStack_38);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_capture_affinity
+// Entry: 00000a60
+// Signature: size_t __cdecl omp_capture_affinity(char * buffer, char * format, size_t buf_size, size_t for_size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+size_t omp_capture_affinity(char *buffer,char *format,size_t buf_size,size_t for_size)
+
+{
+  size_t sVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  ConvertedString CStack_278;
+  size_t local_268;
+  undefined4 local_25c;
+  size_t local_258;
+  size_t local_250;
+  char *local_248;
+  char *local_240;
+  char *local_238;
+  undefined4 local_230;
+  int local_22c;
+  char local_228 [512];
+  long local_28;
+  
+                    /* Unresolved local var: int gtid@[DW_OP_breg31(sp): +68]
+                       Unresolved local var: size_t num_required@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: kmp_str_buf_t capture_buf@[DW_OP_breg31(sp): +104]
+                       Unresolved local var: ConvertedString cformat@[DW_OP_breg31(sp): +40] */
+  local_28 = *____stack_chk_guard;
+  local_258 = for_size;
+  local_250 = buf_size;
+  local_248 = format;
+  local_240 = buffer;
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  local_25c = ___kmp_get_global_thread_id();
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = '\0';
+  ConvertedString::ConvertedString(&CStack_278,local_248,local_258);
+  uVar2 = local_25c;
+  pcVar3 = ConvertedString::get(&CStack_278);
+  local_268 = ___kmp_aux_capture_affinity(uVar2,pcVar3,&local_238);
+  if ((local_240 != (char *)0x0) && (local_250 != 0)) {
+    __kmp_fortran_strncpy_truncate(local_240,local_250,local_238,(long)local_22c);
+  }
+  ___kmp_str_buf_free(&local_238);
+  sVar1 = local_268;
+  ConvertedString::~ConvertedString(&CStack_278);
+  if (*____stack_chk_guard != local_28) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return sVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_thread_num
+// Entry: 00000ba4
+// Signature: int omp_get_thread_num(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_thread_num(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  iVar1 = __kmp_tid_from_gtid(iVar1);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_num_known_threads
+// Entry: 00000bcc
+// Signature: int kmp_get_num_known_threads(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int kmp_get_num_known_threads(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_nth;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_procs
+// Entry: 00000c0c
+// Signature: int omp_get_num_procs(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_num_procs(void)
+
+{
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  return *____kmp_avail_proc;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_nested
+// Entry: 00000c4c
+// Signature: void __cdecl omp_set_nested(int flag)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void omp_set_nested(int flag)
+
+{
+  int local_64;
+  int local_54;
+  undefined1 auStack_38 [24];
+  kmp_info_t *local_20;
+  int local_14;
+  
+  local_14 = flag;
+                    /* Unresolved local var: kmp_info_t * thread@[???]
+                       Unresolved local var: int max_active_levels@[DW_OP_breg31(sp): +44] */
+  local_20 = __kmp_entry_thread();
+  ___kmp_msg_format(0x40114);
+  ___kmp_msg(0,auStack_38);
+  ___kmp_save_internal_controls(local_20);
+  local_54 = (((local_20->th).th_current_task)->td_icvs).max_active_levels;
+  if (local_54 == 1) {
+    local_54 = 0x7fffffff;
+  }
+  if (local_14 == 0) {
+    local_64 = 1;
+  }
+  else {
+    local_64 = local_54;
+  }
+  (((local_20->th).th_current_task)->td_icvs).max_active_levels = local_64;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_entry_thread
+// Entry: 00000d44
+// Signature: kmp_info_t * __kmp_entry_thread(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_entry_thread(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(kmp_info_t **)(*____kmp_threads + (long)iVar1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: omp_get_nested
+// Entry: 00000d78
+// Signature: int omp_get_nested(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_get_nested(void)
+
+{
+  undefined1 auStack_30 [24];
+  kmp_info_t *local_18;
+  
+                    /* Unresolved local var: kmp_info_t * thread@[???] */
+  local_18 = __kmp_entry_thread();
+  ___kmp_msg_format(0x40114);
+  ___kmp_msg(0,auStack_30);
+  return (int)(1 < (((local_18->th).th_current_task)->td_icvs).max_active_levels);
+}
+
+
+
+
+// ========================================
+// Function: omp_set_dynamic
+// Entry: 00000e10
+// Signature: void __cdecl omp_set_dynamic(int flag)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void omp_set_dynamic(int flag)
+
+{
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): 0] */
+  pkVar1 = __kmp_entry_thread();
+  ___kmp_save_internal_controls(pkVar1);
+  (((pkVar1->th).th_current_task)->td_icvs).dynamic = flag != 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_dynamic
+// Entry: 00000e6c
+// Signature: int omp_get_dynamic(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_get_dynamic(void)
+
+{
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): +8] */
+  pkVar1 = __kmp_entry_thread();
+  return (uint)((((pkVar1->th).th_current_task)->td_icvs).dynamic != '\0');
+}
+
+
+
+
+// ========================================
+// Function: omp_in_parallel
+// Entry: 00000eb0
+// Signature: int omp_in_parallel(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_in_parallel(void)
+
+{
+  int iVar1;
+  kmp_info_t *pkVar2;
+  uint local_14;
+  
+                    /* Unresolved local var: kmp_info_t * th@[DW_OP_breg31(sp): 0] */
+  pkVar2 = __kmp_entry_thread();
+  if ((pkVar2->th).th_teams_microtask == kmp_set_stacksize) {
+    iVar1 = std::__1::__atomic_base<int,_false>::operator_int
+                      ((__atomic_base<int,_false> *)&(((pkVar2->th).th_root)->r).r_in_parallel);
+  }
+  else {
+    iVar1 = (((pkVar2->th).th_team)->t).t_active_level;
+  }
+  local_14 = (uint)(iVar1 != 0);
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: operator_int
+// Entry: 00000f48
+// Signature: int __thiscall operator_int(__atomic_base<int,_false> * this)
+// ========================================
+
+
+/* DWARF original name: operator int
+   DWARF original prototype: int operator_int(__atomic_base<int,_false> * this) */
+
+int __thiscall std::__1::__atomic_base<int,_false>::operator_int(__atomic_base<int,_false> *this)
+
+{
+  int iVar1;
+  
+  iVar1 = load(this,memory_order_seq_cst);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_schedule
+// Entry: 00000f70
+// Signature: void __cdecl omp_set_schedule(kmp_sched_t kind, int modifier)
+// ========================================
+
+
+/* WARNING: Enum "kmp_sched": Some values do not have unique names */
+
+void omp_set_schedule(kmp_sched_t kind,int modifier)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_schedule(uVar1,kind,modifier);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_schedule
+// Entry: 00000fa0
+// Signature: void __cdecl omp_get_schedule(kmp_sched_t * kind, int * modifier)
+// ========================================
+
+
+/* WARNING: Enum "kmp_sched": Some values do not have unique names */
+
+void omp_get_schedule(kmp_sched_t *kind,int *modifier)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_get_schedule(uVar1,kind,modifier);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_max_active_levels
+// Entry: 00000fd0
+// Signature: void __cdecl omp_set_max_active_levels(int arg)
+// ========================================
+
+
+void omp_set_max_active_levels(int arg)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_max_active_levels(uVar1,arg);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_max_active_levels
+// Entry: 00000ff8
+// Signature: int omp_get_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_max_active_levels(void)
+
+{
+  int iVar1;
+  
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  ___kmp_get_global_thread_id_reg();
+  iVar1 = ___kmp_get_max_active_levels();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_active_level
+// Entry: 00001034
+// Signature: int omp_get_active_level(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_get_active_level(void)
+
+{
+  kmp_info_t *pkVar1;
+  
+  pkVar1 = __kmp_entry_thread();
+  return (((pkVar1->th).th_team)->t).t_active_level;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_level
+// Entry: 00001050
+// Signature: int omp_get_level(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_get_level(void)
+
+{
+  kmp_info_t *pkVar1;
+  
+  pkVar1 = __kmp_entry_thread();
+  return (((pkVar1->th).th_team)->t).t_level;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_ancestor_thread_num
+// Entry: 0000106c
+// Signature: int __cdecl omp_get_ancestor_thread_num(int level)
+// ========================================
+
+
+int omp_get_ancestor_thread_num(int level)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  uVar2 = ___kmp_get_global_thread_id_reg();
+  iVar1 = ___kmp_get_ancestor_thread_num(uVar2,level);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_team_size
+// Entry: 00001094
+// Signature: int __cdecl omp_get_team_size(int level)
+// ========================================
+
+
+int omp_get_team_size(int level)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  uVar2 = ___kmp_get_global_thread_id_reg();
+  iVar1 = ___kmp_get_team_size(uVar2,level);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_thread_limit
+// Entry: 000010bc
+// Signature: int omp_get_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_thread_limit(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): 0] */
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(int *)(*(long *)(*(long *)(*____kmp_threads + (long)iVar1 * 8) + 0x1b8) + 0x50);
+}
+
+
+
+
+// ========================================
+// Function: omp_in_final
+// Entry: 00001124
+// Signature: int omp_in_final(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_in_final(void)
+
+{
+  kmp_info_t *pkVar1;
+  uint local_14;
+  
+  if (*____kmp_init_parallel == 0) {
+    local_14 = 0;
+  }
+  else {
+    pkVar1 = __kmp_entry_thread();
+    local_14 = (((pkVar1->th).th_current_task)->td_flags).final;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_proc_bind
+// Entry: 00001180
+// Signature: kmp_proc_bind_t omp_get_proc_bind(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_proc_bind_t omp_get_proc_bind(void)
+
+{
+  kmp_info_t *pkVar1;
+  
+  pkVar1 = __kmp_entry_thread();
+  return (((pkVar1->th).th_current_task)->td_icvs).proc_bind;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_places
+// Entry: 0000119c
+// Signature: int omp_get_num_places(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_num_places(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_place_num_procs
+// Entry: 000011a4
+// Signature: int __cdecl omp_get_place_num_procs(int place_num)
+// ========================================
+
+
+int omp_get_place_num_procs(int place_num)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_place_proc_ids
+// Entry: 000011b8
+// Signature: void __cdecl omp_get_place_proc_ids(int place_num, int * ids)
+// ========================================
+
+
+void omp_get_place_proc_ids(int place_num,int *ids)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_place_num
+// Entry: 000011cc
+// Signature: int omp_get_place_num(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_place_num(void)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_partition_num_places
+// Entry: 000011d4
+// Signature: int omp_get_partition_num_places(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_partition_num_places(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_partition_place_nums
+// Entry: 000011dc
+// Signature: void __cdecl omp_get_partition_place_nums(int * place_nums)
+// ========================================
+
+
+void omp_get_partition_place_nums(int *place_nums)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_teams
+// Entry: 000011ec
+// Signature: int omp_get_num_teams(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_num_teams(void)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_aux_get_num_teams();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_team_num
+// Entry: 00001200
+// Signature: int omp_get_team_num(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_team_num(void)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_aux_get_team_num();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_default_device
+// Entry: 00001214
+// Signature: int omp_get_default_device(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_default_device(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_default_device
+// Entry: 0000121c
+// Signature: void __cdecl omp_set_default_device(int arg)
+// ========================================
+
+
+void omp_set_default_device(int arg)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_devices
+// Entry: 0000122c
+// Signature: int omp_get_num_devices(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_num_devices(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_is_initial_device
+// Entry: 00001234
+// Signature: int omp_is_initial_device(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_is_initial_device(void)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_initial_device
+// Entry: 0000123c
+// Signature: int omp_get_initial_device(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_initial_device(void)
+
+{
+  int iVar1;
+  
+  iVar1 = omp_get_num_devices();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_init_lock_with_hint
+// Entry: 00001250
+// Signature: void __cdecl omp_init_lock_with_hint(void * * user_lock, uintptr_t hint)
+// ========================================
+
+
+void omp_init_lock_with_hint(void **user_lock,uintptr_t hint)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_2c;
+  int local_24;
+  uintptr_t local_20;
+  void **local_18;
+  
+  local_20 = hint;
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +20] */
+  local_24 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_2c,local_24,unaff_x30);
+  ___kmpc_init_lock_with_hint(0,local_24,local_18,local_20);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_2c);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_init_nest_lock_with_hint
+// Entry: 000012ac
+// Signature: void __cdecl omp_init_nest_lock_with_hint(void * * user_lock, uintptr_t hint)
+// ========================================
+
+
+void omp_init_nest_lock_with_hint(void **user_lock,uintptr_t hint)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_2c;
+  int local_24;
+  uintptr_t local_20;
+  void **local_18;
+  
+  local_20 = hint;
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard
+                       ReturnAddressGuard@[DW_OP_breg31(sp): +20] */
+  local_24 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_2c,local_24,unaff_x30);
+  ___kmpc_init_nest_lock_with_hint(0,local_24,local_18,local_20);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_2c);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_init_lock
+// Entry: 00001308
+// Signature: void __cdecl omp_init_lock(void * * user_lock)
+// ========================================
+
+
+void omp_init_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_init_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_init_nest_lock
+// Entry: 0000135c
+// Signature: void __cdecl omp_init_nest_lock(void * * user_lock)
+// ========================================
+
+
+void omp_init_nest_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_init_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_destroy_lock
+// Entry: 000013b0
+// Signature: void __cdecl omp_destroy_lock(void * * user_lock)
+// ========================================
+
+
+void omp_destroy_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_destroy_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_destroy_nest_lock
+// Entry: 00001404
+// Signature: void __cdecl omp_destroy_nest_lock(void * * user_lock)
+// ========================================
+
+
+void omp_destroy_nest_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_destroy_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_lock
+// Entry: 00001458
+// Signature: void __cdecl omp_set_lock(void * * user_lock)
+// ========================================
+
+
+void omp_set_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_set_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_nest_lock
+// Entry: 000014ac
+// Signature: void __cdecl omp_set_nest_lock(void * * user_lock)
+// ========================================
+
+
+void omp_set_nest_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_set_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_unset_lock
+// Entry: 00001500
+// Signature: void __cdecl omp_unset_lock(void * * user_lock)
+// ========================================
+
+
+void omp_unset_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_unset_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_unset_nest_lock
+// Entry: 00001554
+// Signature: void __cdecl omp_unset_nest_lock(void * * user_lock)
+// ========================================
+
+
+void omp_unset_nest_lock(void **user_lock)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  ___kmpc_unset_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_test_lock
+// Entry: 000015a8
+// Signature: int __cdecl omp_test_lock(void * * user_lock)
+// ========================================
+
+
+int omp_test_lock(void **user_lock)
+
+{
+  int iVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  iVar1 = ___kmpc_test_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_test_nest_lock
+// Entry: 00001608
+// Signature: int __cdecl omp_test_nest_lock(void * * user_lock)
+// ========================================
+
+
+int omp_test_nest_lock(void **user_lock)
+
+{
+  int iVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard OStack_24;
+  int local_1c;
+  void **local_18;
+  
+  local_18 = user_lock;
+                    /* Unresolved local var: int gtid@[???]
+                       Unresolved local var: OmptReturnAddressGuard ReturnAddressGuard@[???] */
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(&OStack_24,local_1c,unaff_x30);
+  iVar1 = ___kmpc_test_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(&OStack_24);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_wtime
+// Entry: 00001668
+// Signature: double omp_get_wtime(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+double omp_get_wtime(void)
+
+{
+  double local_18;
+  
+                    /* Unresolved local var: double data@[DW_OP_breg31(sp): +8] */
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_elapsed(&local_18);
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_wtick
+// Entry: 000016b0
+// Signature: double omp_get_wtick(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+double omp_get_wtick(void)
+
+{
+  double local_18;
+  
+                    /* Unresolved local var: double data@[DW_OP_breg31(sp): +8] */
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_elapsed_tick(&local_18);
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: kmp_malloc
+// Entry: 000016f8
+// Signature: void * __cdecl kmp_malloc(size_t size)
+// ========================================
+
+
+void * kmp_malloc(size_t size)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)_kmpc_malloc(size);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_aligned_malloc
+// Entry: 0000171c
+// Signature: void * __cdecl kmp_aligned_malloc(size_t size, size_t alignment)
+// ========================================
+
+
+void * kmp_aligned_malloc(size_t size,size_t alignment)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)_kmpc_aligned_malloc(size,alignment);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_calloc
+// Entry: 00001748
+// Signature: void * __cdecl kmp_calloc(size_t nelem, size_t elsize)
+// ========================================
+
+
+void * kmp_calloc(size_t nelem,size_t elsize)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)_kmpc_calloc(nelem,elsize);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_realloc
+// Entry: 00001774
+// Signature: void * __cdecl kmp_realloc(void * ptr, size_t size)
+// ========================================
+
+
+void * kmp_realloc(void *ptr,size_t size)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)_kmpc_realloc(ptr,size);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_free
+// Entry: 000017a0
+// Signature: void __cdecl kmp_free(void * ptr)
+// ========================================
+
+
+void kmp_free(void *ptr)
+
+{
+  _kmpc_free(ptr);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_warnings_on
+// Entry: 000017c4
+// Signature: void kmp_set_warnings_on(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void kmp_set_warnings_on(void)
+
+{
+  *____kmp_generate_warnings = 6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_warnings_off
+// Entry: 000017d8
+// Signature: void kmp_set_warnings_off(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void kmp_set_warnings_off(void)
+
+{
+  *____kmp_generate_warnings = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_set_defaults
+// Entry: 000017e8
+// Signature: void __cdecl kmp_set_defaults(char * str)
+// ========================================
+
+
+void kmp_set_defaults(char *str)
+
+{
+  size_t sVar1;
+  
+                    /* Unresolved local var: int len@[DW_OP_breg31(sp): +4] */
+  sVar1 = _strlen(str);
+  ___kmp_aux_set_defaults(str,(long)(int)sVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_cancellation
+// Entry: 00001820
+// Signature: int omp_get_cancellation(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_cancellation(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_omp_cancellation;
+}
+
+
+
+
+// ========================================
+// Function: kmp_get_cancellation_status
+// Entry: 00001860
+// Signature: int __cdecl kmp_get_cancellation_status(int cancel_kind)
+// ========================================
+
+
+int kmp_get_cancellation_status(int cancel_kind)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_get_cancellation_status(cancel_kind);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_max_task_priority
+// Entry: 00001884
+// Signature: int omp_get_max_task_priority(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_max_task_priority(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_max_task_priority;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_device_num
+// Entry: 000018c4
+// Signature: int omp_get_device_num(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_device_num(void)
+
+{
+  int iVar1;
+  
+  iVar1 = omp_get_initial_device();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_pause_resource
+// Entry: 000018d8
+// Signature: int __cdecl omp_pause_resource(kmp_pause_status_t kind, int device_num)
+// ========================================
+
+
+int omp_pause_resource(kmp_pause_status_t kind,int device_num)
+
+{
+  int iVar1;
+  code *pcVar2;
+  int local_14;
+  
+  iVar1 = omp_get_initial_device();
+  if (device_num == iVar1) {
+    local_14 = ___kmpc_pause_resource(kind);
+  }
+  else {
+                    /* Unresolved local var: _func_int_kmp_pause_status_t_int *
+                       fptr@[DW_OP_breg31(sp): +8] */
+    pcVar2 = (code *)_dlsym(0xfffffffffffffffe,"tgt_pause_resource");
+    if (pcVar2 == kmp_set_stacksize) {
+      local_14 = 1;
+    }
+    else {
+      local_14 = (*pcVar2)(kind,device_num);
+    }
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: omp_pause_resource_all
+// Entry: 00001978
+// Signature: int __cdecl omp_pause_resource_all(kmp_pause_status_t kind)
+// ========================================
+
+
+int omp_pause_resource_all(kmp_pause_status_t kind)
+
+{
+  int iVar1;
+  code *pcVar2;
+  int local_18;
+  
+                    /* Unresolved local var: int fails@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: _func_int_kmp_pause_status_t_int *
+                       fptr@[DW_OP_breg31(sp): 0] */
+  local_18 = 0;
+  pcVar2 = (code *)_dlsym(0xfffffffffffffffe,"tgt_pause_resource");
+  if (pcVar2 != kmp_set_stacksize) {
+    local_18 = (*pcVar2)(kind,0xfffffff5);
+  }
+  iVar1 = ___kmpc_pause_resource(kind);
+  return local_18 + iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_supported_active_levels
+// Entry: 000019f0
+// Signature: int omp_get_supported_active_levels(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_supported_active_levels(void)
+
+{
+  return 0x7fffffff;
+}
+
+
+
+
+// ========================================
+// Function: omp_fulfill_event
+// Entry: 000019f8
+// Signature: void __cdecl omp_fulfill_event(kmp_event_t * event)
+// ========================================
+
+
+void omp_fulfill_event(kmp_event_t *event)
+
+{
+  ___kmp_fulfill_event(event);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_num_teams
+// Entry: 00001a1c
+// Signature: void __cdecl omp_set_num_teams(int num_teams)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void omp_set_num_teams(int num_teams)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_set_num_teams(num_teams);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_max_teams
+// Entry: 00001a64
+// Signature: int omp_get_max_teams(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_max_teams(void)
+
+{
+  int iVar1;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  iVar1 = ___kmp_get_max_teams();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_set_teams_thread_limit
+// Entry: 00001a9c
+// Signature: void __cdecl omp_set_teams_thread_limit(int limit)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void omp_set_teams_thread_limit(int limit)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_set_teams_thread_limit(limit);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_teams_thread_limit
+// Entry: 00001ae4
+// Signature: int omp_get_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int omp_get_teams_thread_limit(void)
+
+{
+  int iVar1;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  iVar1 = ___kmp_get_teams_thread_limit();
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_num_interop_properties
+// Entry: 00001b1c
+// Signature: int __cdecl omp_get_num_interop_properties(omp_interop_t interop)
+// ========================================
+
+
+int omp_get_num_interop_properties(omp_interop_t interop)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_int
+// Entry: 00001b30
+// Signature: intptr_t __cdecl omp_get_interop_int(omp_interop_t interop, omp_interop_property_t property_id, int * err)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+intptr_t omp_get_interop_int(omp_interop_t interop,omp_interop_property_t property_id,int *err)
+
+{
+  code *pcVar1;
+  intptr_t local_18;
+  
+                    /* Unresolved local var:
+                       _func_intptr_t_omp_interop_t_omp_interop_property_t_int_ptr *
+                       fptr@[DW_OP_breg31(sp): +8] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_int");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(interop,property_id,err);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_ptr
+// Entry: 00001ba4
+// Signature: void * __cdecl omp_get_interop_ptr(omp_interop_t interop, omp_interop_property_t property_id, int * err)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+void * omp_get_interop_ptr(omp_interop_t interop,omp_interop_property_t property_id,int *err)
+
+{
+  code *pcVar1;
+  void *local_18;
+  
+                    /* Unresolved local var:
+                       _func_void_ptr_omp_interop_t_omp_interop_property_t_int_ptr *
+                       fptr@[DW_OP_breg31(sp): +8] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_ptr");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = (void *)0x0;
+  }
+  else {
+    local_18 = (void *)(*pcVar1)(interop,property_id,err);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_str
+// Entry: 00001c18
+// Signature: char * __cdecl omp_get_interop_str(omp_interop_t interop, omp_interop_property_t property_id, int * err)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+char * omp_get_interop_str(omp_interop_t interop,omp_interop_property_t property_id,int *err)
+
+{
+  code *pcVar1;
+  char *local_18;
+  
+                    /* Unresolved local var:
+                       _func_char_ptr_omp_interop_t_omp_interop_property_t_int_ptr *
+                       fptr@[DW_OP_breg31(sp): +8] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_str");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = (char *)0x0;
+  }
+  else {
+    local_18 = (char *)(*pcVar1)(interop,property_id,err);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_name
+// Entry: 00001c8c
+// Signature: char * __cdecl omp_get_interop_name(omp_interop_t interop, omp_interop_property_t property_id)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+char * omp_get_interop_name(omp_interop_t interop,omp_interop_property_t property_id)
+
+{
+  code *pcVar1;
+  char *local_18;
+  
+                    /* Unresolved local var: _func_char_ptr_omp_interop_t_omp_interop_property_t *
+                       fptr@[DW_OP_breg31(sp): 0] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_name");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = (char *)0x0;
+  }
+  else {
+    local_18 = (char *)(*pcVar1)(interop,property_id);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_type_desc
+// Entry: 00001cf8
+// Signature: char * __cdecl omp_get_interop_type_desc(omp_interop_t interop, omp_interop_property_t property_id)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+char * omp_get_interop_type_desc(omp_interop_t interop,omp_interop_property_t property_id)
+
+{
+  code *pcVar1;
+  char *local_18;
+  
+                    /* Unresolved local var: _func_char_ptr_omp_interop_t_omp_interop_property_t *
+                       fptr@[DW_OP_breg31(sp): 0] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_type_desc");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = (char *)0x0;
+  }
+  else {
+    local_18 = (char *)(*pcVar1)(interop,property_id);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_get_interop_rc_desc
+// Entry: 00001d64
+// Signature: char * __cdecl omp_get_interop_rc_desc(omp_interop_t interop, omp_interop_property_t property_id)
+// ========================================
+
+
+/* WARNING: Enum "omp_interop_property": Some values do not have unique names */
+
+char * omp_get_interop_rc_desc(omp_interop_t interop,omp_interop_property_t property_id)
+
+{
+  code *pcVar1;
+  char *local_18;
+  
+                    /* Unresolved local var: _func_char_ptr_omp_interop_t_omp_interop_property_t *
+                       fptr@[DW_OP_breg31(sp): 0] */
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_rec_desc");
+  if (pcVar1 == kmp_set_stacksize) {
+    local_18 = (char *)0x0;
+  }
+  else {
+    local_18 = (char *)(*pcVar1)(interop,property_id);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: omp_display_env
+// Entry: 00001dd0
+// Signature: void __cdecl omp_display_env(int verbose)
+// ========================================
+
+
+void omp_display_env(int verbose)
+
+{
+  ___kmp_omp_display_env(verbose);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: omp_in_explicit_task
+// Entry: 00001df4
+// Signature: int omp_in_explicit_task(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int omp_in_explicit_task(void)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  gtid = ___kmp_get_global_thread_id_reg();
+  pkVar1 = __kmp_thread_from_gtid(gtid);
+  return (&((pkVar1->th).th_current_task)->td_flags)->tasktype;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 00001e2c
+// Signature: void __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid, void * ReturnAddress)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void OmptReturnAddressGuard(OmptReturnAddressGuard * this, int Gtid,
+   void * ReturnAddress) */
+
+void __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int Gtid,void *ReturnAddress)
+
+{
+  long *plVar1;
+  
+  plVar1 = ____kmp_threads;
+  this->SetAddress = false;
+  this->Gtid = Gtid;
+  if (((((*__ompt_enabled & 1) != 0) && (-1 < Gtid)) && (*(long *)(*plVar1 + (long)Gtid * 8) != 0))
+     && (*(long *)(*(long *)(*plVar1 + (long)Gtid * 8) + 0x158) == 0)) {
+    this->SetAddress = true;
+    *(void **)(*(long *)(*plVar1 + (long)Gtid * 8) + 0x158) = ReturnAddress;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 00001f10
+// Signature: void __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* DWARF original prototype: void ~OmptReturnAddressGuard(OmptReturnAddressGuard * this) */
+
+void __thiscall OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  if ((this->SetAddress & 1U) != 0) {
+    *(undefined8 *)(*(long *)(*____kmp_threads + (long)this->Gtid * 8) + 0x158) = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ConvertedString
+// Entry: 00001f60
+// Signature: void __thiscall ConvertedString(ConvertedString * this, char * fortran_str, size_t size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+/* DWARF original prototype: void ConvertedString(ConvertedString * this, char * fortran_str, size_t
+   size) */
+
+void __thiscall
+ConvertedString::ConvertedString(ConvertedString *this,char *fortran_str,size_t size)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  char *pcVar2;
+  
+  gtid = ___kmp_get_global_thread_id();
+  pkVar1 = __kmp_thread_from_gtid(gtid);
+  this->th = pkVar1;
+  pcVar2 = (char *)____kmp_thread_malloc(this->th,size + 1);
+  this->buf = pcVar2;
+  _strncpy(this->buf,fortran_str,size);
+  this->buf[size] = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ConvertedString
+// Entry: 00001fd8
+// Signature: void __thiscall ~ConvertedString(ConvertedString * this)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+/* DWARF original prototype: void ~ConvertedString(ConvertedString * this) */
+
+void __thiscall ConvertedString::~ConvertedString(ConvertedString *this)
+
+{
+  ____kmp_thread_free(this->th,this->buf);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: load
+// Entry: 0000200c
+// Signature: int __thiscall load(__atomic_base<int,_false> * this, memory_order __m)
+// ========================================
+
+
+/* DWARF original prototype: int load(__atomic_base<int,_false> * this, memory_order __m) */
+
+int __thiscall
+std::__1::__atomic_base<int,_false>::load(__atomic_base<int,_false> *this,memory_order __m)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load<int>((__cxx_atomic_base_impl<int> *)this,__m);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load<int>
+// Entry: 00002038
+// Signature: int __cdecl __cxx_atomic_load<int>(__cxx_atomic_base_impl<int> * __a, memory_order __order)
+// ========================================
+
+
+int std::__1::__cxx_atomic_load<int>(__cxx_atomic_base_impl<int> *__a,memory_order __order)
+
+{
+  int local_10;
+  
+  if (__order - memory_order_consume < 2) {
+    local_10 = __a->__a_value;
+  }
+  else if (__order == memory_order_seq_cst) {
+    local_10 = __a->__a_value;
+  }
+  else {
+    local_10 = __a->__a_value;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_free
+// Entry: 0001c000
+// Signature: undefined ____kmp_thread_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_malloc
+// Entry: 0001c100
+// Signature: undefined ____kmp_thread_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_capture_affinity
+// Entry: 0001c300
+// Signature: undefined ___kmp_aux_capture_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_capture_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_display_affinity
+// Entry: 0001c400
+// Signature: undefined ___kmp_aux_display_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_display_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_get_num_teams
+// Entry: 0001c500
+// Signature: undefined ___kmp_aux_get_num_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_get_num_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_get_team_num
+// Entry: 0001c600
+// Signature: undefined ___kmp_aux_get_team_num(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_get_team_num(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_blocktime
+// Entry: 0001c700
+// Signature: undefined ___kmp_aux_set_blocktime(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_blocktime(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_defaults
+// Entry: 0001c800
+// Signature: undefined ___kmp_aux_set_defaults(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_defaults(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_stacksize
+// Entry: 0001c900
+// Signature: undefined ___kmp_aux_set_stacksize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_stacksize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_control_tool
+// Entry: 0001cb00
+// Signature: undefined ___kmp_control_tool(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_control_tool(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_elapsed
+// Entry: 0001ce00
+// Signature: undefined ___kmp_elapsed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_elapsed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_elapsed_tick
+// Entry: 0001cf00
+// Signature: undefined ___kmp_elapsed_tick(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_elapsed_tick(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fulfill_event
+// Entry: 0001d000
+// Signature: undefined ___kmp_fulfill_event(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fulfill_event(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_ancestor_thread_num
+// Entry: 0001d200
+// Signature: undefined ___kmp_get_ancestor_thread_num(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_ancestor_thread_num(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_cancellation_status
+// Entry: 0001d300
+// Signature: undefined ___kmp_get_cancellation_status(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_cancellation_status(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id
+// Entry: 0001d400
+// Signature: undefined ___kmp_get_global_thread_id(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 0001d500
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_max_active_levels
+// Entry: 0001d600
+// Signature: undefined ___kmp_get_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_max_active_levels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_max_teams
+// Entry: 0001d700
+// Signature: undefined ___kmp_get_max_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_max_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_schedule
+// Entry: 0001d800
+// Signature: undefined ___kmp_get_schedule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_schedule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_team_size
+// Entry: 0001d900
+// Signature: undefined ___kmp_get_team_size(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_team_size(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_teams_thread_limit
+// Entry: 0001da00
+// Signature: undefined ___kmp_get_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_teams_thread_limit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_middle_initialize
+// Entry: 0001e000
+// Signature: undefined ___kmp_middle_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_middle_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 0001e100
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 0001e200
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_omp_display_env
+// Entry: 0001e600
+// Signature: undefined ___kmp_omp_display_env(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_omp_display_env(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_save_internal_controls
+// Entry: 0001e700
+// Signature: undefined ___kmp_save_internal_controls(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_save_internal_controls(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_serial_initialize
+// Entry: 0001e800
+// Signature: undefined ___kmp_serial_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_serial_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_max_active_levels
+// Entry: 0001e900
+// Signature: undefined ___kmp_set_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_max_active_levels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_num_teams
+// Entry: 0001ea00
+// Signature: undefined ___kmp_set_num_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_num_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_num_threads
+// Entry: 0001eb00
+// Signature: undefined ___kmp_set_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_schedule
+// Entry: 0001ec00
+// Signature: undefined ___kmp_set_schedule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_schedule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_teams_thread_limit
+// Entry: 0001ed00
+// Signature: undefined ___kmp_set_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_teams_thread_limit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 0001ef00
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_user_set_library
+// Entry: 0001f100
+// Signature: undefined ___kmp_user_set_library(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_user_set_library(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_bound_num_threads
+// Entry: 0001f300
+// Signature: undefined ___kmpc_bound_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_bound_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_allocator
+// Entry: 0001f400
+// Signature: undefined ___kmpc_destroy_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_lock
+// Entry: 0001f500
+// Signature: undefined ___kmpc_destroy_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_nest_lock
+// Entry: 0001f600
+// Signature: undefined ___kmpc_destroy_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_get_default_allocator
+// Entry: 0001f700
+// Signature: undefined ___kmpc_get_default_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_get_default_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_allocator
+// Entry: 0001f800
+// Signature: undefined ___kmpc_init_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_lock
+// Entry: 0001f900
+// Signature: undefined ___kmpc_init_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_lock_with_hint
+// Entry: 0001fa00
+// Signature: undefined ___kmpc_init_lock_with_hint(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_lock_with_hint(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_nest_lock
+// Entry: 0001fb00
+// Signature: undefined ___kmpc_init_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_nest_lock_with_hint
+// Entry: 0001fc00
+// Signature: undefined ___kmpc_init_nest_lock_with_hint(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_nest_lock_with_hint(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_pause_resource
+// Entry: 0001fd00
+// Signature: undefined ___kmpc_pause_resource(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_pause_resource(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_default_allocator
+// Entry: 0001fe00
+// Signature: undefined ___kmpc_set_default_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_default_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_lock
+// Entry: 0001ff00
+// Signature: undefined ___kmpc_set_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_nest_lock
+// Entry: 00020000
+// Signature: undefined ___kmpc_set_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_test_lock
+// Entry: 00020100
+// Signature: undefined ___kmpc_test_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_test_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_test_nest_lock
+// Entry: 00020200
+// Signature: undefined ___kmpc_test_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_test_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_unset_lock
+// Entry: 00020300
+// Signature: undefined ___kmpc_unset_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_unset_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_unset_nest_lock
+// Entry: 00020400
+// Signature: undefined ___kmpc_unset_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_unset_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00020500
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlsym
+// Entry: 00020700
+// Signature: undefined _dlsym(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlsym(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_aligned_malloc
+// Entry: 00020800
+// Signature: undefined _kmpc_aligned_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_aligned_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_calloc
+// Entry: 00020900
+// Signature: undefined _kmpc_calloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_calloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_free
+// Entry: 00020a00
+// Signature: undefined _kmpc_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_malloc
+// Entry: 00020b00
+// Signature: undefined _kmpc_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_realloc
+// Entry: 00020c00
+// Signature: undefined _kmpc_realloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_realloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00020e00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncpy
+// Entry: 00020f00
+// Signature: char * _strncpy(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncpy(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 186
+// Failed: 0
+// Skipped external functions: 0

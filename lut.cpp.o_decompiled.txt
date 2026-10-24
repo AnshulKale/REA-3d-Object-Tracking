@@ -1,0 +1,1407 @@
+Program: lut.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: LUT
+// Entry: 00000000
+// Signature: undefined __cdecl LUT(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::LUT(cv::_InputArray const&, cv::_InputArray const&, cv::_OutputArray const&) */
+
+void cv::LUT(_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3)
+
+{
+  uint uVar1;
+  bool bVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  long lVar10;
+  ulong uVar11;
+  code *pcVar12;
+  Mat *pMVar13;
+  undefined8 local_1f0;
+  uchar **ppuStack_1e8;
+  Mat *local_1e0;
+  uint *puStack_1d8;
+  Mat *local_1d0;
+  ulong local_1c8;
+  Mat aMStack_1b0 [8];
+  uint local_1a8;
+  uint local_150 [4];
+  undefined8 local_140;
+  Mat aMStack_f0 [4];
+  undefined4 local_ec;
+  undefined8 local_b0;
+  Region aRStack_90 [8];
+  int local_88;
+  uchar *local_80;
+  undefined8 uStack_78;
+  Mat *local_70;
+  Mat *pMStack_68;
+  undefined8 local_60;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_90,
+             (LocationStaticStorage *)
+             &LUT(cv::_InputArray_const&,cv::_InputArray_const&,cv::_OutputArray_const&)::
+              __cv_trace_location_fn361);
+  iVar7 = (int)param_1;
+  uVar8 = cv::_InputArray::channels(iVar7);
+  uVar3 = cv::_InputArray::depth(iVar7);
+  iVar6 = (int)param_2;
+  uVar9 = cv::_InputArray::channels(iVar6);
+  if ((((int)uVar9 == (int)uVar8) || ((int)uVar9 == 1)) &&
+     (lVar10 = cv::_InputArray::total(iVar6), lVar10 == 0x100)) {
+    uVar4 = cv::_InputArray::isContinuous(iVar6);
+    uVar1 = 0;
+    if (uVar3 < 2) {
+      uVar1 = uVar4;
+    }
+    if ((uVar1 & 1) != 0) {
+      iVar5 = cv::_InputArray::kind();
+      if (iVar5 == 0x10000) {
+        cv::Mat::Mat(aMStack_f0,*(Mat **)(param_1 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_(iVar7);
+      }
+      iVar5 = cv::_InputArray::kind();
+      if (iVar5 == 0x10000) {
+        cv::Mat::Mat((Mat *)local_150,*(Mat **)(param_2 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_(iVar6);
+      }
+      uVar3 = cv::_InputArray::depth(iVar6);
+      cv::_OutputArray::create
+                (param_3,local_ec,local_b0,(uVar3 & 7 | (int)uVar8 << 3) - 8,0xffffffff,0,0);
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_1b0,*(Mat **)(param_3 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_3);
+      }
+      iVar7 = cv::_InputArray::dims(iVar7);
+      if (iVar7 < 3) {
+        ppuStack_1e8 = &local_80;
+        local_1f0 = 0xc70;
+        local_1e0 = aMStack_f0;
+        puStack_1d8 = local_150;
+        local_1c8 = *(ulong *)(((ulong)local_150[0] & 7) * 8 + 0xc20);
+        local_1d0 = aMStack_1b0;
+        bVar2 = (int)((ulong)local_150[0] & 7) != 7;
+        local_80 = (uchar *)CONCAT71(local_80._1_7_,bVar2);
+        if (bVar2) {
+          local_70 = (Mat *)((ulong)local_1a8 << 0x20);
+          uVar11 = cv::Mat::total();
+          if (uVar11 < 0x40000) {
+            LUTParallelBody::operator()((LUTParallelBody *)&local_1f0,(Range *)&local_70);
+          }
+          else {
+            uVar11 = cv::Mat::total();
+            uVar11 = uVar11 >> 0x10;
+            if (uVar11 < 2) {
+              uVar11 = 1;
+            }
+            cv::parallel_for_((Range *)&local_70,(ParallelLoopBody *)&local_1f0,(double)uVar11);
+          }
+          if ((char)local_80 != '\0') {
+            cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)&local_1f0);
+            goto LAB_00000234;
+          }
+        }
+        cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)&local_1f0);
+      }
+      if ((int)((ulong)local_150[0] & 7) != 7) {
+        pcVar12 = *(code **)(((ulong)local_150[0] & 7) * 8 + 0xc20);
+        local_70 = aMStack_f0;
+        pMStack_68 = aMStack_1b0;
+        local_60 = 0;
+        local_80 = (uchar *)0x0;
+        uStack_78 = 0;
+        cv::NAryMatIterator::NAryMatIterator((NAryMatIterator *)&local_1f0,&local_70,&local_80,-1);
+        uVar11 = local_1c8 & 0xffffffff;
+        pMVar13 = (Mat *)0xffffffffffffffff;
+        while( true ) {
+          pMVar13 = pMVar13 + 1;
+          if (local_1d0 <= pMVar13) break;
+          (*pcVar12)(local_80,local_140,uStack_78,uVar11,uVar8,uVar9);
+          cv::NAryMatIterator::operator++((NAryMatIterator *)&local_1f0);
+        }
+LAB_00000234:
+        cv::Mat::~Mat(aMStack_1b0);
+        cv::Mat::~Mat((Mat *)local_150);
+        cv::Mat::~Mat(aMStack_f0);
+        if (local_88 != 0) {
+          cv::utils::trace::details::Region::destroy();
+        }
+        if (*____stack_chk_guard == local_58) {
+          return;
+        }
+                    /* WARNING: Subroutine does not return */
+        ___stack_chk_fail();
+      }
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (&local_1f0,0xdaf);
+      cv::error(-0xd7,(string *)&local_1f0,"LUT",
+                "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/lut.cpp"
+                ,0x191);
+      goto LAB_00000378;
+    }
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (aMStack_f0,0xd3b);
+  cv::error(-0xd7,(string *)aMStack_f0,"LUT",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/core/src/lut.cpp"
+            ,0x170);
+LAB_00000378:
+                    /* WARNING: Does not return */
+  pcVar12 = (code *)SoftwareBreakpoint(1,0x37c);
+  (*pcVar12)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 0000049c
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000528;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000528:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 0000054c
+// Signature: undefined __thiscall operator()(LUTParallelBody * this, Range * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::LUTParallelBody::TEMPNAMEPLACEHOLDERVALUE(cv::Range const&) const */
+
+void __thiscall cv::LUTParallelBody::operator()(LUTParallelBody *this,Range *param_1)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  ulong uVar3;
+  undefined8 local_170 [4];
+  ulong local_150;
+  undefined4 local_148;
+  undefined4 local_130;
+  undefined4 uStack_12c;
+  uint local_d0 [24];
+  uchar *local_70;
+  undefined8 uStack_68;
+  Mat *local_60;
+  undefined4 *puStack_58;
+  undefined8 local_50;
+  long local_48;
+  
+  local_48 = *____stack_chk_guard;
+  local_130 = *(undefined4 *)param_1;
+  uStack_12c = *(undefined4 *)(param_1 + 4);
+  uVar2 = *(undefined8 *)param_1;
+  local_170[0] = 0x7fffffff80000000;
+  cv::Mat::Mat((Mat *)local_d0,*(Mat **)(this + 0x10),(Range *)&local_130,(Range *)local_170);
+  local_60 = (Mat *)0x7fffffff80000000;
+  local_170[0] = uVar2;
+  cv::Mat::Mat((Mat *)&local_130,*(Mat **)(this + 0x20),(Range *)local_170,(Range *)&local_60);
+  uVar1 = **(uint **)(this + 0x18);
+  local_60 = (Mat *)local_d0;
+  local_50 = 0;
+  local_70 = (uchar *)0x0;
+  uStack_68 = 0;
+  puStack_58 = &local_130;
+  cv::NAryMatIterator::NAryMatIterator((NAryMatIterator *)local_170,&local_60,&local_70,-1);
+  uVar3 = 0xffffffffffffffff;
+  while (uVar3 = uVar3 + 1, uVar3 < local_150) {
+    (**(code **)(this + 0x28))
+              (local_70,*(undefined8 *)(*(long *)(this + 0x18) + 0x10),uStack_68,local_148,
+               (local_d0[0] >> 3 & 0x1ff) + 1,(uVar1 >> 3 & 0x1ff) + 1);
+    cv::NAryMatIterator::operator++((NAryMatIterator *)local_170);
+  }
+  cv::Mat::~Mat((Mat *)&local_130);
+  cv::Mat::~Mat((Mat *)local_d0);
+  if (*____stack_chk_guard == local_48) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: ~LUTParallelBody
+// Entry: 000006bc
+// Signature: undefined __thiscall ~LUTParallelBody(LUTParallelBody * this)
+// ========================================
+
+
+/* cv::LUTParallelBody::~LUTParallelBody() */
+
+void __thiscall cv::LUTParallelBody::~LUTParallelBody(LUTParallelBody *this)
+
+{
+  cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 000006c0
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~LUTParallelBody
+// Entry: 000006f4
+// Signature: undefined __thiscall ~LUTParallelBody(LUTParallelBody * this)
+// ========================================
+
+
+/* cv::LUTParallelBody::~LUTParallelBody() */
+
+void __thiscall cv::LUTParallelBody::~LUTParallelBody(LUTParallelBody *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_8u
+// Entry: 00000708
+// Signature: undefined __cdecl LUT8u_8u(uchar * param_1, uchar * param_2, uchar * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_8u(unsigned char const*, unsigned char const*, unsigned char*, int, int, int) */
+
+void cv::LUT8u_8u(uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  byte *pbVar2;
+  uchar *puVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulong uVar6;
+  uchar *puVar7;
+  ulong uVar8;
+  
+  uVar1 = param_5 * param_4;
+  uVar4 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar4 = uVar4 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar4 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar5 = 0;
+    uVar6 = (ulong)(uint)param_5;
+    puVar7 = param_2;
+    uVar8 = uVar6;
+    puVar3 = param_3;
+    pbVar2 = param_1;
+    do {
+      do {
+        *param_3 = puVar7[(long)(int)(uint)*param_1 * (long)param_5];
+        uVar8 = uVar8 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+        puVar7 = puVar7 + 1;
+      } while (uVar8 != 0);
+      uVar5 = uVar5 + uVar6;
+      param_3 = puVar3 + uVar6;
+      param_1 = pbVar2 + uVar6;
+      puVar7 = param_2;
+      uVar8 = uVar6;
+      puVar3 = param_3;
+      pbVar2 = param_1;
+    } while (uVar5 < uVar4);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_8s
+// Entry: 00000790
+// Signature: undefined __cdecl LUT8u_8s(uchar * param_1, signed * param_2, signed * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_8s(unsigned char const*, signed char const*, signed char*, int, int, int) */
+
+void cv::LUT8u_8s(uchar *param_1,signed *param_2,signed *param_3,int param_4,int param_5,int param_6
+                 )
+
+{
+  uint uVar1;
+  byte *pbVar2;
+  signed *psVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulong uVar6;
+  signed *psVar7;
+  ulong uVar8;
+  
+  uVar1 = param_5 * param_4;
+  uVar4 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar4 = uVar4 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar4 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar5 = 0;
+    uVar6 = (ulong)(uint)param_5;
+    psVar7 = param_2;
+    uVar8 = uVar6;
+    psVar3 = param_3;
+    pbVar2 = param_1;
+    do {
+      do {
+        *param_3 = psVar7[(long)(int)(uint)*param_1 * (long)param_5];
+        uVar8 = uVar8 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+        psVar7 = psVar7 + 1;
+      } while (uVar8 != 0);
+      uVar5 = uVar5 + uVar6;
+      param_3 = psVar3 + uVar6;
+      param_1 = pbVar2 + uVar6;
+      psVar7 = param_2;
+      uVar8 = uVar6;
+      psVar3 = param_3;
+      pbVar2 = param_1;
+    } while (uVar5 < uVar4);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_16u
+// Entry: 00000818
+// Signature: undefined __cdecl LUT8u_16u(uchar * param_1, ushort * param_2, ushort * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_16u(unsigned char const*, unsigned short const*, unsigned short*, int, int, int) */
+
+void cv::LUT8u_16u(uchar *param_1,ushort *param_2,ushort *param_3,int param_4,int param_5,
+                  int param_6)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  
+  uVar1 = param_5 * param_4;
+  uVar2 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar2 = uVar2 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar3 = 0;
+    uVar4 = (ulong)(uint)param_5;
+    do {
+      uVar5 = 0;
+      do {
+        param_3[uVar5] = param_2[uVar5 + (long)(int)(uint)param_1[uVar5] * (long)param_5];
+        uVar5 = uVar5 + 1;
+      } while (uVar4 != uVar5);
+      uVar3 = uVar3 + uVar4;
+      param_3 = param_3 + (uint)param_5;
+      param_1 = param_1 + uVar4;
+    } while (uVar3 < uVar2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_16s
+// Entry: 00000898
+// Signature: undefined __cdecl LUT8u_16s(uchar * param_1, short * param_2, short * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_16s(unsigned char const*, short const*, short*, int, int, int) */
+
+void cv::LUT8u_16s(uchar *param_1,short *param_2,short *param_3,int param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  
+  uVar1 = param_5 * param_4;
+  uVar2 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar2 = uVar2 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar3 = 0;
+    uVar4 = (ulong)(uint)param_5;
+    do {
+      uVar5 = 0;
+      do {
+        param_3[uVar5] = param_2[uVar5 + (long)(int)(uint)param_1[uVar5] * (long)param_5];
+        uVar5 = uVar5 + 1;
+      } while (uVar4 != uVar5);
+      uVar3 = uVar3 + uVar4;
+      param_3 = param_3 + (uint)param_5;
+      param_1 = param_1 + uVar4;
+    } while (uVar3 < uVar2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_32s
+// Entry: 00000918
+// Signature: undefined __cdecl LUT8u_32s(uchar * param_1, int * param_2, int * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_32s(unsigned char const*, int const*, int*, int, int, int) */
+
+void cv::LUT8u_32s(uchar *param_1,int *param_2,int *param_3,int param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  
+  uVar1 = param_5 * param_4;
+  uVar2 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar2 = uVar2 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar3 = 0;
+    uVar4 = (ulong)(uint)param_5;
+    do {
+      uVar5 = 0;
+      do {
+        param_3[uVar5] = param_2[uVar5 + (long)(int)(uint)param_1[uVar5] * (long)param_5];
+        uVar5 = uVar5 + 1;
+      } while (uVar4 != uVar5);
+      uVar3 = uVar3 + uVar4;
+      param_3 = param_3 + (uint)param_5;
+      param_1 = param_1 + uVar4;
+    } while (uVar3 < uVar2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_32f
+// Entry: 00000998
+// Signature: undefined __cdecl LUT8u_32f(uchar * param_1, float * param_2, float * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_32f(unsigned char const*, float const*, float*, int, int, int) */
+
+void cv::LUT8u_32f(uchar *param_1,float *param_2,float *param_3,int param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  
+  uVar1 = param_5 * param_4;
+  uVar2 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar2 = uVar2 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar3 = 0;
+    uVar4 = (ulong)(uint)param_5;
+    do {
+      uVar5 = 0;
+      do {
+        param_3[uVar5] = param_2[uVar5 + (long)(int)(uint)param_1[uVar5] * (long)param_5];
+        uVar5 = uVar5 + 1;
+      } while (uVar4 != uVar5);
+      uVar3 = uVar3 + uVar4;
+      param_3 = param_3 + (uint)param_5;
+      param_1 = param_1 + uVar4;
+    } while (uVar3 < uVar2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: LUT8u_64f
+// Entry: 00000a18
+// Signature: undefined __cdecl LUT8u_64f(uchar * param_1, double * param_2, double * param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::LUT8u_64f(unsigned char const*, double const*, double*, int, int, int) */
+
+void cv::LUT8u_64f(uchar *param_1,double *param_2,double *param_3,int param_4,int param_5,
+                  int param_6)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  
+  uVar1 = param_5 * param_4;
+  uVar2 = (ulong)uVar1;
+  if (param_6 == 1) {
+    if (0 < (int)uVar1) {
+      do {
+        *param_3 = param_2[*param_1];
+        uVar2 = uVar2 - 1;
+        param_1 = param_1 + 1;
+        param_3 = param_3 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  else if ((0 < param_5) && (0 < (int)uVar1)) {
+    uVar3 = 0;
+    uVar4 = (ulong)(uint)param_5;
+    do {
+      uVar5 = 0;
+      do {
+        param_3[uVar5] = param_2[uVar5 + (long)(int)(uint)param_1[uVar5] * (long)param_5];
+        uVar5 = uVar5 + 1;
+      } while (uVar4 != uVar5);
+      uVar3 = uVar3 + uVar4;
+      param_3 = param_3 + (uint)param_5;
+      param_1 = param_1 + uVar4;
+    } while (uVar3 < uVar2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00000a98
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000aa8
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000abc
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000b0c
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: parallel_for_
+// Entry: 00002100
+// Signature: undefined parallel_for_(Range * param_1, ParallelLoopBody * param_2, double param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::parallel_for_(Range *param_1,ParallelLoopBody *param_2,double param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: NAryMatIterator
+// Entry: 00002200
+// Signature: undefined __thiscall NAryMatIterator(NAryMatIterator * this, Mat * * param_1, uchar * * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::NAryMatIterator::NAryMatIterator
+          (NAryMatIterator *this,Mat **param_1,uchar **param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator++
+// Entry: 00002300
+// Signature: undefined __thiscall operator++(NAryMatIterator * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::NAryMatIterator::operator++(NAryMatIterator *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ParallelLoopBody
+// Entry: 00002400
+// Signature: undefined __thiscall ~ParallelLoopBody(ParallelLoopBody * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::ParallelLoopBody::~ParallelLoopBody(ParallelLoopBody *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002500
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002600
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1, Range * param_2, Range * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1,Range *param_2,Range *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00002700
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00002800
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00002900
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00002a00
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: isContinuous
+// Entry: 00002b00
+// Signature: undefined isContinuous(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::isContinuous(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: dims
+// Entry: 00002c00
+// Signature: undefined dims(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::dims(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: kind
+// Entry: 00002d00
+// Signature: undefined kind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::kind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: depth
+// Entry: 00002e00
+// Signature: undefined depth(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::depth(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: total
+// Entry: 00002f00
+// Signature: undefined total(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::total(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getMat_
+// Entry: 00003000
+// Signature: undefined getMat_(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::getMat_(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: channels
+// Entry: 00003100
+// Signature: undefined channels(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::channels(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00003200
+// Signature: undefined create(int param_1, int * param_2, int param_3, int param_4, bool param_5, DepthMask param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::_OutputArray::create(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: total
+// Entry: 00003300
+// Signature: undefined total(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::total(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00003400
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00003500
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00003600
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00003b00
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00003c00
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00003d00
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00003e00
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00004000
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00004200
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00004400
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00004500
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 47
+// Failed: 0
+// Skipped external functions: 0

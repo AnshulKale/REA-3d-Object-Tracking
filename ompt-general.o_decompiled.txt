@@ -1,0 +1,3470 @@
+Program: ompt-general.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __ompt_get_teaminfo
+// Entry: 00000000
+// Signature: ompt_team_info_t * __cdecl __ompt_get_teaminfo(int depth, int * size)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+ompt_team_info_t * __ompt_get_teaminfo(int depth,int *size)
+
+{
+  kmp_info_t *pkVar1;
+  ompt_lw_taskteam_t *local_48;
+  ompt_lw_taskteam_t *local_40;
+  kmp_team_p *local_38;
+  int local_1c;
+  
+                    /* Unresolved local var: kmp_info_t * thr@[DW_OP_breg31(sp): +32] */
+  pkVar1 = ompt_get_thread();
+  if (pkVar1 != (kmp_info_t *)0x0) {
+                    /* Unresolved local var: kmp_team * team@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: ompt_lw_taskteam_t * next_lwt@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: ompt_lw_taskteam_t * lwt@[DW_OP_breg31(sp): +8] */
+    local_38 = (pkVar1->th).th_team;
+    if (local_38 == (kmp_team_p *)0x0) {
+      return (ompt_team_info_t *)0x0;
+    }
+    local_40 = (local_38->t).ompt_serialized_team_info;
+    local_48 = (ompt_lw_taskteam_t *)0x0;
+    for (local_1c = depth; 0 < local_1c; local_1c = local_1c + -1) {
+      if (local_48 != (ompt_lw_taskteam_t *)0x0) {
+        local_48 = local_48->parent;
+      }
+      if ((local_48 == (ompt_lw_taskteam_t *)0x0) && (local_38 != (kmp_team_p *)0x0)) {
+        if (local_40 == (ompt_lw_taskteam_t *)0x0) {
+          local_38 = (local_38->t).t_parent;
+          if (local_38 != (kmp_team_p *)0x0) {
+            local_40 = (local_38->t).ompt_serialized_team_info;
+          }
+        }
+        else {
+          local_48 = local_40;
+          local_40 = (ompt_lw_taskteam_t *)0x0;
+        }
+      }
+    }
+    if (local_48 != (ompt_lw_taskteam_t *)0x0) {
+      if (size != (int *)0x0) {
+        *size = 1;
+      }
+      return &local_48->ompt_team_info;
+    }
+    if (local_38 != (kmp_team_p *)0x0) {
+      if (size != (int *)0x0) {
+        *size = (local_38->t).t_nproc;
+      }
+      return &(local_38->t).ompt_team_info;
+    }
+  }
+  return (ompt_team_info_t *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_thread
+// Entry: 000001e8
+// Signature: kmp_info_t * ompt_get_thread(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * ompt_get_thread(void)
+
+{
+  int gtid;
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  gtid = ___kmp_get_global_thread_id();
+  pkVar1 = ompt_get_thread_gtid(gtid);
+  return pkVar1;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_object
+// Entry: 00000210
+// Signature: ompt_task_info_t * __cdecl __ompt_get_task_info_object(int depth)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+ompt_task_info_t * __ompt_get_task_info_object(int depth)
+
+{
+  kmp_info_t *pkVar1;
+  ompt_lw_taskteam_t *local_40;
+  ompt_lw_taskteam_t *local_38;
+  kmp_taskdata_t *local_30;
+  ompt_task_info_t *local_20;
+  int local_14;
+  
+                    /* Unresolved local var: ompt_task_info_t * info@[???]
+                       Unresolved local var: kmp_info_t * thr@[DW_OP_breg31(sp): +24] */
+  local_20 = (ompt_task_info_t *)0x0;
+  pkVar1 = ompt_get_thread();
+  if (pkVar1 != (kmp_info_t *)0x0) {
+                    /* Unresolved local var: kmp_taskdata_t * taskdata@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: ompt_lw_taskteam_t * lwt@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: ompt_lw_taskteam_t * next_lwt@[DW_OP_breg31(sp): 0] */
+    local_30 = (pkVar1->th).th_current_task;
+    local_38 = (ompt_lw_taskteam_t *)0x0;
+    local_40 = (local_30->td_team->t).ompt_serialized_team_info;
+    for (local_14 = depth; 0 < local_14; local_14 = local_14 + -1) {
+      if (local_38 != (ompt_lw_taskteam_t *)0x0) {
+        local_38 = local_38->parent;
+      }
+      if ((local_38 == (ompt_lw_taskteam_t *)0x0) && (local_30 != (kmp_taskdata_t *)0x0)) {
+        if (local_40 == (ompt_lw_taskteam_t *)0x0) {
+          local_30 = local_30->td_parent;
+          if (local_30 != (kmp_taskdata_t *)0x0) {
+            local_40 = (local_30->td_team->t).ompt_serialized_team_info;
+          }
+        }
+        else {
+          local_38 = local_40;
+          local_40 = (ompt_lw_taskteam_t *)0x0;
+        }
+      }
+    }
+    if (local_38 == (ompt_lw_taskteam_t *)0x0) {
+      if (local_30 != (kmp_taskdata_t *)0x0) {
+        local_20 = &local_30->ompt_task_info;
+      }
+    }
+    else {
+      local_20 = &local_38->ompt_task_info;
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_scheduling_taskinfo
+// Entry: 00000394
+// Signature: ompt_task_info_t * __cdecl __ompt_get_scheduling_taskinfo(int depth)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+ompt_task_info_t * __ompt_get_scheduling_taskinfo(int depth)
+
+{
+  kmp_info_t *pkVar1;
+  ompt_lw_taskteam_t *local_40;
+  ompt_lw_taskteam_t *local_38;
+  kmp_taskdata_t *local_30;
+  ompt_task_info_t *local_20;
+  int local_14;
+  
+                    /* Unresolved local var: ompt_task_info_t * info@[???]
+                       Unresolved local var: kmp_info_t * thr@[DW_OP_breg31(sp): +24] */
+  local_20 = (ompt_task_info_t *)0x0;
+  pkVar1 = ompt_get_thread();
+  if (pkVar1 != (kmp_info_t *)0x0) {
+                    /* Unresolved local var: kmp_taskdata_t * taskdata@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: ompt_lw_taskteam_t * lwt@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: ompt_lw_taskteam_t * next_lwt@[DW_OP_breg31(sp): 0] */
+    local_30 = (pkVar1->th).th_current_task;
+    local_38 = (ompt_lw_taskteam_t *)0x0;
+    local_40 = (local_30->td_team->t).ompt_serialized_team_info;
+    for (local_14 = depth; 0 < local_14; local_14 = local_14 + -1) {
+      if (local_38 != (ompt_lw_taskteam_t *)0x0) {
+        local_38 = local_38->parent;
+      }
+      if ((local_38 == (ompt_lw_taskteam_t *)0x0) && (local_30 != (kmp_taskdata_t *)0x0)) {
+        if ((local_30->ompt_task_info).scheduling_parent == (kmp_taskdata *)0x0) {
+          if (local_40 == (ompt_lw_taskteam_t *)0x0) {
+            local_30 = local_30->td_parent;
+            if (local_30 != (kmp_taskdata_t *)0x0) {
+              local_40 = (local_30->td_team->t).ompt_serialized_team_info;
+            }
+          }
+          else {
+            local_38 = local_40;
+            local_40 = (ompt_lw_taskteam_t *)0x0;
+          }
+        }
+        else {
+          local_30 = (local_30->ompt_task_info).scheduling_parent;
+        }
+      }
+    }
+    if (local_38 == (ompt_lw_taskteam_t *)0x0) {
+      if (local_30 != (kmp_taskdata_t *)0x0) {
+        local_20 = &local_30->ompt_task_info;
+      }
+    }
+    else {
+      local_20 = &local_38->ompt_task_info;
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_force_initialization
+// Entry: 00000544
+// Signature: void __ompt_force_initialization(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_force_initialization(void)
+
+{
+  ___kmp_serial_initialize();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_thread_data_internal
+// Entry: 00000558
+// Signature: ompt_data_t * __ompt_get_thread_data_internal(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+ompt_data_t * __ompt_get_thread_data_internal(void)
+
+{
+  int iVar1;
+  kmp_info_t *pkVar2;
+  ompt_data_t *local_18;
+  
+  iVar1 = ___kmp_get_global_thread_id();
+  if (iVar1 < 0) {
+    local_18 = (ompt_data_t *)0x0;
+  }
+  else {
+                    /* Unresolved local var: kmp_info_t * thread@[DW_OP_breg31(sp): 0] */
+    pkVar2 = ompt_get_thread();
+    if (pkVar2 == (kmp_info_t *)0x0) {
+      local_18 = (ompt_data_t *)0x0;
+    }
+    else {
+      local_18 = (ompt_data_t *)(pkVar2->th_pad + 0x148);
+    }
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_thread_assign_wait_id
+// Entry: 000005c4
+// Signature: void __cdecl __ompt_thread_assign_wait_id(void * variable)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_thread_assign_wait_id(void *variable)
+
+{
+  kmp_info_t *pkVar1;
+  
+                    /* Unresolved local var: kmp_info_t * ti@[DW_OP_breg31(sp): 0] */
+  pkVar1 = ompt_get_thread();
+  if (pkVar1 != (kmp_info_t *)0x0) {
+    (pkVar1->th).ompt_thread_info.wait_id = (ompt_wait_id_t)variable;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_state_internal
+// Entry: 0000060c
+// Signature: int __cdecl __ompt_get_state_internal(ompt_wait_id_t * omp_wait_id)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __ompt_get_state_internal(ompt_wait_id_t *omp_wait_id)
+
+{
+  kmp_info_t *pkVar1;
+  int local_14;
+  
+                    /* Unresolved local var: kmp_info_t * ti@[DW_OP_breg31(sp): +8] */
+  pkVar1 = ompt_get_thread();
+  if (pkVar1 == (kmp_info_t *)0x0) {
+    local_14 = 0x102;
+  }
+  else {
+    if (omp_wait_id != (ompt_wait_id_t *)0x0) {
+      *omp_wait_id = (pkVar1->th).ompt_thread_info.wait_id;
+    }
+    local_14 = *(int *)(pkVar1->th_pad + 0x160);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_parallel_info_internal
+// Entry: 0000068c
+// Signature: int __cdecl __ompt_get_parallel_info_internal(int ancestor_level, ompt_data_t * * parallel_data, int * team_size)
+// ========================================
+
+
+int __ompt_get_parallel_info_internal(int ancestor_level,ompt_data_t **parallel_data,int *team_size)
+
+{
+  int iVar1;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined4 local_14;
+  
+  iVar1 = ___kmp_get_global_thread_id();
+  if (iVar1 < 0) {
+    local_14 = 0;
+  }
+  else {
+                    /* Unresolved local var: ompt_team_info_t * info@[DW_OP_breg31(sp): +16] */
+    if (team_size == (int *)0x0) {
+      local_30 = &__ompt_get_teaminfo(ancestor_level,(int *)0x0)->parallel_data;
+    }
+    else {
+      local_30 = &__ompt_get_teaminfo(ancestor_level,team_size)->parallel_data;
+    }
+    if (parallel_data != (ompt_data_t **)0x0) {
+      if (local_30 == (ompt_data_t *)0x0) {
+        local_38 = (ompt_data_t *)0x0;
+      }
+      else {
+        local_38 = local_30;
+      }
+      *parallel_data = local_38;
+    }
+    local_14 = 2;
+    if (local_30 == (ompt_data_t *)0x0) {
+      local_14 = 0;
+    }
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_lw_taskteam_init
+// Entry: 00000784
+// Signature: void __cdecl __ompt_lw_taskteam_init(ompt_lw_taskteam_t * lwt, kmp_info_t * thr, int gtid, ompt_data_t * ompt_pid, void * codeptr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_lw_taskteam_init
+               (ompt_lw_taskteam_t *lwt,kmp_info_t *thr,int gtid,ompt_data_t *ompt_pid,void *codeptr
+               )
+
+{
+  (lwt->ompt_team_info).parallel_data = *ompt_pid;
+  (lwt->ompt_team_info).master_return_address = codeptr;
+  (lwt->ompt_task_info).task_data.value = 0;
+  (lwt->ompt_task_info).frame.enter_frame.value = 0;
+  (lwt->ompt_task_info).frame.exit_frame.value = 0;
+  (lwt->ompt_task_info).scheduling_parent = (kmp_taskdata *)0x0;
+  lwt->heap = 0;
+  lwt->parent = (ompt_lw_taskteam_s *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_lw_taskteam_link
+// Entry: 00000800
+// Signature: void __cdecl __ompt_lw_taskteam_link(ompt_lw_taskteam_t * lwt, kmp_info_t * thr, int on_heap, bool always)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_lw_taskteam_link(ompt_lw_taskteam_t *lwt,kmp_info_t *thr,int on_heap,bool always)
+
+{
+  kmp_team_p *pkVar1;
+  ompt_data_t oVar2;
+  undefined1 auStack_88 [64];
+  ompt_lw_taskteam_s *local_48;
+  ompt_data_t local_40;
+  void *pvStack_38;
+  ompt_lw_taskteam_t *local_30;
+  undefined1 local_25;
+  int local_24;
+  kmp_info_t *local_20;
+  ompt_lw_taskteam_t *local_18;
+  
+  local_30 = lwt;
+  local_25 = always;
+  local_24 = on_heap;
+  local_20 = thr;
+  local_18 = lwt;
+                    /* Unresolved local var: ompt_lw_taskteam_t * link_lwt@[???] */
+  if ((always) || (1 < (((thr->th).th_team)->t).t_serialized)) {
+                    /* Unresolved local var: ompt_team_info_t tmp_team@[???]
+                       Unresolved local var: ompt_lw_taskteam_t * my_parent@[???]
+                       Unresolved local var: ompt_task_info_t tmp_task@[DW_OP_breg31(sp): +24] */
+    if (on_heap != 0) {
+      local_30 = (ompt_lw_taskteam_t *)____kmp_allocate(0x60);
+    }
+    local_30->heap = local_24;
+    pvStack_38 = (local_18->ompt_team_info).master_return_address;
+    local_40 = (local_18->ompt_team_info).parallel_data;
+    oVar2 = (((local_20->th).th_team)->t).ompt_team_info.parallel_data;
+    (local_30->ompt_team_info).master_return_address =
+         (((local_20->th).th_team)->t).ompt_team_info.master_return_address;
+    (local_30->ompt_team_info).parallel_data = oVar2;
+    pkVar1 = (local_20->th).th_team;
+    (pkVar1->t).ompt_team_info.master_return_address = pvStack_38;
+    (pkVar1->t).ompt_team_info.parallel_data = local_40;
+    local_48 = (((local_20->th).th_team)->t).ompt_serialized_team_info;
+    local_30->parent = local_48;
+    (((local_20->th).th_team)->t).ompt_serialized_team_info = local_30;
+    _memcpy(auStack_88,&local_18->ompt_task_info,0x40);
+    _memcpy(&local_30->ompt_task_info,&((local_20->th).th_current_task)->ompt_task_info,0x40);
+    _memcpy(&((local_20->th).th_current_task)->ompt_task_info,auStack_88,0x40);
+  }
+  else {
+    pkVar1 = (thr->th).th_team;
+    oVar2 = (lwt->ompt_team_info).parallel_data;
+    (pkVar1->t).ompt_team_info.master_return_address = (lwt->ompt_team_info).master_return_address;
+    (pkVar1->t).ompt_team_info.parallel_data = oVar2;
+    _memcpy(&((thr->th).th_current_task)->ompt_task_info,&lwt->ompt_task_info,0x40);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_lw_taskteam_unlink
+// Entry: 00000974
+// Signature: void __cdecl __ompt_lw_taskteam_unlink(kmp_info_t * thr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_lw_taskteam_unlink(kmp_info_t *thr)
+
+{
+  kmp_team_p *pkVar1;
+  ompt_data_t oVar2;
+  ompt_data_t oVar3;
+  void *pvVar4;
+  undefined1 auStack_60 [64];
+  ompt_lw_taskteam_t *local_20;
+  kmp_info_t *local_18;
+  
+                    /* Unresolved local var: ompt_lw_taskteam_t * lwtask@[???] */
+  local_20 = (((thr->th).th_team)->t).ompt_serialized_team_info;
+  if (local_20 != (ompt_lw_taskteam_t *)0x0) {
+                    /* Unresolved local var: ompt_task_info_t tmp_task@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: ompt_team_info_t tmp_team@[DW_OP_breg31(sp): +16] */
+    local_18 = thr;
+    _memcpy(auStack_60,&local_20->ompt_task_info,0x40);
+    _memcpy(&local_20->ompt_task_info,&((local_18->th).th_current_task)->ompt_task_info,0x40);
+    _memcpy(&((local_18->th).th_current_task)->ompt_task_info,auStack_60,0x40);
+    (((local_18->th).th_team)->t).ompt_serialized_team_info = local_20->parent;
+    pvVar4 = (local_20->ompt_team_info).master_return_address;
+    oVar2 = (local_20->ompt_team_info).parallel_data;
+    oVar3 = (((local_18->th).th_team)->t).ompt_team_info.parallel_data;
+    (local_20->ompt_team_info).master_return_address =
+         (((local_18->th).th_team)->t).ompt_team_info.master_return_address;
+    (local_20->ompt_team_info).parallel_data = oVar3;
+    pkVar1 = (local_18->th).th_team;
+    (pkVar1->t).ompt_team_info.master_return_address = pvVar4;
+    (pkVar1->t).ompt_team_info.parallel_data = oVar2;
+    if (local_20->heap != 0) {
+      ____kmp_free(local_20);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_internal
+// Entry: 00000a74
+// Signature: int __cdecl __ompt_get_task_info_internal(int ancestor_level, int * type, ompt_data_t * * task_data, ompt_frame_t * * task_frame, ompt_data_t * * parallel_data, int * thread_num)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __ompt_get_task_info_internal
+              (int ancestor_level,int *type,ompt_data_t **task_data,ompt_frame_t **task_frame,
+              ompt_data_t **parallel_data,int *thread_num)
+
+{
+  uint uVar1;
+  bool bVar2;
+  int iVar3;
+  kmp_info_t *pkVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  ompt_data_t *local_a8;
+  ompt_data_t *local_a0;
+  ompt_data_t *local_98;
+  ompt_data_t *local_88;
+  ompt_data_t *local_80;
+  kmp_team_p *local_78;
+  kmp_team_p *local_70;
+  kmp_taskdata_t *local_68;
+  ompt_data_t *local_50;
+  ompt_data_t *local_48;
+  int local_18;
+  int local_14;
+  
+                    /* Unresolved local var: ompt_task_info_t * info@[???]
+                       Unresolved local var: ompt_team_info_t * team_info@[???]
+                       Unresolved local var: kmp_info_t * thr@[???]
+                       Unresolved local var: int level@[???] */
+  iVar3 = ___kmp_get_global_thread_id();
+  if (iVar3 < 0) {
+    local_14 = 0;
+  }
+  else if (ancestor_level < 0) {
+    local_14 = 0;
+  }
+  else {
+    local_48 = (ompt_data_t *)0x0;
+    local_50 = (ompt_data_t *)0x0;
+    pkVar4 = ompt_get_thread();
+    if (pkVar4 == (kmp_info_t *)0x0) {
+      local_14 = 0;
+    }
+    else {
+                    /* Unresolved local var: kmp_taskdata_t * taskdata@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: kmp_team * team@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: kmp_team * prev_team@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: ompt_lw_taskteam_t * lwt@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: ompt_lw_taskteam_t * next_lwt@[DW_OP_breg31(sp): +40]
+                        */
+      local_68 = (pkVar4->th).th_current_task;
+      if (local_68 == (kmp_taskdata_t *)0x0) {
+        local_14 = 0;
+      }
+      else {
+        local_70 = (pkVar4->th).th_team;
+        local_78 = (kmp_team_p *)0x0;
+        if (local_70 == (kmp_team_p *)0x0) {
+          local_14 = 0;
+        }
+        else {
+          local_80 = (ompt_data_t *)0x0;
+          local_88 = (ompt_data_t *)(local_68->td_team->t).ompt_serialized_team_info;
+          for (local_18 = ancestor_level; 0 < local_18; local_18 = local_18 + -1) {
+            if (local_80 != (ompt_data_t *)0x0) {
+              local_80 = (ompt_data_t *)local_80[0xb].value;
+            }
+            if ((local_80 == (ompt_data_t *)0x0) && (local_68 != (kmp_taskdata_t *)0x0)) {
+              if ((local_68->ompt_task_info).scheduling_parent == (kmp_taskdata *)0x0) {
+                if (local_88 == (ompt_data_t *)0x0) {
+                  local_68 = local_68->td_parent;
+                  if (local_70 == (kmp_team_p *)0x0) {
+                    return 0;
+                  }
+                  local_78 = local_70;
+                  local_70 = (local_70->t).t_parent;
+                  if (local_68 != (kmp_taskdata_t *)0x0) {
+                    local_88 = (ompt_data_t *)(local_68->td_team->t).ompt_serialized_team_info;
+                  }
+                }
+                else {
+                  local_80 = local_88;
+                  local_88 = (ompt_data_t *)0x0;
+                }
+              }
+              else {
+                local_68 = (local_68->ompt_task_info).scheduling_parent;
+              }
+            }
+          }
+          if (local_80 == (ompt_data_t *)0x0) {
+            if (local_68 != (kmp_taskdata_t *)0x0) {
+              local_48 = (ompt_data_t *)&local_68->ompt_task_info;
+              local_50 = &(local_70->t).ompt_team_info.parallel_data;
+              if (type != (int *)0x0) {
+                if (local_68->td_parent == (kmp_taskdata_t *)0x0) {
+                  *type = 1;
+                }
+                else {
+                  uVar5 = 4;
+                  if ((&local_68->td_flags)->tasktype == 0) {
+                    uVar5 = 2;
+                  }
+                  bVar2 = true;
+                  if ((&local_68->td_flags)->task_serial == 0) {
+                    bVar2 = (&local_68->td_flags)->tasking_ser != 0;
+                  }
+                  uVar1 = 0x8000000;
+                  if (!bVar2) {
+                    uVar1 = 0;
+                  }
+                  uVar6 = 0x10000000;
+                  if ((local_68->td_flags).tiedness != 0) {
+                    uVar6 = 0;
+                  }
+                  uVar7 = 0x20000000;
+                  if ((local_68->td_flags).final == 0) {
+                    uVar7 = 0;
+                  }
+                  uVar8 = 0x40000000;
+                  if ((local_68->td_flags).merged_if0 == 0) {
+                    uVar8 = 0;
+                  }
+                  *type = uVar5 | uVar1 | uVar6 | uVar7 | uVar8;
+                }
+              }
+            }
+          }
+          else {
+            local_48 = local_80 + 2;
+            local_50 = local_80;
+            if (type != (int *)0x0) {
+              *type = 2;
+            }
+          }
+          if (task_data != (ompt_data_t **)0x0) {
+            if (local_48 == (ompt_data_t *)0x0) {
+              local_98 = (ompt_data_t *)0x0;
+            }
+            else {
+              local_98 = local_48 + 3;
+            }
+            *task_data = local_98;
+          }
+          if (task_frame != (ompt_frame_t **)0x0) {
+            if (local_48 == (ompt_data_t *)0x0) {
+              local_a0 = (ompt_data_t *)0x0;
+            }
+            else {
+              local_a0 = local_48;
+            }
+            *task_frame = (ompt_frame_t *)local_a0;
+          }
+          if (parallel_data != (ompt_data_t **)0x0) {
+            if (local_50 == (ompt_data_t *)0x0) {
+              local_a8 = (ompt_data_t *)0x0;
+            }
+            else {
+              local_a8 = local_50;
+            }
+            *parallel_data = local_a8;
+          }
+          if (thread_num != (int *)0x0) {
+            if (ancestor_level == 0) {
+              iVar3 = ___kmp_get_global_thread_id();
+              iVar3 = __kmp_tid_from_gtid(iVar3);
+              *thread_num = iVar3;
+            }
+            else if (local_80 == (ompt_data_t *)0x0) {
+              if (local_78 == (kmp_team_p *)0x0) {
+                iVar3 = ___kmp_get_global_thread_id();
+                iVar3 = __kmp_tid_from_gtid(iVar3);
+                *thread_num = iVar3;
+              }
+              else {
+                *thread_num = (local_78->t).t_master_tid;
+              }
+            }
+            else {
+              *thread_num = 0;
+            }
+          }
+          local_14 = 2;
+          if (local_48 == (ompt_data_t *)0x0) {
+            local_14 = 0;
+          }
+        }
+      }
+    }
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_tid_from_gtid
+// Entry: 0000103c
+// Signature: int __cdecl __kmp_tid_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int __kmp_tid_from_gtid(int gtid)
+
+{
+  return *(int *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x20);
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_memory_internal
+// Entry: 00001064
+// Signature: int __cdecl __ompt_get_task_memory_internal(void * * addr, size_t * size, int blocknum)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __ompt_get_task_memory_internal(void **addr,size_t *size,int blocknum)
+
+{
+  size_t sVar1;
+  kmp_info_t *pkVar2;
+  kmp_taskdata_t *pkVar3;
+  kmp_int32 *local_50;
+  int local_14;
+  
+                    /* Unresolved local var: kmp_info_t * thr@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: kmp_taskdata_t * taskdata@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: kmp_task_t * task@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: void * ret_addr@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int64_t ret_size@[DW_OP_breg31(sp): +8] */
+  if (blocknum == 0) {
+    pkVar2 = ompt_get_thread();
+    if (pkVar2 == (kmp_info_t *)0x0) {
+      local_14 = 0;
+    }
+    else {
+      pkVar3 = (pkVar2->th).th_current_task;
+      if ((&pkVar3->td_flags)->tasktype == 1) {
+        if ((pkVar3->td_flags).destructors_thunk == 0) {
+          local_50 = (kmp_int32 *)((long)&pkVar3[1].td_alloc_thread + 4);
+        }
+        else {
+          local_50 = &pkVar3[1].td_level;
+        }
+        sVar1 = (pkVar3->td_size_alloc - 0x140) - ((long)local_50 - (long)(pkVar3 + 1));
+        if ((long)sVar1 < 0) {
+          local_14 = 0;
+        }
+        else {
+          *addr = local_50;
+          *size = sVar1;
+          local_14 = 1;
+        }
+      }
+      else {
+        local_14 = 0;
+      }
+    }
+  }
+  else {
+    local_14 = 0;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_team_assign_id
+// Entry: 000011b0
+// Signature: void __cdecl __ompt_team_assign_id(kmp_team_t * team, ompt_data_t ompt_pid)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void __ompt_team_assign_id(kmp_team_t *team,ompt_data_t ompt_pid)
+
+{
+  (team->t).ompt_team_info.parallel_data = ompt_pid;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_barrier_kind
+// Entry: 000011d0
+// Signature: ompt_sync_region_t __cdecl __ompt_get_barrier_kind(barrier_type bt, kmp_info_t * thr)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+ompt_sync_region_t __ompt_get_barrier_kind(barrier_type bt,kmp_info_t *thr)
+
+{
+  uint uVar1;
+  ompt_sync_region_t local_4;
+  
+                    /* Unresolved local var: kmp_int32 flags@[???] */
+  if (bt == bs_forkjoin_barrier) {
+    local_4 = ompt_sync_region_barrier_implicit;
+  }
+  else if (bt == bs_plain_barrier) {
+    if ((thr->th).th_ident == (ident_t *)0x0) {
+      local_4 = ompt_sync_region_barrier;
+    }
+    else {
+      uVar1 = ((thr->th).th_ident)->flags;
+      if ((uVar1 & 0x20) == 0) {
+        if ((uVar1 & 0x40) == 0) {
+          local_4 = ompt_sync_region_barrier_implementation;
+        }
+        else {
+          local_4 = ompt_sync_region_barrier_implicit;
+        }
+      }
+      else {
+        local_4 = ompt_sync_region_barrier_explicit;
+      }
+    }
+  }
+  else {
+    local_4 = ompt_sync_region_barrier_implementation;
+  }
+  return local_4;
+}
+
+
+
+
+// ========================================
+// Function: ompt_pre_init
+// Entry: 000012a8
+// Signature: void ompt_pre_init(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void ompt_pre_init(void)
+
+{
+  uint omp_version;
+  undefined8 *puVar1;
+  int iVar2;
+  char *pcVar3;
+  undefined4 local_1c;
+  
+                    /* Unresolved local var: char * ompt_env_var@[???]
+                       Unresolved local var: tool_setting_e tool_setting@[???]
+                       Unresolved local var: char * ompt_env_verbose_init@[???] */
+  puVar1 = ____stderrp;
+  if (ompt_pre_init::ompt_pre_initialized == 0) {
+    ompt_pre_init::ompt_pre_initialized = 1;
+    pcVar3 = _getenv("OMP_TOOL");
+    local_1c = 0;
+    if ((pcVar3 == (char *)0x0) || (iVar2 = _strcmp(pcVar3,""), iVar2 == 0)) {
+      local_1c = 1;
+    }
+    else {
+      iVar2 = ___kmp_str_match(pcVar3,0,"disabled");
+      if (iVar2 == 0) {
+        iVar2 = ___kmp_str_match(pcVar3,0,"enabled");
+        if (iVar2 != 0) {
+          local_1c = 3;
+        }
+      }
+      else {
+        local_1c = 2;
+      }
+    }
+    pcVar3 = _getenv("OMP_TOOL_VERBOSE_INIT");
+    if (((pcVar3 == (char *)0x0) || (iVar2 = _strcmp(pcVar3,""), iVar2 == 0)) ||
+       (iVar2 = ___kmp_str_match(pcVar3,0,"disabled"), iVar2 != 0)) {
+      verbose_init = 0;
+    }
+    else {
+      verbose_init = 1;
+      iVar2 = ___kmp_str_match(pcVar3,0,"STDERR");
+      if (iVar2 == 0) {
+        iVar2 = ___kmp_str_match(pcVar3,0,"STDOUT");
+        if (iVar2 == 0) {
+          verbose_file = (FILE *)_fopen(pcVar3,"w");
+        }
+        else {
+          verbose_file = (FILE *)*____stdoutp;
+        }
+      }
+      else {
+        verbose_file = (FILE *)*puVar1;
+      }
+    }
+    switch(local_1c) {
+    case 0:
+      _fprintf((FILE *)*puVar1,
+               "Warning: OMP_TOOL has invalid value \"%s\".\n  legal values are (NULL,\"\",\"disabled\",\"enabled\").\n"
+              );
+      break;
+    case 1:
+    case 3:
+      omp_version = *____kmp_openmp_version;
+      pcVar3 = ompt_get_runtime_version();
+      ompt_start_tool_result = ompt_try_start_tool(omp_version,pcVar3);
+      ompt_enabled = (ompt_callbacks_active_t)0x0;
+      break;
+    case 2:
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"OMP tool disabled. \n");
+      }
+    }
+    if (((verbose_init != 0) && (verbose_file != (FILE *)*puVar1)) &&
+       (verbose_file != (FILE *)*____stdoutp)) {
+      _fclose((FILE *)verbose_file);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompt_try_start_tool
+// Entry: 00001608
+// Signature: ompt_start_tool_result_t * __cdecl ompt_try_start_tool(uint omp_version, char * runtime_version)
+// ========================================
+
+
+ompt_start_tool_result_t * ompt_try_start_tool(uint omp_version,char *runtime_version)
+
+{
+  FILE *pFVar1;
+  uint uVar2;
+  void *pvVar3;
+  long lVar5;
+  long local_60;
+  undefined1 auStack_58 [8];
+  undefined8 local_50;
+  char *local_48;
+  char *local_40;
+  code *local_38;
+  ompt_start_tool_result_t *local_30;
+  char *local_28;
+  uint local_1c;
+  ompt_start_tool_result_t *local_18;
+  void *pvVar4;
+  
+                    /* Unresolved local var: ompt_start_tool_result_t * ret@[???]
+                       Unresolved local var: ompt_start_tool_t start_tool@[???]
+                       Unresolved local var: char * sep@[???]
+                       Unresolved local var: char * tool_libs@[???] */
+  local_30 = (ompt_start_tool_result_t *)0x0;
+  local_38 = __ompt_get_teaminfo;
+  local_40 = ":";
+  local_28 = runtime_version;
+  local_1c = omp_version;
+  if (verbose_init != 0) {
+    _fprintf((FILE *)verbose_file,"----- START LOGGING OF TOOL REGISTRATION -----\n");
+  }
+  if (verbose_init != 0) {
+    _fprintf((FILE *)verbose_file,"Search for OMP tool in current address space... ");
+  }
+  local_30 = ompt_tool_darwin(local_1c,local_28);
+  if (local_30 == (ompt_start_tool_result_t *)0x0) {
+    if (verbose_init != 0) {
+      _fprintf((FILE *)verbose_file,"Failed.\n");
+    }
+    local_48 = _getenv("OMP_TOOL_LIBRARIES");
+    if (local_48 == (char *)0x0) {
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"No OMP_TOOL_LIBRARIES defined.\n");
+      }
+    }
+    else {
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"Searching tool libraries...\n");
+      }
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"OMP_TOOL_LIBRARIES = %s\n");
+      }
+      local_50 = ___kmp_str_format("%s");
+      local_60 = ___kmp_str_token(local_50,local_40,auStack_58);
+      _dlerror();
+      while (pvVar3 = ompt_tool_module, local_60 != 0) {
+        if (verbose_init != 0) {
+          _fprintf((FILE *)verbose_file,"Opening %s... ");
+        }
+        pvVar3 = (void *)_dlopen(local_60,1);
+        pFVar1 = verbose_file;
+        if (pvVar3 == (void *)0x0) {
+          if (verbose_init != 0) {
+            _dlerror();
+            _fprintf((FILE *)pFVar1,"Failed: %s\n");
+          }
+        }
+        else {
+          pvVar4 = pvVar3;
+          if (verbose_init != 0) {
+            uVar2 = _fprintf((FILE *)verbose_file,"Success. \n");
+            pvVar4 = (void *)(ulong)uVar2;
+          }
+          if (verbose_init != 0) {
+            uVar2 = _fprintf((FILE *)verbose_file,"Searching for ompt_start_tool in %s... ");
+            pvVar4 = (void *)(ulong)uVar2;
+          }
+          _dlerror(pvVar4);
+          local_38 = (code *)_dlsym(pvVar3,"ompt_start_tool");
+          if (local_38 == __ompt_get_teaminfo) {
+                    /* Unresolved local var: char * error@[DW_OP_breg31(sp): +48] */
+            lVar5 = _dlerror();
+            if (lVar5 == 0) {
+              if (verbose_init != 0) {
+                _fprintf((FILE *)verbose_file,"Failed: %s\n");
+              }
+            }
+            else if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"Failed: %s\n");
+            }
+          }
+          else {
+            local_30 = (ompt_start_tool_result_t *)(*local_38)(local_1c,local_28);
+            if (local_30 != (ompt_start_tool_result_t *)0x0) {
+              if (verbose_init != 0) {
+                _fprintf((FILE *)verbose_file,"Success.\n");
+              }
+              if (verbose_init != 0) {
+                _fprintf((FILE *)verbose_file,"Tool was started and is using the OMPT interface.\n")
+                ;
+              }
+              break;
+            }
+            if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"Found but not using the OMPT interface.\n");
+            }
+            if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"Continuing search...\n");
+            }
+          }
+          _dlclose(pvVar3);
+        }
+        local_60 = ___kmp_str_token(0,local_40,auStack_58);
+      }
+      ompt_tool_module = pvVar3;
+      ___kmp_str_free(&local_50);
+    }
+    if (local_30 == (ompt_start_tool_result_t *)0x0) {
+                    /* Unresolved local var: char * fname@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: void * h@[DW_OP_breg31(sp): +32] */
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"...searching tool libraries failed. Using archer tool.\n");
+      }
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"Opening %s... ");
+      }
+      lVar5 = _dlopen("libarcher.so",1);
+      if (lVar5 != 0) {
+        if (verbose_init != 0) {
+          _fprintf((FILE *)verbose_file,"Success.\n");
+        }
+        if (verbose_init != 0) {
+          _fprintf((FILE *)verbose_file,"Searching for ompt_start_tool in %s... ");
+        }
+        local_38 = (code *)_dlsym(lVar5,"ompt_start_tool");
+        pFVar1 = verbose_file;
+        if (local_38 == __ompt_get_teaminfo) {
+          if (verbose_init != 0) {
+            _dlerror();
+            _fprintf((FILE *)pFVar1,"Failed: %s\n");
+          }
+        }
+        else {
+          local_30 = (ompt_start_tool_result_t *)(*local_38)(local_1c,local_28);
+          if (local_30 != (ompt_start_tool_result_t *)0x0) {
+            if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"Success.\n");
+            }
+            if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"Tool was started and is using the OMPT interface.\n");
+            }
+            if (verbose_init != 0) {
+              _fprintf((FILE *)verbose_file,"----- END LOGGING OF TOOL REGISTRATION -----\n");
+            }
+            return local_30;
+          }
+          if (verbose_init != 0) {
+            _fprintf((FILE *)verbose_file,"Found but not using the OMPT interface.\n");
+          }
+        }
+      }
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"No OMP tool loaded.\n");
+      }
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"----- END LOGGING OF TOOL REGISTRATION -----\n");
+      }
+      local_18 = local_30;
+    }
+    else {
+      if (verbose_init != 0) {
+        _fprintf((FILE *)verbose_file,"----- END LOGGING OF TOOL REGISTRATION -----\n");
+      }
+      local_18 = local_30;
+    }
+  }
+  else {
+    if (verbose_init != 0) {
+                    /* Unresolved local var: char * libs@[???]
+                       Unresolved local var: char * buf@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: char * fname@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: void * h@[DW_OP_breg31(sp): +56] */
+      _fprintf((FILE *)verbose_file,"Success.\n");
+    }
+    if (verbose_init != 0) {
+      _fprintf((FILE *)verbose_file,"Tool was started and is using the OMPT interface.\n");
+    }
+    if (verbose_init != 0) {
+      _fprintf((FILE *)verbose_file,"----- END LOGGING OF TOOL REGISTRATION -----\n");
+    }
+    local_18 = local_30;
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_runtime_version
+// Entry: 00001ee8
+// Signature: char * ompt_get_runtime_version(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * ompt_get_runtime_version(void)
+
+{
+  return (char *)(____kmp_version_lib_ver + 6);
+}
+
+
+
+
+// ========================================
+// Function: ompt_post_init
+// Entry: 00001ef8
+// Signature: void ompt_post_init(void)
+// ========================================
+
+
+/* WARNING: Restarted to delay deadcode elimination for space: ram */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ompt_post_init(void)
+
+{
+  ompt_callback_thread_begin_t p_Var1;
+  int iVar2;
+  ompt_data_t *poVar3;
+  ompt_initialize_t p_Var4;
+  ompt_data_t *local_28;
+  ompt_data_t *local_20;
+  kmp_info_t *local_18;
+  
+                    /* Unresolved local var: kmp_info_t * root_thread@[???]
+                       Unresolved local var: ompt_data_t * task_data@[???]
+                       Unresolved local var: ompt_data_t * parallel_data@[???] */
+  if ((ompt_post_init::ompt_post_initialized == 0) &&
+     (ompt_post_init::ompt_post_initialized = 1,
+     ompt_start_tool_result != (ompt_start_tool_result_t *)0x0)) {
+    p_Var4 = ompt_start_tool_result->initialize;
+    iVar2 = _omp_get_initial_device();
+    iVar2 = (*p_Var4)(ompt_fn_lookup,iVar2,&ompt_start_tool_result->tool_data);
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffffe | (ulong)(iVar2 != 0));
+    if ((ulong)(iVar2 != 0) == 0) {
+      ompt_enabled = (ompt_callbacks_active_t)0x0;
+    }
+    else {
+      local_18 = ompt_get_thread();
+      ompt_set_thread_state(local_18,ompt_state_overhead);
+      p_Var1 = ompt_callbacks.ompt_callback_thread_begin_callback;
+      if (ompt_enabled.ompt_callback_thread_begin != 0) {
+        poVar3 = __ompt_get_thread_data_internal();
+        (*p_Var1)(ompt_thread_initial,poVar3);
+      }
+      __ompt_get_task_info_internal
+                (0,(int *)0x0,&local_20,(ompt_frame_t **)0x0,&local_28,(int *)0x0);
+      if (ompt_enabled.ompt_callback_implicit_task != 0) {
+        (*ompt_callbacks.ompt_callback_implicit_task_callback)
+                  (ompt_scope_begin,local_28,local_20,1,1,1);
+      }
+      ompt_set_thread_state(local_18,ompt_state_work_serial);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompt_fn_lookup
+// Entry: 000020bc
+// Signature: ompt_interface_fn_t __cdecl ompt_fn_lookup(char * s)
+// ========================================
+
+
+/* WARNING: Enum "ompt_callbacks_t": Some values do not have unique names */
+
+ompt_interface_fn_t ompt_fn_lookup(char *s)
+
+{
+  int iVar1;
+  ompt_interface_fn_t local_18;
+  
+                    /* Unresolved local var: ompt_enumerate_states_t ompt_enumerate_states_f@[???]
+                       Unresolved local var: ompt_enumerate_mutex_impls_t
+                       ompt_enumerate_mutex_impls_f@[???]
+                       Unresolved local var: ompt_set_callback_t ompt_set_callback_f@[???]
+                       Unresolved local var: ompt_get_callback_t ompt_get_callback_f@[???]
+                       Unresolved local var: ompt_get_state_t ompt_get_state_f@[???]
+                       Unresolved local var: ompt_get_parallel_info_t ompt_get_parallel_info_f@[???]
+                       Unresolved local var: ompt_get_task_info_t ompt_get_task_info_f@[???]
+                       Unresolved local var: ompt_get_task_memory_t ompt_get_task_memory_f@[???]
+                       Unresolved local var: ompt_get_thread_data_t
+                       ompt_get_thread_data_f@[DW_OP_breg31(sp): +88]
+                       Unresolved local var: ompt_get_unique_id_t
+                       ompt_get_unique_id_f@[DW_OP_breg31(sp): +80]
+                       Unresolved local var: ompt_finalize_tool_t
+                       ompt_finalize_tool_f@[DW_OP_breg31(sp): +72]
+                       Unresolved local var: ompt_get_num_procs_t
+                       ompt_get_num_procs_f@[DW_OP_breg31(sp): +64]
+                       Unresolved local var: ompt_get_num_places_t
+                       ompt_get_num_places_f@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: ompt_get_place_proc_ids_t
+                       ompt_get_place_proc_ids_f@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: ompt_get_place_num_t
+                       ompt_get_place_num_f@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: ompt_get_partition_place_nums_t
+                       ompt_get_partition_place_nums_f@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: ompt_get_proc_id_t
+                       ompt_get_proc_id_f@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: ompt_get_target_info_t
+                       ompt_get_target_info_f@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: ompt_get_num_devices_t
+                       ompt_get_num_devices_f@[DW_OP_breg31(sp): +8] */
+  iVar1 = _strcmp(s,"ompt_enumerate_states");
+  if (iVar1 == 0) {
+    local_18 = ompt_enumerate_states;
+  }
+  else {
+    iVar1 = _strcmp(s,"ompt_enumerate_mutex_impls");
+    if (iVar1 == 0) {
+      local_18 = ompt_enumerate_mutex_impls;
+    }
+    else {
+      iVar1 = _strcmp(s,"ompt_set_callback");
+      if (iVar1 == 0) {
+        local_18 = ompt_set_callback;
+      }
+      else {
+        iVar1 = _strcmp(s,"ompt_get_callback");
+        if (iVar1 == 0) {
+          local_18 = ompt_get_callback;
+        }
+        else {
+          iVar1 = _strcmp(s,"ompt_get_state");
+          if (iVar1 == 0) {
+            local_18 = ompt_get_state;
+          }
+          else {
+            iVar1 = _strcmp(s,"ompt_get_parallel_info");
+            if (iVar1 == 0) {
+              local_18 = ompt_get_parallel_info;
+            }
+            else {
+              iVar1 = _strcmp(s,"ompt_get_task_info");
+              if (iVar1 == 0) {
+                local_18 = ompt_get_task_info;
+              }
+              else {
+                iVar1 = _strcmp(s,"ompt_get_task_memory");
+                if (iVar1 == 0) {
+                  local_18 = ompt_get_task_memory;
+                }
+                else {
+                  iVar1 = _strcmp(s,"ompt_get_thread_data");
+                  if (iVar1 == 0) {
+                    local_18 = ompt_get_thread_data;
+                  }
+                  else {
+                    iVar1 = _strcmp(s,"ompt_get_unique_id");
+                    if (iVar1 == 0) {
+                      local_18 = ompt_get_unique_id;
+                    }
+                    else {
+                      iVar1 = _strcmp(s,"ompt_finalize_tool");
+                      if (iVar1 == 0) {
+                        local_18 = ompt_finalize_tool;
+                      }
+                      else {
+                        iVar1 = _strcmp(s,"ompt_get_num_procs");
+                        if (iVar1 == 0) {
+                          local_18 = ompt_get_num_procs;
+                        }
+                        else {
+                          iVar1 = _strcmp(s,"ompt_get_num_places");
+                          if (iVar1 == 0) {
+                            local_18 = ompt_get_num_places;
+                          }
+                          else {
+                            iVar1 = _strcmp(s,"ompt_get_place_proc_ids");
+                            if (iVar1 == 0) {
+                              local_18 = ompt_get_place_proc_ids;
+                            }
+                            else {
+                              iVar1 = _strcmp(s,"ompt_get_place_num");
+                              if (iVar1 == 0) {
+                                local_18 = ompt_get_place_num;
+                              }
+                              else {
+                                iVar1 = _strcmp(s,"ompt_get_partition_place_nums");
+                                if (iVar1 == 0) {
+                                  local_18 = ompt_get_partition_place_nums;
+                                }
+                                else {
+                                  iVar1 = _strcmp(s,"ompt_get_proc_id");
+                                  if (iVar1 == 0) {
+                                    local_18 = ompt_get_proc_id;
+                                  }
+                                  else {
+                                    iVar1 = _strcmp(s,"ompt_get_target_info");
+                                    if (iVar1 == 0) {
+                                      local_18 = ompt_get_target_info;
+                                    }
+                                    else {
+                                      iVar1 = _strcmp(s,"ompt_get_num_devices");
+                                      if (iVar1 == 0) {
+                                        local_18 = ompt_get_num_devices;
+                                      }
+                                      else {
+                                        local_18 = __ompt_get_teaminfo;
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: ompt_set_thread_state
+// Entry: 0000250c
+// Signature: void __cdecl ompt_set_thread_state(kmp_info_t * thread, ompt_state_t state)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+void ompt_set_thread_state(kmp_info_t *thread,ompt_state_t state)
+
+{
+  if (thread != (kmp_info_t *)0x0) {
+    *(ompt_state_t *)(thread->th_pad + 0x160) = state;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompt_fini
+// Entry: 00002544
+// Signature: void ompt_fini(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void ompt_fini(void)
+
+{
+  if (ompt_enabled.enabled != 0) {
+    if ((ompt_start_tool_result != (ompt_start_tool_result_t *)0x0) &&
+       (ompt_start_tool_result->finalize != __ompt_get_teaminfo)) {
+      (*ompt_start_tool_result->finalize)(&ompt_start_tool_result->tool_data);
+    }
+    if ((libomptarget_ompt_result != (ompt_start_tool_result_t *)0x0) &&
+       (libomptarget_ompt_result->finalize != __ompt_get_teaminfo)) {
+      (*libomptarget_ompt_result->finalize)((ompt_data_t *)0x0);
+    }
+  }
+  if (ompt_tool_module != (void *)0x0) {
+    _dlclose(ompt_tool_module);
+  }
+  ompt_enabled = (ompt_callbacks_active_t)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_control_tool
+// Entry: 00002648
+// Signature: int __cdecl __kmp_control_tool(uint64_t command, uint64_t modifier, void * arg)
+// ========================================
+
+
+int __kmp_control_tool(uint64_t command,uint64_t modifier,void *arg)
+
+{
+  ompt_callback_control_tool_t p_Var1;
+  int gtid;
+  void *pvVar2;
+  int local_14;
+  
+  p_Var1 = ompt_callbacks.ompt_callback_control_tool_callback;
+  if (ompt_enabled.enabled == 0) {
+    local_14 = -2;
+  }
+  else if (ompt_enabled.ompt_callback_control_tool == 0) {
+    local_14 = -1;
+  }
+  else {
+    gtid = ___kmp_get_global_thread_id_reg();
+    pvVar2 = __ompt_load_return_address(gtid);
+    local_14 = (*p_Var1)(command,modifier,arg,pvVar2);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_load_return_address
+// Entry: 00002724
+// Signature: void * __cdecl __ompt_load_return_address(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * __ompt_load_return_address(int gtid)
+
+{
+  long lVar1;
+  void *pvVar2;
+  
+                    /* Unresolved local var: kmp_info_t * thr@[???]
+                       Unresolved local var: void * return_address@[???] */
+  lVar1 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  pvVar2 = *(void **)(lVar1 + 0x158);
+  *(undefined8 *)(lVar1 + 0x158) = 0;
+  return pvVar2;
+}
+
+
+
+
+// ========================================
+// Function: ompt_libomp_connect
+// Entry: 00002764
+// Signature: void __cdecl ompt_libomp_connect(ompt_start_tool_result_t * result)
+// ========================================
+
+
+void ompt_libomp_connect(ompt_start_tool_result_t *result)
+
+{
+  if (verbose_init != 0) {
+    _fprintf((FILE *)verbose_file,"libomp --> OMPT: Enter libomp_ompt_connect\n");
+  }
+  __ompt_force_initialization();
+  if (((ompt_enabled.enabled != 0) &&
+      (ompt_callbacks.ompt_callback_device_initialize_callback != __ompt_get_teaminfo)) &&
+     (result != (ompt_start_tool_result_t *)0x0)) {
+    if (verbose_init != 0) {
+      _fprintf((FILE *)verbose_file,"libomp --> OMPT: Connecting with libomptarget\n");
+    }
+    (*result->initialize)(ompt_libomp_target_fn_lookup,0,(ompt_data_t *)0x0);
+    libomptarget_ompt_result = result;
+  }
+  if (verbose_init != 0) {
+    _fprintf((FILE *)verbose_file,"libomp --> OMPT: Exit libomp_ompt_connect\n");
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompt_libomp_target_fn_lookup
+// Entry: 0000289c
+// Signature: ompt_interface_fn_t __cdecl ompt_libomp_target_fn_lookup(char * s)
+// ========================================
+
+
+ompt_interface_fn_t ompt_libomp_target_fn_lookup(char *s)
+
+{
+  int iVar1;
+  ompt_callback_target_data_op_emi_t local_18;
+  
+  iVar1 = _strcmp(s,"ompt_callback_device_initialize");
+  if (iVar1 == 0) {
+    local_18 = (ompt_callback_target_data_op_emi_t)
+               ompt_callbacks.ompt_callback_device_initialize_callback;
+  }
+  else {
+    iVar1 = _strcmp(s,"ompt_callback_device_finalize");
+    if (iVar1 == 0) {
+      local_18 = (ompt_callback_target_data_op_emi_t)
+                 ompt_callbacks.ompt_callback_device_finalize_callback;
+    }
+    else {
+      iVar1 = _strcmp(s,"ompt_callback_device_load");
+      if (iVar1 == 0) {
+        local_18 = (ompt_callback_target_data_op_emi_t)
+                   ompt_callbacks.ompt_callback_device_load_callback;
+      }
+      else {
+        iVar1 = _strcmp(s,"ompt_callback_device_unload");
+        if (iVar1 == 0) {
+          local_18 = (ompt_callback_target_data_op_emi_t)
+                     ompt_callbacks.ompt_callback_device_unload_callback;
+        }
+        else {
+          iVar1 = _strcmp(s,"ompt_callback_target_emi");
+          if (iVar1 == 0) {
+            local_18 = (ompt_callback_target_data_op_emi_t)
+                       ompt_callbacks.ompt_callback_target_emi_callback;
+          }
+          else {
+            iVar1 = _strcmp(s,"ompt_callback_target_data_op_emi");
+            if (iVar1 == 0) {
+              local_18 = ompt_callbacks.ompt_callback_target_data_op_emi_callback;
+            }
+            else {
+              iVar1 = _strcmp(s,"ompt_callback_target_submit_emi");
+              if (iVar1 == 0) {
+                local_18 = (ompt_callback_target_data_op_emi_t)
+                           ompt_callbacks.ompt_callback_target_submit_emi_callback;
+              }
+              else {
+                iVar1 = _strcmp(s,"ompt_callback_target_map_emi");
+                if (iVar1 == 0) {
+                  local_18 = (ompt_callback_target_data_op_emi_t)
+                             ompt_callbacks.ompt_callback_target_map_emi_callback;
+                }
+                else {
+                  iVar1 = _strcmp(s,"ompt_callback_target");
+                  if (iVar1 == 0) {
+                    local_18 = (ompt_callback_target_data_op_emi_t)
+                               ompt_callbacks.ompt_callback_target_callback;
+                  }
+                  else {
+                    iVar1 = _strcmp(s,"ompt_callback_target_data_op");
+                    if (iVar1 == 0) {
+                      local_18 = (ompt_callback_target_data_op_emi_t)
+                                 ompt_callbacks.ompt_callback_target_data_op_callback;
+                    }
+                    else {
+                      iVar1 = _strcmp(s,"ompt_callback_target_submit");
+                      if (iVar1 == 0) {
+                        local_18 = (ompt_callback_target_data_op_emi_t)
+                                   ompt_callbacks.ompt_callback_target_submit_callback;
+                      }
+                      else {
+                        iVar1 = _strcmp(s,"ompt_callback_target_map");
+                        if (iVar1 == 0) {
+                          local_18 = (ompt_callback_target_data_op_emi_t)
+                                     ompt_callbacks.ompt_callback_target_map_callback;
+                        }
+                        else {
+                          local_18 = __ompt_get_teaminfo;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return (ompt_interface_fn_t)local_18;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_thread_gtid
+// Entry: 00002b10
+// Signature: kmp_info_t * __cdecl ompt_get_thread_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * ompt_get_thread_gtid(int gtid)
+
+{
+  undefined8 local_20;
+  
+  if (gtid < 0) {
+    local_20 = (kmp_info_t *)0x0;
+  }
+  else {
+    local_20 = __kmp_thread_from_gtid(gtid);
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_thread_from_gtid
+// Entry: 00002b60
+// Signature: kmp_info_t * __cdecl __kmp_thread_from_gtid(int gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_thread_from_gtid(int gtid)
+
+{
+  return *(kmp_info_t **)(*____kmp_threads + (long)gtid * 8);
+}
+
+
+
+
+// ========================================
+// Function: ompt_tool_darwin
+// Entry: 00002b84
+// Signature: ompt_start_tool_result_t * __cdecl ompt_tool_darwin(uint omp_version, char * runtime_version)
+// ========================================
+
+
+ompt_start_tool_result_t * ompt_tool_darwin(uint omp_version,char *runtime_version)
+
+{
+  code *pcVar1;
+  ompt_start_tool_result_t *local_28;
+  
+                    /* Unresolved local var: ompt_start_tool_result_t * ret@[DW_OP_breg31(sp): +8]
+                       Unresolved local var: ompt_start_tool_t start_tool@[DW_OP_breg31(sp): 0] */
+  local_28 = (ompt_start_tool_result_t *)0x0;
+  pcVar1 = (code *)_dlsym(0xfffffffffffffffe,"ompt_start_tool");
+  if (pcVar1 != __ompt_get_teaminfo) {
+    local_28 = (ompt_start_tool_result_t *)(*pcVar1)(omp_version,runtime_version);
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: ompt_enumerate_states
+// Entry: 00002bec
+// Signature: int __cdecl ompt_enumerate_states(int current_state, int * next_state, char * * next_state_name)
+// ========================================
+
+
+int ompt_enumerate_states(int current_state,int *next_state,char **next_state_name)
+
+{
+  int local_1c;
+  
+                    /* Unresolved local var: int i@[???] */
+  local_1c = 0;
+  while( true ) {
+    if (0x13 < local_1c) {
+      return 0;
+    }
+    if (ompt_state_info[local_1c].state_id == current_state) break;
+    local_1c = local_1c + 1;
+  }
+  *next_state = ompt_state_info[local_1c + 1].state_id;
+  *next_state_name = ompt_state_info[local_1c + 1].state_name;
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_enumerate_mutex_impls
+// Entry: 00002cb8
+// Signature: int __cdecl ompt_enumerate_mutex_impls(int current_impl, int * next_impl, char * * next_impl_name)
+// ========================================
+
+
+int ompt_enumerate_mutex_impls(int current_impl,int *next_impl,char **next_impl_name)
+
+{
+  int local_1c;
+  
+                    /* Unresolved local var: int i@[???] */
+  local_1c = 0;
+  while( true ) {
+    if (2 < local_1c) {
+      return 0;
+    }
+    if (kmp_mutex_impl_info[local_1c].id == current_impl) break;
+    local_1c = local_1c + 1;
+  }
+  *next_impl = kmp_mutex_impl_info[local_1c + 1].id;
+  *next_impl_name = kmp_mutex_impl_info[local_1c + 1].name;
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_set_callback
+// Entry: 00002d84
+// Signature: ompt_set_result_t __cdecl ompt_set_callback(ompt_callbacks_t which, ompt_callback_t callback)
+// ========================================
+
+
+/* WARNING: Enum "ompt_callbacks_t": Some values do not have unique names */
+
+ompt_set_result_t ompt_set_callback(ompt_callbacks_t which,ompt_callback_t callback)
+
+{
+  ompt_set_result_t local_4;
+  
+  switch(which) {
+  case ompt_callback_thread_begin:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffffd |
+                   (ulong)(callback != __ompt_get_teaminfo) << 1);
+    ompt_callbacks.ompt_callback_thread_begin_callback = (ompt_callback_thread_begin_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_thread_end:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffffb |
+                   (ulong)(callback != __ompt_get_teaminfo) << 2);
+    ompt_callbacks.ompt_callback_thread_end_callback = (ompt_callback_thread_end_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_parallel_begin:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffff7 |
+                   (ulong)(callback != __ompt_get_teaminfo) << 3);
+    ompt_callbacks.ompt_callback_parallel_begin_callback = (ompt_callback_parallel_begin_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_parallel_end:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffffef |
+                   (ulong)(callback != __ompt_get_teaminfo) << 4);
+    ompt_callbacks.ompt_callback_parallel_end_callback = (ompt_callback_parallel_end_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_task_create:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffffdf |
+                   (ulong)(callback != __ompt_get_teaminfo) << 5);
+    ompt_callbacks.ompt_callback_task_create_callback = (ompt_callback_task_create_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_task_schedule:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffffbf |
+                   (ulong)(callback != __ompt_get_teaminfo) << 6);
+    ompt_callbacks.ompt_callback_task_schedule_callback = (ompt_callback_task_schedule_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_implicit_task:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffff7f |
+                   (ulong)(callback != __ompt_get_teaminfo) << 7);
+    ompt_callbacks.ompt_callback_implicit_task_callback = (ompt_callback_implicit_task_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_target:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffbfffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1e);
+    ompt_callbacks.ompt_callback_target_callback = (ompt_callback_target_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_target_data_op:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffff7fffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1f);
+    ompt_callbacks.ompt_callback_target_data_op_callback = (ompt_callback_target_data_op_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_target_submit:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffeffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x20);
+    ompt_callbacks.ompt_callback_target_submit_callback = (ompt_callback_target_submit_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_control_tool:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffeff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 8);
+    ompt_callbacks.ompt_callback_control_tool_callback = (ompt_callback_control_tool_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_device_initialize:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffbffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1a);
+    ompt_callbacks.ompt_callback_device_initialize_callback =
+         (ompt_callback_device_initialize_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_device_finalize:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffff7ffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1b);
+    ompt_callbacks.ompt_callback_device_finalize_callback =
+         (ompt_callback_device_finalize_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_device_load:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffefffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1c);
+    ompt_callbacks.ompt_callback_device_load_callback = (ompt_callback_device_load_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_device_unload:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffdfffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x1d);
+    ompt_callbacks.ompt_callback_device_unload_callback = (ompt_callback_device_unload_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_sync_region_wait:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffdff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 9);
+    ompt_callbacks.ompt_callback_sync_region_wait_callback = (ompt_callback_sync_region_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_mutex_released:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffffbff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 10);
+    ompt_callbacks.ompt_callback_mutex_released_callback = (ompt_callback_mutex_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_dependences:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffff7ff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0xb);
+    ompt_callbacks.ompt_callback_dependences_callback = (ompt_callback_dependences_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_task_dependence:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffefff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0xc);
+    ompt_callbacks.ompt_callback_task_dependence_callback =
+         (ompt_callback_task_dependence_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_work:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffdfff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0xd);
+    ompt_callbacks.ompt_callback_work_callback = (ompt_callback_work_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_masked:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffffbfff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0xe);
+    ompt_callbacks.ompt_callback_masked_callback = (ompt_callback_masked_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_target_map:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffdffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x21);
+    ompt_callbacks.ompt_callback_target_map_callback = (ompt_callback_target_map_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_sync_region:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffff7fff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0xf);
+    ompt_callbacks.ompt_callback_sync_region_callback = (ompt_callback_sync_region_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_lock_init:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffeffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x10);
+    ompt_callbacks.ompt_callback_lock_init_callback = (ompt_callback_mutex_acquire_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_lock_destroy:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffdffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x11);
+    ompt_callbacks.ompt_callback_lock_destroy_callback = (ompt_callback_mutex_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_mutex_acquire:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffffbffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x12);
+    ompt_callbacks.ompt_callback_mutex_acquire_callback = (ompt_callback_mutex_acquire_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_mutex_acquired:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffff7ffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x13);
+    ompt_callbacks.ompt_callback_mutex_acquired_callback = (ompt_callback_mutex_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_nest_lock:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffefffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x14);
+    ompt_callbacks.ompt_callback_nest_lock_callback = (ompt_callback_nest_lock_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_flush:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffdfffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x15);
+    ompt_callbacks.ompt_callback_flush_callback = (ompt_callback_flush_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_cancel:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffffbfffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x16);
+    ompt_callbacks.ompt_callback_cancel_callback = (ompt_callback_cancel_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_reduction:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffffff7fffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x17);
+    ompt_callbacks.ompt_callback_reduction_callback = (ompt_callback_sync_region_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_dispatch:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffeffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x18);
+    ompt_callbacks.ompt_callback_dispatch_callback = (ompt_callback_dispatch_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  case ompt_callback_target_emi:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffbffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x22);
+    ompt_callbacks.ompt_callback_target_emi_callback = (ompt_callback_target_emi_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_target_data_op_emi:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffff7ffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x23);
+    ompt_callbacks.ompt_callback_target_data_op_emi_callback =
+         (ompt_callback_target_data_op_emi_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_target_submit_emi:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffefffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x24);
+    ompt_callbacks.ompt_callback_target_submit_emi_callback =
+         (ompt_callback_target_submit_emi_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_target_map_emi:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xffffffdfffffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x25);
+    ompt_callbacks.ompt_callback_target_map_emi_callback = (ompt_callback_target_map_emi_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_never;
+    }
+    break;
+  case ompt_callback_error:
+    ompt_enabled = (ompt_callbacks_active_t)
+                   ((ulong)ompt_enabled & 0xfffffffffdffffff |
+                   (ulong)(callback != __ompt_get_teaminfo) << 0x19);
+    ompt_callbacks.ompt_callback_error_callback = (ompt_callback_error_t)callback;
+    if (callback == __ompt_get_teaminfo) {
+      local_4 = ompt_set_always;
+    }
+    else {
+      local_4 = ompt_set_always;
+    }
+    break;
+  default:
+    local_4 = ompt_set_error;
+  }
+  return local_4;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_callback
+// Entry: 00003d80
+// Signature: int __cdecl ompt_get_callback(ompt_callbacks_t which, ompt_callback_t * callback)
+// ========================================
+
+
+/* WARNING: Enum "ompt_callbacks_t": Some values do not have unique names */
+
+int ompt_get_callback(ompt_callbacks_t which,ompt_callback_t *callback)
+
+{
+  int local_14;
+  
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+  if (ompt_enabled.enabled == 0) {
+    local_14 = 0;
+  }
+  else {
+    switch(which) {
+    case ompt_callback_thread_begin:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_thread_begin == 0) ||
+         (ompt_callbacks.ompt_callback_thread_begin_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_thread_begin_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_thread_end:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_thread_end == 0) ||
+         (ompt_callbacks.ompt_callback_thread_end_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_thread_end_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_parallel_begin:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_parallel_begin == 0) ||
+         (ompt_callbacks.ompt_callback_parallel_begin_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_parallel_begin_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_parallel_end:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_parallel_end == 0) ||
+         (ompt_callbacks.ompt_callback_parallel_end_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_parallel_end_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_task_create:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_task_create == 0) ||
+         (ompt_callbacks.ompt_callback_task_create_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_task_create_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_task_schedule:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_task_schedule == 0) ||
+         (ompt_callbacks.ompt_callback_task_schedule_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_task_schedule_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_implicit_task:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_implicit_task == 0) ||
+         (ompt_callbacks.ompt_callback_implicit_task_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_implicit_task_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target == 0) ||
+         (ompt_callbacks.ompt_callback_target_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_data_op:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_data_op == 0) ||
+         (ompt_callbacks.ompt_callback_target_data_op_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_data_op_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_submit:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_submit == 0) ||
+         (ompt_callbacks.ompt_callback_target_submit_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_submit_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_control_tool:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_control_tool == 0) ||
+         (ompt_callbacks.ompt_callback_control_tool_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_control_tool_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_device_initialize:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_device_initialize == 0) ||
+         (ompt_callbacks.ompt_callback_device_initialize_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_device_initialize_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_device_finalize:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_device_finalize == 0) ||
+         (ompt_callbacks.ompt_callback_device_finalize_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_device_finalize_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_device_load:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_device_load == 0) ||
+         (ompt_callbacks.ompt_callback_device_load_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_device_load_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_device_unload:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_device_unload == 0) ||
+         (ompt_callbacks.ompt_callback_device_unload_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_device_unload_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_sync_region_wait:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_sync_region_wait == 0) ||
+         (ompt_callbacks.ompt_callback_sync_region_wait_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_sync_region_wait_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_mutex_released:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_mutex_released == 0) ||
+         (ompt_callbacks.ompt_callback_mutex_released_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_mutex_released_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_dependences:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_dependences == 0) ||
+         (ompt_callbacks.ompt_callback_dependences_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_dependences_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_task_dependence:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_task_dependence == 0) ||
+         (ompt_callbacks.ompt_callback_task_dependence_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_task_dependence_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_work:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_work == 0) ||
+         (ompt_callbacks.ompt_callback_work_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_work_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_masked:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_masked == 0) ||
+         (ompt_callbacks.ompt_callback_masked_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_masked_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_map:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_map == 0) ||
+         (ompt_callbacks.ompt_callback_target_map_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_map_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_sync_region:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_sync_region == 0) ||
+         (ompt_callbacks.ompt_callback_sync_region_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_sync_region_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_lock_init:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_lock_init == 0) ||
+         (ompt_callbacks.ompt_callback_lock_init_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_lock_init_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_lock_destroy:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_lock_destroy == 0) ||
+         (ompt_callbacks.ompt_callback_lock_destroy_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_lock_destroy_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_mutex_acquire:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_mutex_acquire == 0) ||
+         (ompt_callbacks.ompt_callback_mutex_acquire_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_mutex_acquire_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_mutex_acquired:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_mutex_acquired == 0) ||
+         (ompt_callbacks.ompt_callback_mutex_acquired_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_mutex_acquired_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_nest_lock:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_nest_lock == 0) ||
+         (ompt_callbacks.ompt_callback_nest_lock_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_nest_lock_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_flush:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_flush == 0) ||
+         (ompt_callbacks.ompt_callback_flush_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_flush_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_cancel:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_cancel == 0) ||
+         (ompt_callbacks.ompt_callback_cancel_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_cancel_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_reduction:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_reduction == 0) ||
+         (ompt_callbacks.ompt_callback_reduction_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_reduction_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_dispatch:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_dispatch == 0) ||
+         (ompt_callbacks.ompt_callback_dispatch_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_dispatch_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_emi:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_emi == 0) ||
+         (ompt_callbacks.ompt_callback_target_emi_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_emi_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_data_op_emi:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_data_op_emi == 0) ||
+         (ompt_callbacks.ompt_callback_target_data_op_emi_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_data_op_emi_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_submit_emi:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_target_submit_emi == 0) ||
+         (ompt_callbacks.ompt_callback_target_submit_emi_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_submit_emi_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_target_map_emi:
+      if ((ompt_enabled.ompt_callback_target_map_emi == 0) ||
+         (ompt_callbacks.ompt_callback_target_map_emi_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_target_map_emi_callback;
+        local_14 = 1;
+      }
+      break;
+    case ompt_callback_error:
+                    /* Unresolved local var: ompt_callback_t mycb@[???] */
+      if ((ompt_enabled.ompt_callback_error == 0) ||
+         (ompt_callbacks.ompt_callback_error_callback == __ompt_get_teaminfo)) {
+        local_14 = 0;
+      }
+      else {
+        *callback = (ompt_callback_t)ompt_callbacks.ompt_callback_error_callback;
+        local_14 = 1;
+      }
+      break;
+    default:
+      local_14 = 0;
+    }
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_state
+// Entry: 00004d18
+// Signature: int __cdecl ompt_get_state(ompt_wait_id_t * wait_id)
+// ========================================
+
+
+int ompt_get_state(ompt_wait_id_t *wait_id)
+
+{
+  undefined4 local_24;
+  undefined4 local_14;
+  
+                    /* Unresolved local var: int thread_state@[DW_OP_breg31(sp): +12] */
+  if (ompt_enabled.enabled == 0) {
+    local_14 = 0;
+  }
+  else {
+    local_24 = __ompt_get_state_internal(wait_id);
+    if (local_24 == 0x102) {
+      local_24 = 0;
+    }
+    local_14 = local_24;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_parallel_info
+// Entry: 00004d94
+// Signature: int __cdecl ompt_get_parallel_info(int ancestor_level, ompt_data_t * * parallel_data, int * team_size)
+// ========================================
+
+
+int ompt_get_parallel_info(int ancestor_level,ompt_data_t **parallel_data,int *team_size)
+
+{
+  undefined4 local_14;
+  
+  if (ompt_enabled.enabled == 0) {
+    local_14 = 0;
+  }
+  else {
+    local_14 = __ompt_get_parallel_info_internal(ancestor_level,parallel_data,team_size);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_task_info
+// Entry: 00004dfc
+// Signature: int __cdecl ompt_get_task_info(int ancestor_level, int * type, ompt_data_t * * task_data, ompt_frame_t * * task_frame, ompt_data_t * * parallel_data, int * thread_num)
+// ========================================
+
+
+int ompt_get_task_info(int ancestor_level,int *type,ompt_data_t **task_data,
+                      ompt_frame_t **task_frame,ompt_data_t **parallel_data,int *thread_num)
+
+{
+  undefined4 local_14;
+  
+  if (ompt_enabled.enabled == 0) {
+    local_14 = 0;
+  }
+  else {
+    local_14 = __ompt_get_task_info_internal
+                         (ancestor_level,type,task_data,task_frame,parallel_data,thread_num);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_task_memory
+// Entry: 00004e7c
+// Signature: int __cdecl ompt_get_task_memory(void * * addr, size_t * size, int block)
+// ========================================
+
+
+int ompt_get_task_memory(void **addr,size_t *size,int block)
+
+{
+  int iVar1;
+  
+  iVar1 = __ompt_get_task_memory_internal(addr,size,block);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_thread_data
+// Entry: 00004eb0
+// Signature: ompt_data_t * ompt_get_thread_data(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ompt_data_t * ompt_get_thread_data(void)
+
+{
+  undefined8 local_18;
+  
+  if (ompt_enabled.enabled == 0) {
+    local_18 = (ompt_data_t *)0x0;
+  }
+  else {
+    local_18 = __ompt_get_thread_data_internal();
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_unique_id
+// Entry: 00004f00
+// Signature: uint64_t ompt_get_unique_id(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint64_t ompt_get_unique_id(void)
+
+{
+  uint64_t uVar1;
+  
+  uVar1 = __ompt_get_unique_id_internal();
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_finalize_tool
+// Entry: 00004f14
+// Signature: void ompt_finalize_tool(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void ompt_finalize_tool(void)
+
+{
+  ___kmp_internal_end_atexit();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_num_procs
+// Entry: 00004f28
+// Signature: int ompt_get_num_procs(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ompt_get_num_procs(void)
+
+{
+  return *____kmp_avail_proc;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_num_places
+// Entry: 00004f38
+// Signature: int ompt_get_num_places(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ompt_get_num_places(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_place_proc_ids
+// Entry: 00004f40
+// Signature: int __cdecl ompt_get_place_proc_ids(int place_num, int ids_size, int * ids)
+// ========================================
+
+
+int ompt_get_place_proc_ids(int place_num,int ids_size,int *ids)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_place_num
+// Entry: 00004f5c
+// Signature: int ompt_get_place_num(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ompt_get_place_num(void)
+
+{
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_partition_place_nums
+// Entry: 00004f64
+// Signature: int __cdecl ompt_get_partition_place_nums(int place_nums_size, int * place_nums)
+// ========================================
+
+
+int ompt_get_partition_place_nums(int place_nums_size,int *place_nums)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_proc_id
+// Entry: 00004f7c
+// Signature: int ompt_get_proc_id(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ompt_get_proc_id(void)
+
+{
+  if (ompt_enabled.enabled != 0) {
+    ___kmp_get_global_thread_id();
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_target_info
+// Entry: 00004fe4
+// Signature: int __cdecl ompt_get_target_info(uint64_t * device_num, ompt_id_t * target_id, ompt_id_t * host_op_id)
+// ========================================
+
+
+int ompt_get_target_info(uint64_t *device_num,ompt_id_t *target_id,ompt_id_t *host_op_id)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: ompt_get_num_devices
+// Entry: 00005000
+// Signature: int ompt_get_num_devices(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ompt_get_num_devices(void)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_unique_id_internal
+// Entry: 00005008
+// Signature: uint64_t __ompt_get_unique_id_internal(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint64_t __ompt_get_unique_id_internal(void)
+
+{
+  char cVar1;
+  bool bVar2;
+  uint64_t *puVar3;
+  uint64_t uVar4;
+  undefined8 local_28;
+  
+                    /* Unresolved local var: uint64_t ID@[???] */
+  puVar3 = (uint64_t *)(*(code *)*_ompt_get_num_devices)();
+  if (*puVar3 == 0) {
+                    /* Unresolved local var: uint64_t new_thread@[???] */
+    local_28 = __ompt_get_unique_id_internal::thread;
+    do {
+      do {
+        uVar4 = __ompt_get_unique_id_internal::thread;
+        if (__ompt_get_unique_id_internal::thread != local_28) break;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(0x5b38,0x10);
+        if (bVar2) {
+          cVar1 = ExclusiveMonitorsStatus();
+          __ompt_get_unique_id_internal::thread = local_28 + 1;
+        }
+      } while (cVar1 != '\0');
+      bVar2 = uVar4 != local_28;
+      local_28 = uVar4;
+    } while (bVar2);
+    *puVar3 = uVar4 << 0x30;
+  }
+  uVar4 = *puVar3;
+  *puVar3 = uVar4 + 1;
+  return uVar4 + 1;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_allocate
+// Entry: 00021000
+// Signature: undefined ____kmp_allocate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_allocate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_free
+// Entry: 00021100
+// Signature: undefined ____kmp_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id
+// Entry: 00021300
+// Signature: undefined ___kmp_get_global_thread_id(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 00021400
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_internal_end_atexit
+// Entry: 00021500
+// Signature: undefined ___kmp_internal_end_atexit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_internal_end_atexit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_serial_initialize
+// Entry: 00021700
+// Signature: undefined ___kmp_serial_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_serial_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_format
+// Entry: 00021800
+// Signature: undefined ___kmp_str_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_free
+// Entry: 00021900
+// Signature: undefined ___kmp_str_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_match
+// Entry: 00021a00
+// Signature: undefined ___kmp_str_match(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_match(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_token
+// Entry: 00021b00
+// Signature: undefined ___kmp_str_token(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_token(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlclose
+// Entry: 00022100
+// Signature: undefined _dlclose(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlclose(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlerror
+// Entry: 00022200
+// Signature: undefined _dlerror(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlerror(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlopen
+// Entry: 00022300
+// Signature: undefined _dlopen(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlopen(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlsym
+// Entry: 00022400
+// Signature: undefined _dlsym(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlsym(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fclose
+// Entry: 00022500
+// Signature: int _fclose(FILE * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _fclose(FILE *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fopen
+// Entry: 00022600
+// Signature: FILE * _fopen(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+FILE * _fopen(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fprintf
+// Entry: 00022700
+// Signature: int _fprintf(FILE * param_1, char * param_2, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _fprintf(FILE *param_1,char *param_2,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _getenv
+// Entry: 00022800
+// Signature: char * _getenv(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _getenv(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00022900
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_initial_device
+// Entry: 00022a00
+// Signature: undefined _omp_get_initial_device(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _omp_get_initial_device(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00022b00
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 72
+// Failed: 0
+// Skipped external functions: 0

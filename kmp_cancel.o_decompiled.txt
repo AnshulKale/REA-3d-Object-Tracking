@@ -1,0 +1,901 @@
+Program: kmp_cancel.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmpc_cancel
+// Entry: 00000000
+// Signature: kmp_int32 __cdecl __kmpc_cancel(ident_t * loc_ref, kmp_int32 gtid, kmp_int32 cncl_kind)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_cancel(ident_t *loc_ref,kmp_int32 gtid,kmp_int32 cncl_kind)
+
+{
+  long lVar1;
+  undefined8 unaff_x30;
+  ompt_data_t *local_70;
+  int local_64;
+  long local_60;
+  long local_58;
+  uint local_4c;
+  ompt_data_t *local_48;
+  int local_3c;
+  long local_38;
+  long local_30;
+  int local_28;
+  kmp_int32 local_24;
+  ident_t *local_20;
+  
+                    /* Unresolved local var: kmp_info_t * this_thr@[???] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_taskdata_t * task@[DW_OP_breg31(sp): +56]
+                       Unresolved local var: kmp_taskgroup_t * taskgroup@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: kmp_int32 old@[DW_OP_breg31(sp): +44]
+                       Unresolved local var: ompt_data_t * task_data@[DW_OP_breg31(sp): +32] */
+  local_30 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  if (*____kmp_omp_cancellation != 0) {
+    local_28 = cncl_kind;
+    local_24 = gtid;
+    local_20 = loc_ref;
+    if (cncl_kind - 1U < 3) {
+                    /* Unresolved local var: kmp_team_t * this_team@[???]
+                       Unresolved local var: kmp_int32 old@[???] */
+      local_38 = *(long *)(local_30 + 0x40);
+      local_3c = 0;
+      std::__1::__atomic_base<int,_false>::compare_exchange_strong
+                ((__atomic_base<int,_false> *)(local_38 + 0x308),&local_3c,cncl_kind,
+                 memory_order_seq_cst);
+      if ((local_3c == 0) || (local_3c == local_28)) {
+        if ((*__ompt_enabled >> 0x16 & 1) != 0) {
+                    /* Unresolved local var: ompt_data_t * task_data@[???]
+                       Unresolved local var: ompt_cancel_flag_t type@[???] */
+          __ompt_get_task_info_internal
+                    (0,(int *)0x0,&local_48,(ompt_frame_t **)0x0,(ompt_data_t **)0x0,(int *)0x0);
+          local_4c = 1;
+          if (local_28 == 1) {
+            local_4c = 1;
+          }
+          else if (local_28 == 2) {
+            local_4c = 4;
+          }
+          else if (local_28 == 3) {
+            local_4c = 2;
+          }
+          (**(code **)(lVar1 + 0xa8))(local_48,local_4c | 0x10,unaff_x30);
+        }
+        return 1;
+      }
+    }
+    else if (cncl_kind == 4) {
+      local_58 = *(long *)(local_30 + 0x1b8);
+      local_60 = *(long *)(local_58 + 0x88);
+      if (local_60 == 0) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                            0x6e);
+      }
+      else {
+        local_64 = 0;
+        std::__1::__atomic_base<int,_false>::compare_exchange_strong
+                  ((__atomic_base<int,_false> *)(local_60 + 4),&local_64,4,memory_order_seq_cst);
+        if ((local_64 == 0) || (local_64 == local_28)) {
+          if ((*__ompt_enabled >> 0x16 & 1) != 0) {
+            __ompt_get_task_info_internal
+                      (0,(int *)0x0,&local_70,(ompt_frame_t **)0x0,(ompt_data_t **)0x0,(int *)0x0);
+            (**(code **)(lVar1 + 0xa8))(local_70,0x18,unaff_x30);
+          }
+          return 1;
+        }
+      }
+    }
+    else {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                          0x73);
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: compare_exchange_strong
+// Entry: 000002f8
+// Signature: bool __thiscall compare_exchange_strong(__atomic_base<int,_false> * this, int * __e, int __d, memory_order __m)
+// ========================================
+
+
+/* DWARF original prototype: bool compare_exchange_strong(__atomic_base<int,_false> * this, int *
+   __e, int __d, memory_order __m) */
+
+bool __thiscall
+std::__1::__atomic_base<int,_false>::compare_exchange_strong
+          (__atomic_base<int,_false> *this,int *__e,int __d,memory_order __m)
+
+{
+  bool bVar1;
+  
+  bVar1 = __cxx_atomic_compare_exchange_strong<int>
+                    ((__cxx_atomic_base_impl<int> *)this,__e,__d,__m,__m);
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_cancellationpoint
+// Entry: 0000033c
+// Signature: kmp_int32 __cdecl __kmpc_cancellationpoint(ident_t * loc_ref, kmp_int32 gtid, kmp_int32 cncl_kind)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_cancellationpoint(ident_t *loc_ref,kmp_int32 gtid,kmp_int32 cncl_kind)
+
+{
+  long lVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 unaff_x30;
+  ompt_data_t *local_60;
+  long local_58;
+  long local_50;
+  uint local_44;
+  ompt_data_t *local_40;
+  long local_38;
+  long local_30;
+  int local_28;
+  kmp_int32 local_24;
+  ident_t *local_20;
+  
+                    /* Unresolved local var: kmp_info_t * this_thr@[???] */
+  lVar1 = __ompt_callbacks;
+                    /* Unresolved local var: kmp_taskdata_t * task@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: kmp_taskgroup_t * taskgroup@[DW_OP_breg31(sp): +40]
+                       Unresolved local var: ompt_data_t * task_data@[DW_OP_breg31(sp): +32] */
+  local_30 = *(long *)(*____kmp_threads + (long)gtid * 8);
+  if (*____kmp_omp_cancellation != 0) {
+    local_28 = cncl_kind;
+    local_24 = gtid;
+    local_20 = loc_ref;
+    if (cncl_kind - 1U < 3) {
+                    /* Unresolved local var: kmp_team_t * this_team@[???] */
+      local_38 = *(long *)(local_30 + 0x40);
+      iVar2 = std::__1::__atomic_base<int,_false>::operator_int
+                        ((__atomic_base<int,_false> *)(local_38 + 0x308));
+      iVar3 = local_28;
+      if (iVar2 == 0) {
+        return 0;
+      }
+      iVar2 = std::__1::__atomic_base<int,_false>::operator_int
+                        ((__atomic_base<int,_false> *)(local_38 + 0x308));
+      if (iVar3 == iVar2) {
+        if ((*__ompt_enabled >> 0x16 & 1) != 0) {
+                    /* Unresolved local var: ompt_data_t * task_data@[???]
+                       Unresolved local var: ompt_cancel_flag_t type@[???] */
+          __ompt_get_task_info_internal
+                    (0,(int *)0x0,&local_40,(ompt_frame_t **)0x0,(ompt_data_t **)0x0,(int *)0x0);
+          local_44 = 1;
+          if (local_28 == 1) {
+            local_44 = 1;
+          }
+          else if (local_28 == 2) {
+            local_44 = 4;
+          }
+          else if (local_28 == 3) {
+            local_44 = 2;
+          }
+          (**(code **)(lVar1 + 0xa8))(local_40,local_44 | 0x20,unaff_x30);
+        }
+        return 1;
+      }
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                          0xb6);
+    }
+    else {
+      if (cncl_kind == 4) {
+        local_50 = *(long *)(local_30 + 0x1b8);
+        local_58 = *(long *)(local_50 + 0x88);
+        if (local_58 != 0) {
+          if (((*__ompt_enabled >> 0x16 & 1) != 0) &&
+             (iVar3 = std::__1::__atomic_base<int,_false>::operator_int
+                                ((__atomic_base<int,_false> *)(local_58 + 4)), iVar3 != 0)) {
+            __ompt_get_task_info_internal
+                      (0,(int *)0x0,&local_60,(ompt_frame_t **)0x0,(ompt_data_t **)0x0,(int *)0x0);
+            (**(code **)(lVar1 + 0xa8))(local_60,0x28,unaff_x30);
+          }
+          iVar3 = std::__1::__atomic_base<int,_false>::operator_int
+                            ((__atomic_base<int,_false> *)(local_58 + 4));
+          return (uint)(iVar3 != 0);
+        }
+        return 0;
+      }
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                          0xde);
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: operator_int
+// Entry: 00000620
+// Signature: int __thiscall operator_int(__atomic_base<int,_false> * this)
+// ========================================
+
+
+/* DWARF original name: operator int
+   DWARF original prototype: int operator_int(__atomic_base<int,_false> * this) */
+
+int __thiscall std::__1::__atomic_base<int,_false>::operator_int(__atomic_base<int,_false> *this)
+
+{
+  int iVar1;
+  
+  iVar1 = load(this,memory_order_seq_cst);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmpc_cancel_barrier
+// Entry: 00000648
+// Signature: kmp_int32 __cdecl __kmpc_cancel_barrier(ident_t * loc, kmp_int32 gtid)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+kmp_int32 __kmpc_cancel_barrier(ident_t *loc,kmp_int32 gtid)
+
+{
+  int iVar1;
+  long lVar2;
+  kmp_int32 local_20;
+  
+                    /* Unresolved local var: int ret@[???]
+                       Unresolved local var: kmp_info_t * this_thr@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: kmp_team_t * this_team@[DW_OP_breg31(sp): +16] */
+  local_20 = 0;
+  lVar2 = *(long *)(*(long *)(*____kmp_threads + (long)gtid * 8) + 0x40);
+  ___kmpc_barrier(loc,gtid);
+  if (*____kmp_omp_cancellation != 0) {
+    iVar1 = std::__1::__atomic_base<int,_false>::load
+                      ((__atomic_base<int,_false> *)(lVar2 + 0x308),memory_order_relaxed);
+    switch(iVar1) {
+    case 0:
+      break;
+    case 1:
+      local_20 = 1;
+      ___kmpc_barrier(loc,gtid);
+      std::__1::atomic<int>::operator=((atomic<int> *)(lVar2 + 0x308),0);
+      break;
+    case 2:
+    case 3:
+      local_20 = 1;
+      ___kmpc_barrier(loc,gtid);
+      std::__1::atomic<int>::operator=((atomic<int> *)(lVar2 + 0x308),0);
+      ___kmpc_barrier(loc,gtid);
+      break;
+    case 4:
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                          0x118);
+      break;
+    default:
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_cancel.cpp",
+                          0x11e);
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: load
+// Entry: 000007ac
+// Signature: int __thiscall load(__atomic_base<int,_false> * this, memory_order __m)
+// ========================================
+
+
+/* DWARF original prototype: int load(__atomic_base<int,_false> * this, memory_order __m) */
+
+int __thiscall
+std::__1::__atomic_base<int,_false>::load(__atomic_base<int,_false> *this,memory_order __m)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load<int>((__cxx_atomic_base_impl<int> *)this,__m);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 000007d8
+// Signature: int __thiscall operator=(atomic<int> * this, int __d)
+// ========================================
+
+
+/* DWARF original prototype: int operator=(atomic<int> * this, int __d) */
+
+int __thiscall std::__1::atomic<int>::operator=(atomic<int> *this,int __d)
+
+{
+  __atomic_base<int,_false>::store((__atomic_base<int,_false> *)this,__d,memory_order_seq_cst);
+  return __d;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_get_cancellation_status
+// Entry: 0000080c
+// Signature: int __cdecl __kmp_get_cancellation_status(int cancel_kind)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+int __kmp_get_cancellation_status(int cancel_kind)
+
+{
+  int iVar1;
+  kmp_info_t *pkVar2;
+  kmp_taskgroup_t *pkVar3;
+  uint local_40;
+  
+  if (*____kmp_omp_cancellation != 0) {
+                    /* Unresolved local var: kmp_info_t * this_thr@[???] */
+    pkVar2 = __kmp_entry_thread();
+    if (cancel_kind - 1U < 3) {
+                    /* Unresolved local var: kmp_team_t * this_team@[DW_OP_breg31(sp): +24] */
+      iVar1 = std::__1::__atomic_base<int,_false>::operator_int
+                        ((__atomic_base<int,_false> *)&(((pkVar2->th).th_team)->t).t_cancel_request)
+      ;
+      return (uint)(iVar1 == cancel_kind);
+    }
+    if (cancel_kind == 4) {
+                    /* Unresolved local var: kmp_taskdata_t * task@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: kmp_taskgroup_t * taskgroup@[DW_OP_breg31(sp): +8] */
+      pkVar3 = ((pkVar2->th).th_current_task)->td_taskgroup;
+      local_40 = 0;
+      if (pkVar3 != (kmp_taskgroup_t *)0x0) {
+        iVar1 = std::__1::__atomic_base<int,_false>::operator_int
+                          ((__atomic_base<int,_false> *)&pkVar3->cancel_request);
+        local_40 = (uint)(iVar1 != 0);
+      }
+      return local_40;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_entry_thread
+// Entry: 0000091c
+// Signature: kmp_info_t * __kmp_entry_thread(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "sched_type": Some values do not have unique names */
+
+kmp_info_t * __kmp_entry_thread(void)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int gtid@[???] */
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(kmp_info_t **)(*____kmp_threads + (long)iVar1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_compare_exchange_strong<int>
+// Entry: 00000950
+// Signature: bool __cdecl __cxx_atomic_compare_exchange_strong<int>(__cxx_atomic_base_impl<int> * __a, int * __expected, int __value, memory_order __success, memory_order __failure)
+// ========================================
+
+
+bool std::__1::__cxx_atomic_compare_exchange_strong<int>
+               (__cxx_atomic_base_impl<int> *__a,int *__expected,int __value,memory_order __success,
+               memory_order __failure)
+
+{
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  bool bVar4;
+  memory_order mVar5;
+  bool local_31;
+  
+  mVar5 = __to_failure_order(__failure);
+  switch(__success) {
+  case memory_order_consume:
+  case memory_order_acquire:
+    if (mVar5 - memory_order_consume < 2) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else if (mVar5 == memory_order_seq_cst) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    break;
+  case memory_order_release:
+    if (mVar5 - memory_order_consume < 2) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else if (mVar5 == memory_order_seq_cst) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    break;
+  case memory_order_acq_rel:
+    if (mVar5 - memory_order_consume < 2) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else if (mVar5 == memory_order_seq_cst) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    break;
+  case memory_order_seq_cst:
+    if (mVar5 - memory_order_consume < 2) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else if (mVar5 == memory_order_seq_cst) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    break;
+  default:
+    if (mVar5 - memory_order_consume < 2) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else if (mVar5 == memory_order_seq_cst) {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+    else {
+      iVar2 = *__expected;
+      do {
+        iVar1 = __a->__a_value;
+        if (iVar1 != iVar2) break;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(__a,0x10);
+        if (bVar4) {
+          __a->__a_value = __value;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      local_31 = iVar1 == iVar2;
+      if (!local_31) {
+        *__expected = iVar1;
+      }
+    }
+  }
+  return local_31;
+}
+
+
+
+
+// ========================================
+// Function: __to_failure_order
+// Entry: 0000104c
+// Signature: memory_order __cdecl __to_failure_order(memory_order __order)
+// ========================================
+
+
+memory_order std::__1::__to_failure_order(memory_order __order)
+
+{
+  memory_order local_c;
+  memory_order local_8;
+  
+  if (__order == memory_order_release) {
+    local_8 = memory_order_relaxed;
+  }
+  else {
+    local_c = __order;
+    if (__order == memory_order_acq_rel) {
+      local_c = memory_order_acquire;
+    }
+    local_8 = local_c;
+  }
+  return local_8;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load<int>
+// Entry: 000010b8
+// Signature: int __cdecl __cxx_atomic_load<int>(__cxx_atomic_base_impl<int> * __a, memory_order __order)
+// ========================================
+
+
+int std::__1::__cxx_atomic_load<int>(__cxx_atomic_base_impl<int> *__a,memory_order __order)
+
+{
+  int local_10;
+  
+  if (__order - memory_order_consume < 2) {
+    local_10 = __a->__a_value;
+  }
+  else if (__order == memory_order_seq_cst) {
+    local_10 = __a->__a_value;
+  }
+  else {
+    local_10 = __a->__a_value;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: store
+// Entry: 00001138
+// Signature: void __thiscall store(__atomic_base<int,_false> * this, int __d, memory_order __m)
+// ========================================
+
+
+/* DWARF original prototype: void store(__atomic_base<int,_false> * this, int __d, memory_order __m)
+    */
+
+void __thiscall
+std::__1::__atomic_base<int,_false>::store(__atomic_base<int,_false> *this,int __d,memory_order __m)
+
+{
+  __cxx_atomic_store<int>((__cxx_atomic_base_impl<int> *)this,__d,__m);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_store<int>
+// Entry: 0000116c
+// Signature: void __cdecl __cxx_atomic_store<int>(__cxx_atomic_base_impl<int> * __a, int __val, memory_order __order)
+// ========================================
+
+
+void std::__1::__cxx_atomic_store<int>
+               (__cxx_atomic_base_impl<int> *__a,int __val,memory_order __order)
+
+{
+  if (__order == memory_order_release) {
+    __a->__a_value = __val;
+  }
+  else if (__order == memory_order_seq_cst) {
+    __a->__a_value = __val;
+  }
+  else {
+    __a->__a_value = __val;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_internal
+// Entry: 00014000
+// Signature: undefined __ompt_get_task_info_internal(int param_1, int * param_2, ompt_data_t * * param_3, ompt_frame_t * * param_4, ompt_data_t * * param_5, int * param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_task_info_internal
+               (int param_1,int *param_2,ompt_data_t **param_3,ompt_frame_t **param_4,
+               ompt_data_t **param_5,int *param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00014100
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 00014200
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_barrier
+// Entry: 00014500
+// Signature: undefined ___kmpc_barrier(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_barrier(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 18
+// Failed: 0
+// Skipped external functions: 0

@@ -1,0 +1,1732 @@
+Program: kmp_str.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: __kmp_str_buf_clear
+// Entry: 00000000
+// Signature: void __cdecl __kmp_str_buf_clear(kmp_str_buf_t * buffer)
+// ========================================
+
+
+void __kmp_str_buf_clear(kmp_str_buf_t *buffer)
+
+{
+  if (0 < buffer->used) {
+    buffer->used = 0;
+    *buffer->str = '\0';
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_reserve
+// Entry: 00000040
+// Signature: void __cdecl __kmp_str_buf_reserve(kmp_str_buf_t * buffer, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_str_buf_reserve(kmp_str_buf_t *buffer,size_t size)
+
+{
+  undefined8 *puVar1;
+  char *pcVar2;
+  undefined1 auStack_68 [24];
+  undefined8 local_50;
+  undefined8 uStack_48;
+  undefined8 local_40;
+  undefined1 auStack_38 [24];
+  size_t local_20;
+  kmp_str_buf_t *local_18;
+  
+  puVar1 = ____kmp_msg_null;
+  if (buffer->size < (uint)size) {
+    do {
+      buffer->size = buffer->size << 1;
+    } while (buffer->size < (uint)size);
+    local_20 = size;
+    local_18 = buffer;
+    if (buffer->str == buffer->bulk) {
+      pcVar2 = _malloc((ulong)buffer->size);
+      local_18->str = pcVar2;
+      if (local_18->str == (char *)0x0) {
+        ___kmp_msg_format(0x4006f);
+        uStack_48 = puVar1[1];
+        local_50 = *puVar1;
+        local_40 = puVar1[2];
+        ___kmp_fatal(auStack_38);
+      }
+      _memcpy(local_18->str,local_18->bulk,(long)(local_18->used + 1));
+    }
+    else {
+      pcVar2 = _realloc(buffer->str,(ulong)buffer->size);
+      local_18->str = pcVar2;
+      if (local_18->str == (char *)0x0) {
+        ___kmp_msg_format(0x4006f);
+        ___kmp_fatal(auStack_68);
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_detach
+// Entry: 000001f0
+// Signature: void __cdecl __kmp_str_buf_detach(kmp_str_buf_t * buffer)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_str_buf_detach(kmp_str_buf_t *buffer)
+
+{
+  char *pcVar1;
+  undefined1 auStack_30 [24];
+  kmp_str_buf_t *local_18;
+  
+  if (buffer->size < 0x201) {
+    local_18 = buffer;
+    pcVar1 = _malloc((ulong)buffer->size);
+    local_18->str = pcVar1;
+    if (local_18->str == (char *)0x0) {
+      ___kmp_msg_format(0x4006f);
+      ___kmp_fatal(auStack_30);
+    }
+    _memcpy(local_18->str,local_18->bulk,(long)(local_18->used + 1));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_free
+// Entry: 000002c0
+// Signature: void __cdecl __kmp_str_buf_free(kmp_str_buf_t * buffer)
+// ========================================
+
+
+void __kmp_str_buf_free(kmp_str_buf_t *buffer)
+
+{
+  if (0x200 < buffer->size) {
+    _free(buffer->str);
+  }
+  buffer->str = buffer->bulk;
+  buffer->size = 0x200;
+  buffer->used = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_cat
+// Entry: 00000328
+// Signature: void __cdecl __kmp_str_buf_cat(kmp_str_buf_t * buffer, char * str, size_t len)
+// ========================================
+
+
+void __kmp_str_buf_cat(kmp_str_buf_t *buffer,char *str,size_t len)
+
+{
+  __kmp_str_buf_reserve(buffer,(long)buffer->used + len + 1);
+  buffer->str[buffer->used] = '\0';
+  _strncat(buffer->str + buffer->used,str,len);
+  __kmp_type_convert<unsigned_long,_int>((long)buffer->used + len,&buffer->used);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<unsigned_long,_int>
+// Entry: 000003bc
+// Signature: void __cdecl __kmp_type_convert<unsigned_long,_int>(unsigned long src, int * dest)
+// ========================================
+
+
+/* DWARF original name: __kmp_type_convert<unsigned long, int> */
+
+void __kmp_type_convert<unsigned_long,_int>(unsigned_long src,int *dest)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_convert<unsigned_long,_int,_false,_false,_false,_true>::to(src);
+  *dest = iVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_catbuf
+// Entry: 000003ec
+// Signature: void __cdecl __kmp_str_buf_catbuf(kmp_str_buf_t * dest, kmp_str_buf_t * src)
+// ========================================
+
+
+void __kmp_str_buf_catbuf(kmp_str_buf_t *dest,kmp_str_buf_t *src)
+
+{
+  if ((src->str != (char *)0x0) && (src->used != 0)) {
+    __kmp_str_buf_reserve(dest,(long)(dest->used + src->used + 1));
+    dest->str[dest->used] = '\0';
+    _strncat(dest->str + dest->used,src->str,(long)src->used);
+    dest->used = dest->used + src->used;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_vprint
+// Entry: 000004c4
+// Signature: int __cdecl __kmp_str_buf_vprint(kmp_str_buf_t * buffer, char * format, va_list args)
+// ========================================
+
+
+int __kmp_str_buf_vprint(kmp_str_buf_t *buffer,char *format,va_list args)
+
+{
+  int iVar1;
+  int iVar2;
+  int local_34;
+  
+                    /* Unresolved local var: int rc@[DW_OP_breg31(sp): +20] */
+  while( true ) {
+                    /* Unresolved local var: int free@[DW_OP_breg31(sp): +16]
+                       Unresolved local var: int size@[DW_OP_breg31(sp): +12] */
+    iVar1 = buffer->size - buffer->used;
+                    /* Unresolved local var: va_list _args@[DW_OP_breg31(sp): 0] */
+    iVar2 = _vsnprintf(buffer->str + buffer->used,(long)iVar1,format,args);
+    if ((-1 < iVar2) && (iVar2 < iVar1)) break;
+    if (iVar2 < 0) {
+      local_34 = buffer->size << 1;
+    }
+    else {
+      local_34 = buffer->used + iVar2 + 1;
+    }
+    __kmp_str_buf_reserve(buffer,(long)local_34);
+  }
+  buffer->used = buffer->used + iVar2;
+  return iVar2;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_print
+// Entry: 000005d0
+// Signature: int __cdecl __kmp_str_buf_print(kmp_str_buf_t * buffer, char * format, ...)
+// ========================================
+
+
+int __kmp_str_buf_print(kmp_str_buf_t *buffer,char *format,...)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int rc@[DW_OP_breg31(sp): +12]
+                       Unresolved local var: va_list args@[DW_OP_breg31(sp): 0] */
+  iVar1 = __kmp_str_buf_vprint(buffer,format,&stack0x00000000);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_buf_print_size
+// Entry: 00000614
+// Signature: void __cdecl __kmp_str_buf_print_size(kmp_str_buf_t * buf, size_t size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __kmp_str_buf_print_size(kmp_str_buf_t *buf,size_t size)
+
+{
+  int iVar1;
+  int local_78;
+  ulong local_70;
+  undefined1 auStack_60 [72];
+  long local_18;
+  
+                    /* Unresolved local var: char *[9] names@[DW_OP_breg31(sp): +48]
+                       Unresolved local var: int units@[DW_OP_breg31(sp): +28]
+                       Unresolved local var: int u@[DW_OP_breg31(sp): +24] */
+  local_18 = *____stack_chk_guard;
+  _memcpy(auStack_60,&l___const___kmp_str_buf_print_size_names,0x48);
+  local_78 = 0;
+  local_70 = size;
+  if (size != 0) {
+    for (; local_70 % 0x400 == 0 && local_78 + 1 < 9; local_70 = local_70 / 0x400) {
+      local_78 = local_78 + 1;
+    }
+  }
+  iVar1 = __kmp_str_buf_print(buf,"%llu%s");
+  if (*____stack_chk_guard == local_18) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(iVar1);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_fname_init
+// Entry: 00000740
+// Signature: void __cdecl __kmp_str_fname_init(kmp_str_fname_t * fname, char * path)
+// ========================================
+
+
+void __kmp_str_fname_init(kmp_str_fname_t *fname,char *path)
+
+{
+  char *pcVar1;
+  char *local_40;
+  
+  fname->path = (char *)0x0;
+  fname->dir = (char *)0x0;
+  fname->base = (char *)0x0;
+  if (path != (char *)0x0) {
+                    /* Unresolved local var: char * slash@[???]
+                       Unresolved local var: char * base@[DW_OP_breg31(sp): +32] */
+    pcVar1 = __kmp_str_format("%s");
+    fname->path = pcVar1;
+    pcVar1 = __kmp_str_format("%s");
+    fname->dir = pcVar1;
+    local_40 = strrchr(fname->dir,0x2f);
+    if (local_40 == (char *)0x0) {
+      local_40 = fname->dir;
+    }
+    else {
+      local_40 = local_40 + 1;
+    }
+    pcVar1 = __kmp_str_format("%s");
+    fname->base = pcVar1;
+    *local_40 = '\0';
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_format
+// Entry: 00000858
+// Signature: char * __cdecl __kmp_str_format(char * format, ...)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+char * __kmp_str_format(char *format,...)
+
+{
+  undefined8 *puVar1;
+  undefined1 auStack_88 [24];
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined1 auStack_50 [28];
+  int local_34;
+  char *local_30;
+  int local_24;
+  
+                    /* Unresolved local var: va_list args@[???]
+                       Unresolved local var: int size@[???]
+                       Unresolved local var: char * buffer@[???]
+                       Unresolved local var: int rc@[???] */
+  puVar1 = ____kmp_msg_null;
+  local_24 = 0x200;
+  local_30 = (char *)0x0;
+  local_30 = _malloc(0x200);
+  if (local_30 == (char *)0x0) {
+    ___kmp_msg_format(0x4006f);
+    uStack_68 = puVar1[1];
+    local_70 = *puVar1;
+    local_60 = puVar1[2];
+    ___kmp_fatal(auStack_50);
+  }
+  while ((local_34 = _vsnprintf(local_30,(long)local_24,format,&stack0x00000000), local_34 < 0 ||
+         (local_24 <= local_34))) {
+    if (local_34 < 0) {
+      local_24 = local_24 << 1;
+    }
+    else {
+      local_24 = local_34 + 1;
+    }
+    local_30 = _realloc(local_30,(long)local_24);
+    if (local_30 == (char *)0x0) {
+      ___kmp_msg_format(0x4006f);
+      ___kmp_fatal(auStack_88);
+    }
+  }
+  return local_30;
+}
+
+
+
+
+// ========================================
+// Function: strrchr
+// Entry: 000009dc
+// Signature: char * __cdecl strrchr(char * __s, int __c)
+// ========================================
+
+
+char * strrchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = __libcpp_strrchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_fname_free
+// Entry: 00000a08
+// Signature: void __cdecl __kmp_str_fname_free(kmp_str_fname_t * fname)
+// ========================================
+
+
+void __kmp_str_fname_free(kmp_str_fname_t *fname)
+
+{
+  __kmp_str_free(&fname->path);
+  __kmp_str_free(&fname->dir);
+  __kmp_str_free(&fname->base);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_free
+// Entry: 00000a44
+// Signature: void __cdecl __kmp_str_free(char * * str)
+// ========================================
+
+
+void __kmp_str_free(char **str)
+
+{
+  _free(*str);
+  *str = (char *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_fname_match
+// Entry: 00000a74
+// Signature: int __cdecl __kmp_str_fname_match(kmp_str_fname_t * fname, char * pattern)
+// ========================================
+
+
+int __kmp_str_fname_match(kmp_str_fname_t *fname,char *pattern)
+
+{
+  int iVar1;
+  uint local_54;
+  uint local_50;
+  uint local_4c;
+  uint local_48;
+  uint local_44;
+  kmp_str_fname_t kStack_40;
+  uint local_28;
+  uint local_24;
+  char *local_20;
+  kmp_str_fname_t *local_18;
+  
+                    /* Unresolved local var: int dir_match@[???]
+                       Unresolved local var: int base_match@[???] */
+  local_24 = 1;
+  local_28 = 1;
+  if (pattern != (char *)0x0) {
+                    /* Unresolved local var: kmp_str_fname_t ptrn@[DW_OP_breg31(sp): +32] */
+    local_20 = pattern;
+    local_18 = fname;
+    __kmp_str_fname_init(&kStack_40,pattern);
+    iVar1 = _strcmp(kStack_40.dir,"*/");
+    local_44 = 1;
+    if (iVar1 != 0) {
+      local_48 = 0;
+      if (local_18->dir != (char *)0x0) {
+        iVar1 = __kmp_str_eqf(local_18->dir,kStack_40.dir);
+        local_48 = (uint)(iVar1 != 0);
+      }
+      local_44 = local_48;
+    }
+    local_24 = local_44;
+    iVar1 = _strcmp(kStack_40.base,"*");
+    local_4c = 1;
+    if (iVar1 != 0) {
+      local_50 = 0;
+      if (local_18->base != (char *)0x0) {
+        iVar1 = __kmp_str_eqf(local_18->base,kStack_40.base);
+        local_50 = (uint)(iVar1 != 0);
+      }
+      local_4c = local_50;
+    }
+    local_28 = local_4c;
+    __kmp_str_fname_free(&kStack_40);
+  }
+  local_54 = 0;
+  if (local_24 != 0) {
+    local_54 = (uint)(local_28 != 0);
+  }
+  return local_54;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_eqf
+// Entry: 00000c04
+// Signature: int __cdecl __kmp_str_eqf(char * lhs, char * rhs)
+// ========================================
+
+
+int __kmp_str_eqf(char *lhs,char *rhs)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int result@[DW_OP_breg31(sp): +12] */
+  iVar1 = _strcmp(lhs,rhs);
+  return (uint)(iVar1 == 0);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_loc_numbers
+// Entry: 00000c44
+// Signature: void __cdecl __kmp_str_loc_numbers(char * Psource, int * LineBeg, int * LineEndOrCol)
+// ========================================
+
+
+void __kmp_str_loc_numbers(char *Psource,int *LineBeg,int *LineEndOrCol)
+
+{
+  int iVar1;
+  char *local_30;
+  
+                    /* Unresolved local var: char * Str@[DW_OP_breg31(sp): 0] */
+  local_30 = strchr(Psource,0x3b);
+  if (local_30 != (char *)0x0) {
+    local_30 = strchr(local_30 + 1,0x3b);
+  }
+  if (local_30 != (char *)0x0) {
+    local_30 = strchr(local_30 + 1,0x3b);
+  }
+  if (local_30 == (char *)0x0) {
+    *LineBeg = 0;
+  }
+  else {
+    iVar1 = _atoi(local_30 + 1);
+    *LineBeg = iVar1;
+    local_30 = strchr(local_30 + 1,0x3b);
+  }
+  if (local_30 == (char *)0x0) {
+    *LineEndOrCol = 0;
+  }
+  else {
+    iVar1 = _atoi(local_30 + 1);
+    *LineEndOrCol = iVar1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: strchr
+// Entry: 00000d54
+// Signature: char * __cdecl strchr(char * __s, int __c)
+// ========================================
+
+
+char * strchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = __libcpp_strchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_loc_init
+// Entry: 00000d80
+// Signature: kmp_str_loc_t __cdecl __kmp_str_loc_init(kmp_str_loc_t * __return_storage_ptr__, char * psource, bool init_fname)
+// ========================================
+
+
+void __kmp_str_loc_init(kmp_str_loc_t *__return_storage_ptr__,char *psource,bool init_fname)
+
+{
+  int iVar1;
+  char *pcVar2;
+  char *local_80;
+  char *local_40;
+  char *local_38;
+  char *local_30;
+  char *local_28;
+  byte local_19;
+  char *local_18;
+  
+                    /* Unresolved local var: kmp_str_loc_t loc@[???] */
+  __return_storage_ptr__->_bulk = (char *)0x0;
+  __return_storage_ptr__->file = (char *)0x0;
+  __return_storage_ptr__->func = (char *)0x0;
+  __return_storage_ptr__->line = 0;
+  __return_storage_ptr__->col = 0;
+  local_19 = init_fname;
+  local_18 = psource;
+  if (psource != (char *)0x0) {
+                    /* Unresolved local var: char * str@[???]
+                       Unresolved local var: char * dummy@[???]
+                       Unresolved local var: char * line@[???]
+                       Unresolved local var: char * col@[???] */
+    local_28 = (char *)0x0;
+    local_30 = (char *)0x0;
+    local_38 = (char *)0x0;
+    local_40 = (char *)0x0;
+    pcVar2 = __kmp_str_format("%s");
+    __return_storage_ptr__->_bulk = pcVar2;
+    local_28 = __return_storage_ptr__->_bulk;
+    __kmp_str_split(local_28,';',&local_30,&local_28);
+    __kmp_str_split(local_28,';',&__return_storage_ptr__->file,&local_28);
+    __kmp_str_split(local_28,';',&__return_storage_ptr__->func,&local_28);
+    __kmp_str_split(local_28,';',&local_38,&local_28);
+    __kmp_str_split(local_28,';',&local_40,&local_28);
+    if (local_38 != (char *)0x0) {
+      iVar1 = _atoi(local_38);
+      __return_storage_ptr__->line = iVar1;
+      if (__return_storage_ptr__->line < 0) {
+        __return_storage_ptr__->line = 0;
+      }
+    }
+    if (local_40 != (char *)0x0) {
+      iVar1 = _atoi(local_40);
+      __return_storage_ptr__->col = iVar1;
+      if (__return_storage_ptr__->col < 0) {
+        __return_storage_ptr__->col = 0;
+      }
+    }
+  }
+  if ((local_19 & 1) == 0) {
+    local_80 = (char *)0x0;
+  }
+  else {
+    local_80 = __return_storage_ptr__->file;
+  }
+  __kmp_str_fname_init(&__return_storage_ptr__->fname,local_80);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_split
+// Entry: 00000f70
+// Signature: void __cdecl __kmp_str_split(char * str, char delim, char * * head, char * * tail)
+// ========================================
+
+
+void __kmp_str_split(char *str,char delim,char **head,char **tail)
+
+{
+  char *pcVar1;
+  char *local_40;
+  
+                    /* Unresolved local var: char * h@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: char * t@[DW_OP_breg31(sp): +16] */
+  local_40 = (char *)0x0;
+                    /* Unresolved local var: char * ptr@[DW_OP_breg31(sp): +8] */
+  if ((str != (char *)0x0) && (pcVar1 = strchr(str,(uint)(byte)delim), pcVar1 != (char *)0x0)) {
+    *pcVar1 = '\0';
+    local_40 = pcVar1 + 1;
+  }
+  if (head != (char **)0x0) {
+    *head = str;
+  }
+  if (tail != (char **)0x0) {
+    *tail = local_40;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_loc_free
+// Entry: 00001040
+// Signature: void __cdecl __kmp_str_loc_free(kmp_str_loc_t * loc)
+// ========================================
+
+
+void __kmp_str_loc_free(kmp_str_loc_t *loc)
+
+{
+  __kmp_str_fname_free(&loc->fname);
+  __kmp_str_free(&loc->_bulk);
+  loc->file = (char *)0x0;
+  loc->func = (char *)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_match
+// Entry: 00001080
+// Signature: int __cdecl __kmp_str_match(char * target, int len, char * data)
+// ========================================
+
+
+int __kmp_str_match(char *target,int len,char *data)
+
+{
+  bool bVar1;
+  uint local_40;
+  uint local_3c;
+  uint local_38;
+  int local_34;
+  int local_2c;
+  int local_24;
+  
+                    /* Unresolved local var: int i@[???] */
+  if ((target != (char *)0x0) && (data != (char *)0x0)) {
+    local_24 = 0;
+    while( true ) {
+      bVar1 = false;
+      if (target[local_24] != '\0') {
+        bVar1 = data[local_24] != '\0';
+      }
+      if (!bVar1) {
+        if (len < 1) {
+          local_3c = 0;
+          if (target[local_24] == '\0') {
+            local_40 = 1;
+            if (len == 0) {
+              local_40 = (uint)(data[local_24] == '\0');
+            }
+            local_3c = local_40;
+          }
+          local_38 = local_3c;
+        }
+        else {
+          local_38 = (uint)(len <= local_24);
+        }
+        return local_38;
+      }
+      if ((target[local_24] < 'A') || ('Z' < target[local_24])) {
+        local_2c = (int)target[local_24];
+      }
+      else {
+        local_2c = target[local_24] + 0x20;
+      }
+      if ((data[local_24] < 'A') || ('Z' < data[local_24])) {
+        local_34 = (int)data[local_24];
+      }
+      else {
+        local_34 = data[local_24] + 0x20;
+      }
+      if (local_2c != local_34) break;
+      local_24 = local_24 + 1;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_contains
+// Entry: 000012ec
+// Signature: bool __cdecl __kmp_str_contains(char * target, int len, char * data)
+// ========================================
+
+
+bool __kmp_str_contains(char *target,int len,char *data)
+
+{
+  int local_38;
+  int local_30;
+  int local_2c;
+  int local_28;
+  int local_24;
+  bool local_1;
+  
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: int j@[???]
+                       Unresolved local var: int start@[???] */
+  local_24 = 0;
+  local_28 = 0;
+  local_2c = 0;
+  if ((target == (char *)0x0) || (data == (char *)0x0)) {
+    local_1 = false;
+  }
+  else {
+    while (target[local_24] != '\0') {
+      if (data[local_28] == '\0') {
+        return false;
+      }
+      if ((target[local_24] < 'A') || ('Z' < target[local_24])) {
+        local_30 = (int)target[local_24];
+      }
+      else {
+        local_30 = target[local_24] + 0x20;
+      }
+      if ((data[local_28] < 'A') || ('Z' < data[local_28])) {
+        local_38 = (int)data[local_28];
+      }
+      else {
+        local_38 = data[local_28] + 0x20;
+      }
+      if (local_30 == local_38) {
+        if (local_24 == 0) {
+          local_2c = local_28;
+        }
+        local_28 = local_28 + 1;
+        local_24 = local_24 + 1;
+      }
+      else {
+        local_2c = local_2c + 1;
+        local_24 = 0;
+        local_28 = local_2c;
+      }
+    }
+    local_1 = local_24 == len;
+  }
+  return local_1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_match_false
+// Entry: 00001518
+// Signature: int __cdecl __kmp_str_match_false(char * data)
+// ========================================
+
+
+int __kmp_str_match_false(char *data)
+
+{
+  int iVar1;
+  uint local_20;
+  
+                    /* Unresolved local var: int result@[DW_OP_breg31(sp): +4] */
+  iVar1 = __kmp_str_match("false",1,data);
+  local_20 = 1;
+  if (iVar1 == 0) {
+    iVar1 = __kmp_str_match("off",2,data);
+    local_20 = 1;
+    if (iVar1 == 0) {
+      iVar1 = __kmp_str_match("0",1,data);
+      local_20 = 1;
+      if (iVar1 == 0) {
+        iVar1 = __kmp_str_match(".false.",2,data);
+        local_20 = 1;
+        if (iVar1 == 0) {
+          iVar1 = __kmp_str_match(".f.",2,data);
+          local_20 = 1;
+          if (iVar1 == 0) {
+            iVar1 = __kmp_str_match("no",1,data);
+            local_20 = 1;
+            if (iVar1 == 0) {
+              iVar1 = __kmp_str_match("disabled",0,data);
+              local_20 = (uint)(iVar1 != 0);
+            }
+          }
+        }
+      }
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_match_true
+// Entry: 00001670
+// Signature: int __cdecl __kmp_str_match_true(char * data)
+// ========================================
+
+
+int __kmp_str_match_true(char *data)
+
+{
+  int iVar1;
+  uint local_20;
+  
+                    /* Unresolved local var: int result@[DW_OP_breg31(sp): +4] */
+  iVar1 = __kmp_str_match("true",1,data);
+  local_20 = 1;
+  if (iVar1 == 0) {
+    iVar1 = __kmp_str_match("on",2,data);
+    local_20 = 1;
+    if (iVar1 == 0) {
+      iVar1 = __kmp_str_match("1",1,data);
+      local_20 = 1;
+      if (iVar1 == 0) {
+        iVar1 = __kmp_str_match(".true.",2,data);
+        local_20 = 1;
+        if (iVar1 == 0) {
+          iVar1 = __kmp_str_match(".t.",2,data);
+          local_20 = 1;
+          if (iVar1 == 0) {
+            iVar1 = __kmp_str_match("yes",1,data);
+            local_20 = 1;
+            if (iVar1 == 0) {
+              iVar1 = __kmp_str_match("enabled",0,data);
+              local_20 = (uint)(iVar1 != 0);
+            }
+          }
+        }
+      }
+    }
+  }
+  return local_20;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_replace
+// Entry: 000017c8
+// Signature: void __cdecl __kmp_str_replace(char * str, char search_for, char replace_with)
+// ========================================
+
+
+void __kmp_str_replace(char *str,char search_for,char replace_with)
+
+{
+  char *local_28;
+  
+                    /* Unresolved local var: char * found@[DW_OP_breg31(sp): +8] */
+  for (local_28 = strchr(str,(uint)(byte)search_for); local_28 != (char *)0x0;
+      local_28 = strchr(local_28 + 1,(uint)(byte)search_for)) {
+    *local_28 = replace_with;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_token
+// Entry: 0000183c
+// Signature: char * __cdecl __kmp_str_token(char * str, char * delim, char * * buf)
+// ========================================
+
+
+char * __kmp_str_token(char *str,char *delim,char **buf)
+
+{
+  char *pcVar1;
+  
+                    /* Unresolved local var: char * token@[DW_OP_breg31(sp): 0] */
+  pcVar1 = _strtok_r(str,delim,buf);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_to_int
+// Entry: 0000187c
+// Signature: int __cdecl __kmp_str_to_int(char * str, char sentinel)
+// ========================================
+
+
+int __kmp_str_to_int(char *str,char sentinel)
+
+{
+  char cVar1;
+  uint uVar2;
+  int local_30;
+  char *local_28;
+  uint local_1c;
+  int local_18;
+  
+                    /* Unresolved local var: int result@[???]
+                       Unresolved local var: int factor@[???]
+                       Unresolved local var: char * t@[???] */
+  local_18 = 0;
+  for (local_28 = str; ((*local_28 != '\0' && ('/' < *local_28)) && (*local_28 < ':'));
+      local_28 = local_28 + 1) {
+    local_18 = local_18 * 10 + *local_28 + -0x30;
+  }
+  cVar1 = *local_28;
+  if (cVar1 == '\0') {
+    local_1c = 1;
+    goto LAB_00001a40;
+  }
+  if (cVar1 == 'B') {
+LAB_000019b8:
+    local_28 = local_28 + 1;
+    local_1c = 1;
+  }
+  else {
+    if (cVar1 == 'K') {
+LAB_000019d0:
+      local_28 = local_28 + 1;
+      local_1c = 0x400;
+      goto LAB_00001a40;
+    }
+    if (cVar1 != 'M') {
+      if (cVar1 == 'b') goto LAB_000019b8;
+      if (cVar1 == 'k') goto LAB_000019d0;
+      if (cVar1 != 'm') {
+        if (*local_28 != sentinel) {
+          return -1;
+        }
+        local_28 = "";
+        local_1c = 1;
+        goto LAB_00001a40;
+      }
+    }
+    local_28 = local_28 + 1;
+    local_1c = 0x100000;
+  }
+LAB_00001a40:
+  uVar2 = 0;
+  if (local_1c != 0) {
+    uVar2 = 0x7fffffff / local_1c;
+  }
+  if ((int)uVar2 < local_18) {
+    local_18 = 0x7fffffff;
+  }
+  else {
+    local_18 = local_18 * local_1c;
+  }
+  if (*local_28 == '\0') {
+    local_30 = local_18;
+  }
+  else {
+    local_30 = 0;
+  }
+  return local_30;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_to_size
+// Entry: 00001ac8
+// Signature: void __cdecl __kmp_str_to_size(char * str, size_t * out, size_t dfactor, char * * error)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001df0) */
+/* WARNING: Removing unreachable block (ram,0x00001da4) */
+/* WARNING: Removing unreachable block (ram,0x00001e3c) */
+/* WARNING: Removing unreachable block (ram,0x00001f54) */
+/* WARNING: Removing unreachable block (ram,0x00001e88) */
+/* WARNING: Removing unreachable block (ram,0x00001d58) */
+/* WARNING: Removing unreachable block (ram,0x00001ed4) */
+/* WARNING: Removing unreachable block (ram,0x00001f08) */
+
+void __kmp_str_to_size(char *str,size_t *out,size_t dfactor,char **error)
+
+{
+  ulong uVar1;
+  bool bVar2;
+  bool bVar3;
+  char *pcVar4;
+  int local_48;
+  ulong local_40;
+  ulong local_38;
+  
+                    /* Unresolved local var: size_t value@[???]
+                       Unresolved local var: size_t factor@[???]
+                       Unresolved local var: int overflow@[???]
+                       Unresolved local var: int i@[???]
+                       Unresolved local var: int digit@[???] */
+  local_38 = 0;
+  local_40 = 0;
+  bVar3 = false;
+  local_48 = 0;
+  while( true ) {
+    bVar2 = true;
+    if (str[local_48] != ' ') {
+      bVar2 = str[local_48] == '\t';
+    }
+    if (!bVar2) break;
+    local_48 = local_48 + 1;
+  }
+  if ((str[local_48] < '0') || ('9' < str[local_48])) {
+    pcVar4 = (char *)___kmp_i18n_catgets(0x20003);
+    *error = pcVar4;
+  }
+  else {
+    do {
+      bVar2 = !bVar3;
+      bVar3 = true;
+      if (bVar2) {
+        bVar3 = (-(long)(str[local_48] + -0x30) - 1U) / 10 < local_38;
+      }
+      local_38 = local_38 * 10 + (long)(str[local_48] + -0x30);
+      local_48 = local_48 + 1;
+      bVar2 = false;
+      if ('/' < str[local_48]) {
+        bVar2 = str[local_48] < ':';
+      }
+    } while (bVar2);
+    while( true ) {
+      bVar2 = true;
+      if (str[local_48] != ' ') {
+        bVar2 = str[local_48] == '\t';
+      }
+      if (!bVar2) break;
+      local_48 = local_48 + 1;
+    }
+    switch(str[local_48]) {
+    case 'E':
+    case 'e':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +48] */
+      local_48 = local_48 + 1;
+      local_40 = 0x1000000000000000;
+      break;
+    case 'G':
+    case 'g':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +72] */
+      local_48 = local_48 + 1;
+      local_40 = 0x40000000;
+      break;
+    case 'K':
+    case 'k':
+                    /* Unresolved local var: size_t shift@[???] */
+      local_48 = local_48 + 1;
+      local_40 = 0x400;
+      break;
+    case 'M':
+    case 'm':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +80] */
+      local_48 = local_48 + 1;
+      local_40 = 0x100000;
+      break;
+    case 'P':
+    case 'p':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +56] */
+      local_48 = local_48 + 1;
+      local_40 = 0x4000000000000;
+      break;
+    case 'T':
+    case 't':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +64] */
+      local_48 = local_48 + 1;
+      local_40 = 0x10000000000;
+      break;
+    case 'Y':
+    case 'y':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +32] */
+      local_48 = local_48 + 1;
+      local_40 = 0;
+      bVar3 = true;
+      break;
+    case 'Z':
+    case 'z':
+                    /* Unresolved local var: size_t shift@[DW_OP_breg31(sp): +40] */
+      local_48 = local_48 + 1;
+      local_40 = 0;
+      bVar3 = true;
+    }
+    if ((str[local_48] == 'b') || (str[local_48] == 'B')) {
+      if (local_40 == 0) {
+        local_40 = 1;
+      }
+      local_48 = local_48 + 1;
+    }
+    if (((str[local_48] == ' ') || (str[local_48] == '\t')) || (str[local_48] == '\0')) {
+      if (local_40 == 0) {
+        local_40 = dfactor;
+      }
+      bVar2 = true;
+      if (!bVar3) {
+        uVar1 = 0;
+        if (local_40 != 0) {
+          uVar1 = 0xffffffffffffffff / local_40;
+        }
+        bVar2 = uVar1 < local_38;
+      }
+      while( true ) {
+        bVar3 = true;
+        if (str[local_48] != ' ') {
+          bVar3 = str[local_48] == '\t';
+        }
+        if (!bVar3) break;
+        local_48 = local_48 + 1;
+      }
+      if (str[local_48] == '\0') {
+        if (bVar2) {
+          pcVar4 = (char *)___kmp_i18n_catgets(0x20006);
+          *error = pcVar4;
+          *out = 0xffffffffffffffff;
+        }
+        else {
+          *error = (char *)0x0;
+          *out = local_38 * local_40;
+        }
+      }
+      else {
+        pcVar4 = (char *)___kmp_i18n_catgets(0x20005);
+        *error = pcVar4;
+      }
+    }
+    else {
+      pcVar4 = (char *)___kmp_i18n_catgets(0x20004);
+      *error = pcVar4;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_str_to_uint
+// Entry: 00002290
+// Signature: void __cdecl __kmp_str_to_uint(char * str, kmp_uint64 * out, char * * error)
+// ========================================
+
+
+void __kmp_str_to_uint(char *str,kmp_uint64 *out,char **error)
+
+{
+  bool bVar1;
+  bool bVar2;
+  char *pcVar3;
+  int local_38;
+  ulong local_30;
+  
+                    /* Unresolved local var: size_t value@[DW_OP_breg31(sp): +32]
+                       Unresolved local var: int overflow@[DW_OP_breg31(sp): +28]
+                       Unresolved local var: int i@[DW_OP_breg31(sp): +24]
+                       Unresolved local var: int digit@[DW_OP_breg31(sp): +20] */
+  local_30 = 0;
+  bVar1 = false;
+  local_38 = 0;
+  while( true ) {
+    bVar2 = true;
+    if (str[local_38] != ' ') {
+      bVar2 = str[local_38] == '\t';
+    }
+    if (!bVar2) break;
+    local_38 = local_38 + 1;
+  }
+  if ((str[local_38] < '0') || ('9' < str[local_38])) {
+    pcVar3 = (char *)___kmp_i18n_catgets(0x20003);
+    *error = pcVar3;
+  }
+  else {
+    do {
+      bVar2 = !bVar1;
+      bVar1 = true;
+      if (bVar2) {
+        bVar1 = (-(long)(str[local_38] + -0x30) - 1U) / 10 < local_30;
+      }
+      local_30 = local_30 * 10 + (long)(str[local_38] + -0x30);
+      local_38 = local_38 + 1;
+      bVar2 = false;
+      if ('/' < str[local_38]) {
+        bVar2 = str[local_38] < ':';
+      }
+    } while (bVar2);
+    while( true ) {
+      bVar2 = true;
+      if (str[local_38] != ' ') {
+        bVar2 = str[local_38] == '\t';
+      }
+      if (!bVar2) break;
+      local_38 = local_38 + 1;
+    }
+    if (str[local_38] == '\0') {
+      if (bVar1) {
+        pcVar3 = (char *)___kmp_i18n_catgets(0x20006);
+        *error = pcVar3;
+        *out = 0xffffffffffffffff;
+      }
+      else {
+        *error = (char *)0x0;
+        *out = local_30;
+      }
+    }
+    else {
+      pcVar3 = (char *)___kmp_i18n_catgets(0x20005);
+      *error = pcVar3;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strrchr
+// Entry: 00002530
+// Signature: char * __cdecl __libcpp_strrchr(char * __s, int __c)
+// ========================================
+
+
+char * __libcpp_strrchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = (char *)_strrchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strchr
+// Entry: 0000255c
+// Signature: char * __cdecl __libcpp_strchr(char * __s, int __c)
+// ========================================
+
+
+char * __libcpp_strchr(char *__s,int __c)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = (char *)_strchr(__s,__c);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 00002588
+// Signature: int __cdecl to(unsigned long src)
+// ========================================
+
+
+int kmp_convert<unsigned_long,_int,_false,_false,_false,_true>::to(unsigned_long src)
+
+{
+  type tVar1;
+  
+  tVar1 = std::__1::numeric_limits<int>::max();
+  if ((ulong)(long)tVar1 < src) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11d5);
+  }
+  return (int)src;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 000025e8
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::numeric_limits<int>::max(void)
+
+{
+  type tVar1;
+  
+  tVar1 = __libcpp_numeric_limits<int,_true>::max();
+  return tVar1;
+}
+
+
+
+
+// ========================================
+// Function: max
+// Entry: 000025fc
+// Signature: type __cdecl max(void)
+// ========================================
+
+
+type std::__1::__libcpp_numeric_limits<int,_true>::max(void)
+
+{
+  return 0x7fffffff;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 0000d000
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 0000d100
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 0000d200
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 0000d300
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 0000d500
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _atoi
+// Entry: 0000d700
+// Signature: int _atoi(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _atoi(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 0000d800
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 0000d900
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 0000da00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _realloc
+// Entry: 0000db00
+// Signature: void * _realloc(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _realloc(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strchr
+// Entry: 0000dc00
+// Signature: undefined _strchr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _strchr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 0000dd00
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncat
+// Entry: 0000de00
+// Signature: char * _strncat(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncat(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strrchr
+// Entry: 0000df00
+// Signature: undefined _strrchr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _strrchr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strtok_r
+// Entry: 0000e000
+// Signature: char * _strtok_r(char * param_1, char * param_2, char * * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strtok_r(char *param_1,char *param_2,char **param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vsnprintf
+// Entry: 0000e100
+// Signature: int _vsnprintf(char * param_1, size_t param_2, char * param_3, va_list param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _vsnprintf(char *param_1,size_t param_2,char *param_3,va_list param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 52
+// Failed: 0
+// Skipped external functions: 0

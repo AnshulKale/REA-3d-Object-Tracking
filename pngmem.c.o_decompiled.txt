@@ -1,0 +1,598 @@
+Program: pngmem.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ltmp0
+// Entry: 00000000
+// Signature: undefined ltmp0(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ltmp0(void *param_1)
+
+{
+  undefined1 auStack_510 [1008];
+  code *local_120;
+  long local_28;
+  
+  local_28 = *____stack_chk_guard;
+  if (param_1 != (void *)0x0) {
+    _memcpy(auStack_510,param_1,0x4e8);
+    _bzero(param_1,0x4e8);
+    if (local_120 == ltmp0) {
+      _free(param_1);
+    }
+    else {
+      (*local_120)(auStack_510,param_1);
+    }
+    _png_free_jmpbuf(auStack_510);
+  }
+  if (*____stack_chk_guard == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: _png_calloc
+// Entry: 000000b8
+// Signature: undefined _png_calloc(void)
+// ========================================
+
+
+void * _png_calloc(long param_1,size_t param_2)
+
+{
+  void *pvVar1;
+  long lVar2;
+  code *UNRECOVERED_JUMPTABLE;
+  undefined1 auVar3 [16];
+  
+  if (param_1 == 0) {
+    return (void *)0x0;
+  }
+  if (param_2 != 0) {
+    if (*(code **)(param_1 + 1000) == ltmp0) {
+      pvVar1 = _malloc(param_2);
+    }
+    else {
+      pvVar1 = (void *)(**(code **)(param_1 + 1000))(param_1,param_2);
+    }
+    if (pvVar1 != (void *)0x0) {
+      _bzero(pvVar1,param_2);
+      return pvVar1;
+    }
+  }
+  auVar3 = _png_error(param_1,0x452);
+  lVar2 = auVar3._0_8_;
+  if (lVar2 == 0) {
+    return (void *)0x0;
+  }
+  if (auVar3._8_8_ != 0) {
+    if (*(code **)(lVar2 + 1000) == ltmp0) {
+      pvVar1 = _malloc(auVar3._8_8_);
+    }
+    else {
+      pvVar1 = (void *)(**(code **)(lVar2 + 1000))(lVar2);
+    }
+    if (pvVar1 != (void *)0x0) {
+      return pvVar1;
+    }
+  }
+  auVar3 = _png_error(lVar2,0x452);
+  if (auVar3._8_8_ == 0) {
+    return (void *)0x0;
+  }
+  if ((auVar3._0_8_ != 0) &&
+     (UNRECOVERED_JUMPTABLE = *(code **)(auVar3._0_8_ + 1000), UNRECOVERED_JUMPTABLE != ltmp0)) {
+                    /* WARNING: Could not recover jumptable at 0x000001b0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    pvVar1 = (void *)(*UNRECOVERED_JUMPTABLE)();
+    return pvVar1;
+  }
+  pvVar1 = _malloc(auVar3._8_8_);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc
+// Entry: 0000014c
+// Signature: undefined _png_malloc(void)
+// ========================================
+
+
+void * _png_malloc(long param_1,size_t param_2)
+
+{
+  void *pvVar1;
+  code *UNRECOVERED_JUMPTABLE;
+  undefined1 auVar2 [16];
+  
+  if (param_1 == 0) {
+    return (void *)0x0;
+  }
+  if (param_2 != 0) {
+    if (*(code **)(param_1 + 1000) == ltmp0) {
+      pvVar1 = _malloc(param_2);
+    }
+    else {
+      pvVar1 = (void *)(**(code **)(param_1 + 1000))(param_1);
+    }
+    if (pvVar1 != (void *)0x0) {
+      return pvVar1;
+    }
+  }
+  auVar2 = _png_error(param_1,0x452);
+  if (auVar2._8_8_ == 0) {
+    return (void *)0x0;
+  }
+  if ((auVar2._0_8_ != 0) &&
+     (UNRECOVERED_JUMPTABLE = *(code **)(auVar2._0_8_ + 1000), UNRECOVERED_JUMPTABLE != ltmp0)) {
+                    /* WARNING: Could not recover jumptable at 0x000001b0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    pvVar1 = (void *)(*UNRECOVERED_JUMPTABLE)();
+    return pvVar1;
+  }
+  pvVar1 = _malloc(auVar2._8_8_);
+  return pvVar1;
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_array
+// Entry: 000001c4
+// Signature: undefined _png_malloc_array(void)
+// ========================================
+
+
+void * _png_malloc_array(long param_1,uint param_2,ulong param_3,uint param_4,ulong param_5)
+
+{
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  void *pvVar4;
+  size_t sVar6;
+  uint uVar7;
+  ulong uVar8;
+  undefined1 auVar9 [16];
+  long lVar5;
+  
+  if ((0 < (int)param_2) && (param_3 != 0)) {
+    auVar9._8_8_ = 0;
+    auVar9._0_8_ = param_3;
+    auVar2._8_8_ = 0;
+    auVar2._0_8_ = CONCAT44(0,param_2);
+    if ((SUB168(auVar9 * auVar2,8) == 0) && (sVar6 = CONCAT44(0,param_2) * param_3, sVar6 != 0)) {
+      if ((param_1 != 0) && (*(code **)(param_1 + 1000) != ltmp0)) {
+                    /* WARNING: Could not recover jumptable at 0x00000200. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+        pvVar4 = (void *)(**(code **)(param_1 + 1000))();
+        return pvVar4;
+      }
+      pvVar4 = _malloc(sVar6);
+      return pvVar4;
+    }
+    return (void *)0x0;
+  }
+  auVar9 = _png_error(param_1,0x418);
+  lVar5 = auVar9._0_8_;
+  uVar7 = (uint)param_3;
+  if ((((-1 < (int)uVar7) && (0 < (int)param_4)) && (param_5 != 0)) &&
+     ((auVar9._8_8_ != (void *)0x0 || (uVar7 == 0)))) {
+    if ((param_4 <= (uVar7 ^ 0x7fffffff)) &&
+       (uVar8 = CONCAT44(0,param_4 + uVar7), auVar1._8_8_ = 0, auVar1._0_8_ = param_5,
+       auVar3._8_8_ = 0, auVar3._0_8_ = uVar8, SUB168(auVar1 * auVar3,8) == 0)) {
+      sVar6 = uVar8 * param_5;
+      if (sVar6 == 0) {
+        return (void *)0x0;
+      }
+      if ((lVar5 == 0) || (*(code **)(lVar5 + 1000) == ltmp0)) {
+        pvVar4 = _malloc(sVar6);
+      }
+      else {
+        pvVar4 = (void *)(**(code **)(lVar5 + 1000))();
+      }
+      if (pvVar4 != (void *)0x0) {
+        if (uVar7 == 0) {
+          sVar6 = 0;
+        }
+        else {
+          sVar6 = (param_3 & 0xffffffff) * param_5;
+          _memcpy(pvVar4,auVar9._8_8_,sVar6);
+        }
+        _bzero((void *)((long)pvVar4 + sVar6),param_4 * param_5);
+        return pvVar4;
+      }
+    }
+    return (void *)0x0;
+  }
+  auVar9 = _png_error(lVar5,0x434);
+  pvVar4 = (void *)0x0;
+  if ((auVar9._0_8_ == 0) ||
+     ((auVar9._8_8_ != 0 && (pvVar4 = _malloc(auVar9._8_8_), pvVar4 != (void *)0x0)))) {
+    return pvVar4;
+  }
+  auVar9 = _png_error(auVar9._0_8_,0x460);
+  lVar5 = auVar9._0_8_;
+  if (lVar5 != 0) {
+    if (auVar9._8_8_ != 0) {
+      if (*(code **)(lVar5 + 1000) == ltmp0) {
+        pvVar4 = _malloc(auVar9._8_8_);
+      }
+      else {
+        pvVar4 = (void *)(**(code **)(lVar5 + 1000))(lVar5);
+      }
+      if (pvVar4 != (void *)0x0) {
+        return pvVar4;
+      }
+    }
+    _png_warning(lVar5,0x452);
+  }
+  return (void *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: _png_realloc_array
+// Entry: 00000228
+// Signature: undefined _png_realloc_array(void)
+// ========================================
+
+
+void * _png_realloc_array(long param_1,void *param_2,uint param_3,uint param_4,ulong param_5)
+
+{
+  undefined1 auVar1 [16];
+  void *pvVar2;
+  long lVar3;
+  size_t sVar4;
+  ulong uVar5;
+  undefined1 auVar6 [16];
+  
+  if (((((int)param_3 < 0) || ((int)param_4 < 1)) || (param_5 == 0)) ||
+     ((param_2 == (void *)0x0 && (param_3 != 0)))) {
+    auVar6 = _png_error(param_1,0x434);
+    pvVar2 = (void *)0x0;
+    if ((auVar6._0_8_ == 0) ||
+       ((auVar6._8_8_ != 0 && (pvVar2 = _malloc(auVar6._8_8_), pvVar2 != (void *)0x0)))) {
+      return pvVar2;
+    }
+    auVar6 = _png_error(auVar6._0_8_,0x460);
+    lVar3 = auVar6._0_8_;
+    if (lVar3 != 0) {
+      if (auVar6._8_8_ != 0) {
+        if (*(code **)(lVar3 + 1000) == ltmp0) {
+          pvVar2 = _malloc(auVar6._8_8_);
+        }
+        else {
+          pvVar2 = (void *)(**(code **)(lVar3 + 1000))(lVar3);
+        }
+        if (pvVar2 != (void *)0x0) {
+          return pvVar2;
+        }
+      }
+      _png_warning(lVar3,0x452);
+    }
+    return (void *)0x0;
+  }
+  if ((param_4 <= (param_3 ^ 0x7fffffff)) &&
+     (uVar5 = CONCAT44(0,param_4 + param_3), auVar6._8_8_ = 0, auVar6._0_8_ = param_5,
+     auVar1._8_8_ = 0, auVar1._0_8_ = uVar5, SUB168(auVar6 * auVar1,8) == 0)) {
+    sVar4 = uVar5 * param_5;
+    if (sVar4 == 0) {
+      return (void *)0x0;
+    }
+    if ((param_1 == 0) || (*(code **)(param_1 + 1000) == ltmp0)) {
+      pvVar2 = _malloc(sVar4);
+    }
+    else {
+      pvVar2 = (void *)(**(code **)(param_1 + 1000))();
+    }
+    if (pvVar2 != (void *)0x0) {
+      if (param_3 == 0) {
+        sVar4 = 0;
+      }
+      else {
+        sVar4 = param_3 * param_5;
+        _memcpy(pvVar2,param_2,sVar4);
+      }
+      _bzero((void *)((long)pvVar2 + sVar4),param_4 * param_5);
+      return pvVar2;
+    }
+  }
+  return (void *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_default
+// Entry: 00000348
+// Signature: undefined _png_malloc_default(void)
+// ========================================
+
+
+void * _png_malloc_default(long param_1,size_t param_2)
+
+{
+  void *pvVar1;
+  long lVar2;
+  undefined1 auVar3 [16];
+  
+  pvVar1 = (void *)0x0;
+  if ((param_1 == 0) || ((param_2 != 0 && (pvVar1 = _malloc(param_2), pvVar1 != (void *)0x0)))) {
+    return pvVar1;
+  }
+  auVar3 = _png_error(param_1,0x460);
+  lVar2 = auVar3._0_8_;
+  if (lVar2 != 0) {
+    if (auVar3._8_8_ != 0) {
+      if (*(code **)(lVar2 + 1000) == ltmp0) {
+        pvVar1 = _malloc(auVar3._8_8_);
+      }
+      else {
+        pvVar1 = (void *)(**(code **)(lVar2 + 1000))(lVar2);
+      }
+      if (pvVar1 != (void *)0x0) {
+        return pvVar1;
+      }
+    }
+    _png_warning(lVar2,0x452);
+  }
+  return (void *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_warn
+// Entry: 00000388
+// Signature: undefined _png_malloc_warn(void)
+// ========================================
+
+
+void * _png_malloc_warn(long param_1,size_t param_2)
+
+{
+  void *pvVar1;
+  
+  if (param_1 != 0) {
+    if (param_2 != 0) {
+      if (*(code **)(param_1 + 1000) == ltmp0) {
+        pvVar1 = _malloc(param_2);
+      }
+      else {
+        pvVar1 = (void *)(**(code **)(param_1 + 1000))(param_1);
+      }
+      if (pvVar1 != (void *)0x0) {
+        return pvVar1;
+      }
+    }
+    _png_warning(param_1,0x452);
+  }
+  return (void *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_mem_fn
+// Entry: 000003f8
+// Signature: undefined _png_set_mem_fn(void)
+// ========================================
+
+
+void _png_set_mem_fn(long param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  if (param_1 != 0) {
+    *(undefined8 *)(param_1 + 0x3e0) = param_2;
+    *(undefined8 *)(param_1 + 1000) = param_3;
+    *(undefined8 *)(param_1 + 0x3f0) = param_4;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_get_mem_ptr
+// Entry: 0000040c
+// Signature: undefined _png_get_mem_ptr(void)
+// ========================================
+
+
+undefined8 _png_get_mem_ptr(long param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = 0;
+  if (param_1 != 0) {
+    uVar1 = *(undefined8 *)(param_1 + 0x3e0);
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00001000
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00001200
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001300
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00001400
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00001500
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_error
+// Entry: 00001600
+// Signature: undefined _png_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free_jmpbuf
+// Entry: 00001700
+// Signature: undefined _png_free_jmpbuf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free_jmpbuf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_warning
+// Entry: 00001800
+// Signature: undefined _png_warning(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_warning(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 17
+// Failed: 0
+// Skipped external functions: 0

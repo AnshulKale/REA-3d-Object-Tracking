@@ -1,0 +1,6657 @@
+Program: softfloat.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: softfloat
+// Entry: 00000000
+// Signature: undefined __thiscall softfloat(softfloat * this, uint param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(unsigned int) */
+
+softfloat * __thiscall cv::softfloat::softfloat(softfloat *this,uint param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined4 local_24;
+  
+  if (param_1 == 0) {
+    *(undefined4 *)this = 0;
+    return this;
+  }
+  if (-1 < (int)param_1) {
+    softfloat_normRoundPackToF32((cv *)&local_24,false,0x9c,param_1);
+    *(undefined4 *)this = local_24;
+    return this;
+  }
+  uVar1 = ~(uint)((param_1 >> 1 & 0x7f | param_1 & 1) == 0x40) & (param_1 >> 1) + 0x40 >> 7;
+  iVar2 = 0;
+  if (uVar1 != 0) {
+    iVar2 = 0x4e800000;
+  }
+  *(uint *)this = iVar2 + uVar1;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 000000b0
+// Signature: undefined __thiscall softfloat(softfloat * this, uint param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(unsigned int) */
+
+softfloat * __thiscall cv::softfloat::softfloat(softfloat *this,uint param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined4 local_24;
+  
+  if (param_1 == 0) {
+    *(undefined4 *)this = 0;
+    return this;
+  }
+  if (-1 < (int)param_1) {
+    softfloat_normRoundPackToF32((cv *)&local_24,false,0x9c,param_1);
+    *(undefined4 *)this = local_24;
+    return this;
+  }
+  uVar1 = ~(uint)((param_1 >> 1 & 0x7f | param_1 & 1) == 0x40) & (param_1 >> 1) + 0x40 >> 7;
+  iVar2 = 0;
+  if (uVar1 != 0) {
+    iVar2 = 0x4e800000;
+  }
+  *(uint *)this = iVar2 + uVar1;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 00000160
+// Signature: undefined __thiscall softfloat(softfloat * this, ulonglong param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(unsigned long long) */
+
+void __thiscall cv::softfloat::softfloat(softfloat *this,ulonglong param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  
+  uVar4 = (uint)param_1;
+  uVar5 = (uint)(param_1 >> 0x20);
+  uVar6 = (uint)(uVar5 == 0);
+  uVar1 = uVar4;
+  if (uVar5 != 0) {
+    uVar1 = uVar5;
+  }
+  uVar5 = uVar1 << 0x10;
+  uVar3 = uVar6 << 5 | 0x10;
+  if (0xffff < uVar1) {
+    uVar5 = uVar1;
+    uVar3 = uVar6 << 5;
+  }
+  uVar1 = uVar5 << 8;
+  uVar6 = uVar3 | 8;
+  if (uVar5 >> 0x18 != 0) {
+    uVar1 = uVar5;
+    uVar6 = uVar3;
+  }
+  uVar5 = ((byte)(&softfloat_countLeadingZeros8)[uVar1 >> 0x18] + uVar6) - 0x28;
+  if ((uVar5 >> 7 & 1) == 0) {
+    iVar2 = 0;
+    if (param_1 != 0) {
+      iVar2 = (uVar4 << (ulong)((int)(char)uVar5 & 0x1f)) + (uVar5 & 0xff) * -0x800000 + 0x4a800000;
+    }
+    *(int *)this = iVar2;
+    return;
+  }
+  iVar2 = (int)(char)((byte)(&softfloat_countLeadingZeros8)[uVar1 >> 0x18] + uVar6);
+  uVar5 = iVar2 - 0x21;
+  uVar1 = uVar4 << (ulong)(uVar5 & 0x1f);
+  if (iVar2 < 0x21) {
+    uVar1 = (uint)(param_1 >> ((ulong)(0x21 - iVar2) & 0x3f)) |
+            (uint)((param_1 & (-1L << ((ulong)(0x21 - iVar2) & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+  }
+  uVar4 = 0x9c - (int)(char)uVar5;
+  if ((0xfc < uVar4) && (((uVar5 & 0xff) != 0x9f || ((int)(uVar1 + 0x40) < 0)))) {
+    *(undefined4 *)this = 0x7f800000;
+    return;
+  }
+  uVar1 = ~(uint)((uVar1 & 0x7f) == 0x40) & uVar1 + 0x40 >> 7;
+  iVar2 = 0;
+  if (uVar1 != 0) {
+    iVar2 = uVar4 * 0x800000;
+  }
+  *(uint *)this = iVar2 + uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 00000278
+// Signature: undefined __thiscall softfloat(softfloat * this, ulonglong param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(unsigned long long) */
+
+void __thiscall cv::softfloat::softfloat(softfloat *this,ulonglong param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  
+  uVar4 = (uint)param_1;
+  uVar5 = (uint)(param_1 >> 0x20);
+  uVar6 = (uint)(uVar5 == 0);
+  uVar1 = uVar4;
+  if (uVar5 != 0) {
+    uVar1 = uVar5;
+  }
+  uVar5 = uVar1 << 0x10;
+  uVar3 = uVar6 << 5 | 0x10;
+  if (0xffff < uVar1) {
+    uVar5 = uVar1;
+    uVar3 = uVar6 << 5;
+  }
+  uVar1 = uVar5 << 8;
+  uVar6 = uVar3 | 8;
+  if (uVar5 >> 0x18 != 0) {
+    uVar1 = uVar5;
+    uVar6 = uVar3;
+  }
+  uVar5 = ((byte)(&softfloat_countLeadingZeros8)[uVar1 >> 0x18] + uVar6) - 0x28;
+  if ((uVar5 >> 7 & 1) == 0) {
+    iVar2 = 0;
+    if (param_1 != 0) {
+      iVar2 = (uVar4 << (ulong)((int)(char)uVar5 & 0x1f)) + (uVar5 & 0xff) * -0x800000 + 0x4a800000;
+    }
+    *(int *)this = iVar2;
+    return;
+  }
+  iVar2 = (int)(char)((byte)(&softfloat_countLeadingZeros8)[uVar1 >> 0x18] + uVar6);
+  uVar5 = iVar2 - 0x21;
+  uVar1 = uVar4 << (ulong)(uVar5 & 0x1f);
+  if (iVar2 < 0x21) {
+    uVar1 = (uint)(param_1 >> ((ulong)(0x21 - iVar2) & 0x3f)) |
+            (uint)((param_1 & (-1L << ((ulong)(0x21 - iVar2) & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+  }
+  uVar4 = 0x9c - (int)(char)uVar5;
+  if ((0xfc < uVar4) && (((uVar5 & 0xff) != 0x9f || ((int)(uVar1 + 0x40) < 0)))) {
+    *(undefined4 *)this = 0x7f800000;
+    return;
+  }
+  uVar1 = ~(uint)((uVar1 & 0x7f) == 0x40) & uVar1 + 0x40 >> 7;
+  iVar2 = 0;
+  if (uVar1 != 0) {
+    iVar2 = uVar4 * 0x800000;
+  }
+  *(uint *)this = iVar2 + uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 0000027c
+// Signature: undefined __thiscall softfloat(softfloat * this, int param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(int) */
+
+softfloat * __thiscall cv::softfloat::softfloat(softfloat *this,int param_1)
+
+{
+  uint uVar1;
+  undefined4 local_24;
+  
+  if ((param_1 & 0x7fffffffU) != 0) {
+    uVar1 = -param_1;
+    if (-1 < param_1) {
+      uVar1 = param_1;
+    }
+    softfloat_normRoundPackToF32((cv *)&local_24,SUB41((uint)param_1 >> 0x1f,0),0x9c,uVar1);
+    *(undefined4 *)this = local_24;
+    return this;
+  }
+  *(uint *)this = param_1 >> 0x1f & 0xcf000000;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 000002ec
+// Signature: undefined __thiscall softfloat(softfloat * this, int param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(int) */
+
+softfloat * __thiscall cv::softfloat::softfloat(softfloat *this,int param_1)
+
+{
+  uint uVar1;
+  undefined4 local_24;
+  
+  if ((param_1 & 0x7fffffffU) != 0) {
+    uVar1 = -param_1;
+    if (-1 < param_1) {
+      uVar1 = param_1;
+    }
+    softfloat_normRoundPackToF32((cv *)&local_24,SUB41((uint)param_1 >> 0x1f,0),0x9c,uVar1);
+    *(undefined4 *)this = local_24;
+    return this;
+  }
+  *(uint *)this = param_1 >> 0x1f & 0xcf000000;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 0000035c
+// Signature: undefined __thiscall softfloat(softfloat * this, longlong param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(long long) */
+
+void __thiscall cv::softfloat::softfloat(softfloat *this,longlong param_1)
+
+{
+  ulong uVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  
+  uVar1 = -param_1;
+  if (-1 < param_1) {
+    uVar1 = param_1;
+  }
+  uVar6 = (uint)(uVar1 >> 0x20);
+  uVar7 = (uint)(uVar6 == 0);
+  uVar4 = (uint)uVar1;
+  uVar2 = uVar4;
+  if (uVar6 != 0) {
+    uVar2 = uVar6;
+  }
+  uVar6 = uVar2 << 0x10;
+  uVar8 = uVar7 << 5 | 0x10;
+  if (0xffff < uVar2) {
+    uVar6 = uVar2;
+    uVar8 = uVar7 << 5;
+  }
+  uVar2 = uVar6 << 8;
+  uVar7 = uVar8 | 8;
+  if (uVar6 >> 0x18 != 0) {
+    uVar2 = uVar6;
+    uVar7 = uVar8;
+  }
+  uVar6 = ((byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18] + uVar7) - 0x28;
+  uVar8 = (uint)((ulong)param_1 >> 0x20);
+  if ((uVar6 >> 7 & 1) == 0) {
+    if (param_1 != 0) {
+      uVar2 = (uint)(char)uVar6;
+      *(uint *)this =
+           (uVar8 & 0x80000000 | 0x4a800000) + uVar2 * -0x800000 + (uVar4 << (ulong)(uVar2 & 0x1f));
+      return;
+    }
+    *(undefined4 *)this = 0;
+    return;
+  }
+  iVar3 = (int)(char)((byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18] + uVar7);
+  uVar6 = iVar3 - 0x21;
+  uVar2 = uVar4 << (ulong)(uVar6 & 0x1f);
+  if (iVar3 < 0x21) {
+    uVar2 = (uint)(uVar1 >> ((ulong)(0x21 - iVar3) & 0x3f)) |
+            (uint)((uVar1 & (-1L << ((ulong)(0x21 - iVar3) & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+  }
+  uVar4 = 0x9c - (int)(char)uVar6;
+  if ((0xfc < uVar4) && (((uVar6 & 0xff) != 0x9f || ((int)(uVar2 + 0x40) < 0)))) {
+    uVar5 = 0xff800000;
+    if (-1 < param_1) {
+      uVar5 = 0x7f800000;
+    }
+    *(undefined4 *)this = uVar5;
+    return;
+  }
+  uVar2 = ~(uint)((uVar2 & 0x7f) == 0x40) & uVar2 + 0x40 >> 7;
+  iVar3 = 0;
+  if (uVar2 != 0) {
+    iVar3 = uVar4 * 0x800000;
+  }
+  *(uint *)this = (uVar2 | uVar8 & 0x80000000) + iVar3;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat
+// Entry: 0000049c
+// Signature: undefined __thiscall softfloat(softfloat * this, longlong param_1)
+// ========================================
+
+
+/* cv::softfloat::softfloat(long long) */
+
+void __thiscall cv::softfloat::softfloat(softfloat *this,longlong param_1)
+
+{
+  ulong uVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  
+  uVar1 = -param_1;
+  if (-1 < param_1) {
+    uVar1 = param_1;
+  }
+  uVar6 = (uint)(uVar1 >> 0x20);
+  uVar7 = (uint)(uVar6 == 0);
+  uVar4 = (uint)uVar1;
+  uVar2 = uVar4;
+  if (uVar6 != 0) {
+    uVar2 = uVar6;
+  }
+  uVar6 = uVar2 << 0x10;
+  uVar8 = uVar7 << 5 | 0x10;
+  if (0xffff < uVar2) {
+    uVar6 = uVar2;
+    uVar8 = uVar7 << 5;
+  }
+  uVar2 = uVar6 << 8;
+  uVar7 = uVar8 | 8;
+  if (uVar6 >> 0x18 != 0) {
+    uVar2 = uVar6;
+    uVar7 = uVar8;
+  }
+  uVar6 = ((byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18] + uVar7) - 0x28;
+  uVar8 = (uint)((ulong)param_1 >> 0x20);
+  if ((uVar6 >> 7 & 1) == 0) {
+    if (param_1 != 0) {
+      uVar2 = (uint)(char)uVar6;
+      *(uint *)this =
+           (uVar8 & 0x80000000 | 0x4a800000) + uVar2 * -0x800000 + (uVar4 << (ulong)(uVar2 & 0x1f));
+      return;
+    }
+    *(undefined4 *)this = 0;
+    return;
+  }
+  iVar3 = (int)(char)((byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18] + uVar7);
+  uVar6 = iVar3 - 0x21;
+  uVar2 = uVar4 << (ulong)(uVar6 & 0x1f);
+  if (iVar3 < 0x21) {
+    uVar2 = (uint)(uVar1 >> ((ulong)(0x21 - iVar3) & 0x3f)) |
+            (uint)((uVar1 & (-1L << ((ulong)(0x21 - iVar3) & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+  }
+  uVar4 = 0x9c - (int)(char)uVar6;
+  if ((0xfc < uVar4) && (((uVar6 & 0xff) != 0x9f || ((int)(uVar2 + 0x40) < 0)))) {
+    uVar5 = 0xff800000;
+    if (-1 < param_1) {
+      uVar5 = 0x7f800000;
+    }
+    *(undefined4 *)this = uVar5;
+    return;
+  }
+  uVar2 = ~(uint)((uVar2 & 0x7f) == 0x40) & uVar2 + 0x40 >> 7;
+  iVar3 = 0;
+  if (uVar2 != 0) {
+    iVar3 = uVar4 * 0x800000;
+  }
+  *(uint *)this = (uVar2 | uVar8 & 0x80000000) + iVar3;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator.cast.to.softdouble
+// Entry: 000004a0
+// Signature: softdouble __thiscall operator.cast.to.softdouble(softfloat * this)
+// ========================================
+
+
+/* cv::softfloat::operator cv::softdouble() const */
+
+void __thiscall cv::softfloat::operator_cast_to_softdouble(softfloat *this)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  ulong *in_x8;
+  uint uVar6;
+  uint uVar7;
+  
+  uVar3 = *(uint *)this;
+  uVar6 = uVar3 & 0x7fffff;
+  if (((uVar3 ^ 0xffffffff) & 0x7f800000) == 0) {
+    uVar2 = (ulong)(uVar3 >> 0x1f) << 0x3f | 0x7ff0000000000000;
+    if (uVar6 != 0) {
+      uVar2 = (ulong)uVar3 << 0x1d | (ulong)(uVar3 >> 0x1f) << 0x3f | 0x7ff8000000000000;
+    }
+    *in_x8 = uVar2;
+    return;
+  }
+  uVar4 = uVar3 >> 0x17 & 0xff;
+  if (uVar4 == 0) {
+    if (uVar6 == 0) {
+      *in_x8 = ((ulong)uVar3 & 0x80000000) << 0x20;
+      return;
+    }
+    uVar4 = uVar3 << 0x10;
+    if (uVar6 >= 0x10000) {
+      uVar4 = uVar6;
+    }
+    uVar7 = (uint)(uVar6 < 0x10000);
+    uVar1 = uVar7 << 4 | 8;
+    uVar5 = uVar4 << 8;
+    if (uVar4 >> 0x18 != 0) {
+      uVar1 = uVar7 << 4;
+      uVar5 = uVar4;
+    }
+    uVar4 = (uVar1 + (byte)(&softfloat_countLeadingZeros8)[uVar5 >> 0x18]) - 8;
+    uVar6 = uVar6 << (ulong)(uVar4 & 0x1f);
+    uVar4 = -(int)(char)uVar4;
+  }
+  *in_x8 = ((ulong)(uVar3 >> 0x1f) << 0x3f | (ulong)uVar6 << 0x1d) + ((ulong)uVar4 << 0x34) +
+           0x3800000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator+
+// Entry: 00000570
+// Signature: undefined __thiscall operator+(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+void __thiscall cv::softfloat::operator+(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  cv *in_x8;
+  
+  uVar1 = *(uint *)this;
+  uVar2 = *(uint *)param_1;
+  if (-1 < (int)(uVar2 ^ uVar1)) {
+    softfloat_addMagsF32(in_x8,uVar1,uVar2);
+    return;
+  }
+  softfloat_subMagsF32(in_x8,uVar1,uVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator-
+// Entry: 00000594
+// Signature: undefined __thiscall operator-(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+void __thiscall cv::softfloat::operator-(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  cv *in_x8;
+  
+  uVar1 = *(uint *)this;
+  uVar2 = *(uint *)param_1;
+  if (-1 < (int)(uVar2 ^ uVar1)) {
+    softfloat_subMagsF32(in_x8,uVar1,uVar2);
+    return;
+  }
+  softfloat_addMagsF32(in_x8,uVar1,uVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator*
+// Entry: 000005b8
+// Signature: undefined __thiscall operator*(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+void __thiscall cv::softfloat::operator*(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  bool bVar5;
+  uint *in_x8;
+  ulong uVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  
+  uVar2 = *(uint *)this;
+  uVar4 = uVar2 >> 0x17 & 0xff;
+  uVar3 = *(uint *)param_1;
+  uVar8 = uVar2 & 0x7fffff;
+  uVar10 = uVar3 >> 0x17 & 0xff;
+  uVar7 = uVar3 & 0x7fffff;
+  uVar1 = uVar3 ^ uVar2;
+  if (uVar4 == 0xff) {
+    if ((uVar8 == 0) && (uVar10 != 0xff || uVar7 == 0)) {
+      uVar10 = uVar10 | uVar7;
+LAB_00000648:
+      uVar8 = 0xffc00000;
+      if (uVar10 != 0) {
+        uVar8 = uVar1 & 0x80000000 | 0x7f800000;
+      }
+      *in_x8 = uVar8;
+      return;
+    }
+LAB_00000604:
+    if (uVar8 != 0 && ((uVar2 ^ 0xffffffff) & 0x7f800000) == 0) {
+      uVar3 = uVar2;
+    }
+    if ((uVar2 & 0x7fc00000) != 0x7f800000 || (uVar2 & 0x3fffff) == 0) {
+      uVar2 = uVar3;
+    }
+    *in_x8 = uVar2 | 0x400000;
+    return;
+  }
+  if (((uVar3 ^ 0xffffffff) & 0x7f800000) == 0) {
+    if (uVar7 == 0) {
+      uVar10 = uVar4 | uVar8;
+      goto LAB_00000648;
+    }
+    goto LAB_00000604;
+  }
+  if (uVar4 == 0) {
+    if (uVar8 == 0) goto LAB_00000784;
+    uVar2 = uVar2 << 0x10;
+    if (uVar8 >= 0x10000) {
+      uVar2 = uVar8;
+    }
+    uVar11 = (uint)(uVar8 < 0x10000);
+    bVar5 = uVar2 >> 0x18 != 0;
+    uVar4 = uVar2 << 8;
+    if (bVar5) {
+      uVar4 = uVar2;
+    }
+    uVar2 = uVar11 << 4 | 8;
+    if (bVar5) {
+      uVar2 = uVar11 << 4;
+    }
+    uVar2 = (uVar2 + (byte)(&softfloat_countLeadingZeros8)[uVar4 >> 0x18]) - 8;
+    uVar4 = 1 - (int)(char)uVar2;
+    uVar8 = uVar8 << (ulong)(uVar2 & 0x1f);
+  }
+  if (uVar10 == 0) {
+    if (uVar7 == 0) {
+LAB_00000784:
+      *in_x8 = uVar1 & 0x80000000;
+      return;
+    }
+    uVar3 = uVar3 << 0x10;
+    if (uVar7 >= 0x10000) {
+      uVar3 = uVar7;
+    }
+    uVar10 = (uint)(uVar7 < 0x10000);
+    bVar5 = uVar3 >> 0x18 != 0;
+    uVar2 = uVar3 << 8;
+    if (bVar5) {
+      uVar2 = uVar3;
+    }
+    uVar3 = uVar10 << 4 | 8;
+    if (bVar5) {
+      uVar3 = uVar10 << 4;
+    }
+    uVar3 = (uVar3 + (byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18]) - 8;
+    uVar10 = 1 - (int)(char)uVar3;
+    uVar7 = uVar7 << (ulong)(uVar3 & 0x1f);
+  }
+  uVar6 = (ulong)(uVar7 << 8 | 0x80000000) * (ulong)(uVar8 << 7 | 0x40000000);
+  uVar8 = (uint)(uVar6 >> 0x20);
+  bVar5 = uVar8 >> 0x1e == 0;
+  iVar9 = -0x80;
+  if (!bVar5) {
+    iVar9 = -0x7f;
+  }
+  uVar7 = uVar10 + uVar4 + iVar9;
+  uVar8 = (uVar8 | (uVar6 & 0xffff8000) != 0) << bVar5;
+  if (0xfc < uVar7) {
+    if ((uVar7 >> 0xf & 1) == 0) {
+      if ((0xfd < (uVar7 & 0xffff)) || ((int)(uVar8 + 0x40) < 0)) {
+        *in_x8 = uVar1 & 0x80000000 | 0x7f800000;
+        return;
+      }
+      uVar7 = 0xfd;
+    }
+    else {
+      uVar3 = uVar8 >> (ulong)(-uVar7 & 0x1f);
+      iVar9 = uVar8 << (ulong)(uVar7 & 0x1f);
+      uVar8 = 1;
+      if ((-uVar7 & 0xffff) < 0x1f) {
+        uVar8 = uVar3 | iVar9 != 0;
+      }
+      uVar7 = 0;
+    }
+  }
+  uVar8 = ~(uint)((uVar8 & 0x7f) == 0x40) & uVar8 + 0x40 >> 7;
+  iVar9 = 0;
+  if (uVar8 != 0) {
+    iVar9 = uVar7 << 0x17;
+  }
+  *in_x8 = (uVar8 | uVar1 & 0x80000000) + iVar9;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator/
+// Entry: 00000804
+// Signature: undefined __thiscall operator/(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+void __thiscall cv::softfloat::operator/(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  long lVar2;
+  uint uVar3;
+  uint uVar4;
+  ulong uVar5;
+  bool bVar6;
+  uint *in_x8;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  
+  uVar8 = *(uint *)this;
+  uVar11 = uVar8 >> 0x17 & 0xff;
+  uVar10 = *(uint *)param_1;
+  uVar7 = uVar8 & 0x7fffff;
+  uVar1 = uVar10 & 0x7fffff;
+  uVar3 = uVar10 ^ uVar8;
+  if (uVar11 == 0xff) {
+    if (uVar7 == 0) {
+      if (((uVar10 ^ 0xffffffff) & 0x7f800000) != 0) {
+LAB_000009dc:
+        *in_x8 = uVar3 & 0x80000000 | 0x7f800000;
+        return;
+      }
+      if (uVar1 == 0) {
+LAB_000009ec:
+        *in_x8 = 0xffc00000;
+        return;
+      }
+    }
+  }
+  else {
+    if (((uVar10 ^ 0xffffffff) & 0x7f800000) != 0) {
+      uVar4 = uVar10 >> 0x17 & 0xff;
+      if (uVar4 == 0) {
+        if (uVar1 == 0) {
+          if (uVar11 == 0 && uVar7 == 0) goto LAB_000009ec;
+          goto LAB_000009dc;
+        }
+        uVar10 = uVar10 << 0x10;
+        if (uVar1 >= 0x10000) {
+          uVar10 = uVar1;
+        }
+        uVar12 = (uint)(uVar1 < 0x10000);
+        bVar6 = uVar10 >> 0x18 != 0;
+        uVar4 = uVar10 << 8;
+        if (bVar6) {
+          uVar4 = uVar10;
+        }
+        uVar10 = uVar12 << 4 | 8;
+        if (bVar6) {
+          uVar10 = uVar12 << 4;
+        }
+        uVar10 = (uVar10 + (byte)(&softfloat_countLeadingZeros8)[uVar4 >> 0x18]) - 8;
+        uVar4 = 1 - (int)(char)uVar10;
+        uVar1 = uVar1 << (ulong)(uVar10 & 0x1f);
+      }
+      if (uVar11 == 0) {
+        if (uVar7 == 0) goto LAB_00000988;
+        uVar10 = uVar8 << 0x10;
+        if (uVar7 >= 0x10000) {
+          uVar10 = uVar7;
+        }
+        uVar11 = (uint)(uVar7 < 0x10000);
+        bVar6 = uVar10 >> 0x18 != 0;
+        uVar8 = uVar10 << 8;
+        if (bVar6) {
+          uVar8 = uVar10;
+        }
+        uVar10 = uVar11 << 4 | 8;
+        if (bVar6) {
+          uVar10 = uVar11 << 4;
+        }
+        uVar10 = (uVar10 + (byte)(&softfloat_countLeadingZeros8)[uVar8 >> 0x18]) - 8;
+        uVar11 = 1 - (int)(char)uVar10;
+        uVar7 = uVar7 << (ulong)(uVar10 & 0x1f);
+      }
+      uVar7 = uVar7 | 0x800000;
+      uVar1 = uVar1 | 0x800000;
+      iVar9 = 0x7d;
+      if (uVar1 <= uVar7) {
+        iVar9 = 0x7e;
+      }
+      uVar10 = iVar9 + (uVar11 - uVar4);
+      lVar2 = 0x1e;
+      if (uVar1 > uVar7) {
+        lVar2 = 0x1f;
+      }
+      uVar5 = 0;
+      if ((ulong)uVar1 != 0) {
+        uVar5 = ((ulong)uVar7 << lVar2) / (ulong)uVar1;
+      }
+      uVar8 = (uint)uVar5;
+      if ((uVar5 & 0x3f) == 0) {
+        uVar8 = (uVar5 & 0xffffffff) * (ulong)uVar1 - ((ulong)uVar7 << lVar2) != 0 | uVar8;
+      }
+      if (0xfc < (uVar10 & 0xffff)) {
+        if ((uVar10 >> 0xf & 1) == 0) {
+          if ((0xfd < (uVar10 & 0xffff)) || ((int)(uVar8 + 0x40) < 0)) goto LAB_000009dc;
+          uVar10 = 0xfd;
+        }
+        else {
+          uVar7 = uVar8 >> (ulong)(-uVar10 & 0x1f);
+          iVar9 = uVar8 << (ulong)(uVar10 & 0x1f);
+          uVar8 = (uint)(uVar8 != 0);
+          if ((-uVar10 & 0xffff) < 0x1f) {
+            uVar8 = uVar7 | iVar9 != 0;
+          }
+          uVar10 = 0;
+        }
+      }
+      uVar7 = ~(uint)((uVar8 & 0x7f) == 0x40) & uVar8 + 0x40 >> 7;
+      iVar9 = 0;
+      if (uVar7 != 0) {
+        iVar9 = uVar10 << 0x17;
+      }
+      *in_x8 = (uVar7 | uVar3 & 0x80000000) + iVar9;
+      return;
+    }
+    if (uVar1 == 0) {
+LAB_00000988:
+      *in_x8 = uVar3 & 0x80000000;
+      return;
+    }
+  }
+  if (uVar7 != 0 && ((uVar8 ^ 0xffffffff) & 0x7f800000) == 0) {
+    uVar10 = uVar8;
+  }
+  if ((uVar8 & 0x7fc00000) != 0x7f800000 || (uVar8 & 0x3fffff) == 0) {
+    uVar8 = uVar10;
+  }
+  *in_x8 = uVar8 | 0x400000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator%
+// Entry: 00000a60
+// Signature: undefined __thiscall operator%(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+void __thiscall cv::softfloat::operator%(softfloat *this,softfloat *param_1)
+
+{
+  ulong uVar1;
+  bool bVar2;
+  uint uVar3;
+  cv *in_x8;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  long lVar9;
+  uint uVar10;
+  
+  uVar4 = *(uint *)this;
+  uVar6 = *(uint *)param_1;
+  uVar10 = uVar4 & 0x7fffff;
+  uVar5 = uVar6 & 0x7fffff;
+  if ((uVar4 & 0x7f800000) == 0x7f800000) {
+    if ((uVar10 == 0) && (((uVar6 ^ 0xffffffff) & 0x7f800000) != 0 || uVar5 == 0)) {
+LAB_00000c9c:
+      *(undefined4 *)in_x8 = 0xffc00000;
+      return;
+    }
+  }
+  else {
+    if (((uVar6 ^ 0xffffffff) & 0x7f800000) != 0) {
+      uVar3 = uVar6 >> 0x17 & 0xff;
+      if (uVar3 == 0) {
+        if (uVar5 == 0) goto LAB_00000c9c;
+        uVar6 = uVar6 << 0x10;
+        if (uVar5 >= 0x10000) {
+          uVar6 = uVar5;
+        }
+        uVar7 = (uint)(uVar5 < 0x10000);
+        bVar2 = uVar6 >> 0x18 != 0;
+        uVar3 = uVar6 << 8;
+        if (bVar2) {
+          uVar3 = uVar6;
+        }
+        uVar6 = uVar7 << 4 | 8;
+        if (bVar2) {
+          uVar6 = uVar7 << 4;
+        }
+        uVar6 = (uVar6 + (byte)(&softfloat_countLeadingZeros8)[uVar3 >> 0x18]) - 8;
+        uVar3 = 1 - (int)(char)uVar6;
+        uVar5 = uVar5 << (ulong)(uVar6 & 0x1f);
+        uVar6 = uVar4 >> 0x17 & 0xff;
+        if (uVar6 == 0) goto LAB_00000bb0;
+LAB_00000ae0:
+        uVar7 = uVar6 - uVar3;
+      }
+      else {
+        uVar6 = uVar4 >> 0x17 & 0xff;
+        if (uVar6 != 0) goto LAB_00000ae0;
+LAB_00000bb0:
+        if (uVar10 == 0) goto LAB_00000ac8;
+        uVar6 = uVar4 << 0x10;
+        if (uVar10 >= 0x10000) {
+          uVar6 = uVar10;
+        }
+        uVar8 = (uint)(uVar10 < 0x10000);
+        bVar2 = uVar6 >> 0x18 != 0;
+        uVar7 = uVar6 << 8;
+        if (bVar2) {
+          uVar7 = uVar6;
+        }
+        uVar6 = uVar8 << 4 | 8;
+        if (bVar2) {
+          uVar6 = uVar8 << 4;
+        }
+        uVar7 = (uVar6 + (byte)(&softfloat_countLeadingZeros8)[uVar7 >> 0x18]) - 8;
+        uVar6 = 1 - (int)(char)uVar7;
+        uVar10 = uVar10 << (ulong)(uVar7 & 0x1f);
+        uVar7 = uVar6 - uVar3;
+      }
+      uVar5 = uVar5 | 0x800000;
+      uVar10 = uVar10 | 0x800000;
+      if (0 < (int)uVar7) {
+        uVar1 = 0;
+        if ((ulong)(uVar5 << 8) != 0) {
+          uVar1 = 0x7fffffffffffffff / (ulong)(uVar5 << 8);
+        }
+        uVar10 = uVar10 << 7;
+        uVar5 = uVar5 * 0x40;
+        lVar9 = uVar1 * uVar10;
+        uVar8 = (uint)((ulong)lVar9 >> 0x20);
+        uVar6 = uVar7 - 0x1f;
+        if (0x1e < uVar7) {
+          do {
+            uVar10 = -(uVar5 * (int)((ulong)lVar9 >> 0x20));
+            uVar7 = uVar6 & 0xffff;
+            uVar6 = uVar6 - 0x1d;
+            lVar9 = uVar1 * uVar10;
+            uVar8 = (uint)((ulong)lVar9 >> 0x20);
+          } while (0x1c < uVar7);
+        }
+        uVar8 = uVar8 >> (ulong)(~uVar6 & 0x1f);
+        uVar7 = (uVar10 << (ulong)((int)(short)uVar6 + 0x1eU & 0x1f)) - uVar8 * uVar5;
+LAB_00000c4c:
+        uVar10 = uVar7 * -2;
+        do {
+          uVar8 = uVar8 + 1;
+          uVar10 = uVar10 + uVar5 * 2;
+          uVar7 = uVar7 - uVar5;
+        } while (-1 < (int)uVar7);
+        if (((int)(uVar5 - uVar10) < 0) || ((uVar5 == uVar10 && ((uVar8 & 1) != 0)))) {
+          uVar7 = uVar5 + uVar7;
+        }
+        bVar2 = (int)uVar4 >= 0;
+        uVar10 = -uVar7;
+        if (-1 < (int)uVar7) {
+          bVar2 = (int)uVar4 < 0;
+          uVar10 = uVar7;
+        }
+        softfloat_normRoundPackToF32(in_x8,bVar2,(short)uVar3,uVar10);
+        return;
+      }
+      if (-2 < (int)uVar7) {
+        uVar5 = uVar5 << 6;
+        uVar8 = uVar10 * 0x40;
+        uVar7 = uVar5;
+        if (uVar8 < uVar5) {
+          uVar7 = 0;
+        }
+        uVar7 = uVar8 - uVar7;
+        if (uVar6 != uVar3) {
+          uVar7 = uVar10 << 5;
+        }
+        uVar8 = (uint)(uVar5 <= uVar8);
+        if (uVar6 != uVar3) {
+          uVar8 = 0;
+        }
+        goto LAB_00000c4c;
+      }
+      goto LAB_00000ac8;
+    }
+    if (uVar5 == 0) goto LAB_00000ac8;
+  }
+  if (uVar10 != 0 && (uVar4 & 0x7f800000) == 0x7f800000) {
+    uVar6 = uVar4;
+  }
+  if ((uVar4 & 0x3fffff) == 0 || (uVar4 & 0x7fc00000) != 0x7f800000) {
+    uVar4 = uVar6;
+  }
+  uVar4 = uVar4 | 0x400000;
+LAB_00000ac8:
+  *(uint *)in_x8 = uVar4;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator==
+// Entry: 00000ca8
+// Signature: undefined __thiscall operator==(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator==(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)this;
+  if ((((uVar1 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar1 & 0x7fffff) == 0) &&
+     (uVar2 = *(uint *)param_1, ((uVar2 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar2 & 0x7fffff) == 0)
+     ) {
+    return ((uVar2 | uVar1) & 0x7fffffff) == 0 || uVar1 == uVar2;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator!=
+// Entry: 00000cf8
+// Signature: undefined __thiscall operator!=(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator!=(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)this;
+  if (((uVar1 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar1 & 0x7fffff) == 0) {
+    uVar2 = *(uint *)param_1;
+    return ((uVar2 ^ 0xffffffff) & 0x7f800000) == 0 && (uVar2 & 0x7fffff) != 0 ||
+           ((uVar2 | uVar1) & 0x7fffffff) != 0 && uVar1 != uVar2;
+  }
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: operator>
+// Entry: 00000d4c
+// Signature: undefined __thiscall operator>(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator>(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)param_1;
+  if ((((uVar1 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar1 & 0x7fffff) == 0) &&
+     (uVar2 = *(uint *)this, ((uVar2 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar2 & 0x7fffff) == 0)) {
+    if (uVar1 >> 0x1f != -((int)uVar2 >> 0x1f)) {
+      return (uVar1 & 0x80000000) != 0 && ((uVar2 | uVar1) & 0x7fffffff) != 0;
+    }
+    if (uVar1 != uVar2) {
+      return uVar1 >> 0x1f != (uint)(uVar1 < uVar2);
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator>=
+// Entry: 00000dc4
+// Signature: undefined __thiscall operator>=(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator>=(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)param_1;
+  if ((((uVar1 ^ 0xffffffff) & 0x7f800000) == 0 && (uVar1 & 0x7fffff) != 0) ||
+     (uVar2 = *(uint *)this, ((uVar2 ^ 0xffffffff) & 0x7f800000) == 0 && (uVar2 & 0x7fffff) != 0)) {
+    return false;
+  }
+  if (uVar1 >> 0x1f != -((int)uVar2 >> 0x1f)) {
+    return (uVar1 & 0x80000000) != 0 || ((uVar2 | uVar1) & 0x7fffffff) == 0;
+  }
+  if (uVar1 == uVar2) {
+    return true;
+  }
+  return uVar1 >> 0x1f != (uint)(uVar1 < uVar2);
+}
+
+
+
+
+// ========================================
+// Function: operator<
+// Entry: 00000e48
+// Signature: undefined __thiscall operator<(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator<(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)this;
+  if ((((uVar1 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar1 & 0x7fffff) == 0) &&
+     (uVar2 = *(uint *)param_1, ((uVar2 ^ 0xffffffff) & 0x7f800000) != 0 || (uVar2 & 0x7fffff) == 0)
+     ) {
+    if (uVar1 >> 0x1f != -((int)uVar2 >> 0x1f)) {
+      return (uVar1 & 0x80000000) != 0 && ((uVar2 | uVar1) & 0x7fffffff) != 0;
+    }
+    if (uVar1 != uVar2) {
+      return uVar1 >> 0x1f != (uint)(uVar1 < uVar2);
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator<=
+// Entry: 00000ec0
+// Signature: undefined __thiscall operator<=(softfloat * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::softfloat::TEMPNAMEPLACEHOLDERVALUE(cv::softfloat const&) const */
+
+bool __thiscall cv::softfloat::operator<=(softfloat *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)this;
+  if ((((uVar1 ^ 0xffffffff) & 0x7f800000) == 0 && (uVar1 & 0x7fffff) != 0) ||
+     (uVar2 = *(uint *)param_1, ((uVar2 ^ 0xffffffff) & 0x7f800000) == 0 && (uVar2 & 0x7fffff) != 0)
+     ) {
+    return false;
+  }
+  if (uVar1 >> 0x1f != -((int)uVar2 >> 0x1f)) {
+    return (uVar1 & 0x80000000) != 0 || ((uVar2 | uVar1) & 0x7fffffff) == 0;
+  }
+  if (uVar1 == uVar2) {
+    return true;
+  }
+  return uVar1 >> 0x1f != (uint)(uVar1 < uVar2);
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 00000f44
+// Signature: undefined __thiscall softdouble(softdouble * this, uint param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(unsigned int) */
+
+void __thiscall cv::softdouble::softdouble(softdouble *this,uint param_1)
+
+{
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  bool bVar4;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return;
+  }
+  bVar4 = param_1 < 0x10000;
+  uVar2 = param_1 << 0x10;
+  if (!bVar4) {
+    uVar2 = param_1;
+  }
+  bVar1 = bVar4 << 4 | 8;
+  uVar3 = uVar2 << 8;
+  if (uVar2 >> 0x18 != 0) {
+    bVar1 = bVar4 << 4;
+    uVar3 = uVar2;
+  }
+  uVar2 = (uint)(char)(bVar1 + (&softfloat_countLeadingZeros8)[uVar3 >> 0x18] + '\x15');
+  *(ulong *)this = ((ulong)param_1 << ((ulong)uVar2 & 0x3f)) + ((ulong)(0x432 - uVar2) << 0x34);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 00000fb8
+// Signature: undefined __thiscall softdouble(softdouble * this, uint param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(unsigned int) */
+
+void __thiscall cv::softdouble::softdouble(softdouble *this,uint param_1)
+
+{
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  bool bVar4;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return;
+  }
+  bVar4 = param_1 < 0x10000;
+  uVar2 = param_1 << 0x10;
+  if (!bVar4) {
+    uVar2 = param_1;
+  }
+  bVar1 = bVar4 << 4 | 8;
+  uVar3 = uVar2 << 8;
+  if (uVar2 >> 0x18 != 0) {
+    bVar1 = bVar4 << 4;
+    uVar3 = uVar2;
+  }
+  uVar2 = (uint)(char)(bVar1 + (&softfloat_countLeadingZeros8)[uVar3 >> 0x18] + '\x15');
+  *(ulong *)this = ((ulong)param_1 << ((ulong)uVar2 & 0x3f)) + ((ulong)(0x432 - uVar2) << 0x34);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 0000102c
+// Signature: undefined __thiscall softdouble(softdouble * this, ulonglong param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(unsigned long long) */
+
+softdouble * __thiscall cv::softdouble::softdouble(softdouble *this,ulonglong param_1)
+
+{
+  ulong uVar1;
+  long lVar2;
+  undefined8 local_28;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return this;
+  }
+  if (-1 < (long)param_1) {
+    softfloat_normRoundPackToF64((cv *)&local_28,false,0x43c,param_1);
+    *(undefined8 *)this = local_28;
+    return this;
+  }
+  uVar1 = ~(ulong)((param_1 >> 1 & 0x3ff | param_1 & 1) == 0x200) & (param_1 >> 1) + 0x200 >> 10;
+  lVar2 = 0;
+  if (uVar1 != 0) {
+    lVar2 = 0x43d0000000000000;
+  }
+  *(ulong *)this = lVar2 + uVar1;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 000010dc
+// Signature: undefined __thiscall softdouble(softdouble * this, ulonglong param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(unsigned long long) */
+
+softdouble * __thiscall cv::softdouble::softdouble(softdouble *this,ulonglong param_1)
+
+{
+  ulong uVar1;
+  long lVar2;
+  undefined8 local_28;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return this;
+  }
+  if (-1 < (long)param_1) {
+    softfloat_normRoundPackToF64((cv *)&local_28,false,0x43c,param_1);
+    *(undefined8 *)this = local_28;
+    return this;
+  }
+  uVar1 = ~(ulong)((param_1 >> 1 & 0x3ff | param_1 & 1) == 0x200) & (param_1 >> 1) + 0x200 >> 10;
+  lVar2 = 0;
+  if (uVar1 != 0) {
+    lVar2 = 0x43d0000000000000;
+  }
+  *(ulong *)this = lVar2 + uVar1;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 0000118c
+// Signature: undefined __thiscall softdouble(softdouble * this, int param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(int) */
+
+void __thiscall cv::softdouble::softdouble(softdouble *this,int param_1)
+
+{
+  uint uVar1;
+  byte bVar2;
+  uint uVar3;
+  uint uVar4;
+  bool bVar5;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return;
+  }
+  uVar1 = -param_1;
+  if (-1 < param_1) {
+    uVar1 = param_1;
+  }
+  bVar5 = uVar1 < 0x10000;
+  uVar3 = uVar1 << 0x10;
+  if (!bVar5) {
+    uVar3 = uVar1;
+  }
+  bVar2 = bVar5 << 4 | 8;
+  uVar4 = uVar3 << 8;
+  if (uVar3 >> 0x18 != 0) {
+    bVar2 = bVar5 << 4;
+    uVar4 = uVar3;
+  }
+  uVar3 = (uint)(char)(bVar2 + (&softfloat_countLeadingZeros8)[uVar4 >> 0x18] + '\x15');
+  *(ulong *)this =
+       ((ulong)uVar1 << ((ulong)uVar3 & 0x3f)) + ((ulong)((uint)param_1 >> 0x1f) << 0x3f) +
+       ((ulong)(0x432 - uVar3) << 0x34);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 0000120c
+// Signature: undefined __thiscall softdouble(softdouble * this, int param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(int) */
+
+void __thiscall cv::softdouble::softdouble(softdouble *this,int param_1)
+
+{
+  uint uVar1;
+  byte bVar2;
+  uint uVar3;
+  uint uVar4;
+  bool bVar5;
+  
+  if (param_1 == 0) {
+    *(undefined8 *)this = 0;
+    return;
+  }
+  uVar1 = -param_1;
+  if (-1 < param_1) {
+    uVar1 = param_1;
+  }
+  bVar5 = uVar1 < 0x10000;
+  uVar3 = uVar1 << 0x10;
+  if (!bVar5) {
+    uVar3 = uVar1;
+  }
+  bVar2 = bVar5 << 4 | 8;
+  uVar4 = uVar3 << 8;
+  if (uVar3 >> 0x18 != 0) {
+    bVar2 = bVar5 << 4;
+    uVar4 = uVar3;
+  }
+  uVar3 = (uint)(char)(bVar2 + (&softfloat_countLeadingZeros8)[uVar4 >> 0x18] + '\x15');
+  *(ulong *)this =
+       ((ulong)uVar1 << ((ulong)uVar3 & 0x3f)) + ((ulong)((uint)param_1 >> 0x1f) << 0x3f) +
+       ((ulong)(0x432 - uVar3) << 0x34);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 0000128c
+// Signature: undefined __thiscall softdouble(softdouble * this, longlong param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(long long) */
+
+softdouble * __thiscall cv::softdouble::softdouble(softdouble *this,longlong param_1)
+
+{
+  ulonglong uVar1;
+  undefined8 local_28;
+  
+  if ((param_1 & 0x7fffffffffffffffU) != 0) {
+    uVar1 = -param_1;
+    if (-1 < param_1) {
+      uVar1 = param_1;
+    }
+    softfloat_normRoundPackToF64((cv *)&local_28,SUB81((ulong)param_1 >> 0x3f,0),0x43c,uVar1);
+    *(undefined8 *)this = local_28;
+    return this;
+  }
+  *(ulong *)this = param_1 >> 0x3f & 0xc3e0000000000000;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: softdouble
+// Entry: 000012fc
+// Signature: undefined __thiscall softdouble(softdouble * this, longlong param_1)
+// ========================================
+
+
+/* cv::softdouble::softdouble(long long) */
+
+softdouble * __thiscall cv::softdouble::softdouble(softdouble *this,longlong param_1)
+
+{
+  ulonglong uVar1;
+  undefined8 local_28;
+  
+  if ((param_1 & 0x7fffffffffffffffU) != 0) {
+    uVar1 = -param_1;
+    if (-1 < param_1) {
+      uVar1 = param_1;
+    }
+    softfloat_normRoundPackToF64((cv *)&local_28,SUB81((ulong)param_1 >> 0x3f,0),0x43c,uVar1);
+    *(undefined8 *)this = local_28;
+    return this;
+  }
+  *(ulong *)this = param_1 >> 0x3f & 0xc3e0000000000000;
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: cvTrunc
+// Entry: 0000136c
+// Signature: undefined __cdecl cvTrunc(softfloat * param_1)
+// ========================================
+
+
+/* cvTrunc(cv::softfloat const&) */
+
+uint cvTrunc(softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  uVar1 = *(uint *)param_1;
+  uVar2 = uVar1 >> 0x17 & 0xff;
+  if (uVar2 < 0x7f) {
+    return 0;
+  }
+  if (0x9d < uVar2) {
+    if (uVar1 == 0xcf000000) {
+      return 0x80000000;
+    }
+    uVar3 = 0x7fffffff;
+    if ((uVar2 != 0xff || (uVar1 & 0x7fffff) == 0) && 0x7fffffff < uVar1) {
+      uVar3 = 0x80000000;
+    }
+    return uVar3;
+  }
+  uVar3 = ((uVar1 & 0x7fffff) << 8 | 0x80000000) >> (ulong)(0x9e - uVar2 & 0x1f);
+  uVar2 = -uVar3;
+  if (-1 < (int)uVar1) {
+    uVar2 = uVar3;
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: cvRound
+// Entry: 000013e0
+// Signature: undefined __cdecl cvRound(softfloat * param_1)
+// ========================================
+
+
+/* cvRound(cv::softfloat const&) */
+
+uint cvRound(softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  ulong uVar4;
+  uint uVar5;
+  ulong uVar6;
+  
+  uVar2 = *(uint *)param_1;
+  uVar6 = (ulong)(uVar2 >> 0x17) & 0xff;
+  uVar5 = (uint)uVar6;
+  uVar3 = (uint)((uVar2 & 0x7fffff) == 0);
+  if (uVar5 != 0xff) {
+    uVar3 = 1;
+  }
+  uVar1 = 0;
+  if ((int)uVar2 < 0) {
+    uVar1 = uVar3;
+  }
+  uVar3 = uVar2 & 0x7fffff;
+  if ((uVar2 & 0x7f800000) != 0) {
+    uVar3 = uVar2 & 0x7fffff | 0x800000;
+  }
+  uVar4 = (ulong)uVar3 << 0x20;
+  if (uVar5 < 0xaa) {
+    if (0x6b < uVar5) {
+      uVar4 = uVar4 >> (0xaa - uVar6 & 0x3f) |
+              (ulong)(uVar4 << ((ulong)((uVar2 >> 0x17) + 0x16) & 0x3f) != 0);
+      goto LAB_00001444;
+    }
+    uVar4 = (ulong)(uVar3 != 0);
+  }
+  else {
+LAB_00001444:
+    if (0xffffffff7ff < uVar4) goto LAB_0000148c;
+  }
+  uVar3 = (uint)(uVar4 + 0x800 >> 0xc) & ((uVar4 & 0xfff) == 0x800 ^ 0xffffffff);
+  uVar2 = -uVar3;
+  if (uVar1 == 0) {
+    uVar2 = uVar3;
+  }
+  if (uVar3 == 0) {
+    return uVar2;
+  }
+  if (uVar1 == -((int)uVar2 >> 0x1f)) {
+    return uVar2;
+  }
+LAB_0000148c:
+  uVar3 = 0x80000000;
+  if (uVar1 == 0) {
+    uVar3 = 0x7fffffff;
+  }
+  return uVar3;
+}
+
+
+
+
+// ========================================
+// Function: cvFloor
+// Entry: 0000149c
+// Signature: undefined __cdecl cvFloor(softfloat * param_1)
+// ========================================
+
+
+/* cvFloor(cv::softfloat const&) */
+
+int cvFloor(softfloat *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  long lVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  
+  uVar4 = *(uint *)param_1;
+  uVar9 = (ulong)(uVar4 >> 0x17) & 0xff;
+  uVar8 = (uint)uVar9;
+  uVar5 = (uint)((uVar4 & 0x7fffff) == 0);
+  if (uVar8 != 0xff) {
+    uVar5 = 1;
+  }
+  uVar1 = 0;
+  if ((int)uVar4 < 0) {
+    uVar1 = uVar5;
+  }
+  uVar5 = uVar4 & 0x7fffff;
+  if ((uVar4 & 0x7f800000) != 0) {
+    uVar5 = uVar4 & 0x7fffff | 0x800000;
+  }
+  uVar10 = (ulong)uVar5 << 0x20;
+  uVar2 = (ulong)(uVar5 != 0);
+  if (0x6b < uVar8) {
+    uVar2 = uVar10 >> (0xaa - uVar9 & 0x3f) |
+            (ulong)(uVar10 << ((ulong)((uVar4 >> 0x17) + 0x16) & 0x3f) != 0);
+  }
+  if (uVar8 < 0xaa) {
+    uVar10 = uVar2;
+  }
+  lVar3 = 0xfff;
+  if (uVar1 == 0) {
+    lVar3 = 0;
+  }
+  if (uVar10 + lVar3 >> 0x2c == 0) {
+    iVar7 = (int)(uVar10 + lVar3 >> 0xc);
+    iVar6 = -iVar7;
+    if (uVar1 == 0) {
+      iVar6 = iVar7;
+    }
+    if (iVar7 == 0) {
+      return iVar6;
+    }
+    if (uVar1 == -(iVar6 >> 0x1f)) {
+      return iVar6;
+    }
+  }
+  iVar6 = -0x80000000;
+  if (uVar1 == 0) {
+    iVar6 = 0x7fffffff;
+  }
+  return iVar6;
+}
+
+
+
+
+// ========================================
+// Function: cvCeil
+// Entry: 00001548
+// Signature: undefined __cdecl cvCeil(softfloat * param_1)
+// ========================================
+
+
+/* cvCeil(cv::softfloat const&) */
+
+int cvCeil(softfloat *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  long lVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  
+  uVar4 = *(uint *)param_1;
+  uVar9 = (ulong)(uVar4 >> 0x17) & 0xff;
+  uVar8 = (uint)uVar9;
+  uVar5 = (uint)((uVar4 & 0x7fffff) == 0);
+  if (uVar8 != 0xff) {
+    uVar5 = 1;
+  }
+  uVar1 = 0;
+  if ((int)uVar4 < 0) {
+    uVar1 = uVar5;
+  }
+  uVar5 = uVar4 & 0x7fffff;
+  if ((uVar4 & 0x7f800000) != 0) {
+    uVar5 = uVar4 & 0x7fffff | 0x800000;
+  }
+  uVar10 = (ulong)uVar5 << 0x20;
+  uVar2 = (ulong)(uVar5 != 0);
+  if (0x6b < uVar8) {
+    uVar2 = uVar10 >> (0xaa - uVar9 & 0x3f) |
+            (ulong)(uVar10 << ((ulong)((uVar4 >> 0x17) + 0x16) & 0x3f) != 0);
+  }
+  if (uVar8 < 0xaa) {
+    uVar10 = uVar2;
+  }
+  lVar3 = 0;
+  if (uVar1 == 0) {
+    lVar3 = 0xfff;
+  }
+  if (uVar10 + lVar3 >> 0x2c == 0) {
+    iVar7 = (int)(uVar10 + lVar3 >> 0xc);
+    iVar6 = -iVar7;
+    if (uVar1 == 0) {
+      iVar6 = iVar7;
+    }
+    if (iVar7 == 0) {
+      return iVar6;
+    }
+    if (uVar1 == -(iVar6 >> 0x1f)) {
+      return iVar6;
+    }
+  }
+  iVar6 = -0x80000000;
+  if (uVar1 == 0) {
+    iVar6 = 0x7fffffff;
+  }
+  return iVar6;
+}
+
+
+
+
+// ========================================
+// Function: cvTrunc
+// Entry: 000015f4
+// Signature: undefined __cdecl cvTrunc(softdouble * param_1)
+// ========================================
+
+
+/* cvTrunc(cv::softdouble const&) */
+
+uint cvTrunc(softdouble *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  ulong uVar3;
+  uint uVar4;
+  ulong uVar5;
+  
+  uVar3 = *(ulong *)param_1;
+  uVar1 = (uint)(uVar3 >> 0x20);
+  uVar4 = uVar1 >> 0x14 & 0x7ff;
+  if (uVar4 < 0x3ff) {
+    return 0;
+  }
+  uVar5 = uVar3 & 0xfffffffffffff;
+  if (0x41d < uVar4) {
+    if ((((long)uVar3 < 0) && (uVar5 >> 0x15 == 0)) && (uVar4 == 0x41e)) {
+      return 0x80000000;
+    }
+    uVar2 = 0x7fffffff;
+    if (uVar4 != 0x7ff || uVar5 == 0) {
+      uVar2 = (int)uVar1 >> 0x1f ^ 0x7fffffff;
+    }
+    return uVar2;
+  }
+  uVar4 = (uint)((uVar5 | 0x10000000000000) >> ((ulong)(0x433 - uVar4) & 0x3f));
+  uVar1 = -uVar4;
+  if (-1 < (long)uVar3) {
+    uVar1 = uVar4;
+  }
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: cvRound
+// Entry: 0000166c
+// Signature: undefined __cdecl cvRound(softdouble * param_1)
+// ========================================
+
+
+/* cvRound(cv::softdouble const&) */
+
+uint cvRound(softdouble *param_1)
+
+{
+  ulong uVar1;
+  uint uVar2;
+  uint uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  uint uVar6;
+  uint uVar7;
+  
+  uVar4 = *(ulong *)param_1;
+  uVar1 = uVar4 & 0xfffffffffffff;
+  uVar6 = (uint)(uVar4 >> 0x34);
+  uVar3 = uVar6 & 0x7ff;
+  uVar5 = uVar1;
+  if ((uVar4 >> 0x34 & 0x7ff) != 0) {
+    uVar5 = uVar1 | 0x10000000000000;
+  }
+  uVar7 = (uint)(uVar1 == 0);
+  if (uVar3 != 0x7ff) {
+    uVar7 = 1;
+  }
+  uVar2 = 0;
+  if ((long)uVar4 < 0) {
+    uVar2 = uVar7;
+  }
+  if (uVar3 < 0x427) {
+    if (1000 < uVar3) {
+      uVar5 = uVar5 >> ((ulong)(0x427 - uVar3) & 0x3f) |
+              (ulong)(uVar5 << ((ulong)(uVar6 + 0x19) & 0x3f) != 0);
+      goto LAB_000016c8;
+    }
+    uVar5 = (ulong)(uVar5 != 0);
+  }
+  else {
+LAB_000016c8:
+    if (0xffffffff7ff < uVar5) goto LAB_00001710;
+  }
+  uVar3 = (uint)(uVar5 + 0x800 >> 0xc) & ((uVar5 & 0xfff) == 0x800 ^ 0xffffffff);
+  uVar6 = -uVar3;
+  if (uVar2 == 0) {
+    uVar6 = uVar3;
+  }
+  if (uVar3 == 0) {
+    return uVar6;
+  }
+  if (uVar2 == -((int)uVar6 >> 0x1f)) {
+    return uVar6;
+  }
+LAB_00001710:
+  uVar3 = 0x80000000;
+  if (uVar2 == 0) {
+    uVar3 = 0x7fffffff;
+  }
+  return uVar3;
+}
+
+
+
+
+// ========================================
+// Function: cvFloor
+// Entry: 00001720
+// Signature: undefined __cdecl cvFloor(softdouble * param_1)
+// ========================================
+
+
+/* cvFloor(cv::softdouble const&) */
+
+int cvFloor(softdouble *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  uint uVar3;
+  ulong uVar4;
+  long lVar5;
+  int iVar6;
+  ulong uVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
+  
+  uVar7 = *(ulong *)param_1;
+  uVar2 = uVar7 & 0xfffffffffffff;
+  uVar8 = (uint)(uVar7 >> 0x34);
+  uVar1 = uVar8 & 0x7ff;
+  uVar4 = uVar2;
+  if ((uVar7 >> 0x34 & 0x7ff) != 0) {
+    uVar4 = uVar2 | 0x10000000000000;
+  }
+  uVar10 = (uint)(uVar2 == 0);
+  if (uVar1 != 0x7ff) {
+    uVar10 = 1;
+  }
+  uVar3 = 0;
+  if ((long)uVar7 < 0) {
+    uVar3 = uVar10;
+  }
+  uVar2 = (ulong)(uVar4 != 0);
+  if (1000 < uVar1) {
+    uVar2 = uVar4 >> ((ulong)(0x427 - uVar1) & 0x3f) |
+            (ulong)(uVar4 << ((ulong)(uVar8 + 0x19) & 0x3f) != 0);
+  }
+  if (uVar1 < 0x427) {
+    uVar4 = uVar2;
+  }
+  lVar5 = 0xfff;
+  if (uVar3 == 0) {
+    lVar5 = 0;
+  }
+  if (uVar4 + lVar5 >> 0x2c == 0) {
+    iVar9 = (int)(uVar4 + lVar5 >> 0xc);
+    iVar6 = -iVar9;
+    if (uVar3 == 0) {
+      iVar6 = iVar9;
+    }
+    if (iVar9 == 0) {
+      return iVar6;
+    }
+    if (uVar3 == -(iVar6 >> 0x1f)) {
+      return iVar6;
+    }
+  }
+  iVar6 = -0x80000000;
+  if (uVar3 == 0) {
+    iVar6 = 0x7fffffff;
+  }
+  return iVar6;
+}
+
+
+
+
+// ========================================
+// Function: cvCeil
+// Entry: 000017c4
+// Signature: undefined __cdecl cvCeil(softdouble * param_1)
+// ========================================
+
+
+/* cvCeil(cv::softdouble const&) */
+
+int cvCeil(softdouble *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  uint uVar3;
+  ulong uVar4;
+  long lVar5;
+  int iVar6;
+  ulong uVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
+  
+  uVar7 = *(ulong *)param_1;
+  uVar2 = uVar7 & 0xfffffffffffff;
+  uVar8 = (uint)(uVar7 >> 0x34);
+  uVar1 = uVar8 & 0x7ff;
+  uVar4 = uVar2;
+  if ((uVar7 >> 0x34 & 0x7ff) != 0) {
+    uVar4 = uVar2 | 0x10000000000000;
+  }
+  uVar10 = (uint)(uVar2 == 0);
+  if (uVar1 != 0x7ff) {
+    uVar10 = 1;
+  }
+  uVar3 = 0;
+  if ((long)uVar7 < 0) {
+    uVar3 = uVar10;
+  }
+  uVar2 = (ulong)(uVar4 != 0);
+  if (1000 < uVar1) {
+    uVar2 = uVar4 >> ((ulong)(0x427 - uVar1) & 0x3f) |
+            (ulong)(uVar4 << ((ulong)(uVar8 + 0x19) & 0x3f) != 0);
+  }
+  if (uVar1 < 0x427) {
+    uVar4 = uVar2;
+  }
+  lVar5 = 0;
+  if (uVar3 == 0) {
+    lVar5 = 0xfff;
+  }
+  if (uVar4 + lVar5 >> 0x2c == 0) {
+    iVar9 = (int)(uVar4 + lVar5 >> 0xc);
+    iVar6 = -iVar9;
+    if (uVar3 == 0) {
+      iVar6 = iVar9;
+    }
+    if (iVar9 == 0) {
+      return iVar6;
+    }
+    if (uVar3 == -(iVar6 >> 0x1f)) {
+      return iVar6;
+    }
+  }
+  iVar6 = -0x80000000;
+  if (uVar3 == 0) {
+    iVar6 = 0x7fffffff;
+  }
+  return iVar6;
+}
+
+
+
+
+// ========================================
+// Function: cvRound64
+// Entry: 00001868
+// Signature: undefined __cdecl cvRound64(softdouble * param_1)
+// ========================================
+
+
+/* cvRound64(cv::softdouble const&) */
+
+ulong cvRound64(softdouble *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  uint uVar6;
+  
+  uVar3 = *(ulong *)param_1;
+  uVar5 = uVar3 & 0xfffffffffffff;
+  uVar1 = (uint)(uVar3 >> 0x34) & 0x7ff;
+  uVar4 = uVar5;
+  if ((uVar3 >> 0x34 & 0x7ff) != 0) {
+    uVar4 = uVar5 | 0x10000000000000;
+  }
+  uVar6 = (uint)(uVar5 == 0);
+  if (uVar1 != 0x7ff) {
+    uVar6 = 1;
+  }
+  uVar2 = 0;
+  if ((long)uVar3 < 0) {
+    uVar2 = uVar6;
+  }
+  uVar6 = 0x433 - uVar1;
+  if (0x432 < uVar1) {
+    if (uVar1 < 0x43f) {
+      uVar4 = uVar4 << ((ulong)-uVar6 & 0x3f);
+      uVar5 = -uVar4;
+      if (uVar2 == 0) {
+        uVar5 = uVar4;
+      }
+      if (-1 < (long)uVar4) {
+        return uVar5;
+      }
+    }
+    uVar5 = 0x8000000000000000;
+    if (uVar2 == 0) {
+      uVar5 = 0x7fffffffffffffff;
+    }
+    return uVar5;
+  }
+  if (uVar1 < 0x3f4) {
+    return 0;
+  }
+  uVar5 = uVar4 >> ((ulong)uVar6 & 0x3f);
+  uVar4 = uVar4 << ((ulong)-uVar6 & 0x3f);
+  if ((uVar4 & 0x8000000000000000) != 0) {
+    uVar5 = uVar5 + 1 & ((ulong)((uVar4 & 0x7fffffffffffffff) == 0) ^ 0xffffffffffffffff);
+  }
+  uVar4 = -uVar5;
+  if (uVar2 == 0) {
+    uVar4 = uVar5;
+  }
+  if (uVar5 == 0) {
+    return uVar4;
+  }
+  uVar5 = 0x8000000000000000;
+  if (uVar2 == 0) {
+    uVar5 = 0x7fffffffffffffff;
+  }
+  if (-(int)((long)uVar4 >> 0x3f) != uVar2) {
+    uVar4 = uVar5;
+  }
+  return uVar4;
+}
+
+
+
+
+// ========================================
+// Function: operator.cast.to.softfloat
+// Entry: 00001938
+// Signature: softfloat __thiscall operator.cast.to.softfloat(softdouble * this)
+// ========================================
+
+
+/* cv::softdouble::operator cv::softfloat() const */
+
+void __thiscall cv::softdouble::operator_cast_to_softfloat(softdouble *this)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint *in_x8;
+  uint uVar3;
+  ulong uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  
+  uVar4 = *(ulong *)this;
+  uVar3 = (uint)(uVar4 >> 0x20);
+  uVar6 = uVar3 >> 0x14 & 0x7ff;
+  if (uVar6 == 0x7ff) {
+    uVar6 = uVar3 & 0x80000000 | 0x7f800000;
+    if ((uVar4 & 0xfffffffffffff) != 0) {
+      uVar6 = uVar3 & 0x80000000 | (uint)(uVar4 >> 0x1d) & 0x3fffff | 0x7fc00000;
+    }
+    *in_x8 = uVar6;
+    return;
+  }
+  uVar2 = (uint)((uVar4 & 0xfffffffffffff) >> 0x16) | (uint)((uVar4 & 0x3fffff) != 0);
+  if (uVar6 == 0 && uVar2 == 0) {
+    *in_x8 = uVar3 & 0x80000000;
+    return;
+  }
+  uVar7 = uVar6 - 0x381;
+  uVar5 = uVar2 | 0x40000000;
+  if (0xfc < uVar7) {
+    if (uVar6 < 0x381) {
+      uVar2 = uVar5 >> (ulong)(0x381 - uVar6 & 0x1f);
+      iVar1 = uVar5 << (ulong)((uVar3 >> 0x14) - 1 & 0x1f);
+      uVar5 = 1;
+      if (0x362 < uVar6) {
+        uVar5 = uVar2 | iVar1 != 0;
+      }
+      uVar7 = 0;
+    }
+    else {
+      if ((0xfd < uVar7) || ((int)(uVar2 + 0x40000040) < 0)) {
+        uVar3 = 0xff800000;
+        if (-1 < (long)uVar4) {
+          uVar3 = 0x7f800000;
+        }
+        *in_x8 = uVar3;
+        return;
+      }
+      uVar7 = 0xfd;
+    }
+  }
+  uVar6 = ~(uint)((uVar5 & 0x7f) == 0x40) & uVar5 + 0x40 >> 7;
+  iVar1 = 0;
+  if (uVar6 != 0) {
+    iVar1 = uVar7 << 0x17;
+  }
+  *in_x8 = (uVar6 | uVar3 & 0x80000000) + iVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator+
+// Entry: 00001a5c
+// Signature: undefined __thiscall operator+(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+void __thiscall cv::softdouble::operator+(softdouble *this,softdouble *param_1)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  bool bVar3;
+  cv *in_x8;
+  
+  uVar1 = *(ulonglong *)this;
+  uVar2 = *(ulonglong *)param_1;
+  bVar3 = SUB81(uVar1 >> 0x3f,0);
+  if (-(int)((long)uVar1 >> 0x3f) == -(int)((long)uVar2 >> 0x3f)) {
+    softfloat_addMagsF64(in_x8,uVar1,uVar2,bVar3);
+    return;
+  }
+  softfloat_subMagsF64(in_x8,uVar1,uVar2,bVar3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator-
+// Entry: 00001a88
+// Signature: undefined __thiscall operator-(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+void __thiscall cv::softdouble::operator-(softdouble *this,softdouble *param_1)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  bool bVar3;
+  cv *in_x8;
+  
+  uVar1 = *(ulonglong *)this;
+  uVar2 = *(ulonglong *)param_1;
+  bVar3 = SUB81(uVar1 >> 0x3f,0);
+  if (-(int)((long)uVar1 >> 0x3f) == -(int)((long)uVar2 >> 0x3f)) {
+    softfloat_subMagsF64(in_x8,uVar1,uVar2,bVar3);
+    return;
+  }
+  softfloat_addMagsF64(in_x8,uVar1,uVar2,bVar3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator*
+// Entry: 00001ab4
+// Signature: undefined __thiscall operator*(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+void __thiscall cv::softdouble::operator*(softdouble *this,softdouble *param_1)
+
+{
+  char cVar1;
+  byte bVar2;
+  byte bVar3;
+  bool bVar4;
+  ulong *in_x8;
+  ulong uVar5;
+  ulong uVar6;
+  long lVar7;
+  int iVar8;
+  ulong uVar9;
+  ulong uVar10;
+  ulong uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  ulong uVar15;
+  ulong uVar16;
+  ulong uVar17;
+  ulong uVar18;
+  
+  uVar16 = *(ulong *)this;
+  uVar14 = (uint)(uVar16 >> 0x34) & 0x7ff;
+  uVar10 = *(ulong *)param_1;
+  uVar6 = uVar16 & 0xfffffffffffff;
+  uVar12 = (uint)(uVar10 >> 0x34) & 0x7ff;
+  uVar9 = uVar10 & 0xfffffffffffff;
+  uVar5 = uVar10 ^ uVar16;
+  if (uVar14 == 0x7ff) {
+    if ((uVar6 == 0) && (uVar15 = uVar9, uVar11 = uVar10, uVar12 != 0x7ff || uVar9 == 0)) {
+LAB_00001b44:
+      uVar10 = 0xfff8000000000000;
+      if ((uVar11 >> 0x34 & 0x7ff) != 0 || uVar15 != 0) {
+        uVar10 = uVar5 & 0x8000000000000000 | 0x7ff0000000000000;
+      }
+      *in_x8 = uVar10;
+      return;
+    }
+LAB_00001afc:
+    if (uVar6 != 0 && ((uVar16 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+      uVar10 = uVar16;
+    }
+    if ((uVar16 & 0x7ff8000000000000) != 0x7ff0000000000000 || (uVar16 & 0x7ffffffffffff) == 0) {
+      uVar16 = uVar10;
+    }
+    *in_x8 = uVar16 | 0x8000000000000;
+    return;
+  }
+  if (uVar12 == 0x7ff) {
+    uVar15 = uVar6;
+    uVar11 = uVar16;
+    if (uVar9 == 0) goto LAB_00001b44;
+    goto LAB_00001afc;
+  }
+  if (uVar14 == 0) {
+    if (uVar6 == 0) goto LAB_00001cec;
+    uVar13 = (uint)(uVar6 >> 0x20);
+    bVar4 = uVar13 == 0;
+    uVar14 = (uint)uVar16;
+    if (!bVar4) {
+      uVar14 = uVar13;
+    }
+    uVar13 = uVar14 << 0x10;
+    bVar2 = bVar4 << 5 | 0x10;
+    if (0xffff < uVar14) {
+      uVar13 = uVar14;
+      bVar2 = bVar4 << 5;
+    }
+    uVar14 = uVar13 << 8;
+    bVar3 = bVar2 | 8;
+    if (uVar13 >> 0x18 != 0) {
+      uVar14 = uVar13;
+      bVar3 = bVar2;
+    }
+    cVar1 = bVar3 + (&softfloat_countLeadingZeros8)[uVar14 >> 0x18] + -0xb;
+    uVar6 = uVar6 << ((long)cVar1 & 0x3fU);
+    uVar14 = 1 - (int)cVar1;
+  }
+  if (uVar12 == 0) {
+    if (uVar9 == 0) {
+LAB_00001cec:
+      *in_x8 = uVar5 & 0x8000000000000000;
+      return;
+    }
+    uVar13 = (uint)(uVar9 >> 0x20);
+    bVar4 = uVar13 == 0;
+    uVar12 = (uint)uVar10;
+    if (!bVar4) {
+      uVar12 = uVar13;
+    }
+    uVar13 = uVar12 << 0x10;
+    bVar2 = bVar4 << 5 | 0x10;
+    if (0xffff < uVar12) {
+      uVar13 = uVar12;
+      bVar2 = bVar4 << 5;
+    }
+    uVar12 = uVar13 << 8;
+    bVar3 = bVar2 | 8;
+    if (uVar13 >> 0x18 != 0) {
+      uVar12 = uVar13;
+      bVar3 = bVar2;
+    }
+    cVar1 = bVar3 + (&softfloat_countLeadingZeros8)[uVar12 >> 0x18] + -0xb;
+    uVar9 = uVar9 << ((long)cVar1 & 0x3fU);
+    uVar12 = 1 - (int)cVar1;
+  }
+  uVar11 = uVar6 << 10 | 0x4000000000000000;
+  uVar15 = uVar9 << 0xb | 0x8000000000000000;
+  uVar17 = uVar11 >> 0x20;
+  uVar18 = uVar15 >> 0x20;
+  uVar9 = (uVar9 << 0xb & 0xfffff800) * uVar17;
+  uVar16 = uVar18 * (uVar6 << 10 & 0xfffffc00);
+  uVar10 = uVar16 + uVar9;
+  lVar7 = 0x100000000;
+  if (!CARRY8(uVar16,uVar9)) {
+    lVar7 = 0;
+  }
+  uVar15 = uVar15 * uVar11;
+  uVar16 = (uVar10 >> 0x20) + uVar18 * uVar17 + lVar7;
+  if (uVar15 < uVar10 << 0x20) {
+    uVar16 = uVar16 + 1;
+  }
+  uVar10 = uVar16 | uVar15 != 0;
+  bVar4 = uVar16 >> 0x3e == 0;
+  iVar8 = -0x400;
+  if (!bVar4) {
+    iVar8 = -0x3ff;
+  }
+  uVar14 = uVar12 + uVar14 + iVar8;
+  uVar6 = (ulong)uVar14;
+  uVar16 = uVar10 << bVar4;
+  if (0x7fc < uVar14) {
+    if ((uVar14 >> 0xf & 1) == 0) {
+      if ((0x7fd < (uVar14 & 0xffff)) || ((long)(uVar16 + 0x200) < 0)) {
+        *in_x8 = uVar5 & 0x8000000000000000 | 0x7ff0000000000000;
+        return;
+      }
+      uVar6 = 0x7fd;
+    }
+    else {
+      uVar12 = -(int)(short)uVar14;
+      uVar6 = uVar16 >> ((ulong)uVar12 & 0x3f);
+      lVar7 = uVar16 << ((ulong)(uint)(int)(short)uVar14 & 0x3f);
+      uVar16 = (ulong)(uVar10 != 0);
+      if (uVar12 < 0x3f) {
+        uVar16 = uVar6 | lVar7 != 0;
+      }
+      uVar6 = 0;
+    }
+  }
+  uVar10 = ~(ulong)((uVar16 & 0x3ff) == 0x200) & uVar16 + 0x200 >> 10;
+  lVar7 = 0;
+  if (uVar10 != 0) {
+    lVar7 = uVar6 << 0x34;
+  }
+  *in_x8 = (uVar10 | uVar5 & 0x8000000000000000) + lVar7;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator/
+// Entry: 00001d6c
+// Signature: undefined __thiscall operator/(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+void __thiscall cv::softdouble::operator/(softdouble *this,softdouble *param_1)
+
+{
+  char cVar1;
+  long lVar2;
+  byte bVar3;
+  byte bVar4;
+  bool bVar5;
+  ulong *in_x8;
+  ulong uVar6;
+  ulong uVar7;
+  long lVar8;
+  int iVar9;
+  ulong uVar10;
+  ulong uVar11;
+  int iVar12;
+  uint uVar13;
+  ulong uVar14;
+  uint uVar15;
+  uint uVar16;
+  ulong uVar17;
+  ulong uVar18;
+  
+  uVar11 = *(ulong *)this;
+  uVar14 = uVar11 >> 0x34 & 0x7ff;
+  uVar17 = *(ulong *)param_1;
+  uVar10 = uVar11 & 0xfffffffffffff;
+  uVar15 = (uint)(uVar17 >> 0x34) & 0x7ff;
+  uVar7 = uVar17 & 0xfffffffffffff;
+  uVar6 = uVar17 ^ uVar11;
+  iVar12 = (int)uVar14;
+  if (iVar12 == 0x7ff) {
+    if (uVar10 == 0) {
+      if (uVar15 != 0x7ff) goto LAB_00001fe0;
+      if (uVar7 == 0) goto LAB_00001fa4;
+    }
+LAB_00001db4:
+    if (uVar10 != 0 && ((uVar11 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+      uVar17 = uVar11;
+    }
+    if ((uVar11 & 0x7ff8000000000000) != 0x7ff0000000000000 || (uVar11 & 0x7ffffffffffff) == 0) {
+      uVar11 = uVar17;
+    }
+    *in_x8 = uVar11 | 0x8000000000000;
+    return;
+  }
+  if (uVar15 == 0) {
+    if (uVar7 == 0) {
+      if (uVar14 == 0 && uVar10 == 0) {
+LAB_00001fa4:
+        *in_x8 = 0xfff8000000000000;
+        return;
+      }
+      goto LAB_00001fe0;
+    }
+    uVar16 = (uint)(uVar7 >> 0x20);
+    bVar5 = uVar16 == 0;
+    uVar15 = (uint)uVar17;
+    if (!bVar5) {
+      uVar15 = uVar16;
+    }
+    uVar16 = uVar15 << 0x10;
+    bVar3 = bVar5 << 5 | 0x10;
+    if (0xffff < uVar15) {
+      uVar16 = uVar15;
+      bVar3 = bVar5 << 5;
+    }
+    uVar15 = uVar16 << 8;
+    bVar4 = bVar3 | 8;
+    if (uVar16 >> 0x18 != 0) {
+      uVar15 = uVar16;
+      bVar4 = bVar3;
+    }
+    cVar1 = bVar4 + (&softfloat_countLeadingZeros8)[uVar15 >> 0x18] + -0xb;
+    uVar7 = uVar7 << ((long)cVar1 & 0x3fU);
+    uVar15 = 1 - (int)cVar1;
+  }
+  else if (uVar15 == 0x7ff) {
+    if (uVar7 != 0) goto LAB_00001db4;
+    goto LAB_00001f54;
+  }
+  if (iVar12 == 0) {
+    if (uVar10 == 0) {
+LAB_00001f54:
+      *in_x8 = uVar6 & 0x8000000000000000;
+      return;
+    }
+    uVar13 = (uint)(uVar10 >> 0x20);
+    bVar5 = uVar13 == 0;
+    uVar16 = (uint)uVar11;
+    if (!bVar5) {
+      uVar16 = uVar13;
+    }
+    uVar13 = uVar16 << 0x10;
+    bVar3 = bVar5 << 5 | 0x10;
+    if (0xffff < uVar16) {
+      uVar13 = uVar16;
+      bVar3 = bVar5 << 5;
+    }
+    uVar16 = uVar13 << 8;
+    bVar4 = bVar3 | 8;
+    if (uVar13 >> 0x18 != 0) {
+      uVar16 = uVar13;
+      bVar4 = bVar3;
+    }
+    cVar1 = bVar4 + (&softfloat_countLeadingZeros8)[uVar16 >> 0x18] + -0xb;
+    uVar10 = uVar10 << ((long)cVar1 & 0x3fU);
+    iVar12 = 1 - cVar1;
+  }
+  uVar10 = uVar10 | 0x10000000000000;
+  bVar5 = (uVar7 | 0x10000000000000) <= uVar10;
+  iVar9 = 0x3fd;
+  if (bVar5) {
+    iVar9 = 0x3fe;
+  }
+  uVar15 = iVar9 + (iVar12 - uVar15);
+  uVar17 = (ulong)uVar15;
+  lVar8 = 10;
+  if (!bVar5) {
+    lVar8 = 0xb;
+  }
+  uVar11 = (uVar7 & 0x1fffffffe00000 | 0x10000000000000) >> 0x15;
+  iVar12 = 0;
+  if (uVar11 != 0) {
+    iVar12 = (int)(0x7fffffffffffffff / uVar11);
+  }
+  uVar18 = ((uVar10 << lVar8) >> 0x20) * (ulong)(iVar12 - 2U);
+  uVar14 = uVar18 >> 0x1f & 0xfffffffe;
+  lVar2 = (uVar7 & 0x1fffff) * 0x80;
+  uVar10 = ((uVar10 << lVar8) - uVar14 * uVar11) * 0x10000000 - uVar14 * lVar2;
+  uVar16 = (int)((uVar10 >> 0x20) * (ulong)(iVar12 - 2U) >> 0x20) + 4;
+  uVar7 = (uVar18 & 0xffffffff00000000) + (ulong)uVar16 * 0x10;
+  if ((uVar16 & 0x1c) == 0) {
+    uVar16 = uVar16 * 2 & 0xfffffff0;
+    lVar8 = (uVar10 - uVar11 * uVar16) * 0x10000000;
+    if ((long)(lVar8 - lVar2 * (ulong)uVar16) < 0) {
+      uVar7 = (uVar7 & 0xffffffffffffff80) - 0x80;
+    }
+    else {
+      uVar7 = uVar7 & 0xffffffffffffff80 | (ulong)(lVar8 - lVar2 * (ulong)uVar16 != 0);
+    }
+  }
+  if (0x7fc < (uVar15 & 0xffff)) {
+    if ((uVar15 >> 0xf & 1) == 0) {
+      if ((0x7fd < (uVar15 & 0xffff)) || ((long)(uVar7 + 0x200) < 0)) {
+LAB_00001fe0:
+        *in_x8 = uVar6 & 0x8000000000000000 | 0x7ff0000000000000;
+        return;
+      }
+      uVar17 = 0x7fd;
+    }
+    else {
+      uVar16 = -(int)(short)uVar15;
+      uVar17 = uVar7 >> ((ulong)uVar16 & 0x3f);
+      lVar8 = uVar7 << ((ulong)(uint)(int)(short)uVar15 & 0x3f);
+      uVar7 = (ulong)(uVar7 != 0);
+      if (uVar16 < 0x3f) {
+        uVar7 = uVar17 | lVar8 != 0;
+      }
+      uVar17 = 0;
+    }
+  }
+  uVar11 = ~(ulong)((uVar7 & 0x3ff) == 0x200) & uVar7 + 0x200 >> 10;
+  lVar8 = 0;
+  if (uVar11 != 0) {
+    lVar8 = uVar17 << 0x34;
+  }
+  *in_x8 = (uVar11 | uVar6 & 0x8000000000000000) + lVar8;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator%
+// Entry: 00002054
+// Signature: undefined __thiscall operator%(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+void __thiscall cv::softdouble::operator%(softdouble *this,softdouble *param_1)
+
+{
+  f64_rem();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_rem
+// Entry: 00002068
+// Signature: undefined __thiscall f64_rem(cv * this, softdouble param_1, softdouble param_2)
+// ========================================
+
+
+/* cv::f64_rem(cv::softdouble, cv::softdouble) */
+
+void __thiscall cv::f64_rem(cv *this,ulong param_2,ulong param_3)
+
+{
+  ulonglong uVar1;
+  char cVar2;
+  ulong uVar3;
+  byte bVar4;
+  byte bVar5;
+  bool bVar6;
+  bool bVar7;
+  short sVar8;
+  int iVar9;
+  ulong uVar10;
+  uint uVar11;
+  ulong uVar12;
+  ulong uVar13;
+  ulonglong uVar14;
+  ulong uVar15;
+  ulong uVar16;
+  uint uVar17;
+  long lVar18;
+  uint uVar19;
+  
+  uVar17 = (uint)(param_2 >> 0x34) & 0x7ff;
+  uVar12 = param_2 & 0xfffffffffffff;
+  uVar10 = param_3 >> 0x34 & 0x7ff;
+  uVar15 = param_3 & 0xfffffffffffff;
+  iVar9 = (int)uVar10;
+  if (uVar17 == 0x7ff) {
+    if ((uVar12 == 0) && ((iVar9 != 0x7ff || (uVar15 == 0)))) {
+      *(undefined8 *)this = 0xfff8000000000000;
+      return;
+    }
+LAB_000020ac:
+    if (((param_2 & 0x7ff8000000000000) == 0x7ff0000000000000) && ((param_2 & 0x7ffffffffffff) != 0)
+       ) {
+      *(ulong *)this = param_2 | 0x8000000000000;
+      return;
+    }
+    if (uVar12 != 0 && ((param_2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+      param_3 = param_2;
+    }
+    *(ulong *)this = param_3 | 0x8000000000000;
+    return;
+  }
+  if (iVar9 == 0x7ff) {
+    if (uVar15 != 0) goto LAB_000020ac;
+    goto LAB_000020f8;
+  }
+  if ((int)uVar17 < iVar9 + -1) goto LAB_000020f8;
+  if (iVar9 == 0) {
+    if (uVar15 == 0) {
+      *(undefined8 *)this = 0xfff8000000000000;
+      return;
+    }
+    uVar19 = (uint)(uVar15 >> 0x20);
+    bVar6 = uVar19 == 0;
+    uVar11 = (uint)param_3;
+    if (!bVar6) {
+      uVar11 = uVar19;
+    }
+    uVar19 = uVar11 << 0x10;
+    bVar4 = bVar6 << 5 | 0x10;
+    if (0xffff < uVar11) {
+      uVar19 = uVar11;
+      bVar4 = bVar6 << 5;
+    }
+    uVar11 = uVar19 << 8;
+    bVar5 = bVar4 | 8;
+    if (uVar19 >> 0x18 != 0) {
+      uVar11 = uVar19;
+      bVar5 = bVar4;
+    }
+    cVar2 = bVar5 + (&softfloat_countLeadingZeros8)[uVar11 >> 0x18] + -0xb;
+    uVar15 = uVar15 << ((long)cVar2 & 0x3fU);
+    uVar10 = (ulong)(1 - (int)cVar2);
+    if (uVar17 != 0) goto LAB_00002108;
+LAB_000021bc:
+    if (uVar12 == 0) goto LAB_000020f8;
+    uVar11 = (uint)(uVar12 >> 0x20);
+    bVar6 = uVar11 == 0;
+    uVar17 = (uint)param_2;
+    if (!bVar6) {
+      uVar17 = uVar11;
+    }
+    uVar11 = uVar17 << 0x10;
+    bVar4 = bVar6 << 5 | 0x10;
+    if (0xffff < uVar17) {
+      uVar11 = uVar17;
+      bVar4 = bVar6 << 5;
+    }
+    uVar17 = uVar11 << 8;
+    bVar5 = bVar4 | 8;
+    if (uVar11 >> 0x18 != 0) {
+      uVar17 = uVar11;
+      bVar5 = bVar4;
+    }
+    cVar2 = bVar5 + (&softfloat_countLeadingZeros8)[uVar17 >> 0x18] + -0xb;
+    uVar17 = 1 - (int)cVar2;
+    uVar12 = uVar12 << ((long)cVar2 & 0x3fU) | 0x10000000000000;
+    uVar15 = uVar15 | 0x10000000000000;
+    uVar11 = uVar17 - (int)uVar10;
+    if (0 < (int)uVar11) goto LAB_0000211c;
+LAB_00002240:
+    if ((int)uVar11 < -1) {
+LAB_000020f8:
+      *(ulong *)this = param_2;
+      return;
+    }
+    uVar15 = uVar15 * 0x200;
+    uVar13 = uVar12 * 0x200;
+    bVar6 = uVar15 + uVar12 * -0x200 == 0;
+    uVar3 = uVar15;
+    if (uVar15 >= uVar13 && !bVar6) {
+      uVar3 = 0;
+    }
+    bVar7 = uVar17 != (uint)uVar10;
+    uVar17 = (uint)(uVar15 < uVar13 || bVar6);
+    if (bVar7) {
+      uVar17 = 0;
+    }
+    uVar16 = (ulong)uVar17;
+    uVar14 = uVar13 - uVar3;
+    if (bVar7) {
+      uVar14 = uVar12 << 8;
+    }
+  }
+  else {
+    if (uVar17 == 0) goto LAB_000021bc;
+LAB_00002108:
+    uVar12 = uVar12 | 0x10000000000000;
+    uVar15 = uVar15 | 0x10000000000000;
+    uVar11 = uVar17 - (int)uVar10;
+    if ((int)uVar11 < 1) goto LAB_00002240;
+LAB_0000211c:
+    sVar8 = (short)uVar10;
+    uVar13 = uVar15 >> 0x15 & 0xffffffff;
+    uVar3 = 0;
+    if (uVar13 != 0) {
+      uVar3 = 0x7fffffffffffffff / uVar13;
+    }
+    uVar13 = uVar12 << 9;
+    uVar15 = uVar15 * 0x200;
+    lVar18 = (uVar12 >> 0x17 & 0xffffffff) * uVar3;
+    uVar17 = uVar11 - 0x1e;
+    if (0x1d < uVar11) {
+      do {
+        lVar18 = uVar13 * 0x20000000 - (lVar18 + 0x80000000U >> 0x20) * uVar15;
+        uVar13 = (uVar15 & lVar18 >> 0x3f) + lVar18;
+        uVar19 = uVar17 - 0x1d;
+        uVar11 = uVar17 & 0xffff;
+        lVar18 = (uVar13 >> 0x20) * uVar3;
+        uVar17 = uVar19;
+      } while (0x1c < uVar11);
+    }
+    uVar16 = (ulong)((uint)((ulong)lVar18 >> 0x20) >> (ulong)(~uVar17 & 0x1f));
+    uVar14 = (uVar13 << ((ulong)((int)(short)uVar17 + 0x1e) & 0x3f)) - uVar15 * uVar16;
+    if ((long)uVar14 < 0) {
+      uVar1 = uVar14 + uVar15;
+      lVar18 = uVar1 + uVar14;
+      goto joined_r0x000022e0;
+    }
+  }
+  do {
+    sVar8 = (short)uVar10;
+    uVar16 = (ulong)((int)uVar16 + 1);
+    uVar14 = uVar14 - uVar15;
+  } while (-1 < (long)uVar14);
+  uVar1 = uVar15 + uVar14;
+  lVar18 = uVar1 + uVar14;
+joined_r0x000022e0:
+  if ((lVar18 < 0) || ((lVar18 == 0 && ((uVar16 & 1) != 0)))) {
+    uVar14 = uVar1;
+  }
+  bVar6 = (long)param_2 >= 0;
+  uVar1 = -uVar14;
+  if (-1 < (long)uVar14) {
+    bVar6 = (long)param_2 < 0;
+    uVar1 = uVar14;
+  }
+  softfloat_normRoundPackToF64(this,bVar6,sVar8,uVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator==
+// Entry: 00002328
+// Signature: undefined __thiscall operator==(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator==(softdouble *this,softdouble *param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  
+  uVar1 = *(ulong *)this;
+  if ((((uVar1 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar1 & 0xfffffffffffff) == 0)
+     && (uVar2 = *(ulong *)param_1,
+        ((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar2 & 0xfffffffffffff) == 0))
+  {
+    return ((uVar2 | uVar1) & 0x7fffffffffffffff) == 0 || uVar1 == uVar2;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator!=
+// Entry: 00002378
+// Signature: undefined __thiscall operator!=(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator!=(softdouble *this,softdouble *param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  
+  uVar1 = *(ulong *)this;
+  if (((uVar1 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar1 & 0xfffffffffffff) == 0) {
+    uVar2 = *(ulong *)param_1;
+    return ((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 &&
+           (uVar2 & 0xfffffffffffff) != 0 ||
+           ((uVar2 | uVar1) & 0x7fffffffffffffff) != 0 && uVar1 != uVar2;
+  }
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: operator>
+// Entry: 000023cc
+// Signature: undefined __thiscall operator>(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator>(softdouble *this,softdouble *param_1)
+
+{
+  int iVar1;
+  ulong uVar2;
+  ulong uVar3;
+  
+  uVar2 = *(ulong *)param_1;
+  if ((((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar2 & 0xfffffffffffff) == 0)
+     && (uVar3 = *(ulong *)this,
+        ((uVar3 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar3 & 0xfffffffffffff) == 0))
+  {
+    iVar1 = (int)((long)uVar2 >> 0x3f);
+    if (-iVar1 != -(int)((long)uVar3 >> 0x3f)) {
+      return (uVar2 & 0x8000000000000000) != 0 && ((uVar3 | uVar2) & 0x7fffffffffffffff) != 0;
+    }
+    if (uVar2 != uVar3) {
+      return -(uint)(uVar2 < uVar3) != iVar1;
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator>=
+// Entry: 00002448
+// Signature: undefined __thiscall operator>=(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator>=(softdouble *this,softdouble *param_1)
+
+{
+  int iVar1;
+  ulong uVar2;
+  ulong uVar3;
+  
+  uVar2 = *(ulong *)param_1;
+  if ((((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 && (uVar2 & 0xfffffffffffff) != 0)
+     || (uVar3 = *(ulong *)this,
+        ((uVar3 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 && (uVar3 & 0xfffffffffffff) != 0))
+  {
+    return false;
+  }
+  iVar1 = (int)((long)uVar2 >> 0x3f);
+  if (-iVar1 != -(int)((long)uVar3 >> 0x3f)) {
+    return (uVar2 & 0x8000000000000000) != 0 || ((uVar3 | uVar2) & 0x7fffffffffffffff) == 0;
+  }
+  if (uVar2 == uVar3) {
+    return true;
+  }
+  return -(uint)(uVar2 < uVar3) != iVar1;
+}
+
+
+
+
+// ========================================
+// Function: operator<
+// Entry: 000024d0
+// Signature: undefined __thiscall operator<(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator<(softdouble *this,softdouble *param_1)
+
+{
+  int iVar1;
+  ulong uVar2;
+  ulong uVar3;
+  
+  uVar2 = *(ulong *)this;
+  if ((((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar2 & 0xfffffffffffff) == 0)
+     && (uVar3 = *(ulong *)param_1,
+        ((uVar3 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0 || (uVar3 & 0xfffffffffffff) == 0))
+  {
+    iVar1 = (int)((long)uVar2 >> 0x3f);
+    if (-iVar1 != -(int)((long)uVar3 >> 0x3f)) {
+      return (uVar2 & 0x8000000000000000) != 0 && ((uVar3 | uVar2) & 0x7fffffffffffffff) != 0;
+    }
+    if (uVar2 != uVar3) {
+      return -(uint)(uVar2 < uVar3) != iVar1;
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: operator<=
+// Entry: 0000254c
+// Signature: undefined __thiscall operator<=(softdouble * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::softdouble::TEMPNAMEPLACEHOLDERVALUE(cv::softdouble const&) const */
+
+bool __thiscall cv::softdouble::operator<=(softdouble *this,softdouble *param_1)
+
+{
+  int iVar1;
+  ulong uVar2;
+  ulong uVar3;
+  
+  uVar2 = *(ulong *)this;
+  if ((((uVar2 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 && (uVar2 & 0xfffffffffffff) != 0)
+     || (uVar3 = *(ulong *)param_1,
+        ((uVar3 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 && (uVar3 & 0xfffffffffffff) != 0))
+  {
+    return false;
+  }
+  iVar1 = (int)((long)uVar2 >> 0x3f);
+  if (-iVar1 != -(int)((long)uVar3 >> 0x3f)) {
+    return (uVar2 & 0x8000000000000000) != 0 || ((uVar3 | uVar2) & 0x7fffffffffffffff) == 0;
+  }
+  if (uVar2 == uVar3) {
+    return true;
+  }
+  return -(uint)(uVar2 < uVar3) != iVar1;
+}
+
+
+
+
+// ========================================
+// Function: mulAdd
+// Entry: 000025d4
+// Signature: undefined __thiscall mulAdd(cv * this, softfloat * param_1, softfloat * param_2, softfloat * param_3)
+// ========================================
+
+
+/* cv::mulAdd(cv::softfloat const&, cv::softfloat const&, cv::softfloat const&) */
+
+void __thiscall cv::mulAdd(cv *this,softfloat *param_1,softfloat *param_2,softfloat *param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  uint *in_x8;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  ulong uVar7;
+  uint uVar8;
+  uint uVar9;
+  int iVar10;
+  uint uVar11;
+  uint uVar12;
+  uint uVar13;
+  ulong uVar14;
+  uint uVar15;
+  uint uVar16;
+  
+  uVar8 = *(uint *)this;
+  uVar12 = *(uint *)param_1;
+  uVar2 = uVar8 >> 0x17 & 0xff;
+  uVar5 = uVar8 & 0x7fffff;
+  uVar1 = *(uint *)param_2;
+  uVar15 = uVar12 >> 0x17 & 0xff;
+  uVar13 = uVar12 & 0x7fffff;
+  uVar6 = uVar1 & 0x7fffff;
+  uVar4 = uVar12 ^ uVar8;
+  if (uVar2 == 0xff) {
+    if ((uVar5 != 0) || ((uVar13 != 0 && (uVar15 == 0xff)))) goto LAB_0000262c;
+    if (uVar15 == 0 && uVar13 == 0) {
+LAB_000026cc:
+      uVar11 = 0xffc00000;
+      goto LAB_000026d0;
+    }
+LAB_000026ac:
+    uVar11 = uVar4 & 0x80000000 | 0x7f800000;
+    if (((uVar1 ^ 0xffffffff) & 0x7f800000) != 0) goto LAB_00002898;
+    if (uVar6 == 0) {
+      if (-1 < (int)(uVar4 ^ uVar1)) goto LAB_00002898;
+      goto LAB_000026cc;
+    }
+  }
+  else {
+    if (((uVar12 ^ 0xffffffff) & 0x7f800000) != 0) {
+      uVar9 = uVar1 >> 0x17 & 0xff;
+      uVar11 = uVar1;
+      if (uVar9 == 0xff) {
+        if (uVar6 == 0) goto LAB_00002898;
+        uVar11 = 0;
+        goto LAB_000026d0;
+      }
+      if (uVar2 == 0) {
+        if (uVar5 != 0) {
+          uVar8 = uVar8 << 0x10;
+          if (uVar5 >= 0x10000) {
+            uVar8 = uVar5;
+          }
+          uVar16 = (uint)(uVar5 < 0x10000);
+          bVar3 = uVar8 >> 0x18 != 0;
+          uVar2 = uVar8 << 8;
+          if (bVar3) {
+            uVar2 = uVar8;
+          }
+          uVar8 = uVar16 << 4 | 8;
+          if (bVar3) {
+            uVar8 = uVar16 << 4;
+          }
+          uVar8 = (uVar8 + (byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18]) - 8;
+          uVar2 = 1 - (int)(char)uVar8;
+          uVar5 = uVar5 << (ulong)(uVar8 & 0x1f);
+          goto joined_r0x00002748;
+        }
+LAB_00002880:
+        if ((-1 < (int)(uVar4 ^ uVar1)) || (uVar9 != 0 || uVar6 != 0)) goto LAB_00002898;
+LAB_00002894:
+        uVar11 = 0;
+LAB_00002898:
+        *in_x8 = uVar11;
+        return;
+      }
+joined_r0x00002748:
+      if (uVar15 == 0) {
+        if (uVar13 == 0) goto LAB_00002880;
+        uVar12 = uVar12 << 0x10;
+        if (uVar13 >= 0x10000) {
+          uVar12 = uVar13;
+        }
+        uVar15 = (uint)(uVar13 < 0x10000);
+        bVar3 = uVar12 >> 0x18 != 0;
+        uVar8 = uVar12 << 8;
+        if (bVar3) {
+          uVar8 = uVar12;
+        }
+        uVar12 = uVar15 << 4 | 8;
+        if (bVar3) {
+          uVar12 = uVar15 << 4;
+        }
+        uVar12 = (uVar12 + (byte)(&softfloat_countLeadingZeros8)[uVar8 >> 0x18]) - 8;
+        uVar15 = 1 - (int)(char)uVar12;
+        uVar13 = uVar13 << (ulong)(uVar12 & 0x1f);
+      }
+      uVar14 = (ulong)(uVar13 << 7 | 0x40000000) * (ulong)(uVar5 << 7 | 0x40000000);
+      bVar3 = uVar14 >> 0x3d == 0;
+      iVar10 = -0x7f;
+      if (!bVar3) {
+        iVar10 = -0x7e;
+      }
+      uVar5 = uVar15 + uVar2 + iVar10;
+      uVar14 = uVar14 << bVar3;
+      if (uVar9 == 0) {
+        if (uVar6 == 0) {
+          uVar4 = uVar4 >> 0x1f;
+          uVar9 = uVar5 - 1;
+          uVar13 = (uint)(uVar14 >> 0x1f) | (uint)((uVar14 & 0x7fffc000) != 0);
+          goto joined_r0x00002a94;
+        }
+        uVar13 = uVar1 << 0x10;
+        if (uVar6 >= 0x10000) {
+          uVar13 = uVar6;
+        }
+        uVar8 = (uint)(uVar6 < 0x10000);
+        bVar3 = uVar13 >> 0x18 != 0;
+        uVar12 = uVar13 << 8;
+        if (bVar3) {
+          uVar12 = uVar13;
+        }
+        uVar13 = uVar8 << 4 | 8;
+        if (bVar3) {
+          uVar13 = uVar8 << 4;
+        }
+        uVar13 = (uVar13 + (byte)(&softfloat_countLeadingZeros8)[uVar12 >> 0x18]) - 8;
+        uVar9 = 1 - (int)(char)uVar13;
+        uVar6 = uVar6 << (ulong)(uVar13 & 0x1f);
+      }
+      uVar6 = uVar6 << 6 | 0x20000000;
+      uVar13 = uVar5 - uVar9;
+      if (-1 < (int)(uVar4 ^ uVar1)) {
+        uVar12 = (uint)(short)uVar13;
+        if ((int)uVar12 < 1) {
+          if (0x20 - uVar12 < 0x3f) {
+            uVar13 = (uint)(uVar14 >> ((ulong)(0x20 - uVar12) & 0x3f)) |
+                     (uint)(uVar14 << ((ulong)(uVar12 + 0x20) & 0x3f) != 0);
+          }
+          else {
+            uVar13 = 1;
+          }
+          uVar13 = uVar13 + uVar6;
+        }
+        else {
+          if ((uVar13 & 0xffff) < 0x3f) {
+            uVar7 = ((ulong)uVar6 << 0x20) >> ((ulong)uVar12 & 0x3f) |
+                    (ulong)(((ulong)uVar6 << 0x20) << ((ulong)-uVar12 & 0x3f) != 0);
+          }
+          else {
+            uVar7 = 1;
+          }
+          uVar13 = (uint)(uVar7 + uVar14 >> 0x20) | (uint)((int)(uVar7 + uVar14) != 0);
+          uVar9 = uVar5;
+        }
+        uVar4 = uVar4 >> 0x1f;
+        if (uVar13 >> 0x1e == 0) {
+          uVar9 = uVar9 - 1;
+          uVar13 = uVar13 << 1;
+        }
+        goto joined_r0x00002a94;
+      }
+      uVar7 = (ulong)uVar6 << 0x20;
+      uVar6 = (uint)(short)uVar13;
+      if ((uVar13 >> 0xf & 1) == 0) {
+        if ((uVar5 & 0xffff) == (uVar9 & 0xffff)) {
+          uVar14 = uVar14 - uVar7;
+          if (uVar14 == 0) goto LAB_00002894;
+          if ((long)uVar14 < 0) {
+            uVar4 = ~uVar4 >> 0x1f;
+            uVar14 = -uVar14;
+          }
+          else {
+            uVar4 = uVar4 >> 0x1f;
+          }
+        }
+        else {
+          if ((uVar13 & 0xffff) < 0x3f) {
+            uVar7 = uVar7 >> ((ulong)uVar6 & 0x3f) | (ulong)(uVar7 << ((ulong)-uVar6 & 0x3f) != 0);
+          }
+          else {
+            uVar7 = 1;
+          }
+          uVar4 = uVar4 >> 0x1f;
+          uVar14 = uVar14 - uVar7;
+        }
+      }
+      else {
+        if (-uVar6 < 0x3f) {
+          uVar14 = uVar14 >> ((ulong)-uVar6 & 0x3f) | (ulong)(uVar14 << ((ulong)uVar6 & 0x3f) != 0);
+        }
+        else {
+          uVar14 = 1;
+        }
+        uVar4 = uVar1 >> 0x1f;
+        uVar14 = uVar7 - uVar14;
+        uVar5 = uVar9;
+      }
+      uVar6 = (uint)(uVar14 >> 0x20);
+      uVar12 = (uint)(uVar6 == 0);
+      uVar13 = (uint)uVar14;
+      if (uVar6 != 0) {
+        uVar13 = uVar6;
+      }
+      uVar6 = uVar13 << 0x10;
+      uVar8 = uVar12 << 5 | 0x10;
+      if (0xffff < uVar13) {
+        uVar6 = uVar13;
+        uVar8 = uVar12 << 5;
+      }
+      uVar13 = uVar6 << 8;
+      uVar12 = uVar8 | 8;
+      if (uVar6 >> 0x18 != 0) {
+        uVar13 = uVar6;
+        uVar12 = uVar8;
+      }
+      iVar10 = uVar12 + (byte)(&softfloat_countLeadingZeros8)[uVar13 >> 0x18];
+      if ((iVar10 - 0x21U >> 7 & 1) == 0) {
+        uVar13 = (uint)uVar14 << (ulong)((int)(char)(iVar10 - 0x21U) & 0x1f);
+      }
+      else {
+        uVar13 = (uint)(uVar14 >> ((ulong)(0x21 - iVar10) & 0x3f)) |
+                 (uint)((uVar14 & (-1L << ((ulong)(0x21 - iVar10) & 0x3f) ^ 0xffffffffffffffffU)) !=
+                       0);
+      }
+      uVar4 = (uint)(uVar4 != 0);
+      uVar9 = uVar5 - (int)(char)((char)iVar10 + -1);
+joined_r0x00002a94:
+      if (0xfc < (uVar9 & 0xffff)) {
+        if ((uVar9 >> 0xf & 1) == 0) {
+          if ((0xfd < (uVar9 & 0xffff)) || ((int)(uVar13 + 0x40) < 0)) {
+            uVar5 = 0xff800000;
+            if (uVar4 == 0) {
+              uVar5 = 0x7f800000;
+            }
+            *in_x8 = uVar5;
+            return;
+          }
+          uVar9 = 0xfd;
+        }
+        else {
+          uVar5 = uVar13 >> (ulong)(-uVar9 & 0x1f);
+          iVar10 = uVar13 << (ulong)(uVar9 & 0x1f);
+          uVar13 = (uint)(uVar13 != 0);
+          if ((-uVar9 & 0xffff) < 0x1f) {
+            uVar13 = uVar5 | iVar10 != 0;
+          }
+          uVar9 = 0;
+        }
+      }
+      uVar5 = 0x80000000;
+      if (uVar4 == 0) {
+        uVar5 = 0;
+      }
+      uVar13 = ~(uint)((uVar13 & 0x7f) == 0x40) & uVar13 + 0x40 >> 7;
+      iVar10 = 0;
+      if (uVar13 != 0) {
+        iVar10 = uVar9 << 0x17;
+      }
+      *in_x8 = (uVar13 | uVar5) + iVar10;
+      return;
+    }
+    if (uVar13 == 0) {
+      if (uVar2 != 0 || uVar5 != 0) goto LAB_000026ac;
+      goto LAB_000026cc;
+    }
+LAB_0000262c:
+    if (uVar5 != 0 && ((uVar8 ^ 0xffffffff) & 0x7f800000) == 0) {
+      uVar12 = uVar8;
+    }
+    if ((uVar8 & 0x7fc00000) != 0x7f800000 || (uVar8 & 0x3fffff) == 0) {
+      uVar8 = uVar12;
+    }
+    uVar11 = uVar8 | 0x400000;
+  }
+  if (((uVar11 & 0x7fc00000) == 0x7f800000) && ((uVar11 & 0x3fffff) != 0)) {
+    *in_x8 = uVar11 | 0x400000;
+    return;
+  }
+LAB_000026d0:
+  if ((uVar11 & 0x7fffff) != 0 && ((uVar11 ^ 0xffffffff) & 0x7f800000) == 0) {
+    uVar1 = uVar11;
+  }
+  *in_x8 = uVar1 | 0x400000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: mulAdd
+// Entry: 00002b40
+// Signature: undefined __thiscall mulAdd(cv * this, softdouble * param_1, softdouble * param_2, softdouble * param_3)
+// ========================================
+
+
+/* cv::mulAdd(cv::softdouble const&, cv::softdouble const&, cv::softdouble const&) */
+
+void __thiscall cv::mulAdd(cv *this,softdouble *param_1,softdouble *param_2,softdouble *param_3)
+
+{
+  char cVar1;
+  byte bVar2;
+  byte bVar3;
+  bool bVar4;
+  uint uVar5;
+  uint uVar6;
+  ulong uVar7;
+  ulong *in_x8;
+  uint uVar8;
+  uint uVar9;
+  long lVar10;
+  uint uVar11;
+  ulong uVar12;
+  ulong uVar13;
+  ulong uVar14;
+  uint uVar15;
+  ulong uVar16;
+  ulong uVar17;
+  ulong uVar18;
+  ulong uVar19;
+  uint uVar20;
+  int iVar21;
+  ulong uVar22;
+  
+  uVar7 = *(ulong *)this;
+  uVar19 = *(ulong *)param_1;
+  uVar5 = (uint)(uVar7 >> 0x34) & 0x7ff;
+  uVar16 = uVar7 & 0xfffffffffffff;
+  uVar13 = *(ulong *)param_2;
+  uVar20 = (uint)(uVar19 >> 0x34) & 0x7ff;
+  uVar18 = uVar19 & 0xfffffffffffff;
+  uVar12 = uVar13 >> 0x34 & 0x7ff;
+  uVar14 = uVar13 & 0xfffffffffffff;
+  uVar8 = (uint)((uVar19 ^ uVar7) >> 0x20);
+  uVar15 = uVar8 >> 0x1f;
+  uVar11 = (uint)uVar12;
+  uVar8 = -((int)uVar8 >> 0x1f);
+  uVar9 = -(int)((long)uVar13 >> 0x3f);
+  if (uVar5 == 0x7ff) {
+    if ((uVar16 != 0) || ((uVar18 != 0 && (uVar20 == 0x7ff)))) goto LAB_00002ba8;
+    if ((uVar19 >> 0x34 & 0x7ff) == 0 && uVar18 == 0) {
+LAB_00002c4c:
+      uVar17 = 0xfff8000000000000;
+      goto LAB_00002c50;
+    }
+LAB_00002c30:
+    uVar17 = (uVar19 ^ uVar7) & 0x8000000000000000 | 0x7ff0000000000000;
+    if (uVar11 != 0x7ff) goto LAB_00002e8c;
+    if (uVar14 == 0) {
+      if (uVar8 == uVar9) goto LAB_00002e8c;
+      goto LAB_00002c4c;
+    }
+  }
+  else {
+    if (uVar20 != 0x7ff) {
+      uVar17 = uVar13;
+      if (uVar11 == 0x7ff) {
+        if (uVar14 == 0) goto LAB_00002e8c;
+        uVar17 = 0;
+        goto LAB_00002c50;
+      }
+      if (uVar5 == 0) {
+        if (uVar16 != 0) {
+          uVar6 = (uint)(uVar16 >> 0x20);
+          bVar4 = uVar6 == 0;
+          uVar5 = (uint)uVar7;
+          if (!bVar4) {
+            uVar5 = uVar6;
+          }
+          uVar6 = uVar5 << 0x10;
+          bVar2 = bVar4 << 5 | 0x10;
+          if (0xffff < uVar5) {
+            uVar6 = uVar5;
+            bVar2 = bVar4 << 5;
+          }
+          uVar5 = uVar6 << 8;
+          bVar3 = bVar2 | 8;
+          if (uVar6 >> 0x18 != 0) {
+            uVar5 = uVar6;
+            bVar3 = bVar2;
+          }
+          cVar1 = bVar3 + (&softfloat_countLeadingZeros8)[uVar5 >> 0x18] + -0xb;
+          uVar16 = uVar16 << ((long)cVar1 & 0x3fU);
+          uVar5 = 1 - (int)cVar1;
+          goto joined_r0x00002ce0;
+        }
+LAB_00002e74:
+        if ((uVar8 == uVar9) || (uVar12 != 0 || uVar14 != 0)) goto LAB_00002e8c;
+LAB_00002e88:
+        uVar17 = 0;
+LAB_00002e8c:
+        *in_x8 = uVar17;
+        return;
+      }
+joined_r0x00002ce0:
+      if (uVar20 == 0) {
+        if (uVar18 == 0) goto LAB_00002e74;
+        uVar6 = (uint)(uVar18 >> 0x20);
+        bVar4 = uVar6 == 0;
+        uVar20 = (uint)uVar19;
+        if (!bVar4) {
+          uVar20 = uVar6;
+        }
+        uVar6 = uVar20 << 0x10;
+        bVar2 = bVar4 << 5 | 0x10;
+        if (0xffff < uVar20) {
+          uVar6 = uVar20;
+          bVar2 = bVar4 << 5;
+        }
+        uVar20 = uVar6 << 8;
+        bVar3 = bVar2 | 8;
+        if (uVar6 >> 0x18 != 0) {
+          uVar20 = uVar6;
+          bVar3 = bVar2;
+        }
+        cVar1 = bVar3 + (&softfloat_countLeadingZeros8)[uVar20 >> 0x18] + -0xb;
+        uVar18 = uVar18 << ((long)cVar1 & 0x3fU);
+        uVar20 = 1 - (int)cVar1;
+      }
+      uVar22 = uVar16 << 10 | 0x4000000000000000;
+      uVar7 = uVar18 << 10 | 0x4000000000000000;
+      uVar12 = uVar22 >> 0x20;
+      uVar17 = uVar7 >> 0x20;
+      uVar18 = (uVar18 << 10 & 0xfffffc00) * uVar12;
+      uVar16 = uVar17 * (uVar16 << 10 & 0xfffffc00);
+      uVar19 = uVar16 + uVar18;
+      lVar10 = 0x100000000;
+      if (!CARRY8(uVar16,uVar18)) {
+        lVar10 = 0;
+      }
+      uVar7 = uVar7 * uVar22;
+      uVar16 = (uVar19 >> 0x20) + uVar17 * uVar12 + lVar10;
+      if (uVar7 < uVar19 << 0x20) {
+        uVar16 = uVar16 + 1;
+      }
+      bVar4 = uVar16 >> 0x3d == 0;
+      uVar12 = uVar7 << bVar4;
+      uVar19 = uVar7 >> 0x3f | uVar16 << 1;
+      if (!bVar4) {
+        uVar19 = uVar16;
+      }
+      iVar21 = -0x3ff;
+      if (!bVar4) {
+        iVar21 = -0x3fe;
+      }
+      uVar5 = uVar20 + uVar5 + iVar21;
+      if (uVar11 == 0) {
+        if (uVar14 == 0) {
+          uVar20 = uVar5 - 1;
+          uVar19 = (ulong)(uVar12 != 0) | uVar19 << 1;
+          goto joined_r0x00002fa4;
+        }
+        uVar11 = (uint)(uVar14 >> 0x20);
+        bVar4 = uVar11 == 0;
+        uVar20 = (uint)uVar13;
+        if (!bVar4) {
+          uVar20 = uVar11;
+        }
+        uVar11 = uVar20 << 0x10;
+        bVar2 = bVar4 << 5 | 0x10;
+        if (0xffff < uVar20) {
+          uVar11 = uVar20;
+          bVar2 = bVar4 << 5;
+        }
+        uVar20 = uVar11 << 8;
+        bVar3 = bVar2 | 8;
+        if (uVar11 >> 0x18 != 0) {
+          uVar20 = uVar11;
+          bVar3 = bVar2;
+        }
+        cVar1 = bVar3 + (&softfloat_countLeadingZeros8)[uVar20 >> 0x18] + -0xb;
+        uVar14 = uVar14 << ((long)cVar1 & 0x3fU);
+        uVar11 = 1 - (int)cVar1;
+      }
+      uVar7 = uVar14 << 9 | 0x2000000000000000;
+      uVar6 = (uint)(short)(uVar5 - uVar11);
+      uVar13 = (ulong)uVar6;
+      if ((uVar5 - uVar11 >> 0xf & 1) == 0) {
+        uVar20 = uVar5;
+        if ((uVar5 & 0xffff) == (uVar11 & 0xffff)) {
+joined_r0x00002f04:
+          uVar13 = 0;
+          uVar16 = 0;
+        }
+        else if (uVar6 < 0x40) {
+          uVar13 = uVar7 >> (uVar13 & 0x3f);
+          uVar16 = uVar7 << ((ulong)-uVar6 & 0x3f);
+        }
+        else {
+          uVar16 = 1;
+          if (uVar6 < 0x7f) {
+            uVar16 = uVar7 >> (uVar13 & 0x3f) |
+                     (ulong)((uVar7 & (-1L << (uVar13 & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+          }
+joined_r0x00002fc4:
+          uVar13 = 0;
+        }
+        if (uVar8 == uVar9) {
+          uVar13 = uVar19 + uVar13 + (ulong)CARRY8(uVar16,uVar12);
+          uVar16 = uVar16 + uVar12;
+          if ((int)uVar6 < 1) {
+            uVar13 = uVar19 + uVar7;
+            uVar16 = uVar12;
+          }
+          uVar19 = uVar13 | uVar16 != 0;
+          if (uVar13 >> 0x3e == 0) {
+            uVar20 = uVar20 - 1;
+            uVar19 = uVar19 << 1;
+          }
+          goto joined_r0x00002fa4;
+        }
+        if ((int)uVar6 < 0) goto LAB_0000300c;
+        if ((uVar5 & 0xffff) == (uVar11 & 0xffff)) {
+          uVar19 = uVar19 - uVar7;
+          if (uVar19 == 0 && uVar12 == 0) goto LAB_00002e88;
+          if ((uVar19 & 0x8000000000000000) != 0) {
+            uVar19 = -uVar19 - (ulong)(uVar12 != 0);
+            uVar12 = -uVar12;
+            uVar8 = uVar8 ^ 1;
+          }
+        }
+        else {
+          uVar19 = (uVar19 - uVar13) - (ulong)(uVar12 < uVar16);
+          uVar12 = uVar12 - uVar16;
+        }
+      }
+      else {
+        uVar20 = uVar11;
+        if ((uVar8 == uVar9) || (uVar6 != 0xffffffff)) {
+          if (0x3e < -uVar6) {
+            uVar19 = (ulong)(uVar19 != 0);
+            uVar16 = 0;
+            goto joined_r0x00002fc4;
+          }
+          uVar19 = uVar19 >> ((ulong)-uVar6 & 0x3f) | (ulong)(uVar19 << (uVar13 & 0x3f) != 0);
+          goto joined_r0x00002f04;
+        }
+        uVar12 = uVar12 >> 1 | uVar19 << 0x3f;
+        uVar19 = uVar19 >> 1;
+LAB_0000300c:
+        uVar19 = (uVar7 - uVar19) - (ulong)(uVar12 != 0);
+        uVar12 = -uVar12;
+        uVar8 = uVar9;
+      }
+      uVar5 = uVar20 - 0x40;
+      uVar7 = uVar12;
+      uVar13 = 0;
+      if (uVar19 != 0) {
+        uVar5 = uVar20;
+        uVar7 = uVar19;
+        uVar13 = uVar12;
+      }
+      uVar11 = (uint)(uVar7 >> 0x20);
+      uVar15 = (uint)(uVar11 == 0);
+      uVar20 = (uint)uVar7;
+      if (uVar11 != 0) {
+        uVar20 = uVar11;
+      }
+      uVar11 = uVar20 << 0x10;
+      uVar9 = uVar15 << 5 | 0x10;
+      if (0xffff < uVar20) {
+        uVar11 = uVar20;
+        uVar9 = uVar15 << 5;
+      }
+      uVar20 = uVar11 << 8;
+      uVar15 = uVar9 | 8;
+      if (uVar11 >> 0x18 != 0) {
+        uVar20 = uVar11;
+        uVar15 = uVar9;
+      }
+      uVar11 = (uVar15 + (byte)(&softfloat_countLeadingZeros8)[uVar20 >> 0x18]) - 1;
+      uVar9 = (uint)(char)uVar11;
+      uVar12 = (ulong)(1 - (uVar15 + (byte)(&softfloat_countLeadingZeros8)[uVar20 >> 0x18]));
+      uVar19 = uVar13 << ((ulong)uVar9 & 0x3f);
+      uVar16 = uVar13 >> (uVar12 & 0x3f) | uVar7 << ((ulong)uVar9 & 0x3f);
+      if ((uVar11 & 0x80) != 0) {
+        uVar19 = uVar13;
+        uVar16 = uVar7 >> (uVar12 & 0x3f) |
+                 (ulong)((uVar7 & (-1L << (uVar12 & 0x3f) ^ 0xffffffffffffffffU)) != 0);
+      }
+      uVar15 = (uint)(uVar8 != 0);
+      uVar8 = (uint)(uVar8 != 0);
+      uVar20 = uVar5 - uVar9;
+      uVar19 = uVar16 | uVar19 != 0;
+joined_r0x00002fa4:
+      uVar7 = (ulong)uVar20;
+      if (0x7fc < (uVar20 & 0xffff)) {
+        uVar8 = uVar15;
+        if ((uVar20 >> 0xf & 1) == 0) {
+          if ((0x7fd < (uVar20 & 0xffff)) || ((long)(uVar19 + 0x200) < 0)) {
+            uVar19 = 0xfff0000000000000;
+            if (uVar15 == 0) {
+              uVar19 = 0x7ff0000000000000;
+            }
+            *in_x8 = uVar19;
+            return;
+          }
+          uVar7 = 0x7fd;
+        }
+        else {
+          uVar5 = -(int)(short)uVar20;
+          uVar7 = uVar19 >> ((ulong)uVar5 & 0x3f);
+          lVar10 = uVar19 << ((ulong)(uint)(int)(short)uVar20 & 0x3f);
+          uVar19 = (ulong)(uVar19 != 0);
+          if (uVar5 < 0x3f) {
+            uVar19 = uVar7 | lVar10 != 0;
+          }
+          uVar7 = 0;
+        }
+      }
+      uVar13 = 0x8000000000000000;
+      if (uVar8 == 0) {
+        uVar13 = 0;
+      }
+      uVar19 = ~(ulong)((uVar19 & 0x3ff) == 0x200) & uVar19 + 0x200 >> 10;
+      lVar10 = 0;
+      if (uVar19 != 0) {
+        lVar10 = uVar7 << 0x34;
+      }
+      *in_x8 = (uVar19 | uVar13) + lVar10;
+      return;
+    }
+    if (uVar18 == 0) {
+      if ((uVar7 >> 0x34 & 0x7ff) != 0 || uVar16 != 0) goto LAB_00002c30;
+      goto LAB_00002c4c;
+    }
+LAB_00002ba8:
+    if (uVar16 != 0 && ((uVar7 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+      uVar19 = uVar7;
+    }
+    if ((uVar7 & 0x7ff8000000000000) != 0x7ff0000000000000 || (uVar7 & 0x7ffffffffffff) == 0) {
+      uVar7 = uVar19;
+    }
+    uVar17 = uVar7 | 0x8000000000000;
+  }
+  if (((uVar17 & 0x7ff8000000000000) == 0x7ff0000000000000) && ((uVar17 & 0x7ffffffffffff) != 0)) {
+    *in_x8 = uVar17 | 0x8000000000000;
+    return;
+  }
+LAB_00002c50:
+  if ((uVar17 & 0xfffffffffffff) != 0 && ((uVar17 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0)
+  {
+    uVar13 = uVar17;
+  }
+  *in_x8 = uVar13 | 0x8000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: sqrt
+// Entry: 000031b4
+// Signature: undefined __thiscall sqrt(cv * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::sqrt(cv::softfloat const&) */
+
+void __thiscall cv::sqrt(cv *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  long lVar6;
+  uint uVar7;
+  bool bVar8;
+  uint *in_x8;
+  uint uVar9;
+  uint uVar10;
+  
+  uVar1 = *(uint *)this;
+  uVar7 = uVar1 >> 0x17 & 0xff;
+  uVar10 = uVar1 & 0x7fffff;
+  if (uVar7 == 0xff) {
+    if (uVar10 != 0) {
+      uVar10 = uVar1 | 0x400000;
+      if (((uVar1 & 0x3fffff) == 0 || (uVar1 & 0x7fc00000) != 0x7f800000) &&
+          ((uVar1 ^ 0xffffffff) & 0x7f800000) != 0) {
+        uVar10 = 0x400000;
+      }
+      *in_x8 = uVar10;
+      return;
+    }
+    if ((int)uVar1 < 0) {
+LAB_00003350:
+      *in_x8 = 0xffc00000;
+      return;
+    }
+  }
+  else {
+    if (-1 < (int)uVar1) {
+      if (uVar7 == 0) {
+        if (uVar10 == 0) goto LAB_00003340;
+        uVar1 = uVar1 << 0x10;
+        if (uVar10 >= 0x10000) {
+          uVar1 = uVar10;
+        }
+        uVar9 = (uint)(uVar10 < 0x10000);
+        bVar8 = uVar1 >> 0x18 != 0;
+        uVar7 = uVar1 << 8;
+        if (bVar8) {
+          uVar7 = uVar1;
+        }
+        uVar1 = uVar9 << 4 | 8;
+        if (bVar8) {
+          uVar1 = uVar9 << 4;
+        }
+        uVar1 = (uVar1 + (byte)(&softfloat_countLeadingZeros8)[uVar7 >> 0x18]) - 8;
+        uVar7 = 1 - (int)(char)uVar1;
+        uVar10 = uVar10 << (ulong)(uVar1 & 0x1f);
+      }
+      uVar2 = uVar7 + 0x1ff81 >> 1;
+      uVar1 = uVar2 + 0x7e;
+      lVar6 = (ulong)(uVar10 >> 0x13 & 0xe | uVar7 & 1) * 2;
+      uVar5 = uVar10 << 8 | 0x80000000;
+      uVar10 = (uint)*(ushort *)(&softfloat_approxRecipSqrt_1k0s + lVar6) -
+               ((uVar10 >> 4 & 0xffff) * (uint)*(ushort *)(&softfloat_approxRecipSqrt_1k1s + lVar6)
+               >> 0x14);
+      uVar9 = uVar10 & 0xffff;
+      uVar4 = ~(uint)((ulong)(uVar9 * uVar9 << ((uVar7 & 1) == 0)) * (ulong)uVar5 >> 0x17);
+      uVar10 = (int)((ulong)(uVar10 & 0xffff) * (ulong)uVar4 >> 0x19) + uVar10 * 0x10000;
+      uVar10 = uVar10 + (ushort)(((ulong)uVar4 * (ulong)uVar4 >> 0x20) *
+                                 (ulong)((uVar10 >> 3) + uVar9 * -0x4000 + (uVar10 >> 1)) >> 0x30);
+      if (uVar10 < 0x80000001) {
+        uVar10 = 0x80000000;
+      }
+      uVar10 = ((uint)((ulong)uVar10 * (ulong)uVar5 >> 0x20) >> (ulong)(uVar7 & 1)) + 2;
+      if ((uVar10 & 0x3e) == 0) {
+        iVar3 = (uVar10 >> 2) * (uVar10 >> 2);
+        if (iVar3 < 0) {
+          uVar10 = uVar10 & 0xfffffffc | 1;
+        }
+        else {
+          uVar10 = (uVar10 & 0xfffffffc) - (uint)(iVar3 != 0);
+        }
+      }
+      if (0xfc < (uVar1 & 0xffff)) {
+        uVar1 = 0;
+        uVar10 = uVar10 >> (ulong)(0xff82 - uVar2 & 0x1f) |
+                 (uint)(uVar10 << (ulong)(uVar2 + 0x1e & 0x1f) != 0);
+      }
+      uVar10 = ~(uint)((uVar10 & 0x7f) == 0x40) & uVar10 + 0x40 >> 7;
+      iVar3 = 0;
+      if (uVar10 != 0) {
+        iVar3 = uVar1 << 0x17;
+      }
+      *in_x8 = iVar3 + uVar10;
+      return;
+    }
+    if (uVar7 != 0 || uVar10 != 0) goto LAB_00003350;
+  }
+LAB_00003340:
+  *in_x8 = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: sqrt
+// Entry: 000033bc
+// Signature: undefined __thiscall sqrt(cv * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::sqrt(cv::softdouble const&) */
+
+void __thiscall cv::sqrt(cv *this,softdouble *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  char cVar3;
+  byte bVar4;
+  byte bVar5;
+  bool bVar6;
+  ulong *in_x8;
+  ulong uVar7;
+  ulong uVar8;
+  long lVar9;
+  uint uVar10;
+  ulong uVar11;
+  long lVar12;
+  
+  uVar7 = *(ulong *)this;
+  uVar11 = uVar7 >> 0x34 & 0x7ff;
+  uVar8 = uVar7 & 0xfffffffffffff;
+  if ((int)uVar11 == 0x7ff) {
+    if (uVar8 != 0) {
+      uVar8 = uVar7 | 0x8000000000000;
+      if (((uVar7 & 0x7ffffffffffff) == 0 || (uVar7 & 0x7ff8000000000000) != 0x7ff0000000000000) &&
+          ((uVar7 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0) {
+        uVar8 = 0x8000000000000;
+      }
+      *in_x8 = uVar8;
+      return;
+    }
+    if ((long)uVar7 < 0) {
+LAB_00003598:
+      *in_x8 = 0xfff8000000000000;
+      return;
+    }
+  }
+  else {
+    if (-1 < (long)uVar7) {
+      if ((int)uVar11 == 0) {
+        if (uVar8 == 0) goto LAB_00003588;
+        uVar10 = (uint)(uVar8 >> 0x20);
+        bVar6 = uVar10 == 0;
+        uVar2 = (uint)uVar7;
+        if (!bVar6) {
+          uVar2 = uVar10;
+        }
+        uVar10 = uVar2 << 0x10;
+        bVar4 = bVar6 << 5 | 0x10;
+        if (0xffff < uVar2) {
+          uVar10 = uVar2;
+          bVar4 = bVar6 << 5;
+        }
+        uVar2 = uVar10 << 8;
+        bVar5 = bVar4 | 8;
+        if (uVar10 >> 0x18 != 0) {
+          uVar2 = uVar10;
+          bVar5 = bVar4;
+        }
+        cVar3 = bVar5 + (&softfloat_countLeadingZeros8)[uVar2 >> 0x18] + -0xb;
+        uVar8 = uVar8 << ((long)cVar3 & 0x3fU);
+        uVar11 = (ulong)(1 - (int)cVar3);
+      }
+      lVar9 = (uVar11 & 1 | (uVar8 >> 0x31 & 7) << 1) * 2;
+      uVar2 = (uint)*(ushort *)(&softfloat_approxRecipSqrt_1k0s + lVar9) -
+              (((uint)((uVar8 | 0x10000000000000) >> 0x15) >> 0xc & 0xffff) *
+               (uint)*(ushort *)(&softfloat_approxRecipSqrt_1k1s + lVar9) >> 0x14);
+      uVar10 = uVar2 & 0xffff;
+      bVar6 = (uVar11 & 1) == 0;
+      uVar1 = ~(uint)(((uVar8 & 0x1fffffffe00000 | 0x10000000000000) >> 0x15) *
+                      (ulong)(uVar10 * uVar10 << bVar6) >> 0x17);
+      uVar2 = (int)((ulong)(uVar2 & 0xffff) * (ulong)uVar1 >> 0x19) + uVar2 * 0x10000;
+      lVar9 = 8;
+      if (bVar6) {
+        lVar9 = 9;
+      }
+      uVar2 = uVar2 + (ushort)(((ulong)uVar1 * (ulong)uVar1 >> 0x20) *
+                               (ulong)((uVar2 >> 3) + uVar10 * -0x4000 + (uVar2 >> 1)) >> 0x30);
+      if (uVar2 < 0x80000001) {
+        uVar2 = 0x80000000;
+      }
+      uVar10 = (uint)(((uVar8 & 0x1fffffffe00000 | 0x10000000000000) >> 0x15) * (ulong)uVar2 >> 0x20
+                     ) >> (uVar11 & 1);
+      lVar9 = (uVar8 | 0x10000000000000) << lVar9;
+      uVar7 = ((lVar9 - (ulong)uVar10 * (ulong)uVar10 >> 2 & 0xffffffff) * (ulong)uVar2 >> 0x1d &
+              0x7fffffff8) + ((ulong)uVar10 << 0x20) + 0x20;
+      if ((uVar7 & 0x1f8) < 0x22) {
+        lVar9 = lVar9 << 0x34;
+        lVar12 = (uVar7 >> 6) * (uVar7 >> 6);
+        if (lVar9 - lVar12 < 0) {
+          uVar7 = (uVar7 & 0xffffffffffffffc0) - 1;
+        }
+        else {
+          uVar7 = uVar7 & 0xffffffffffffffc0 | (ulong)(lVar9 != lVar12);
+        }
+      }
+      uVar7 = ~(ulong)((uVar7 & 0x3ff) == 0x200) & uVar7 + 0x200 >> 10;
+      lVar9 = 0;
+      if (uVar7 != 0) {
+        lVar9 = ((ulong)((int)uVar11 + 0x1c01U >> 1 & 0x7fff) << 0x34) + 0x3fe0000000000000;
+      }
+      *in_x8 = lVar9 + uVar7;
+      return;
+    }
+    if (uVar11 != 0 || uVar8 != 0) goto LAB_00003598;
+  }
+LAB_00003588:
+  *in_x8 = uVar7;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: exp
+// Entry: 000035d8
+// Signature: undefined __thiscall exp(cv * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::exp(cv::softfloat const&) */
+
+void __thiscall cv::exp(cv *this,softfloat *param_1)
+
+{
+  f32_exp();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f32_exp
+// Entry: 00003604
+// Signature: undefined __thiscall f32_exp(cv * this, softfloat param_1)
+// ========================================
+
+
+/* cv::f32_exp(cv::softfloat) */
+
+void __thiscall cv::f32_exp(cv *this,uint *param_2)
+
+{
+  ulong uVar1;
+  uint uVar2;
+  byte bVar3;
+  int iVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  ulong uVar11;
+  uint uVar12;
+  cv acStack_98 [8];
+  ulonglong local_90;
+  cv acStack_88 [8];
+  ulonglong local_80;
+  cv acStack_78 [8];
+  ulonglong local_70;
+  cv acStack_68 [8];
+  undefined8 local_60;
+  softdouble asStack_58 [8];
+  cv acStack_50 [8];
+  ulonglong local_48;
+  ulong local_40;
+  ulong local_38;
+  
+  uVar10 = *param_2;
+  if (0x7f800000 < (uVar10 & 0x7fffffff)) {
+    *(undefined4 *)this = 0x7fffffff;
+    return;
+  }
+  if ((uVar10 & 0x7fffffff) == 0x7f800000) {
+    if (uVar10 == 0x7f800000 &&
+        ((uVar10 & 0x7fffff) == 0 || ((uVar10 ^ 0xffffffff) & 0x7f800000) != 0)) {
+      *(undefined4 *)this = 0x7f800000;
+      return;
+    }
+    *(undefined4 *)this = 0;
+    return;
+  }
+  if (((DAT_00008ea8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008ea8), iVar4 != 0)) {
+    local_38 = 0x3ff0000000000000;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008ea8);
+  }
+  if (((DAT_00008eb8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008eb8), iVar4 != 0)) {
+    local_38 = 0x3fe62e42fef9277b;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008eb8);
+  }
+  if (((DAT_00008ec8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008ec8), iVar4 != 0)) {
+    local_38 = 0x3fcebfbe081585e7;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008ec8);
+  }
+  if (((DAT_00008ed8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008ed8), iVar4 != 0)) {
+    local_38 = 0x3fac6af0d93cf576;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008ed8);
+  }
+  uVar10 = *param_2;
+  uVar6 = (ulong)uVar10;
+  if ((uVar10 & 0x7f000000) < 0x44800001) {
+    uVar8 = uVar10 & 0x7fffff;
+    if (((uVar10 ^ 0xffffffff) & 0x7f800000) == 0) {
+      if (uVar8 == 0) {
+        local_40 = (ulong)(uVar10 >> 0x1f) << 0x3f | 0x7ff0000000000000;
+      }
+      else {
+        local_40 = uVar6 << 0x1d | (ulong)(uVar10 >> 0x1f) << 0x3f | 0x7ff8000000000000;
+      }
+    }
+    else {
+      uVar9 = uVar10 >> 0x17 & 0xff;
+      if (uVar9 == 0) {
+        if (uVar8 == 0) {
+          local_40 = (uVar6 & 0x80000000) << 0x20;
+          goto LAB_000037dc;
+        }
+        uVar10 = uVar10 << 0x10;
+        if (uVar8 >= 0x10000) {
+          uVar10 = uVar8;
+        }
+        uVar12 = (uint)(uVar8 < 0x10000);
+        uVar9 = uVar12 << 4 | 8;
+        uVar2 = uVar10 << 8;
+        if (uVar10 >> 0x18 != 0) {
+          uVar9 = uVar12 << 4;
+          uVar2 = uVar10;
+        }
+        uVar10 = (uVar9 + (byte)(&softfloat_countLeadingZeros8)[uVar2 >> 0x18]) - 8;
+        uVar8 = uVar8 << (ulong)(uVar10 & 0x1f);
+        uVar9 = -(int)(char)uVar10;
+      }
+      local_40 = ((uVar6 & 0x80000000) << 0x20 | (ulong)uVar8 << 0x1d) + ((ulong)uVar9 << 0x34) +
+                 0x3800000000000000;
+    }
+LAB_000037dc:
+    softdouble::operator*((softdouble *)&local_40,(softdouble *)&exp_prescale);
+    uVar6 = local_38;
+  }
+  else {
+    uVar6 = 0x4107700000000000;
+    if ((int)uVar10 < 0) {
+      uVar6 = 0xc107700000000000;
+    }
+  }
+  uVar1 = uVar6 & 0xfffffffffffff;
+  uVar8 = (uint)(uVar6 >> 0x20);
+  uVar10 = uVar8 >> 0x14 & 0x7ff;
+  uVar11 = uVar1;
+  if ((uVar6 >> 0x34 & 0x7ff) != 0) {
+    uVar11 = uVar1 | 0x10000000000000;
+  }
+  uVar9 = (uint)(uVar1 == 0);
+  if (uVar10 != 0x7ff) {
+    uVar9 = 1;
+  }
+  uVar2 = 0;
+  if ((long)uVar6 < 0) {
+    uVar2 = uVar9;
+  }
+  if (uVar10 < 0x427) {
+    if (1000 < uVar10) {
+      uVar11 = uVar11 >> ((ulong)(0x427 - uVar10) & 0x3f) |
+               (ulong)(uVar11 << ((ulong)((uVar8 >> 0x14) + 0x19) & 0x3f) != 0);
+      goto LAB_00003850;
+    }
+    uVar11 = (ulong)(uVar11 != 0);
+LAB_0000386c:
+    uVar10 = (uint)(uVar11 + 0x800 >> 0xc) & ((uVar11 & 0xfff) == 0x800 ^ 0xffffffff);
+    uVar9 = -uVar10;
+    if (uVar2 == 0) {
+      uVar9 = uVar10;
+    }
+    if ((uVar10 != 0) && (uVar2 != -((int)uVar9 >> 0x1f))) goto LAB_00003898;
+  }
+  else {
+LAB_00003850:
+    if (uVar11 < 0xffffffff800) goto LAB_0000386c;
+LAB_00003898:
+    uVar9 = 0x80000000;
+    if (uVar2 == 0) {
+      uVar9 = 0x7fffffff;
+    }
+  }
+  iVar4 = (int)uVar9 >> 6;
+  if (0x3ff < iVar4) {
+    iVar4 = 0x400;
+  }
+  if (iVar4 < -0x3fe) {
+    iVar4 = -0x3ff;
+  }
+  local_40 = (ulong)(iVar4 + 0x3ff) << 0x34;
+  uVar10 = uVar8 >> 0x14 & 0x7ff;
+  bVar3 = (byte)(uVar6 >> 0x38);
+  iVar4 = (int)uVar8 >> 0x1f;
+  uVar11 = uVar6;
+  if (uVar10 < 0x3ff) {
+    uVar7 = uVar6 & 0x8000000000000000 | 0x3ff0000000000000;
+    if (uVar10 != 0x3fe || uVar1 == 0) {
+      uVar7 = uVar6 & 0x8000000000000000;
+    }
+    if ((uVar6 & 0x7fffffffffffffff) != 0) {
+      uVar11 = uVar7;
+    }
+    if (-iVar4 == -(int)((long)uVar11 >> 0x3f)) goto LAB_0000395c;
+  }
+  else if (uVar10 < 0x433) {
+    uVar7 = 1L << ((ulong)(0x433 - uVar10) & 0x3f);
+    uVar1 = uVar6 + (uVar7 >> 1);
+    uVar11 = 0xffffffffffffffff;
+    if ((uVar1 & uVar7 - 1) == 0) {
+      uVar11 = ~uVar7;
+    }
+    uVar11 = uVar11 & -uVar7 & uVar1;
+    if (-iVar4 == -(int)((long)uVar11 >> 0x3f)) goto LAB_0000395c;
+  }
+  else {
+    if (((uVar1 != 0) && (uVar10 == 0x7ff)) &&
+       (uVar11 = uVar6 | 0x8000000000000,
+       ((uVar6 & 0x7ffffffffffff) == 0 || (uVar6 & 0x7ff8000000000000) != 0x7ff0000000000000) &&
+       ((uVar6 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0)) {
+      uVar11 = 0x8000000000000;
+    }
+    if (-iVar4 == -(int)((long)uVar11 >> 0x3f)) {
+LAB_0000395c:
+      softfloat_subMagsF64(acStack_50,uVar6,uVar11,(bool)(bVar3 >> 7));
+      goto LAB_000039ac;
+    }
+  }
+  softfloat_addMagsF64(acStack_50,uVar6,uVar11,(bool)(bVar3 >> 7));
+LAB_000039ac:
+  softdouble::operator*((softdouble *)acStack_50,(softdouble *)&exp_postscale);
+  local_38 = local_48;
+  softdouble::operator*((softdouble *)&local_40,(softdouble *)&EXPPOLY_32F_A0);
+  local_60 = (&expTab)[uVar9 & 0x3f];
+  softdouble::operator*(asStack_58,(softdouble *)&local_60);
+  bVar5 = SUB81(local_48 >> 0x3f,0);
+  if (-(int)((long)local_48 >> 0x3f) == -(int)((long)DAT_00008ed0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_98,local_48,DAT_00008ed0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_98,local_48,DAT_00008ed0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_98,(softdouble *)&local_38);
+  bVar5 = SUB81(local_90 >> 0x3f,0);
+  if (-(int)((long)local_90 >> 0x3f) == -(int)((long)DAT_00008ec0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_88,local_90,DAT_00008ec0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_88,local_90,DAT_00008ec0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_88,(softdouble *)&local_38);
+  bVar5 = SUB81(local_80 >> 0x3f,0);
+  if (-(int)((long)local_80 >> 0x3f) == -(int)((long)DAT_00008eb0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_78,local_80,DAT_00008eb0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_78,local_80,DAT_00008eb0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_78,(softdouble *)&local_38);
+  bVar5 = SUB81(local_70 >> 0x3f,0);
+  if (-(int)((long)local_70 >> 0x3f) == -(int)((long)DAT_00008ea0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_68,local_70,DAT_00008ea0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_68,local_70,DAT_00008ea0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_50,(softdouble *)acStack_68);
+  softdouble::operator_cast_to_softfloat((softdouble *)&local_48);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: exp
+// Entry: 00003c64
+// Signature: undefined __thiscall exp(cv * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::exp(cv::softdouble const&) */
+
+void __thiscall cv::exp(cv *this,softdouble *param_1)
+
+{
+  f64_exp();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_exp
+// Entry: 00003c90
+// Signature: undefined __thiscall f64_exp(cv * this, softdouble param_1)
+// ========================================
+
+
+/* cv::f64_exp(cv::softdouble) */
+
+void __thiscall cv::f64_exp(cv *this,softdouble *param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  byte bVar3;
+  int iVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  uint uVar8;
+  uint uVar9;
+  ulong uVar10;
+  ulonglong local_a8;
+  cv acStack_a0 [8];
+  ulonglong local_98;
+  cv acStack_90 [8];
+  ulonglong local_88;
+  cv acStack_80 [8];
+  ulonglong local_78;
+  cv acStack_70 [8];
+  ulonglong local_68;
+  cv acStack_60 [8];
+  undefined8 local_58;
+  softdouble asStack_50 [8];
+  cv acStack_48 [8];
+  long local_40;
+  ulong local_38;
+  
+  uVar6 = *(ulong *)param_2;
+  if (0x7ff0000000000000 < (uVar6 & 0x7fffffffffffffff)) {
+    *(undefined8 *)this = 0x7fffffffffffffff;
+    return;
+  }
+  if ((uVar6 & 0x7fffffffffffffff) == 0x7ff0000000000000) {
+    if (uVar6 != 0x7ff0000000000000 ||
+        (uVar6 & 0xfffffffffffff) != 0 && ((uVar6 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0)
+    {
+      *(undefined8 *)this = 0;
+      return;
+    }
+    *(undefined8 *)this = 0x7ff0000000000000;
+    return;
+  }
+  if (((DAT_00008ee8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008ee8), iVar4 != 0)) {
+    local_38 = 0x3ff0000000000000;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008ee8);
+  }
+  if (((DAT_00008ef8 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008ef8), iVar4 != 0)) {
+    local_38 = 0x3fe62e42fefa39f1;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008ef8);
+  }
+  if (((DAT_00008f08 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008f08), iVar4 != 0)) {
+    local_38 = 0x3fcebfbdff82a45a;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008f08);
+  }
+  if (((DAT_00008f18 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008f18), iVar4 != 0)) {
+    local_38 = 0x3fac6b08d81fec75;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008f18);
+  }
+  if (((DAT_00008f28 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008f28), iVar4 != 0)) {
+    local_38 = 0x3f83b2a72b4f3cd3;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008f28);
+  }
+  if (((DAT_00008f38 & 1) == 0) && (iVar4 = ___cxa_guard_acquire(&DAT_00008f38), iVar4 != 0)) {
+    local_38 = 0x3f55e7aa1566c2a4;
+    softdouble::operator/((softdouble *)&local_38,(softdouble *)&EXPPOLY_32F_A0);
+    ___cxa_guard_release(&DAT_00008f38);
+  }
+  if ((*(ulong *)param_2 & 0x7fe0000000000000) < 0x4090000000000001) {
+    softdouble::operator*(param_2,(softdouble *)&exp_prescale);
+  }
+  else {
+    local_38 = *(ulong *)param_2 & 0x8000000000000000 | 0x4107700000000000;
+  }
+  uVar6 = local_38 & 0xfffffffffffff;
+  uVar2 = (uint)(local_38 >> 0x20);
+  uVar9 = uVar2 >> 0x14 & 0x7ff;
+  uVar10 = uVar6;
+  if ((local_38 >> 0x34 & 0x7ff) != 0) {
+    uVar10 = uVar6 | 0x10000000000000;
+  }
+  uVar8 = (uint)(uVar6 == 0);
+  if (uVar9 != 0x7ff) {
+    uVar8 = 1;
+  }
+  uVar1 = 0;
+  if ((long)local_38 < 0) {
+    uVar1 = uVar8;
+  }
+  if (uVar9 < 0x427) {
+    if (1000 < uVar9) {
+      uVar10 = uVar10 >> ((ulong)(0x427 - uVar9) & 0x3f) |
+               (ulong)(uVar10 << ((ulong)((uVar2 >> 0x14) + 0x19) & 0x3f) != 0);
+      goto LAB_00003e40;
+    }
+    uVar10 = (ulong)(uVar10 != 0);
+LAB_00003e5c:
+    uVar9 = (uint)(uVar10 + 0x800 >> 0xc) & ((uVar10 & 0xfff) == 0x800 ^ 0xffffffff);
+    uVar8 = -uVar9;
+    if (uVar1 == 0) {
+      uVar8 = uVar9;
+    }
+    if ((uVar9 != 0) && (uVar1 != -((int)uVar8 >> 0x1f))) goto LAB_00003e88;
+  }
+  else {
+LAB_00003e40:
+    if (uVar10 < 0xffffffff800) goto LAB_00003e5c;
+LAB_00003e88:
+    uVar8 = 0x80000000;
+    if (uVar1 == 0) {
+      uVar8 = 0x7fffffff;
+    }
+  }
+  iVar4 = (int)uVar8 >> 6;
+  if (0x3ff < iVar4) {
+    iVar4 = 0x400;
+  }
+  if (iVar4 < -0x3fe) {
+    iVar4 = -0x3ff;
+  }
+  local_40 = (ulong)(iVar4 + 0x3ff) << 0x34;
+  uVar9 = uVar2 >> 0x14 & 0x7ff;
+  bVar3 = (byte)(local_38 >> 0x38);
+  iVar4 = (int)uVar2 >> 0x1f;
+  uVar10 = local_38;
+  if (uVar9 < 0x3ff) {
+    uVar7 = local_38 & 0x8000000000000000 | 0x3ff0000000000000;
+    if (uVar9 != 0x3fe || uVar6 == 0) {
+      uVar7 = local_38 & 0x8000000000000000;
+    }
+    if ((local_38 & 0x7fffffffffffffff) != 0) {
+      uVar10 = uVar7;
+    }
+    if (-iVar4 == -(int)((long)uVar10 >> 0x3f)) goto LAB_00003f4c;
+  }
+  else if (uVar9 < 0x433) {
+    uVar7 = 1L << ((ulong)(0x433 - uVar9) & 0x3f);
+    uVar6 = local_38 + (uVar7 >> 1);
+    uVar10 = 0xffffffffffffffff;
+    if ((uVar6 & uVar7 - 1) == 0) {
+      uVar10 = ~uVar7;
+    }
+    uVar10 = uVar10 & -uVar7 & uVar6;
+    if (-iVar4 == -(int)((long)uVar10 >> 0x3f)) goto LAB_00003f4c;
+  }
+  else {
+    if (((uVar6 != 0) && (uVar9 == 0x7ff)) &&
+       (uVar10 = local_38 | 0x8000000000000,
+       ((local_38 & 0x7ffffffffffff) == 0 || (local_38 & 0x7ff8000000000000) != 0x7ff0000000000000)
+       && ((local_38 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0)) {
+      uVar10 = 0x8000000000000;
+    }
+    if (-iVar4 == -(int)((long)uVar10 >> 0x3f)) {
+LAB_00003f4c:
+      softfloat_subMagsF64(acStack_48,local_38,uVar10,(bool)(bVar3 >> 7));
+      goto LAB_00003f9c;
+    }
+  }
+  softfloat_addMagsF64(acStack_48,local_38,uVar10,(bool)(bVar3 >> 7));
+LAB_00003f9c:
+  softdouble::operator*((softdouble *)acStack_48,(softdouble *)&exp_postscale);
+  softdouble::operator*((softdouble *)&local_40,(softdouble *)&EXPPOLY_32F_A0);
+  local_58 = (&expTab)[uVar8 & 0x3f];
+  softdouble::operator*(asStack_50,(softdouble *)&local_58);
+  softdouble::operator*((softdouble *)&DAT_00008f30,(softdouble *)&local_38);
+  bVar5 = SUB81(local_a8 >> 0x3f,0);
+  if (-(int)((long)local_a8 >> 0x3f) == -(int)((long)DAT_00008f20 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_a0,local_a8,DAT_00008f20,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_a0,local_a8,DAT_00008f20,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_a0,(softdouble *)&local_38);
+  bVar5 = SUB81(local_98 >> 0x3f,0);
+  if (-(int)((long)local_98 >> 0x3f) == -(int)((long)DAT_00008f10 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_90,local_98,DAT_00008f10,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_90,local_98,DAT_00008f10,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_90,(softdouble *)&local_38);
+  bVar5 = SUB81(local_88 >> 0x3f,0);
+  if (-(int)((long)local_88 >> 0x3f) == -(int)((long)DAT_00008f00 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_80,local_88,DAT_00008f00,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_80,local_88,DAT_00008f00,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_80,(softdouble *)&local_38);
+  bVar5 = SUB81(local_78 >> 0x3f,0);
+  if (-(int)((long)local_78 >> 0x3f) == -(int)((long)DAT_00008ef0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_70,local_78,DAT_00008ef0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_70,local_78,DAT_00008ef0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_70,(softdouble *)&local_38);
+  bVar5 = SUB81(local_68 >> 0x3f,0);
+  if (-(int)((long)local_68 >> 0x3f) == -(int)((long)DAT_00008ee0 >> 0x3f)) {
+    softfloat_addMagsF64(acStack_60,local_68,DAT_00008ee0,bVar5);
+  }
+  else {
+    softfloat_subMagsF64(acStack_60,local_68,DAT_00008ee0,bVar5);
+  }
+  softdouble::operator*((softdouble *)acStack_48,(softdouble *)acStack_60);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: log
+// Entry: 00004330
+// Signature: undefined __thiscall log(cv * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::log(cv::softfloat const&) */
+
+void __thiscall cv::log(cv *this,softfloat *param_1)
+
+{
+  f32_log();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f32_log
+// Entry: 0000433c
+// Signature: undefined __thiscall f32_log(cv * this, softfloat param_1)
+// ========================================
+
+
+/* cv::f32_log(cv::softfloat) */
+
+void __thiscall cv::f32_log(cv *this,ulong param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  undefined4 uVar4;
+  undefined *puVar5;
+  undefined8 local_c0;
+  softdouble asStack_b8 [8];
+  ulonglong local_b0;
+  undefined8 local_a8;
+  softdouble asStack_a0 [8];
+  softdouble asStack_98 [8];
+  ulonglong local_90;
+  long local_88;
+  ulonglong local_80;
+  ulonglong local_78;
+  ulonglong local_70;
+  ulonglong local_68;
+  ulonglong local_60;
+  undefined *local_58;
+  ulong local_50;
+  ulonglong local_48;
+  
+  uVar2 = (uint)param_2;
+  if ((uVar2 & 0x7fffffff) < 0x7f800001) {
+    if ((((uVar2 ^ 0xffffffff) & 0x7f800000) == 0) && ((param_2 & 0x7fffff) != 0)) {
+LAB_000043a4:
+      uVar1 = uVar2 >> 0xf & 0xff;
+      local_50 = (param_2 & 0x7fff) << 0x1d | 0x3ff0000000000000;
+      softfloat_subMagsF64((cv *)&local_50,local_50,0x3ff0000000000000,false);
+      puVar5 = (&icvLogTab)[uVar1 << 1];
+      local_58 = (&icvLogTab)[(uVar2 >> 0xf & 0xff) << 1 | 1];
+      softdouble::operator*((softdouble *)&local_50,(softdouble *)&local_58);
+      if (uVar1 == 0xff) {
+        local_78 = 0x4080000000000000;
+        local_70 = 0xbff0000000000000;
+        softdouble::operator/((softdouble *)&local_70,(softdouble *)&local_78);
+        bVar3 = SUB81(local_60 >> 0x3f,0);
+        if (-(int)((long)local_60 >> 0x3f) == -(int)((long)local_68 >> 0x3f)) {
+          softfloat_addMagsF64((cv *)&local_48,local_60,local_68,bVar3);
+        }
+        else {
+          softfloat_subMagsF64((cv *)&local_48,local_60,local_68,bVar3);
+        }
+        local_60 = local_48;
+      }
+      uVar2 = (uVar2 >> 0x17 & 0xff) - 0x7f;
+      if (uVar2 == 0) {
+        local_88 = 0;
+      }
+      else {
+        uVar1 = -uVar2;
+        if (-1 < (int)uVar2) {
+          uVar1 = uVar2;
+        }
+        local_88 = ((ulong)uVar1 <<
+                   ((ulong)(uint)(int)(char)((&softfloat_countLeadingZeros8)[uVar1] + '-') & 0x3f))
+                   + ((ulong)(uVar2 >> 0x1f) << 0x3f) +
+                   ((ulong)(0x432 - (int)(char)((&softfloat_countLeadingZeros8)[uVar1] + '-')) <<
+                   0x34);
+      }
+      softdouble::operator*((softdouble *)&ln_2,(softdouble *)&local_88);
+      bVar3 = SUB81(local_80 >> 0x3f,0);
+      if (-(int)((long)local_80 >> 0x3f) == -(int)((long)puVar5 >> 0x3f)) {
+        softfloat_addMagsF64((cv *)&local_78,local_80,(ulonglong)puVar5,bVar3);
+      }
+      else {
+        softfloat_subMagsF64((cv *)&local_78,local_80,(ulonglong)puVar5,bVar3);
+      }
+      softdouble::operator*((softdouble *)&local_60,(softdouble *)&local_60);
+      softdouble::operator*(asStack_a0,(softdouble *)&local_60);
+      local_a8 = 0x4008000000000000;
+      softdouble::operator/(asStack_98,(softdouble *)&local_a8);
+      bVar3 = SUB81(local_78 >> 0x3f,0);
+      if (-(int)((long)local_78 >> 0x3f) == -(int)((long)local_90 >> 0x3f)) {
+        softfloat_addMagsF64((cv *)&local_70,local_78,local_90,bVar3);
+      }
+      else {
+        softfloat_subMagsF64((cv *)&local_70,local_78,local_90,bVar3);
+      }
+      softdouble::operator*((softdouble *)&local_60,(softdouble *)&local_60);
+      local_c0 = 0x4000000000000000;
+      softdouble::operator/(asStack_b8,(softdouble *)&local_c0);
+      bVar3 = SUB81(local_70 >> 0x3f,0);
+      if (-(int)((long)local_70 >> 0x3f) == -(int)((long)local_b0 >> 0x3f)) {
+        softfloat_subMagsF64((cv *)&local_68,local_70,local_b0,bVar3);
+      }
+      else {
+        softfloat_addMagsF64((cv *)&local_68,local_70,local_b0,bVar3);
+      }
+      bVar3 = SUB81(local_68 >> 0x3f,0);
+      if (-(int)((long)local_68 >> 0x3f) == -(int)((long)local_60 >> 0x3f)) {
+        softfloat_addMagsF64((cv *)&local_48,local_68,local_60,bVar3);
+      }
+      else {
+        softfloat_subMagsF64((cv *)&local_48,local_68,local_60,bVar3);
+      }
+      softdouble::operator_cast_to_softfloat((softdouble *)&local_48);
+      return;
+    }
+    if ((int)uVar2 < 0) {
+      if ((param_2 & 0x7fffffff) != 0) goto LAB_00004368;
+    }
+    else if ((param_2 & 0x7fffffff) != 0) goto LAB_000043a4;
+    uVar4 = 0xff800000;
+  }
+  else {
+LAB_00004368:
+    uVar4 = 0x7fffffff;
+  }
+  *(undefined4 *)this = uVar4;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: log
+// Entry: 000045dc
+// Signature: undefined __thiscall log(cv * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::log(cv::softdouble const&) */
+
+void __thiscall cv::log(cv *this,softdouble *param_1)
+
+{
+  f64_log();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_log
+// Entry: 00004608
+// Signature: undefined __thiscall f64_log(cv * this, softdouble param_1)
+// ========================================
+
+
+/* cv::f64_log(cv::softdouble) */
+
+void __thiscall cv::f64_log(cv *this,ulong *param_2)
+
+{
+  char cVar1;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  uint uVar7;
+  undefined *puVar8;
+  uint uVar9;
+  ulonglong local_100;
+  cv acStack_f8 [8];
+  ulonglong local_f0;
+  cv acStack_e8 [8];
+  ulonglong local_e0;
+  cv acStack_d8 [8];
+  ulonglong local_d0;
+  ulonglong local_c8;
+  cv acStack_c0 [8];
+  ulonglong local_b8;
+  cv acStack_b0 [8];
+  ulonglong local_a8;
+  cv acStack_a0 [8];
+  ulonglong local_98;
+  long local_90;
+  ulonglong local_88;
+  ulonglong local_80;
+  ulonglong local_78;
+  ulonglong local_70;
+  undefined *local_68;
+  ulong local_60;
+  ulonglong local_58;
+  
+  uVar6 = *param_2;
+  uVar5 = uVar6 & 0x7fffffffffffffff;
+  if (0x7ff0000000000000 < uVar5) {
+LAB_0000463c:
+    *(undefined8 *)this = 0x7fffffffffffffff;
+    return;
+  }
+  if (((uVar6 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 && (uVar6 & 0xfffffffffffff) != 0) {
+LAB_00004664:
+    if (((DAT_00008f48 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f48), iVar3 != 0)) {
+      DAT_00008f40 = 0x3ff0000000000000;
+      ___cxa_guard_release(&DAT_00008f48);
+    }
+    if (((DAT_00008f58 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f58), iVar3 != 0)) {
+      local_60 = 0x4000000000000000;
+      local_58 = 0xbff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008f58);
+    }
+    if (((DAT_00008f68 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f68), iVar3 != 0)) {
+      local_60 = 0x4008000000000000;
+      local_58 = 0x3ff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008f68);
+    }
+    if (((DAT_00008f78 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f78), iVar3 != 0)) {
+      local_60 = 0x4010000000000000;
+      local_58 = 0xbff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008f78);
+    }
+    if (((DAT_00008f88 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f88), iVar3 != 0)) {
+      local_60 = 0x4014000000000000;
+      local_58 = 0x3ff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008f88);
+    }
+    if (((DAT_00008f98 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008f98), iVar3 != 0)) {
+      local_60 = 0x4018000000000000;
+      local_58 = 0xbff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008f98);
+    }
+    if (((DAT_00008fa8 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008fa8), iVar3 != 0)) {
+      local_60 = 0x401c000000000000;
+      local_58 = 0x3ff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008fa8);
+    }
+    if (((DAT_00008fb8 & 1) == 0) && (iVar3 = ___cxa_guard_acquire(&DAT_00008fb8), iVar3 != 0)) {
+      local_60 = 0x4020000000000000;
+      local_58 = 0xbff0000000000000;
+      softdouble::operator/((softdouble *)&local_58,(softdouble *)&local_60);
+      ___cxa_guard_release(&DAT_00008fb8);
+    }
+    uVar2 = (uint)(*param_2 >> 0x20);
+    uVar9 = uVar2 >> 0xc & 0xff;
+    local_60 = *param_2 & 0xfffffffffff | 0x3ff0000000000000;
+    softfloat_subMagsF64((cv *)&local_60,local_60,0x3ff0000000000000,false);
+    puVar8 = (&icvLogTab)[uVar9 << 1];
+    local_68 = (&icvLogTab)[(uVar2 >> 0xc & 0xff) << 1 | 1];
+    softdouble::operator*((softdouble *)&local_60,(softdouble *)&local_68);
+    if (uVar9 == 0xff) {
+      local_80 = 0xbff0000000000000;
+      local_88 = 0x4080000000000000;
+      softdouble::operator/((softdouble *)&local_80,(softdouble *)&local_88);
+      bVar4 = SUB81(local_70 >> 0x3f,0);
+      if (-(int)((long)local_70 >> 0x3f) == -(int)((long)local_78 >> 0x3f)) {
+        softfloat_addMagsF64((cv *)&local_58,local_70,local_78,bVar4);
+      }
+      else {
+        softfloat_subMagsF64((cv *)&local_58,local_70,local_78,bVar4);
+      }
+      local_70 = local_58;
+    }
+    softdouble::operator*((softdouble *)&local_70,(softdouble *)&local_70);
+    uVar2 = (uVar2 >> 0x14 & 0x7ff) - 0x3ff;
+    if (uVar2 == 0) {
+      local_90 = 0;
+    }
+    else {
+      uVar9 = -uVar2;
+      if (-1 < (int)uVar2) {
+        uVar9 = uVar2;
+      }
+      uVar7 = 0x18;
+      if (0xff < uVar9) {
+        uVar7 = 0x10;
+      }
+      cVar1 = '-';
+      if (0xff < uVar9) {
+        cVar1 = '%';
+      }
+      local_90 = ((ulong)uVar9 <<
+                 ((ulong)(uint)(int)(char)((&softfloat_countLeadingZeros8)
+                                           [(uVar9 << (ulong)uVar7) >> 0x18] + cVar1) & 0x3f)) +
+                 ((ulong)(uVar2 >> 0x1f) << 0x3f) +
+                 ((ulong)(0x432 - (int)(char)((&softfloat_countLeadingZeros8)
+                                              [(uVar9 << (ulong)uVar7) >> 0x18] + cVar1)) << 0x34);
+    }
+    softdouble::operator*((softdouble *)&ln_2,(softdouble *)&local_90);
+    bVar4 = SUB81(local_88 >> 0x3f,0);
+    if (-(int)((long)local_88 >> 0x3f) == -(int)((long)puVar8 >> 0x3f)) {
+      softfloat_addMagsF64((cv *)&local_80,local_88,(ulonglong)puVar8,bVar4);
+    }
+    else {
+      softfloat_subMagsF64((cv *)&local_80,local_88,(ulonglong)puVar8,bVar4);
+    }
+    softdouble::operator*((softdouble *)&DAT_00008fb0,(softdouble *)&local_58);
+    bVar4 = SUB81(local_c8 >> 0x3f,0);
+    if (-(int)((long)local_c8 >> 0x3f) == -(int)((long)DAT_00008f90 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_c0,local_c8,DAT_00008f90,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_c0,local_c8,DAT_00008f90,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_c0,(softdouble *)&local_58);
+    bVar4 = SUB81(local_b8 >> 0x3f,0);
+    if (-(int)((long)local_b8 >> 0x3f) == -(int)((long)DAT_00008f70 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_b0,local_b8,DAT_00008f70,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_b0,local_b8,DAT_00008f70,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_b0,(softdouble *)&local_58);
+    bVar4 = SUB81(local_a8 >> 0x3f,0);
+    if (-(int)((long)local_a8 >> 0x3f) == -(int)((long)DAT_00008f50 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_a0,local_a8,DAT_00008f50,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_a0,local_a8,DAT_00008f50,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_a0,(softdouble *)&local_58);
+    bVar4 = SUB81(local_80 >> 0x3f,0);
+    if (-(int)((long)local_80 >> 0x3f) == -(int)((long)local_98 >> 0x3f)) {
+      softfloat_addMagsF64((cv *)&local_78,local_80,local_98,bVar4);
+    }
+    else {
+      softfloat_subMagsF64((cv *)&local_78,local_80,local_98,bVar4);
+    }
+    softdouble::operator*((softdouble *)&DAT_00008fa0,(softdouble *)&local_58);
+    bVar4 = SUB81(local_100 >> 0x3f,0);
+    if (-(int)((long)local_100 >> 0x3f) == -(int)((long)DAT_00008f80 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_f8,local_100,DAT_00008f80,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_f8,local_100,DAT_00008f80,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_f8,(softdouble *)&local_58);
+    bVar4 = SUB81(local_f0 >> 0x3f,0);
+    if (-(int)((long)local_f0 >> 0x3f) == -(int)((long)DAT_00008f60 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_e8,local_f0,DAT_00008f60,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_e8,local_f0,DAT_00008f60,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_e8,(softdouble *)&local_58);
+    bVar4 = SUB81(local_e0 >> 0x3f,0);
+    if (-(int)((long)local_e0 >> 0x3f) == -(int)((long)DAT_00008f40 >> 0x3f)) {
+      softfloat_addMagsF64(acStack_d8,local_e0,DAT_00008f40,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(acStack_d8,local_e0,DAT_00008f40,bVar4);
+    }
+    softdouble::operator*((softdouble *)acStack_d8,(softdouble *)&local_70);
+    bVar4 = SUB81(local_78 >> 0x3f,0);
+    if (-(int)((long)local_78 >> 0x3f) == -(int)((long)local_d0 >> 0x3f)) {
+      softfloat_addMagsF64(this,local_78,local_d0,bVar4);
+    }
+    else {
+      softfloat_subMagsF64(this,local_78,local_d0,bVar4);
+    }
+  }
+  else {
+    if ((long)uVar6 < 0) {
+      if (uVar5 != 0) goto LAB_0000463c;
+    }
+    else if (uVar5 != 0) goto LAB_00004664;
+    *(undefined8 *)this = 0xfff0000000000000;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: pow
+// Entry: 00004c90
+// Signature: undefined __thiscall pow(cv * this, softfloat * param_1, softfloat * param_2)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* cv::pow(cv::softfloat const&, cv::softfloat const&) */
+
+void __thiscall cv::pow(cv *this,softfloat *param_1,softfloat *param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *puVar4;
+  uint uVar5;
+  bool bVar6;
+  bool bVar7;
+  bool bVar8;
+  bool bVar9;
+  bool bVar10;
+  bool bVar11;
+  int iVar12;
+  uint uVar13;
+  uint uVar14;
+  uint *in_x8;
+  uint *puVar15;
+  uint uVar16;
+  ulong uVar17;
+  uint uVar18;
+  ulong uVar19;
+  uint uVar20;
+  uint local_34;
+  undefined4 local_30;
+  uint local_2c;
+  uint local_28;
+  uint local_24;
+  
+  uVar14 = *(uint *)this;
+  local_34 = *(uint *)param_1;
+  if (((DAT_00008fc0 & 1) == 0) && (iVar12 = ___cxa_guard_acquire(&DAT_00008fc0), iVar12 != 0)) {
+    __MergedGlobals = 0;
+    ___cxa_guard_release(&DAT_00008fc0);
+  }
+  if (((DAT_00008fc8 & 1) == 0) && (iVar12 = ___cxa_guard_acquire(&DAT_00008fc8), iVar12 != 0)) {
+    DAT_00008e94 = 0x3f800000;
+    ___cxa_guard_release(&DAT_00008fc8);
+  }
+  if (((DAT_00008fd0 & 1) == 0) && (iVar12 = ___cxa_guard_acquire(&DAT_00008fd0), iVar12 != 0)) {
+    DAT_00008e98 = 0x7f800000;
+    ___cxa_guard_release(&DAT_00008fd0);
+  }
+  if (((DAT_00008fd8 & 1) == 0) && (iVar12 = ___cxa_guard_acquire(&DAT_00008fd8), iVar12 != 0)) {
+    DAT_00008e9c = 0x7fffffff;
+    ___cxa_guard_release(&DAT_00008fd8);
+  }
+  uVar13 = DAT_00008e94;
+  uVar20 = __MergedGlobals;
+  bVar6 = ((__MergedGlobals ^ 0xffffffff) & 0x7f800000) == 0;
+  bVar7 = (__MergedGlobals & 0x7fffff) != 0;
+  bVar1 = bVar7 && bVar6;
+  iVar12 = (int)local_34 >> 0x1f;
+  if ((bVar1) || ((((local_34 ^ 0xffffffff) & 0x7f800000) == 0 && ((local_34 & 0x7fffff) != 0)))) {
+LAB_00004d4c:
+    bVar8 = false;
+  }
+  else {
+    if (__MergedGlobals >> 0x1f == -iVar12) {
+      if (__MergedGlobals == local_34) goto LAB_00004d4c;
+      bVar8 = __MergedGlobals >> 0x1f == (uint)(__MergedGlobals < local_34);
+    }
+    else {
+      if (-1 < (int)__MergedGlobals) goto LAB_00004d4c;
+      bVar8 = ((__MergedGlobals | local_34) & 0x7fffffff) == 0;
+    }
+    bVar8 = !bVar8;
+  }
+  uVar18 = uVar14 & 0x7fffffff;
+  uVar16 = local_34 & 0x7fffffff;
+  bVar9 = ((DAT_00008e94 ^ 0xffffffff) & 0x7f800000) == 0;
+  bVar10 = (DAT_00008e94 & 0x7fffff) != 0;
+  if ((bVar10 && bVar9) ||
+     ((((uVar14 ^ 0xffffffff) & 0x7f800000) == 0 && ((uVar14 & 0x7fffff) != 0)))) {
+LAB_00004d94:
+    bVar11 = false;
+    *in_x8 = 0;
+  }
+  else if ((int)DAT_00008e94 < 0) {
+    bVar11 = ((DAT_00008e94 | uVar14) & 0x7fffffff) != 0;
+    *in_x8 = 0;
+  }
+  else {
+    if (DAT_00008e94 == uVar18) goto LAB_00004d94;
+    bVar11 = DAT_00008e94 >> 0x1f != (uint)(DAT_00008e94 < uVar18);
+    *in_x8 = 0;
+  }
+  if (0x7f800000 < uVar16) {
+LAB_00004dac:
+    if (in_x8 == &DAT_00008e9c) {
+      return;
+    }
+    *in_x8 = DAT_00008e9c;
+    return;
+  }
+  if (uVar16 == 0x7f800000) {
+    if (((uVar14 & 0x7fffff) == 0 || ((uVar14 ^ 0xffffffff) & 0x7f800000) != 0) &&
+        (!bVar10 || !bVar9)) {
+      puVar4 = &__MergedGlobals;
+      if (!(bool)(bVar8 ^ bVar11)) {
+        puVar4 = &DAT_00008e98;
+      }
+      puVar15 = &DAT_00008e9c;
+      if ((((uVar13 | uVar14) & 0x7fffffff) != 0 && uVar18 != uVar13) && uVar18 < 0x7f800001) {
+        puVar15 = puVar4;
+      }
+      if (puVar15 == in_x8) {
+        return;
+      }
+      goto LAB_00005028;
+    }
+    puVar4 = &__MergedGlobals;
+    if (!(bool)(bVar8 ^ bVar11)) {
+      puVar4 = &DAT_00008e98;
+    }
+    puVar15 = &DAT_00008e9c;
+    if (uVar18 < 0x7f800001) {
+      puVar15 = puVar4;
+    }
+joined_r0x00004e74:
+    if (puVar15 == in_x8) {
+      return;
+    }
+LAB_00005028:
+    *in_x8 = *puVar15;
+    return;
+  }
+  uVar2 = local_34 & 0x7f800000;
+  bVar8 = uVar2 == 0x7f800000;
+  uVar3 = local_34 & 0x7fffff;
+  bVar11 = uVar3 != 0;
+  if (!bVar11 || !bVar8) {
+    if ((!bVar7 || !bVar6) && ((local_34 == uVar20 || (((uVar20 | local_34) & 0x7fffffff) == 0)))) {
+      if (in_x8 == &DAT_00008e94) {
+        return;
+      }
+      *in_x8 = uVar13;
+      return;
+    }
+    if ((!bVar10 || !bVar9) && ((local_34 == uVar13 || (((uVar13 | local_34) & 0x7fffffff) == 0))))
+    {
+      *in_x8 = uVar14;
+      return;
+    }
+  }
+  if (0x7f800000 < uVar18) goto LAB_00004dac;
+  if (uVar18 == 0x7f800000) {
+    if (bVar1 || bVar11 && bVar8) {
+LAB_00005018:
+      puVar15 = &DAT_00008e98;
+    }
+    else {
+      if (uVar20 >> 0x1f == -iVar12) {
+        if ((local_34 == uVar20) || (uVar20 >> 0x1f == (uint)(local_34 < uVar20)))
+        goto LAB_00005018;
+      }
+      else if ((-1 < (int)local_34) || (((uVar20 | local_34) & 0x7fffffff) == 0)) goto LAB_00005018;
+      puVar15 = &__MergedGlobals;
+    }
+    goto joined_r0x00004e74;
+  }
+  uVar19 = (ulong)(local_34 >> 0x17) & 0xff;
+  uVar18 = (uint)uVar19;
+  uVar13 = local_34;
+  if (uVar18 < 0x7f) {
+    if (uVar16 != 0) {
+      uVar13 = local_34 & 0x80000000 | 0x3f800000;
+      if (uVar18 != 0x7e || uVar3 == 0) {
+        uVar13 = local_34 & 0x80000000;
+      }
+    }
+  }
+  else if (uVar18 < 0x96) {
+    uVar5 = 1 << (ulong)(0x96 - uVar18 & 0x1f);
+    uVar13 = local_34 + (uVar5 >> 1);
+    uVar16 = 0xffffffff;
+    if ((uVar13 & uVar5 - 1) == 0) {
+      uVar16 = ~uVar5;
+    }
+    uVar13 = uVar16 & -uVar5 & uVar13;
+  }
+  else if (((uVar3 != 0) && (uVar18 == 0xff)) &&
+          (uVar13 = local_34 | 0x400000,
+          ((local_34 & 0x3fffff) == 0 || (local_34 & 0x7fc00000) != 0x7f800000) &&
+          uVar2 != 0x7f800000)) {
+    uVar13 = 0x400000;
+  }
+  if (((bVar11 && bVar8) ||
+      ((((uVar13 ^ 0xffffffff) & 0x7f800000) == 0 && ((uVar13 & 0x7fffff) != 0)))) ||
+     ((local_34 != uVar13 && (((uVar13 | local_34) & 0x7fffffff) != 0)))) {
+    if ((uVar14 & 0x7fffff) != 0 && ((uVar14 ^ 0xffffffff) & 0x7f800000) == 0 || bVar1) {
+LAB_000050f4:
+      f32_log((cv *)&local_28);
+      softfloat::operator*((softfloat *)&local_34,(softfloat *)&local_28);
+      f32_exp();
+      return;
+    }
+    uVar13 = uVar20 >> 0x1f;
+    if (uVar13 == -((int)uVar14 >> 0x1f)) {
+      if ((uVar14 != uVar20) && (uVar13 != uVar14 < uVar20)) goto LAB_00004dac;
+    }
+    else if (((int)uVar14 < 0) && (((uVar20 | uVar14) & 0x7fffffff) != 0)) goto LAB_00004dac;
+    if ((uVar14 != uVar20) && (((uVar20 | uVar14) & 0x7fffffff) != 0)) goto LAB_000050f4;
+    puVar4 = &__MergedGlobals;
+    if (bVar11 && bVar8) goto joined_r0x00005214;
+    if (uVar13 == -iVar12) {
+      if ((local_34 == uVar20) || (uVar13 == local_34 < uVar20)) {
+LAB_000051f4:
+        puVar4 = &DAT_00008e94;
+        if (((uVar20 | local_34) & 0x7fffffff) != 0 && local_34 != uVar20) {
+          puVar4 = &__MergedGlobals;
+        }
+        goto joined_r0x00005214;
+      }
+    }
+    else if ((-1 < (int)local_34) || (((uVar20 | local_34) & 0x7fffffff) == 0)) goto LAB_000051f4;
+    puVar4 = &DAT_00008e98;
+joined_r0x00005214:
+    if (puVar4 == in_x8) {
+      return;
+    }
+    *in_x8 = *puVar4;
+    return;
+  }
+  uVar20 = uVar3;
+  if (uVar2 != 0) {
+    uVar20 = uVar3 | 0x800000;
+  }
+  uVar17 = (ulong)uVar20 << 0x20;
+  if (uVar18 < 0xaa) {
+    if (0x6b < uVar18) {
+      uVar17 = uVar17 >> (0xaa - uVar19 & 0x3f) |
+               (ulong)(uVar17 << ((ulong)((local_34 >> 0x17) + 0x16) & 0x3f) != 0);
+      goto LAB_000051ac;
+    }
+    uVar17 = (ulong)(uVar20 != 0);
+LAB_00005238:
+    uVar20 = (uint)(uVar17 + 0x800 >> 0xc) & ((uVar17 & 0xfff) == 0x800 ^ 0xffffffff);
+    uVar16 = (uint)((uVar3 == 0 || uVar18 != 0xff) && (int)local_34 < 0);
+    uVar13 = -uVar20;
+    if (uVar16 == 0) {
+      uVar13 = uVar20;
+    }
+    if ((uVar20 == 0) || (uVar16 == -((int)uVar13 >> 0x1f))) goto LAB_00005270;
+  }
+  else {
+LAB_000051ac:
+    if (uVar17 < 0xffffffff800) goto LAB_00005238;
+  }
+  uVar13 = 0x80000000;
+  if (uVar3 != 0 && uVar18 == 0xff || (int)local_34 >= 0) {
+    uVar13 = 0x7fffffff;
+  }
+LAB_00005270:
+  if (((uVar14 & 0x7fffffff) == 0) &&
+     ((uVar14 & 0x7fffff) == 0 || ((uVar14 ^ 0xffffffff) & 0x7f800000) != 0)) {
+    uVar14 = 0x3f800000;
+    if (uVar13 != 0) {
+      uVar14 = 0;
+    }
+    uVar20 = 0x7f800000;
+    if (-1 < (int)uVar13) {
+      uVar20 = uVar14;
+    }
+    *in_x8 = uVar20;
+    return;
+  }
+  local_28 = 0x3f800000;
+  uVar20 = -uVar13;
+  if (-1 < (int)uVar13) {
+    uVar20 = uVar13;
+  }
+  local_2c = uVar14;
+  if ((int)uVar13 < 0) {
+    local_30 = 0x3f800000;
+    softfloat::operator/((softfloat *)&local_30,(softfloat *)&local_2c);
+    local_2c = local_24;
+  }
+  if (1 < uVar20) {
+    do {
+      if ((uVar20 & 1) != 0) {
+        softfloat::operator*((softfloat *)&local_28,(softfloat *)&local_2c);
+        local_28 = local_24;
+      }
+      softfloat::operator*((softfloat *)&local_2c,(softfloat *)&local_2c);
+      local_2c = local_24;
+      bVar1 = 3 < uVar20;
+      uVar20 = uVar20 >> 1;
+    } while (bVar1);
+  }
+  softfloat::operator*((softfloat *)&local_28,(softfloat *)&local_2c);
+  *in_x8 = local_24;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: pow
+// Entry: 00005464
+// Signature: undefined __thiscall pow(cv * this, softdouble * param_1, softdouble * param_2)
+// ========================================
+
+
+/* cv::pow(cv::softdouble const&, cv::softdouble const&) */
+
+void __thiscall cv::pow(cv *this,softdouble *param_1,softdouble *param_2)
+
+{
+  ulong uVar1;
+  long lVar2;
+  long lVar3;
+  int iVar4;
+  bool bVar5;
+  bool bVar6;
+  bool bVar7;
+  bool bVar8;
+  bool bVar9;
+  bool bVar10;
+  int iVar11;
+  ulong *in_x8;
+  ulong uVar12;
+  ulong *puVar13;
+  uint uVar14;
+  uint uVar15;
+  ulong uVar16;
+  ulong uVar17;
+  ulong uVar18;
+  ulong uVar19;
+  ulong uVar20;
+  uint uVar21;
+  uint uVar22;
+  ulong local_48;
+  undefined8 local_40;
+  ulong local_38;
+  ulong local_30;
+  ulong local_28;
+  
+  uVar12 = *(ulong *)this;
+  local_48 = *(ulong *)param_1;
+  if (((DAT_00008fe8 & 1) == 0) && (iVar11 = ___cxa_guard_acquire(&DAT_00008fe8), iVar11 != 0)) {
+    DAT_00008fe0 = 0;
+    ___cxa_guard_release(&DAT_00008fe8);
+  }
+  if (((DAT_00008ff8 & 1) == 0) && (iVar11 = ___cxa_guard_acquire(&DAT_00008ff8), iVar11 != 0)) {
+    DAT_00008ff0 = 0x3ff0000000000000;
+    ___cxa_guard_release(&DAT_00008ff8);
+  }
+  if (((DAT_00009008 & 1) == 0) && (iVar11 = ___cxa_guard_acquire(&DAT_00009008), iVar11 != 0)) {
+    DAT_00009000 = 0x7ff0000000000000;
+    ___cxa_guard_release(&DAT_00009008);
+  }
+  if (((DAT_00009018 & 1) == 0) && (iVar11 = ___cxa_guard_acquire(&DAT_00009018), iVar11 != 0)) {
+    DAT_00009010 = 0x7fffffffffffffff;
+    ___cxa_guard_release(&DAT_00009018);
+  }
+  uVar20 = DAT_00008ff0;
+  uVar16 = DAT_00008fe0;
+  bVar5 = ((DAT_00008fe0 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0;
+  bVar6 = (DAT_00008fe0 & 0xfffffffffffff) != 0;
+  iVar11 = (int)((long)DAT_00008fe0 >> 0x3f);
+  uVar22 = (uint)(local_48 >> 0x20);
+  iVar4 = (int)uVar22 >> 0x1f;
+  if ((bVar6 && bVar5) ||
+     ((((local_48 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 &&
+      ((local_48 & 0xfffffffffffff) != 0)))) {
+LAB_00005520:
+    bVar7 = false;
+  }
+  else {
+    if (-iVar11 == -iVar4) {
+      if (DAT_00008fe0 == local_48) goto LAB_00005520;
+      bVar7 = -(uint)(DAT_00008fe0 < local_48) == iVar11;
+    }
+    else {
+      if (-1 < (long)DAT_00008fe0) goto LAB_00005520;
+      bVar7 = ((DAT_00008fe0 | local_48) & 0x7fffffffffffffff) == 0;
+    }
+    bVar7 = !bVar7;
+  }
+  uVar17 = uVar12 & 0x7fffffffffffffff;
+  uVar18 = local_48 & 0x7fffffffffffffff;
+  bVar8 = ((DAT_00008ff0 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0;
+  bVar9 = (DAT_00008ff0 & 0xfffffffffffff) != 0;
+  if ((bVar9 && bVar8) ||
+     ((((uVar12 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 &&
+      ((uVar12 & 0xfffffffffffff) != 0)))) {
+LAB_00005568:
+    bVar10 = false;
+    *in_x8 = 0;
+  }
+  else if ((long)DAT_00008ff0 < 0) {
+    bVar10 = ((DAT_00008ff0 | uVar12) & 0x7fffffffffffffff) != 0;
+    *in_x8 = 0;
+  }
+  else {
+    if (DAT_00008ff0 == uVar17) goto LAB_00005568;
+    bVar10 = -(int)((long)DAT_00008ff0 >> 0x3f) != (uint)(DAT_00008ff0 < uVar17);
+    *in_x8 = 0;
+  }
+  if (0x7ff0000000000000 < uVar18) {
+LAB_00005580:
+    if (in_x8 != &DAT_00009010) {
+      *in_x8 = DAT_00009010;
+    }
+    return;
+  }
+  if (uVar18 == 0x7ff0000000000000) {
+    if (((uVar12 & 0xfffffffffffff) == 0 ||
+        ((uVar12 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0) && (!bVar9 || !bVar8)) {
+      lVar2 = 0x150;
+      if (!(bool)(bVar7 ^ bVar10)) {
+        lVar2 = 0x170;
+      }
+      lVar3 = 0x180;
+      if ((((uVar20 | uVar12) & 0x7fffffffffffffff) != 0 && uVar17 != uVar20) &&
+          uVar17 < 0x7ff0000000000001) {
+        lVar3 = lVar2;
+      }
+      puVar13 = (ulong *)((long)&__MergedGlobals + lVar3);
+    }
+    else {
+      lVar2 = 0x150;
+      if (!(bool)(bVar7 ^ bVar10)) {
+        lVar2 = 0x170;
+      }
+      puVar13 = &DAT_00009010;
+      if (uVar17 < 0x7ff0000000000001) {
+        puVar13 = (ulong *)((long)&__MergedGlobals + lVar2);
+      }
+    }
+    goto LAB_000057ec;
+  }
+  bVar7 = (local_48 & 0x7ff0000000000000) == 0x7ff0000000000000;
+  uVar1 = local_48 & 0xfffffffffffff;
+  bVar10 = uVar1 != 0;
+  if (!bVar10 || !bVar7) {
+    if ((!bVar6 || !bVar5) &&
+       ((local_48 == uVar16 || (((uVar16 | local_48) & 0x7fffffffffffffff) == 0)))) {
+      if (in_x8 == &DAT_00008ff0) {
+        return;
+      }
+      *in_x8 = uVar20;
+      return;
+    }
+    if ((!bVar9 || !bVar8) &&
+       ((local_48 == uVar20 || (((uVar20 | local_48) & 0x7fffffffffffffff) == 0)))) {
+      *in_x8 = uVar12;
+      return;
+    }
+  }
+  if (0x7ff0000000000000 < uVar17) goto LAB_00005580;
+  if (uVar17 == 0x7ff0000000000000) {
+    if ((!bVar6 || !bVar5) && (!bVar10 || !bVar7)) {
+      if (-iVar4 == -iVar11) {
+        if ((local_48 != uVar16) && (-(uint)(local_48 < uVar16) != iVar11)) {
+LAB_000059ac:
+          puVar13 = &DAT_00008fe0;
+          goto LAB_000057ec;
+        }
+      }
+      else if (((long)local_48 < 0) && (((uVar16 | local_48) & 0x7fffffffffffffff) != 0))
+      goto LAB_000059ac;
+    }
+LAB_000057e4:
+    puVar13 = &DAT_00009000;
+LAB_000057ec:
+    if (puVar13 == in_x8) {
+      return;
+    }
+    *in_x8 = *puVar13;
+    return;
+  }
+  uVar21 = uVar22 >> 0x14 & 0x7ff;
+  uVar20 = local_48;
+  if (uVar21 < 0x3ff) {
+    if (uVar18 != 0) {
+      uVar20 = local_48 & 0x8000000000000000 | 0x3ff0000000000000;
+      if (uVar21 != 0x3fe || uVar1 == 0) {
+        uVar20 = local_48 & 0x8000000000000000;
+      }
+    }
+  }
+  else if (uVar21 < 0x433) {
+    uVar19 = 1L << ((ulong)(0x433 - uVar21) & 0x3f);
+    uVar20 = local_48 + (uVar19 >> 1);
+    uVar18 = 0xffffffffffffffff;
+    if ((uVar20 & uVar19 - 1) == 0) {
+      uVar18 = ~uVar19;
+    }
+    uVar20 = uVar18 & -uVar19 & uVar20;
+  }
+  else if (((uVar1 != 0) && (uVar21 == 0x7ff)) &&
+          (uVar20 = local_48 | 0x8000000000000,
+          ((local_48 & 0x7ffffffffffff) == 0 ||
+          (local_48 & 0x7ff8000000000000) != 0x7ff0000000000000) &&
+          (local_48 & 0x7ff0000000000000) != 0x7ff0000000000000)) {
+    uVar20 = 0x8000000000000;
+  }
+  local_38 = uVar12;
+  if (((bVar10 && bVar7) ||
+      ((((uVar20 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0 &&
+       ((uVar20 & 0xfffffffffffff) != 0)))) ||
+     ((local_48 != uVar20 && (((uVar20 | local_48) & 0x7fffffffffffffff) != 0)))) {
+    if ((uVar12 & 0xfffffffffffff) != 0 && ((uVar12 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0
+        || bVar6 && bVar5) {
+LAB_000058d4:
+      f64_log((cv *)&local_30,&local_38);
+      softdouble::operator*((softdouble *)&local_48,(softdouble *)&local_30);
+      f64_exp();
+      return;
+    }
+    if (-(int)((long)uVar12 >> 0x3f) == -iVar11) {
+      if ((uVar12 != uVar16) && (-(uint)(uVar12 < uVar16) != iVar11)) goto LAB_00005580;
+    }
+    else if (((long)uVar12 < 0) && (((uVar16 | uVar12) & 0x7fffffffffffffff) != 0))
+    goto LAB_00005580;
+    if ((uVar12 != uVar16) && (((uVar16 | uVar12) & 0x7fffffffffffffff) != 0)) goto LAB_000058d4;
+    if (bVar10 && bVar7) goto LAB_000059ac;
+    if (-iVar4 == -iVar11) {
+      if ((local_48 != uVar16) && (-(uint)(local_48 < uVar16) != iVar11)) goto LAB_000057e4;
+    }
+    else if (((long)local_48 < 0) && (((uVar16 | local_48) & 0x7fffffffffffffff) != 0))
+    goto LAB_000057e4;
+    lVar2 = 0x160;
+    if (((uVar16 | local_48) & 0x7fffffffffffffff) != 0 && local_48 != uVar16) {
+      lVar2 = 0x150;
+    }
+    puVar13 = (ulong *)((long)&__MergedGlobals + lVar2);
+    goto LAB_000057ec;
+  }
+  uVar21 = uVar22 >> 0x14 & 0x7ff;
+  uVar16 = uVar1;
+  if ((local_48 >> 0x34 & 0x7ff) != 0) {
+    uVar16 = uVar1 | 0x10000000000000;
+  }
+  if (uVar21 < 0x427) {
+    if (1000 < uVar21) {
+      uVar16 = uVar16 >> ((ulong)(0x427 - uVar21) & 0x3f) |
+               (ulong)(uVar16 << ((ulong)((uVar22 >> 0x14) + 0x19) & 0x3f) != 0);
+      goto LAB_0000598c;
+    }
+    uVar16 = (ulong)(uVar16 != 0);
+LAB_00005a04:
+    uVar22 = (uint)(uVar16 + 0x800 >> 0xc) & ((uVar16 & 0xfff) == 0x800 ^ 0xffffffff);
+    uVar14 = (uint)((uVar1 == 0 || uVar21 != 0x7ff) && (long)local_48 < 0);
+    uVar15 = -uVar22;
+    if (uVar14 == 0) {
+      uVar15 = uVar22;
+    }
+    if ((uVar22 == 0) || (uVar14 == -((int)uVar15 >> 0x1f))) goto LAB_00005a3c;
+  }
+  else {
+LAB_0000598c:
+    if (uVar16 < 0xffffffff800) goto LAB_00005a04;
+  }
+  uVar15 = 0x80000000;
+  if (uVar1 != 0 && uVar21 == 0x7ff || (long)local_48 >= 0) {
+    uVar15 = 0x7fffffff;
+  }
+LAB_00005a3c:
+  if ((uVar17 == 0) &&
+     ((uVar12 & 0xfffffffffffff) == 0 || ((uVar12 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0))
+  {
+    uVar12 = 0x3ff0000000000000;
+    if (uVar15 != 0) {
+      uVar12 = 0;
+    }
+    uVar16 = 0x7ff0000000000000;
+    if (-1 < (int)uVar15) {
+      uVar16 = uVar12;
+    }
+    *in_x8 = uVar16;
+    return;
+  }
+  local_30 = 0x3ff0000000000000;
+  uVar22 = -uVar15;
+  if (-1 < (int)uVar15) {
+    uVar22 = uVar15;
+  }
+  if ((int)uVar15 < 0) {
+    local_40 = 0x3ff0000000000000;
+    softdouble::operator/((softdouble *)&local_40,(softdouble *)&local_38);
+    local_38 = local_28;
+  }
+  if (1 < uVar22) {
+    do {
+      if ((uVar22 & 1) != 0) {
+        softdouble::operator*((softdouble *)&local_30,(softdouble *)&local_38);
+        local_30 = local_28;
+      }
+      softdouble::operator*((softdouble *)&local_38,(softdouble *)&local_38);
+      local_38 = local_28;
+      bVar5 = 3 < uVar22;
+      uVar22 = uVar22 >> 1;
+    } while (bVar5);
+  }
+  softdouble::operator*((softdouble *)&local_30,(softdouble *)&local_38);
+  *in_x8 = local_28;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: cbrt
+// Entry: 00005c04
+// Signature: undefined __thiscall cbrt(cv * this, softfloat * param_1)
+// ========================================
+
+
+/* cv::cbrt(cv::softfloat const&) */
+
+void __thiscall cv::cbrt(cv *this,softfloat *param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  short sVar3;
+  short sVar4;
+  uint uVar5;
+  uint *in_x8;
+  int iVar6;
+  ulonglong local_e0;
+  cv acStack_d8 [8];
+  ulonglong local_d0;
+  cv acStack_c8 [8];
+  ulonglong local_c0;
+  cv acStack_b8 [8];
+  ulonglong local_b0;
+  cv acStack_a8 [8];
+  ulonglong local_a0;
+  cv acStack_98 [8];
+  ulonglong local_90;
+  cv acStack_88 [8];
+  ulonglong local_80;
+  cv acStack_78 [8];
+  ulonglong local_70;
+  cv acStack_68 [8];
+  ulong local_60;
+  undefined8 local_58;
+  undefined8 local_50;
+  ulong uStack_48;
+  
+  uVar1 = *(uint *)this;
+  uVar5 = uVar1 & 0x7fffffff;
+  if (0x7f800000 < uVar5) {
+    uVar5 = 0x7fffffff;
+    goto LAB_00006048;
+  }
+  if (uVar5 == 0x7f800000) {
+    *in_x8 = uVar1;
+    return;
+  }
+  iVar6 = (uVar1 >> 0x17 & 0xff) - 0x7f;
+  sVar4 = (short)((uint)(iVar6 * 0x5556) >> 0x10);
+  sVar3 = (short)iVar6;
+  iVar2 = (int)(short)(sVar3 + (sVar4 - (sVar4 >> 0xf)) * -3);
+  iVar6 = 0;
+  if (-1 < iVar2) {
+    iVar6 = -3;
+  }
+  iVar6 = iVar6 + iVar2;
+  uStack_48 = ((ulong)uVar1 & 0x7fffff) << 0x1d | (ulong)(iVar6 + 0x3ff) << 0x34;
+  local_50 = 0x4046a09e6653ba70;
+  local_58 = 0x402d9e20660edb21;
+  softdouble::operator*((softdouble *)&local_50,(softdouble *)&uStack_48);
+  if ((long)local_a0 < 0) {
+    softfloat_subMagsF64(acStack_98,local_a0,0x406808f46c6116e0,true);
+    softdouble::operator*((softdouble *)acStack_98,(softdouble *)&uStack_48);
+    if (-1 < (long)local_90) goto LAB_00005d20;
+LAB_00005ee8:
+    softfloat_subMagsF64(acStack_88,local_90,0x405dca97439cae14,true);
+    softdouble::operator*((softdouble *)acStack_88,(softdouble *)&uStack_48);
+    if (-1 < (long)local_80) goto LAB_00005d54;
+LAB_00005f1c:
+    softfloat_subMagsF64(acStack_78,local_80,0x402add70d2827500,true);
+    softdouble::operator*((softdouble *)acStack_78,(softdouble *)&uStack_48);
+    if (-1 < (long)local_70) goto LAB_00005d88;
+LAB_00005f50:
+    softfloat_subMagsF64(acStack_68,local_70,0x3fc4f15f83f55d2d,true);
+    softdouble::operator*((softdouble *)&local_58,(softdouble *)&uStack_48);
+    if (-1 < (long)local_e0) goto LAB_00005dbc;
+LAB_00005f84:
+    softfloat_subMagsF64(acStack_d8,local_e0,0x4062ff15c0285815,true);
+    softdouble::operator*((softdouble *)acStack_d8,(softdouble *)&uStack_48);
+    if (-1 < (long)local_d0) goto LAB_00005df0;
+LAB_00005fb8:
+    softfloat_subMagsF64(acStack_c8,local_d0,0x406510d06a8112ce,true);
+    softdouble::operator*((softdouble *)acStack_c8,(softdouble *)&uStack_48);
+    if (-1 < (long)local_c0) goto LAB_00005e24;
+LAB_00005fec:
+    softfloat_subMagsF64(acStack_b8,local_c0,0x4040fecbc9e2c375,true);
+    softdouble::operator*((softdouble *)acStack_b8,(softdouble *)&uStack_48);
+    if (-1 < (long)local_b0) goto LAB_00005e58;
+LAB_00006020:
+    softfloat_subMagsF64(acStack_a8,local_b0,0x3ff0000000000000,true);
+    softdouble::operator/((softdouble *)acStack_68,(softdouble *)acStack_a8);
+  }
+  else {
+    softfloat_addMagsF64(acStack_98,local_a0,0x406808f46c6116e0,false);
+    softdouble::operator*((softdouble *)acStack_98,(softdouble *)&uStack_48);
+    if ((long)local_90 < 0) goto LAB_00005ee8;
+LAB_00005d20:
+    softfloat_addMagsF64(acStack_88,local_90,0x405dca97439cae14,false);
+    softdouble::operator*((softdouble *)acStack_88,(softdouble *)&uStack_48);
+    if ((long)local_80 < 0) goto LAB_00005f1c;
+LAB_00005d54:
+    softfloat_addMagsF64(acStack_78,local_80,0x402add70d2827500,false);
+    softdouble::operator*((softdouble *)acStack_78,(softdouble *)&uStack_48);
+    if ((long)local_70 < 0) goto LAB_00005f50;
+LAB_00005d88:
+    softfloat_addMagsF64(acStack_68,local_70,0x3fc4f15f83f55d2d,false);
+    softdouble::operator*((softdouble *)&local_58,(softdouble *)&uStack_48);
+    if ((long)local_e0 < 0) goto LAB_00005f84;
+LAB_00005dbc:
+    softfloat_addMagsF64(acStack_d8,local_e0,0x4062ff15c0285815,false);
+    softdouble::operator*((softdouble *)acStack_d8,(softdouble *)&uStack_48);
+    if ((long)local_d0 < 0) goto LAB_00005fb8;
+LAB_00005df0:
+    softfloat_addMagsF64(acStack_c8,local_d0,0x406510d06a8112ce,false);
+    softdouble::operator*((softdouble *)acStack_c8,(softdouble *)&uStack_48);
+    if ((long)local_c0 < 0) goto LAB_00005fec;
+LAB_00005e24:
+    softfloat_addMagsF64(acStack_b8,local_c0,0x4040fecbc9e2c375,false);
+    softdouble::operator*((softdouble *)acStack_b8,(softdouble *)&uStack_48);
+    if ((long)local_b0 < 0) goto LAB_00006020;
+LAB_00005e58:
+    softfloat_addMagsF64(acStack_a8,local_b0,0x3ff0000000000000,false);
+    softdouble::operator/((softdouble *)acStack_68,(softdouble *)acStack_a8);
+  }
+  if (uVar5 == 0) {
+    uVar5 = 0;
+  }
+  else {
+    iVar6 = (int)(short)(sVar3 - (short)iVar6);
+    uVar5 = ((uVar1 & 0x80000000) +
+             ((iVar6 / 3 + (iVar6 >> 0x1f)) - (iVar6 * 0x5556 >> 0x1f)) * 0x800000 |
+            (uint)(local_60 >> 0x1d) & 0x7fffff) + 0x3f000000;
+  }
+LAB_00006048:
+  *in_x8 = uVar5;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: sin
+// Entry: 00006064
+// Signature: undefined __thiscall sin(cv * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::sin(cv::softdouble const&) */
+
+void __thiscall cv::sin(cv *this,softdouble *param_1)
+
+{
+  ulong *in_x8;
+  ulong local_48;
+  ulong local_40;
+  ulong local_38;
+  int local_2c;
+  ulong local_28;
+  
+  local_48 = *(ulong *)this;
+  if (((local_48 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+    *in_x8 = 0x7fffffffffffffff;
+    return;
+  }
+  local_28 = 0;
+  f64_sincos_reduce((softdouble *)&local_48,(softdouble *)&local_28,&local_2c);
+  if (local_2c == 2) {
+    local_40 = local_28;
+    f64_sin_kernel(&local_38,&local_40);
+  }
+  else {
+    if (local_2c == 1) {
+      local_38 = local_28;
+      f64_cos_kernel();
+      return;
+    }
+    if (local_2c == 0) {
+      local_38 = local_28;
+      f64_sin_kernel();
+      return;
+    }
+    local_40 = local_28;
+    f64_cos_kernel(&local_38,&local_40);
+  }
+  *in_x8 = local_38 ^ 0x8000000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: cos
+// Entry: 00006160
+// Signature: undefined __thiscall cos(cv * this, softdouble * param_1)
+// ========================================
+
+
+/* cv::cos(cv::softdouble const&) */
+
+void __thiscall cv::cos(cv *this,softdouble *param_1)
+
+{
+  ulong *in_x8;
+  ulong local_48;
+  ulong local_40;
+  ulong local_38;
+  int local_2c;
+  ulong local_28;
+  
+  local_48 = *(ulong *)this;
+  if (((local_48 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+    *in_x8 = 0x7fffffffffffffff;
+    return;
+  }
+  local_28 = 0;
+  f64_sincos_reduce((softdouble *)&local_48,(softdouble *)&local_28,&local_2c);
+  if (local_2c == 2) {
+    local_40 = local_28;
+    f64_cos_kernel(&local_38,&local_40);
+  }
+  else {
+    if (local_2c != 1) {
+      if (local_2c == 0) {
+        local_38 = local_28;
+        f64_cos_kernel();
+        return;
+      }
+      local_38 = local_28;
+      f64_sin_kernel();
+      return;
+    }
+    local_40 = local_28;
+    f64_sin_kernel(&local_38,&local_40);
+  }
+  *in_x8 = local_38 ^ 0x8000000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_subMagsF32
+// Entry: 0000625c
+// Signature: undefined __thiscall softfloat_subMagsF32(cv * this, uint param_1, uint param_2)
+// ========================================
+
+
+/* cv::softfloat_subMagsF32(unsigned int, unsigned int) */
+
+void __thiscall cv::softfloat_subMagsF32(cv *this,uint param_1,uint param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  byte bVar3;
+  bool bVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  
+  uVar2 = param_1 >> 0x17 & 0xff;
+  uVar8 = param_1 & 0x7fffff;
+  uVar1 = param_2 & 0x7fffff;
+  uVar10 = param_2 >> 0x17 & 0xff;
+  uVar5 = uVar2 - uVar10;
+  if (uVar5 == 0) {
+    if (uVar2 != 0xff) {
+      uVar8 = uVar8 - uVar1;
+      if (uVar8 != 0) {
+        uVar1 = 0;
+        if (uVar2 != 0) {
+          uVar1 = uVar2 - 1;
+        }
+        bVar4 = (int)param_1 >= 0;
+        uVar5 = -uVar8;
+        if (-1 < (int)uVar8) {
+          bVar4 = (int)param_1 < 0;
+          uVar5 = uVar8;
+        }
+        uVar8 = uVar5 << 0x10;
+        if (uVar5 >= 0x10000) {
+          uVar8 = uVar5;
+        }
+        uVar9 = (uint)(uVar5 < 0x10000);
+        uVar2 = uVar9 << 4 | 8;
+        uVar10 = uVar8 << 8;
+        if (uVar8 >> 0x18 != 0) {
+          uVar2 = uVar9 << 4;
+          uVar10 = uVar8;
+        }
+        uVar2 = (uVar2 + (byte)(&softfloat_countLeadingZeros8)[uVar10 >> 0x18]) - 8;
+        uVar8 = uVar1 - (int)(char)uVar2;
+        if (-1 < (int)uVar8) {
+          uVar1 = uVar2;
+        }
+        iVar7 = -0x80000000;
+        if (!bVar4) {
+          iVar7 = 0;
+        }
+        *(uint *)this =
+             iVar7 + (uVar8 & ((int)uVar8 >> 0x1f ^ 0xffffffffU)) * 0x800000 +
+             (uVar5 << (ulong)(uVar1 & 0x1f));
+        return;
+      }
+      *(undefined4 *)this = 0;
+      return;
+    }
+    if (uVar1 == 0 && uVar8 == 0) {
+      *(undefined4 *)this = 0xffc00000;
+      return;
+    }
+  }
+  else {
+    uVar9 = uVar8 * 0x80;
+    uVar6 = uVar1 * 0x80;
+    bVar3 = (byte)(param_1 >> 0x18);
+    if ((int)uVar5 < 0) {
+      if (uVar10 != 0xff) {
+        bVar3 = ~bVar3;
+        uVar8 = uVar9;
+        if (uVar2 != 0) {
+          uVar8 = 0x40000000;
+        }
+        uVar8 = uVar8 + uVar9;
+        uVar5 = -uVar5;
+        goto LAB_00006348;
+      }
+      if (uVar1 == 0) {
+        *(uint *)this = (param_1 & 0x80000000) - 0x800000;
+        return;
+      }
+    }
+    else {
+      if (uVar2 != 0xff) {
+        uVar8 = uVar6;
+        if ((param_2 & 0x7f800000) != 0) {
+          uVar8 = 0x40000000;
+        }
+        uVar8 = uVar8 + uVar6;
+        uVar10 = uVar2;
+        uVar6 = uVar9;
+LAB_00006348:
+        uVar1 = (uint)(uVar8 != 0);
+        if (uVar5 < 0x1f) {
+          uVar1 = uVar8 >> (ulong)(uVar5 & 0x1f) | (uint)(uVar8 << (ulong)(-uVar5 & 0x1f) != 0);
+        }
+        softfloat_normRoundPackToF32
+                  (this,(bool)(bVar3 >> 7),(short)uVar10 + -1,(uVar6 | 0x40000000) - uVar1);
+        return;
+      }
+      if (uVar8 == 0) {
+        *(uint *)this = param_1;
+        return;
+      }
+    }
+  }
+  if (((param_1 & 0x7fc00000) == 0x7f800000) && ((param_1 & 0x3fffff) != 0)) {
+    *(uint *)this = param_1 | 0x400000;
+    return;
+  }
+  if (uVar8 != 0 && ((param_1 ^ 0xffffffff) & 0x7f800000) == 0) {
+    param_2 = param_1;
+  }
+  *(uint *)this = param_2 | 0x400000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_addMagsF32
+// Entry: 00006428
+// Signature: undefined __thiscall softfloat_addMagsF32(cv * this, uint param_1, uint param_2)
+// ========================================
+
+
+/* cv::softfloat_addMagsF32(unsigned int, unsigned int) */
+
+void __thiscall cv::softfloat_addMagsF32(cv *this,uint param_1,uint param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  
+  uVar8 = param_1 >> 0x17 & 0xff;
+  uVar1 = param_1 & 0x7fffff;
+  uVar7 = param_2 >> 0x17 & 0xff;
+  uVar2 = param_2 & 0x7fffff;
+  uVar6 = uVar8 - uVar7;
+  if (uVar6 == 0) {
+    if (uVar8 == 0) {
+      *(uint *)this = uVar2 + param_1;
+      return;
+    }
+    if (uVar8 == 0xff) {
+      if (uVar2 == 0 && uVar1 == 0) {
+LAB_00006458:
+        *(uint *)this = param_1;
+        return;
+      }
+LAB_00006484:
+      if (((param_1 & 0x7fc00000) == 0x7f800000) && ((param_1 & 0x3fffff) != 0)) {
+        *(uint *)this = param_1 | 0x400000;
+        return;
+      }
+      if (uVar1 != 0 && ((param_1 ^ 0xffffffff) & 0x7f800000) == 0) {
+        param_2 = param_1;
+      }
+      *(uint *)this = param_2 | 0x400000;
+      return;
+    }
+    uVar9 = uVar2 + uVar1 | 0x1000000;
+    if ((uVar8 < 0xfe) && ((uVar2 + uVar1 & 1) == 0)) {
+      *(uint *)this = (param_1 & 0x80000000 | uVar8 << 0x17) + (uVar9 >> 1);
+      return;
+    }
+    uVar9 = uVar9 << 6;
+  }
+  else {
+    iVar4 = uVar1 * 0x40;
+    iVar5 = uVar2 * 0x40;
+    if ((int)uVar6 < 0) {
+      if (uVar7 == 0xff) {
+        if (uVar2 != 0) goto LAB_00006484;
+        goto LAB_000065c0;
+      }
+      iVar3 = iVar4;
+      if (uVar8 != 0) {
+        iVar3 = 0x20000000;
+      }
+      uVar1 = iVar3 + iVar4;
+      uVar2 = (uint)(uVar1 != 0);
+      if (-uVar6 < 0x1f) {
+        uVar2 = uVar1 >> (ulong)(-uVar6 & 0x1f) | (uint)(uVar1 << (ulong)(uVar6 & 0x1f) != 0);
+      }
+      uVar9 = iVar5 + uVar2 + 0x20000000;
+      uVar8 = uVar7;
+    }
+    else {
+      if (uVar8 == 0xff) {
+        if (uVar1 == 0) goto LAB_00006458;
+        goto LAB_00006484;
+      }
+      iVar3 = iVar5;
+      if (uVar7 != 0) {
+        iVar3 = 0x20000000;
+      }
+      uVar1 = iVar3 + iVar5;
+      uVar9 = (uint)(uVar1 != 0);
+      if (uVar6 < 0x1f) {
+        uVar9 = uVar1 >> (ulong)(uVar6 & 0x1f) | (uint)(uVar1 << (ulong)(-uVar6 & 0x1f) != 0);
+      }
+      uVar9 = uVar9 + iVar4 + 0x20000000;
+    }
+    if (uVar9 >> 0x1e == 0) {
+      uVar8 = uVar8 - 1;
+      uVar9 = uVar9 << 1;
+    }
+  }
+  if (0xfc < uVar8) {
+    if ((int)uVar8 < 0) {
+      uVar9 = uVar9 >> (ulong)(-uVar8 & 0x1f) | (uint)(uVar9 << (ulong)(uVar8 & 0x1f) != 0);
+      uVar8 = 0;
+    }
+    else {
+      if ((0xfd < uVar8) || ((int)(uVar9 + 0x40) < 0)) {
+LAB_000065c0:
+        *(uint *)this = param_1 & 0x80000000 | 0x7f800000;
+        return;
+      }
+      uVar8 = 0xfd;
+    }
+  }
+  uVar1 = ~(uint)((uVar9 & 0x7f) == 0x40) & uVar9 + 0x40 >> 7;
+  iVar4 = 0;
+  if (uVar1 != 0) {
+    iVar4 = uVar8 << 0x17;
+  }
+  *(uint *)this = (uVar1 | param_1 & 0x80000000) + iVar4;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_normRoundPackToF32
+// Entry: 00006630
+// Signature: undefined __thiscall softfloat_normRoundPackToF32(cv * this, bool param_1, short param_2, uint param_3)
+// ========================================
+
+
+/* cv::softfloat_normRoundPackToF32(bool, short, unsigned int) */
+
+void __thiscall cv::softfloat_normRoundPackToF32(cv *this,bool param_1,short param_2,uint param_3)
+
+{
+  byte bVar1;
+  int iVar2;
+  bool bVar3;
+  bool bVar4;
+  uint uVar5;
+  undefined4 uVar6;
+  uint uVar7;
+  int iVar8;
+  uint uVar9;
+  
+  bVar3 = param_3 < 0x10000;
+  uVar5 = param_3 << 0x10;
+  if (!bVar3) {
+    uVar5 = param_3;
+  }
+  bVar4 = uVar5 >> 0x18 != 0;
+  uVar7 = uVar5 << 8;
+  if (bVar4) {
+    uVar7 = uVar5;
+  }
+  bVar1 = bVar3 << 4 | 8;
+  if (bVar4) {
+    bVar1 = bVar3 << 4;
+  }
+  uVar7 = (uint)(char)(bVar1 + (&softfloat_countLeadingZeros8)[uVar7 >> 0x18] + -1);
+  uVar5 = (ushort)param_2 - uVar7;
+  if ((6 < (int)uVar7) && ((uVar5 & 0xffff) < 0xfd)) {
+    iVar8 = -0x80000000;
+    if (!param_1) {
+      iVar8 = 0;
+    }
+    iVar2 = 0;
+    if (param_3 != 0) {
+      iVar2 = uVar5 * 0x800000;
+    }
+    *(uint *)this = (param_3 << (ulong)(uVar7 - 7 & 0x1f)) + iVar8 + iVar2;
+    return;
+  }
+  uVar7 = param_3 << (ulong)(uVar7 & 0x1f);
+  if (0xfc < (uVar5 & 0xffff)) {
+    if ((uVar5 >> 0xf & 1) == 0) {
+      if ((0xfd < (uVar5 & 0xffff)) || ((int)(uVar7 + 0x40) < 0)) {
+        uVar6 = 0xff800000;
+        if (!param_1) {
+          uVar6 = 0x7f800000;
+        }
+        *(undefined4 *)this = uVar6;
+        return;
+      }
+      uVar5 = 0xfd;
+    }
+    else {
+      uVar9 = uVar7 >> (ulong)(-uVar5 & 0x1f);
+      iVar8 = uVar7 << (ulong)(uVar5 & 0x1f);
+      uVar7 = (uint)(uVar7 != 0);
+      if ((-uVar5 & 0xffff) < 0x1f) {
+        uVar7 = uVar9 | iVar8 != 0;
+      }
+      uVar5 = 0;
+    }
+  }
+  uVar9 = 0x80000000;
+  if (!param_1) {
+    uVar9 = 0;
+  }
+  uVar7 = ~(uint)((uVar7 & 0x7f) == 0x40) & uVar7 + 0x40 >> 7;
+  iVar8 = 0;
+  if (uVar7 != 0) {
+    iVar8 = uVar5 << 0x17;
+  }
+  *(uint *)this = (uVar7 | uVar9) + iVar8;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_addMagsF64
+// Entry: 00006778
+// Signature: undefined __thiscall softfloat_addMagsF64(cv * this, ulonglong param_1, ulonglong param_2, bool param_3)
+// ========================================
+
+
+/* cv::softfloat_addMagsF64(unsigned long long, unsigned long long, bool) */
+
+void __thiscall cv::softfloat_addMagsF64(cv *this,ulonglong param_1,ulonglong param_2,bool param_3)
+
+{
+  undefined8 uVar1;
+  long lVar2;
+  uint uVar3;
+  uint uVar4;
+  ulong uVar5;
+  uint uVar6;
+  ulong uVar7;
+  ulong uVar8;
+  ulong uVar9;
+  
+  uVar5 = param_1 >> 0x34 & 0x7ff;
+  uVar8 = param_1 & 0xfffffffffffff;
+  uVar7 = param_2 >> 0x34 & 0x7ff;
+  uVar9 = param_2 & 0xfffffffffffff;
+  uVar6 = (uint)uVar7;
+  uVar4 = (uint)uVar5;
+  uVar3 = uVar4 - uVar6;
+  if (uVar3 == 0) {
+    if (uVar4 == 0x7ff) {
+      if (uVar9 == 0 && uVar8 == 0) {
+LAB_000067c0:
+        *(ulonglong *)this = param_1;
+        return;
+      }
+LAB_000067e0:
+      if (((param_1 & 0x7ff8000000000000) == 0x7ff0000000000000) &&
+         ((param_1 & 0x7ffffffffffff) != 0)) {
+        *(ulonglong *)this = param_1 | 0x8000000000000;
+        return;
+      }
+      if (uVar8 != 0 && ((param_1 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+        param_2 = param_1;
+      }
+      *(ulonglong *)this = param_2 | 0x8000000000000;
+      return;
+    }
+    if (uVar4 == 0) {
+      *(ulong *)this = uVar9 + param_1;
+      return;
+    }
+    uVar9 = (uVar9 + uVar8) * 0x200 | 0x4000000000000000;
+  }
+  else {
+    if ((int)uVar3 < 0) {
+      if (uVar6 == 0x7ff) {
+        if (uVar9 != 0) goto LAB_000067e0;
+        goto LAB_00006910;
+      }
+      uVar5 = uVar8 << 10;
+      if (uVar4 != 0) {
+        uVar5 = uVar8 * 0x200 | 0x2000000000000000;
+      }
+      uVar8 = (ulong)(uVar5 != 0);
+      if (-uVar3 < 0x3f) {
+        uVar8 = uVar5 >> ((ulong)-uVar3 & 0x3f) | (ulong)(uVar5 << ((ulong)uVar3 & 0x3f) != 0);
+      }
+      uVar9 = uVar9 * 0x200 + uVar8 + 0x2000000000000000;
+      uVar5 = uVar7;
+      uVar4 = uVar6;
+    }
+    else {
+      if (uVar4 == 0x7ff) {
+        if (uVar8 == 0) goto LAB_000067c0;
+        goto LAB_000067e0;
+      }
+      uVar7 = uVar9 << 10;
+      if (uVar6 != 0) {
+        uVar7 = uVar9 * 0x200 | 0x2000000000000000;
+      }
+      uVar9 = (ulong)(uVar7 != 0);
+      if (uVar3 < 0x3f) {
+        uVar9 = uVar7 >> ((ulong)uVar3 & 0x3f) | (ulong)(uVar7 << ((ulong)-uVar3 & 0x3f) != 0);
+      }
+      uVar9 = uVar9 + uVar8 * 0x200 + 0x2000000000000000;
+    }
+    if (uVar9 >> 0x3e == 0) {
+      uVar4 = uVar4 - 1;
+      uVar5 = (ulong)uVar4;
+      uVar9 = uVar9 << 1;
+    }
+    else {
+      uVar4 = (uint)uVar5;
+    }
+  }
+  if (0x7fc < uVar4) {
+    uVar4 = (uint)uVar5;
+    if ((int)uVar4 < 0) {
+      uVar9 = uVar9 >> ((ulong)-uVar4 & 0x3f) | (ulong)(uVar9 << (uVar5 & 0x3f) != 0);
+      uVar5 = 0;
+    }
+    else {
+      if ((0x7fd < uVar4) || ((long)(uVar9 + 0x200) < 0)) {
+LAB_00006910:
+        uVar1 = 0xfff0000000000000;
+        if (!param_3) {
+          uVar1 = 0x7ff0000000000000;
+        }
+        *(undefined8 *)this = uVar1;
+        return;
+      }
+      uVar5 = 0x7fd;
+    }
+  }
+  uVar7 = 0x8000000000000000;
+  if (!param_3) {
+    uVar7 = 0;
+  }
+  uVar8 = ~(ulong)((uVar9 & 0x3ff) == 0x200) & uVar9 + 0x200 >> 10;
+  lVar2 = 0;
+  if (uVar8 != 0) {
+    lVar2 = uVar5 << 0x34;
+  }
+  *(ulong *)this = (uVar8 | uVar7) + lVar2;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_subMagsF64
+// Entry: 00006980
+// Signature: undefined __thiscall softfloat_subMagsF64(cv * this, ulonglong param_1, ulonglong param_2, bool param_3)
+// ========================================
+
+
+/* cv::softfloat_subMagsF64(unsigned long long, unsigned long long, bool) */
+
+void __thiscall cv::softfloat_subMagsF64(cv *this,ulonglong param_1,ulonglong param_2,bool param_3)
+
+{
+  int iVar1;
+  long lVar2;
+  undefined8 uVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  bool bVar7;
+  int iVar8;
+  ulong uVar9;
+  uint uVar10;
+  ulong uVar11;
+  uint uVar12;
+  ulong uVar13;
+  ulong uVar14;
+  ulong uVar15;
+  
+  uVar9 = param_1 >> 0x34 & 0x7ff;
+  uVar13 = param_1 & 0xfffffffffffff;
+  uVar10 = (uint)(param_2 >> 0x34) & 0x7ff;
+  uVar15 = param_2 & 0xfffffffffffff;
+  iVar8 = (int)uVar9;
+  uVar4 = iVar8 - uVar10;
+  if (uVar4 == 0) {
+    if (iVar8 != 0x7ff) {
+      uVar13 = uVar13 - uVar15;
+      if (uVar13 == 0) {
+        *(undefined8 *)this = 0;
+        return;
+      }
+      iVar1 = 0;
+      if (iVar8 != 0) {
+        iVar1 = iVar8 + -1;
+      }
+      bVar7 = (uVar13 & 0x8000000000000000) != 0;
+      if (bVar7) {
+        param_3 = !param_3;
+      }
+      uVar9 = -uVar13;
+      if (!bVar7) {
+        uVar9 = uVar13;
+      }
+      uVar10 = (uint)(uVar9 >> 0x20);
+      uVar12 = (uint)(uVar10 == 0);
+      uVar4 = (uint)uVar9;
+      if (uVar10 != 0) {
+        uVar4 = uVar10;
+      }
+      uVar10 = uVar4 << 0x10;
+      uVar6 = uVar12 << 5 | 0x10;
+      if (0xffff < uVar4) {
+        uVar10 = uVar4;
+        uVar6 = uVar12 << 5;
+      }
+      uVar4 = uVar10 << 8;
+      uVar12 = uVar6 | 8;
+      if (uVar10 >> 0x18 != 0) {
+        uVar4 = uVar10;
+        uVar12 = uVar6;
+      }
+      iVar8 = (byte)(&softfloat_countLeadingZeros8)[uVar4 >> 0x18] + uVar12 + -0xb;
+      uVar4 = iVar1 - (char)iVar8;
+      iVar5 = (int)(short)uVar4;
+      if (-1 < iVar5) {
+        iVar1 = iVar8;
+      }
+      lVar2 = -0x8000000000000000;
+      if (param_3 == false) {
+        lVar2 = 0;
+      }
+      *(ulong *)this =
+           lVar2 + ((ulong)(uVar4 & (iVar5 >> 0x1f ^ 0xffffffffU)) << 0x34) +
+           (uVar9 << ((long)(char)iVar1 & 0x3fU));
+      return;
+    }
+    if (uVar15 == 0 && uVar13 == 0) {
+      *(undefined8 *)this = 0xfff8000000000000;
+      return;
+    }
+  }
+  else {
+    uVar14 = uVar13 * 0x400;
+    uVar11 = uVar15 * 0x400;
+    if ((int)uVar4 < 0) {
+      if (uVar10 != 0x7ff) {
+        uVar13 = uVar14;
+        if (iVar8 != 0) {
+          uVar13 = 0x4000000000000000;
+        }
+        uVar13 = uVar13 + uVar14;
+        uVar9 = (ulong)(uVar13 != 0);
+        if (-uVar4 < 0x3f) {
+          uVar9 = uVar13 >> ((ulong)-uVar4 & 0x3f) | (ulong)(uVar13 << ((ulong)uVar4 & 0x3f) != 0);
+        }
+        softfloat_normRoundPackToF64
+                  (this,!param_3,(short)uVar10 + -1,(uVar11 | 0x4000000000000000) - uVar9);
+        return;
+      }
+      if (uVar15 == 0) {
+        uVar3 = 0x7ff0000000000000;
+        if (!param_3) {
+          uVar3 = 0xfff0000000000000;
+        }
+        *(undefined8 *)this = uVar3;
+        return;
+      }
+    }
+    else {
+      if (iVar8 != 0x7ff) {
+        uVar13 = uVar11;
+        if (uVar10 != 0) {
+          uVar13 = 0x4000000000000000;
+        }
+        uVar13 = uVar13 + uVar11;
+        uVar15 = (ulong)(uVar13 != 0);
+        if (uVar4 < 0x3f) {
+          uVar15 = uVar13 >> ((ulong)uVar4 & 0x3f) | (ulong)(uVar13 << ((ulong)-uVar4 & 0x3f) != 0);
+        }
+        softfloat_normRoundPackToF64
+                  (this,param_3,(short)uVar9 + -1,(uVar14 | 0x4000000000000000) - uVar15);
+        return;
+      }
+      if (uVar13 == 0) {
+        *(ulonglong *)this = param_1;
+        return;
+      }
+    }
+  }
+  if (((param_1 & 0x7ff8000000000000) == 0x7ff0000000000000) && ((param_1 & 0x7ffffffffffff) != 0))
+  {
+    *(ulonglong *)this = param_1 | 0x8000000000000;
+    return;
+  }
+  if (uVar13 != 0 && ((param_1 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) {
+    param_2 = param_1;
+  }
+  *(ulonglong *)this = param_2 | 0x8000000000000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: softfloat_normRoundPackToF64
+// Entry: 00006b94
+// Signature: undefined __thiscall softfloat_normRoundPackToF64(cv * this, bool param_1, short param_2, ulonglong param_3)
+// ========================================
+
+
+/* cv::softfloat_normRoundPackToF64(bool, short, unsigned long long) */
+
+void __thiscall
+cv::softfloat_normRoundPackToF64(cv *this,bool param_1,short param_2,ulonglong param_3)
+
+{
+  byte bVar1;
+  long lVar2;
+  ulong uVar3;
+  undefined8 uVar4;
+  uint uVar5;
+  byte bVar6;
+  bool bVar7;
+  uint uVar8;
+  ulong uVar9;
+  long lVar10;
+  ulong uVar11;
+  
+  uVar8 = (uint)(param_3 >> 0x20);
+  bVar7 = uVar8 == 0;
+  uVar5 = (uint)param_3;
+  if (!bVar7) {
+    uVar5 = uVar8;
+  }
+  uVar8 = uVar5 << 0x10;
+  bVar6 = bVar7 << 5 | 0x10;
+  if (0xffff < uVar5) {
+    uVar8 = uVar5;
+    bVar6 = bVar7 << 5;
+  }
+  bVar7 = uVar8 >> 0x18 != 0;
+  uVar5 = uVar8 << 8;
+  if (bVar7) {
+    uVar5 = uVar8;
+  }
+  bVar1 = bVar6 | 8;
+  if (bVar7) {
+    bVar1 = bVar6;
+  }
+  uVar8 = (uint)(char)(bVar1 + (&softfloat_countLeadingZeros8)[uVar5 >> 0x18] + -1);
+  uVar5 = (ushort)param_2 - uVar8;
+  uVar9 = (ulong)uVar5;
+  if ((9 < (int)uVar8) && ((uVar5 & 0xffff) < 0x7fd)) {
+    lVar10 = -0x8000000000000000;
+    if (!param_1) {
+      lVar10 = 0;
+    }
+    lVar2 = 0;
+    if (param_3 != 0) {
+      lVar2 = uVar9 << 0x34;
+    }
+    *(ulonglong *)this = (param_3 << ((ulong)(uVar8 - 10) & 0x3f)) + lVar10 + lVar2;
+    return;
+  }
+  uVar11 = param_3 << ((ulong)uVar8 & 0x3f);
+  if (0x7fc < (uVar5 & 0xffff)) {
+    if ((uVar5 >> 0xf & 1) == 0) {
+      if ((0x7fd < (uVar5 & 0xffff)) || ((long)(uVar11 + 0x200) < 0)) {
+        uVar4 = 0xfff0000000000000;
+        if (!param_1) {
+          uVar4 = 0x7ff0000000000000;
+        }
+        *(undefined8 *)this = uVar4;
+        return;
+      }
+      uVar9 = 0x7fd;
+    }
+    else {
+      uVar8 = -(int)(short)uVar5;
+      uVar9 = uVar11 >> ((ulong)uVar8 & 0x3f);
+      lVar10 = uVar11 << ((ulong)(uint)(int)(short)uVar5 & 0x3f);
+      uVar11 = (ulong)(uVar11 != 0);
+      if (uVar8 < 0x3f) {
+        uVar11 = uVar9 | lVar10 != 0;
+      }
+      uVar9 = 0;
+    }
+  }
+  uVar3 = 0x8000000000000000;
+  if (!param_1) {
+    uVar3 = 0;
+  }
+  uVar11 = ~(ulong)((uVar11 & 0x3ff) == 0x200) & uVar11 + 0x200 >> 10;
+  lVar10 = 0;
+  if (uVar11 != 0) {
+    lVar10 = uVar9 << 0x34;
+  }
+  *(ulong *)this = (uVar11 | uVar3) + lVar10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_sincos_reduce
+// Entry: 00006cec
+// Signature: undefined __cdecl f64_sincos_reduce(softdouble * param_1, softdouble * param_2, int * param_3)
+// ========================================
+
+
+/* cv::f64_sincos_reduce(cv::softdouble const&, cv::softdouble&, int&) */
+
+void cv::f64_sincos_reduce(softdouble *param_1,softdouble *param_2,int *param_3)
+
+{
+  ulong uVar1;
+  ulonglong uVar2;
+  bool bVar3;
+  ulong uVar4;
+  undefined8 local_70;
+  ulong local_68;
+  ulong local_60;
+  double local_58;
+  
+  uVar1 = *(ulong *)param_1;
+  if (((uVar1 & 0x7ffffffffffffff8) < 0x3fe921fb54442d18) &&
+     ((uVar1 & 0xfffffffffffff) == 0 || ((uVar1 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0)) {
+    *param_3 = 0;
+    if (param_1 != param_2) {
+      *(ulong *)param_2 = uVar1;
+      return;
+    }
+    return;
+  }
+  f64_rem((cv *)&local_58,uVar1,0x401921fb54442d18);
+  if ((long)local_58 < 0) {
+    softfloat_addMagsF64((cv *)&local_60,(ulonglong)local_58,0x3f50000000000000,true);
+    uVar1 = local_60;
+    if (((local_60 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) goto LAB_00006dd0;
+LAB_00006e28:
+    uVar4 = uVar1 & 0x7fffffffffffffff;
+    if (uVar4 < 0x3fe921fb54442d19) {
+      *param_3 = 0;
+      *(double *)param_2 = local_58;
+      return;
+    }
+    local_70 = 0x4008000000000000;
+    softdouble::operator*((softdouble *)&local_70,(softdouble *)&piby4);
+    if ((((local_68 ^ 0xffffffffffffffff) & 0x7ff0000000000000) == 0) &&
+       ((local_68 & 0xfffffffffffff) != 0)) goto LAB_00006df4;
+    if ((long)local_68 < 0) {
+      if (((local_68 | uVar1) & 0x7fffffffffffffff) == 0) goto code_r0x00006ea8;
+      goto LAB_00006df4;
+    }
+    if ((uVar4 != local_68) && (local_68 <= uVar4)) goto LAB_00006df4;
+code_r0x00006ea8:
+    if (local_58 <= 0.0) {
+      *param_3 = 3;
+      uVar2 = 0x3ff921fb54442d18;
+      goto joined_r0x00006efc;
+    }
+    *param_3 = 1;
+    uVar2 = 0x3ff921fb54442d18;
+joined_r0x00006ecc:
+    if ((long)local_58 < 0) {
+      bVar3 = true;
+LAB_00006ed4:
+      softfloat_addMagsF64((cv *)&local_68,(ulonglong)local_58,uVar2,bVar3);
+      goto LAB_00006f08;
+    }
+    bVar3 = false;
+  }
+  else {
+    softfloat_subMagsF64((cv *)&local_60,(ulonglong)local_58,0x3f50000000000000,false);
+    uVar1 = local_60;
+    if (((local_60 ^ 0xffffffffffffffff) & 0x7ff0000000000000) != 0) goto LAB_00006e28;
+LAB_00006dd0:
+    uVar1 = local_60;
+    if ((local_60 & 0xfffffffffffff) == 0) goto LAB_00006e28;
+    local_70 = 0x4008000000000000;
+    softdouble::operator*((softdouble *)&local_70,(softdouble *)&piby4);
+LAB_00006df4:
+    *param_3 = 2;
+    uVar2 = 0x400921fb54442d18;
+    if (0.0 < local_58) goto joined_r0x00006ecc;
+joined_r0x00006efc:
+    if (-1 < (long)local_58) {
+      bVar3 = false;
+      goto LAB_00006ed4;
+    }
+    bVar3 = true;
+  }
+  softfloat_subMagsF64((cv *)&local_68,(ulonglong)local_58,uVar2,bVar3);
+LAB_00006f08:
+  *(ulong *)param_2 = local_68;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_sin_kernel
+// Entry: 00006f2c
+// Signature: undefined __cdecl f64_sin_kernel(softdouble param_1)
+// ========================================
+
+
+/* cv::f64_sin_kernel(cv::softdouble) */
+
+void cv::f64_sin_kernel(ulong *param_1,softdouble *param_2,undefined8 param_3,softdouble *param_4)
+
+{
+  undefined8 local_60;
+  softdouble asStack_58 [8];
+  softdouble asStack_50 [8];
+  softdouble asStack_48 [8];
+  softdouble asStack_40 [8];
+  softdouble asStack_38 [8];
+  softdouble asStack_30 [8];
+  cv acStack_28 [8];
+  
+  if ((*(ulong *)param_2 >> 0x36 & 0x1ff) < 0xf9) {
+    *param_1 = *(ulong *)param_2;
+    return;
+  }
+  softdouble::operator*(param_2,param_2);
+  mulAdd(acStack_28,(softdouble *)&S6,(softdouble *)&S5,param_4);
+  mulAdd(acStack_28,asStack_58,(softdouble *)&S4,param_4);
+  mulAdd(acStack_28,asStack_50,(softdouble *)&S3,param_4);
+  mulAdd(acStack_28,asStack_48,(softdouble *)&S2,param_4);
+  mulAdd(acStack_28,asStack_40,(softdouble *)&S1,param_4);
+  local_60 = 0x3ff0000000000000;
+  mulAdd(acStack_28,asStack_38,(softdouble *)&local_60,param_4);
+  softdouble::operator*(param_2,asStack_30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: f64_cos_kernel
+// Entry: 0000702c
+// Signature: undefined __cdecl f64_cos_kernel(softdouble param_1)
+// ========================================
+
+
+/* cv::f64_cos_kernel(cv::softdouble) */
+
+void cv::f64_cos_kernel(undefined8 *param_1,softdouble *param_2,undefined8 param_3,
+                       softdouble *param_4)
+
+{
+  undefined8 local_68;
+  undefined8 local_60;
+  softdouble asStack_58 [8];
+  softdouble asStack_50 [8];
+  softdouble asStack_48 [8];
+  softdouble asStack_40 [8];
+  softdouble asStack_38 [8];
+  cv acStack_30 [8];
+  cv acStack_28 [8];
+  
+  if ((*(ulong *)param_2 >> 0x36 & 0x1ff) < 0xf9) {
+    *param_1 = 0x3ff0000000000000;
+    return;
+  }
+  softdouble::operator*(param_2,param_2);
+  mulAdd(acStack_28,(softdouble *)&C6,(softdouble *)&C5,param_4);
+  mulAdd(acStack_28,asStack_58,(softdouble *)&C4,param_4);
+  mulAdd(acStack_28,asStack_50,(softdouble *)&C3,param_4);
+  mulAdd(acStack_28,asStack_48,(softdouble *)&C2,param_4);
+  mulAdd(acStack_28,asStack_40,(softdouble *)&C1,param_4);
+  local_60 = 0xbfe0000000000000;
+  mulAdd(acStack_28,asStack_38,(softdouble *)&local_60,param_4);
+  local_68 = 0x3ff0000000000000;
+  mulAdd(acStack_30,(softdouble *)acStack_28,(softdouble *)&local_68,param_4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_acquire
+// Entry: 0000a000
+// Signature: undefined ___cxa_guard_acquire(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_acquire(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_release
+// Entry: 0000a100
+// Signature: undefined ___cxa_guard_release(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_release(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 78
+// Failed: 0
+// Skipped external functions: 0

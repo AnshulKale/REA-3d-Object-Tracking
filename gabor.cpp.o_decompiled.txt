@@ -1,0 +1,622 @@
+Program: gabor.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: getGaborKernel
+// Entry: 00000000
+// Signature: undefined __thiscall getGaborKernel(cv * this, Size_ param_1, double param_2, double param_3, double param_4, double param_5, double param_6, int param_7)
+// ========================================
+
+
+/* cv::getGaborKernel(cv::Size_<int>, double, double, double, double, double, int) */
+
+void __thiscall
+cv::getGaborKernel(Mat *param_1,double param_2,double param_3,double param_4,double param_5,
+                  double param_6,cv *this,int param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  code *pcVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  ulong uVar12;
+  ulong uVar13;
+  long lVar14;
+  long lVar15;
+  long lVar16;
+  long lVar17;
+  undefined8 *puVar18;
+  long lVar19;
+  undefined8 uVar21;
+  double dVar20;
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  double dVar36;
+  double dVar37;
+  double dVar38;
+  double dVar39;
+  double dVar40;
+  double dVar41;
+  double dVar42;
+  double dVar43;
+  double dVar44;
+  int iVar45;
+  int iVar46;
+  int iVar47;
+  int iVar48;
+  string asStack_a0 [32];
+  
+  param_5 = param_2 / param_5;
+  auVar23._8_8_ = 0;
+  auVar23._0_8_ = param_3;
+  dVar20 = (double)___sincos_stret(auVar23);
+  dVar39 = ABS(param_2 * 3.0 * param_3);
+  dVar40 = ABS(dVar20 * param_5 * 3.0);
+  if (dVar40 <= dVar39) {
+    dVar40 = dVar39;
+  }
+  uVar1 = (uint)(long)(double)(long)dVar40;
+  if (0 < (int)this) {
+    uVar1 = (uint)((ulong)this >> 1) & 0x7fffffff;
+  }
+  uVar12 = (ulong)uVar1;
+  dVar39 = ABS(param_2 * 3.0 * dVar20);
+  dVar40 = ABS(param_3 * param_5 * 3.0);
+  if (dVar40 <= dVar39) {
+    dVar40 = dVar39;
+  }
+  uVar2 = (uint)(long)(double)(long)dVar40;
+  if (0xffffffff < (long)this) {
+    uVar2 = (uint)((ulong)this >> 0x21);
+  }
+  uVar13 = (ulong)uVar2;
+  if (param_8 - 5U < 2) {
+    uVar3 = uVar1 << 1 | 1;
+    cv::Mat::Mat(param_1,uVar2 << 1 | 1,uVar3,param_8);
+    if ((-1 < (int)uVar2) && (-1 < (int)uVar1)) {
+      iVar48 = -uVar1;
+      dVar40 = -0.5 / (param_2 * param_2);
+      param_4 = ltmp1 / param_4;
+      lVar17 = (long)iVar48;
+      lVar16 = (long)(int)-uVar2;
+      lVar9 = (ulong)uVar3 - 1;
+      iVar47 = iVar48 + SUB84(lCPI0_1,0);
+      iVar48 = iVar48 + (int)((ulong)lCPI0_1 >> 0x20);
+      dVar39 = -0.5 / (param_5 * param_5);
+      if (param_8 == 5) {
+        lVar10 = uVar13 - lVar16;
+        do {
+          dVar43 = dVar20 * (double)(int)lVar16;
+          dVar44 = param_3 * (double)(int)lVar16;
+          lVar19 = *(long *)(param_1 + 0x10);
+          lVar11 = **(long **)(param_1 + 0x48);
+          lVar15 = lVar17;
+          if (uVar1 != 0) {
+            lVar14 = lVar9;
+            puVar18 = (undefined8 *)(lVar19 + uVar12 * 4 + lVar17 * -4 + -4 + lVar11 * lVar10);
+            iVar45 = iVar47;
+            iVar46 = iVar48;
+            do {
+              auVar22._0_8_ = (long)iVar45;
+              auVar22._8_8_ = (long)iVar46;
+              auVar23 = NEON_scvtf(auVar22,8);
+              dVar41 = dVar43 + param_3 * auVar23._0_8_;
+              dVar42 = dVar43 + param_3 * auVar23._8_8_;
+              auVar24._0_8_ = (long)-iVar45;
+              auVar24._8_8_ = (long)-iVar46;
+              auVar23 = NEON_scvtf(auVar24,8);
+              dVar36 = dVar44 + dVar20 * auVar23._0_8_;
+              dVar37 = dVar44 + dVar20 * auVar23._8_8_;
+              dVar38 = dVar37 * dVar37 * dVar39 + dVar42 * dVar42 * dVar40;
+              auVar25._8_8_ = 0;
+              auVar25._0_8_ = dVar38;
+              dVar37 = (double)_exp(auVar25);
+              auVar4._8_8_ = dVar38;
+              auVar4._0_8_ = dVar36 * dVar36 * dVar39 + dVar41 * dVar41 * dVar40;
+              dVar36 = (double)_exp(auVar4);
+              dVar42 = param_6 + dVar42 * param_4;
+              auVar26._8_8_ = 0;
+              auVar26._0_8_ = dVar42;
+              dVar38 = (double)_cos(auVar26);
+              auVar5._8_8_ = dVar42;
+              auVar5._0_8_ = param_6 + dVar41 * param_4;
+              dVar42 = (double)_cos(auVar5);
+              uVar21 = NEON_rev64(CONCAT44((float)(dVar38 * dVar37),(float)(dVar42 * dVar36)),4);
+              *puVar18 = uVar21;
+              iVar45 = iVar45 + 2;
+              iVar46 = iVar46 + 2;
+              lVar14 = lVar14 + -2;
+              lVar15 = lVar9 + lVar17;
+              puVar18 = puVar18 + -1;
+            } while (lVar14 != 0);
+          }
+          do {
+            dVar36 = dVar43 + param_3 * (double)(int)lVar15;
+            dVar37 = dVar44 + dVar20 * (double)-(int)lVar15;
+            auVar27._0_8_ = dVar37 * dVar39 * dVar37 + dVar36 * dVar40 * dVar36;
+            auVar27._8_8_ = 0;
+            dVar37 = (double)_exp(auVar27);
+            auVar28._0_8_ = param_6 + dVar36 * param_4;
+            auVar28._8_8_ = 0;
+            dVar36 = (double)_cos(auVar28);
+            *(float *)(lVar19 + lVar11 * (uVar13 - lVar16) + (uVar12 - lVar15) * 4) =
+                 (float)(dVar36 * dVar37);
+            lVar15 = lVar15 + 1;
+          } while ((int)lVar15 != uVar1 + 1);
+          lVar16 = lVar16 + 1;
+          lVar10 = lVar10 + -1;
+        } while (uVar2 + 1 != (int)lVar16);
+      }
+      else {
+        lVar10 = uVar13 - lVar16;
+        do {
+          dVar43 = dVar20 * (double)(int)lVar16;
+          dVar44 = param_3 * (double)(int)lVar16;
+          lVar19 = *(long *)(param_1 + 0x10);
+          lVar11 = **(long **)(param_1 + 0x48);
+          lVar15 = lVar17;
+          if (uVar1 != 0) {
+            lVar14 = lVar9;
+            puVar18 = (undefined8 *)(lVar19 + uVar12 * 8 + lVar17 * -8 + -8 + lVar11 * lVar10);
+            iVar45 = iVar47;
+            iVar46 = iVar48;
+            do {
+              auVar29._0_8_ = (long)iVar45;
+              auVar29._8_8_ = (long)iVar46;
+              auVar23 = NEON_scvtf(auVar29,8);
+              dVar41 = dVar43 + param_3 * auVar23._0_8_;
+              dVar42 = dVar43 + param_3 * auVar23._8_8_;
+              auVar30._0_8_ = (long)-iVar45;
+              auVar30._8_8_ = (long)-iVar46;
+              auVar23 = NEON_scvtf(auVar30,8);
+              dVar36 = dVar44 + dVar20 * auVar23._0_8_;
+              dVar37 = dVar44 + dVar20 * auVar23._8_8_;
+              dVar38 = dVar37 * dVar37 * dVar39 + dVar42 * dVar42 * dVar40;
+              auVar31._8_8_ = 0;
+              auVar31._0_8_ = dVar38;
+              dVar37 = (double)_exp(auVar31);
+              auVar6._8_8_ = dVar38;
+              auVar6._0_8_ = dVar36 * dVar36 * dVar39 + dVar41 * dVar41 * dVar40;
+              dVar36 = (double)_exp(auVar6);
+              dVar42 = param_6 + dVar42 * param_4;
+              auVar32._8_8_ = 0;
+              auVar32._0_8_ = dVar42;
+              dVar38 = (double)_cos(auVar32);
+              auVar7._8_8_ = dVar42;
+              auVar7._0_8_ = param_6 + dVar41 * param_4;
+              dVar42 = (double)_cos(auVar7);
+              auVar33._0_8_ = dVar42 * dVar36;
+              auVar33._8_8_ = dVar38 * dVar37;
+              auVar23 = NEON_ext(auVar33,auVar33,8,1);
+              puVar18[1] = auVar23._8_8_;
+              *puVar18 = auVar23._0_8_;
+              iVar45 = iVar45 + 2;
+              iVar46 = iVar46 + 2;
+              lVar14 = lVar14 + -2;
+              lVar15 = lVar9 + lVar17;
+              puVar18 = puVar18 + -2;
+            } while (lVar14 != 0);
+          }
+          do {
+            dVar36 = dVar43 + param_3 * (double)(int)lVar15;
+            dVar37 = dVar44 + dVar20 * (double)-(int)lVar15;
+            auVar34._0_8_ = dVar37 * dVar39 * dVar37 + dVar36 * dVar40 * dVar36;
+            auVar34._8_8_ = 0;
+            dVar37 = (double)_exp(auVar34);
+            auVar35._0_8_ = param_6 + dVar36 * param_4;
+            auVar35._8_8_ = 0;
+            dVar36 = (double)_cos(auVar35);
+            *(double *)(lVar19 + lVar11 * (uVar13 - lVar16) + (uVar12 - lVar15) * 8) =
+                 dVar36 * dVar37;
+            lVar15 = lVar15 + 1;
+          } while ((int)lVar15 != uVar1 + 1);
+          lVar16 = lVar16 + 1;
+          lVar10 = lVar10 + -1;
+        } while (uVar2 + 1 != (int)lVar16);
+      }
+    }
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (asStack_a0,0x69c);
+  cv::error(-0xd7,asStack_a0,"getGaborKernel",
+            "/Users/runner/work/3DObjectTracking/3DObjectTracking/M3T/third_party/opencv-src/modules/imgproc/src/gabor.cpp"
+            ,0x49);
+                    /* WARNING: Does not return */
+  pcVar8 = (code *)SoftwareBreakpoint(1,0x510);
+  (*pcVar8)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 0000052c
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_000005b8;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_000005b8:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000005dc
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000005f0
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000640
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00001100
+// Signature: undefined __thiscall Mat(Mat * this, int param_1, int param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,int param_1,int param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00001200
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00001300
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00001400
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00001700
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* operator delete(void*) */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00001800
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00001900
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00001b00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___sincos_stret
+// Entry: 00001d00
+// Signature: undefined ___sincos_stret(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___sincos_stret(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cos
+// Entry: 00001e00
+// Signature: undefined _cos(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cos(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _exp
+// Entry: 00001f00
+// Signature: undefined _exp(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _exp(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00002000
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00002100
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 18
+// Failed: 0
+// Skipped external functions: 0

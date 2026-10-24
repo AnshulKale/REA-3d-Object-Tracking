@@ -1,0 +1,463 @@
+Program: apple_conversions.mm.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: MatToCGImage
+// Entry: 00000000
+// Signature: undefined __cdecl MatToCGImage(Mat * param_1)
+// ========================================
+
+
+/* MatToCGImage(cv::Mat const&) */
+
+undefined8 MatToCGImage(Mat *param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 in_x1;
+  long lVar4;
+  undefined4 uVar5;
+  
+  uVar1 = _objc_msgSend_dataWithBytes_length_
+                    (_OBJC_CLASSLIST_REFERENCES___,in_x1,*(undefined8 *)(param_1 + 0x10),
+                     **(long **)(param_1 + 0x48) * (long)*(int *)(param_1 + 8));
+  if ((*(int *)(param_1 + 4) < 1) ||
+     (*(long *)(*(long *)(param_1 + 0x48) + (ulong)(*(int *)(param_1 + 4) - 1) * 8) != 1)) {
+    uVar2 = _CGColorSpaceCreateDeviceRGB();
+  }
+  else {
+    uVar2 = _CGColorSpaceCreateDeviceGray();
+  }
+  uVar1 = _CGDataProviderCreateWithCFData(uVar1);
+  if (*(int *)(param_1 + 4) < 1) {
+    lVar4 = 0;
+  }
+  else {
+    lVar4 = (*(undefined8 **)(param_1 + 0x48))[*(int *)(param_1 + 4) - 1] << 3;
+  }
+  uVar5 = 3;
+  if ((*(uint *)param_1 & 0xff8) != 0x18) {
+    uVar5 = 0;
+  }
+  uVar3 = _CGImageCreate((long)*(int *)(param_1 + 0xc),(long)*(int *)(param_1 + 8),
+                         ((ulong)(0x28442211 >> (((ulong)*(uint *)param_1 & 7) << 2)) & 0xf) << 3,
+                         lVar4,**(undefined8 **)(param_1 + 0x48),uVar2,uVar5,uVar1,0,0);
+  _CGDataProviderRelease(uVar1);
+  _CGColorSpaceRelease(uVar2);
+  return uVar3;
+}
+
+
+
+
+// ========================================
+// Function: CGImageToMat
+// Entry: 00000104
+// Signature: undefined __cdecl CGImageToMat(CGImage * param_1, Mat * param_2, bool param_3)
+// ========================================
+
+
+/* CGImageToMat(CGImage*, cv::Mat&, bool) */
+
+void CGImageToMat(CGImage *param_1,Mat *param_2,bool param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 local_60;
+  undefined8 uStack_58;
+  undefined8 uStack_50;
+  undefined8 uStack_48;
+  
+  uVar3 = _CGImageGetColorSpace();
+  uVar4 = _CGImageGetWidth(param_1);
+  uVar5 = _CGImageGetHeight(param_1);
+  iVar1 = _CGColorSpaceGetModel(uVar3);
+  iVar2 = (int)param_2;
+  iVar7 = (int)uVar5;
+  iVar8 = (int)uVar4;
+  if (iVar1 == 0) {
+    cv::Mat::create(iVar2,iVar7,iVar8);
+    if (param_3) {
+      uStack_58 = 0;
+      local_60 = 0;
+      uStack_48 = 0;
+      uStack_50 = 0;
+      cv::Mat::operator=(param_2,(Scalar_ *)&local_60);
+    }
+    uVar6 = *(undefined8 *)(param_2 + 0x10);
+    iVar1 = *(int *)(param_2 + 8);
+    iVar2 = *(int *)(param_2 + 0xc);
+    uVar9 = **(undefined8 **)(param_2 + 0x48);
+    uVar10 = 0;
+  }
+  else {
+    iVar1 = _CGColorSpaceGetModel(uVar3);
+    if (iVar1 == 5) {
+      uVar6 = _CGColorSpaceCreateDeviceRGB();
+      cv::Mat::create(iVar2,iVar7,iVar8);
+      if (param_3) {
+        uStack_58 = 0;
+        local_60 = 0;
+        uStack_48 = 0;
+        uStack_50 = 0;
+        cv::Mat::operator=(param_2,(Scalar_ *)&local_60);
+        uVar3 = 1;
+      }
+      else {
+        uVar3 = 5;
+      }
+      uVar3 = _CGBitmapContextCreate
+                        (*(undefined8 *)(param_2 + 0x10),(long)*(int *)(param_2 + 0xc),
+                         (long)*(int *)(param_2 + 8),8,**(undefined8 **)(param_2 + 0x48),uVar6,uVar3
+                        );
+      _CGColorSpaceRelease(uVar6);
+      goto LAB_00000274;
+    }
+    cv::Mat::create(iVar2,iVar7,iVar8);
+    if (param_3) {
+      uStack_58 = 0;
+      local_60 = 0;
+      uStack_48 = 0;
+      uStack_50 = 0;
+      cv::Mat::operator=(param_2,(Scalar_ *)&local_60);
+      uVar10 = 1;
+    }
+    else {
+      uVar10 = 5;
+    }
+    uVar6 = *(undefined8 *)(param_2 + 0x10);
+    iVar1 = *(int *)(param_2 + 8);
+    iVar2 = *(int *)(param_2 + 0xc);
+    uVar9 = **(undefined8 **)(param_2 + 0x48);
+  }
+  uVar3 = _CGBitmapContextCreate(uVar6,(long)iVar2,(long)iVar1,8,uVar9,uVar3,uVar10);
+LAB_00000274:
+  _CGContextDrawImage(0,0,(double)uVar4,(double)uVar5,uVar3,param_1);
+  _CGContextRelease(uVar3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _CGBitmapContextCreate
+// Entry: 00001000
+// Signature: undefined _CGBitmapContextCreate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGBitmapContextCreate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGColorSpaceCreateDeviceGray
+// Entry: 00001100
+// Signature: undefined _CGColorSpaceCreateDeviceGray(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGColorSpaceCreateDeviceGray(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGColorSpaceCreateDeviceRGB
+// Entry: 00001200
+// Signature: undefined _CGColorSpaceCreateDeviceRGB(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGColorSpaceCreateDeviceRGB(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGColorSpaceGetModel
+// Entry: 00001300
+// Signature: undefined _CGColorSpaceGetModel(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGColorSpaceGetModel(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGColorSpaceRelease
+// Entry: 00001400
+// Signature: undefined _CGColorSpaceRelease(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGColorSpaceRelease(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGContextDrawImage
+// Entry: 00001500
+// Signature: undefined _CGContextDrawImage(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGContextDrawImage(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGContextRelease
+// Entry: 00001600
+// Signature: undefined _CGContextRelease(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGContextRelease(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGDataProviderCreateWithCFData
+// Entry: 00001700
+// Signature: undefined _CGDataProviderCreateWithCFData(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGDataProviderCreateWithCFData(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGDataProviderRelease
+// Entry: 00001800
+// Signature: undefined _CGDataProviderRelease(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGDataProviderRelease(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGImageCreate
+// Entry: 00001900
+// Signature: undefined _CGImageCreate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGImageCreate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGImageGetColorSpace
+// Entry: 00001a00
+// Signature: undefined _CGImageGetColorSpace(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGImageGetColorSpace(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGImageGetHeight
+// Entry: 00001b00
+// Signature: undefined _CGImageGetHeight(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGImageGetHeight(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _CGImageGetWidth
+// Entry: 00001c00
+// Signature: undefined _CGImageGetWidth(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _CGImageGetWidth(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00001e00
+// Signature: undefined create(int param_1, int param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::create(int param_1,int param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00001f00
+// Signature: undefined __thiscall operator=(Mat * this, Scalar_ * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Scalar_ *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _objc_msgSend$dataWithBytes:length:
+// Entry: 00002000
+// Signature: undefined _objc_msgSend$dataWithBytes:length:(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _objc_msgSend_dataWithBytes_length_(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 18
+// Failed: 0
+// Skipped external functions: 0
