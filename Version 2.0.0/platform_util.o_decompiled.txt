@@ -1,0 +1,91 @@
+Program: platform_util.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _mbedtls_platform_zeroize
+// Entry: 00000000
+// Signature: undefined _mbedtls_platform_zeroize(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _mbedtls_platform_zeroize(undefined8 param_1,long param_2)
+
+{
+  if (param_2 != 0) {
+    (*__memset_func)(param_1,0,param_2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_zeroize_and_free
+// Entry: 00000034
+// Signature: undefined _mbedtls_zeroize_and_free(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _mbedtls_zeroize_and_free(void *param_1,long param_2)
+
+{
+  if ((param_1 != (void *)0x0) && (param_2 != 0)) {
+    (*__memset_func)(param_1,0,param_2);
+  }
+  _free(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001000
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00001100
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 4
+// Failed: 0
+// Skipped external functions: 0

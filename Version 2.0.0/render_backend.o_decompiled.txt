@@ -1,0 +1,912 @@
+Program: render_backend.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ~path[abi:ne180100]
+// Entry: 00000000
+// Signature: undefined __thiscall ~path[abi:ne180100](path * this)
+// ========================================
+
+
+/* std::__fs::filesystem::path::~path[abi:ne180100]() */
+
+path * __thiscall std::__fs::filesystem::path::~path_abi_ne180100_(path *this)
+
+{
+  if (-1 < (char)this[0x17]) {
+    return this;
+  }
+  operator_delete(*(void **)this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00000040
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000050
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000064
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 000000b4
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: SetBackend
+// Entry: 000000d8
+// Signature: undefined __cdecl SetBackend(RenderBackendType param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::RenderBackend::SetBackend(m3t::RenderBackendType) */
+
+void m3t::RenderBackend::SetBackend(int param_1)
+
+{
+  ostream *poVar1;
+  long *plVar2;
+  ulong uVar3;
+  undefined2 uVar4;
+  undefined4 local_40;
+  undefined1 uStack_3c;
+  undefined1 uStack_3b;
+  undefined1 uStack_3a;
+  undefined1 uStack_39;
+  char local_29;
+  id aiStack_28 [8];
+  
+  if (param_1 == 2) {
+    param_1 = 1;
+  }
+  current_backend_ = param_1;
+  poVar1 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                     (_cout,"M3T render backend set to: ",0x1b);
+  if (current_backend_ == 2) {
+    uVar3 = 4;
+    local_29 = '\x04';
+    local_40 = 0x6f747541;
+    uStack_3c = 0;
+  }
+  else {
+    if (current_backend_ == 1) {
+      local_40 = 0x6b6c7556;
+      uVar4 = 0x6e61;
+    }
+    else {
+      if (current_backend_ != 0) {
+        uVar3 = 7;
+        local_29 = '\a';
+        local_40 = 0x6e6b6e55;
+        uStack_3c = 0x6f;
+        uStack_3b = 0x77;
+        uStack_3a = 0x6e;
+        uStack_39 = 0;
+        goto LAB_000001a8;
+      }
+      local_40 = 0x6e65704f;
+      uVar4 = 0x4c47;
+    }
+    local_29 = '\x06';
+    uVar3 = 6;
+    uStack_3c = (undefined1)uVar4;
+    uStack_3b = (undefined1)((ushort)uVar4 >> 8);
+    uStack_3a = 0;
+  }
+LAB_000001a8:
+  poVar1 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                     (poVar1,(char *)&local_40,uVar3);
+  std::ios_base::getloc();
+  plVar2 = (long *)std::locale::use_facet(aiStack_28);
+  (**(code **)(*plVar2 + 0x38))(plVar2,10);
+  std::locale::~locale((locale *)aiStack_28);
+  std::ostream::put((char)poVar1);
+  std::ostream::flush();
+  if (-1 < local_29) {
+    return;
+  }
+  operator_delete((void *)CONCAT17(uStack_39,
+                                   CONCAT16(uStack_3a,
+                                            CONCAT15(uStack_3b,CONCAT14(uStack_3c,local_40)))));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: GetBackendName
+// Entry: 00000264
+// Signature: undefined __thiscall GetBackendName(RenderBackend * this)
+// ========================================
+
+
+/* m3t::RenderBackend::GetBackendName() */
+
+void __thiscall m3t::RenderBackend::GetBackendName(RenderBackend *this)
+
+{
+  undefined4 *in_x8;
+  
+  if (current_backend_ == 2) {
+    *(undefined1 *)((long)in_x8 + 0x17) = 4;
+    *in_x8 = 0x6f747541;
+    *(undefined1 *)(in_x8 + 1) = 0;
+    return;
+  }
+  if (current_backend_ != 1) {
+    if (current_backend_ == 0) {
+      *(undefined1 *)((long)in_x8 + 0x17) = 6;
+      *in_x8 = 0x6e65704f;
+      *(undefined2 *)(in_x8 + 1) = 0x4c47;
+      *(undefined1 *)((long)in_x8 + 6) = 0;
+      return;
+    }
+    *(undefined1 *)((long)in_x8 + 0x17) = 7;
+    *in_x8 = 0x6e6b6e55;
+    *(undefined4 *)((long)in_x8 + 3) = 0x6e776f6e;
+    *(undefined1 *)((long)in_x8 + 7) = 0;
+    return;
+  }
+  *(undefined1 *)((long)in_x8 + 0x17) = 6;
+  *in_x8 = 0x6b6c7556;
+  *(undefined2 *)(in_x8 + 1) = 0x6e61;
+  *(undefined1 *)((long)in_x8 + 6) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 0000030c
+// Signature: ostream * __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>(ostream * param_1, char * param_2, ulong param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ostream& std::__put_character_sequence[abi:ne180100]<char, std::char_traits<char>
+   >(std::ostream&, char const*, unsigned long) */
+
+ostream * std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                    (ostream *param_1,char *param_2,ulong param_3)
+
+{
+  ostream *poVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  long *plVar5;
+  long lVar6;
+  undefined8 uVar7;
+  sentry local_68 [16];
+  id aiStack_58 [8];
+  
+  std::ostream::sentry::sentry(local_68,param_1);
+  if (local_68[0] != (sentry)0x0) {
+    poVar1 = param_1 + *(long *)(*(long *)param_1 + -0x18);
+    uVar7 = *(undefined8 *)(poVar1 + 0x28);
+    uVar3 = *(uint *)(poVar1 + 8);
+    iVar4 = *(int *)(poVar1 + 0x90);
+    if (iVar4 == -1) {
+      std::ios_base::getloc();
+      plVar5 = (long *)std::locale::use_facet(aiStack_58);
+      iVar4 = (**(code **)(*plVar5 + 0x38))(plVar5,0x20);
+      std::locale::~locale((locale *)aiStack_58);
+      *(int *)(poVar1 + 0x90) = iVar4;
+    }
+    pcVar2 = param_2 + param_3;
+    if ((uVar3 & 0xb0) != 0x20) {
+      pcVar2 = param_2;
+    }
+    lVar6 = __pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                      (uVar7,param_2,pcVar2,param_2 + param_3,poVar1,(int)(char)iVar4);
+    if (lVar6 == 0) {
+      std::ios_base::clear((int)param_1 + (int)*(undefined8 *)(*(long *)param_1 + -0x18));
+    }
+  }
+  std::ostream::sentry::~sentry(local_68);
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __pad_and_output[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 00000470
+// Signature: ostreambuf_iterator __pad_and_output[abi:ne180100]<char,std::char_traits<char>>(ostreambuf_iterator param_1, char * param_2, char * param_3, char * param_4, ios_base * param_5, char param_6)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* std::ostreambuf_iterator<char, std::char_traits<char> > std::__pad_and_output[abi:ne180100]<char,
+   std::char_traits<char> >(std::ostreambuf_iterator<char, std::char_traits<char> >, char const*,
+   char const*, char const*, std::ios_base&, char) */
+
+long * std::__pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                 (long *param_1,long param_2,long param_3,long param_4,long param_5,int param_6)
+
+{
+  ulong uVar1;
+  long lVar2;
+  undefined8 *******pppppppuVar3;
+  ulong uVar4;
+  _Unwind_Exception *exception_object;
+  long lVar5;
+  undefined8 *******local_68;
+  ulong local_60;
+  undefined8 uStack_58;
+  
+  if (param_1 == (long *)0x0) {
+    return (long *)0x0;
+  }
+  uVar1 = *(long *)(param_5 + 0x18) - (param_4 - param_2);
+  if (uVar1 == 0 || *(long *)(param_5 + 0x18) < param_4 - param_2) {
+    uVar1 = 0;
+  }
+  lVar5 = param_3 - param_2;
+  if ((lVar5 < 1) || (lVar2 = (**(code **)(*param_1 + 0x60))(param_1,param_2,lVar5), lVar2 == lVar5)
+     ) {
+    if (0 < (long)uVar1) {
+      if (0x7ffffffffffffff7 < uVar1) {
+        exception_object = (_Unwind_Exception *)string::__throw_length_error_abi_ne180100_();
+        if ((long)uStack_58 < 0) {
+          operator_delete(local_68);
+        }
+        __Unwind_Resume(exception_object);
+        return (long *)(ulong)m3t::RenderBackend::current_backend_;
+      }
+      if (uVar1 < 0x17) {
+        uStack_58 = CONCAT17((char)uVar1,(undefined7)uStack_58);
+        pppppppuVar3 = &local_68;
+      }
+      else {
+        uVar4 = (uVar1 & 0xfffffffffffffff8) + 8;
+        if ((uVar1 | 7) != 0x17) {
+          uVar4 = uVar1 | 7;
+        }
+        pppppppuVar3 = operator_new(uVar4 + 1);
+        uStack_58 = uVar4 + 1 | 0x8000000000000000;
+        local_68 = pppppppuVar3;
+        local_60 = uVar1;
+      }
+      _memset(pppppppuVar3,param_6,uVar1);
+      *(undefined1 *)((long)pppppppuVar3 + uVar1) = 0;
+      pppppppuVar3 = local_68;
+      if (-1 < (long)uStack_58) {
+        pppppppuVar3 = &local_68;
+      }
+      uVar4 = (**(code **)(*param_1 + 0x60))(param_1,pppppppuVar3,uVar1);
+      if ((long)uStack_58 < 0) {
+        operator_delete(local_68);
+      }
+      if (uVar4 != uVar1) {
+        return (long *)0x0;
+      }
+    }
+    param_4 = param_4 - param_3;
+    if ((param_4 < 1) ||
+       (lVar5 = (**(code **)(*param_1 + 0x60))(param_1,param_3,param_4), lVar5 == param_4)) {
+      *(undefined8 *)(param_5 + 0x18) = 0;
+      return param_1;
+    }
+  }
+  return (long *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: GetBackend
+// Entry: 00000614
+// Signature: undefined __cdecl GetBackend(void)
+// ========================================
+
+
+/* m3t::RenderBackend::GetBackend() */
+
+undefined4 m3t::RenderBackend::GetBackend(void)
+
+{
+  return current_backend_;
+}
+
+
+
+
+// ========================================
+// Function: SetVulkanShaderDirectory
+// Entry: 00000620
+// Signature: undefined __cdecl SetVulkanShaderDirectory(path * param_1)
+// ========================================
+
+
+/* m3t::RenderBackend::SetVulkanShaderDirectory(std::__fs::filesystem::path const&) */
+
+void m3t::RenderBackend::SetVulkanShaderDirectory(path *param_1)
+
+{
+  std::string::operator=((string *)&vulkan_shader_dir_,(string *)param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: GetVulkanShaderDirectory
+// Entry: 00000630
+// Signature: undefined __cdecl GetVulkanShaderDirectory(void)
+// ========================================
+
+
+/* m3t::RenderBackend::GetVulkanShaderDirectory() */
+
+undefined8 m3t::RenderBackend::GetVulkanShaderDirectory(void)
+
+{
+  return 0x7f0;
+}
+
+
+
+
+// ========================================
+// Function: IsOpenGLAvailable
+// Entry: 0000063c
+// Signature: undefined __cdecl IsOpenGLAvailable(void)
+// ========================================
+
+
+/* m3t::RenderBackend::IsOpenGLAvailable() */
+
+undefined8 m3t::RenderBackend::IsOpenGLAvailable(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: IsVulkanAvailable
+// Entry: 00000644
+// Signature: undefined __cdecl IsVulkanAvailable(void)
+// ========================================
+
+
+/* m3t::RenderBackend::IsVulkanAvailable() */
+
+undefined8 m3t::RenderBackend::IsVulkanAvailable(void)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: GetBackendName
+// Entry: 0000064c
+// Signature: undefined __thiscall GetBackendName(RenderBackend * this, RenderBackendType param_1)
+// ========================================
+
+
+/* m3t::RenderBackend::GetBackendName(m3t::RenderBackendType) */
+
+void __thiscall m3t::RenderBackend::GetBackendName(undefined4 *param_1,int param_2)
+
+{
+  if (param_2 == 2) {
+    *(undefined1 *)((long)param_1 + 0x17) = 4;
+    *param_1 = 0x6f747541;
+    *(undefined1 *)(param_1 + 1) = 0;
+    return;
+  }
+  if (param_2 != 1) {
+    if (param_2 == 0) {
+      *(undefined1 *)((long)param_1 + 0x17) = 6;
+      *param_1 = 0x6e65704f;
+      *(undefined2 *)(param_1 + 1) = 0x4c47;
+      *(undefined1 *)((long)param_1 + 6) = 0;
+      return;
+    }
+    *(undefined1 *)((long)param_1 + 0x17) = 7;
+    *param_1 = 0x6e6b6e55;
+    *(undefined4 *)((long)param_1 + 3) = 0x6e776f6e;
+    *(undefined1 *)((long)param_1 + 7) = 0;
+    return;
+  }
+  *(undefined1 *)((long)param_1 + 0x17) = 6;
+  *param_1 = 0x6b6c7556;
+  *(undefined2 *)(param_1 + 1) = 0x6e61;
+  *(undefined1 *)((long)param_1 + 6) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00001000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: use_facet
+// Entry: 00001100
+// Signature: undefined use_facet(id * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::locale::use_facet(id *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getloc
+// Entry: 00001200
+// Signature: undefined getloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::getloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00001300
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00001400
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00001500
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::string::TEMPNAMEPLACEHOLDERVALUE(std::string const&) */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: put
+// Entry: 00001600
+// Signature: undefined put(char param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ostream::put(char param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: flush
+// Entry: 00001700
+// Signature: undefined flush(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ostream::flush(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sentry
+// Entry: 00001800
+// Signature: undefined __thiscall sentry(sentry * this, ostream * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::sentry(sentry *this,ostream *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~sentry
+// Entry: 00001900
+// Signature: undefined __thiscall ~sentry(sentry * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::~sentry(sentry *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~locale
+// Entry: 00001c00
+// Signature: undefined __thiscall ~locale(locale * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::locale::~locale(locale *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __set_badbit_and_consider_rethrow
+// Entry: 00001d00
+// Signature: undefined __set_badbit_and_consider_rethrow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ios_base::__set_badbit_and_consider_rethrow() */
+
+void std::ios_base::__set_badbit_and_consider_rethrow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 00001e00
+// Signature: undefined clear(uint param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::clear(uint param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00001f00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00002200
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00002300
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00002400
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00002600
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00002900
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00002c00
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 35
+// Failed: 0
+// Skipped external functions: 0

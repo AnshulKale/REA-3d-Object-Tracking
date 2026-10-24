@@ -1,0 +1,1679 @@
+Program: kmp_str.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ___kmp_str_buf_clear
+// Entry: 00000000
+// Signature: undefined ___kmp_str_buf_clear(void)
+// ========================================
+
+
+void ___kmp_str_buf_clear(undefined8 *param_1)
+
+{
+  if (0 < *(int *)((long)param_1 + 0xc)) {
+    *(undefined4 *)((long)param_1 + 0xc) = 0;
+    *(undefined1 *)*param_1 = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_reserve
+// Entry: 00000040
+// Signature: undefined ___kmp_str_buf_reserve(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_str_buf_reserve(long *param_1,undefined8 param_2)
+
+{
+  undefined8 *puVar1;
+  void *pvVar2;
+  undefined1 auStack_68 [24];
+  undefined8 local_50;
+  undefined8 uStack_48;
+  undefined8 local_40;
+  undefined1 auStack_38 [24];
+  undefined8 local_20;
+  long *local_18;
+  
+  puVar1 = ____kmp_msg_null;
+  if (*(uint *)(param_1 + 1) < (uint)param_2) {
+    do {
+      *(int *)(param_1 + 1) = (int)param_1[1] << 1;
+    } while (*(uint *)(param_1 + 1) < (uint)param_2);
+    local_20 = param_2;
+    local_18 = param_1;
+    if ((long *)*param_1 == param_1 + 2) {
+      pvVar2 = _malloc((ulong)*(uint *)(param_1 + 1));
+      *local_18 = (long)pvVar2;
+      if (*local_18 == 0) {
+        ___kmp_msg_format(0x4006f);
+        uStack_48 = puVar1[1];
+        local_50 = *puVar1;
+        local_40 = puVar1[2];
+        ___kmp_fatal(auStack_38);
+      }
+      _memcpy((void *)*local_18,local_18 + 2,(long)(*(int *)((long)local_18 + 0xc) + 1));
+    }
+    else {
+      pvVar2 = _realloc((void *)*param_1,(ulong)*(uint *)(param_1 + 1));
+      *local_18 = (long)pvVar2;
+      if (*local_18 == 0) {
+        ___kmp_msg_format(0x4006f);
+        ___kmp_fatal(auStack_68);
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_detach
+// Entry: 000001f0
+// Signature: undefined ___kmp_str_buf_detach(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_str_buf_detach(long *param_1)
+
+{
+  void *pvVar1;
+  undefined1 auStack_30 [24];
+  long *local_18;
+  
+  if (*(uint *)(param_1 + 1) < 0x201) {
+    local_18 = param_1;
+    pvVar1 = _malloc((ulong)*(uint *)(param_1 + 1));
+    *local_18 = (long)pvVar1;
+    if (*local_18 == 0) {
+      ___kmp_msg_format(0x4006f);
+      ___kmp_fatal(auStack_30);
+    }
+    _memcpy((void *)*local_18,local_18 + 2,(long)(*(int *)((long)local_18 + 0xc) + 1));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 000002c0
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+void ___kmp_str_buf_free(long *param_1)
+
+{
+  if (0x200 < *(uint *)(param_1 + 1)) {
+    _free((void *)*param_1);
+  }
+  *param_1 = (long)(param_1 + 2);
+  *(undefined4 *)(param_1 + 1) = 0x200;
+  *(undefined4 *)((long)param_1 + 0xc) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_cat
+// Entry: 00000328
+// Signature: undefined ___kmp_str_buf_cat(void)
+// ========================================
+
+
+void ___kmp_str_buf_cat(long *param_1,char *param_2,size_t param_3)
+
+{
+  ___kmp_str_buf_reserve(param_1,(long)*(int *)((long)param_1 + 0xc) + param_3 + 1);
+  *(undefined1 *)(*param_1 + (long)*(int *)((long)param_1 + 0xc)) = 0;
+  _strncat((char *)(*param_1 + (long)*(int *)((long)param_1 + 0xc)),param_2,param_3);
+  __kmp_type_convert<unsigned_long,int>
+            ((long)*(int *)((long)param_1 + 0xc) + param_3,(int *)((long)param_1 + 0xc));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<unsigned_long,int>
+// Entry: 000003bc
+// Signature: void __cdecl __kmp_type_convert<unsigned_long,int>(ulong param_1, int * param_2)
+// ========================================
+
+
+/* void __kmp_type_convert<unsigned long, int>(unsigned long, int*) */
+
+void __kmp_type_convert<unsigned_long,int>(ulong param_1,int *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_convert<unsigned_long,int,false,false,false,true>::to(param_1);
+  *param_2 = iVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_catbuf
+// Entry: 000003ec
+// Signature: undefined ___kmp_str_buf_catbuf(void)
+// ========================================
+
+
+void ___kmp_str_buf_catbuf(long *param_1,long *param_2)
+
+{
+  if ((*param_2 != 0) && (*(int *)((long)param_2 + 0xc) != 0)) {
+    ___kmp_str_buf_reserve
+              (param_1,(long)(*(int *)((long)param_1 + 0xc) + *(int *)((long)param_2 + 0xc) + 1));
+    *(undefined1 *)(*param_1 + (long)*(int *)((long)param_1 + 0xc)) = 0;
+    _strncat((char *)(*param_1 + (long)*(int *)((long)param_1 + 0xc)),(char *)*param_2,
+             (long)*(int *)((long)param_2 + 0xc));
+    *(int *)((long)param_1 + 0xc) = *(int *)((long)param_1 + 0xc) + *(int *)((long)param_2 + 0xc);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_vprint
+// Entry: 000004c4
+// Signature: undefined ___kmp_str_buf_vprint(void)
+// ========================================
+
+
+int ___kmp_str_buf_vprint(long *param_1,char *param_2,va_list param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int local_34;
+  
+  while( true ) {
+    iVar1 = (int)param_1[1] - *(int *)((long)param_1 + 0xc);
+    iVar2 = _vsnprintf((char *)(*param_1 + (long)*(int *)((long)param_1 + 0xc)),(long)iVar1,param_2,
+                       param_3);
+    if ((-1 < iVar2) && (iVar2 < iVar1)) break;
+    if (iVar2 < 0) {
+      local_34 = (int)param_1[1] << 1;
+    }
+    else {
+      local_34 = *(int *)((long)param_1 + 0xc) + iVar2 + 1;
+    }
+    ___kmp_str_buf_reserve(param_1,(long)local_34);
+  }
+  *(int *)((long)param_1 + 0xc) = *(int *)((long)param_1 + 0xc) + iVar2;
+  return iVar2;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_print
+// Entry: 000005d0
+// Signature: undefined ___kmp_str_buf_print(void)
+// ========================================
+
+
+undefined4 ___kmp_str_buf_print(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = ___kmp_str_buf_vprint(param_1,param_2,&stack0x00000000);
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_print_size
+// Entry: 00000614
+// Signature: undefined ___kmp_str_buf_print_size(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_str_buf_print_size(undefined8 param_1,ulong param_2)
+
+{
+  int local_78;
+  ulong local_70;
+  undefined1 auStack_60 [72];
+  long local_18;
+  
+  local_18 = *____stack_chk_guard;
+  _memcpy(auStack_60,&l___const___kmp_str_buf_print_size_names,0x48);
+  local_78 = 0;
+  local_70 = param_2;
+  if (param_2 != 0) {
+    for (; local_70 % 0x400 == 0 && local_78 + 1 < 9; local_70 = local_70 / 0x400) {
+      local_78 = local_78 + 1;
+    }
+  }
+  ___kmp_str_buf_print(param_1,"%llu%s");
+  if (*____stack_chk_guard == local_18) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_fname_init
+// Entry: 00000740
+// Signature: undefined ___kmp_str_fname_init(void)
+// ========================================
+
+
+void ___kmp_str_fname_init(undefined8 *param_1,long param_2)
+
+{
+  undefined8 uVar1;
+  long lVar2;
+  undefined1 *local_40;
+  
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  if (param_2 != 0) {
+    uVar1 = ___kmp_str_format();
+    *param_1 = uVar1;
+    uVar1 = ___kmp_str_format("%s");
+    param_1[1] = uVar1;
+    lVar2 = __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPci(param_1[1],0x2f);
+    if (lVar2 == 0) {
+      local_40 = (undefined1 *)param_1[1];
+    }
+    else {
+      local_40 = (undefined1 *)(lVar2 + 1);
+    }
+    uVar1 = ___kmp_str_format("%s");
+    param_1[2] = uVar1;
+    *local_40 = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_format
+// Entry: 00000858
+// Signature: undefined ___kmp_str_format(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+char * ___kmp_str_format(char *param_1)
+
+{
+  undefined8 *puVar1;
+  undefined1 auStack_88 [24];
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined1 auStack_50 [28];
+  int local_34;
+  char *local_30;
+  int local_24;
+  
+  puVar1 = ____kmp_msg_null;
+  local_24 = 0x200;
+  local_30 = (char *)0x0;
+  local_30 = _malloc(0x200);
+  if (local_30 == (char *)0x0) {
+    ___kmp_msg_format(0x4006f);
+    uStack_68 = puVar1[1];
+    local_70 = *puVar1;
+    local_60 = puVar1[2];
+    ___kmp_fatal(auStack_50);
+  }
+  while ((local_34 = _vsnprintf(local_30,(long)local_24,param_1,&stack0x00000000), local_34 < 0 ||
+         (local_24 <= local_34))) {
+    if (local_34 < 0) {
+      local_24 = local_24 << 1;
+    }
+    else {
+      local_24 = local_34 + 1;
+    }
+    local_30 = _realloc(local_30,(long)local_24);
+    if (local_30 == (char *)0x0) {
+      ___kmp_msg_format(0x4006f);
+      ___kmp_fatal(auStack_88);
+    }
+  }
+  return local_30;
+}
+
+
+
+
+// ========================================
+// Function: __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPci
+// Entry: 000009dc
+// Signature: undefined __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPci(void)
+// ========================================
+
+
+void __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPci(char *param_1,int param_2)
+
+{
+  __libcpp_strrchr_abi_v15006_(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_fname_free
+// Entry: 00000a08
+// Signature: undefined ___kmp_str_fname_free(void)
+// ========================================
+
+
+void ___kmp_str_fname_free(long param_1)
+
+{
+  ___kmp_str_free(param_1);
+  ___kmp_str_free(param_1 + 8);
+  ___kmp_str_free(param_1 + 0x10);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_free
+// Entry: 00000a44
+// Signature: undefined ___kmp_str_free(void)
+// ========================================
+
+
+void ___kmp_str_free(undefined8 *param_1)
+
+{
+  _free((void *)*param_1);
+  *param_1 = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_fname_match
+// Entry: 00000a74
+// Signature: undefined ___kmp_str_fname_match(void)
+// ========================================
+
+
+bool ___kmp_str_fname_match(long param_1,long param_2)
+
+{
+  int iVar1;
+  uint local_50;
+  uint local_4c;
+  uint local_48;
+  uint local_44;
+  undefined1 auStack_40 [8];
+  char *local_38;
+  char *local_30;
+  uint local_28;
+  uint local_24;
+  long local_20;
+  long local_18;
+  
+  local_24 = 1;
+  local_28 = 1;
+  if (param_2 != 0) {
+    local_20 = param_2;
+    local_18 = param_1;
+    ___kmp_str_fname_init(auStack_40,param_2);
+    iVar1 = _strcmp(local_38,"*/");
+    local_44 = 1;
+    if (iVar1 != 0) {
+      local_48 = 0;
+      if (*(long *)(local_18 + 8) != 0) {
+        iVar1 = ___kmp_str_eqf(*(undefined8 *)(local_18 + 8),local_38);
+        local_48 = (uint)(iVar1 != 0);
+      }
+      local_44 = local_48;
+    }
+    local_24 = local_44;
+    iVar1 = _strcmp(local_30,"*");
+    local_4c = 1;
+    if (iVar1 != 0) {
+      local_50 = 0;
+      if (*(long *)(local_18 + 0x10) != 0) {
+        iVar1 = ___kmp_str_eqf(*(undefined8 *)(local_18 + 0x10),local_30);
+        local_50 = (uint)(iVar1 != 0);
+      }
+      local_4c = local_50;
+    }
+    local_28 = local_4c;
+    ___kmp_str_fname_free(auStack_40);
+  }
+  return local_24 != 0 && local_28 != 0;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_eqf
+// Entry: 00000c04
+// Signature: undefined ___kmp_str_eqf(void)
+// ========================================
+
+
+bool ___kmp_str_eqf(char *param_1,char *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = _strcmp(param_1,param_2);
+  return iVar1 == 0;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_loc_numbers
+// Entry: 00000c44
+// Signature: undefined ___kmp_str_loc_numbers(void)
+// ========================================
+
+
+void ___kmp_str_loc_numbers(undefined8 param_1,int *param_2,int *param_3)
+
+{
+  int iVar1;
+  undefined8 local_30;
+  
+  local_30 = __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(param_1,0x3b);
+  if (local_30 != 0) {
+    local_30 = __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(local_30 + 1,0x3b);
+  }
+  if (local_30 != 0) {
+    local_30 = __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(local_30 + 1,0x3b);
+  }
+  if (local_30 == 0) {
+    *param_2 = 0;
+  }
+  else {
+    iVar1 = _atoi((char *)(local_30 + 1));
+    *param_2 = iVar1;
+    local_30 = __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(local_30 + 1,0x3b);
+  }
+  if (local_30 == 0) {
+    *param_3 = 0;
+  }
+  else {
+    iVar1 = _atoi((char *)(local_30 + 1));
+    *param_3 = iVar1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci
+// Entry: 00000d54
+// Signature: undefined __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(void)
+// ========================================
+
+
+void __Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(char *param_1,int param_2)
+
+{
+  __libcpp_strchr_abi_v15006_(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_loc_init
+// Entry: 00000d80
+// Signature: undefined ___kmp_str_loc_init(void)
+// ========================================
+
+
+void ___kmp_str_loc_init(undefined8 *param_1,long param_2,byte param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 local_80;
+  char *local_40;
+  char *local_38;
+  undefined8 local_30;
+  undefined8 local_28;
+  byte local_19;
+  long local_18;
+  
+  local_19 = param_3 & 1;
+  *param_1 = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  *(undefined4 *)(param_1 + 6) = 0;
+  *(undefined4 *)((long)param_1 + 0x34) = 0;
+  local_18 = param_2;
+  if (param_2 != 0) {
+    local_28 = 0;
+    local_30 = 0;
+    local_38 = (char *)0x0;
+    local_40 = (char *)0x0;
+    uVar2 = ___kmp_str_format("%s");
+    *param_1 = uVar2;
+    local_28 = *param_1;
+    ___kmp_str_split(local_28,0x3b,&local_30,&local_28);
+    ___kmp_str_split(local_28,0x3b,param_1 + 4,&local_28);
+    ___kmp_str_split(local_28,0x3b,param_1 + 5,&local_28);
+    ___kmp_str_split(local_28,0x3b,&local_38,&local_28);
+    ___kmp_str_split(local_28,0x3b,&local_40,&local_28);
+    if (local_38 != (char *)0x0) {
+      iVar1 = _atoi(local_38);
+      *(int *)(param_1 + 6) = iVar1;
+      if (*(int *)(param_1 + 6) < 0) {
+        *(undefined4 *)(param_1 + 6) = 0;
+      }
+    }
+    if (local_40 != (char *)0x0) {
+      iVar1 = _atoi(local_40);
+      *(int *)((long)param_1 + 0x34) = iVar1;
+      if (*(int *)((long)param_1 + 0x34) < 0) {
+        *(undefined4 *)((long)param_1 + 0x34) = 0;
+      }
+    }
+  }
+  if ((local_19 & 1) == 0) {
+    local_80 = 0;
+  }
+  else {
+    local_80 = param_1[4];
+  }
+  ___kmp_str_fname_init(param_1 + 1,local_80);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_split
+// Entry: 00000f70
+// Signature: undefined ___kmp_str_split(void)
+// ========================================
+
+
+void ___kmp_str_split(long param_1,undefined1 param_2,long *param_3,undefined8 *param_4)
+
+{
+  undefined1 *puVar1;
+  undefined1 *local_40;
+  
+  local_40 = (undefined1 *)0x0;
+  if ((param_1 != 0) &&
+     (puVar1 = (undefined1 *)__Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(param_1,param_2),
+     puVar1 != (undefined1 *)0x0)) {
+    *puVar1 = 0;
+    local_40 = puVar1 + 1;
+  }
+  if (param_3 != (long *)0x0) {
+    *param_3 = param_1;
+  }
+  if (param_4 != (undefined8 *)0x0) {
+    *param_4 = local_40;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_loc_free
+// Entry: 00001040
+// Signature: undefined ___kmp_str_loc_free(void)
+// ========================================
+
+
+void ___kmp_str_loc_free(long param_1)
+
+{
+  ___kmp_str_fname_free(param_1 + 8);
+  ___kmp_str_free(param_1);
+  *(undefined8 *)(param_1 + 0x20) = 0;
+  *(undefined8 *)(param_1 + 0x28) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_match
+// Entry: 00001080
+// Signature: undefined ___kmp_str_match(void)
+// ========================================
+
+
+bool ___kmp_str_match(long param_1,int param_2,long param_3)
+
+{
+  bool bVar1;
+  int local_34;
+  int local_2c;
+  int local_24;
+  
+  if ((param_1 != 0) && (param_3 != 0)) {
+    local_24 = 0;
+    while( true ) {
+      bVar1 = false;
+      if (*(char *)(param_1 + local_24) != '\0') {
+        bVar1 = *(char *)(param_3 + local_24) != '\0';
+      }
+      if (!bVar1) {
+        if (0 < param_2) {
+          return param_2 <= local_24;
+        }
+        if (*(char *)(param_1 + local_24) == '\0') {
+          if (param_2 == 0) {
+            return *(char *)(param_3 + local_24) == '\0';
+          }
+          return true;
+        }
+        return false;
+      }
+      if ((*(char *)(param_1 + local_24) < 'A') || ('Z' < *(char *)(param_1 + local_24))) {
+        local_2c = (int)*(char *)(param_1 + local_24);
+      }
+      else {
+        local_2c = *(char *)(param_1 + local_24) + 0x20;
+      }
+      if ((*(char *)(param_3 + local_24) < 'A') || ('Z' < *(char *)(param_3 + local_24))) {
+        local_34 = (int)*(char *)(param_3 + local_24);
+      }
+      else {
+        local_34 = *(char *)(param_3 + local_24) + 0x20;
+      }
+      if (local_2c != local_34) break;
+      local_24 = local_24 + 1;
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_contains
+// Entry: 000012ec
+// Signature: undefined ___kmp_str_contains(void)
+// ========================================
+
+
+bool ___kmp_str_contains(long param_1,int param_2,long param_3)
+
+{
+  int local_38;
+  int local_30;
+  int local_2c;
+  int local_28;
+  int local_24;
+  bool local_1;
+  
+  local_24 = 0;
+  local_28 = 0;
+  local_2c = 0;
+  if ((param_1 == 0) || (param_3 == 0)) {
+    local_1 = false;
+  }
+  else {
+    while (*(char *)(param_1 + local_24) != '\0') {
+      if (*(char *)(param_3 + local_28) == '\0') {
+        return false;
+      }
+      if ((*(char *)(param_1 + local_24) < 'A') || ('Z' < *(char *)(param_1 + local_24))) {
+        local_30 = (int)*(char *)(param_1 + local_24);
+      }
+      else {
+        local_30 = *(char *)(param_1 + local_24) + 0x20;
+      }
+      if ((*(char *)(param_3 + local_28) < 'A') || ('Z' < *(char *)(param_3 + local_28))) {
+        local_38 = (int)*(char *)(param_3 + local_28);
+      }
+      else {
+        local_38 = *(char *)(param_3 + local_28) + 0x20;
+      }
+      if (local_30 == local_38) {
+        if (local_24 == 0) {
+          local_2c = local_28;
+        }
+        local_28 = local_28 + 1;
+        local_24 = local_24 + 1;
+      }
+      else {
+        local_2c = local_2c + 1;
+        local_24 = 0;
+        local_28 = local_2c;
+      }
+    }
+    local_1 = local_24 == param_2;
+  }
+  return local_1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_match_false
+// Entry: 00001518
+// Signature: undefined ___kmp_str_match_false(void)
+// ========================================
+
+
+bool ___kmp_str_match_false(undefined8 param_1)
+
+{
+  bool bVar1;
+  int iVar2;
+  
+  iVar2 = ___kmp_str_match("false",1,param_1);
+  bVar1 = true;
+  if (iVar2 == 0) {
+    iVar2 = ___kmp_str_match("off",2,param_1);
+    bVar1 = true;
+    if (iVar2 == 0) {
+      iVar2 = ___kmp_str_match("0",1,param_1);
+      bVar1 = true;
+      if (iVar2 == 0) {
+        iVar2 = ___kmp_str_match(".false.",2,param_1);
+        bVar1 = true;
+        if (iVar2 == 0) {
+          iVar2 = ___kmp_str_match(".f.",2,param_1);
+          bVar1 = true;
+          if (iVar2 == 0) {
+            iVar2 = ___kmp_str_match("no",1,param_1);
+            bVar1 = true;
+            if (iVar2 == 0) {
+              iVar2 = ___kmp_str_match("disabled",0,param_1);
+              bVar1 = iVar2 != 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_match_true
+// Entry: 00001670
+// Signature: undefined ___kmp_str_match_true(void)
+// ========================================
+
+
+bool ___kmp_str_match_true(undefined8 param_1)
+
+{
+  bool bVar1;
+  int iVar2;
+  
+  iVar2 = ___kmp_str_match("true",1,param_1);
+  bVar1 = true;
+  if (iVar2 == 0) {
+    iVar2 = ___kmp_str_match("on",2,param_1);
+    bVar1 = true;
+    if (iVar2 == 0) {
+      iVar2 = ___kmp_str_match("1",1,param_1);
+      bVar1 = true;
+      if (iVar2 == 0) {
+        iVar2 = ___kmp_str_match(".true.",2,param_1);
+        bVar1 = true;
+        if (iVar2 == 0) {
+          iVar2 = ___kmp_str_match(".t.",2,param_1);
+          bVar1 = true;
+          if (iVar2 == 0) {
+            iVar2 = ___kmp_str_match("yes",1,param_1);
+            bVar1 = true;
+            if (iVar2 == 0) {
+              iVar2 = ___kmp_str_match("enabled",0,param_1);
+              bVar1 = iVar2 != 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_replace
+// Entry: 000017c8
+// Signature: undefined ___kmp_str_replace(void)
+// ========================================
+
+
+void ___kmp_str_replace(undefined8 param_1,undefined1 param_2,undefined1 param_3)
+
+{
+  undefined1 *local_28;
+  
+  for (local_28 = (undefined1 *)__Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(param_1,param_2);
+      local_28 != (undefined1 *)0x0;
+      local_28 = (undefined1 *)__Z6strchrB6v15006Ua9enable_ifIXLb1EEEPci(local_28 + 1,param_2)) {
+    *local_28 = param_3;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_token
+// Entry: 0000183c
+// Signature: undefined ___kmp_str_token(void)
+// ========================================
+
+
+char * ___kmp_str_token(char *param_1,char *param_2,char **param_3)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = _strtok_r(param_1,param_2,param_3);
+  return pcVar1;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_to_int
+// Entry: 0000187c
+// Signature: undefined ___kmp_str_to_int(void)
+// ========================================
+
+
+int ___kmp_str_to_int(char *param_1,char param_2)
+
+{
+  char cVar1;
+  uint uVar2;
+  int local_30;
+  char *local_28;
+  uint local_1c;
+  int local_18;
+  
+  local_18 = 0;
+  for (local_28 = param_1; ((*local_28 != '\0' && ('/' < *local_28)) && (*local_28 < ':'));
+      local_28 = local_28 + 1) {
+    local_18 = local_18 * 10 + *local_28 + -0x30;
+  }
+  cVar1 = *local_28;
+  if (cVar1 == '\0') {
+    local_1c = 1;
+    goto LAB_00001a40;
+  }
+  if (cVar1 == 'B') {
+LAB_000019b8:
+    local_28 = local_28 + 1;
+    local_1c = 1;
+  }
+  else {
+    if (cVar1 == 'K') {
+LAB_000019d0:
+      local_28 = local_28 + 1;
+      local_1c = 0x400;
+      goto LAB_00001a40;
+    }
+    if (cVar1 != 'M') {
+      if (cVar1 == 'b') goto LAB_000019b8;
+      if (cVar1 == 'k') goto LAB_000019d0;
+      if (cVar1 != 'm') {
+        if (*local_28 != param_2) {
+          return -1;
+        }
+        local_28 = "";
+        local_1c = 1;
+        goto LAB_00001a40;
+      }
+    }
+    local_28 = local_28 + 1;
+    local_1c = 0x100000;
+  }
+LAB_00001a40:
+  uVar2 = 0;
+  if (local_1c != 0) {
+    uVar2 = 0x7fffffff / local_1c;
+  }
+  if ((int)uVar2 < local_18) {
+    local_18 = 0x7fffffff;
+  }
+  else {
+    local_18 = local_18 * local_1c;
+  }
+  if (*local_28 == '\0') {
+    local_30 = local_18;
+  }
+  else {
+    local_30 = 0;
+  }
+  return local_30;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_to_size
+// Entry: 00001ac8
+// Signature: undefined ___kmp_str_to_size(void)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001df0) */
+/* WARNING: Removing unreachable block (ram,0x00001da4) */
+/* WARNING: Removing unreachable block (ram,0x00001e3c) */
+/* WARNING: Removing unreachable block (ram,0x00001f54) */
+/* WARNING: Removing unreachable block (ram,0x00001e88) */
+/* WARNING: Removing unreachable block (ram,0x00001d58) */
+/* WARNING: Removing unreachable block (ram,0x00001ed4) */
+/* WARNING: Removing unreachable block (ram,0x00001f08) */
+
+void ___kmp_str_to_size(long param_1,long *param_2,ulong param_3,undefined8 *param_4)
+
+{
+  int iVar1;
+  ulong uVar2;
+  bool bVar3;
+  bool bVar4;
+  undefined8 uVar5;
+  int local_48;
+  ulong local_40;
+  ulong local_38;
+  
+  local_38 = 0;
+  local_40 = 0;
+  bVar4 = false;
+  local_48 = 0;
+  while( true ) {
+    bVar3 = true;
+    if (*(char *)(param_1 + local_48) != ' ') {
+      bVar3 = *(char *)(param_1 + local_48) == '\t';
+    }
+    if (!bVar3) break;
+    local_48 = local_48 + 1;
+  }
+  if ((*(char *)(param_1 + local_48) < '0') || ('9' < *(char *)(param_1 + local_48))) {
+    uVar5 = ___kmp_i18n_catgets(0x20003);
+    *param_4 = uVar5;
+  }
+  else {
+    do {
+      iVar1 = *(char *)(param_1 + local_48) + -0x30;
+      bVar3 = !bVar4;
+      bVar4 = true;
+      if (bVar3) {
+        bVar4 = (-(long)iVar1 - 1U) / 10 < local_38;
+      }
+      local_38 = local_38 * 10 + (long)iVar1;
+      local_48 = local_48 + 1;
+      bVar3 = false;
+      if ('/' < *(char *)(param_1 + local_48)) {
+        bVar3 = *(char *)(param_1 + local_48) < ':';
+      }
+    } while (bVar3);
+    while( true ) {
+      bVar3 = true;
+      if (*(char *)(param_1 + local_48) != ' ') {
+        bVar3 = *(char *)(param_1 + local_48) == '\t';
+      }
+      if (!bVar3) break;
+      local_48 = local_48 + 1;
+    }
+    switch(*(undefined1 *)(param_1 + local_48)) {
+    case 0x45:
+    case 0x65:
+      local_48 = local_48 + 1;
+      local_40 = 0x1000000000000000;
+      break;
+    case 0x47:
+    case 0x67:
+      local_48 = local_48 + 1;
+      local_40 = 0x40000000;
+      break;
+    case 0x4b:
+    case 0x6b:
+      local_48 = local_48 + 1;
+      local_40 = 0x400;
+      break;
+    case 0x4d:
+    case 0x6d:
+      local_48 = local_48 + 1;
+      local_40 = 0x100000;
+      break;
+    case 0x50:
+    case 0x70:
+      local_48 = local_48 + 1;
+      local_40 = 0x4000000000000;
+      break;
+    case 0x54:
+    case 0x74:
+      local_48 = local_48 + 1;
+      local_40 = 0x10000000000;
+      break;
+    case 0x59:
+    case 0x79:
+      local_48 = local_48 + 1;
+      local_40 = 0;
+      bVar4 = true;
+      break;
+    case 0x5a:
+    case 0x7a:
+      local_48 = local_48 + 1;
+      local_40 = 0;
+      bVar4 = true;
+    }
+    if ((*(char *)(param_1 + local_48) == 'b') || (*(char *)(param_1 + local_48) == 'B')) {
+      if (local_40 == 0) {
+        local_40 = 1;
+      }
+      local_48 = local_48 + 1;
+    }
+    if (((*(char *)(param_1 + local_48) == ' ') || (*(char *)(param_1 + local_48) == '\t')) ||
+       (*(char *)(param_1 + local_48) == '\0')) {
+      if (local_40 == 0) {
+        local_40 = param_3;
+      }
+      bVar3 = true;
+      if (!bVar4) {
+        uVar2 = 0;
+        if (local_40 != 0) {
+          uVar2 = 0xffffffffffffffff / local_40;
+        }
+        bVar3 = uVar2 < local_38;
+      }
+      while( true ) {
+        bVar4 = true;
+        if (*(char *)(param_1 + local_48) != ' ') {
+          bVar4 = *(char *)(param_1 + local_48) == '\t';
+        }
+        if (!bVar4) break;
+        local_48 = local_48 + 1;
+      }
+      if (*(char *)(param_1 + local_48) == '\0') {
+        if (bVar3) {
+          uVar5 = ___kmp_i18n_catgets(0x20006);
+          *param_4 = uVar5;
+          *param_2 = -1;
+        }
+        else {
+          *param_4 = 0;
+          *param_2 = local_38 * local_40;
+        }
+      }
+      else {
+        uVar5 = ___kmp_i18n_catgets(0x20005);
+        *param_4 = uVar5;
+      }
+    }
+    else {
+      uVar5 = ___kmp_i18n_catgets(0x20004);
+      *param_4 = uVar5;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_to_uint
+// Entry: 00002290
+// Signature: undefined ___kmp_str_to_uint(void)
+// ========================================
+
+
+void ___kmp_str_to_uint(long param_1,ulong *param_2,undefined8 *param_3)
+
+{
+  bool bVar1;
+  int iVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  int local_38;
+  ulong local_30;
+  
+  local_30 = 0;
+  bVar1 = false;
+  local_38 = 0;
+  while( true ) {
+    bVar3 = true;
+    if (*(char *)(param_1 + local_38) != ' ') {
+      bVar3 = *(char *)(param_1 + local_38) == '\t';
+    }
+    if (!bVar3) break;
+    local_38 = local_38 + 1;
+  }
+  if ((*(char *)(param_1 + local_38) < '0') || ('9' < *(char *)(param_1 + local_38))) {
+    uVar4 = ___kmp_i18n_catgets(0x20003);
+    *param_3 = uVar4;
+  }
+  else {
+    do {
+      iVar2 = *(char *)(param_1 + local_38) + -0x30;
+      bVar3 = !bVar1;
+      bVar1 = true;
+      if (bVar3) {
+        bVar1 = (-(long)iVar2 - 1U) / 10 < local_30;
+      }
+      local_30 = local_30 * 10 + (long)iVar2;
+      local_38 = local_38 + 1;
+      bVar3 = false;
+      if ('/' < *(char *)(param_1 + local_38)) {
+        bVar3 = *(char *)(param_1 + local_38) < ':';
+      }
+    } while (bVar3);
+    while( true ) {
+      bVar3 = true;
+      if (*(char *)(param_1 + local_38) != ' ') {
+        bVar3 = *(char *)(param_1 + local_38) == '\t';
+      }
+      if (!bVar3) break;
+      local_38 = local_38 + 1;
+    }
+    if (*(char *)(param_1 + local_38) == '\0') {
+      if (bVar1) {
+        uVar4 = ___kmp_i18n_catgets(0x20006);
+        *param_3 = uVar4;
+        *param_2 = 0xffffffffffffffff;
+      }
+      else {
+        *param_3 = 0;
+        *param_2 = local_30;
+      }
+    }
+    else {
+      uVar4 = ___kmp_i18n_catgets(0x20005);
+      *param_3 = uVar4;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strrchr[abi:v15006]
+// Entry: 00002530
+// Signature: undefined __cdecl __libcpp_strrchr[abi:v15006](char * param_1, int param_2)
+// ========================================
+
+
+/* __libcpp_strrchr[abi:v15006](char const*, int) */
+
+void __libcpp_strrchr_abi_v15006_(char *param_1,int param_2)
+
+{
+  _strrchr(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strchr[abi:v15006]
+// Entry: 0000255c
+// Signature: undefined __cdecl __libcpp_strchr[abi:v15006](char * param_1, int param_2)
+// ========================================
+
+
+/* __libcpp_strchr[abi:v15006](char const*, int) */
+
+void __libcpp_strchr_abi_v15006_(char *param_1,int param_2)
+
+{
+  _strchr(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 00002588
+// Signature: undefined __cdecl to(ulong param_1)
+// ========================================
+
+
+/* kmp_convert<unsigned long, int, false, false, false, true>::to(unsigned long) */
+
+ulong kmp_convert<unsigned_long,int,false,false,false,true>::to(ulong param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = std::numeric_limits<int>::max_abi_v15006_();
+  if ((ulong)(long)iVar1 < param_1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11d5);
+  }
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: max[abi:v15006]
+// Entry: 000025e8
+// Signature: undefined __cdecl max[abi:v15006](void)
+// ========================================
+
+
+/* std::numeric_limits<int>::max[abi:v15006]() */
+
+void std::numeric_limits<int>::max_abi_v15006_(void)
+
+{
+  __libcpp_numeric_limits<int,true>::max_abi_v15006_();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: max[abi:v15006]
+// Entry: 000025fc
+// Signature: undefined __cdecl max[abi:v15006](void)
+// ========================================
+
+
+/* std::__libcpp_numeric_limits<int, true>::max[abi:v15006]() */
+
+undefined8 std::__libcpp_numeric_limits<int,true>::max_abi_v15006_(void)
+
+{
+  return 0x7fffffff;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00003000
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00003100
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 00003200
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00003300
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00003500
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _atoi
+// Entry: 00003700
+// Signature: int _atoi(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _atoi(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00003800
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00003900
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00003a00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _realloc
+// Entry: 00003b00
+// Signature: void * _realloc(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _realloc(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strchr
+// Entry: 00003c00
+// Signature: char * _strchr(char * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strchr(char *param_1,int param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strcmp
+// Entry: 00003d00
+// Signature: int _strcmp(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _strcmp(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncat
+// Entry: 00003e00
+// Signature: char * _strncat(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncat(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strrchr
+// Entry: 00003f00
+// Signature: char * _strrchr(char * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strrchr(char *param_1,int param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strtok_r
+// Entry: 00004000
+// Signature: char * _strtok_r(char * param_1, char * param_2, char * * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strtok_r(char *param_1,char *param_2,char **param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vsnprintf
+// Entry: 00004100
+// Signature: int _vsnprintf(char * param_1, size_t param_2, char * param_3, va_list param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _vsnprintf(char *param_1,size_t param_2,char *param_3,va_list param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 52
+// Failed: 0
+// Skipped external functions: 0

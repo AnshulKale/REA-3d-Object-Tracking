@@ -1,0 +1,291 @@
+Program: polynom_solver.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: solve_deg2
+// Entry: 00000000
+// Signature: undefined __cdecl solve_deg2(double param_1, double param_2, double param_3, double * param_4, double * param_5)
+// ========================================
+
+
+/* solve_deg2(double, double, double, double&, double&) */
+
+undefined4 solve_deg2(double param_1,double param_2,double param_3,double *param_4,double *param_5)
+
+{
+  double dVar1;
+  undefined4 uVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
+  dVar5 = param_1 * -4.0 * param_3 + param_2 * param_2;
+  if (0.0 <= dVar5) {
+    dVar3 = 0.5 / param_1;
+    dVar4 = dVar3 * (-param_2 - SQRT(dVar5));
+    dVar1 = dVar3 * (SQRT(dVar5) - param_2);
+    if (dVar5 == 0.0) {
+      dVar4 = -(param_2 * dVar3);
+      dVar1 = -(param_2 * dVar3);
+    }
+    uVar2 = 2;
+    if (dVar5 == 0.0) {
+      uVar2 = 1;
+    }
+    *param_4 = dVar1;
+    *param_5 = dVar4;
+    return uVar2;
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: solve_deg3
+// Entry: 00000068
+// Signature: undefined __cdecl solve_deg3(double param_1, double param_2, double param_3, double param_4, double * param_5, double * param_6, double * param_7)
+// ========================================
+
+
+/* solve_deg3(double, double, double, double, double&, double&, double&) */
+
+undefined4
+solve_deg3(double param_1,double param_2,double param_3,double param_4,double *param_5,
+          double *param_6,double *param_7)
+
+{
+  undefined4 uVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  if (param_1 != 0.0) {
+    dVar2 = 1.0 / param_1;
+    dVar4 = dVar2 * param_2;
+    dVar5 = (dVar2 * param_3 * 3.0 - dVar4 * dVar4) / 9.0;
+    dVar6 = (dVar2 * param_4 * -27.0 + dVar2 * param_3 * dVar4 * 9.0 + dVar4 * dVar4 * dVar4 * -2.0)
+            / 54.0;
+    dVar4 = dVar4 * 0.3333333333333333;
+    if (dVar5 == 0.0) {
+      if (dVar6 == 0.0) {
+        dVar4 = -dVar4;
+        *param_7 = dVar4;
+        *param_6 = dVar4;
+        *param_5 = dVar4;
+        return 3;
+      }
+      dVar2 = (double)_cbrt(dVar6 + dVar6);
+      dVar2 = dVar2 - dVar4;
+    }
+    else {
+      dVar2 = dVar5 * dVar5 * dVar5;
+      dVar3 = dVar2 + dVar6 * dVar6;
+      if (dVar3 <= 0.0) {
+        dVar2 = (double)_acos(dVar6 / SQRT(-dVar2));
+        dVar5 = SQRT(-dVar5) + SQRT(-dVar5);
+        dVar6 = (double)_cos(dVar2 / 3.0);
+        *param_5 = dVar5 * dVar6 - dVar4;
+        dVar6 = (double)_cos((dVar2 + l001) / 3.0);
+        *param_6 = dVar5 * dVar6 - dVar4;
+        dVar2 = (double)_cos((dVar2 + l002) / 3.0);
+        *param_7 = dVar5 * dVar2 - dVar4;
+        return 3;
+      }
+      dVar2 = 0.0;
+      if (2.220446049250313e-16 < ABS(dVar6)) {
+        dVar2 = (double)_cbrt(ABS(dVar6) + SQRT(dVar3));
+        if (dVar6 < 0.0) {
+          dVar2 = -dVar2;
+        }
+        dVar2 = dVar2 - dVar5 / dVar2;
+      }
+      dVar2 = dVar2 - dVar4;
+    }
+LAB_00000224:
+    *param_5 = dVar2;
+    return 1;
+  }
+  if (param_2 == 0.0) {
+    if (param_3 != 0.0) {
+      dVar2 = -param_4 / param_3;
+      goto LAB_00000224;
+    }
+  }
+  else {
+    *param_7 = 0.0;
+    dVar2 = param_2 * -4.0 * param_4 + param_3 * param_3;
+    if (0.0 <= dVar2) {
+      dVar5 = 0.5 / param_2;
+      dVar6 = dVar5 * (-param_3 - SQRT(dVar2));
+      dVar4 = dVar5 * (SQRT(dVar2) - param_3);
+      if (dVar2 == 0.0) {
+        dVar6 = -(param_3 * dVar5);
+        dVar4 = -(param_3 * dVar5);
+      }
+      uVar1 = 2;
+      if (dVar2 == 0.0) {
+        uVar1 = 1;
+      }
+      *param_5 = dVar4;
+      *param_6 = dVar6;
+      return uVar1;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: solve_deg4
+// Entry: 000002cc
+// Signature: undefined __cdecl solve_deg4(double param_1, double param_2, double param_3, double param_4, double param_5, double * param_6, double * param_7, double * param_8, double * param_9)
+// ========================================
+
+
+/* solve_deg4(double, double, double, double, double, double&, double&, double&, double&) */
+
+undefined8
+solve_deg4(double param_1,double param_2,double param_3,double param_4,double param_5,
+          double *param_6,double *param_7,double *param_8,double *param_9)
+
+{
+  undefined8 uVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dStack_78;
+  double dStack_70;
+  double local_68;
+  
+  if (param_1 == 0.0) {
+    *param_9 = 0.0;
+    uVar1 = solve_deg3(param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+    return uVar1;
+  }
+  dVar2 = 1.0 / param_1;
+  dVar5 = dVar2 * param_2;
+  dVar7 = dVar2 * param_3;
+  dVar8 = dVar2 * param_4;
+  dVar4 = dVar2 * param_5;
+  dVar6 = dVar5 * dVar5;
+  uVar1 = solve_deg3(1.0,-(dVar2 * param_3),dVar4 * -4.0 + dVar5 * dVar8,
+                     (-(dVar8 * dVar8) + dVar4 * dVar7 * 4.0) - dVar4 * dVar6,&local_68,&dStack_70,
+                     &dStack_78);
+  if ((int)uVar1 == 0) {
+    return uVar1;
+  }
+  dVar2 = -(dVar2 * param_3) + dVar6 * 0.25 + local_68;
+  if (0.0 <= dVar2) {
+    dVar3 = SQRT(dVar2);
+    if (l003 <= dVar3) {
+      dVar2 = (dVar7 * -2.0 + dVar6 * 0.75) - dVar2;
+      dVar6 = ((dVar8 * -8.0 + dVar5 * dVar7 * 4.0) - dVar5 * dVar6) * (1.0 / dVar3) * 0.25;
+      dVar4 = dVar2 + dVar6;
+      dVar2 = dVar2 - dVar6;
+    }
+    else {
+      dVar2 = dVar4 * -4.0 + local_68 * local_68;
+      if (dVar2 < 0.0) {
+        return 0;
+      }
+      dVar2 = SQRT(dVar2);
+      dVar4 = dVar7 * -2.0 + dVar6 * 0.75 + dVar2 * 2.0;
+      dVar2 = dVar4 + dVar2 * -4.0;
+    }
+    if (0.0 <= dVar4) {
+      dVar6 = (dVar3 * 0.5 + SQRT(dVar4) * 0.5) - dVar5 * 0.25;
+      *param_6 = dVar6;
+      *param_7 = dVar6 - SQRT(dVar4);
+      if (dVar2 < 0.0) {
+        return 2;
+      }
+      dVar4 = (SQRT(dVar2) * 0.5 - dVar3 * 0.5) - dVar5 * 0.25;
+      *param_8 = dVar4;
+      *param_9 = dVar4 - SQRT(dVar2);
+      return 4;
+    }
+    if (0.0 <= dVar2) {
+      dVar4 = (SQRT(dVar2) * 0.5 - dVar3 * 0.5) - dVar5 * 0.25;
+      *param_6 = dVar4;
+      *param_7 = dVar4 - SQRT(dVar2);
+      return 2;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _acos
+// Entry: 00001000
+// Signature: undefined _acos(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _acos(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cbrt
+// Entry: 00001100
+// Signature: undefined _cbrt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cbrt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cos
+// Entry: 00001200
+// Signature: undefined _cos(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cos(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 6
+// Failed: 0
+// Skipped external functions: 0

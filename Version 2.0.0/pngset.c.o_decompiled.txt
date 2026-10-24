@@ -1,0 +1,2351 @@
+Program: pngset.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _png_set_bKGD
+// Entry: 00000000
+// Signature: undefined _png_set_bKGD(void)
+// ========================================
+
+
+void _png_set_bKGD(long param_1,long param_2,undefined8 *param_3)
+
+{
+  if (((param_1 != 0) && (param_2 != 0)) && (param_3 != (undefined8 *)0x0)) {
+    *(undefined8 *)(param_2 + 0xca) = *param_3;
+    *(undefined2 *)(param_2 + 0xd2) = *(undefined2 *)(param_3 + 1);
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x20;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_cHRM_fixed
+// Entry: 0000002c
+// Signature: undefined _png_set_cHRM_fixed(void)
+// ========================================
+
+
+void _png_set_cHRM_fixed(long param_1,long param_2,undefined4 param_3,undefined4 param_4,
+                        undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
+                        undefined4 param_9)
+
+{
+  int iVar1;
+  undefined4 local_40;
+  undefined4 uStack_3c;
+  undefined4 local_38;
+  undefined4 uStack_34;
+  undefined4 local_30;
+  undefined4 local_28;
+  undefined4 uStack_24;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    local_30 = param_9;
+    local_40 = param_5;
+    uStack_3c = param_6;
+    local_38 = param_7;
+    uStack_34 = param_8;
+    local_28 = param_3;
+    uStack_24 = param_4;
+    iVar1 = _png_colorspace_set_chromaticities(param_1,param_2 + 0x34,&local_40,2);
+    if (iVar1 != 0) {
+      *(ushort *)(param_2 + 0x7e) = *(ushort *)(param_2 + 0x7e) | 0x10;
+    }
+    _png_colorspace_sync_info(param_1,param_2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_cHRM_XYZ_fixed
+// Entry: 0000009c
+// Signature: undefined _png_set_cHRM_XYZ_fixed(void)
+// ========================================
+
+
+void _png_set_cHRM_XYZ_fixed
+               (long param_1,long param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,
+               undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9,
+               undefined4 param_10)
+
+{
+  int iVar1;
+  undefined4 local_44;
+  undefined4 uStack_40;
+  undefined4 local_3c;
+  undefined4 uStack_38;
+  undefined4 local_34;
+  undefined4 uStack_30;
+  undefined4 local_2c;
+  undefined4 local_24;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    local_2c = param_9;
+    local_24 = param_10;
+    local_44 = param_3;
+    uStack_40 = param_4;
+    local_3c = param_5;
+    uStack_38 = param_6;
+    local_34 = param_7;
+    uStack_30 = param_8;
+    iVar1 = _png_colorspace_set_endpoints(param_1,param_2 + 0x34,&local_44,2);
+    if (iVar1 != 0) {
+      *(ushort *)(param_2 + 0x7e) = *(ushort *)(param_2 + 0x7e) | 0x10;
+    }
+    _png_colorspace_sync_info(param_1,param_2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_cHRM
+// Entry: 00000114
+// Signature: undefined _png_set_cHRM(void)
+// ========================================
+
+
+void _png_set_cHRM(undefined1 param_1 [16],undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                  long param_9,long param_10)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  int iVar8;
+  undefined4 local_c0;
+  undefined4 uStack_bc;
+  undefined4 local_b8;
+  undefined4 uStack_b4;
+  undefined4 local_b0;
+  undefined4 uStack_ac;
+  undefined4 local_a8;
+  undefined4 uStack_a4;
+  
+  uVar1 = _png_fixed(param_9,"cHRM White X");
+  uVar2 = _png_fixed(param_2,param_9,"cHRM White Y");
+  uVar3 = _png_fixed(param_3,param_9,"cHRM Red X");
+  uVar4 = _png_fixed(param_4,param_9,"cHRM Red Y");
+  uVar5 = _png_fixed(param_5,param_9,"cHRM Green X");
+  uVar6 = _png_fixed(param_6,param_9,"cHRM Green Y");
+  uVar7 = _png_fixed(param_7,param_9,"cHRM Blue X");
+  uStack_ac = _png_fixed(param_8,param_9,"cHRM Blue Y");
+  if ((param_9 != 0) && (param_10 != 0)) {
+    local_c0 = uVar3;
+    uStack_bc = uVar4;
+    local_b8 = uVar5;
+    uStack_b4 = uVar6;
+    local_b0 = uVar7;
+    local_a8 = uVar1;
+    uStack_a4 = uVar2;
+    iVar8 = _png_colorspace_set_chromaticities(param_9,param_10 + 0x34,&local_c0,2);
+    if (iVar8 != 0) {
+      *(ushort *)(param_10 + 0x7e) = *(ushort *)(param_10 + 0x7e) | 0x10;
+    }
+    _png_colorspace_sync_info(param_9,param_10);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_cHRM_XYZ
+// Entry: 00000294
+// Signature: undefined _png_set_cHRM_XYZ(void)
+// ========================================
+
+
+void _png_set_cHRM_XYZ(undefined1 param_1 [16],undefined8 param_2,undefined8 param_3,
+                      undefined8 param_4,undefined8 param_5,undefined8 param_6,undefined8 param_7,
+                      undefined8 param_8,long param_9,long param_10)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  undefined4 uVar8;
+  int iVar9;
+  undefined8 in_stack_00000000;
+  undefined4 local_c4;
+  undefined4 uStack_c0;
+  undefined4 local_bc;
+  undefined4 uStack_b8;
+  undefined4 local_b4;
+  undefined4 uStack_b0;
+  undefined4 local_ac;
+  undefined4 uStack_a8;
+  undefined4 local_a4;
+  
+  uVar1 = _png_fixed(param_9,"cHRM Red X");
+  uVar2 = _png_fixed(param_2,param_9,"cHRM Red Y");
+  uVar3 = _png_fixed(param_3,param_9,"cHRM Red Z");
+  uVar4 = _png_fixed(param_4,param_9,"cHRM Green X");
+  uVar5 = _png_fixed(param_5,param_9,"cHRM Green Y");
+  uVar6 = _png_fixed(param_6,param_9,"cHRM Green Z");
+  uVar7 = _png_fixed(param_7,param_9,"cHRM Blue X");
+  uVar8 = _png_fixed(param_8,param_9,"cHRM Blue Y");
+  local_a4 = _png_fixed(in_stack_00000000,param_9,"cHRM Blue Z");
+  if ((param_9 != 0) && (param_10 != 0)) {
+    local_c4 = uVar1;
+    uStack_c0 = uVar2;
+    local_bc = uVar3;
+    uStack_b8 = uVar4;
+    local_b4 = uVar5;
+    uStack_b0 = uVar6;
+    local_ac = uVar7;
+    uStack_a8 = uVar8;
+    iVar9 = _png_colorspace_set_endpoints(param_9,param_10 + 0x34,&local_c4,2);
+    if (iVar9 != 0) {
+      *(ushort *)(param_10 + 0x7e) = *(ushort *)(param_10 + 0x7e) | 0x10;
+    }
+    _png_colorspace_sync_info(param_9,param_10);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_eXIf_1
+// Entry: 00000440
+// Signature: undefined _png_set_eXIf_1(void)
+// ========================================
+
+
+void _png_set_eXIf_1(long param_1,long param_2,int param_3,long param_4)
+
+{
+  long lVar1;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    if (*(long *)(param_2 + 0xf0) != 0) {
+      _png_free(param_1);
+      *(undefined8 *)(param_2 + 0xf0) = 0;
+    }
+    *(int *)(param_2 + 0xec) = param_3;
+    lVar1 = _png_malloc_warn(param_1,(long)param_3);
+    *(long *)(param_2 + 0xf0) = lVar1;
+    if (lVar1 == 0) {
+      _png_warning(param_1,"Insufficient memory for eXIf chunk data");
+      return;
+    }
+    *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x8000;
+    if (0 < *(int *)(param_2 + 0xec)) {
+      lVar1 = 0;
+      do {
+        *(undefined1 *)(*(long *)(param_2 + 0xf0) + lVar1) = *(undefined1 *)(param_4 + lVar1);
+        lVar1 = lVar1 + 1;
+      } while (lVar1 < *(int *)(param_2 + 0xec));
+    }
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x10000;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_gAMA_fixed
+// Entry: 00000504
+// Signature: undefined _png_set_gAMA_fixed(void)
+// ========================================
+
+
+void _png_set_gAMA_fixed(long param_1,long param_2)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    _png_colorspace_set_gamma(param_1,param_2 + 0x34);
+    _png_colorspace_sync_info(param_1,param_2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_gAMA
+// Entry: 00000548
+// Signature: undefined _png_set_gAMA(void)
+// ========================================
+
+
+void _png_set_gAMA(long param_1,long param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = _png_fixed(param_1,"png_set_gAMA");
+  if ((param_1 != 0) && (param_2 != 0)) {
+    _png_colorspace_set_gamma(param_1,param_2 + 0x34,uVar1);
+    _png_colorspace_sync_info(param_1,param_2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_hIST
+// Entry: 000005a0
+// Signature: undefined _png_set_hIST(void)
+// ========================================
+
+
+void _png_set_hIST(long param_1,long param_2,void *param_3)
+
+{
+  void *pvVar1;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    if (*(ushort *)(param_2 + 0x20) - 0x101 < 0xffffff00) {
+      _png_warning(param_1,"Invalid palette size, hIST allocation skipped");
+      return;
+    }
+    _png_free_data(param_1,param_2,8,0);
+    pvVar1 = (void *)_png_malloc_warn(param_1,0x200);
+    *(void **)(param_2 + 0x100) = pvVar1;
+    if (pvVar1 == (void *)0x0) {
+      _png_warning(param_1,"Insufficient memory for hIST chunk data");
+      return;
+    }
+    *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 8;
+    if ((ulong)*(ushort *)(param_2 + 0x20) != 0) {
+      _memcpy(pvVar1,param_3,(ulong)*(ushort *)(param_2 + 0x20) << 1);
+    }
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x40;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_IHDR
+// Entry: 00000670
+// Signature: undefined _png_set_IHDR(void)
+// ========================================
+
+
+void _png_set_IHDR(long param_1,undefined4 *param_2,ulong param_3,undefined8 param_4,
+                  undefined1 param_5,undefined1 param_6,undefined1 param_7,undefined1 param_8,
+                  undefined1 param_9)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  byte bVar3;
+  uint uVar4;
+  
+  if (param_1 == 0) {
+    return;
+  }
+  if (param_2 == (undefined4 *)0x0) {
+    return;
+  }
+  *param_2 = (int)param_3;
+  param_2[1] = (int)param_4;
+  *(undefined1 *)(param_2 + 9) = param_5;
+  *(undefined1 *)((long)param_2 + 0x25) = param_6;
+  *(undefined1 *)((long)param_2 + 0x26) = param_8;
+  *(undefined1 *)((long)param_2 + 0x27) = param_9;
+  *(undefined1 *)(param_2 + 10) = param_7;
+  _png_check_IHDR(param_1,param_3,param_4,param_5,param_6,param_7,param_8,param_9);
+  bVar3 = *(byte *)((long)param_2 + 0x25);
+  if (bVar3 == 3) {
+    uVar4 = 1;
+  }
+  else {
+    uVar1 = bVar3 & 2;
+    uVar4 = uVar1 | 1;
+    *(char *)((long)param_2 + 0x29) = (char)uVar4;
+    if ((bVar3 >> 2 & 1) == 0) goto LAB_000006f8;
+    uVar4 = uVar1 + 2;
+  }
+  *(char *)((long)param_2 + 0x29) = (char)uVar4;
+LAB_000006f8:
+  uVar4 = *(byte *)(param_2 + 9) * uVar4;
+  *(char *)((long)param_2 + 0x2a) = (char)uVar4;
+  uVar2 = (ulong)(uVar4 & 0xff) * (param_3 & 0xffffffff) + 7 >> 3;
+  if (7 < (uVar4 & 0xff)) {
+    uVar2 = (param_3 & 0xffffffff) * (ulong)(uVar4 >> 3 & 0x1f);
+  }
+  *(ulong *)(param_2 + 4) = uVar2;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_oFFs
+// Entry: 0000073c
+// Signature: undefined _png_set_oFFs(void)
+// ========================================
+
+
+void _png_set_oFFs(long param_1,long param_2,undefined4 param_3,undefined4 param_4,
+                  undefined1 param_5)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    *(undefined4 *)(param_2 + 0xd4) = param_3;
+    *(undefined4 *)(param_2 + 0xd8) = param_4;
+    *(undefined1 *)(param_2 + 0xdc) = param_5;
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x100;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_pCAL
+// Entry: 0000075c
+// Signature: undefined _png_set_pCAL(void)
+// ========================================
+
+
+void _png_set_pCAL(long param_1,long param_2,char *param_3,undefined4 param_4,undefined4 param_5,
+                  uint param_6,uint param_7,char *param_8,undefined8 *param_9)
+
+{
+  int iVar1;
+  size_t sVar2;
+  size_t sVar3;
+  void *pvVar4;
+  undefined8 uVar5;
+  long lVar6;
+  undefined8 *puVar7;
+  ulong uVar8;
+  char *pcVar9;
+  
+  if ((((param_1 == 0) || (param_2 == 0)) || (param_3 == (char *)0x0)) ||
+     ((param_8 == (char *)0x0 || ((0 < (int)param_7 && (param_9 == (undefined8 *)0x0)))))) {
+    return;
+  }
+  sVar2 = _strlen(param_3);
+  if (param_6 < 4) {
+    if (param_7 < 0x100) {
+      if (param_7 != 0) {
+        uVar8 = (ulong)param_7;
+        puVar7 = param_9;
+        do {
+          pcVar9 = (char *)*puVar7;
+          if (pcVar9 == (char *)0x0) {
+LAB_0000094c:
+            pcVar9 = "Invalid format for pCAL parameter";
+            goto LAB_00000960;
+          }
+          sVar3 = _strlen(pcVar9);
+          iVar1 = _png_check_fp_string(pcVar9,sVar3);
+          if (iVar1 == 0) goto LAB_0000094c;
+          puVar7 = puVar7 + 1;
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
+      }
+      pvVar4 = (void *)_png_malloc_warn(param_1,sVar2 + 1);
+      *(void **)(param_2 + 0x108) = pvVar4;
+      if (pvVar4 != (void *)0x0) {
+        _memcpy(pvVar4,param_3,sVar2 + 1);
+        *(undefined4 *)(param_2 + 0x110) = param_4;
+        *(undefined4 *)(param_2 + 0x114) = param_5;
+        *(char *)(param_2 + 0x128) = (char)param_6;
+        *(char *)(param_2 + 0x129) = (char)param_7;
+        sVar2 = _strlen(param_8);
+        pvVar4 = (void *)_png_malloc_warn(param_1,sVar2 + 1);
+        *(void **)(param_2 + 0x118) = pvVar4;
+        if (pvVar4 == (void *)0x0) {
+          pcVar9 = "Insufficient memory for pCAL units";
+        }
+        else {
+          _memcpy(pvVar4,param_8,sVar2 + 1);
+          sVar2 = (ulong)(param_7 + 1) << 3;
+          pvVar4 = (void *)_png_malloc_warn(param_1,sVar2);
+          *(void **)(param_2 + 0x120) = pvVar4;
+          if (pvVar4 != (void *)0x0) {
+            _bzero(pvVar4,sVar2);
+            if (0 < (int)param_7) {
+              lVar6 = 0;
+              do {
+                sVar2 = _strlen(*(char **)((long)param_9 + lVar6));
+                uVar5 = _png_malloc_warn(param_1,sVar2 + 1);
+                *(undefined8 *)(*(long *)(param_2 + 0x120) + lVar6) = uVar5;
+                pvVar4 = *(void **)(*(long *)(param_2 + 0x120) + lVar6);
+                if (pvVar4 == (void *)0x0) {
+                  pcVar9 = "Insufficient memory for pCAL parameter";
+                  goto LAB_000009a8;
+                }
+                _memcpy(pvVar4,*(void **)((long)param_9 + lVar6),sVar2 + 1);
+                lVar6 = lVar6 + 8;
+              } while ((ulong)param_7 << 3 != lVar6);
+            }
+            *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x400;
+            *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x80;
+            return;
+          }
+          pcVar9 = "Insufficient memory for pCAL params";
+        }
+LAB_000009a8:
+        _png_warning(param_1,pcVar9);
+        return;
+      }
+      pcVar9 = "Insufficient memory for pCAL purpose";
+    }
+    else {
+      pcVar9 = "Invalid pCAL parameter count";
+    }
+  }
+  else {
+    pcVar9 = "Invalid pCAL equation type";
+  }
+LAB_00000960:
+  _png_chunk_report(param_1,pcVar9,1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_sCAL_s
+// Entry: 000009cc
+// Signature: undefined _png_set_sCAL_s(void)
+// ========================================
+
+
+void _png_set_sCAL_s(long param_1,long param_2,int param_3,char *param_4,char *param_5)
+
+{
+  int iVar1;
+  size_t sVar2;
+  size_t sVar3;
+  void *pvVar4;
+  
+  if ((param_1 == 0) || (param_2 == 0)) {
+    return;
+  }
+  if (param_3 - 3U < 0xfffffffe) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(param_1,"Invalid sCAL unit");
+  }
+  if ((((param_4 != (char *)0x0) && (sVar2 = _strlen(param_4), sVar2 != 0)) && (*param_4 != '-')) &&
+     (iVar1 = _png_check_fp_string(param_4,sVar2), iVar1 != 0)) {
+    if (((param_5 != (char *)0x0) && (sVar3 = _strlen(param_5), sVar3 != 0)) &&
+       ((*param_5 != '-' && (iVar1 = _png_check_fp_string(param_5,sVar3), iVar1 != 0)))) {
+      *(char *)(param_2 + 0x14c) = (char)param_3;
+      pvVar4 = (void *)_png_malloc_warn(param_1,sVar2 + 1);
+      *(void **)(param_2 + 0x150) = pvVar4;
+      if (pvVar4 != (void *)0x0) {
+        _memcpy(pvVar4,param_4,sVar2 + 1);
+        pvVar4 = (void *)_png_malloc_warn(param_1,sVar3 + 1);
+        *(void **)(param_2 + 0x158) = pvVar4;
+        if (pvVar4 != (void *)0x0) {
+          _memcpy(pvVar4,param_5,sVar3 + 1);
+          *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x4000;
+          *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x100;
+          return;
+        }
+        _png_free(param_1,*(undefined8 *)(param_2 + 0x150));
+        *(undefined8 *)(param_2 + 0x150) = 0;
+      }
+      _png_warning(param_1,"Memory allocation failed while processing sCAL");
+      return;
+    }
+                    /* WARNING: Subroutine does not return */
+    _png_error(param_1,"Invalid sCAL height");
+  }
+                    /* WARNING: Subroutine does not return */
+  _png_error(param_1,"Invalid sCAL width");
+}
+
+
+
+
+// ========================================
+// Function: _png_set_pHYs
+// Entry: 00000d8c
+// Signature: undefined _png_set_pHYs(void)
+// ========================================
+
+
+void _png_set_pHYs(long param_1,long param_2,undefined4 param_3,undefined4 param_4,
+                  undefined1 param_5)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    *(undefined4 *)(param_2 + 0xe0) = param_3;
+    *(undefined4 *)(param_2 + 0xe4) = param_4;
+    *(undefined1 *)(param_2 + 0xe8) = param_5;
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x80;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_PLTE
+// Entry: 00000dac
+// Signature: undefined _png_set_PLTE(void)
+// ========================================
+
+
+void _png_set_PLTE(long param_1,long param_2,void *param_3,uint param_4)
+
+{
+  void *pvVar1;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    if (*(char *)(param_2 + 0x25) == '\x03') {
+      if (((int)param_4 < 0) || (1 << (ulong)(*(byte *)(param_2 + 0x24) & 0x1f) < (int)param_4)) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(param_1,"Invalid palette length");
+      }
+    }
+    else if (0x100 < param_4) {
+      _png_warning(param_1,"Invalid palette length");
+      return;
+    }
+    if (((param_3 == (void *)0x0) && (param_4 != 0)) ||
+       ((param_4 == 0 && ((*(byte *)(param_1 + 0x3d8) & 1) == 0)))) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"Invalid palette");
+    }
+    _png_free_data(param_1,param_2,0x1000,0);
+    pvVar1 = (void *)_png_calloc(param_1,0x300);
+    *(void **)(param_1 + 0x248) = pvVar1;
+    if (param_4 != 0) {
+      _memcpy(pvVar1,param_3,(ulong)param_4 + (ulong)param_4 * 2);
+    }
+    *(void **)(param_2 + 0x18) = pvVar1;
+    *(short *)(param_1 + 0x250) = (short)param_4;
+    *(short *)(param_2 + 0x20) = (short)param_4;
+    *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x1000;
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 8;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_sBIT
+// Entry: 00000ed0
+// Signature: undefined _png_set_sBIT(void)
+// ========================================
+
+
+void _png_set_sBIT(long param_1,long param_2,undefined4 *param_3)
+
+{
+  if (((param_1 != 0) && (param_2 != 0)) && (param_3 != (undefined4 *)0x0)) {
+    *(undefined4 *)(param_2 + 0xb0) = *param_3;
+    *(undefined1 *)(param_2 + 0xb4) = *(undefined1 *)(param_3 + 1);
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_sRGB
+// Entry: 00000efc
+// Signature: undefined _png_set_sRGB(void)
+// ========================================
+
+
+void _png_set_sRGB(long param_1,long param_2)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    _png_colorspace_set_sRGB(param_1,param_2 + 0x34);
+    _png_colorspace_sync_info(param_1,param_2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_sRGB_gAMA_and_cHRM
+// Entry: 00000f40
+// Signature: undefined _png_set_sRGB_gAMA_and_cHRM(void)
+// ========================================
+
+
+void _png_set_sRGB_gAMA_and_cHRM(long param_1,long param_2)
+
+{
+  int iVar1;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    iVar1 = _png_colorspace_set_sRGB(param_1,param_2 + 0x34);
+    if (iVar1 != 0) {
+      *(ushort *)(param_2 + 0x7e) = *(ushort *)(param_2 + 0x7e) | 0x18;
+    }
+    _png_colorspace_sync_info(param_1,param_2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_iCCP
+// Entry: 00000f94
+// Signature: undefined _png_set_iCCP(void)
+// ========================================
+
+
+void _png_set_iCCP(long param_1,long param_2,char *param_3,int param_4,void *param_5,ulong param_6)
+
+{
+  int iVar1;
+  size_t sVar2;
+  void *pvVar3;
+  void *pvVar4;
+  char *pcVar5;
+  
+  if ((((param_1 != 0) && (param_2 != 0)) && (param_3 != (char *)0x0)) && (param_5 != (void *)0x0))
+  {
+    if (param_4 != 0) {
+      _png_app_error(param_1,"Invalid iCCP compression method");
+    }
+    iVar1 = _png_colorspace_set_ICC
+                      (param_1,param_2 + 0x34,param_3,param_6,param_5,
+                       *(undefined1 *)(param_2 + 0x25));
+    _png_colorspace_sync_info(param_1,param_2);
+    if (iVar1 != 0) {
+      *(ushort *)(param_2 + 0x7e) = *(ushort *)(param_2 + 0x7e) | 0x18;
+      sVar2 = _strlen(param_3);
+      pvVar3 = (void *)_png_malloc_warn(param_1,sVar2 + 1);
+      if (pvVar3 == (void *)0x0) {
+        pcVar5 = "Insufficient memory to process iCCP chunk";
+      }
+      else {
+        _memcpy(pvVar3,param_3,sVar2 + 1);
+        pvVar4 = (void *)_png_malloc_warn(param_1,param_6 & 0xffffffff);
+        if (pvVar4 != (void *)0x0) {
+          _memcpy(pvVar4,param_5,param_6 & 0xffffffff);
+          _png_free_data(param_1,param_2,0x10,0);
+          *(int *)(param_2 + 0x90) = (int)param_6;
+          *(void **)(param_2 + 0x80) = pvVar3;
+          *(void **)(param_2 + 0x88) = pvVar4;
+          *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x10;
+          *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x1000;
+          return;
+        }
+        _png_free(param_1,pvVar3);
+        pcVar5 = "Insufficient memory to process iCCP profile";
+      }
+      _png_benign_error(param_1,pcVar5);
+      return;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_text
+// Entry: 000010f8
+// Signature: undefined _png_set_text(void)
+// ========================================
+
+
+void _png_set_text(undefined8 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = _png_set_text_2();
+  if (iVar1 == 0) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  _png_error(param_1,"Insufficient memory to store text");
+}
+
+
+
+
+// ========================================
+// Function: _png_set_text_2
+// Entry: 0000112c
+// Signature: undefined _png_set_text_2(void)
+// ========================================
+
+
+undefined8 _png_set_text_2(long param_1,long param_2,long param_3,uint param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  long lVar4;
+  size_t sVar5;
+  size_t sVar6;
+  char *pcVar7;
+  size_t sVar8;
+  size_t sVar9;
+  void *pvVar10;
+  int *piVar11;
+  int iVar12;
+  long *plVar13;
+  long lVar14;
+  undefined8 *puVar15;
+  undefined8 uVar16;
+  ulong uVar17;
+  undefined8 *puVar18;
+  
+  if (param_3 == 0) {
+    return 0;
+  }
+  if (param_1 == 0) {
+    return 0;
+  }
+  if (param_2 == 0) {
+    return 0;
+  }
+  if ((int)param_4 < 1) {
+    return 0;
+  }
+  uVar2 = *(uint *)(param_2 + 0x94);
+  if ((int)(*(int *)(param_2 + 0x98) - uVar2) < (int)param_4) {
+    if (param_4 <= (uVar2 ^ 0x7fffffff)) {
+      iVar1 = (uVar2 + param_4 & 0xfffffff8) + 8;
+      if (0x7ffffff6 < (int)(uVar2 + param_4)) {
+        iVar1 = 0x7fffffff;
+      }
+      lVar4 = _png_realloc_array(param_1,*(undefined8 *)(param_2 + 0xa0),uVar2,iVar1 - uVar2,0x38);
+      if (lVar4 != 0) {
+        _png_free(param_1,*(undefined8 *)(param_2 + 0xa0));
+        *(long *)(param_2 + 0xa0) = lVar4;
+        *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x4000;
+        *(int *)(param_2 + 0x98) = iVar1;
+        goto LAB_000011ec;
+      }
+    }
+    pcVar7 = "too many text chunks";
+LAB_00001438:
+    uVar16 = 1;
+    _png_chunk_report(param_1,pcVar7,1);
+  }
+  else {
+LAB_000011ec:
+    uVar17 = (ulong)param_4;
+    puVar18 = (undefined8 *)(param_3 + 0x30);
+    do {
+      if ((char *)puVar18[-5] != (char *)0x0) {
+        iVar1 = *(int *)(puVar18 + -6);
+        if (iVar1 - 3U < 0xfffffffc) {
+          _png_chunk_report(param_1,"text compression mode is out of range",1);
+        }
+        else {
+          lVar4 = *(long *)(param_2 + 0xa0);
+          iVar3 = *(int *)(param_2 + 0x94);
+          sVar5 = _strlen((char *)puVar18[-5]);
+          if (iVar1 < 1) {
+            sVar6 = 0;
+            pcVar7 = (char *)puVar18[-4];
+joined_r0x00001288:
+            sVar8 = 0;
+            if (pcVar7 == (char *)0x0) goto LAB_000012c0;
+LAB_000012a8:
+            if (*pcVar7 == '\0') goto LAB_000012c0;
+            sVar9 = _strlen(pcVar7);
+            iVar12 = iVar1;
+          }
+          else {
+            if ((char *)puVar18[-1] == (char *)0x0) {
+              sVar6 = 0;
+              pcVar7 = (char *)*puVar18;
+            }
+            else {
+              sVar6 = _strlen((char *)puVar18[-1]);
+              pcVar7 = (char *)*puVar18;
+            }
+            if (pcVar7 == (char *)0x0) {
+              pcVar7 = (char *)puVar18[-4];
+              goto joined_r0x00001288;
+            }
+            sVar8 = _strlen(pcVar7);
+            pcVar7 = (char *)puVar18[-4];
+            if (pcVar7 != (char *)0x0) goto LAB_000012a8;
+LAB_000012c0:
+            sVar9 = 0;
+            iVar12 = 1;
+            if (iVar1 < 1) {
+              iVar12 = -1;
+            }
+          }
+          piVar11 = (int *)(lVar4 + (long)iVar3 * 0x38);
+          *piVar11 = iVar12;
+          pvVar10 = (void *)_png_malloc_base(param_1,sVar5 + sVar6 + sVar8 + sVar9 + 4);
+          plVar13 = (long *)(lVar4 + (long)iVar3 * 0x38 + 8);
+          *plVar13 = (long)pvVar10;
+          if (pvVar10 == (void *)0x0) {
+            pcVar7 = "text chunk: out of memory";
+            goto LAB_00001438;
+          }
+          _memcpy(pvVar10,(void *)puVar18[-5],sVar5);
+          *(undefined1 *)(*plVar13 + sVar5) = 0;
+          if (*(int *)(puVar18 + -6) < 1) {
+            lVar14 = lVar4 + (long)iVar3 * 0x38;
+            *(undefined8 *)(lVar14 + 0x28) = 0;
+            *(undefined8 *)(lVar14 + 0x30) = 0;
+          }
+          else {
+            pvVar10 = (void *)(*plVar13 + sVar5 + 1);
+            lVar14 = lVar4 + (long)iVar3 * 0x38;
+            *(void **)(lVar14 + 0x28) = pvVar10;
+            _memcpy(pvVar10,(void *)puVar18[-1],sVar6);
+            *(undefined1 *)(*(long *)(lVar14 + 0x28) + sVar6) = 0;
+            pvVar10 = (void *)(*(long *)(lVar14 + 0x28) + sVar6 + 1);
+            plVar13 = (long *)(lVar14 + 0x30);
+            *plVar13 = (long)pvVar10;
+            _memcpy(pvVar10,(void *)*puVar18,sVar8);
+            *(undefined1 *)(*plVar13 + sVar8) = 0;
+            sVar5 = sVar8;
+          }
+          pvVar10 = (void *)(*plVar13 + sVar5 + 1);
+          puVar15 = (undefined8 *)(lVar4 + (long)iVar3 * 0x38 + 0x10);
+          *puVar15 = pvVar10;
+          if (sVar9 != 0) {
+            _memcpy(pvVar10,(void *)puVar18[-4],sVar9);
+            pvVar10 = (void *)*puVar15;
+          }
+          *(undefined1 *)((long)pvVar10 + sVar9) = 0;
+          sVar5 = sVar9;
+          sVar6 = 0;
+          if (*piVar11 < 1) {
+            sVar5 = 0;
+            sVar6 = sVar9;
+          }
+          lVar4 = lVar4 + (long)iVar3 * 0x38;
+          *(size_t *)(lVar4 + 0x18) = sVar6;
+          *(size_t *)(lVar4 + 0x20) = sVar5;
+          *(int *)(param_2 + 0x94) = *(int *)(param_2 + 0x94) + 1;
+        }
+      }
+      puVar18 = puVar18 + 7;
+      uVar17 = uVar17 - 1;
+    } while (uVar17 != 0);
+    uVar16 = 0;
+  }
+  return uVar16;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_tRNS
+// Entry: 000014e0
+// Signature: undefined _png_set_tRNS(void)
+// ========================================
+
+
+void _png_set_tRNS(long param_1,long param_2,void *param_3,uint param_4,undefined8 *param_5)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  void *pvVar3;
+  
+  if (param_1 == 0) {
+    return;
+  }
+  if (param_2 == 0) {
+    return;
+  }
+  if (param_3 != (void *)0x0) {
+    _png_free_data(param_1,param_2,0x2000,0);
+    if (param_4 - 1 < 0x100) {
+      pvVar3 = (void *)_png_malloc(param_1,0x100);
+      *(void **)(param_2 + 0xb8) = pvVar3;
+      _memcpy(pvVar3,param_3,(ulong)param_4);
+    }
+    else {
+      pvVar3 = *(void **)(param_2 + 0xb8);
+    }
+    *(void **)(param_1 + 0x2e0) = pvVar3;
+  }
+  if (param_5 == (undefined8 *)0x0) {
+    *(short *)(param_2 + 0x22) = (short)param_4;
+    if (param_4 == 0) {
+      return;
+    }
+    goto LAB_000015f8;
+  }
+  if (*(byte *)(param_2 + 0x24) < 0x10) {
+    uVar2 = ~(-1 << (ulong)(*(byte *)(param_2 + 0x24) & 0x1f));
+    if (*(char *)(param_2 + 0x25) == '\x02') {
+      if ((*(ushort *)((long)param_5 + 2) <= uVar2) && (*(ushort *)((long)param_5 + 4) <= uVar2)) {
+        uVar1 = *(ushort *)((long)param_5 + 6);
+        goto joined_r0x000015c8;
+      }
+LAB_000015cc:
+      _png_warning(param_1,"tRNS chunk has out-of-range samples for bit_depth");
+    }
+    else if (*(char *)(param_2 + 0x25) == '\0') {
+      uVar1 = *(ushort *)(param_5 + 1);
+joined_r0x000015c8:
+      if (uVar2 < uVar1) goto LAB_000015cc;
+    }
+  }
+  *(undefined8 *)(param_2 + 0xc0) = *param_5;
+  *(undefined2 *)(param_2 + 200) = *(undefined2 *)(param_5 + 1);
+  if (param_4 < 2) {
+    param_4 = 1;
+  }
+  *(short *)(param_2 + 0x22) = (short)param_4;
+LAB_000015f8:
+  *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x10;
+  *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x2000;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_sPLT
+// Entry: 00001624
+// Signature: undefined _png_set_sPLT(void)
+// ========================================
+
+
+void _png_set_sPLT(long param_1,long param_2,undefined8 *param_3,ulong param_4)
+
+{
+  uint uVar1;
+  long lVar2;
+  char *pcVar3;
+  size_t sVar4;
+  void *pvVar5;
+  int iVar6;
+  undefined8 *puVar7;
+  
+  if ((((param_3 != (undefined8 *)0x0) && (param_1 != 0)) && (param_2 != 0)) && (0 < (int)param_4))
+  {
+    lVar2 = _png_realloc_array(param_1,*(undefined8 *)(param_2 + 0x140),
+                               *(undefined4 *)(param_2 + 0x148),param_4,0x20);
+    if (lVar2 == 0) {
+      pcVar3 = "too many sPLT chunks";
+LAB_0000178c:
+      _png_chunk_report(param_1,pcVar3,1);
+      return;
+    }
+    _png_free(param_1,*(undefined8 *)(param_2 + 0x140));
+    *(long *)(param_2 + 0x140) = lVar2;
+    *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x20;
+    puVar7 = (undefined8 *)(lVar2 + (long)*(int *)(param_2 + 0x148) * 0x20);
+    do {
+      while( true ) {
+        pcVar3 = (char *)*param_3;
+        iVar6 = (int)param_4;
+        if ((pcVar3 != (char *)0x0) && (param_3[2] != 0)) break;
+        _png_app_error(param_1,"png_set_sPLT: invalid sPLT");
+        param_4 = (ulong)(iVar6 - 1U);
+        if (iVar6 - 1U == 0) {
+          return;
+        }
+      }
+      *(undefined1 *)(puVar7 + 1) = *(undefined1 *)(param_3 + 1);
+      sVar4 = _strlen(pcVar3);
+      pvVar5 = (void *)_png_malloc_base(param_1,sVar4 + 1);
+      *puVar7 = pvVar5;
+      if (pvVar5 == (void *)0x0) {
+LAB_0000177c:
+        if (iVar6 < 1) {
+          return;
+        }
+        pcVar3 = "sPLT out of memory";
+        goto LAB_0000178c;
+      }
+      _memcpy(pvVar5,(void *)*param_3,sVar4 + 1);
+      pvVar5 = (void *)_png_malloc_array(param_1,*(undefined4 *)(param_3 + 3),10);
+      puVar7[2] = pvVar5;
+      if (pvVar5 == (void *)0x0) {
+        _png_free(param_1,*puVar7);
+        *puVar7 = 0;
+        goto LAB_0000177c;
+      }
+      uVar1 = *(uint *)(param_3 + 3);
+      *(uint *)(puVar7 + 3) = uVar1;
+      _memcpy(pvVar5,(void *)param_3[2],(ulong)uVar1 * 10);
+      *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x2000;
+      *(int *)(param_2 + 0x148) = *(int *)(param_2 + 0x148) + 1;
+      puVar7 = puVar7 + 4;
+      param_3 = param_3 + 4;
+      param_4 = (ulong)(iVar6 - 1U);
+    } while (iVar6 - 1U != 0);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_unknown_chunks
+// Entry: 000017c4
+// Signature: undefined _png_set_unknown_chunks(void)
+// ========================================
+
+
+void _png_set_unknown_chunks(long param_1,long param_2,undefined4 *param_3,ulong param_4)
+
+{
+  uint uVar1;
+  size_t sVar2;
+  long lVar3;
+  void *pvVar4;
+  uint uVar5;
+  int iVar6;
+  undefined4 *puVar7;
+  
+  if ((((param_3 == (undefined4 *)0x0) || (param_1 == 0)) || (param_2 == 0)) || ((int)param_4 < 1))
+  {
+    return;
+  }
+  lVar3 = _png_realloc_array(param_1,*(undefined8 *)(param_2 + 0x130),
+                             *(undefined4 *)(param_2 + 0x138),param_4,0x20);
+  if (lVar3 == 0) {
+    _png_chunk_report(param_1,"too many unknown chunks",1);
+    return;
+  }
+  _png_free(param_1,*(undefined8 *)(param_2 + 0x130));
+  *(long *)(param_2 + 0x130) = lVar3;
+  *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x200;
+  puVar7 = (undefined4 *)(lVar3 + (long)*(int *)(param_2 + 0x138) * 0x20);
+LAB_00001880:
+  do {
+    *puVar7 = *param_3;
+    *(undefined1 *)(puVar7 + 1) = 0;
+    uVar1 = *(byte *)(param_3 + 6) & 0xb;
+    if ((*(byte *)(param_3 + 6) & 0xb) == 0) {
+      if (*(char *)(param_1 + 0x125) < '\0') {
+LAB_00001964:
+                    /* WARNING: Subroutine does not return */
+        _png_error(param_1,"invalid location in png_set_unknown_chunks");
+      }
+      _png_app_warning(param_1,"png_set_unknown_chunks now expects a valid location");
+      uVar1 = *(uint *)(param_1 + 0x124) & 0xb;
+      if (uVar1 == 0) goto LAB_00001964;
+    }
+    do {
+      uVar5 = uVar1;
+      uVar1 = uVar5 & -uVar5 ^ uVar5;
+    } while (uVar5 != (uVar5 & -uVar5));
+    *(char *)(puVar7 + 6) = (char)uVar5;
+    iVar6 = (int)param_4;
+    if (*(long *)(param_3 + 4) == 0) {
+      *(undefined8 *)(puVar7 + 2) = 0;
+      *(undefined8 *)(puVar7 + 4) = 0;
+LAB_00001864:
+      puVar7 = puVar7 + 8;
+      *(int *)(param_2 + 0x138) = *(int *)(param_2 + 0x138) + 1;
+      param_3 = param_3 + 8;
+      param_4 = (ulong)(iVar6 - 1U);
+      if (iVar6 - 1U == 0 || iVar6 < 1) {
+        return;
+      }
+      goto LAB_00001880;
+    }
+    pvVar4 = (void *)_png_malloc_base(param_1);
+    *(void **)(puVar7 + 2) = pvVar4;
+    if (pvVar4 != (void *)0x0) {
+      sVar2 = *(size_t *)(param_3 + 4);
+      _memcpy(pvVar4,*(void **)(param_3 + 2),sVar2);
+      *(size_t *)(puVar7 + 4) = sVar2;
+      goto LAB_00001864;
+    }
+    _png_chunk_report(param_1,"unknown chunk: out of memory",1);
+    param_3 = param_3 + 8;
+    param_4 = (ulong)(iVar6 - 1U);
+    if (iVar6 - 1U == 0 || iVar6 < 1) {
+      return;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _png_set_unknown_chunk_location
+// Entry: 00001974
+// Signature: undefined _png_set_unknown_chunk_location(void)
+// ========================================
+
+
+void _png_set_unknown_chunk_location(long param_1,long param_2,uint param_3,uint param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  if ((((param_1 != 0) && (param_2 != 0)) && (-1 < (int)param_3)) &&
+     ((int)param_3 < *(int *)(param_2 + 0x138))) {
+    if ((param_4 & 0xb) == 0) {
+      _png_app_error(param_1,"invalid unknown chunk location");
+      uVar1 = 8;
+      if ((param_4 & 4) == 0) {
+        uVar1 = 1;
+      }
+    }
+    else {
+      uVar1 = param_4 & 0xb;
+    }
+    if (uVar1 == 0) {
+      if (*(char *)(param_1 + 0x125) < '\0') {
+LAB_00001a50:
+                    /* WARNING: Subroutine does not return */
+        _png_error(param_1,"invalid location in png_set_unknown_chunks");
+      }
+      _png_app_warning(param_1,"png_set_unknown_chunks now expects a valid location");
+      uVar1 = *(uint *)(param_1 + 0x124) & 0xb;
+      if (uVar1 == 0) goto LAB_00001a50;
+    }
+    do {
+      uVar2 = uVar1;
+      uVar1 = uVar2 & -uVar2 ^ uVar2;
+    } while (uVar2 != (uVar2 & -uVar2));
+    *(char *)(*(long *)(param_2 + 0x130) + (ulong)param_3 * 0x20 + 0x18) = (char)uVar2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_permit_mng_features
+// Entry: 00001a60
+// Signature: undefined _png_permit_mng_features(void)
+// ========================================
+
+
+void _png_permit_mng_features(long param_1,uint param_2)
+
+{
+  if (param_1 != 0) {
+    *(uint *)(param_1 + 0x3d8) = param_2 & 5;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_keep_unknown_chunks
+// Entry: 00001a78
+// Signature: undefined _png_set_keep_unknown_chunks(void)
+// ========================================
+
+
+void _png_set_keep_unknown_chunks(long param_1,uint param_2,undefined *param_3,uint param_4)
+
+{
+  int iVar1;
+  uint uVar2;
+  ulong uVar3;
+  int *piVar4;
+  int iVar5;
+  int *piVar6;
+  int *piVar7;
+  int iVar8;
+  
+  if (param_1 == 0) {
+    return;
+  }
+  if (3 < param_2) {
+    _png_app_error(param_1,"png_set_keep_unknown_chunks: invalid keep");
+    return;
+  }
+  if ((int)param_4 < 1) {
+    *(uint *)(param_1 + 0x3b8) = param_2;
+    if (param_4 == 0) {
+      return;
+    }
+    param_4 = 0x12;
+    param_3 = &_png_set_keep_unknown_chunks_chunks_to_ignore;
+  }
+  else if (param_3 == (undefined *)0x0) {
+    _png_app_error(param_1,"png_set_keep_unknown_chunks: no chunk list");
+    return;
+  }
+  piVar6 = *(int **)(param_1 + 0x3c0);
+  iVar8 = 0;
+  if (piVar6 != (int *)0x0) {
+    iVar8 = *(int *)(param_1 + 0x3bc);
+  }
+  if (0x33333333 < iVar8 + param_4) {
+    _png_app_error(param_1,"png_set_keep_unknown_chunks: too many chunks");
+    return;
+  }
+  if (param_2 == 0) {
+    if ((iVar8 != 0) && (piVar6 != (int *)0x0)) {
+      uVar3 = 0;
+      do {
+        piVar7 = piVar6;
+        iVar5 = iVar8;
+        do {
+          if (*piVar7 == *(int *)(param_3 + (uint)((int)uVar3 * 5))) {
+            *(undefined1 *)(piVar7 + 1) = 0;
+            break;
+          }
+          piVar7 = (int *)((long)piVar7 + 5);
+          iVar5 = iVar5 + -1;
+        } while (iVar5 != 0);
+        uVar3 = uVar3 + 1;
+      } while (uVar3 != param_4);
+      goto LAB_00001c40;
+    }
+LAB_00001cc8:
+    *(undefined4 *)(param_1 + 0x3bc) = 0;
+    piVar7 = *(int **)(param_1 + 0x3c0);
+  }
+  else {
+    piVar6 = (int *)_png_malloc(param_1,(iVar8 + param_4) * 5);
+    if (iVar8 != 0) {
+      _memcpy(piVar6,*(void **)(param_1 + 0x3c0),(ulong)(uint)(iVar8 * 5));
+    }
+    if (piVar6 == (int *)0x0) goto LAB_00001cc8;
+    uVar3 = 0;
+    do {
+      uVar2 = (int)uVar3 * 5;
+      piVar7 = piVar6;
+      if (iVar8 != 0) {
+        piVar7 = (int *)((long)piVar6 + (ulong)(iVar8 - 1) * 5 + 5);
+        piVar4 = piVar6;
+        iVar5 = iVar8;
+        do {
+          if (*piVar4 == *(int *)(param_3 + uVar2)) goto LAB_00001b94;
+          piVar4 = (int *)((long)piVar4 + 5);
+          iVar5 = iVar5 + -1;
+        } while (iVar5 != 0);
+      }
+      iVar8 = iVar8 + 1;
+      *piVar7 = *(int *)(param_3 + uVar2);
+      piVar4 = piVar7;
+LAB_00001b94:
+      *(char *)(piVar4 + 1) = (char)param_2;
+      uVar3 = uVar3 + 1;
+    } while (uVar3 != param_4);
+LAB_00001c40:
+    if (iVar8 != 0) {
+      iVar5 = 0;
+      piVar7 = piVar6;
+      piVar4 = piVar6;
+      do {
+        if ((char)piVar4[1] != '\0') {
+          if (piVar4 != piVar7) {
+            iVar1 = *piVar4;
+            *(char *)(piVar7 + 1) = (char)piVar4[1];
+            *piVar7 = iVar1;
+          }
+          piVar7 = (int *)((long)piVar7 + 5);
+          iVar5 = iVar5 + 1;
+        }
+        piVar4 = (int *)((long)piVar4 + 5);
+        iVar8 = iVar8 + -1;
+      } while (iVar8 != 0);
+      if (iVar5 != 0) {
+        piVar7 = *(int **)(param_1 + 0x3c0);
+        *(int *)(param_1 + 0x3bc) = iVar5;
+        if (piVar7 == piVar6) {
+          return;
+        }
+        goto LAB_00001cd8;
+      }
+    }
+    if (*(int **)(param_1 + 0x3c0) != piVar6) {
+      _png_free(param_1,piVar6);
+      goto LAB_00001cc8;
+    }
+    *(undefined4 *)(param_1 + 0x3bc) = 0;
+    piVar7 = piVar6;
+  }
+  piVar6 = (int *)0x0;
+  if (piVar7 == (int *)0x0) {
+    return;
+  }
+LAB_00001cd8:
+  if (piVar7 != (int *)0x0) {
+    _png_free(param_1,piVar7);
+  }
+  *(int **)(param_1 + 0x3c0) = piVar6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_read_user_chunk_fn
+// Entry: 00001d18
+// Signature: undefined _png_set_read_user_chunk_fn(void)
+// ========================================
+
+
+void _png_set_read_user_chunk_fn(long param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  if (param_1 != 0) {
+    *(undefined8 *)(param_1 + 0x3b0) = param_3;
+    *(undefined8 *)(param_1 + 0x3a8) = param_2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_rows
+// Entry: 00001d28
+// Signature: undefined _png_set_rows(void)
+// ========================================
+
+
+void _png_set_rows(long param_1,long param_2,long param_3)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    if (*(long *)(param_2 + 0x160) != 0 && *(long *)(param_2 + 0x160) != param_3) {
+      _png_free_data(param_1,param_2,0x40,0);
+    }
+    *(long *)(param_2 + 0x160) = param_3;
+    if (param_3 != 0) {
+      *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x8000;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_compression_buffer_size
+// Entry: 00001d84
+// Signature: undefined _png_set_compression_buffer_size(void)
+// ========================================
+
+
+void _png_set_compression_buffer_size(long param_1,ulong param_2)
+
+{
+  if (param_1 != 0) {
+    if (param_2 - 0x80000000 < 0xffffffff80000001) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"invalid compression buffer size");
+    }
+    if (*(char *)(param_1 + 0x125) < '\0') {
+      *(int *)(param_1 + 0x468) = (int)param_2;
+    }
+    else {
+      if (*(int *)(param_1 + 0x130) != 0) {
+        _png_warning(param_1,"Compression buffer size cannot be changed because it is in use");
+        return;
+      }
+      if (param_2 < 6) {
+        _png_warning(param_1,"Compression buffer size cannot be reduced below 6");
+        return;
+      }
+      if (*(uint *)(param_1 + 0x1b0) != param_2) {
+        _png_free_buffer_list(param_1,param_1 + 0x1a8);
+        *(int *)(param_1 + 0x1b0) = (int)param_2;
+        return;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_invalid
+// Entry: 00001e3c
+// Signature: undefined _png_set_invalid(void)
+// ========================================
+
+
+void _png_set_invalid(long param_1,long param_2,uint param_3)
+
+{
+  if ((param_1 != 0) && (param_2 != 0)) {
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) & (param_3 ^ 0xffffffff);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_user_limits
+// Entry: 00001e54
+// Signature: undefined _png_set_user_limits(void)
+// ========================================
+
+
+void _png_set_user_limits(long param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  if (param_1 != 0) {
+    *(undefined4 *)(param_1 + 0x41c) = param_2;
+    *(undefined4 *)(param_1 + 0x420) = param_3;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_chunk_cache_max
+// Entry: 00001e64
+// Signature: undefined _png_set_chunk_cache_max(void)
+// ========================================
+
+
+void _png_set_chunk_cache_max(long param_1,undefined4 param_2)
+
+{
+  if (param_1 != 0) {
+    *(undefined4 *)(param_1 + 0x424) = param_2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_chunk_malloc_max
+// Entry: 00001e70
+// Signature: undefined _png_set_chunk_malloc_max(void)
+// ========================================
+
+
+void _png_set_chunk_malloc_max(long param_1,undefined8 param_2)
+
+{
+  if (param_1 != 0) {
+    *(undefined8 *)(param_1 + 0x428) = param_2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_benign_errors
+// Entry: 00001e7c
+// Signature: undefined _png_set_benign_errors(void)
+// ========================================
+
+
+void _png_set_benign_errors(long param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = 0;
+  if (param_2 != 0) {
+    uVar1 = 0x700000;
+  }
+  *(uint *)(param_1 + 0x128) = *(uint *)(param_1 + 0x128) & 0xff8fffff | uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_check_for_invalid_index
+// Entry: 00001e9c
+// Signature: undefined _png_set_check_for_invalid_index(void)
+// ========================================
+
+
+void _png_set_check_for_invalid_index(long param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x254) = -(uint)(param_2 < 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_check_keyword
+// Entry: 00001eac
+// Signature: undefined _png_check_keyword(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int _png_check_keyword(undefined8 param_1,byte *param_2,undefined1 *param_3)
+
+{
+  bool bVar1;
+  uint uVar2;
+  byte bVar3;
+  bool bVar4;
+  undefined1 *puVar5;
+  uint uVar6;
+  uint uVar7;
+  byte *pbVar8;
+  byte *pbVar9;
+  uint uVar10;
+  int iVar11;
+  undefined1 auStack_138 [256];
+  long local_38;
+  
+  local_38 = *____stack_chk_guard;
+  if (param_2 == (byte *)0x0) {
+    iVar11 = 0;
+    *param_3 = 0;
+  }
+  else {
+    uVar10 = (uint)*param_2;
+    if (*param_2 == 0) {
+      uVar6 = 0;
+      uVar7 = 0;
+      bVar4 = true;
+      pbVar9 = param_2;
+    }
+    else {
+      uVar7 = 0;
+      uVar6 = 0;
+      bVar4 = true;
+      pbVar8 = param_2;
+      do {
+        if ((uVar10 < 0xa1) && (0x5d < uVar10 - 0x21)) {
+          if (bVar4) {
+            uVar2 = uVar10;
+            if (uVar7 != 0) {
+              uVar2 = uVar7;
+            }
+          }
+          else {
+            puVar5 = param_3 + 1;
+            *param_3 = 0x20;
+            uVar6 = uVar6 + 1;
+            param_3 = puVar5;
+            uVar2 = uVar7;
+            if (uVar10 != 0x20) {
+              uVar2 = uVar10;
+            }
+          }
+          bVar4 = true;
+          bVar3 = pbVar8[1];
+          uVar7 = uVar2;
+        }
+        else {
+          bVar4 = false;
+          *param_3 = (char)uVar10;
+          uVar6 = uVar6 + 1;
+          bVar3 = pbVar8[1];
+          param_3 = param_3 + 1;
+        }
+        uVar10 = (uint)bVar3;
+        pbVar9 = pbVar8 + 1;
+      } while ((uVar10 != 0) && (pbVar9 = pbVar8 + 1, pbVar8 = pbVar9, uVar6 < 0x4f));
+    }
+    bVar1 = uVar6 != 0 && bVar4;
+    uVar10 = 0x20;
+    if ((uVar6 == 0 || !bVar4) || uVar7 != 0) {
+      uVar10 = uVar7;
+    }
+    param_3[-(ulong)bVar1] = 0;
+    iVar11 = uVar6 - bVar1;
+    if (iVar11 != 0) {
+      if (*pbVar9 == 0) {
+        if (uVar10 != 0) {
+          _png_warning_parameter(auStack_138,1,param_2);
+          _png_warning_parameter_signed(auStack_138,2,4,uVar10);
+          _png_formatted_warning(param_1,auStack_138,"keyword \"@1\": bad character \'0x@2\'");
+        }
+      }
+      else {
+        _png_warning(param_1,"keyword truncated");
+      }
+    }
+  }
+  if (*____stack_chk_guard == local_38) {
+    return iVar11;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00003000
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00003200
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00003300
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_app_error
+// Entry: 00003400
+// Signature: undefined _png_app_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_app_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_app_warning
+// Entry: 00003500
+// Signature: undefined _png_app_warning(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_app_warning(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_ascii_from_fp
+// Entry: 00003700
+// Signature: undefined _png_ascii_from_fp(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_ascii_from_fp(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_benign_error
+// Entry: 00003800
+// Signature: undefined _png_benign_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_benign_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_calloc
+// Entry: 00003900
+// Signature: undefined _png_calloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_calloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_check_IHDR
+// Entry: 00003a00
+// Signature: undefined _png_check_IHDR(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_check_IHDR(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_check_fp_string
+// Entry: 00003b00
+// Signature: undefined _png_check_fp_string(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_check_fp_string(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_chunk_report
+// Entry: 00003c00
+// Signature: undefined _png_chunk_report(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_chunk_report(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_set_ICC
+// Entry: 00003d00
+// Signature: undefined _png_colorspace_set_ICC(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_set_ICC(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_set_chromaticities
+// Entry: 00003e00
+// Signature: undefined _png_colorspace_set_chromaticities(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_set_chromaticities(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_set_endpoints
+// Entry: 00003f00
+// Signature: undefined _png_colorspace_set_endpoints(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_set_endpoints(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_set_gamma
+// Entry: 00004000
+// Signature: undefined _png_colorspace_set_gamma(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_set_gamma(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_set_sRGB
+// Entry: 00004100
+// Signature: undefined _png_colorspace_set_sRGB(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_set_sRGB(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_colorspace_sync_info
+// Entry: 00004200
+// Signature: undefined _png_colorspace_sync_info(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_colorspace_sync_info(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_error
+// Entry: 00004300
+// Signature: noreturn undefined _png_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_fixed
+// Entry: 00004400
+// Signature: undefined _png_fixed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_fixed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_formatted_warning
+// Entry: 00004500
+// Signature: undefined _png_formatted_warning(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_formatted_warning(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free
+// Entry: 00004600
+// Signature: undefined _png_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free_buffer_list
+// Entry: 00004700
+// Signature: undefined _png_free_buffer_list(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free_buffer_list(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free_data
+// Entry: 00004800
+// Signature: undefined _png_free_data(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free_data(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc
+// Entry: 00004900
+// Signature: undefined _png_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_array
+// Entry: 00004a00
+// Signature: undefined _png_malloc_array(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc_array(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_base
+// Entry: 00004b00
+// Signature: undefined _png_malloc_base(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc_base(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_warn
+// Entry: 00004c00
+// Signature: undefined _png_malloc_warn(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc_warn(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_realloc_array
+// Entry: 00004d00
+// Signature: undefined _png_realloc_array(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_realloc_array(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_warning
+// Entry: 00004e00
+// Signature: undefined _png_warning(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_warning(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_warning_parameter
+// Entry: 00004f00
+// Signature: undefined _png_warning_parameter(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_warning_parameter(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_warning_parameter_signed
+// Entry: 00005000
+// Signature: undefined _png_warning_parameter_signed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_warning_parameter_signed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00005100
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 69
+// Failed: 0
+// Skipped external functions: 0

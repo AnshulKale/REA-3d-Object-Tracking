@@ -1,0 +1,984 @@
+Program: kmp_wait_release.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ___kmp_wait_64
+// Entry: 00000000
+// Signature: undefined ___kmp_wait_64(void)
+// ========================================
+
+
+bool ___kmp_wait_64(kmp_info *param_1,kmp_flag_64 *param_2,int param_3)
+
+{
+  bool bVar1;
+  
+  if (param_3 == 0) {
+    bVar1 = __kmp_wait_template<kmp_flag_64<false,true>,false,false,true>(param_1,param_2);
+  }
+  else {
+    bVar1 = __kmp_wait_template<kmp_flag_64<false,true>,true,false,true>(param_1,param_2);
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_wait_template<kmp_flag_64<false,true>,true,false,true>
+// Entry: 00000058
+// Signature: bool __cdecl __kmp_wait_template<kmp_flag_64<false,true>,true,false,true>(kmp_info * param_1, kmp_flag_64 * param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* bool __kmp_wait_template<kmp_flag_64<false, true>, true, false, true>(kmp_info*,
+   kmp_flag_64<false, true>*) */
+
+bool __kmp_wait_template<kmp_flag_64<false,true>,true,false,true>
+               (kmp_info *param_1,kmp_flag_64 *param_2)
+
+{
+  ulong uVar1;
+  long lVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  ulong *puVar6;
+  int iVar7;
+  ulong uVar8;
+  long lVar9;
+  int local_a8;
+  long local_70;
+  long local_68;
+  kmp_info *local_60;
+  int local_54;
+  ulong local_48;
+  ulong local_40;
+  int local_34;
+  int local_30;
+  int local_2c;
+  kmp_flag_64 *local_28;
+  kmp_info *local_20;
+  
+  puVar6 = __ompt_enabled;
+  piVar5 = ____kmp_use_yield;
+  piVar4 = ____kmp_tasking_mode;
+  piVar3 = ____kmp_pause_status;
+  lVar2 = ____kmp_global;
+  local_34 = 0;
+  local_28 = param_2;
+  local_20 = param_1;
+  uVar8 = (**(code **)(*(long *)param_2 + 0x10))();
+  if ((uVar8 & 1) == 0) {
+    local_30 = *(int *)(local_20 + 0x24);
+    std::__atomic_base<bool,false>::store_abi_v15006_
+              ((__atomic_base<bool,false> *)(local_20 + 0x544),1,3);
+    if ((*puVar6 & 1) != 0) {
+      local_54 = *(int *)(local_20 + 0x160);
+      if ((local_54 == 0x13) && (*(int *)(local_20 + 0x20) != 0)) {
+        local_60 = local_20 + 0x150;
+      }
+      else {
+        local_68 = 0;
+        if (*(long *)(local_20 + 0x40) != 0) {
+          local_68 = *(long *)(*(long *)(local_20 + 0x40) + 0x1f0);
+        }
+        if (local_68 == 0) {
+          local_60 = (kmp_info *)(*(long *)(local_20 + 0x1b8) + 0x100);
+        }
+        else {
+          local_60 = (kmp_info *)(local_68 + 0x28);
+        }
+      }
+      if ((*piVar4 == 0) || (*(long *)(local_20 + 0x1b0) == 0)) {
+        __ompt_implicit_task_end(local_20,local_54,local_60);
+      }
+    }
+    local_2c = *____kmp_yield_init;
+    if ((*____kmp_dflt_blocktime != 0x7fffffff) || (*piVar3 == 1)) {
+      if (*piVar3 == 1) {
+        local_48 = ___kmp_now_nsec();
+      }
+      else {
+        lVar9 = ___kmp_now_nsec();
+        local_48 = lVar9 + *(long *)(local_20 + 0x88);
+      }
+      local_40 = 0;
+    }
+    DataMemoryBarrier(2,3);
+    while (uVar8 = (**(code **)(*(long *)local_28 + 0x20))(), (uVar8 & 1) != 0) {
+      local_70 = 0;
+      if (*piVar4 != 0) {
+        local_70 = *(long *)(local_20 + 0x1b0);
+        if (local_70 == 0) {
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+        else if (*(int *)(local_70 + 0x100) == 0) {
+          if ((*puVar6 & 1) != 0) {
+            __ompt_implicit_task_end(local_20,local_54,local_60);
+          }
+          *(undefined8 *)(local_20 + 0x1b0) = 0;
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+        else if (*(int *)(local_70 + 0x98) == 1) {
+          kmp_flag_64<false,true>::execute_tasks
+                    ((kmp_flag_64<false,true> *)local_28,local_20,local_30,1,&local_34,0);
+        }
+        else {
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+      }
+      if (*(int *)(lVar2 + 0x44) != 0) {
+        if (*(int *)(lVar2 + 0x40) != 0) {
+          ___kmp_abort_thread();
+        }
+        break;
+      }
+      if ((*piVar5 == 1) || (*piVar5 == 2)) {
+        if (*____kmp_avail_proc == 0) {
+          local_a8 = *____kmp_xproc;
+        }
+        else {
+          local_a8 = *____kmp_avail_proc;
+        }
+        if (*____kmp_nth <= local_a8) goto LAB_000004b8;
+        ___kmp_yield();
+      }
+      else {
+LAB_000004b8:
+        if ((*piVar5 == 1) && (local_2c = local_2c + -2, local_2c == 0)) {
+          ___kmp_yield();
+          local_2c = *____kmp_yield_next;
+        }
+      }
+      if ((((local_70 == 0) || (local_30 < 2)) || (*____kmp_hidden_helper_threads_num < local_30))
+         || (*____kmp_hidden_helper_team_done != 0)) {
+        if ((((*____kmp_dflt_blocktime != 0x7fffffff) || (*piVar3 == 1)) &&
+            ((local_70 == 0 ||
+             ((*(int *)(local_70 + 0x98) == 0 || ((*____kmp_wpolicy_passive & 1) != 0)))))) &&
+           ((uVar8 = local_40 + 1, uVar1 = local_40 % 1000, local_40 = uVar8, uVar1 == 0 &&
+            (uVar8 = ___kmp_now_nsec(), local_48 <= uVar8)))) {
+          std::__atomic_base<bool,false>::store_abi_v15006_
+                    ((__atomic_base<bool,false> *)(local_20 + 0x544),0);
+          kmp_flag_64<false,true>::suspend((kmp_flag_64<false,true> *)local_28,local_30);
+          std::__atomic_base<bool,false>::store_abi_v15006_
+                    ((__atomic_base<bool,false> *)(local_20 + 0x544),1,3);
+          if (*(int *)(lVar2 + 0x44) != 0) {
+            if (*(int *)(lVar2 + 0x40) != 0) {
+              ___kmp_abort_thread();
+            }
+            break;
+          }
+          if ((*piVar4 != 0) && (*(int *)(local_20 + 0x1d8) == 1)) {
+            *(undefined4 *)(local_20 + 0x1d8) = 0;
+          }
+        }
+      }
+      else {
+        iVar7 = std::__atomic_base<int,false>::load_abi_v15006_
+                          (____kmp_unexecuted_hidden_helper_tasks,2);
+        if (iVar7 == 0) {
+          ___kmp_hidden_helper_worker_thread_wait();
+        }
+      }
+    }
+    if ((((*puVar6 & 1) != 0) && (*(int *)(local_20 + 0x160) != 0x102)) &&
+       (__ompt_implicit_task_end(local_20,*(int *)(local_20 + 0x160),local_60),
+       *(int *)(local_20 + 0x160) == 0x100)) {
+      *(undefined4 *)(local_20 + 0x160) = 0x101;
+    }
+    std::__atomic_base<bool,false>::store_abi_v15006_
+              ((__atomic_base<bool,false> *)(local_20 + 0x544),0,3);
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_wait_template<kmp_flag_64<false,true>,false,false,true>
+// Entry: 000007fc
+// Signature: bool __cdecl __kmp_wait_template<kmp_flag_64<false,true>,false,false,true>(kmp_info * param_1, kmp_flag_64 * param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* bool __kmp_wait_template<kmp_flag_64<false, true>, false, false, true>(kmp_info*,
+   kmp_flag_64<false, true>*) */
+
+bool __kmp_wait_template<kmp_flag_64<false,true>,false,false,true>
+               (kmp_info *param_1,kmp_flag_64 *param_2)
+
+{
+  ulong uVar1;
+  long lVar2;
+  int *piVar3;
+  int *piVar4;
+  int iVar5;
+  ulong uVar6;
+  long lVar7;
+  int local_98;
+  long local_70;
+  ulong local_48;
+  ulong local_40;
+  int local_34;
+  int local_30;
+  int local_2c;
+  kmp_flag_64 *local_28;
+  kmp_info *local_20;
+  
+  piVar4 = ____kmp_use_yield;
+  piVar3 = ____kmp_pause_status;
+  lVar2 = ____kmp_global;
+  local_34 = 0;
+  local_28 = param_2;
+  local_20 = param_1;
+  uVar6 = (**(code **)(*(long *)param_2 + 0x10))();
+  if ((uVar6 & 1) == 0) {
+    local_30 = *(int *)(local_20 + 0x24);
+    local_2c = *____kmp_yield_init;
+    if ((*____kmp_dflt_blocktime != 0x7fffffff) || (*piVar3 == 1)) {
+      if (*piVar3 == 1) {
+        local_48 = ___kmp_now_nsec();
+      }
+      else {
+        lVar7 = ___kmp_now_nsec();
+        local_48 = lVar7 + *(long *)(local_20 + 0x88);
+      }
+      local_40 = 0;
+    }
+    DataMemoryBarrier(2,3);
+    while (uVar6 = (**(code **)(*(long *)local_28 + 0x20))(), (uVar6 & 1) != 0) {
+      local_70 = 0;
+      if (*____kmp_tasking_mode != 0) {
+        local_70 = *(long *)(local_20 + 0x1b0);
+        if (local_70 == 0) {
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+        else if (*(int *)(local_70 + 0x100) == 0) {
+          *(undefined8 *)(local_20 + 0x1b0) = 0;
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+        else if (*(int *)(local_70 + 0x98) == 1) {
+          kmp_flag_64<false,true>::execute_tasks
+                    ((kmp_flag_64<false,true> *)local_28,local_20,local_30,0,&local_34,0);
+        }
+        else {
+          *(undefined4 *)(local_20 + 0x1d8) = 1;
+        }
+      }
+      if (*(int *)(lVar2 + 0x44) != 0) {
+        if (*(int *)(lVar2 + 0x40) != 0) {
+          ___kmp_abort_thread();
+        }
+        break;
+      }
+      if ((*piVar4 == 1) || (*piVar4 == 2)) {
+        if (*____kmp_avail_proc == 0) {
+          local_98 = *____kmp_xproc;
+        }
+        else {
+          local_98 = *____kmp_avail_proc;
+        }
+        if (*____kmp_nth <= local_98) goto LAB_00000b7c;
+        ___kmp_yield();
+      }
+      else {
+LAB_00000b7c:
+        if ((*piVar4 == 1) && (local_2c = local_2c + -2, local_2c == 0)) {
+          ___kmp_yield();
+          local_2c = *____kmp_yield_next;
+        }
+      }
+      if ((((local_70 == 0) || (local_30 < 2)) || (*____kmp_hidden_helper_threads_num < local_30))
+         || (*____kmp_hidden_helper_team_done != 0)) {
+        if ((((*____kmp_dflt_blocktime != 0x7fffffff) || (*piVar3 == 1)) &&
+            ((local_70 == 0 ||
+             ((*(int *)(local_70 + 0x98) == 0 || ((*____kmp_wpolicy_passive & 1) != 0)))))) &&
+           ((uVar6 = local_40 + 1, uVar1 = local_40 % 1000, local_40 = uVar6, uVar1 == 0 &&
+            (uVar6 = ___kmp_now_nsec(), local_48 <= uVar6)))) {
+          kmp_flag_64<false,true>::suspend((kmp_flag_64<false,true> *)local_28,local_30);
+          if (*(int *)(lVar2 + 0x44) != 0) {
+            if (*(int *)(lVar2 + 0x40) != 0) {
+              ___kmp_abort_thread();
+            }
+            break;
+          }
+          if ((*____kmp_tasking_mode != 0) && (*(int *)(local_20 + 0x1d8) == 1)) {
+            *(undefined4 *)(local_20 + 0x1d8) = 0;
+          }
+        }
+      }
+      else {
+        iVar5 = std::__atomic_base<int,false>::load_abi_v15006_
+                          (____kmp_unexecuted_hidden_helper_tasks,2);
+        if (iVar5 == 0) {
+          ___kmp_hidden_helper_worker_thread_wait();
+        }
+      }
+    }
+    if ((((*__ompt_enabled & 1) != 0) && (*(int *)(local_20 + 0x160) != 0x102)) &&
+       (*(int *)(local_20 + 0x160) == 0x100)) {
+      *(undefined4 *)(local_20 + 0x160) = 0x101;
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_release_64
+// Entry: 00000e54
+// Signature: undefined ___kmp_release_64(void)
+// ========================================
+
+
+void ___kmp_release_64(kmp_flag_64 *param_1)
+
+{
+  __kmp_release_template<kmp_flag_64<false,true>>(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_template<kmp_flag_64<false,true>>
+// Entry: 00000e78
+// Signature: void __cdecl __kmp_release_template<kmp_flag_64<false,true>>(kmp_flag_64 * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_release_template<kmp_flag_64<false, true> >(kmp_flag_64<false, true>*) */
+
+void __kmp_release_template<kmp_flag_64<false,true>>(kmp_flag_64 *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  long lVar3;
+  uint local_1c;
+  
+  kmp_flag_native<unsigned_long_long,(flag_type)1,true>::internal_release
+            ((kmp_flag_native<unsigned_long_long,(flag_type)1,true> *)param_1);
+  if ((*____kmp_dflt_blocktime != 0x7fffffff) &&
+     (uVar2 = kmp_flag_native<unsigned_long_long,(flag_type)1,true>::is_any_sleeping
+                        ((kmp_flag_native<unsigned_long_long,(flag_type)1,true> *)param_1),
+     (uVar2 & 1) != 0)) {
+    for (local_1c = 0;
+        uVar1 = kmp_flag<(flag_type)1>::get_num_waiters((kmp_flag<(flag_type)1> *)(param_1 + 8)),
+        local_1c < uVar1; local_1c = local_1c + 1) {
+      lVar3 = kmp_flag<(flag_type)1>::get_waiter((kmp_flag<(flag_type)1> *)(param_1 + 8),local_1c);
+      if (lVar3 != 0) {
+        kmp_flag_64<false,true>::resume((kmp_flag_64<false,true> *)param_1,*(int *)(lVar3 + 0x24));
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: store[abi:v15006]
+// Entry: 00000f5c
+// Signature: undefined __thiscall store[abi:v15006](__atomic_base<bool,false> * this, bool param_1, memory_order param_2)
+// ========================================
+
+
+/* std::__atomic_base<bool, false>::store[abi:v15006](bool, std::memory_order) */
+
+void __thiscall
+std::__atomic_base<bool,false>::store_abi_v15006_
+          (__atomic_base<bool,false> *this,byte param_1,undefined4 param_3)
+
+{
+  __cxx_atomic_store_abi_v15006_<bool>(this,param_1 & 1,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ompt_implicit_task_end
+// Entry: 00000f9c
+// Signature: undefined __cdecl __ompt_implicit_task_end(kmp_info * param_1, ompt_state_t param_2, ompt_data_t * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __ompt_implicit_task_end(kmp_info*, ompt_state_t, ompt_data_t*) */
+
+void __ompt_implicit_task_end(long param_1,int param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  long lVar2;
+  ulong *puVar3;
+  undefined4 uVar4;
+  
+  puVar3 = __ompt_enabled;
+  lVar2 = __ompt_callbacks;
+  iVar1 = *(int *)(param_1 + 0x20);
+  if (param_2 == 0x13) {
+    *(undefined4 *)(param_1 + 0x160) = 0x101;
+    if ((*puVar3 >> 9 & 1) != 0) {
+      (**(code **)(lVar2 + 0x40))(2,2,0,param_3,0);
+    }
+    if ((*puVar3 >> 0xf & 1) != 0) {
+      (**(code **)(lVar2 + 0x70))(2,2,0,param_3,0);
+    }
+    if (iVar1 == 0) {
+      *(undefined4 *)(param_1 + 0x160) = 0x101;
+    }
+    else {
+      if ((*puVar3 >> 7 & 1) != 0) {
+        uVar4 = 2;
+        if ((*(uint *)(param_1 + 0x174) & 0x40000000) != 0) {
+          uVar4 = 1;
+        }
+        (**(code **)(lVar2 + 0x30))(2,0,param_3,0,iVar1,uVar4);
+      }
+      *(undefined4 *)(param_1 + 0x160) = 0x100;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: execute_tasks
+// Entry: 0000113c
+// Signature: undefined __thiscall execute_tasks(kmp_flag_64<false,true> * this, kmp_info * param_1, int param_2, int param_3, int * param_4, int param_5)
+// ========================================
+
+
+/* kmp_flag_64<false, true>::execute_tasks(kmp_info*, int, int, int*, int) */
+
+int __thiscall
+kmp_flag_64<false,true>::execute_tasks
+          (kmp_flag_64<false,true> *this,kmp_info *param_1,int param_2,int param_3,int *param_4,
+          int param_5)
+
+{
+  int iVar1;
+  
+  iVar1 = __kmp_execute_tasks_64<false,true>
+                    (param_1,param_2,(kmp_flag_64 *)this,param_3,param_4,param_5);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: load[abi:v15006]
+// Entry: 00001188
+// Signature: undefined __thiscall load[abi:v15006](__atomic_base<int,false> * this, memory_order param_1)
+// ========================================
+
+
+/* std::__atomic_base<int, false>::load[abi:v15006](std::memory_order) const */
+
+int __thiscall
+std::__atomic_base<int,false>::load_abi_v15006_(__atomic_base<int,false> *this,undefined4 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load_abi_v15006_<int>(this,param_2);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: suspend
+// Entry: 000011b4
+// Signature: undefined __thiscall suspend(kmp_flag_64<false,true> * this, int param_1)
+// ========================================
+
+
+/* kmp_flag_64<false, true>::suspend(int) */
+
+void __thiscall kmp_flag_64<false,true>::suspend(kmp_flag_64<false,true> *this,int param_1)
+
+{
+  __kmp_suspend_64<false,true>(param_1,(kmp_flag_64 *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_store[abi:v15006]<bool>
+// Entry: 000011e0
+// Signature: void __cxx_atomic_store[abi:v15006]<bool>(__cxx_atomic_base_impl * param_1, bool param_2, memory_order param_3)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__cxx_atomic_store[abi:v15006]<bool>(std::__cxx_atomic_base_impl<bool>*, bool,
+   std::memory_order) */
+
+void std::__cxx_atomic_store_abi_v15006_<bool>(byte *param_1,byte param_2,int param_3)
+
+{
+  param_2 = param_2 & 1;
+  if (param_3 == 3) {
+    *param_1 = param_2;
+  }
+  else if (param_3 == 5) {
+    *param_1 = param_2;
+  }
+  else {
+    *param_1 = param_2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load[abi:v15006]<int>
+// Entry: 00001270
+// Signature: int __cxx_atomic_load[abi:v15006]<int>(__cxx_atomic_base_impl * param_1, memory_order param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* int std::__cxx_atomic_load[abi:v15006]<int>(std::__cxx_atomic_base_impl<int> const*,
+   std::memory_order) */
+
+int std::__cxx_atomic_load_abi_v15006_<int>(int *param_1,int param_2)
+
+{
+  undefined4 local_10;
+  
+  if (param_2 - 1U < 2) {
+    local_10 = *param_1;
+  }
+  else if (param_2 == 5) {
+    local_10 = *param_1;
+  }
+  else {
+    local_10 = *param_1;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: internal_release
+// Entry: 000012f0
+// Signature: undefined __thiscall internal_release(kmp_flag_native<unsigned_long_long,(flag_type)1,true> * this)
+// ========================================
+
+
+/* kmp_flag_native<unsigned long long, (flag_type)1, true>::internal_release() */
+
+void __thiscall
+kmp_flag_native<unsigned_long_long,(flag_type)1,true>::internal_release
+          (kmp_flag_native<unsigned_long_long,(flag_type)1,true> *this)
+
+{
+  ulonglong *puVar1;
+  
+  puVar1 = (ulonglong *)get(this);
+  flag_traits<(flag_type)1>::test_then_add4(puVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: is_any_sleeping
+// Entry: 00001318
+// Signature: undefined __thiscall is_any_sleeping(kmp_flag_native<unsigned_long_long,(flag_type)1,true> * this)
+// ========================================
+
+
+/* kmp_flag_native<unsigned long long, (flag_type)1, true>::is_any_sleeping() */
+
+byte __thiscall
+kmp_flag_native<unsigned_long_long,(flag_type)1,true>::is_any_sleeping
+          (kmp_flag_native<unsigned_long_long,(flag_type)1,true> *this)
+
+{
+  ulonglong *puVar1;
+  byte local_11;
+  
+  if (*(long *)(this + 0x20) == 0) {
+    puVar1 = (ulonglong *)get(this);
+    local_11 = is_sleeping_val(this,*puVar1);
+  }
+  else {
+    local_11 = std::__atomic_base<bool,false>::load_abi_v15006_
+                         (*(__atomic_base<bool,false> **)(this + 0x20),5);
+  }
+  local_11 = local_11 & 1;
+  return local_11;
+}
+
+
+
+
+// ========================================
+// Function: get_num_waiters
+// Entry: 000013a0
+// Signature: undefined __thiscall get_num_waiters(kmp_flag<(flag_type)1> * this)
+// ========================================
+
+
+/* kmp_flag<(flag_type)1>::get_num_waiters() */
+
+undefined4 __thiscall kmp_flag<(flag_type)1>::get_num_waiters(kmp_flag<(flag_type)1> *this)
+
+{
+  return *(undefined4 *)(this + 0x10);
+}
+
+
+
+
+// ========================================
+// Function: get_waiter
+// Entry: 000013b8
+// Signature: undefined __thiscall get_waiter(kmp_flag<(flag_type)1> * this, uint param_1)
+// ========================================
+
+
+/* kmp_flag<(flag_type)1>::get_waiter(unsigned int) */
+
+undefined8 __thiscall kmp_flag<(flag_type)1>::get_waiter(kmp_flag<(flag_type)1> *this,uint param_1)
+
+{
+  return *(undefined8 *)(this + (ulong)param_1 * 8 + 8);
+}
+
+
+
+
+// ========================================
+// Function: resume
+// Entry: 000013dc
+// Signature: undefined __thiscall resume(kmp_flag_64<false,true> * this, int param_1)
+// ========================================
+
+
+/* kmp_flag_64<false, true>::resume(int) */
+
+void __thiscall kmp_flag_64<false,true>::resume(kmp_flag_64<false,true> *this,int param_1)
+
+{
+  __kmp_resume_64<false,true>(param_1,(kmp_flag_64 *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: test_then_add4
+// Entry: 00001408
+// Signature: undefined __cdecl test_then_add4(ulonglong * param_1)
+// ========================================
+
+
+/* flag_traits<(flag_type)1>::test_then_add4(unsigned long long volatile*) */
+
+ulonglong flag_traits<(flag_type)1>::test_then_add4(ulonglong *param_1)
+
+{
+  char cVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  undefined8 local_10;
+  
+  local_10 = *param_1;
+  do {
+    do {
+      uVar3 = *param_1;
+      if (uVar3 != local_10) break;
+      cVar1 = '\x01';
+      bVar2 = (bool)ExclusiveMonitorPass(param_1,0x10);
+      if (bVar2) {
+        *param_1 = local_10 + 4;
+        cVar1 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar1 != '\0');
+    bVar2 = uVar3 == local_10;
+    local_10 = uVar3;
+    if (bVar2) {
+      return uVar3;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: get
+// Entry: 00001468
+// Signature: undefined __thiscall get(kmp_flag_native<unsigned_long_long,(flag_type)1,true> * this)
+// ========================================
+
+
+/* kmp_flag_native<unsigned long long, (flag_type)1, true>::get() */
+
+undefined8 __thiscall
+kmp_flag_native<unsigned_long_long,(flag_type)1,true>::get
+          (kmp_flag_native<unsigned_long_long,(flag_type)1,true> *this)
+
+{
+  return *(undefined8 *)(this + 0x28);
+}
+
+
+
+
+// ========================================
+// Function: load[abi:v15006]
+// Entry: 00001480
+// Signature: undefined __thiscall load[abi:v15006](__atomic_base<bool,false> * this, memory_order param_1)
+// ========================================
+
+
+/* std::__atomic_base<bool, false>::load[abi:v15006](std::memory_order) const */
+
+bool __thiscall
+std::__atomic_base<bool,false>::load_abi_v15006_(__atomic_base<bool,false> *this,undefined4 param_2)
+
+{
+  bool bVar1;
+  
+  bVar1 = __cxx_atomic_load_abi_v15006_<bool>(this,param_2);
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: is_sleeping_val
+// Entry: 000014b0
+// Signature: undefined __thiscall is_sleeping_val(kmp_flag_native<unsigned_long_long,(flag_type)1,true> * this, ulonglong param_1)
+// ========================================
+
+
+/* kmp_flag_native<unsigned long long, (flag_type)1, true>::is_sleeping_val(unsigned long long) */
+
+bool __thiscall
+kmp_flag_native<unsigned_long_long,(flag_type)1,true>::is_sleeping_val
+          (kmp_flag_native<unsigned_long_long,(flag_type)1,true> *this,ulonglong param_1)
+
+{
+  byte bVar1;
+  bool local_11;
+  
+  if (*(long *)(this + 0x20) == 0) {
+    local_11 = (param_1 & 1) != 0;
+  }
+  else {
+    bVar1 = std::__atomic_base<bool,false>::load_abi_v15006_
+                      (*(__atomic_base<bool,false> **)(this + 0x20),5);
+    local_11 = (bool)(bVar1 & 1);
+  }
+  return local_11;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load[abi:v15006]<bool>
+// Entry: 00001530
+// Signature: bool __cxx_atomic_load[abi:v15006]<bool>(__cxx_atomic_base_impl * param_1, memory_order param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* bool std::__cxx_atomic_load[abi:v15006]<bool>(std::__cxx_atomic_base_impl<bool> const*,
+   std::memory_order) */
+
+bool std::__cxx_atomic_load_abi_v15006_<bool>(byte *param_1,int param_2)
+
+{
+  undefined1 local_d;
+  
+  if (param_2 - 1U < 2) {
+    local_d = *param_1;
+  }
+  else if (param_2 == 5) {
+    local_d = *param_1;
+  }
+  else {
+    local_d = *param_1;
+  }
+  return (bool)(local_d & 1);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_resume_64<false,true>
+// Entry: 00002000
+// Signature: void __kmp_resume_64<false,true>(int param_1, kmp_flag_64 * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_resume_64<false,true>(int param_1,kmp_flag_64 *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __kmp_suspend_64<false,true>
+// Entry: 00002100
+// Signature: void __kmp_suspend_64<false,true>(int param_1, kmp_flag_64 * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __kmp_suspend_64<false,true>(int param_1,kmp_flag_64 *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __kmp_execute_tasks_64<false,true>
+// Entry: 00002200
+// Signature: int __kmp_execute_tasks_64<false,true>(kmp_info * param_1, int param_2, kmp_flag_64 * param_3, int param_4, int * param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int __kmp_execute_tasks_64<false,true>
+              (kmp_info *param_1,int param_2,kmp_flag_64 *param_3,int param_4,int *param_5,
+              int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_abort_thread
+// Entry: 00002300
+// Signature: undefined ___kmp_abort_thread(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_abort_thread(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_hidden_helper_worker_thread_wait
+// Entry: 00002900
+// Signature: undefined ___kmp_hidden_helper_worker_thread_wait(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_hidden_helper_worker_thread_wait(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_now_nsec
+// Entry: 00002a00
+// Signature: undefined ___kmp_now_nsec(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_now_nsec(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_yield
+// Entry: 00003300
+// Signature: undefined ___kmp_yield(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_yield(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 29
+// Failed: 0
+// Skipped external functions: 0

@@ -1,0 +1,326 @@
+Program: pk_wrap.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _rsa_verify_wrap
+// Entry: 00000018
+// Signature: undefined _rsa_verify_wrap(void)
+// ========================================
+
+
+int _rsa_verify_wrap(long param_1,undefined8 param_2,undefined8 param_3,ulong param_4,
+                    undefined8 param_5,ulong param_6)
+
+{
+  int iVar1;
+  ulong uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  
+  uVar4 = *(undefined8 *)(param_1 + 8);
+  uVar2 = _mbedtls_rsa_get_len(uVar4);
+  if (((int)param_2 == 0) && (param_4 >> 0x20 != 0)) {
+    return -16000;
+  }
+  if (param_6 < uVar2) {
+    return -0x4380;
+  }
+  iVar1 = _mbedtls_rsa_pkcs1_verify(uVar4,param_2,param_4,param_3,param_5);
+  iVar3 = -0x3900;
+  if (param_6 <= uVar2) {
+    iVar3 = 0;
+  }
+  if (iVar1 == 0) {
+    iVar1 = iVar3;
+  }
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _rsa_sign_wrap
+// Entry: 000000e4
+// Signature: undefined _rsa_sign_wrap(void)
+// ========================================
+
+
+undefined8
+_rsa_sign_wrap(long param_1,undefined8 param_2,undefined8 param_3,ulong param_4,undefined8 param_5,
+              ulong param_6,ulong *param_7,undefined8 param_8,undefined8 param_9)
+
+{
+  ulong uVar1;
+  undefined8 uVar2;
+  
+  uVar2 = *(undefined8 *)(param_1 + 8);
+  if (((int)param_2 == 0) && (param_4 >> 0x20 != 0)) {
+    uVar2 = 0xffffc180;
+  }
+  else {
+    uVar1 = _mbedtls_rsa_get_len(uVar2);
+    *param_7 = uVar1;
+    if (uVar1 <= param_6) {
+      uVar2 = _mbedtls_rsa_pkcs1_sign(uVar2,param_8,param_9,param_2,param_4,param_3,param_5);
+      return uVar2;
+    }
+    uVar2 = 0xffffc780;
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: _rsa_decrypt_wrap
+// Entry: 000001a4
+// Signature: undefined _rsa_decrypt_wrap(void)
+// ========================================
+
+
+undefined8
+_rsa_decrypt_wrap(long param_1,undefined8 param_2,long param_3,undefined8 param_4,undefined8 param_5
+                 ,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  long lVar1;
+  undefined8 uVar2;
+  
+  uVar2 = *(undefined8 *)(param_1 + 8);
+  lVar1 = _mbedtls_rsa_get_len(uVar2);
+  if (lVar1 == param_3) {
+    uVar2 = _mbedtls_rsa_pkcs1_decrypt(uVar2,param_7,param_8,param_5,param_2,param_4,param_6);
+    return uVar2;
+  }
+  return 0xffffbf80;
+}
+
+
+
+
+// ========================================
+// Function: _rsa_encrypt_wrap
+// Entry: 0000023c
+// Signature: undefined _rsa_encrypt_wrap(void)
+// ========================================
+
+
+undefined8
+_rsa_encrypt_wrap(long param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                 ulong *param_5,ulong param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  ulong uVar1;
+  undefined8 uVar2;
+  
+  uVar2 = *(undefined8 *)(param_1 + 8);
+  uVar1 = _mbedtls_rsa_get_len(uVar2);
+  *param_5 = uVar1;
+  if (param_6 < uVar1) {
+    return 0xffffbc00;
+  }
+  uVar2 = _mbedtls_rsa_pkcs1_encrypt(uVar2,param_7,param_8,param_3,param_2,param_4);
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: _rsa_free_wrap
+// Entry: 00000318
+// Signature: undefined _rsa_free_wrap(void)
+// ========================================
+
+
+void _rsa_free_wrap(void *param_1)
+
+{
+  _mbedtls_rsa_free();
+  _free(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _calloc
+// Entry: 00001000
+// Signature: void * _calloc(size_t param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _calloc(size_t param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001100
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_free
+// Entry: 00001300
+// Signature: undefined _mbedtls_rsa_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_get_len
+// Entry: 00001500
+// Signature: undefined _mbedtls_rsa_get_len(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_get_len(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_init
+// Entry: 00001600
+// Signature: undefined _mbedtls_rsa_init(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_init(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_pkcs1_decrypt
+// Entry: 00001700
+// Signature: undefined _mbedtls_rsa_pkcs1_decrypt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_pkcs1_decrypt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_pkcs1_encrypt
+// Entry: 00001800
+// Signature: undefined _mbedtls_rsa_pkcs1_encrypt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_pkcs1_encrypt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_pkcs1_sign
+// Entry: 00001900
+// Signature: undefined _mbedtls_rsa_pkcs1_sign(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_pkcs1_sign(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_rsa_pkcs1_verify
+// Entry: 00001a00
+// Signature: undefined _mbedtls_rsa_pkcs1_verify(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _mbedtls_rsa_pkcs1_verify(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 14
+// Failed: 0
+// Skipped external functions: 0

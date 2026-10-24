@@ -1,0 +1,1352 @@
+Program: histogram_validator.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ~HistogramValidator
+// Entry: 00000000
+// Signature: undefined __thiscall ~HistogramValidator(HistogramValidator * this)
+// ========================================
+
+
+/* m3t::HistogramValidator::~HistogramValidator() */
+
+HistogramValidator * __thiscall
+m3t::HistogramValidator::~HistogramValidator(HistogramValidator *this)
+
+{
+  *(undefined8 *)this = 0xe30;
+  cv::Mat::~Mat((Mat *)(this + 0x20));
+  *(undefined8 *)this = 0xe80;
+  if (-1 < (char)this[0x1f]) {
+    return this;
+  }
+  operator_delete(*(void **)(this + 8));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~HistogramValidator
+// Entry: 0000005c
+// Signature: undefined __thiscall ~HistogramValidator(HistogramValidator * this)
+// ========================================
+
+
+/* m3t::HistogramValidator::~HistogramValidator() */
+
+void __thiscall m3t::HistogramValidator::~HistogramValidator(HistogramValidator *this)
+
+{
+  *(undefined8 *)this = 0xe30;
+  cv::Mat::~Mat((Mat *)(this + 0x20));
+  *(undefined8 *)this = 0xe80;
+  if (-1 < (char)this[0x1f]) {
+    operator_delete(this);
+    return;
+  }
+  operator_delete(*(void **)(this + 8));
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: Validate
+// Entry: 000000b8
+// Signature: undefined __cdecl Validate(Mat * param_1)
+// ========================================
+
+
+/* m3t::HistogramValidator::Validate(cv::Mat const&) */
+
+float m3t::HistogramValidator::Validate(Mat *param_1)
+
+{
+  ulong uVar1;
+  double dVar2;
+  float fVar3;
+  undefined4 local_d0 [2];
+  Mat *local_c8;
+  undefined8 local_c0;
+  undefined4 local_b8 [2];
+  Mat *local_b0;
+  undefined8 local_a8;
+  Mat aMStack_a0 [96];
+  
+  uVar1 = cv::Mat::empty();
+  fVar3 = 0.0;
+  if ((uVar1 & 1) != 0) {
+    return 0.0;
+  }
+  uVar1 = cv::Mat::empty();
+  if ((uVar1 & 1) != 0) {
+    return 0.0;
+  }
+  ComputeHistogram(param_1);
+  local_a8 = 0;
+  local_b8[0] = 0x1010000;
+  local_c0 = 0;
+  local_d0[0] = 0x1010000;
+  local_c8 = aMStack_a0;
+  local_b0 = param_1 + 0x20;
+  dVar2 = (double)cv::compareHist((_InputArray *)local_b8,(_InputArray *)local_d0,
+                                  *(int *)(param_1 + 0x84));
+  switch(*(undefined4 *)(param_1 + 0x84)) {
+  case 0:
+    dVar2 = (dVar2 + 1.0) * 0.5;
+    break;
+  case 1:
+    dVar2 = (double)_exp(-dVar2);
+    break;
+  case 2:
+    break;
+  case 3:
+    dVar2 = 1.0 - dVar2;
+    break;
+  default:
+    goto switchD_0000015c_default;
+  }
+  fVar3 = (float)dVar2;
+switchD_0000015c_default:
+  cv::Mat::~Mat(aMStack_a0);
+  return fVar3;
+}
+
+
+
+
+// ========================================
+// Function: HistogramValidator
+// Entry: 000001d0
+// Signature: undefined __thiscall HistogramValidator(HistogramValidator * this, string * param_1, uchar * param_2, int param_3, int param_4, bool param_5, HistogramCompareMethod param_6, int param_7)
+// ========================================
+
+
+/* m3t::HistogramValidator::HistogramValidator(std::string const&, unsigned char const*, int, int,
+   bool, m3t::HistogramCompareMethod, int) */
+
+HistogramValidator * __thiscall
+m3t::HistogramValidator::HistogramValidator
+          (HistogramValidator *this,undefined8 *param_1,void *param_2,int param_3,int param_4,
+          HistogramValidator param_5,undefined4 param_7,undefined4 param_8)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined4 local_1a0 [2];
+  Mat *local_198;
+  undefined8 uStack_190;
+  undefined4 local_140 [2];
+  Mat *local_138;
+  undefined8 uStack_130;
+  Mat aMStack_128 [96];
+  Mat aMStack_c8 [104];
+  
+  *(undefined8 *)this = 0xe80;
+  if (*(char *)((long)param_1 + 0x17) < '\0') {
+    std::string::__init_copy_ctor_external((string *)(this + 8),(char *)*param_1,param_1[1]);
+  }
+  else {
+    uVar3 = param_1[1];
+    uVar2 = *param_1;
+    *(undefined8 *)(this + 0x18) = param_1[2];
+    *(undefined8 *)(this + 0x10) = uVar3;
+    *(undefined8 *)(this + 8) = uVar2;
+  }
+  *(undefined8 *)this = 0xe30;
+  cv::Mat::Mat((Mat *)(this + 0x20));
+  this[0x80] = param_5;
+  *(undefined4 *)(this + 0x84) = param_7;
+  *(undefined4 *)(this + 0x88) = param_8;
+  cv::Mat::Mat(aMStack_c8,param_4,param_3,0x18,param_2,0);
+  iVar1 = (int)param_2;
+  cv::Mat::Mat(aMStack_128);
+  uStack_190 = 0;
+  local_1a0[0] = 0x1010000;
+  local_140[0] = 0x2010000;
+  uStack_130 = 0;
+  local_198 = aMStack_c8;
+  local_138 = aMStack_128;
+  cv::cvtColor((cv *)local_1a0,(_InputArray *)local_140,(_OutputArray *)0x1,0,iVar1);
+  ComputeHistogram((Mat *)this);
+  cv::Mat::operator=((Mat *)(this + 0x20),(Mat *)local_1a0);
+  cv::Mat::~Mat((Mat *)local_1a0);
+  cv::Mat::~Mat(aMStack_128);
+  cv::Mat::~Mat(aMStack_c8);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ComputeHistogram
+// Entry: 0000036c
+// Signature: undefined __cdecl ComputeHistogram(Mat * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::HistogramValidator::ComputeHistogram(cv::Mat const&) const */
+
+void m3t::HistogramValidator::ComputeHistogram(Mat *param_1)
+
+{
+  Mat *pMVar1;
+  Mat *pMVar2;
+  _InputArray *p_Var3;
+  int in_w4;
+  Mat *in_x8;
+  Mat *local_1b0;
+  Mat *local_1a8;
+  undefined8 local_1a0;
+  undefined4 local_150 [2];
+  Mat **local_148;
+  undefined8 uStack_140;
+  float *local_138;
+  int local_12c;
+  Mat *local_128;
+  Mat **local_120;
+  undefined8 uStack_118;
+  Mat *local_c8;
+  Mat *local_c0;
+  Mat *local_b8;
+  undefined4 local_b0 [2];
+  Mat **local_a8;
+  undefined8 uStack_a0;
+  undefined8 local_50;
+  long local_48;
+  
+  local_48 = *____stack_chk_guard;
+  cv::Mat::Mat(in_x8);
+  if (param_1[0x80] == (Mat)0x0) {
+    local_1b0 = (Mat *)0x0;
+    local_1a8 = (Mat *)0x0;
+    local_1a0 = 0;
+    uStack_a0 = 0;
+    local_b0[0] = 0x1010000;
+    local_128._0_4_ = 0x2050000;
+    local_120 = &local_1b0;
+    uStack_118 = 0;
+    cv::split((_InputArray *)local_b0,(_OutputArray *)&local_128);
+    local_12c = *(int *)(param_1 + 0x88);
+    local_50 = 0x4380000000000000;
+    local_138 = (float *)&local_50;
+    local_c8 = (Mat *)0x0;
+    local_c0 = (Mat *)0x0;
+    local_b8 = (Mat *)0x0;
+    cv::Mat::Mat((Mat *)local_b0);
+    pMVar2 = local_1b0;
+    cv::Mat::Mat((Mat *)&local_128);
+    uStack_140 = 0;
+    local_150[0] = 0x1010000;
+    local_148 = &local_128;
+    cv::calcHist(pMVar2,1,(int *)0x0,(_InputArray *)local_150,
+                 (_OutputArray *)&stack0xfffffffffffffe38,1,&local_12c,&local_138,true,false);
+    cv::Mat::~Mat((Mat *)&local_128);
+    pMVar2 = local_c0;
+    if (local_c0 < local_b8) {
+      cv::Mat::Mat(local_c0,(Mat *)local_b0);
+      local_c0 = pMVar2 + 0x60;
+    }
+    else {
+      local_c0 = std::vector<cv::Mat,std::allocator<cv::Mat>>::__push_back_slow_path<cv::Mat_const&>
+                           ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_c8,(Mat *)local_b0);
+    }
+    pMVar2 = (Mat *)cv::Mat::~Mat((Mat *)local_b0);
+    cv::Mat::Mat(pMVar2);
+    pMVar2 = local_1b0 + 0x60;
+    cv::Mat::Mat((Mat *)&local_128);
+    uStack_140 = 0;
+    local_150[0] = 0x1010000;
+    local_148 = &local_128;
+    cv::calcHist(pMVar2,1,(int *)0x0,(_InputArray *)local_150,
+                 (_OutputArray *)&stack0xfffffffffffffe38,1,&local_12c,&local_138,true,false);
+    cv::Mat::~Mat((Mat *)&local_128);
+    pMVar2 = local_c0;
+    if (local_c0 < local_b8) {
+      cv::Mat::Mat(local_c0,(Mat *)local_b0);
+      local_c0 = pMVar2 + 0x60;
+    }
+    else {
+      local_c0 = std::vector<cv::Mat,std::allocator<cv::Mat>>::__push_back_slow_path<cv::Mat_const&>
+                           ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_c8,(Mat *)local_b0);
+    }
+    pMVar2 = (Mat *)cv::Mat::~Mat((Mat *)local_b0);
+    cv::Mat::Mat(pMVar2);
+    pMVar2 = local_1b0 + 0xc0;
+    cv::Mat::Mat((Mat *)&local_128);
+    uStack_140 = 0;
+    local_150[0] = 0x1010000;
+    local_148 = &local_128;
+    cv::calcHist(pMVar2,1,(int *)0x0,(_InputArray *)local_150,
+                 (_OutputArray *)&stack0xfffffffffffffe38,1,&local_12c,&local_138,true,false);
+    cv::Mat::~Mat((Mat *)&local_128);
+    pMVar2 = local_c0;
+    if (local_c0 < local_b8) {
+      cv::Mat::Mat(local_c0,(Mat *)local_b0);
+      local_c0 = pMVar2 + 0x60;
+    }
+    else {
+      local_c0 = std::vector<cv::Mat,std::allocator<cv::Mat>>::__push_back_slow_path<cv::Mat_const&>
+                           ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_c8,(Mat *)local_b0);
+    }
+    p_Var3 = (_InputArray *)cv::Mat::~Mat((Mat *)local_b0);
+    local_b0[0] = 0x1050000;
+    local_a8 = &local_c8;
+    uStack_a0 = 0;
+    local_128._0_4_ = 0x2010000;
+    uStack_118 = 0;
+    cv::vconcat(p_Var3,(_OutputArray *)&local_128);
+    pMVar1 = local_c8;
+    pMVar2 = local_c0;
+    if (local_c8 != (Mat *)0x0) {
+      for (; pMVar2 != pMVar1; pMVar2 = (Mat *)cv::Mat::~Mat(pMVar2 + -0x60)) {
+      }
+      local_c0 = pMVar1;
+      operator_delete(local_c8);
+    }
+    pMVar1 = local_1b0;
+    pMVar2 = local_1a8;
+    if (local_1b0 != (Mat *)0x0) {
+      for (; pMVar2 != pMVar1; pMVar2 = (Mat *)cv::Mat::~Mat(pMVar2 + -0x60)) {
+      }
+      local_1a8 = pMVar1;
+      operator_delete(local_1b0);
+    }
+  }
+  else {
+    cv::Mat::Mat((Mat *)local_b0);
+    uStack_118 = 0;
+    local_128._0_4_ = 0x1010000;
+    local_1b0._0_4_ = 0x2010000;
+    local_1a0 = 0;
+    local_1a8 = (Mat *)local_b0;
+    cv::cvtColor((cv *)&local_128,(_InputArray *)&local_1b0,(_OutputArray *)0x29,0,in_w4);
+    local_c8 = (Mat *)0x0;
+    local_c0 = (Mat *)0x0;
+    local_b8 = (Mat *)0x0;
+    uStack_118 = 0;
+    local_128._0_4_ = 0x1010000;
+    local_1b0 = (Mat *)CONCAT44(local_1b0._4_4_,0x2050000);
+    local_1a8 = (Mat *)&local_c8;
+    local_1a0 = 0;
+    local_120 = (Mat **)local_b0;
+    cv::split((_InputArray *)&local_128,(_OutputArray *)&local_1b0);
+    cv::Mat::Mat((Mat *)&local_128,local_c8);
+    local_12c = *(int *)(param_1 + 0x88);
+    local_50 = 0x4334000000000000;
+    local_138 = (float *)&local_50;
+    cv::Mat::Mat((Mat *)&local_1b0);
+    uStack_140 = 0;
+    local_150[0] = 0x1010000;
+    local_148 = &local_1b0;
+    cv::calcHist((Mat *)&local_128,1,(int *)0x0,(_InputArray *)local_150,
+                 (_OutputArray *)&stack0xfffffffffffffe38,1,&local_12c,&local_138,true,false);
+    cv::Mat::~Mat((Mat *)&local_1b0);
+    cv::Mat::~Mat((Mat *)&local_128);
+    pMVar1 = local_c8;
+    pMVar2 = local_c0;
+    if (local_c8 != (Mat *)0x0) {
+      for (; pMVar2 != pMVar1; pMVar2 = (Mat *)cv::Mat::~Mat(pMVar2 + -0x60)) {
+      }
+      local_c0 = pMVar1;
+      operator_delete(local_c8);
+    }
+    cv::Mat::~Mat((Mat *)local_b0);
+  }
+  uStack_a0 = 0;
+  local_b0[0] = 0x1010000;
+  local_128._0_4_ = 0x3010000;
+  uStack_118 = 0;
+  p_Var3 = (_InputArray *)cv::noArray();
+  cv::normalize((_InputArray *)local_b0,(_InputOutputArray *)&local_128,0.0,1.0,0x20,-1,p_Var3);
+  if (*____stack_chk_guard != local_48) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 000008e4
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000970
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000984
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 000009d4
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 000009f8
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: HistogramValidator
+// Entry: 00000a20
+// Signature: undefined __thiscall HistogramValidator(HistogramValidator * this, string * param_1, uchar * param_2, int param_3, int param_4, bool param_5, HistogramCompareMethod param_6, int param_7)
+// ========================================
+
+
+/* m3t::HistogramValidator::HistogramValidator(std::string const&, unsigned char const*, int, int,
+   bool, m3t::HistogramCompareMethod, int) */
+
+HistogramValidator * __thiscall
+m3t::HistogramValidator::HistogramValidator
+          (HistogramValidator *this,undefined8 *param_1,void *param_2,int param_3,int param_4,
+          HistogramValidator param_5,undefined4 param_7,undefined4 param_8)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined4 auStack_1a0 [2];
+  Mat *pMStack_198;
+  undefined8 uStack_190;
+  undefined4 auStack_140 [2];
+  Mat *pMStack_138;
+  undefined8 uStack_130;
+  Mat aMStack_128 [96];
+  Mat aMStack_c8 [104];
+  
+  *(undefined8 *)this = 0xe80;
+  if (*(char *)((long)param_1 + 0x17) < '\0') {
+    std::string::__init_copy_ctor_external((string *)(this + 8),(char *)*param_1,param_1[1]);
+  }
+  else {
+    uVar3 = param_1[1];
+    uVar2 = *param_1;
+    *(undefined8 *)(this + 0x18) = param_1[2];
+    *(undefined8 *)(this + 0x10) = uVar3;
+    *(undefined8 *)(this + 8) = uVar2;
+  }
+  *(undefined8 *)this = 0xe30;
+  cv::Mat::Mat((Mat *)(this + 0x20));
+  this[0x80] = param_5;
+  *(undefined4 *)(this + 0x84) = param_7;
+  *(undefined4 *)(this + 0x88) = param_8;
+  cv::Mat::Mat(aMStack_c8,param_4,param_3,0x18,param_2,0);
+  iVar1 = (int)param_2;
+  cv::Mat::Mat(aMStack_128);
+  uStack_190 = 0;
+  auStack_1a0[0] = 0x1010000;
+  auStack_140[0] = 0x2010000;
+  uStack_130 = 0;
+  pMStack_198 = aMStack_c8;
+  pMStack_138 = aMStack_128;
+  cv::cvtColor((cv *)auStack_1a0,(_InputArray *)auStack_140,(_OutputArray *)0x1,0,iVar1);
+  ComputeHistogram((Mat *)this);
+  cv::Mat::operator=((Mat *)(this + 0x20),(Mat *)auStack_1a0);
+  cv::Mat::~Mat((Mat *)auStack_1a0);
+  cv::Mat::~Mat(aMStack_128);
+  cv::Mat::~Mat(aMStack_c8);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 00000a24
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<cv::Mat,std::allocator<cv::Mat>> * this)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::~vector[abi:ne180100]() */
+
+vector<cv::Mat,std::allocator<cv::Mat>> * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::~vector_abi_ne180100_
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar3 = *(void **)this;
+  if (pvVar3 != (void *)0x0) {
+    pvVar1 = *(void **)(this + 8);
+    pvVar2 = pvVar3;
+    if (pvVar1 != pvVar3) {
+      do {
+        pvVar1 = (void *)cv::Mat::~Mat((Mat *)((long)pvVar1 + -0x60));
+      } while (pvVar1 != pvVar3);
+      pvVar2 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar3;
+    operator_delete(pvVar2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __push_back_slow_path<cv::Mat_const&>
+// Entry: 00000a7c
+// Signature: Mat * __thiscall __push_back_slow_path<cv::Mat_const&>(vector<cv::Mat,std::allocator<cv::Mat>> * this, Mat * param_1)
+// ========================================
+
+
+/* cv::Mat* std::vector<cv::Mat, std::allocator<cv::Mat> >::__push_back_slow_path<cv::Mat
+   const&>(cv::Mat const&) */
+
+Mat * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::__push_back_slow_path<cv::Mat_const&>
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this,Mat *param_1)
+
+{
+  ulong uVar1;
+  void *pvVar2;
+  Mat *pMVar3;
+  Mat *pMVar4;
+  void *pvVar5;
+  _Unwind_Exception *exception_object;
+  _Unwind_Exception *exception_object_00;
+  Mat *extraout_x0;
+  long lVar6;
+  long lVar7;
+  ulong uVar8;
+  Mat *unaff_x20;
+  long lVar9;
+  void *local_68;
+  Mat *local_60;
+  Mat *local_58;
+  void *pvStack_50;
+  vector<cv::Mat,std::allocator<cv::Mat>> *local_48;
+  
+  lVar7 = *(long *)(this + 8) - *(long *)this >> 5;
+  lVar9 = lVar7 * -0x5555555555555555;
+  uVar1 = lVar9 + 1;
+  if (0x2aaaaaaaaaaaaaa < uVar1) {
+    __throw_length_error_abi_ne180100_();
+LAB_00000bd4:
+    exception_object = (_Unwind_Exception *)__throw_bad_array_new_length_abi_ne180100_();
+    __split_buffer<cv::Mat,std::allocator<cv::Mat>&>::~__split_buffer
+              ((__split_buffer<cv::Mat,std::allocator<cv::Mat>&> *)&local_68);
+    __Unwind_Resume(exception_object);
+    if (lVar9 != -0x60) {
+      lVar9 = lVar9 + 0x60;
+      do {
+        cv::Mat::~Mat(unaff_x20 + lVar9);
+        lVar9 = lVar9 + 0x60;
+      } while (lVar9 != 0);
+    }
+    __split_buffer<cv::Mat,std::allocator<cv::Mat>&>::~__split_buffer
+              ((__split_buffer<cv::Mat,std::allocator<cv::Mat>&> *)&local_68);
+    __Unwind_Resume(exception_object_00);
+    lVar9 = *(long *)(extraout_x0 + 8);
+    lVar7 = *(long *)(extraout_x0 + 0x10);
+    while (lVar7 != lVar9) {
+      *(Mat **)(extraout_x0 + 0x10) = (Mat *)(lVar7 + -0x60);
+      cv::Mat::~Mat((Mat *)(lVar7 + -0x60));
+      lVar7 = *(long *)(extraout_x0 + 0x10);
+    }
+    if (*(void **)extraout_x0 != (void *)0x0) {
+      operator_delete(*(void **)extraout_x0);
+    }
+    return extraout_x0;
+  }
+  local_48 = this + 0x10;
+  lVar6 = *(long *)local_48 - *(long *)this >> 5;
+  uVar8 = lVar6 * 0x5555555555555556;
+  if (uVar8 < uVar1 || uVar8 - uVar1 == 0) {
+    uVar8 = uVar1;
+  }
+  if (0x155555555555554 < (ulong)(lVar6 * -0x5555555555555555)) {
+    uVar8 = 0x2aaaaaaaaaaaaaa;
+  }
+  if (uVar8 == 0) {
+    local_68 = (void *)0x0;
+  }
+  else {
+    unaff_x20 = param_1;
+    if (0x2aaaaaaaaaaaaaa < uVar8) goto LAB_00000bd4;
+    local_68 = operator_new(uVar8 * 0x60);
+  }
+  local_60 = (Mat *)((long)local_68 + lVar7 * 0x20);
+  pvStack_50 = (void *)((long)local_68 + uVar8 * 0x60);
+  local_58 = local_60;
+  cv::Mat::Mat(local_60,param_1);
+  pMVar3 = local_60;
+  lVar6 = 0;
+  local_58 = local_58 + 0x60;
+  lVar9 = *(long *)this;
+  lVar7 = *(long *)(this + 8);
+  while (pMVar4 = local_58, lVar7 + lVar6 != lVar9) {
+    lVar6 = lVar6 + -0x60;
+    cv::Mat::Mat(pMVar3 + lVar6,(Mat *)(lVar6 + lVar7));
+  }
+  pvVar2 = *(void **)this;
+  pvVar5 = *(void **)(this + 8);
+  *(Mat **)this = pMVar3 + lVar6;
+  *(void **)(this + 0x10) = pvStack_50;
+  *(Mat **)(this + 8) = local_58;
+  for (; pvVar5 != pvVar2; pvVar5 = (void *)cv::Mat::~Mat((Mat *)((long)pvVar5 + -0x60))) {
+  }
+  if (pvVar2 != (void *)0x0) {
+    operator_delete(pvVar2);
+  }
+  return pMVar4;
+}
+
+
+
+
+// ========================================
+// Function: ~__split_buffer
+// Entry: 00000c1c
+// Signature: undefined __thiscall ~__split_buffer(__split_buffer<cv::Mat,std::allocator<cv::Mat>&> * this)
+// ========================================
+
+
+/* std::__split_buffer<cv::Mat, std::allocator<cv::Mat>&>::~__split_buffer() */
+
+__split_buffer<cv::Mat,std::allocator<cv::Mat>&> * __thiscall
+std::__split_buffer<cv::Mat,std::allocator<cv::Mat>&>::~__split_buffer
+          (__split_buffer<cv::Mat,std::allocator<cv::Mat>&> *this)
+
+{
+  long lVar1;
+  long lVar2;
+  
+  lVar1 = *(long *)(this + 8);
+  lVar2 = *(long *)(this + 0x10);
+  while (lVar2 != lVar1) {
+    *(Mat **)(this + 0x10) = (Mat *)(lVar2 + -0x60);
+    cv::Mat::~Mat((Mat *)(lVar2 + -0x60));
+    lVar2 = *(long *)(this + 0x10);
+  }
+  if (*(void **)this != (void *)0x0) {
+    operator_delete(*(void **)this);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000c6c
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<cv::Mat,std::allocator<cv::Mat>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: NormalizeScore
+// Entry: 00000c80
+// Signature: undefined __thiscall NormalizeScore(HistogramValidator * this, double param_1)
+// ========================================
+
+
+/* m3t::HistogramValidator::NormalizeScore(double) const */
+
+float __thiscall m3t::HistogramValidator::NormalizeScore(HistogramValidator *this,double param_1)
+
+{
+  double dVar1;
+  
+  switch(*(undefined4 *)(this + 0x84)) {
+  case 0:
+    param_1 = (param_1 + 1.0) * 0.5;
+switchD_00000ca8_caseD_2:
+    return (float)param_1;
+  case 1:
+    dVar1 = (double)_exp(-param_1);
+    return (float)dVar1;
+  case 2:
+    goto switchD_00000ca8_caseD_2;
+  case 3:
+    return (float)(1.0 - param_1);
+  default:
+    return 0.0;
+  }
+}
+
+
+
+
+// ========================================
+// Function: ~Validator
+// Entry: 00000cfc
+// Signature: undefined __thiscall ~Validator(Validator * this)
+// ========================================
+
+
+/* m3t::Validator::~Validator() */
+
+void __thiscall m3t::Validator::~Validator(Validator *this)
+
+{
+  code *pcVar1;
+  
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0xd00);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: ~Validator
+// Entry: 00000d00
+// Signature: undefined __thiscall ~Validator(Validator * this)
+// ========================================
+
+
+/* m3t::Validator::~Validator() */
+
+void __thiscall m3t::Validator::~Validator(Validator *this)
+
+{
+  code *pcVar1;
+  
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0xd04);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00002000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: compareHist
+// Entry: 00002100
+// Signature: undefined compareHist(_InputArray * param_1, _InputArray * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::compareHist(_InputArray *param_1,_InputArray *param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002200
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002300
+// Signature: undefined __thiscall Mat(Mat * this, int param_1, int param_2, int param_3, void * param_4, ulong param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::Mat::Mat(Mat *this,int param_1,int param_2,int param_3,void *param_4,ulong param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002400
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00002500
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00002600
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: split
+// Entry: 00002700
+// Signature: undefined split(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::split(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: noArray
+// Entry: 00002800
+// Signature: undefined noArray(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::noArray(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: vconcat
+// Entry: 00002900
+// Signature: undefined vconcat(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::vconcat(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: calcHist
+// Entry: 00002a00
+// Signature: undefined calcHist(Mat * param_1, int param_2, int * param_3, _InputArray * param_4, _OutputArray * param_5, int param_6, int * param_7, float * * param_8, bool param_9, bool param_10)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::calcHist(Mat *param_1,int param_2,int *param_3,_InputArray *param_4,_OutputArray *param_5,
+                 int param_6,int *param_7,float **param_8,bool param_9,bool param_10)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: cvtColor
+// Entry: 00002b00
+// Signature: undefined __thiscall cvtColor(cv * this, _InputArray * param_1, _OutputArray * param_2, int param_3, int param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::cvtColor(cv *this,_InputArray *param_1,_OutputArray *param_2,int param_3,int param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: normalize
+// Entry: 00002c00
+// Signature: undefined normalize(_InputArray * param_1, _InputOutputArray * param_2, double param_3, double param_4, int param_5, int param_6, _InputArray * param_7)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::normalize(_InputArray *param_1,_InputOutputArray *param_2,double param_3,double param_4,
+                  int param_5,int param_6,_InputArray *param_7)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: empty
+// Entry: 00002d00
+// Signature: undefined empty(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::empty(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00002e00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00002f00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00003000
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00003100
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00003700
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00003800
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00003900
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00003c00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00003e00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _exp
+// Entry: 00004000
+// Signature: undefined _exp(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _exp(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00004100
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 43
+// Failed: 0
+// Skipped external functions: 0

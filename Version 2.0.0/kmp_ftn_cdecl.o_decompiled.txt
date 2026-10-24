@@ -1,0 +1,3922 @@
+Program: kmp_ftn_cdecl.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _kmp_set_stacksize
+// Entry: 00000000
+// Signature: undefined _kmp_set_stacksize(void)
+// ========================================
+
+
+void _kmp_set_stacksize(int param_1)
+
+{
+  ___kmp_aux_set_stacksize((long)param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_stacksize_s
+// Entry: 00000024
+// Signature: undefined _kmp_set_stacksize_s(void)
+// ========================================
+
+
+void _kmp_set_stacksize_s(undefined8 param_1)
+
+{
+  ___kmp_aux_set_stacksize(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_stacksize
+// Entry: 00000048
+// Signature: undefined _kmp_get_stacksize(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _kmp_get_stacksize(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_stksize;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_stacksize_s
+// Entry: 0000008c
+// Signature: undefined _kmp_get_stacksize_s(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _kmp_get_stacksize_s(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_stksize;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_blocktime
+// Entry: 000000cc
+// Signature: undefined _kmp_set_blocktime(void)
+// ========================================
+
+
+void _kmp_set_blocktime(undefined4 param_1)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  uVar2 = __kmp_tid_from_gtid(iVar1);
+  uVar3 = __kmp_thread_from_gtid(iVar1);
+  ___kmp_aux_set_blocktime(param_1,uVar3,uVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_tid_from_gtid
+// Entry: 00000118
+// Signature: undefined __cdecl __kmp_tid_from_gtid(int param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __kmp_tid_from_gtid(int) */
+
+undefined4 __kmp_tid_from_gtid(int param_1)
+
+{
+  return *(undefined4 *)(*(long *)(*____kmp_threads + (long)param_1 * 8) + 0x20);
+}
+
+
+
+
+// ========================================
+// Function: __kmp_thread_from_gtid
+// Entry: 00000140
+// Signature: undefined __cdecl __kmp_thread_from_gtid(int param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __kmp_thread_from_gtid(int) */
+
+undefined8 __kmp_thread_from_gtid(int param_1)
+
+{
+  return *(undefined8 *)(*____kmp_threads + (long)param_1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_blocktime
+// Entry: 00000164
+// Signature: undefined _kmp_get_blocktime(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _kmp_get_blocktime(void)
+
+{
+  int iVar1;
+  int iVar2;
+  long lVar3;
+  undefined4 local_14;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  iVar2 = __kmp_tid_from_gtid(iVar1);
+  lVar3 = *(long *)(*(long *)(*____kmp_threads + (long)iVar1 * 8) + 0x40);
+  if (*____kmp_dflt_blocktime == 0x7fffffff) {
+    local_14 = 0x7fffffff;
+  }
+  else if ((*____kmp_zero_bt == 0) ||
+          (*(char *)(*(long *)(*(long *)(*(long *)(lVar3 + 0x280) + (long)iVar2 * 8) + 0x1b8) + 0x45
+                    ) != '\0')) {
+    local_14 = *(undefined4 *)
+                (*(long *)(*(long *)(*(long *)(lVar3 + 0x280) + (long)iVar2 * 8) + 0x1b8) + 0x48);
+  }
+  else {
+    local_14 = 0;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_library_serial
+// Entry: 00000248
+// Signature: undefined _kmp_set_library_serial(void)
+// ========================================
+
+
+void _kmp_set_library_serial(void)
+
+{
+  ___kmp_user_set_library(1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_library_turnaround
+// Entry: 00000260
+// Signature: undefined _kmp_set_library_turnaround(void)
+// ========================================
+
+
+void _kmp_set_library_turnaround(void)
+
+{
+  ___kmp_user_set_library(2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_library_throughput
+// Entry: 00000278
+// Signature: undefined _kmp_set_library_throughput(void)
+// ========================================
+
+
+void _kmp_set_library_throughput(void)
+
+{
+  ___kmp_user_set_library(3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_library
+// Entry: 00000290
+// Signature: undefined _kmp_set_library(void)
+// ========================================
+
+
+void _kmp_set_library(undefined4 param_1)
+
+{
+  ___kmp_user_set_library(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_library
+// Entry: 000002bc
+// Signature: undefined _kmp_get_library(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _kmp_get_library(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_library;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_disp_num_buffers
+// Entry: 000002fc
+// Signature: undefined _kmp_set_disp_num_buffers(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _kmp_set_disp_num_buffers(int param_1)
+
+{
+  if (((*____kmp_init_serial == 0) && (0 < param_1)) && (param_1 < 0x1001)) {
+    *____kmp_dispatch_num_buffers = param_1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_affinity
+// Entry: 0000036c
+// Signature: undefined _kmp_set_affinity(void)
+// ========================================
+
+
+undefined8 _kmp_set_affinity(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_affinity
+// Entry: 00000380
+// Signature: undefined _kmp_get_affinity(void)
+// ========================================
+
+
+undefined8 _kmp_get_affinity(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_affinity_max_proc
+// Entry: 00000394
+// Signature: undefined _kmp_get_affinity_max_proc(void)
+// ========================================
+
+
+undefined8 _kmp_get_affinity_max_proc(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_create_affinity_mask
+// Entry: 0000039c
+// Signature: undefined _kmp_create_affinity_mask(void)
+// ========================================
+
+
+void _kmp_create_affinity_mask(undefined8 *param_1)
+
+{
+  *param_1 = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_destroy_affinity_mask
+// Entry: 000003b4
+// Signature: undefined _kmp_destroy_affinity_mask(void)
+// ========================================
+
+
+void _kmp_destroy_affinity_mask(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_affinity_mask_proc
+// Entry: 000003c4
+// Signature: undefined _kmp_set_affinity_mask_proc(void)
+// ========================================
+
+
+undefined8 _kmp_set_affinity_mask_proc(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_unset_affinity_mask_proc
+// Entry: 000003dc
+// Signature: undefined _kmp_unset_affinity_mask_proc(void)
+// ========================================
+
+
+undefined8 _kmp_unset_affinity_mask_proc(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_affinity_mask_proc
+// Entry: 000003f4
+// Signature: undefined _kmp_get_affinity_mask_proc(void)
+// ========================================
+
+
+undefined8 _kmp_get_affinity_mask_proc(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_num_threads
+// Entry: 0000040c
+// Signature: undefined _omp_set_num_threads(void)
+// ========================================
+
+
+void _omp_set_num_threads(undefined4 param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_num_threads(param_1,uVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_threads
+// Entry: 00000440
+// Signature: undefined _omp_get_num_threads(void)
+// ========================================
+
+
+void _omp_get_num_threads(void)
+
+{
+  ___kmpc_bound_num_threads(0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_max_threads
+// Entry: 00000458
+// Signature: undefined _omp_get_max_threads(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_get_max_threads(void)
+
+{
+  int iVar1;
+  
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(undefined4 *)(*(long *)(*(long *)(*____kmp_threads + (long)iVar1 * 8) + 0x1b8) + 0x4c);
+}
+
+
+
+
+// ========================================
+// Function: _omp_control_tool
+// Entry: 000004c0
+// Signature: undefined _omp_control_tool(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_control_tool(int param_1,int param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  long lVar2;
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_30 [8];
+  undefined8 local_28;
+  int local_1c;
+  int local_18;
+  undefined4 local_14;
+  
+  local_28 = param_3;
+  local_1c = param_2;
+  local_18 = param_1;
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_30,iVar1,unaff_x30);
+  if (*____kmp_init_middle == 0) {
+    local_14 = 0xfffffffe;
+  }
+  else {
+    lVar2 = *____kmp_threads;
+    iVar1 = ___kmp_get_global_thread_id_reg();
+    lVar2 = *(long *)(*(long *)(lVar2 + (long)iVar1 * 8) + 0x1b8);
+    *(undefined1 **)(lVar2 + 0xf0) = &stack0xfffffffffffffff0;
+    local_14 = ___kmp_control_tool((long)local_18,(long)local_1c,local_28);
+    *(undefined8 *)(lVar2 + 0xf0) = 0;
+  }
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_30);
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 000005a4
+// Signature: undefined __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int param_1, void * param_2)
+// ========================================
+
+
+/* OmptReturnAddressGuard::OmptReturnAddressGuard(int, void*) */
+
+OmptReturnAddressGuard * __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int param_1,void *param_2)
+
+{
+  OmptReturnAddressGuard(this,param_1,param_2);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 000005e0
+// Signature: undefined __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* OmptReturnAddressGuard::~OmptReturnAddressGuard() */
+
+OmptReturnAddressGuard * __thiscall
+OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  ~OmptReturnAddressGuard(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: _omp_init_allocator
+// Entry: 0000060c
+// Signature: undefined _omp_init_allocator(void)
+// ========================================
+
+
+void _omp_init_allocator(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmpc_init_allocator(uVar1,param_1,param_2,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_destroy_allocator
+// Entry: 00000644
+// Signature: undefined _omp_destroy_allocator(void)
+// ========================================
+
+
+void _omp_destroy_allocator(undefined8 param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmpc_destroy_allocator(uVar1,param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_default_allocator
+// Entry: 0000066c
+// Signature: undefined _omp_set_default_allocator(void)
+// ========================================
+
+
+void _omp_set_default_allocator(undefined8 param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmpc_set_default_allocator(uVar1,param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_default_allocator
+// Entry: 00000694
+// Signature: undefined _omp_get_default_allocator(void)
+// ========================================
+
+
+void _omp_get_default_allocator(void)
+
+{
+  ___kmp_get_global_thread_id_reg();
+  ___kmpc_get_default_allocator();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_affinity_format
+// Entry: 000006ac
+// Signature: undefined _omp_set_affinity_format(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_set_affinity_format(char *param_1,ulong param_2)
+
+{
+  char *pcVar1;
+  char *pcVar2;
+  size_t sVar3;
+  char *pcVar4;
+  ConvertedString aCStack_30 [16];
+  ulong local_20;
+  char *local_18;
+  
+  local_20 = param_2;
+  local_18 = param_1;
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ConvertedString::ConvertedString(aCStack_30,local_18,local_20);
+  pcVar4 = (char *)*____kmp_affinity_format;
+  pcVar1 = (char *)ConvertedString::get(aCStack_30);
+  pcVar2 = (char *)ConvertedString::get(aCStack_30);
+  sVar3 = _strlen(pcVar2);
+  __kmp_strncpy_truncate(pcVar4,0x200,pcVar1,sVar3);
+  ConvertedString::~ConvertedString(aCStack_30);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ConvertedString
+// Entry: 0000074c
+// Signature: undefined __thiscall ConvertedString(ConvertedString * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* ConvertedString::ConvertedString(char const*, unsigned long) */
+
+ConvertedString * __thiscall
+ConvertedString::ConvertedString(ConvertedString *this,char *param_1,ulong param_2)
+
+{
+  ConvertedString(this,param_1,param_2);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_strncpy_truncate
+// Entry: 00000788
+// Signature: undefined __cdecl __kmp_strncpy_truncate(char * param_1, ulong param_2, char * param_3, ulong param_4)
+// ========================================
+
+
+/* __kmp_strncpy_truncate(char*, unsigned long, char const*, unsigned long) */
+
+void __kmp_strncpy_truncate(char *param_1,ulong param_2,char *param_3,ulong param_4)
+
+{
+  size_t local_30;
+  
+  local_30 = param_4;
+  if (param_2 <= param_4) {
+    local_30 = param_2 - 1;
+  }
+  _strncpy(param_1,param_3,local_30);
+  param_1[local_30] = '\0';
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get
+// Entry: 000007f8
+// Signature: undefined __thiscall get(ConvertedString * this)
+// ========================================
+
+
+/* ConvertedString::get() const */
+
+undefined8 __thiscall ConvertedString::get(ConvertedString *this)
+
+{
+  return *(undefined8 *)this;
+}
+
+
+
+
+// ========================================
+// Function: ~ConvertedString
+// Entry: 00000810
+// Signature: undefined __thiscall ~ConvertedString(ConvertedString * this)
+// ========================================
+
+
+/* ConvertedString::~ConvertedString() */
+
+ConvertedString * __thiscall ConvertedString::~ConvertedString(ConvertedString *this)
+
+{
+  ~ConvertedString(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_affinity_format
+// Entry: 0000083c
+// Signature: undefined _omp_get_affinity_format(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+size_t _omp_get_affinity_format(char *param_1,ulong param_2)
+
+{
+  size_t sVar1;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  sVar1 = _strlen((char *)*____kmp_affinity_format);
+  if ((param_1 != (char *)0x0) && (param_2 != 0)) {
+    __kmp_fortran_strncpy_truncate(param_1,param_2,(char *)*____kmp_affinity_format,sVar1);
+  }
+  return sVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_fortran_strncpy_truncate
+// Entry: 000008e0
+// Signature: undefined __cdecl __kmp_fortran_strncpy_truncate(char * param_1, ulong param_2, char * param_3, ulong param_4)
+// ========================================
+
+
+/* __kmp_fortran_strncpy_truncate(char*, unsigned long, char const*, unsigned long) */
+
+void __kmp_fortran_strncpy_truncate(char *param_1,ulong param_2,char *param_3,ulong param_4)
+
+{
+  ulong local_40;
+  size_t local_38;
+  
+  local_38 = param_4;
+  if (param_2 <= param_4) {
+    local_38 = param_2 - 1;
+  }
+  _strncpy(param_1,param_3,local_38);
+  local_40 = param_4;
+  if (param_4 < param_2) {
+    for (; local_40 < param_2; local_40 = local_40 + 1) {
+      param_1[local_40] = ' ';
+    }
+  }
+  else {
+    param_1[param_2 - 1] = param_3[param_2 - 1];
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_display_affinity
+// Entry: 000009dc
+// Signature: undefined _omp_display_affinity(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_display_affinity(char *param_1,ulong param_2)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  ConvertedString aCStack_38 [20];
+  undefined4 local_24;
+  ulong local_20;
+  char *local_18;
+  
+  local_20 = param_2;
+  local_18 = param_1;
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  local_24 = ___kmp_get_global_thread_id();
+  ConvertedString::ConvertedString(aCStack_38,local_18,local_20);
+  uVar1 = local_24;
+  uVar2 = ConvertedString::get(aCStack_38);
+  ___kmp_aux_display_affinity(uVar1,uVar2);
+  ConvertedString::~ConvertedString(aCStack_38);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_capture_affinity
+// Entry: 00000a60
+// Signature: undefined _omp_capture_affinity(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _omp_capture_affinity(char *param_1,char *param_2,ulong param_3,ulong param_4)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  ConvertedString aCStack_278 [16];
+  undefined8 local_268;
+  undefined4 local_25c;
+  ulong local_258;
+  ulong local_250;
+  char *local_248;
+  char *local_240;
+  char *local_238;
+  undefined4 local_230;
+  int local_22c;
+  char local_228 [512];
+  long local_28;
+  
+  local_28 = *____stack_chk_guard;
+  local_258 = param_4;
+  local_250 = param_3;
+  local_248 = param_2;
+  local_240 = param_1;
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  local_25c = ___kmp_get_global_thread_id();
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = '\0';
+  ConvertedString::ConvertedString(aCStack_278,local_248,local_258);
+  uVar1 = local_25c;
+  uVar2 = ConvertedString::get(aCStack_278);
+  local_268 = ___kmp_aux_capture_affinity(uVar1,uVar2,&local_238);
+  if ((local_240 != (char *)0x0) && (local_250 != 0)) {
+    __kmp_fortran_strncpy_truncate(local_240,local_250,local_238,(long)local_22c);
+  }
+  ___kmp_str_buf_free(&local_238);
+  uVar2 = local_268;
+  ConvertedString::~ConvertedString(aCStack_278);
+  if (*____stack_chk_guard != local_28) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return uVar2;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_thread_num
+// Entry: 00000ba4
+// Signature: undefined _omp_get_thread_num(void)
+// ========================================
+
+
+void _omp_get_thread_num(void)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  __kmp_tid_from_gtid(iVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_num_known_threads
+// Entry: 00000bcc
+// Signature: undefined _kmp_get_num_known_threads(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _kmp_get_num_known_threads(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_nth;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_procs
+// Entry: 00000c0c
+// Signature: undefined _omp_get_num_procs(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_get_num_procs(void)
+
+{
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  return *____kmp_avail_proc;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_nested
+// Entry: 00000c4c
+// Signature: undefined _omp_set_nested(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_set_nested(int param_1)
+
+{
+  int local_64;
+  int local_54;
+  undefined1 auStack_38 [24];
+  long local_20;
+  int local_14;
+  
+  local_14 = param_1;
+  local_20 = __kmp_entry_thread();
+  ___kmp_msg_format(0x40114);
+  ___kmp_msg(0,auStack_38);
+  ___kmp_save_internal_controls(local_20);
+  local_54 = *(int *)(*(long *)(local_20 + 0x1b8) + 0x54);
+  if (local_54 == 1) {
+    local_54 = 0x7fffffff;
+  }
+  if (local_14 == 0) {
+    local_64 = 1;
+  }
+  else {
+    local_64 = local_54;
+  }
+  *(int *)(*(long *)(local_20 + 0x1b8) + 0x54) = local_64;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_entry_thread
+// Entry: 00000d44
+// Signature: undefined __kmp_entry_thread(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* __kmp_entry_thread() */
+
+undefined8 __kmp_entry_thread(void)
+
+{
+  int iVar1;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(undefined8 *)(*____kmp_threads + (long)iVar1 * 8);
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_nested
+// Entry: 00000d78
+// Signature: undefined _omp_get_nested(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+bool _omp_get_nested(void)
+
+{
+  undefined1 auStack_30 [24];
+  long local_18;
+  
+  local_18 = __kmp_entry_thread();
+  ___kmp_msg_format(0x40114);
+  ___kmp_msg(0,auStack_30);
+  return 1 < *(int *)(*(long *)(local_18 + 0x1b8) + 0x54);
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_dynamic
+// Entry: 00000e10
+// Signature: undefined _omp_set_dynamic(void)
+// ========================================
+
+
+void _omp_set_dynamic(int param_1)
+
+{
+  long lVar1;
+  
+  lVar1 = __kmp_entry_thread();
+  ___kmp_save_internal_controls(lVar1);
+  *(bool *)(*(long *)(lVar1 + 0x1b8) + 0x44) = param_1 != 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_dynamic
+// Entry: 00000e6c
+// Signature: undefined _omp_get_dynamic(void)
+// ========================================
+
+
+bool _omp_get_dynamic(void)
+
+{
+  long lVar1;
+  
+  lVar1 = __kmp_entry_thread();
+  return *(char *)(*(long *)(lVar1 + 0x1b8) + 0x44) != '\0';
+}
+
+
+
+
+// ========================================
+// Function: _omp_in_parallel
+// Entry: 00000eb0
+// Signature: undefined _omp_in_parallel(void)
+// ========================================
+
+
+bool _omp_in_parallel(void)
+
+{
+  int iVar1;
+  long lVar2;
+  
+  lVar2 = __kmp_entry_thread();
+  if (*(long *)(lVar2 + 0x78) == 0) {
+    iVar1 = std::__atomic_base::operator_cast_to_int_abi_v15006_
+                      ((__atomic_base *)(*(long *)(lVar2 + 0x48) + 4));
+  }
+  else {
+    iVar1 = *(int *)(*(long *)(lVar2 + 0x40) + 0x2dc);
+  }
+  return iVar1 != 0;
+}
+
+
+
+
+// ========================================
+// Function: operator.cast.to.int[abi:v15006]
+// Entry: 00000f48
+// Signature: int __thiscall operator.cast.to.int[abi:v15006](__atomic_base * this)
+// ========================================
+
+
+/* std::__atomic_base<int, false>::operator int[abi:v15006]() const */
+
+int __thiscall std::__atomic_base::operator_cast_to_int_abi_v15006_(__atomic_base *this)
+
+{
+  int iVar1;
+  
+  iVar1 = __atomic_base<int,false>::load_abi_v15006_((__atomic_base<int,false> *)this,5);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_schedule
+// Entry: 00000f70
+// Signature: undefined _omp_set_schedule(void)
+// ========================================
+
+
+void _omp_set_schedule(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_schedule(uVar1,param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_schedule
+// Entry: 00000fa0
+// Signature: undefined _omp_get_schedule(void)
+// ========================================
+
+
+void _omp_get_schedule(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_get_schedule(uVar1,param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_max_active_levels
+// Entry: 00000fd0
+// Signature: undefined _omp_set_max_active_levels(void)
+// ========================================
+
+
+void _omp_set_max_active_levels(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_set_max_active_levels(uVar1,param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_max_active_levels
+// Entry: 00000ff8
+// Signature: undefined _omp_get_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_get_max_active_levels(void)
+
+{
+  if (*____kmp_init_middle == 0) {
+    ___kmp_middle_initialize();
+  }
+  ___kmp_get_global_thread_id_reg();
+  ___kmp_get_max_active_levels();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_active_level
+// Entry: 00001034
+// Signature: undefined _omp_get_active_level(void)
+// ========================================
+
+
+undefined4 _omp_get_active_level(void)
+
+{
+  long lVar1;
+  
+  lVar1 = __kmp_entry_thread();
+  return *(undefined4 *)(*(long *)(lVar1 + 0x40) + 0x2dc);
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_level
+// Entry: 00001050
+// Signature: undefined _omp_get_level(void)
+// ========================================
+
+
+undefined4 _omp_get_level(void)
+
+{
+  long lVar1;
+  
+  lVar1 = __kmp_entry_thread();
+  return *(undefined4 *)(*(long *)(lVar1 + 0x40) + 0x290);
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_ancestor_thread_num
+// Entry: 0000106c
+// Signature: undefined _omp_get_ancestor_thread_num(void)
+// ========================================
+
+
+void _omp_get_ancestor_thread_num(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_get_ancestor_thread_num(uVar1,param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_team_size
+// Entry: 00001094
+// Signature: undefined _omp_get_team_size(void)
+// ========================================
+
+
+void _omp_get_team_size(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = ___kmp_get_global_thread_id_reg();
+  ___kmp_get_team_size(uVar1,param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_thread_limit
+// Entry: 000010bc
+// Signature: undefined _omp_get_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_get_thread_limit(void)
+
+{
+  int iVar1;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  return *(undefined4 *)(*(long *)(*(long *)(*____kmp_threads + (long)iVar1 * 8) + 0x1b8) + 0x50);
+}
+
+
+
+
+// ========================================
+// Function: _omp_in_final
+// Entry: 00001124
+// Signature: undefined _omp_in_final(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+uint _omp_in_final(void)
+
+{
+  long lVar1;
+  undefined4 local_14;
+  
+  if (*____kmp_init_parallel == 0) {
+    local_14 = 0;
+  }
+  else {
+    lVar1 = __kmp_entry_thread();
+    local_14 = *(uint *)(*(long *)(lVar1 + 0x1b8) + 4) >> 1 & 1;
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_proc_bind
+// Entry: 00001180
+// Signature: undefined _omp_get_proc_bind(void)
+// ========================================
+
+
+undefined4 _omp_get_proc_bind(void)
+
+{
+  long lVar1;
+  
+  lVar1 = __kmp_entry_thread();
+  return *(undefined4 *)(*(long *)(lVar1 + 0x1b8) + 0x60);
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_places
+// Entry: 0000119c
+// Signature: undefined _omp_get_num_places(void)
+// ========================================
+
+
+undefined8 _omp_get_num_places(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_place_num_procs
+// Entry: 000011a4
+// Signature: undefined _omp_get_place_num_procs(void)
+// ========================================
+
+
+undefined8 _omp_get_place_num_procs(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_place_proc_ids
+// Entry: 000011b8
+// Signature: undefined _omp_get_place_proc_ids(void)
+// ========================================
+
+
+void _omp_get_place_proc_ids(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_place_num
+// Entry: 000011cc
+// Signature: undefined _omp_get_place_num(void)
+// ========================================
+
+
+undefined8 _omp_get_place_num(void)
+
+{
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_partition_num_places
+// Entry: 000011d4
+// Signature: undefined _omp_get_partition_num_places(void)
+// ========================================
+
+
+undefined8 _omp_get_partition_num_places(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_partition_place_nums
+// Entry: 000011dc
+// Signature: undefined _omp_get_partition_place_nums(void)
+// ========================================
+
+
+void _omp_get_partition_place_nums(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_teams
+// Entry: 000011ec
+// Signature: undefined _omp_get_num_teams(void)
+// ========================================
+
+
+void _omp_get_num_teams(void)
+
+{
+  ___kmp_aux_get_num_teams();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_team_num
+// Entry: 00001200
+// Signature: undefined _omp_get_team_num(void)
+// ========================================
+
+
+void _omp_get_team_num(void)
+
+{
+  ___kmp_aux_get_team_num();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_default_device
+// Entry: 00001214
+// Signature: undefined _omp_get_default_device(void)
+// ========================================
+
+
+undefined8 _omp_get_default_device(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_default_device
+// Entry: 0000121c
+// Signature: undefined _omp_set_default_device(void)
+// ========================================
+
+
+void _omp_set_default_device(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_devices
+// Entry: 0000122c
+// Signature: undefined _omp_get_num_devices(void)
+// ========================================
+
+
+undefined8 _omp_get_num_devices(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_is_initial_device
+// Entry: 00001234
+// Signature: undefined _omp_is_initial_device(void)
+// ========================================
+
+
+undefined8 _omp_is_initial_device(void)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_initial_device
+// Entry: 0000123c
+// Signature: undefined _omp_get_initial_device(void)
+// ========================================
+
+
+void _omp_get_initial_device(void)
+
+{
+  _omp_get_num_devices();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_init_lock_with_hint
+// Entry: 00001250
+// Signature: undefined _omp_init_lock_with_hint(void)
+// ========================================
+
+
+void _omp_init_lock_with_hint(undefined8 param_1,undefined8 param_2)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_2c [8];
+  int local_24;
+  undefined8 local_20;
+  undefined8 local_18;
+  
+  local_20 = param_2;
+  local_18 = param_1;
+  local_24 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_2c,local_24,unaff_x30);
+  ___kmpc_init_lock_with_hint(0,local_24,local_18,local_20);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_2c);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_init_nest_lock_with_hint
+// Entry: 000012ac
+// Signature: undefined _omp_init_nest_lock_with_hint(void)
+// ========================================
+
+
+void _omp_init_nest_lock_with_hint(undefined8 param_1,undefined8 param_2)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_2c [8];
+  int local_24;
+  undefined8 local_20;
+  undefined8 local_18;
+  
+  local_20 = param_2;
+  local_18 = param_1;
+  local_24 = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_2c,local_24,unaff_x30);
+  ___kmpc_init_nest_lock_with_hint(0,local_24,local_18,local_20);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_2c);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_init_lock
+// Entry: 00001308
+// Signature: undefined _omp_init_lock(void)
+// ========================================
+
+
+void _omp_init_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_init_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_init_nest_lock
+// Entry: 0000135c
+// Signature: undefined _omp_init_nest_lock(void)
+// ========================================
+
+
+void _omp_init_nest_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_init_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_destroy_lock
+// Entry: 000013b0
+// Signature: undefined _omp_destroy_lock(void)
+// ========================================
+
+
+void _omp_destroy_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_destroy_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_destroy_nest_lock
+// Entry: 00001404
+// Signature: undefined _omp_destroy_nest_lock(void)
+// ========================================
+
+
+void _omp_destroy_nest_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_destroy_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_lock
+// Entry: 00001458
+// Signature: undefined _omp_set_lock(void)
+// ========================================
+
+
+void _omp_set_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_set_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_nest_lock
+// Entry: 000014ac
+// Signature: undefined _omp_set_nest_lock(void)
+// ========================================
+
+
+void _omp_set_nest_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_set_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_unset_lock
+// Entry: 00001500
+// Signature: undefined _omp_unset_lock(void)
+// ========================================
+
+
+void _omp_unset_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_unset_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_unset_nest_lock
+// Entry: 00001554
+// Signature: undefined _omp_unset_nest_lock(void)
+// ========================================
+
+
+void _omp_unset_nest_lock(undefined8 param_1)
+
+{
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  ___kmpc_unset_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_test_lock
+// Entry: 000015a8
+// Signature: undefined _omp_test_lock(void)
+// ========================================
+
+
+undefined4 _omp_test_lock(undefined8 param_1)
+
+{
+  undefined4 uVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  uVar1 = ___kmpc_test_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_test_nest_lock
+// Entry: 00001608
+// Signature: undefined _omp_test_nest_lock(void)
+// ========================================
+
+
+undefined4 _omp_test_nest_lock(undefined8 param_1)
+
+{
+  undefined4 uVar1;
+  void *unaff_x30;
+  OmptReturnAddressGuard aOStack_24 [8];
+  int local_1c;
+  undefined8 local_18;
+  
+  local_18 = param_1;
+  local_1c = ___kmp_get_global_thread_id_reg();
+  OmptReturnAddressGuard::OmptReturnAddressGuard(aOStack_24,local_1c,unaff_x30);
+  uVar1 = ___kmpc_test_nest_lock(0,local_1c,local_18);
+  OmptReturnAddressGuard::~OmptReturnAddressGuard(aOStack_24);
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_wtime
+// Entry: 00001668
+// Signature: undefined _omp_get_wtime(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined1  [16] _omp_get_wtime(void)
+
+{
+  undefined1 auVar1 [16];
+  ulong local_18;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_elapsed(&local_18);
+  auVar1._8_8_ = 0;
+  auVar1._0_8_ = local_18;
+  return auVar1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_wtick
+// Entry: 000016b0
+// Signature: undefined _omp_get_wtick(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined1  [16] _omp_get_wtick(void)
+
+{
+  undefined1 auVar1 [16];
+  ulong local_18;
+  
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_elapsed_tick(&local_18);
+  auVar1._8_8_ = 0;
+  auVar1._0_8_ = local_18;
+  return auVar1;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_malloc
+// Entry: 000016f8
+// Signature: undefined _kmp_malloc(void)
+// ========================================
+
+
+void _kmp_malloc(undefined8 param_1)
+
+{
+  _kmpc_malloc(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_aligned_malloc
+// Entry: 0000171c
+// Signature: undefined _kmp_aligned_malloc(void)
+// ========================================
+
+
+void _kmp_aligned_malloc(undefined8 param_1,undefined8 param_2)
+
+{
+  _kmpc_aligned_malloc(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_calloc
+// Entry: 00001748
+// Signature: undefined _kmp_calloc(void)
+// ========================================
+
+
+void _kmp_calloc(undefined8 param_1,undefined8 param_2)
+
+{
+  _kmpc_calloc(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_realloc
+// Entry: 00001774
+// Signature: undefined _kmp_realloc(void)
+// ========================================
+
+
+void _kmp_realloc(undefined8 param_1,undefined8 param_2)
+
+{
+  _kmpc_realloc(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_free
+// Entry: 000017a0
+// Signature: undefined _kmp_free(void)
+// ========================================
+
+
+void _kmp_free(undefined8 param_1)
+
+{
+  _kmpc_free(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_warnings_on
+// Entry: 000017c4
+// Signature: undefined _kmp_set_warnings_on(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _kmp_set_warnings_on(void)
+
+{
+  *____kmp_generate_warnings = 6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_warnings_off
+// Entry: 000017d8
+// Signature: undefined _kmp_set_warnings_off(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _kmp_set_warnings_off(void)
+
+{
+  *____kmp_generate_warnings = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_set_defaults
+// Entry: 000017e8
+// Signature: undefined _kmp_set_defaults(void)
+// ========================================
+
+
+void _kmp_set_defaults(char *param_1)
+
+{
+  size_t sVar1;
+  
+  sVar1 = _strlen(param_1);
+  ___kmp_aux_set_defaults(param_1,(long)(int)sVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_cancellation
+// Entry: 00001820
+// Signature: undefined _omp_get_cancellation(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_get_cancellation(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_omp_cancellation;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_get_cancellation_status
+// Entry: 00001860
+// Signature: undefined _kmp_get_cancellation_status(void)
+// ========================================
+
+
+void _kmp_get_cancellation_status(undefined4 param_1)
+
+{
+  ___kmp_get_cancellation_status(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_max_task_priority
+// Entry: 00001884
+// Signature: undefined _omp_get_max_task_priority(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 _omp_get_max_task_priority(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  return *____kmp_max_task_priority;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_device_num
+// Entry: 000018c4
+// Signature: undefined _omp_get_device_num(void)
+// ========================================
+
+
+void _omp_get_device_num(void)
+
+{
+  _omp_get_initial_device();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_pause_resource
+// Entry: 000018d8
+// Signature: undefined _omp_pause_resource(void)
+// ========================================
+
+
+undefined4 _omp_pause_resource(undefined4 param_1,int param_2)
+
+{
+  int iVar1;
+  code *pcVar2;
+  undefined4 local_14;
+  
+  iVar1 = _omp_get_initial_device();
+  if (param_2 == iVar1) {
+    local_14 = ___kmpc_pause_resource(param_1);
+  }
+  else {
+    pcVar2 = (code *)_dlsym(0xfffffffffffffffe,"tgt_pause_resource");
+    if (pcVar2 == _kmp_set_stacksize) {
+      local_14 = 1;
+    }
+    else {
+      local_14 = (*pcVar2)(param_1,param_2);
+    }
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: _omp_pause_resource_all
+// Entry: 00001978
+// Signature: undefined _omp_pause_resource_all(void)
+// ========================================
+
+
+int _omp_pause_resource_all(undefined4 param_1)
+
+{
+  int iVar1;
+  code *pcVar2;
+  int local_18;
+  
+  local_18 = 0;
+  pcVar2 = (code *)_dlsym(0xfffffffffffffffe,"tgt_pause_resource");
+  if (pcVar2 != _kmp_set_stacksize) {
+    local_18 = (*pcVar2)(param_1,0xfffffff5);
+  }
+  iVar1 = ___kmpc_pause_resource(param_1);
+  return local_18 + iVar1;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_supported_active_levels
+// Entry: 000019f0
+// Signature: undefined _omp_get_supported_active_levels(void)
+// ========================================
+
+
+undefined8 _omp_get_supported_active_levels(void)
+
+{
+  return 0x7fffffff;
+}
+
+
+
+
+// ========================================
+// Function: _omp_fulfill_event
+// Entry: 000019f8
+// Signature: undefined _omp_fulfill_event(void)
+// ========================================
+
+
+void _omp_fulfill_event(undefined8 param_1)
+
+{
+  ___kmp_fulfill_event(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_num_teams
+// Entry: 00001a1c
+// Signature: undefined _omp_set_num_teams(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_set_num_teams(undefined4 param_1)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_set_num_teams(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_max_teams
+// Entry: 00001a64
+// Signature: undefined _omp_get_max_teams(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_get_max_teams(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_get_max_teams();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_set_teams_thread_limit
+// Entry: 00001a9c
+// Signature: undefined _omp_set_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_set_teams_thread_limit(undefined4 param_1)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_set_teams_thread_limit(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_teams_thread_limit
+// Entry: 00001ae4
+// Signature: undefined _omp_get_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _omp_get_teams_thread_limit(void)
+
+{
+  if (*____kmp_init_serial == 0) {
+    ___kmp_serial_initialize();
+  }
+  ___kmp_get_teams_thread_limit();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_num_interop_properties
+// Entry: 00001b1c
+// Signature: undefined _omp_get_num_interop_properties(void)
+// ========================================
+
+
+undefined8 _omp_get_num_interop_properties(void)
+
+{
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_int
+// Entry: 00001b30
+// Signature: undefined _omp_get_interop_int(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_int(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_int");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2,param_3);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_ptr
+// Entry: 00001ba4
+// Signature: undefined _omp_get_interop_ptr(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_ptr(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_ptr");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2,param_3);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_str
+// Entry: 00001c18
+// Signature: undefined _omp_get_interop_str(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_str(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_str");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2,param_3);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_name
+// Entry: 00001c8c
+// Signature: undefined _omp_get_interop_name(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_name(undefined8 param_1,undefined4 param_2)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_name");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_type_desc
+// Entry: 00001cf8
+// Signature: undefined _omp_get_interop_type_desc(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_type_desc(undefined8 param_1,undefined4 param_2)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_type_desc");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_get_interop_rc_desc
+// Entry: 00001d64
+// Signature: undefined _omp_get_interop_rc_desc(void)
+// ========================================
+
+
+undefined8 _omp_get_interop_rc_desc(undefined8 param_1,undefined4 param_2)
+
+{
+  code *pcVar1;
+  undefined8 local_18;
+  
+  pcVar1 = (code *)_dlsym(0xffffffffffffffff,"omp_get_interop_rec_desc");
+  if (pcVar1 == _kmp_set_stacksize) {
+    local_18 = 0;
+  }
+  else {
+    local_18 = (*pcVar1)(param_1,param_2);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: _omp_display_env
+// Entry: 00001dd0
+// Signature: undefined _omp_display_env(void)
+// ========================================
+
+
+void _omp_display_env(undefined4 param_1)
+
+{
+  ___kmp_omp_display_env(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _omp_in_explicit_task
+// Entry: 00001df4
+// Signature: undefined _omp_in_explicit_task(void)
+// ========================================
+
+
+uint _omp_in_explicit_task(void)
+
+{
+  int iVar1;
+  long lVar2;
+  
+  iVar1 = ___kmp_get_global_thread_id_reg();
+  lVar2 = __kmp_thread_from_gtid(iVar1);
+  return *(uint *)(*(long *)(lVar2 + 0x1b8) + 4) >> 0x10 & 1;
+}
+
+
+
+
+// ========================================
+// Function: OmptReturnAddressGuard
+// Entry: 00001e2c
+// Signature: undefined __thiscall OmptReturnAddressGuard(OmptReturnAddressGuard * this, int param_1, void * param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* OmptReturnAddressGuard::OmptReturnAddressGuard(int, void*) */
+
+OmptReturnAddressGuard * __thiscall
+OmptReturnAddressGuard::OmptReturnAddressGuard
+          (OmptReturnAddressGuard *this,int param_1,void *param_2)
+
+{
+  long *plVar1;
+  
+  plVar1 = ____kmp_threads;
+  *this = (OmptReturnAddressGuard)0x0;
+  *(int *)(this + 4) = param_1;
+  if (((((*__ompt_enabled & 1) != 0) && (-1 < param_1)) &&
+      (*(long *)(*plVar1 + (long)param_1 * 8) != 0)) &&
+     (*(long *)(*(long *)(*plVar1 + (long)param_1 * 8) + 0x158) == 0)) {
+    *this = (OmptReturnAddressGuard)0x1;
+    *(void **)(*(long *)(*plVar1 + (long)param_1 * 8) + 0x158) = param_2;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~OmptReturnAddressGuard
+// Entry: 00001f10
+// Signature: undefined __thiscall ~OmptReturnAddressGuard(OmptReturnAddressGuard * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* OmptReturnAddressGuard::~OmptReturnAddressGuard() */
+
+OmptReturnAddressGuard * __thiscall
+OmptReturnAddressGuard::~OmptReturnAddressGuard(OmptReturnAddressGuard *this)
+
+{
+  if (((byte)*this & 1) != 0) {
+    *(undefined8 *)(*(long *)(*____kmp_threads + (long)*(int *)(this + 4) * 8) + 0x158) = 0;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ConvertedString
+// Entry: 00001f60
+// Signature: undefined __thiscall ConvertedString(ConvertedString * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* ConvertedString::ConvertedString(char const*, unsigned long) */
+
+void __thiscall ConvertedString::ConvertedString(ConvertedString *this,char *param_1,ulong param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = ___kmp_get_global_thread_id();
+  uVar2 = __kmp_thread_from_gtid(iVar1);
+  *(undefined8 *)(this + 8) = uVar2;
+  uVar2 = ____kmp_thread_malloc(*(undefined8 *)(this + 8),param_2 + 1);
+  *(undefined8 *)this = uVar2;
+  _strncpy(*(char **)this,param_1,param_2);
+  *(undefined1 *)(*(long *)this + param_2) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ConvertedString
+// Entry: 00001fd8
+// Signature: undefined __thiscall ~ConvertedString(ConvertedString * this)
+// ========================================
+
+
+/* ConvertedString::~ConvertedString() */
+
+ConvertedString * __thiscall ConvertedString::~ConvertedString(ConvertedString *this)
+
+{
+  ____kmp_thread_free(*(undefined8 *)(this + 8),*(undefined8 *)this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: load[abi:v15006]
+// Entry: 0000200c
+// Signature: undefined __thiscall load[abi:v15006](__atomic_base<int,false> * this, memory_order param_1)
+// ========================================
+
+
+/* std::__atomic_base<int, false>::load[abi:v15006](std::memory_order) const */
+
+int __thiscall
+std::__atomic_base<int,false>::load_abi_v15006_(__atomic_base<int,false> *this,undefined4 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load_abi_v15006_<int>(this,param_2);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load[abi:v15006]<int>
+// Entry: 00002038
+// Signature: int __cxx_atomic_load[abi:v15006]<int>(__cxx_atomic_base_impl * param_1, memory_order param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* int std::__cxx_atomic_load[abi:v15006]<int>(std::__cxx_atomic_base_impl<int> const*,
+   std::memory_order) */
+
+int std::__cxx_atomic_load_abi_v15006_<int>(int *param_1,int param_2)
+
+{
+  undefined4 local_10;
+  
+  if (param_2 - 1U < 2) {
+    local_10 = *param_1;
+  }
+  else if (param_2 == 5) {
+    local_10 = *param_1;
+  }
+  else {
+    local_10 = *param_1;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_free
+// Entry: 00003000
+// Signature: undefined ____kmp_thread_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_thread_malloc
+// Entry: 00003100
+// Signature: undefined ____kmp_thread_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_thread_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_capture_affinity
+// Entry: 00003300
+// Signature: undefined ___kmp_aux_capture_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_capture_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_display_affinity
+// Entry: 00003400
+// Signature: undefined ___kmp_aux_display_affinity(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_display_affinity(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_get_num_teams
+// Entry: 00003500
+// Signature: undefined ___kmp_aux_get_num_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_get_num_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_get_team_num
+// Entry: 00003600
+// Signature: undefined ___kmp_aux_get_team_num(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_get_team_num(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_blocktime
+// Entry: 00003700
+// Signature: undefined ___kmp_aux_set_blocktime(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_blocktime(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_defaults
+// Entry: 00003800
+// Signature: undefined ___kmp_aux_set_defaults(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_defaults(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_aux_set_stacksize
+// Entry: 00003900
+// Signature: undefined ___kmp_aux_set_stacksize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_aux_set_stacksize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_control_tool
+// Entry: 00003b00
+// Signature: undefined ___kmp_control_tool(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_control_tool(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_elapsed
+// Entry: 00003e00
+// Signature: undefined ___kmp_elapsed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_elapsed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_elapsed_tick
+// Entry: 00003f00
+// Signature: undefined ___kmp_elapsed_tick(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_elapsed_tick(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fulfill_event
+// Entry: 00004000
+// Signature: undefined ___kmp_fulfill_event(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fulfill_event(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_ancestor_thread_num
+// Entry: 00004200
+// Signature: undefined ___kmp_get_ancestor_thread_num(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_ancestor_thread_num(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_cancellation_status
+// Entry: 00004300
+// Signature: undefined ___kmp_get_cancellation_status(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_cancellation_status(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id
+// Entry: 00004400
+// Signature: undefined ___kmp_get_global_thread_id(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_global_thread_id_reg
+// Entry: 00004500
+// Signature: undefined ___kmp_get_global_thread_id_reg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_global_thread_id_reg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_max_active_levels
+// Entry: 00004600
+// Signature: undefined ___kmp_get_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_max_active_levels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_max_teams
+// Entry: 00004700
+// Signature: undefined ___kmp_get_max_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_max_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_schedule
+// Entry: 00004800
+// Signature: undefined ___kmp_get_schedule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_schedule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_team_size
+// Entry: 00004900
+// Signature: undefined ___kmp_get_team_size(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_team_size(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_teams_thread_limit
+// Entry: 00004a00
+// Signature: undefined ___kmp_get_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_get_teams_thread_limit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_middle_initialize
+// Entry: 00005000
+// Signature: undefined ___kmp_middle_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_middle_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 00005100
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00005200
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_omp_display_env
+// Entry: 00005600
+// Signature: undefined ___kmp_omp_display_env(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_omp_display_env(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_save_internal_controls
+// Entry: 00005700
+// Signature: undefined ___kmp_save_internal_controls(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_save_internal_controls(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_serial_initialize
+// Entry: 00005800
+// Signature: undefined ___kmp_serial_initialize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_serial_initialize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_max_active_levels
+// Entry: 00005900
+// Signature: undefined ___kmp_set_max_active_levels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_max_active_levels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_num_teams
+// Entry: 00005a00
+// Signature: undefined ___kmp_set_num_teams(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_num_teams(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_num_threads
+// Entry: 00005b00
+// Signature: undefined ___kmp_set_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_schedule
+// Entry: 00005c00
+// Signature: undefined ___kmp_set_schedule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_schedule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_set_teams_thread_limit
+// Entry: 00005d00
+// Signature: undefined ___kmp_set_teams_thread_limit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_set_teams_thread_limit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 00005f00
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_user_set_library
+// Entry: 00006100
+// Signature: undefined ___kmp_user_set_library(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_user_set_library(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_bound_num_threads
+// Entry: 00006300
+// Signature: undefined ___kmpc_bound_num_threads(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_bound_num_threads(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_allocator
+// Entry: 00006400
+// Signature: undefined ___kmpc_destroy_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_lock
+// Entry: 00006500
+// Signature: undefined ___kmpc_destroy_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_destroy_nest_lock
+// Entry: 00006600
+// Signature: undefined ___kmpc_destroy_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_destroy_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_get_default_allocator
+// Entry: 00006700
+// Signature: undefined ___kmpc_get_default_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_get_default_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_allocator
+// Entry: 00006800
+// Signature: undefined ___kmpc_init_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_lock
+// Entry: 00006900
+// Signature: undefined ___kmpc_init_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_lock_with_hint
+// Entry: 00006a00
+// Signature: undefined ___kmpc_init_lock_with_hint(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_lock_with_hint(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_nest_lock
+// Entry: 00006b00
+// Signature: undefined ___kmpc_init_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_init_nest_lock_with_hint
+// Entry: 00006c00
+// Signature: undefined ___kmpc_init_nest_lock_with_hint(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_init_nest_lock_with_hint(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_pause_resource
+// Entry: 00006d00
+// Signature: undefined ___kmpc_pause_resource(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_pause_resource(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_default_allocator
+// Entry: 00006e00
+// Signature: undefined ___kmpc_set_default_allocator(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_default_allocator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_lock
+// Entry: 00006f00
+// Signature: undefined ___kmpc_set_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_set_nest_lock
+// Entry: 00007000
+// Signature: undefined ___kmpc_set_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_set_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_test_lock
+// Entry: 00007100
+// Signature: undefined ___kmpc_test_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_test_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_test_nest_lock
+// Entry: 00007200
+// Signature: undefined ___kmpc_test_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_test_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_unset_lock
+// Entry: 00007300
+// Signature: undefined ___kmpc_unset_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_unset_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_unset_nest_lock
+// Entry: 00007400
+// Signature: undefined ___kmpc_unset_nest_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmpc_unset_nest_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00007500
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _dlsym
+// Entry: 00007700
+// Signature: undefined _dlsym(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _dlsym(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_aligned_malloc
+// Entry: 00007800
+// Signature: undefined _kmpc_aligned_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_aligned_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_calloc
+// Entry: 00007900
+// Signature: undefined _kmpc_calloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_calloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_free
+// Entry: 00007a00
+// Signature: undefined _kmpc_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_malloc
+// Entry: 00007b00
+// Signature: undefined _kmpc_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _kmpc_realloc
+// Entry: 00007c00
+// Signature: undefined _kmpc_realloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _kmpc_realloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00007e00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strncpy
+// Entry: 00007f00
+// Signature: char * _strncpy(char * param_1, char * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strncpy(char *param_1,char *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 186
+// Failed: 0
+// Skipped external functions: 0

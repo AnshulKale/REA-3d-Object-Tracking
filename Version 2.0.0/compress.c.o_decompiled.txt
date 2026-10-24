@@ -1,0 +1,214 @@
+Program: compress.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _compress2
+// Entry: 00000000
+// Signature: int __cdecl _compress2(Bytef * dest, uLongf * destLen, Bytef * source, uLong sourceLen, int level)
+// ========================================
+
+
+int _compress2(Bytef *dest,uLongf *destLen,Bytef *source,uLong sourceLen,int level)
+
+{
+  int iVar1;
+  ulong uVar2;
+  int iVar3;
+  ulong uVar4;
+  z_stream local_b0;
+  
+  uVar4 = *destLen;
+  *destLen = 0;
+  local_b0.zfree = _compress2;
+  local_b0.opaque = (voidpf)0x0;
+  local_b0.zalloc = _compress2;
+  iVar3 = _deflateInit_(&local_b0,level,"1.3",0x70);
+  if (iVar3 != 0) {
+    return iVar3;
+  }
+  local_b0.avail_in = 0;
+  local_b0.next_in = source;
+  local_b0.next_out = dest;
+LAB_000000ac:
+  uVar2 = uVar4;
+  if (0xfffffffe < uVar4) {
+    uVar2 = 0xffffffff;
+  }
+  local_b0.avail_out = (uInt)uVar2;
+  uVar4 = uVar4 - uVar2;
+  if (local_b0.avail_in != 0) goto LAB_00000090;
+  do {
+    uVar2 = sourceLen;
+    if (0xfffffffe < sourceLen) {
+      uVar2 = 0xffffffff;
+    }
+    local_b0.avail_in = (uInt)uVar2;
+    sourceLen = sourceLen - uVar2;
+    iVar3 = _deflate(&local_b0,(uint)(sourceLen == 0) << 2);
+    while( true ) {
+      if (iVar3 != 0) {
+        *destLen = local_b0.total_out;
+        _deflateEnd(&local_b0);
+        iVar1 = 0;
+        if (iVar3 != 1) {
+          iVar1 = iVar3;
+        }
+        return iVar1;
+      }
+      if (local_b0.avail_out == 0) goto LAB_000000ac;
+      if (local_b0.avail_in == 0) break;
+LAB_00000090:
+      iVar3 = _deflate(&local_b0,(uint)(sourceLen == 0) << 2);
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _compress
+// Entry: 0000012c
+// Signature: int __cdecl _compress(Bytef * dest, uLongf * destLen, Bytef * source, uLong sourceLen)
+// ========================================
+
+
+int _compress(Bytef *dest,uLongf *destLen,Bytef *source,uLong sourceLen)
+
+{
+  int iVar1;
+  ulong uVar2;
+  int iVar3;
+  ulong uVar4;
+  z_stream local_b0;
+  
+  uVar4 = *destLen;
+  *destLen = 0;
+  local_b0.zfree = _compress2;
+  local_b0.opaque = (voidpf)0x0;
+  local_b0.zalloc = _compress2;
+  iVar3 = _deflateInit_(&local_b0,-1,"1.3",0x70);
+  if (iVar3 != 0) {
+    return iVar3;
+  }
+  local_b0.avail_in = 0;
+  local_b0.next_in = source;
+  local_b0.next_out = dest;
+LAB_000001d8:
+  uVar2 = uVar4;
+  if (0xfffffffe < uVar4) {
+    uVar2 = 0xffffffff;
+  }
+  local_b0.avail_out = (uInt)uVar2;
+  uVar4 = uVar4 - uVar2;
+  if (local_b0.avail_in != 0) goto LAB_000001bc;
+  do {
+    uVar2 = sourceLen;
+    if (0xfffffffe < sourceLen) {
+      uVar2 = 0xffffffff;
+    }
+    local_b0.avail_in = (uInt)uVar2;
+    sourceLen = sourceLen - uVar2;
+    iVar3 = _deflate(&local_b0,(uint)(sourceLen == 0) << 2);
+    while( true ) {
+      if (iVar3 != 0) {
+        *destLen = local_b0.total_out;
+        _deflateEnd(&local_b0);
+        iVar1 = 0;
+        if (iVar3 != 1) {
+          iVar1 = iVar3;
+        }
+        return iVar1;
+      }
+      if (local_b0.avail_out == 0) goto LAB_000001d8;
+      if (local_b0.avail_in == 0) break;
+LAB_000001bc:
+      iVar3 = _deflate(&local_b0,(uint)(sourceLen == 0) << 2);
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _compressBound
+// Entry: 00000258
+// Signature: uLong __cdecl _compressBound(uLong sourceLen)
+// ========================================
+
+
+uLong _compressBound(uLong sourceLen)
+
+{
+  return sourceLen + (sourceLen >> 0xc) + (sourceLen >> 0xe) + (sourceLen >> 0x19) + 0xd;
+}
+
+
+
+
+// ========================================
+// Function: _deflate
+// Entry: 00001000
+// Signature: int _deflate(z_streamp strm, int flush)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflate(z_streamp strm,int flush)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateEnd
+// Entry: 00001100
+// Signature: int _deflateEnd(z_streamp strm)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateEnd(z_streamp strm)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _deflateInit_
+// Entry: 00001200
+// Signature: int _deflateInit_(z_streamp strm, int level, char * version, int stream_size)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _deflateInit_(z_streamp strm,int level,char *version,int stream_size)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 6
+// Failed: 0
+// Skipped external functions: 0

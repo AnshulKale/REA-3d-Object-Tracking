@@ -1,0 +1,531 @@
+Program: utils.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _cvPointSeqFromMat
+// Entry: 00000000
+// Signature: undefined _cvPointSeqFromMat(void)
+// ========================================
+
+
+long _cvPointSeqFromMat(uint param_1,uint *param_2,long param_3,long param_4)
+
+{
+  uint uVar1;
+  code *pcVar2;
+  uint uVar3;
+  uint uVar4;
+  string asStack_70 [24];
+  string asStack_58 [40];
+  
+  if (((param_2 == (uint *)0x0) || (param_3 == 0)) || (param_4 == 0)) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_58,0x54c);
+    cv::error(-0xd7,asStack_58,"cvPointSeqFromMat",
+              "M3T/third_party/opencv-src/modules/imgproc/src/utils.cpp",0x2f);
+  }
+  else {
+    uVar3 = *param_2;
+    if (((uVar3 >> 0x10 == 0x4242) && (0 < (int)param_2[9])) &&
+       ((0 < (int)param_2[8] && (*(long *)(param_2 + 6) != 0)))) {
+      if (((uVar3 & 0xff8) == 0) && (param_2[9] == 2)) {
+        param_2 = (uint *)_cvReshape(param_2,asStack_58,2,0);
+        uVar3 = *param_2;
+      }
+      if ((uVar3 & 0xfff) - 0xe < 0xfffffffe) {
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (asStack_70,0x5e7);
+        cv::error(-0xd2,asStack_70,"cvPointSeqFromMat",
+                  "M3T/third_party/opencv-src/modules/imgproc/src/utils.cpp",0x3f);
+      }
+      else {
+        if (param_2[9] == 1) {
+          if ((uVar3 >> 0xe & 1) != 0) {
+            uVar4 = param_2[8];
+LAB_000000c4:
+            uVar1 = 0x28442211U >> (ulong)((uVar3 & 7) << 2) & 0xf;
+            _cvMakeSeqHeaderForArray
+                      (uVar3 & 0xfff | param_1 & 0x7000,0x80,uVar1 + uVar1 * (uVar3 >> 3 & 0x1ff),
+                       *(undefined8 *)(param_2 + 6),uVar4 * param_2[9],param_3,param_4);
+            return param_3;
+          }
+        }
+        else if (((uVar3 >> 0xe & 1) != 0) && (uVar4 = 1, param_2[8] == 1)) goto LAB_000000c4;
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (asStack_70,0x63f);
+        cv::error(-5,asStack_70,"cvPointSeqFromMat",
+                  "M3T/third_party/opencv-src/modules/imgproc/src/utils.cpp",0x44);
+      }
+    }
+    else {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_70,0x5c5);
+      cv::error(-5,asStack_70,"cvPointSeqFromMat",
+                "M3T/third_party/opencv-src/modules/imgproc/src/utils.cpp",0x36);
+    }
+  }
+                    /* WARNING: Does not return */
+  pcVar2 = (code *)SoftwareBreakpoint(1,0x1e8);
+  (*pcVar2)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000220
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_000002ac;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_000002ac:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: _cvCopyMakeBorder
+// Entry: 000002d0
+// Signature: undefined _cvCopyMakeBorder(void)
+// ========================================
+
+
+void _cvCopyMakeBorder(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                      cv *param_5,cv *param_6,undefined8 param_7,int param_8,undefined8 param_9,
+                      AutoBuffer *param_10)
+
+{
+  code *pcVar1;
+  int iVar2;
+  undefined8 local_160;
+  undefined8 uStack_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined4 local_140 [2];
+  uint *local_138;
+  undefined8 uStack_130;
+  undefined4 local_128 [2];
+  uint *local_120;
+  undefined8 uStack_118;
+  uint local_110 [2];
+  int local_108;
+  int iStack_104;
+  uint local_b0 [2];
+  int local_a8;
+  int iStack_a4;
+  
+  cv::cvarrToMat(param_5,(void *)0x0,true,false,0,param_10);
+  cv::cvarrToMat(param_6,(void *)0x0,true,false,0,param_10);
+  if (((local_b0[0] ^ local_110[0]) & 0xfff) == 0) {
+    iVar2 = (int)((ulong)param_7 >> 0x20);
+    local_128[0] = 0x1010000;
+    local_120 = local_b0;
+    uStack_118 = 0;
+    local_140[0] = 0x2010000;
+    local_138 = local_110;
+    uStack_130 = 0;
+    local_160 = param_1;
+    uStack_158 = param_2;
+    local_150 = param_3;
+    uStack_148 = param_4;
+    cv::copyMakeBorder((_InputArray *)local_128,(_OutputArray *)local_140,iVar2,
+                       local_108 - (local_a8 + iVar2),(int)param_7,
+                       iStack_104 - (iStack_a4 + (int)param_7),param_8,(Scalar_ *)&local_160);
+    cv::Mat::~Mat((Mat *)local_110);
+    cv::Mat::~Mat((Mat *)local_b0);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_160,0x68b);
+  cv::error(-0xd7,(string *)&local_160,"cvCopyMakeBorder",
+            "M3T/third_party/opencv-src/modules/imgproc/src/utils.cpp",0x56);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x40c);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000458
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 0000046c
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 000004bc
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: cvarrToMat
+// Entry: 00001100
+// Signature: undefined __thiscall cvarrToMat(cv * this, void * param_1, bool param_2, bool param_3, int param_4, AutoBuffer * param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::cvarrToMat(cv *this,void *param_1,bool param_2,bool param_3,int param_4,AutoBuffer *param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: copyMakeBorder
+// Entry: 00001200
+// Signature: undefined copyMakeBorder(_InputArray * param_1, _OutputArray * param_2, int param_3, int param_4, int param_5, int param_6, int param_7, Scalar_ * param_8)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::copyMakeBorder(_InputArray *param_1,_OutputArray *param_2,int param_3,int param_4,
+                       int param_5,int param_6,int param_7,Scalar_ *param_8)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00001300
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00001400
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00001500
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00001600
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00001900
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* operator delete(void*) */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00001a00
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00001b00
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00001d00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cvMakeSeqHeaderForArray
+// Entry: 00001f00
+// Signature: undefined _cvMakeSeqHeaderForArray(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cvMakeSeqHeaderForArray(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _cvReshape
+// Entry: 00002000
+// Signature: undefined _cvReshape(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _cvReshape(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00002100
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00002200
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 20
+// Failed: 0
+// Skipped external functions: 0

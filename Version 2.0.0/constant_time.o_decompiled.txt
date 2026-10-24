@@ -1,0 +1,739 @@
+Program: constant_time.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _mbedtls_ct_memcmp
+// Entry: 00000000
+// Signature: undefined _mbedtls_ct_memcmp(void)
+// ========================================
+
+
+byte _mbedtls_ct_memcmp(byte *param_1,byte *param_2,long param_3)
+
+{
+  byte bVar1;
+  
+  if (param_3 != 0) {
+    bVar1 = 0;
+    do {
+      bVar1 = bVar1 | *param_2 ^ *param_1;
+      param_3 = param_3 + -1;
+      param_1 = param_1 + 1;
+      param_2 = param_2 + 1;
+    } while (param_3 != 0);
+    return bVar1;
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_ct_memmove_left
+// Entry: 00000034
+// Signature: undefined _mbedtls_ct_memmove_left(void)
+// ========================================
+
+
+void _mbedtls_ct_memmove_left(byte *param_1,ulong param_2,long param_3)
+
+{
+  byte *pbVar1;
+  long lVar2;
+  byte bVar3;
+  ulong uVar4;
+  ulong uVar5;
+  long lVar6;
+  ulong uVar7;
+  ulong uVar8;
+  
+  if (param_2 != 0) {
+    uVar4 = param_2 - param_3;
+    lVar2 = param_2 - 1;
+    if (lVar2 == 0) {
+      uVar5 = (long)(-(_mbedtls_ct_zero ^ uVar4 >> 0x3f) | -(_mbedtls_ct_zero >> 1)) >> 0x3f;
+      *param_1 = *param_1 &
+                 (char)((byte)(-(_mbedtls_ct_zero ^
+                                (_mbedtls_ct_zero - (_mbedtls_ct_zero ^ uVar4) &
+                                 (_mbedtls_ct_zero ^ uVar5 ^ 0xffffffffffffffff) |
+                                uVar5 & (_mbedtls_ct_zero ^ uVar4)) >> 0x3f) >> 0x38) |
+                       (byte)(-(_mbedtls_ct_zero >> 1) >> 0x38)) >> 7;
+      return;
+    }
+    uVar5 = 0;
+    do {
+      lVar6 = 0;
+      uVar7 = _mbedtls_ct_zero ^ uVar4;
+      uVar8 = (long)(-(_mbedtls_ct_zero ^ (uVar7 ^ _mbedtls_ct_zero ^ uVar5) >> 0x3f) |
+                    -(_mbedtls_ct_zero >> 1)) >> 0x3f;
+      uVar8 = _mbedtls_ct_zero ^
+              ((_mbedtls_ct_zero ^ uVar5) - uVar7 & (_mbedtls_ct_zero ^ uVar8 ^ 0xffffffffffffffff)
+              | uVar8 & uVar7) >> 0x3f;
+      uVar7 = _mbedtls_ct_zero >> 1;
+      do {
+        pbVar1 = param_1 + lVar6;
+        lVar6 = lVar6 + 1;
+        bVar3 = (char)((byte)(-uVar8 >> 0x38) | (byte)(-uVar7 >> 0x38)) >> 7;
+        *pbVar1 = pbVar1[1] & (bVar3 ^ (byte)_mbedtls_ct_zero ^ 0xff) | bVar3 & *pbVar1;
+      } while (lVar2 != lVar6);
+      param_1[lVar2] = param_1[lVar2] & bVar3;
+      uVar5 = uVar5 + 1;
+    } while (uVar5 != param_2);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_ct_memcpy_if
+// Entry: 00000164
+// Signature: undefined _mbedtls_ct_memcpy_if(void)
+// ========================================
+
+
+void _mbedtls_ct_memcpy_if(ulong param_1,long param_2,long param_3,long param_4,ulong param_5)
+
+{
+  long lVar1;
+  long lVar2;
+  uint5 uVar3;
+  undefined1 auVar4 [16];
+  undefined8 uVar5;
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  uint5 uVar8;
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [11];
+  undefined1 auVar16 [13];
+  undefined1 auVar17 [13];
+  undefined1 auVar18 [13];
+  undefined1 auVar19 [13];
+  undefined1 auVar20 [16];
+  ulong uVar21;
+  byte *pbVar22;
+  ulong uVar23;
+  long lVar24;
+  ulong uVar25;
+  byte *pbVar26;
+  ulong uVar27;
+  byte *pbVar28;
+  undefined8 *puVar29;
+  undefined8 *puVar30;
+  undefined8 *puVar31;
+  undefined1 uVar32;
+  byte bVar33;
+  byte bVar34;
+  byte bVar35;
+  byte bVar36;
+  byte bVar37;
+  byte bVar38;
+  byte bVar39;
+  undefined8 uVar40;
+  undefined1 auVar41 [16];
+  ulong uVar42;
+  undefined1 auVar43 [16];
+  undefined1 auVar44 [16];
+  uint3 uVar45;
+  ulong uVar46;
+  
+  uVar21 = _mbedtls_ct_zero ^ param_1 ^ 0xffffffffffffffff;
+  lVar2 = param_2;
+  if (param_4 != 0) {
+    lVar2 = param_4;
+  }
+  if (param_5 < 8) {
+    uVar23 = 0;
+  }
+  else {
+    uVar25 = 0;
+    do {
+      *(ulong *)(param_2 + uVar25) =
+           *(ulong *)(lVar2 + uVar25) & uVar21 | *(ulong *)(param_3 + uVar25) & param_1;
+      uVar23 = uVar25 + 8;
+      uVar27 = uVar25 + 0x10;
+      uVar25 = uVar23;
+    } while (uVar27 <= param_5);
+  }
+  auVar20 = auRam0000000000009a00;
+  uVar25 = param_5 - uVar23;
+  if (param_5 < uVar23 || uVar25 == 0) {
+    return;
+  }
+  bVar35 = (byte)param_1;
+  bVar39 = (byte)uVar21;
+  if (((7 < uVar25) && (0xf < (uVar23 + param_2) - (uVar23 + param_3))) &&
+     (0xf < (uVar23 + param_2) - (uVar23 + lVar2))) {
+    bVar36 = (byte)(param_1 >> 8);
+    bVar38 = (byte)(param_1 >> 0x18);
+    bVar37 = (byte)(param_1 >> 0x10);
+    if (uVar25 < 0x10) {
+      uVar27 = 0;
+    }
+    else {
+      uVar27 = uVar25 & 0xfffffffffffffff0;
+      pbVar22 = (byte *)(param_3 + uVar23);
+      puVar29 = (undefined8 *)(lVar2 + uVar23);
+      puVar30 = (undefined8 *)(param_2 + uVar23);
+      uVar21 = uVar27;
+      do {
+        auVar16[0xc] = pbVar22[0xf];
+        auVar16._0_12_ = ZEXT112(pbVar22[0xe]) << 0x40;
+        uVar42 = (ulong)auVar16._8_5_ & 0xffffffff;
+        auVar15[10] = pbVar22[5];
+        auVar15._0_10_ = (unkuint10)pbVar22[4] << 0x40;
+        uVar45 = auVar15._8_3_ & 0xffff;
+        auVar18[0xc] = pbVar22[3];
+        auVar18._0_12_ = ZEXT112(pbVar22[2]) << 0x40;
+        uVar46 = (ulong)auVar18._8_5_ & 0xffffffff;
+        uVar40 = puVar29[1];
+        uVar5 = *puVar29;
+        uVar32 = (undefined1)((ulong)uVar40 >> 8);
+        uVar8 = CONCAT14(uVar32,(uint)CONCAT12(uVar32,(ushort)(byte)uVar40)) & 0xff0000ffff;
+        uVar32 = (undefined1)((ulong)uVar5 >> 8);
+        uVar3 = CONCAT14(uVar32,(uint)CONCAT12(uVar32,(ushort)(byte)uVar5)) & 0xff0000ffff;
+        auVar43[0] = bVar39 & (byte)uVar3 | bVar35 & *pbVar22;
+        auVar43._1_7_ = 0;
+        auVar43[8] = bVar39 & (byte)(uVar3 >> 0x20) | bVar35 & pbVar22[1];
+        auVar43._9_7_ = 0;
+        auVar41[1] = bVar36 & (byte)(uVar46 >> 8);
+        auVar41[0] = bVar39 & (byte)((ulong)uVar5 >> 0x10) | bVar35 & (byte)uVar46;
+        auVar41[2] = bVar37 & (byte)(uVar46 >> 0x10);
+        auVar41[3] = bVar38 & (byte)(uVar46 >> 0x18);
+        auVar41._4_4_ = 0;
+        auVar41[8] = bVar39 & (byte)((ulong)uVar5 >> 0x18) | bVar35 & pbVar22[3];
+        auVar41._9_7_ = 0;
+        auVar44[1] = bVar36 & (byte)(uVar45 >> 8);
+        auVar44[0] = bVar39 & (byte)((ulong)uVar5 >> 0x20) | bVar35 & (byte)uVar45;
+        auVar44._2_6_ = 0;
+        auVar44[8] = bVar39 & (byte)((ulong)uVar5 >> 0x28) | bVar35 & pbVar22[5];
+        auVar44._9_7_ = 0;
+        auVar4._1_7_ = 0;
+        auVar4[0] = bVar39 & (byte)((ulong)uVar5 >> 0x30) | bVar35 & pbVar22[6];
+        auVar4[8] = bVar39 & (byte)((ulong)uVar5 >> 0x38) | bVar35 & pbVar22[7];
+        auVar4._9_7_ = 0;
+        auVar41 = a64_TBL(ZEXT816(0),auVar43,auVar41,auVar44,auVar4,auVar20);
+        auVar11._1_7_ = 0;
+        auVar11[0] = bVar39 & (byte)uVar8 | bVar35 & pbVar22[8];
+        auVar11[8] = bVar39 & (byte)(uVar8 >> 0x20) | bVar35 & pbVar22[9];
+        auVar11._9_7_ = 0;
+        auVar12._1_7_ = 0;
+        auVar12[0] = bVar39 & (byte)((ulong)uVar40 >> 0x10) | bVar35 & pbVar22[10];
+        auVar12[8] = bVar39 & (byte)((ulong)uVar40 >> 0x18) | bVar35 & pbVar22[0xb];
+        auVar12._9_7_ = 0;
+        auVar13._1_7_ = 0;
+        auVar13[0] = bVar39 & (byte)((ulong)uVar40 >> 0x20) | bVar35 & pbVar22[0xc];
+        auVar13[8] = bVar39 & (byte)((ulong)uVar40 >> 0x28) | bVar35 & pbVar22[0xd];
+        auVar13._9_7_ = 0;
+        auVar14[1] = bVar36 & (byte)(uVar42 >> 8);
+        auVar14[0] = bVar39 & (byte)((ulong)uVar40 >> 0x30) | bVar35 & (byte)uVar42;
+        auVar14[2] = bVar37 & (byte)(uVar42 >> 0x10);
+        auVar14[3] = bVar38 & (byte)(uVar42 >> 0x18);
+        auVar14._4_4_ = 0;
+        auVar14[8] = bVar39 & (byte)((ulong)uVar40 >> 0x38) | bVar35 & pbVar22[0xf];
+        auVar14._9_7_ = 0;
+        auVar44 = a64_TBL(ZEXT816(0),auVar11,auVar12,auVar13,auVar14,auVar20);
+        puVar30[1] = auVar44._0_8_;
+        *puVar30 = auVar41._0_8_;
+        uVar21 = uVar21 - 0x10;
+        pbVar22 = pbVar22 + 0x10;
+        puVar29 = puVar29 + 2;
+        puVar30 = puVar30 + 2;
+      } while (uVar21 != 0);
+      if (uVar25 == uVar27) {
+        return;
+      }
+      if (((uint)uVar25 >> 3 & 1) == 0) {
+        uVar23 = uVar23 + uVar27;
+        goto LAB_00000208;
+      }
+    }
+    auVar20 = auRam0000000000009b00;
+    uVar21 = param_5 & 7;
+    lVar1 = uVar27 + uVar23;
+    lVar24 = (lVar1 + uVar21) - param_5;
+    puVar29 = (undefined8 *)(param_3 + lVar1);
+    puVar30 = (undefined8 *)(lVar2 + lVar1);
+    puVar31 = (undefined8 *)(param_2 + lVar1);
+    do {
+      uVar40 = *puVar29;
+      bVar33 = (byte)((ulong)uVar40 >> 0x18);
+      bVar34 = (byte)((ulong)uVar40 >> 0x38);
+      auVar17[0xc] = bVar34;
+      auVar17._0_12_ = ZEXT112((byte)((ulong)uVar40 >> 0x30)) << 0x40;
+      uVar27 = (ulong)auVar17._8_5_ & 0xffffffff;
+      auVar19[0xc] = bVar33;
+      auVar19._0_12_ = ZEXT112((byte)((ulong)uVar40 >> 0x10)) << 0x40;
+      uVar42 = (ulong)auVar19._8_5_ & 0xffffffff;
+      uVar5 = *puVar30;
+      uVar32 = (undefined1)((ulong)uVar5 >> 8);
+      uVar3 = CONCAT14(uVar32,(uint)CONCAT12(uVar32,(ushort)(byte)uVar5)) & 0xff0000ffff;
+      auVar6._1_7_ = 0;
+      auVar6[0] = bVar39 & (byte)uVar3 | bVar35 & (byte)uVar40;
+      auVar6[8] = bVar39 & (byte)(uVar3 >> 0x20) | bVar35 & (byte)((ulong)uVar40 >> 8);
+      auVar6._9_7_ = 0;
+      auVar7[1] = bVar36 & (byte)(uVar42 >> 8);
+      auVar7[0] = bVar39 & (byte)((ulong)uVar5 >> 0x10) | bVar35 & (byte)uVar42;
+      auVar7[2] = bVar37 & (byte)(uVar42 >> 0x10);
+      auVar7[3] = bVar38 & (byte)(uVar42 >> 0x18);
+      auVar7._4_4_ = 0;
+      auVar7[8] = bVar39 & (byte)((ulong)uVar5 >> 0x18) | bVar35 & bVar33;
+      auVar7._9_7_ = 0;
+      auVar9._1_7_ = 0;
+      auVar9[0] = bVar39 & (byte)((ulong)uVar5 >> 0x20) | bVar35 & (byte)((ulong)uVar40 >> 0x20);
+      auVar9[8] = bVar39 & (byte)((ulong)uVar5 >> 0x28) | bVar35 & (byte)((ulong)uVar40 >> 0x28);
+      auVar9._9_7_ = 0;
+      auVar10[1] = bVar36 & (byte)(uVar27 >> 8);
+      auVar10[0] = bVar39 & (byte)((ulong)uVar5 >> 0x30) | bVar35 & (byte)uVar27;
+      auVar10[2] = bVar37 & (byte)(uVar27 >> 0x10);
+      auVar10[3] = bVar38 & (byte)(uVar27 >> 0x18);
+      auVar10._4_4_ = 0;
+      auVar10[8] = bVar39 & (byte)((ulong)uVar5 >> 0x38) | bVar35 & bVar34;
+      auVar10._9_7_ = 0;
+      auVar41 = a64_TBL(ZEXT816(0),auVar6,auVar7,auVar9,auVar10,auVar20);
+      *puVar31 = auVar41._0_8_;
+      lVar24 = lVar24 + 8;
+      puVar29 = puVar29 + 1;
+      puVar30 = puVar30 + 1;
+      puVar31 = puVar31 + 1;
+    } while (lVar24 != 0);
+    uVar23 = uVar23 + (uVar25 - uVar21);
+    if (uVar21 == 0) {
+      return;
+    }
+  }
+LAB_00000208:
+  lVar24 = param_5 - uVar23;
+  pbVar22 = (byte *)(lVar2 + uVar23);
+  pbVar26 = (byte *)(param_3 + uVar23);
+  pbVar28 = (byte *)(param_2 + uVar23);
+  do {
+    *pbVar28 = *pbVar22 & bVar39 | *pbVar26 & bVar35;
+    lVar24 = lVar24 + -1;
+    pbVar22 = pbVar22 + 1;
+    pbVar26 = pbVar26 + 1;
+    pbVar28 = pbVar28 + 1;
+  } while (lVar24 != 0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_ct_memcpy_offset
+// Entry: 00000410
+// Signature: undefined _mbedtls_ct_memcpy_offset(void)
+// ========================================
+
+
+void _mbedtls_ct_memcpy_offset
+               (byte *param_1,long param_2,ulong param_3,ulong param_4,ulong param_5,ulong param_6)
+
+{
+  long lVar1;
+  uint5 uVar2;
+  undefined1 auVar3 [16];
+  uint5 uVar4;
+  undefined1 auVar5 [16];
+  uint5 uVar6;
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [11];
+  undefined1 auVar16 [13];
+  undefined1 auVar17 [13];
+  undefined1 auVar18 [13];
+  undefined1 auVar19 [13];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  ulong uVar22;
+  ulong uVar23;
+  ulong uVar24;
+  long lVar25;
+  long lVar26;
+  byte *pbVar27;
+  ulong uVar28;
+  byte *pbVar29;
+  ulong uVar30;
+  ulong uVar31;
+  byte *pbVar32;
+  byte *pbVar33;
+  byte *pbVar34;
+  undefined1 uVar35;
+  byte bVar36;
+  undefined1 uVar37;
+  byte bVar38;
+  byte bVar39;
+  byte bVar40;
+  undefined8 uVar41;
+  undefined1 auVar42 [16];
+  ulong uVar43;
+  undefined1 auVar44 [16];
+  undefined8 uVar45;
+  uint3 uVar46;
+  ulong uVar47;
+  
+  auVar21 = auRam0000000000009b00;
+  auVar20 = auRam0000000000009a00;
+  if (param_4 <= param_5) {
+    if (param_6 < 8) {
+      if (param_6 == 0) {
+        do {
+          param_4 = param_4 + 1;
+        } while (param_4 <= param_5);
+      }
+      else {
+        do {
+          uVar24 = _mbedtls_ct_zero ^ param_3 ^ param_4;
+          bVar36 = (byte)(-(uVar24 >> 1) >> 0x38) | (byte)(-uVar24 >> 0x38);
+          bVar40 = (char)~bVar36 >> 7;
+          bVar39 = (byte)_mbedtls_ct_zero ^ bVar40 ^ 0xff;
+          *param_1 = *param_1 & bVar39 | *(byte *)(param_2 + param_4) & ((char)bVar36 >> 7 ^ 0xffU);
+          if (param_6 != 1) {
+            param_1[1] = param_1[1] & bVar39 | *(byte *)(param_2 + param_4 + 1) & bVar40;
+            if ((param_6 != 2) &&
+               (param_1[2] = param_1[2] & bVar39 | *(byte *)(param_2 + param_4 + 2) & bVar40,
+               param_6 != 3)) {
+              param_1[3] = param_1[3] & bVar39 | *(byte *)(param_2 + param_4 + 3) & bVar40;
+              if ((param_6 != 4) &&
+                 (param_1[4] = param_1[4] & bVar39 | *(byte *)(param_2 + param_4 + 4) & bVar40,
+                 param_6 != 5)) {
+                param_1[5] = param_1[5] & bVar39 | *(byte *)(param_2 + param_4 + 5) & bVar40;
+                if (param_6 != 6) {
+                  param_1[6] = param_1[6] & bVar39 | *(byte *)(param_2 + param_4 + 6) & bVar40;
+                }
+              }
+            }
+          }
+          param_4 = param_4 + 1;
+        } while (param_4 <= param_5);
+      }
+    }
+    else {
+      lVar25 = 0;
+      lVar1 = param_6 + param_4;
+      lVar26 = param_2 + param_4;
+      pbVar27 = (byte *)(lVar26 + 8);
+      do {
+        uVar24 = _mbedtls_ct_zero ^ param_3 ^ param_4;
+        uVar22 = ~(-(uVar24 >> 1) | -uVar24);
+        uVar23 = (long)uVar22 >> 0x3f;
+        uVar28 = _mbedtls_ct_zero ^ uVar23 ^ 0xffffffffffffffff;
+        uVar24 = 0;
+        uVar31 = param_6;
+        pbVar29 = pbVar27;
+        pbVar33 = param_1;
+        do {
+          pbVar32 = pbVar29;
+          uVar30 = uVar31;
+          uVar43 = uVar24;
+          pbVar33 = pbVar33 + 8;
+          *(ulong *)(param_1 + uVar43) =
+               *(ulong *)(param_1 + uVar43) & uVar28 | *(ulong *)(lVar26 + uVar43) & uVar23;
+          uVar24 = uVar43 + 8;
+          uVar31 = uVar30 - 8;
+          pbVar29 = pbVar32 + 8;
+        } while (uVar43 + 0x10 <= param_6);
+        uVar23 = param_6 - uVar24;
+        if (uVar24 <= param_6 && uVar23 != 0) {
+          bVar40 = (byte)uVar28;
+          bVar39 = (byte)((long)uVar22 >> 0x3f);
+          if ((7 < uVar23) &&
+             (((byte *)(param_2 + lVar1 + lVar25) <= param_1 + uVar24 ||
+              (param_1 + param_6 <= (byte *)(lVar26 + uVar24))))) {
+            if (uVar23 < 0x10) {
+              uVar28 = 0;
+            }
+            else {
+              uVar28 = uVar23 & 0xfffffffffffffff0;
+              uVar22 = (param_6 - 8) - uVar43 & 0xfffffffffffffff0;
+              pbVar29 = pbVar32;
+              pbVar34 = pbVar33;
+              do {
+                auVar17[0xc] = pbVar29[0xf];
+                auVar17._0_12_ = ZEXT112(pbVar29[0xe]) << 0x40;
+                uVar43 = (ulong)auVar17._8_5_ & 0xffffffff;
+                auVar15[10] = pbVar29[5];
+                auVar15._0_10_ = (unkuint10)pbVar29[4] << 0x40;
+                uVar46 = auVar15._8_3_ & 0xffff;
+                auVar19[0xc] = pbVar29[3];
+                auVar19._0_12_ = ZEXT112(pbVar29[2]) << 0x40;
+                uVar47 = (ulong)auVar19._8_5_ & 0xffffffff;
+                uVar45 = *(undefined8 *)(pbVar34 + 8);
+                uVar41 = *(undefined8 *)pbVar34;
+                uVar35 = (undefined1)((ulong)uVar45 >> 8);
+                uVar37 = (undefined1)((ulong)uVar45 >> 0x28);
+                uVar4 = CONCAT14(uVar37,(uint)CONCAT12(uVar37,(ushort)(byte)((ulong)uVar45 >> 0x20))
+                                ) & 0xff0000ffff;
+                uVar6 = CONCAT14(uVar35,(uint)CONCAT12(uVar35,(ushort)(byte)uVar45)) & 0xff0000ffff;
+                uVar35 = (undefined1)((ulong)uVar41 >> 8);
+                uVar2 = CONCAT14(uVar35,(uint)CONCAT12(uVar35,(ushort)(byte)uVar41)) & 0xff0000ffff;
+                auVar42._1_7_ = 0;
+                auVar42[0] = bVar40 & (byte)uVar2 | bVar39 & *pbVar29;
+                auVar42[8] = bVar40 & (byte)(uVar2 >> 0x20) | bVar39 & pbVar29[1];
+                auVar42._9_7_ = 0;
+                auVar44[1] = bVar39 & (byte)(uVar47 >> 8);
+                auVar44[0] = bVar40 & (byte)((ulong)uVar41 >> 0x10) | bVar39 & (byte)uVar47;
+                auVar44[2] = bVar39 & (byte)(uVar47 >> 0x10);
+                auVar44[3] = bVar39 & (byte)(uVar47 >> 0x18);
+                auVar44._4_4_ = 0;
+                auVar44[8] = bVar40 & (byte)((ulong)uVar41 >> 0x18) | bVar39 & pbVar29[3];
+                auVar44._9_7_ = 0;
+                auVar9[1] = bVar39 & (byte)(uVar46 >> 8);
+                auVar9[0] = bVar40 & (byte)((ulong)uVar41 >> 0x20) | bVar39 & (byte)uVar46;
+                auVar9._2_6_ = 0;
+                auVar9[8] = bVar40 & (byte)((ulong)uVar41 >> 0x28) | bVar39 & pbVar29[5];
+                auVar9._9_7_ = 0;
+                auVar10._1_7_ = 0;
+                auVar10[0] = bVar40 & (byte)((ulong)uVar41 >> 0x30) | bVar39 & pbVar29[6];
+                auVar10[8] = bVar40 & (byte)((ulong)uVar41 >> 0x38) | bVar39 & pbVar29[7];
+                auVar10._9_7_ = 0;
+                auVar42 = a64_TBL(ZEXT816(0),auVar42,auVar44,auVar9,auVar10,auVar20);
+                auVar11._1_7_ = 0;
+                auVar11[0] = bVar40 & (byte)uVar6 | bVar39 & pbVar29[8];
+                auVar11[8] = bVar40 & (byte)(uVar6 >> 0x20) | bVar39 & pbVar29[9];
+                auVar11._9_7_ = 0;
+                auVar12._1_7_ = 0;
+                auVar12[0] = bVar40 & (byte)((ulong)uVar45 >> 0x10) | bVar39 & pbVar29[10];
+                auVar12[8] = bVar40 & (byte)((ulong)uVar45 >> 0x18) | bVar39 & pbVar29[0xb];
+                auVar12._9_7_ = 0;
+                auVar13._1_7_ = 0;
+                auVar13[0] = bVar40 & (byte)uVar4 | bVar39 & pbVar29[0xc];
+                auVar13[8] = bVar40 & (byte)(uVar4 >> 0x20) | bVar39 & pbVar29[0xd];
+                auVar13._9_7_ = 0;
+                auVar14[1] = bVar39 & (byte)(uVar43 >> 8);
+                auVar14[0] = bVar40 & (byte)((ulong)uVar45 >> 0x30) | bVar39 & (byte)uVar43;
+                auVar14[2] = bVar39 & (byte)(uVar43 >> 0x10);
+                auVar14[3] = bVar39 & (byte)(uVar43 >> 0x18);
+                auVar14._4_4_ = 0;
+                auVar14[8] = bVar40 & (byte)((ulong)uVar45 >> 0x38) | bVar39 & pbVar29[0xf];
+                auVar14._9_7_ = 0;
+                auVar44 = a64_TBL(ZEXT816(0),auVar11,auVar12,auVar13,auVar14,auVar20);
+                *(long *)(pbVar34 + 8) = auVar44._0_8_;
+                *(long *)pbVar34 = auVar42._0_8_;
+                uVar22 = uVar22 - 0x10;
+                pbVar29 = pbVar29 + 0x10;
+                pbVar34 = pbVar34 + 0x10;
+              } while (uVar22 != 0);
+              if (uVar23 == uVar28) goto LAB_000005dc;
+              if (((uint)uVar23 >> 3 & 1) == 0) {
+                uVar24 = (uVar31 & 0xfffffffffffffff0) + uVar24;
+                goto LAB_0000087c;
+              }
+            }
+            uVar24 = uVar24 + (uVar23 - (param_6 & 7));
+            uVar31 = (param_6 & 7 | 8) + uVar28;
+            pbVar29 = pbVar32 + uVar28;
+            pbVar33 = pbVar33 + uVar28;
+            do {
+              uVar41 = *(undefined8 *)pbVar29;
+              bVar36 = (byte)((ulong)uVar41 >> 0x18);
+              bVar38 = (byte)((ulong)uVar41 >> 0x38);
+              auVar16[0xc] = bVar38;
+              auVar16._0_12_ = ZEXT112((byte)((ulong)uVar41 >> 0x30)) << 0x40;
+              uVar22 = (ulong)auVar16._8_5_ & 0xffffffff;
+              auVar18[0xc] = bVar36;
+              auVar18._0_12_ = ZEXT112((byte)((ulong)uVar41 >> 0x10)) << 0x40;
+              uVar23 = (ulong)auVar18._8_5_ & 0xffffffff;
+              uVar45 = *(undefined8 *)pbVar33;
+              uVar46 = CONCAT12((char)((ulong)uVar45 >> 8),(short)uVar45) & 0xff00ff;
+              auVar3._1_7_ = 0;
+              auVar3[0] = bVar40 & (byte)uVar46 | bVar39 & (byte)uVar41;
+              auVar3[8] = bVar40 & (byte)(uVar46 >> 0x10) | bVar39 & (byte)((ulong)uVar41 >> 8);
+              auVar3._9_7_ = 0;
+              auVar5[1] = bVar39 & (byte)(uVar23 >> 8);
+              auVar5[0] = bVar40 & (byte)((ulong)uVar45 >> 0x10) | bVar39 & (byte)uVar23;
+              auVar5[2] = bVar39 & (byte)(uVar23 >> 0x10);
+              auVar5[3] = bVar39 & (byte)(uVar23 >> 0x18);
+              auVar5._4_4_ = 0;
+              auVar5[8] = bVar40 & (byte)((ulong)uVar45 >> 0x18) | bVar39 & bVar36;
+              auVar5._9_7_ = 0;
+              auVar7._1_7_ = 0;
+              auVar7[0] = bVar40 & (byte)((ulong)uVar45 >> 0x20) |
+                          bVar39 & (byte)((ulong)uVar41 >> 0x20);
+              auVar7[8] = bVar40 & (byte)((ulong)uVar45 >> 0x28) |
+                          bVar39 & (byte)((ulong)uVar41 >> 0x28);
+              auVar7._9_7_ = 0;
+              auVar8[1] = bVar39 & (byte)(uVar22 >> 8);
+              auVar8[0] = bVar40 & (byte)((ulong)uVar45 >> 0x30) | bVar39 & (byte)uVar22;
+              auVar8[2] = bVar39 & (byte)(uVar22 >> 0x10);
+              auVar8[3] = bVar39 & (byte)(uVar22 >> 0x18);
+              auVar8._4_4_ = 0;
+              auVar8[8] = bVar40 & (byte)((ulong)uVar45 >> 0x38) | bVar39 & bVar38;
+              auVar8._9_7_ = 0;
+              auVar42 = a64_TBL(ZEXT816(0),auVar3,auVar5,auVar7,auVar8,auVar21);
+              *(long *)pbVar33 = auVar42._0_8_;
+              uVar31 = uVar31 + 8;
+              pbVar29 = pbVar29 + 8;
+              pbVar33 = pbVar33 + 8;
+            } while (uVar30 != uVar31);
+            if ((param_6 & 7) == 0) goto LAB_000005dc;
+          }
+LAB_0000087c:
+          do {
+            param_1[uVar24] = param_1[uVar24] & bVar40 | *(byte *)(lVar26 + uVar24) & bVar39;
+            uVar24 = uVar24 + 1;
+          } while (param_6 != uVar24);
+        }
+LAB_000005dc:
+        param_4 = param_4 + 1;
+        lVar25 = lVar25 + 1;
+        lVar26 = lVar26 + 1;
+        pbVar27 = pbVar27 + 1;
+      } while (param_4 <= param_5);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _mbedtls_ct_zeroize_if
+// Entry: 000008a4
+// Signature: undefined _mbedtls_ct_zeroize_if(void)
+// ========================================
+
+
+void _mbedtls_ct_zeroize_if(uint param_1,long param_2,ulong param_3)
+
+{
+  byte bVar1;
+  ulong uVar2;
+  long lVar3;
+  ulong uVar4;
+  ulong *puVar5;
+  byte *pbVar6;
+  ulong uVar7;
+  undefined8 *puVar8;
+  ulong uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  
+  if (param_3 < 4) {
+    uVar4 = 0;
+  }
+  else {
+    uVar2 = 0;
+    do {
+      *(uint *)(param_2 + uVar2) = *(uint *)(param_2 + uVar2) & ~param_1;
+      uVar4 = uVar2 + 4;
+      uVar9 = uVar2 + 8;
+      uVar2 = uVar4;
+    } while (uVar9 <= param_3);
+  }
+  uVar2 = param_3 - uVar4;
+  if (param_3 < uVar4 || uVar2 == 0) {
+    return;
+  }
+  bVar1 = (byte)~param_1;
+  if (7 < uVar2) {
+    if (uVar2 < 0x20) {
+      uVar7 = 0;
+    }
+    else {
+      uVar7 = uVar2 & 0xffffffffffffffe0;
+      puVar8 = (undefined8 *)(uVar4 + param_2 + 0x10);
+      uVar9 = uVar7;
+      do {
+        uVar11 = puVar8[-1];
+        uVar10 = puVar8[-2];
+        uVar13 = puVar8[1];
+        uVar12 = *puVar8;
+        puVar8[-1] = CONCAT17((byte)((ulong)uVar11 >> 0x38) & bVar1,
+                              CONCAT16((byte)((ulong)uVar11 >> 0x30) & bVar1,
+                                       CONCAT15((byte)((ulong)uVar11 >> 0x28) & bVar1,
+                                                CONCAT14((byte)((ulong)uVar11 >> 0x20) & bVar1,
+                                                         CONCAT13((byte)((ulong)uVar11 >> 0x18) &
+                                                                  bVar1,CONCAT12((byte)((ulong)
+                                                  uVar11 >> 0x10) & bVar1,
+                                                  CONCAT11((byte)((ulong)uVar11 >> 8) & bVar1,
+                                                           (byte)uVar11 & bVar1)))))));
+        puVar8[-2] = CONCAT17((byte)((ulong)uVar10 >> 0x38) & bVar1,
+                              CONCAT16((byte)((ulong)uVar10 >> 0x30) & bVar1,
+                                       CONCAT15((byte)((ulong)uVar10 >> 0x28) & bVar1,
+                                                CONCAT14((byte)((ulong)uVar10 >> 0x20) & bVar1,
+                                                         CONCAT13((byte)((ulong)uVar10 >> 0x18) &
+                                                                  bVar1,CONCAT12((byte)((ulong)
+                                                  uVar10 >> 0x10) & bVar1,
+                                                  CONCAT11((byte)((ulong)uVar10 >> 8) & bVar1,
+                                                           (byte)uVar10 & bVar1)))))));
+        puVar8[1] = CONCAT17((byte)((ulong)uVar13 >> 0x38) & bVar1,
+                             CONCAT16((byte)((ulong)uVar13 >> 0x30) & bVar1,
+                                      CONCAT15((byte)((ulong)uVar13 >> 0x28) & bVar1,
+                                               CONCAT14((byte)((ulong)uVar13 >> 0x20) & bVar1,
+                                                        CONCAT13((byte)((ulong)uVar13 >> 0x18) &
+                                                                 bVar1,CONCAT12((byte)((ulong)uVar13
+                                                                                      >> 0x10) &
+                                                                                bVar1,CONCAT11((byte
+                                                  )((ulong)uVar13 >> 8) & bVar1,(byte)uVar13 & bVar1
+                                                  )))))));
+        *puVar8 = CONCAT17((byte)((ulong)uVar12 >> 0x38) & bVar1,
+                           CONCAT16((byte)((ulong)uVar12 >> 0x30) & bVar1,
+                                    CONCAT15((byte)((ulong)uVar12 >> 0x28) & bVar1,
+                                             CONCAT14((byte)((ulong)uVar12 >> 0x20) & bVar1,
+                                                      CONCAT13((byte)((ulong)uVar12 >> 0x18) & bVar1
+                                                               ,CONCAT12((byte)((ulong)uVar12 >>
+                                                                               0x10) & bVar1,
+                                                                         CONCAT11((byte)((ulong)
+                                                  uVar12 >> 8) & bVar1,(byte)uVar12 & bVar1)))))));
+        puVar8 = puVar8 + 4;
+        uVar9 = uVar9 - 0x20;
+      } while (uVar9 != 0);
+      if (uVar2 == uVar7) {
+        return;
+      }
+      if ((uVar2 & 0x18) == 0) {
+        uVar4 = uVar4 + uVar7;
+        goto LAB_00000980;
+      }
+    }
+    uVar9 = uVar2 & 0xfffffffffffffff8;
+    lVar3 = uVar7 - uVar9;
+    puVar5 = (ulong *)(param_2 + uVar7 + uVar4);
+    do {
+      *puVar5 = *puVar5 & CONCAT17(bVar1,CONCAT16(bVar1,CONCAT15(bVar1,CONCAT14(bVar1,CONCAT13(bVar1
+                                                  ,CONCAT12(bVar1,CONCAT11(bVar1,bVar1)))))));
+      lVar3 = lVar3 + 8;
+      puVar5 = puVar5 + 1;
+    } while (lVar3 != 0);
+    uVar4 = uVar4 + uVar9;
+    if (uVar2 == uVar9) {
+      return;
+    }
+  }
+LAB_00000980:
+  lVar3 = param_3 - uVar4;
+  pbVar6 = (byte *)(param_2 + uVar4);
+  do {
+    *pbVar6 = *pbVar6 & bVar1;
+    lVar3 = lVar3 + -1;
+    pbVar6 = pbVar6 + 1;
+  } while (lVar3 != 0);
+  return;
+}
+
+
+
+// SUMMARY
+// Decompiled: 5
+// Failed: 0
+// Skipped external functions: 0

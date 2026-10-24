@@ -1,0 +1,3975 @@
+Program: persistence_base64_encoding.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: make_base64_header
+// Entry: 00000000
+// Signature: undefined __thiscall make_base64_header(base64 * this, char * param_1)
+// ========================================
+
+
+/* cv::base64::make_base64_header(char const*) */
+
+void __thiscall cv::base64::make_base64_header(base64 *this,char *param_1)
+
+{
+  ulong uVar1;
+  undefined *puVar2;
+  long lVar3;
+  code *pcVar4;
+  size_t sVar5;
+  ostream *poVar6;
+  ulong in_x8;
+  string local_170 [24];
+  undefined *local_158;
+  long local_150 [8];
+  void *local_110;
+  undefined8 uStack_108;
+  long lStack_100;
+  undefined8 uStack_f8;
+  undefined4 local_f0;
+  undefined *local_e8 [17];
+  undefined8 local_60;
+  undefined4 local_58;
+  
+  local_158 = std::ostream-in-std::ostringstream::construction_vtable + 0x18;
+  local_e8[0] = std::ostream-in-std::ostringstream::construction_vtable + 0x40;
+  std::ios_base::init((ios *)local_e8);
+  puVar2 = std::ostringstream::vtable;
+  local_60 = 0;
+  local_58 = 0xffffffff;
+  local_158 = std::ostringstream::vtable + 0x18;
+  local_e8[0] = std::ostringstream::vtable + 0x40;
+  std::streambuf::streambuf((streambuf *)local_150);
+  lVar3 = std::stringbuf::vtable;
+  local_150[0] = std::stringbuf::vtable + 0x10;
+  uStack_108 = 0;
+  local_110 = (void *)0x0;
+  uStack_f8 = 0;
+  lStack_100 = 0;
+  local_f0 = 0x10;
+  sVar5 = _strlen((char *)this);
+  poVar6 = std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                     ((ostream *)&local_158,(char *)this,sVar5);
+  local_170[0] = (string)0x20;
+  std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+            (poVar6,(char *)local_170,1);
+  std::stringbuf::str();
+  uVar1 = *(ulong *)(in_x8 + 8);
+  if (-1 < (char)*(byte *)(in_x8 + 0x17)) {
+    uVar1 = (ulong)*(byte *)(in_x8 + 0x17);
+  }
+  if (uVar1 < 0x18) {
+    std::string::reserve(in_x8);
+    while( true ) {
+      uVar1 = *(ulong *)(in_x8 + 8);
+      if (-1 < (char)*(byte *)(in_x8 + 0x17)) {
+        uVar1 = (ulong)*(byte *)(in_x8 + 0x17);
+      }
+      if (0x17 < uVar1) break;
+      std::string::push_back((char)in_x8);
+    }
+    local_158 = puVar2 + 0x18;
+    local_e8[0] = puVar2 + 0x40;
+    local_150[0] = lVar3 + 0x10;
+    if (lStack_100 < 0) {
+      operator_delete(local_110);
+    }
+    std::streambuf::~streambuf((streambuf *)local_150);
+    std::ostream::~ostream((ostream *)&local_158);
+    std::ios::~ios((ios *)local_e8);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_170,"buffer.size() < ::base64::HEADER_SIZE");
+  cv::error(-0xd7,local_170,"make_base64_header",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x8a);
+                    /* WARNING: Does not return */
+  pcVar4 = (code *)SoftwareBreakpoint(1,0x1c4);
+  (*pcVar4)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000278
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+ostream * __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (ostream *param_1,char *param_2)
+
+{
+  undefined *puVar1;
+  ulong uVar2;
+  long lVar3;
+  size_t sVar4;
+  ostream *poVar5;
+  
+  sVar4 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar4) {
+    poVar5 = (ostream *)std::string::__throw_length_error_abi_ne180100_();
+    puVar1 = std::ostringstream::vtable + 0x18;
+    *(undefined **)(poVar5 + 0x70) = std::ostringstream::vtable + 0x40;
+    lVar3 = std::stringbuf::vtable;
+    *(undefined **)poVar5 = puVar1;
+    *(long *)(poVar5 + 8) = lVar3 + 0x10;
+    if ((char)poVar5[0x5f] < '\0') {
+      operator_delete(*(void **)(poVar5 + 0x48));
+    }
+    std::streambuf::~streambuf((streambuf *)(poVar5 + 8));
+    std::ostream::~ostream(poVar5);
+    std::ios::~ios((ios *)(poVar5 + 0x70));
+    return poVar5;
+  }
+  if (sVar4 < 0x17) {
+    param_1[0x17] = SUB81(sVar4,0);
+    poVar5 = param_1;
+    if (sVar4 == 0) goto LAB_00000304;
+  }
+  else {
+    uVar2 = (sVar4 & 0xfffffffffffffff8) + 8;
+    if ((sVar4 | 7) != 0x17) {
+      uVar2 = sVar4 | 7;
+    }
+    poVar5 = operator_new(uVar2 + 1);
+    *(size_t *)(param_1 + 8) = sVar4;
+    *(ulong *)(param_1 + 0x10) = uVar2 + 1 | 0x8000000000000000;
+    *(ostream **)param_1 = poVar5;
+  }
+  _memmove(poVar5,param_2,sVar4);
+LAB_00000304:
+  poVar5[sVar4] = (ostream)0x0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: ~ostringstream
+// Entry: 00000328
+// Signature: undefined __thiscall ~ostringstream(ostringstream * this)
+// ========================================
+
+
+/* std::ostringstream::~ostringstream() */
+
+ostringstream * __thiscall std::ostringstream::~ostringstream(ostringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this + 0x70) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::ostream::~ostream((ostream *)this);
+  std::ios::~ios((ios *)(this + 0x70));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: base64_encode
+// Entry: 000003b4
+// Signature: undefined __thiscall base64_encode(base64 * this, uchar * param_1, uchar * param_2, ulong param_3, ulong param_4)
+// ========================================
+
+
+/* cv::base64::base64_encode(unsigned char const*, unsigned char*, unsigned long, unsigned long) */
+
+long __thiscall
+cv::base64::base64_encode(base64 *this,uchar *param_1,uchar *param_2,ulong param_3,ulong param_4)
+
+{
+  base64 *pbVar1;
+  base64 bVar2;
+  base64 bVar3;
+  base64 bVar4;
+  long lVar5;
+  uchar *puVar6;
+  uchar uVar7;
+  base64 *pbVar8;
+  base64 *pbVar9;
+  
+  if (this == (base64 *)0x0) {
+    return 0;
+  }
+  if (param_1 == (uchar *)0x0) {
+    return 0;
+  }
+  if (param_3 == 0) {
+    return 0;
+  }
+  pbVar8 = this + (long)param_2;
+  lVar5 = (param_3 / 3) * 3;
+  puVar6 = param_1;
+  if (lVar5 < 1) {
+    if (param_3 != 2) goto LAB_00000464;
+LAB_000004b0:
+    bVar2 = *pbVar8;
+    bVar3 = pbVar8[1];
+    *puVar6 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[(byte)bVar2 >> 2];
+    puVar6[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                [(ulong)((byte)bVar3 >> 4) | ((ulong)(byte)bVar2 & 3) << 4];
+    uVar7 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+            [((ulong)(byte)bVar3 & 0xf) * 4];
+  }
+  else {
+    pbVar9 = pbVar8;
+    do {
+      bVar2 = *pbVar9;
+      bVar3 = pbVar9[1];
+      pbVar1 = pbVar9 + 3;
+      bVar4 = pbVar9[2];
+      *puVar6 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[(byte)bVar2 >> 2]
+      ;
+      puVar6[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                  [(ulong)((byte)bVar3 >> 4) | ((ulong)(byte)bVar2 & 3) << 4];
+      puVar6[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                  [(ulong)((byte)bVar4 >> 6) | ((ulong)(byte)bVar3 & 0xf) << 2];
+      puVar6[3] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                  [(ulong)(byte)bVar4 & 0x3f];
+      puVar6 = puVar6 + 4;
+      pbVar9 = pbVar1;
+    } while (pbVar1 < pbVar8 + lVar5);
+    param_3 = (ulong)(pbVar8 + (param_3 - (long)pbVar1));
+    pbVar8 = pbVar1;
+    if ((base64 *)param_3 == (base64 *)0x2) goto LAB_000004b0;
+LAB_00000464:
+    if ((base64 *)param_3 != (base64 *)0x1) goto LAB_000004f4;
+    bVar2 = *pbVar8;
+    *puVar6 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[(byte)bVar2 >> 2];
+    puVar6[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                [((ulong)(byte)bVar2 & 3) * 0x10];
+    uVar7 = '=';
+  }
+  puVar6[2] = uVar7;
+  puVar6[3] = '=';
+  puVar6 = puVar6 + 4;
+LAB_000004f4:
+  *puVar6 = '\0';
+  return (long)puVar6 - (long)param_1;
+}
+
+
+
+
+// ========================================
+// Function: icvCalcStructSize
+// Entry: 00000500
+// Signature: undefined __cdecl icvCalcStructSize(char * param_1, int param_2)
+// ========================================
+
+
+/* cv::base64::icvCalcStructSize(char const*, int) */
+
+uint cv::base64::icvCalcStructSize(char *param_1,int param_2)
+
+{
+  char cVar1;
+  int iVar2;
+  uint uVar3;
+  
+  iVar2 = cv::fs::calcElemSize(param_1,param_2);
+  cVar1 = *param_1;
+  if (cVar1 == '\0') {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = 0;
+    do {
+      param_1 = param_1 + 1;
+      switch(cVar1) {
+      case 'c':
+      case 'u':
+        if (uVar3 < 2) {
+          uVar3 = 1;
+        }
+        break;
+      case 'd':
+        uVar3 = 8;
+        break;
+      case 'f':
+      case 'i':
+        if (uVar3 < 5) {
+          uVar3 = 4;
+        }
+        break;
+      case 's':
+      case 'w':
+        if (uVar3 < 3) {
+          uVar3 = 2;
+        }
+      }
+      cVar1 = *param_1;
+    } while (cVar1 != '\0');
+  }
+  return (iVar2 + uVar3) - 1 & -uVar3;
+}
+
+
+
+
+// ========================================
+// Function: base64_encode_buffer_size
+// Entry: 000005a8
+// Signature: undefined __thiscall base64_encode_buffer_size(base64 * this, ulong param_1, bool param_2)
+// ========================================
+
+
+/* cv::base64::base64_encode_buffer_size(unsigned long, bool) */
+
+ulong __thiscall cv::base64::base64_encode_buffer_size(base64 *this,ulong param_1,bool param_2)
+
+{
+  return param_1 & 3 | (ulong)(this + 2) / 3 << 2;
+}
+
+
+
+
+// ========================================
+// Function: Base64Writer
+// Entry: 000005cc
+// Signature: undefined __thiscall Base64Writer(Base64Writer * this, Impl * param_1, bool param_2)
+// ========================================
+
+
+/* cv::base64::Base64Writer::Base64Writer(cv::FileStorage::Impl&, bool) */
+
+Base64Writer * __thiscall
+cv::base64::Base64Writer::Base64Writer(Base64Writer *this,Impl *param_1,bool param_2)
+
+{
+  code *pcVar1;
+  Base64ContextEmitter *this_00;
+  string asStack_48 [24];
+  
+  this_00 = operator_new(0x58);
+  Base64ContextEmitter::Base64ContextEmitter(this_00,param_1,param_2);
+  *(Base64ContextEmitter **)this = this_00;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(undefined8 *)(this + 0x18) = 0;
+  if (param_1[0x42] != (Impl)0x0) {
+    return this;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (asStack_48,"fs.write_mode");
+  cv::error(-0xd7,asStack_48,"Base64Writer",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0xe3);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x668);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: Base64Writer
+// Entry: 000006c8
+// Signature: undefined __thiscall Base64Writer(Base64Writer * this, Impl * param_1, bool param_2)
+// ========================================
+
+
+/* cv::base64::Base64Writer::Base64Writer(cv::FileStorage::Impl&, bool) */
+
+Base64Writer * __thiscall
+cv::base64::Base64Writer::Base64Writer(Base64Writer *this,Impl *param_1,bool param_2)
+
+{
+  code *pcVar1;
+  Base64ContextEmitter *this_00;
+  string asStack_48 [24];
+  
+  this_00 = operator_new(0x58);
+  Base64ContextEmitter::Base64ContextEmitter(this_00,param_1,param_2);
+  *(Base64ContextEmitter **)this = this_00;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(undefined8 *)(this + 0x18) = 0;
+  if (param_1[0x42] != (Impl)0x0) {
+    return this;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (asStack_48,"fs.write_mode");
+  cv::error(-0xd7,asStack_48,"Base64Writer",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0xe3);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x668);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: write
+// Entry: 000006cc
+// Signature: undefined __thiscall write(Base64Writer * this, void * param_1, ulong param_2, char * param_3)
+// ========================================
+
+
+/* cv::base64::Base64Writer::write(void const*, unsigned long, char const*) */
+
+void __thiscall
+cv::base64::Base64Writer::write(Base64Writer *this,void *param_1,ulong param_2,char *param_3)
+
+{
+  RawDataToBinaryConvertor aRStack_70 [40];
+  void *local_48;
+  void *local_40;
+  
+  check_dt(this,param_3);
+  RawDataToBinaryConvertor::RawDataToBinaryConvertor
+            (aRStack_70,param_1,(int)param_2,(string *)(this + 8));
+  Base64ContextEmitter::write<cv::base64::RawDataToBinaryConvertor>
+            (*(Base64ContextEmitter **)this,aRStack_70);
+  if (local_48 != (void *)0x0) {
+    local_40 = local_48;
+    operator_delete(local_48);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: check_dt
+// Entry: 00000754
+// Signature: undefined __thiscall check_dt(Base64Writer * this, char * param_1)
+// ========================================
+
+
+/* cv::base64::Base64Writer::check_dt(char const*) */
+
+void __thiscall cv::base64::Base64Writer::check_dt(Base64Writer *this,char *param_1)
+
+{
+  Base64Writer *pBVar1;
+  undefined8 ****ppppuVar2;
+  long lVar3;
+  Base64Writer BVar4;
+  code *pcVar5;
+  int iVar6;
+  size_t sVar7;
+  char *extraout_x1;
+  uint uVar8;
+  size_t sVar9;
+  undefined8 ****ppppuVar10;
+  Base64ContextEmitter *this_00;
+  undefined8 ***local_58;
+  ulong uStack_50;
+  byte local_41;
+  
+  if (param_1 == (char *)0x0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (&local_58,"Invalid \'dt\'.");
+    cv::error(-5,(string *)&local_58,"check_dt",
+              "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0xfc);
+    goto LAB_00000938;
+  }
+  pBVar1 = this + 8;
+  BVar4 = this[0x1f];
+  if ((char)BVar4 < '\0') {
+    sVar7 = *(size_t *)(this + 0x10);
+    if (sVar7 == 0) goto LAB_00000840;
+    sVar9 = _strlen(param_1);
+    if (sVar9 == sVar7) {
+      if (sVar7 == 0xffffffffffffffff) goto LAB_00000930;
+      iVar6 = _memcmp(*(void **)pBVar1,param_1,sVar7);
+      goto joined_r0x00000808;
+    }
+  }
+  else {
+    if (BVar4 == (Base64Writer)0x0) {
+LAB_00000840:
+      std::string::assign((char *)pBVar1);
+      make_base64_header((base64 *)param_1,extraout_x1);
+      uVar8 = (uint)(char)local_41;
+      ppppuVar10 = (undefined8 ****)local_58;
+      if (-1 < (int)uVar8) {
+        uStack_50 = (ulong)local_41;
+        ppppuVar10 = &local_58;
+      }
+      if (0 < (long)uStack_50) {
+        ppppuVar2 = (undefined8 ****)((long)ppppuVar10 + uStack_50);
+        this_00 = *(Base64ContextEmitter **)this;
+        do {
+          sVar9 = (long)ppppuVar2 - (long)ppppuVar10;
+          sVar7 = *(long *)(this_00 + 0x50) - (long)*(void **)(this_00 + 0x48);
+          if ((long)sVar9 <= (long)sVar7) {
+            sVar7 = sVar9;
+          }
+          _memcpy(*(void **)(this_00 + 0x48),ppppuVar10,sVar7);
+          lVar3 = *(long *)(this_00 + 0x48);
+          *(size_t *)(this_00 + 0x48) = lVar3 + sVar7;
+          if (*(ulong *)(this_00 + 0x50) <= lVar3 + sVar7) {
+            Base64ContextEmitter::flush(this_00);
+          }
+          ppppuVar10 = (undefined8 ****)((long)ppppuVar10 + sVar7);
+        } while (ppppuVar10 < ppppuVar2);
+        uVar8 = (uint)local_41;
+      }
+      if ((uVar8 >> 7 & 1) == 0) {
+        return;
+      }
+      operator_delete(local_58);
+      return;
+    }
+    sVar7 = _strlen(param_1);
+    if (sVar7 == (byte)BVar4) {
+      if (sVar7 == 0xffffffffffffffff) {
+LAB_00000930:
+        std::string::__throw_out_of_range_abi_ne180100_();
+        goto LAB_00000938;
+      }
+      iVar6 = _memcmp(pBVar1,param_1,sVar7);
+joined_r0x00000808:
+      if (iVar6 == 0) {
+        return;
+      }
+    }
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (&local_58,"\'dt\' does not match.");
+  cv::error(-5,(string *)&local_58,"check_dt",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x107);
+LAB_00000938:
+                    /* WARNING: Does not return */
+  pcVar5 = (code *)SoftwareBreakpoint(1,0x93c);
+  (*pcVar5)();
+}
+
+
+
+
+// ========================================
+// Function: RawDataToBinaryConvertor
+// Entry: 00000964
+// Signature: undefined __thiscall RawDataToBinaryConvertor(RawDataToBinaryConvertor * this, void * param_1, int param_2, string * param_3)
+// ========================================
+
+
+/* cv::base64::RawDataToBinaryConvertor::RawDataToBinaryConvertor(void const*, int, std::string
+   const&) */
+
+RawDataToBinaryConvertor * __thiscall
+cv::base64::RawDataToBinaryConvertor::RawDataToBinaryConvertor
+          (RawDataToBinaryConvertor *this,void *param_1,int param_2,string *param_3)
+
+{
+  ulong uVar1;
+  string sVar2;
+  code *pcVar3;
+  int iVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  string *psVar7;
+  string asStack_48 [24];
+  
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  *(undefined8 *)(this + 0x38) = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(void **)this = param_1;
+  if (param_1 == (void *)0x0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_48,"src");
+    cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+              "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x10f);
+  }
+  else {
+    uVar1 = *(ulong *)(param_3 + 8);
+    if (-1 < (char)param_3[0x17]) {
+      uVar1 = (ulong)(byte)param_3[0x17];
+    }
+    if (uVar1 == 0) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_48,"!dt.empty()");
+      cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+                "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x110)
+      ;
+    }
+    else {
+      if (0 < param_2) {
+        uVar5 = make_to_binary_funcs(this,param_3);
+        *(undefined8 *)(this + 0x20) = uVar5;
+        *(undefined8 *)(this + 8) = *(undefined8 *)this;
+        *(undefined8 *)(this + 0x10) = *(undefined8 *)this;
+        psVar7 = *(string **)param_3;
+        if (-1 < (char)param_3[0x17]) {
+          psVar7 = param_3;
+        }
+        iVar4 = cv::fs::calcElemSize((char *)psVar7,0);
+        sVar2 = *psVar7;
+        if (sVar2 == (string)0x0) {
+          uVar6 = 0;
+        }
+        else {
+          uVar6 = 0;
+          do {
+            psVar7 = psVar7 + 1;
+            switch(sVar2) {
+            case (string)0x63:
+            case (string)0x75:
+              if (uVar6 < 2) {
+                uVar6 = 1;
+              }
+              break;
+            case (string)0x64:
+              uVar6 = 8;
+              break;
+            case (string)0x66:
+            case (string)0x69:
+              if (uVar6 < 5) {
+                uVar6 = 4;
+              }
+              break;
+            case (string)0x73:
+            case (string)0x77:
+              if (uVar6 < 3) {
+                uVar6 = 2;
+              }
+            }
+            sVar2 = *psVar7;
+          } while (sVar2 != (string)0x0);
+        }
+        *(ulong *)(this + 0x10) = *(long *)this + (ulong)(uint)param_2;
+        *(long *)(this + 0x18) = (long)(int)((iVar4 + uVar6) - 1 & -uVar6);
+        return this;
+      }
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_48,"len > 0");
+      cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+                "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x111)
+      ;
+    }
+  }
+                    /* WARNING: Does not return */
+  pcVar3 = (code *)SoftwareBreakpoint(1,0xf78);
+  (*pcVar3)();
+}
+
+
+
+
+// ========================================
+// Function: write<cv::base64::RawDataToBinaryConvertor>
+// Entry: 00000968
+// Signature: Base64ContextEmitter * __thiscall write<cv::base64::RawDataToBinaryConvertor>(Base64ContextEmitter * this, RawDataToBinaryConvertor * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::base64::Base64ContextEmitter&
+   cv::base64::Base64ContextEmitter::write<cv::base64::RawDataToBinaryConvertor>(cv::base64::RawDataToBinaryConvertor&)
+    */
+
+Base64ContextEmitter * __thiscall
+cv::base64::Base64ContextEmitter::write<cv::base64::RawDataToBinaryConvertor>
+          (Base64ContextEmitter *this,RawDataToBinaryConvertor *param_1)
+
+{
+  void *pvVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  void *pvVar5;
+  ulong uVar6;
+  size_t sVar7;
+  char *pcVar8;
+  size_t sVar9;
+  byte *pbVar10;
+  byte *pbVar11;
+  char *pcVar12;
+  byte *pbVar13;
+  byte *pbVar14;
+  long lVar15;
+  void *pvVar16;
+  long *plVar17;
+  undefined2 local_ba;
+  undefined1 auStack_b8 [80];
+  long local_68;
+  
+  local_68 = *____stack_chk_guard;
+  pvVar5 = operator_new(0x400);
+  _bzero(pvVar5,0x400);
+  uVar6 = *(ulong *)(param_1 + 8);
+  if (uVar6 < *(ulong *)(param_1 + 0x10)) {
+    do {
+      if (*(long *)(param_1 + 0x30) - *(long *)(param_1 + 0x28) != 0) {
+        lVar15 = 0;
+        uVar6 = (*(long *)(param_1 + 0x30) - *(long *)(param_1 + 0x28)) / 0x18;
+        if (uVar6 < 2) {
+          uVar6 = 1;
+        }
+        do {
+          plVar17 = (long *)(*(long *)(param_1 + 0x28) + lVar15);
+          (*(code *)plVar17[2])(*(long *)(param_1 + 8) + *plVar17,(long)pvVar5 + plVar17[1]);
+          lVar15 = lVar15 + 0x18;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+        uVar6 = *(ulong *)(param_1 + 8);
+      }
+      uVar6 = uVar6 + *(long *)(param_1 + 0x18);
+      *(ulong *)(param_1 + 8) = uVar6;
+      if (0 < *(long *)(param_1 + 0x20)) {
+        pvVar1 = (void *)((long)pvVar5 + *(long *)(param_1 + 0x20));
+        pvVar16 = pvVar5;
+        do {
+          sVar7 = (long)pvVar1 - (long)pvVar16;
+          sVar9 = *(long *)(this + 0x50) - (long)*(void **)(this + 0x48);
+          if ((long)sVar7 <= (long)sVar9) {
+            sVar9 = sVar7;
+          }
+          _memcpy(*(void **)(this + 0x48),pvVar16,sVar9);
+          uVar6 = *(long *)(this + 0x48) + sVar9;
+          *(ulong *)(this + 0x48) = uVar6;
+          if (*(ulong *)(this + 0x50) <= uVar6) {
+            pbVar10 = *(byte **)(this + 0x40);
+            pcVar8 = *(char **)(this + 0x28);
+            pbVar11 = (byte *)(uVar6 - (long)pbVar10);
+            if ((pbVar11 != (byte *)0x0 && pbVar10 != (byte *)0x0) && pcVar8 != (char *)0x0) {
+              lVar15 = ((ulong)pbVar11 / 3) * 3;
+              pcVar12 = pcVar8;
+              if (lVar15 < 1) {
+                if (pbVar11 == (byte *)0x2) goto LAB_00000bac;
+LAB_00000b64:
+                if (pbVar11 == (byte *)0x1) {
+                  bVar2 = *pbVar10;
+                  *pcVar12 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                             [bVar2 >> 2];
+                  pcVar12[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                               [((ulong)bVar2 & 3) * 0x10];
+                  pcVar12[2] = '=';
+                  goto LAB_00000bdc;
+                }
+              }
+              else {
+                pbVar13 = pbVar10;
+                pbVar14 = pbVar10;
+                do {
+                  bVar2 = *pbVar14;
+                  bVar3 = pbVar14[1];
+                  bVar4 = pbVar14[2];
+                  *pcVar12 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                             [bVar2 >> 2];
+                  pcVar12[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                               [(ulong)(bVar3 >> 4) | ((ulong)bVar2 & 3) << 4];
+                  pcVar12[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                               [(ulong)(bVar4 >> 6) | ((ulong)bVar3 & 0xf) << 2];
+                  pbVar14 = pbVar14 + 3;
+                  pcVar12[3] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                               [(ulong)bVar4 & 0x3f];
+                  pcVar12 = pcVar12 + 4;
+                  pbVar13 = pbVar13 + 3;
+                } while (pbVar14 < pbVar10 + lVar15);
+                pbVar11 = pbVar10 + ((long)pbVar11 - (long)pbVar13);
+                pbVar10 = pbVar14;
+                if (pbVar11 != (byte *)0x2) goto LAB_00000b64;
+LAB_00000bac:
+                bVar2 = *pbVar10;
+                bVar3 = pbVar10[1];
+                *pcVar12 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                           [bVar2 >> 2];
+                pcVar12[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                             [(ulong)(bVar3 >> 4) | ((ulong)bVar2 & 3) << 4];
+                pcVar12[2] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+                             [((ulong)bVar3 & 0xf) * 4];
+LAB_00000bdc:
+                pcVar12[3] = '=';
+                pcVar12 = pcVar12 + 4;
+              }
+              *pcVar12 = '\0';
+              if (pcVar12 != pcVar8) {
+                *(undefined8 *)(this + 0x48) = *(undefined8 *)(this + 0x40);
+                if (this[8] == (Base64ContextEmitter)0x0) {
+                  (**(code **)(**(long **)this + 0x18))(*(long **)this,*(undefined8 *)(this + 0x28))
+                  ;
+                }
+                else {
+                  local_ba = 10;
+                  plVar17 = *(long **)this;
+                  uVar6 = (plVar17[0x14] + plVar17[0x13]) - 1;
+                  sVar7 = (size_t)*(int *)(*(long *)(plVar17[0x10] +
+                                                    (uVar6 >> 4 & 0xffffffffffffff8)) +
+                                           (uVar6 & 0x7f) * 0x20 + 0x1c);
+                  _memset(auStack_b8,0x20,sVar7);
+                  auStack_b8[sVar7] = 0;
+                  (**(code **)(*plVar17 + 0x18))(plVar17,auStack_b8);
+                  (**(code **)(**(long **)this + 0x18))(*(long **)this,*(undefined8 *)(this + 0x28))
+                  ;
+                  (**(code **)(**(long **)this + 0x18))(*(long **)this,&local_ba);
+                  (**(code **)(**(long **)this + 0x70))();
+                }
+              }
+            }
+          }
+          pvVar16 = (void *)((long)pvVar16 + sVar9);
+        } while (pvVar16 < pvVar1);
+        uVar6 = *(ulong *)(param_1 + 8);
+      }
+    } while (uVar6 < *(ulong *)(param_1 + 0x10));
+  }
+  operator_delete(pvVar5);
+  if (*____stack_chk_guard == local_68) {
+    return this;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: ~Base64Writer
+// Entry: 00000d14
+// Signature: undefined __thiscall ~Base64Writer(Base64Writer * this)
+// ========================================
+
+
+/* cv::base64::Base64Writer::~Base64Writer() */
+
+Base64Writer * __thiscall cv::base64::Base64Writer::~Base64Writer(Base64Writer *this)
+
+{
+  void *pvVar1;
+  Base64ContextEmitter *this_00;
+  
+  this_00 = *(Base64ContextEmitter **)this;
+  if (this_00 != (Base64ContextEmitter *)0x0) {
+    if (*(long *)(this_00 + 0x48) != *(long *)(this_00 + 0x40)) {
+      Base64ContextEmitter::flush(this_00);
+    }
+    pvVar1 = *(void **)(this_00 + 0x28);
+    if (pvVar1 != (void *)0x0) {
+      *(void **)(this_00 + 0x30) = pvVar1;
+      operator_delete(pvVar1);
+    }
+    pvVar1 = *(void **)(this_00 + 0x10);
+    if (pvVar1 != (void *)0x0) {
+      *(void **)(this_00 + 0x18) = pvVar1;
+      operator_delete(pvVar1);
+    }
+    operator_delete(this_00);
+  }
+  if (-1 < (char)this[0x1f]) {
+    return this;
+  }
+  operator_delete(*(void **)(this + 8));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~Base64Writer
+// Entry: 00000d9c
+// Signature: undefined __thiscall ~Base64Writer(Base64Writer * this)
+// ========================================
+
+
+/* cv::base64::Base64Writer::~Base64Writer() */
+
+Base64Writer * __thiscall cv::base64::Base64Writer::~Base64Writer(Base64Writer *this)
+
+{
+  void *pvVar1;
+  Base64ContextEmitter *this_00;
+  
+  this_00 = *(Base64ContextEmitter **)this;
+  if (this_00 != (Base64ContextEmitter *)0x0) {
+    if (*(long *)(this_00 + 0x48) != *(long *)(this_00 + 0x40)) {
+      Base64ContextEmitter::flush(this_00);
+    }
+    pvVar1 = *(void **)(this_00 + 0x28);
+    if (pvVar1 != (void *)0x0) {
+      *(void **)(this_00 + 0x30) = pvVar1;
+      operator_delete(pvVar1);
+    }
+    pvVar1 = *(void **)(this_00 + 0x10);
+    if (pvVar1 != (void *)0x0) {
+      *(void **)(this_00 + 0x18) = pvVar1;
+      operator_delete(pvVar1);
+    }
+    operator_delete(this_00);
+  }
+  if (-1 < (char)this[0x1f]) {
+    return this;
+  }
+  operator_delete(*(void **)(this + 8));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: RawDataToBinaryConvertor
+// Entry: 00000da0
+// Signature: undefined __thiscall RawDataToBinaryConvertor(RawDataToBinaryConvertor * this, void * param_1, int param_2, string * param_3)
+// ========================================
+
+
+/* cv::base64::RawDataToBinaryConvertor::RawDataToBinaryConvertor(void const*, int, std::string
+   const&) */
+
+RawDataToBinaryConvertor * __thiscall
+cv::base64::RawDataToBinaryConvertor::RawDataToBinaryConvertor
+          (RawDataToBinaryConvertor *this,void *param_1,int param_2,string *param_3)
+
+{
+  ulong uVar1;
+  string sVar2;
+  code *pcVar3;
+  int iVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  string *psVar7;
+  string asStack_48 [24];
+  
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  *(undefined8 *)(this + 0x38) = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(void **)this = param_1;
+  if (param_1 == (void *)0x0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_48,"src");
+    cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+              "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x10f);
+  }
+  else {
+    uVar1 = *(ulong *)(param_3 + 8);
+    if (-1 < (char)param_3[0x17]) {
+      uVar1 = (ulong)(byte)param_3[0x17];
+    }
+    if (uVar1 == 0) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_48,"!dt.empty()");
+      cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+                "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x110)
+      ;
+    }
+    else {
+      if (0 < param_2) {
+        uVar5 = make_to_binary_funcs(this,param_3);
+        *(undefined8 *)(this + 0x20) = uVar5;
+        *(undefined8 *)(this + 8) = *(undefined8 *)this;
+        *(undefined8 *)(this + 0x10) = *(undefined8 *)this;
+        psVar7 = *(string **)param_3;
+        if (-1 < (char)param_3[0x17]) {
+          psVar7 = param_3;
+        }
+        iVar4 = cv::fs::calcElemSize((char *)psVar7,0);
+        sVar2 = *psVar7;
+        if (sVar2 == (string)0x0) {
+          uVar6 = 0;
+        }
+        else {
+          uVar6 = 0;
+          do {
+            psVar7 = psVar7 + 1;
+            switch(sVar2) {
+            case (string)0x63:
+            case (string)0x75:
+              if (uVar6 < 2) {
+                uVar6 = 1;
+              }
+              break;
+            case (string)0x64:
+              uVar6 = 8;
+              break;
+            case (string)0x66:
+            case (string)0x69:
+              if (uVar6 < 5) {
+                uVar6 = 4;
+              }
+              break;
+            case (string)0x73:
+            case (string)0x77:
+              if (uVar6 < 3) {
+                uVar6 = 2;
+              }
+            }
+            sVar2 = *psVar7;
+          } while (sVar2 != (string)0x0);
+        }
+        *(ulong *)(this + 0x10) = *(long *)this + (ulong)(uint)param_2;
+        *(long *)(this + 0x18) = (long)(int)((iVar4 + uVar6) - 1 & -uVar6);
+        return this;
+      }
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_48,"len > 0");
+      cv::error(-0xd7,asStack_48,"RawDataToBinaryConvertor",
+                "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x111)
+      ;
+    }
+  }
+                    /* WARNING: Does not return */
+  pcVar3 = (code *)SoftwareBreakpoint(1,0xf78);
+  (*pcVar3)();
+}
+
+
+
+
+// ========================================
+// Function: make_to_binary_funcs
+// Entry: 00000fd8
+// Signature: undefined __thiscall make_to_binary_funcs(RawDataToBinaryConvertor * this, string * param_1)
+// ========================================
+
+
+/* cv::base64::RawDataToBinaryConvertor::make_to_binary_funcs(std::string const&) */
+
+long __thiscall
+cv::base64::RawDataToBinaryConvertor::make_to_binary_funcs
+          (RawDataToBinaryConvertor *this,string *param_1)
+
+{
+  long *plVar1;
+  ulong uVar2;
+  code *pcVar3;
+  long *plVar4;
+  istream *piVar5;
+  void *pvVar6;
+  long lVar7;
+  long lVar8;
+  long *plVar9;
+  long lVar10;
+  long *plVar11;
+  ulong uVar12;
+  long lVar13;
+  long lVar14;
+  long *plVar15;
+  string asStack_1a0 [24];
+  undefined *local_188 [2];
+  long local_178 [2];
+  byte abStack_168 [48];
+  void *local_138;
+  char local_121;
+  undefined *local_110 [19];
+  byte local_71;
+  ulong local_70 [2];
+  
+  local_70[0] = 0;
+  local_71 = 0;
+  std::istringstream::istringstream_abi_ne180100_((istringstream *)local_188,param_1,8);
+  lVar7 = *(long *)(local_188[0] + -0x18);
+  if ((abStack_168[lVar7] >> 1 & 1) == 0) {
+    lVar13 = 0;
+    lVar14 = 0;
+    do {
+      plVar4 = (long *)std::istream::operator>>((istream *)local_188,local_70);
+      if ((*(byte *)((long)plVar4 + *(long *)(*plVar4 + -0x18) + 0x20) & 5) == 0) {
+        if (local_70[0] == 0) {
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (asStack_1a0,"cnt > 0U");
+          cv::error(-0xd7,asStack_1a0,"make_to_binary_funcs",
+                    "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",
+                    0x13d);
+          goto LAB_000013f8;
+        }
+      }
+      else {
+        std::ios_base::clear((int)local_188 + (int)*(undefined8 *)(local_188[0] + -0x18));
+        local_70[0] = 1;
+      }
+      piVar5 = std::operator>>[abi:ne180100]<char,std::char_traits<char>>
+                         ((istream *)local_188,(char *)&local_71);
+      if (((byte)piVar5[*(long *)(*(long *)piVar5 + -0x18) + 0x20] & 5) != 0) {
+        if ((abStack_168[*(long *)(local_188[0] + -0x18)] >> 1 & 1) == 0) goto LAB_0000134c;
+        goto LAB_000012a8;
+      }
+      while (uVar2 = local_70[0], local_70[0] = local_70[0] - 1, uVar2 != 0) {
+        lVar7 = 1;
+        pcVar3 = to_binary<unsigned_char>;
+        switch(local_71) {
+        case 99:
+        case 0x75:
+          break;
+        case 100:
+          pcVar3 = to_binary<double>;
+          lVar7 = 8;
+          break;
+        default:
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (asStack_1a0,"type is not supported");
+          cv::error(-2,asStack_1a0,"make_to_binary_funcs",
+                    "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",
+                    0x160);
+          goto LAB_000013f8;
+        case 0x66:
+          pcVar3 = to_binary<float>;
+          goto LAB_00001170;
+        case 0x69:
+          pcVar3 = to_binary<unsigned_int>;
+LAB_00001170:
+          lVar7 = 4;
+          break;
+        case 0x73:
+        case 0x77:
+          pcVar3 = to_binary<unsigned_short>;
+          lVar7 = 2;
+        }
+        lVar14 = (long)(int)(((int)lVar14 + (int)lVar7) - 1U & -(int)lVar7);
+        plVar4 = *(long **)(this + 0x30);
+        if (plVar4 < *(long **)(this + 0x38)) {
+          *plVar4 = lVar14;
+          plVar4[1] = lVar13;
+          plVar9 = plVar4 + 3;
+          plVar4[2] = (long)pcVar3;
+        }
+        else {
+          plVar15 = *(long **)(this + 0x28);
+          lVar10 = (long)plVar4 - (long)plVar15 >> 3;
+          uVar2 = lVar10 * -0x5555555555555555 + 1;
+          if (0xaaaaaaaaaaaaaaa < uVar2) {
+            std::
+            vector<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t,std::allocator<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t>>
+            ::__throw_length_error_abi_ne180100_();
+            goto LAB_000013f8;
+          }
+          lVar8 = (long)*(long **)(this + 0x38) - (long)plVar15 >> 3;
+          uVar12 = lVar8 * 0x5555555555555556;
+          if (uVar12 < uVar2 || uVar12 - uVar2 == 0) {
+            uVar12 = uVar2;
+          }
+          if (0x555555555555554 < (ulong)(lVar8 * -0x5555555555555555)) {
+            uVar12 = 0xaaaaaaaaaaaaaaa;
+          }
+          if (uVar12 == 0) {
+            pvVar6 = (void *)0x0;
+          }
+          else {
+            if (0xaaaaaaaaaaaaaaa < uVar12) {
+              std::__throw_bad_array_new_length_abi_ne180100_();
+              goto LAB_000013f8;
+            }
+            pvVar6 = operator_new(uVar12 * 0x18);
+          }
+          plVar9 = (long *)((long)pvVar6 + lVar10 * 8);
+          *plVar9 = lVar14;
+          plVar9[1] = lVar13;
+          plVar9[2] = (long)pcVar3;
+          plVar11 = plVar9;
+          if (plVar4 != plVar15) {
+            do {
+              lVar8 = plVar4[-2];
+              lVar10 = plVar4[-3];
+              plVar1 = plVar4 + -1;
+              plVar4 = plVar4 + -3;
+              plVar11[-1] = *plVar1;
+              plVar11[-2] = lVar8;
+              plVar11[-3] = lVar10;
+              plVar11 = plVar11 + -3;
+            } while (plVar4 != plVar15);
+            plVar4 = *(long **)(this + 0x28);
+          }
+          plVar9 = plVar9 + 3;
+          *(long **)(this + 0x28) = plVar11;
+          *(long **)(this + 0x30) = plVar9;
+          *(void **)(this + 0x38) = (void *)((long)pvVar6 + uVar12 * 0x18);
+          if (plVar4 != (long *)0x0) {
+            operator_delete(plVar4);
+          }
+        }
+        *(long **)(this + 0x30) = plVar9;
+        lVar13 = lVar7 + lVar13;
+        lVar14 = lVar14 + lVar7;
+      }
+      lVar7 = *(long *)(local_188[0] + -0x18);
+    } while ((abStack_168[lVar7] >> 1 & 1) == 0);
+  }
+  else {
+    lVar13 = 0;
+  }
+  if ((abStack_168[lVar7] >> 1 & 1) != 0) {
+LAB_000012a8:
+    local_188[0] = std::istringstream::vtable + 0x18;
+    local_110[0] = std::istringstream::vtable + 0x40;
+    local_178[0] = std::stringbuf::vtable + 0x10;
+    if (local_121 < '\0') {
+      operator_delete(local_138);
+    }
+    std::streambuf::~streambuf((streambuf *)local_178);
+    std::istream::~istream((istream *)local_188);
+    std::ios::~ios((ios *)local_110);
+    return lVar13;
+  }
+LAB_0000134c:
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (asStack_1a0,"iss.eof()");
+  cv::error(-0xd7,asStack_1a0,"make_to_binary_funcs",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x16e);
+LAB_000013f8:
+                    /* WARNING: Does not return */
+  pcVar3 = (code *)SoftwareBreakpoint(1,0x13fc);
+  (*pcVar3)();
+}
+
+
+
+
+// ========================================
+// Function: istringstream[abi:ne180100]
+// Entry: 00001450
+// Signature: undefined __thiscall istringstream[abi:ne180100](istringstream * this, string * param_1, uint param_2)
+// ========================================
+
+
+/* std::istringstream::istringstream[abi:ne180100](std::string const&, unsigned int) */
+
+istringstream * __thiscall
+std::istringstream::istringstream_abi_ne180100_(istringstream *this,string *param_1,uint param_2)
+
+{
+  long lVar1;
+  undefined *puVar2;
+  
+  puVar2 = istream-in-std::istringstream::construction_vtable;
+  *(undefined **)(this + 0x78) = istream-in-std::istringstream::construction_vtable + 0x40;
+  *(undefined **)this = puVar2 + 0x18;
+  *(undefined8 *)(this + 8) = 0;
+  std::ios_base::init(this + 0x78);
+  *(undefined8 *)(this + 0x100) = 0;
+  *(undefined4 *)(this + 0x108) = 0xffffffff;
+  puVar2 = vtable;
+  *(undefined **)this = vtable + 0x18;
+  *(undefined **)(this + 0x78) = puVar2 + 0x40;
+  std::streambuf::streambuf((streambuf *)(this + 0x10));
+  lVar1 = stringbuf::vtable + 0x10;
+  *(undefined8 *)(this + 0x58) = 0;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(long *)(this + 0x10) = lVar1;
+  *(undefined8 *)(this + 0x68) = 0;
+  *(undefined8 *)(this + 0x60) = 0;
+  *(uint *)(this + 0x70) = param_2 | 8;
+  stringbuf::str((stringbuf *)(this + 0x10),param_1);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: char_traits<char>>
+// Entry: 00001570
+// Signature: istream * __cdecl char_traits<char>>(istream * param_1, char * param_2)
+// ========================================
+
+
+/* std::istream& std::operator>>[abi:ne180100]<char, std::char_traits<char> >(std::istream&, char&)
+    */
+
+istream * std::operator>>[abi:ne180100]<char,std::char_traits<char>>(istream *param_1,char *param_2)
+
+{
+  byte *pbVar1;
+  uint uVar2;
+  long *plVar3;
+  sentry local_21;
+  
+  std::istream::sentry::sentry(&local_21,param_1,false);
+  if (local_21 == (sentry)0x0) {
+    return param_1;
+  }
+  plVar3 = *(long **)(param_1 + *(long *)(*(long *)param_1 + -0x18) + 0x28);
+  pbVar1 = (byte *)plVar3[3];
+  if (pbVar1 == (byte *)plVar3[4]) {
+    uVar2 = (**(code **)(*plVar3 + 0x50))();
+    if (uVar2 == 0xffffffff) goto LAB_000015e8;
+  }
+  else {
+    plVar3[3] = (long)(pbVar1 + 1);
+    uVar2 = (uint)*pbVar1;
+  }
+  *param_2 = (char)uVar2;
+LAB_000015e8:
+  std::ios_base::clear((int)param_1 + (int)*(undefined8 *)(*(long *)param_1 + -0x18));
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: to_binary<unsigned_char>
+// Entry: 00001670
+// Signature: ulong __cdecl to_binary<unsigned_char>(uchar * param_1, uchar * param_2)
+// ========================================
+
+
+/* unsigned long cv::base64::to_binary<unsigned char>(unsigned char const*, unsigned char*) */
+
+ulong cv::base64::to_binary<unsigned_char>(uchar *param_1,uchar *param_2)
+
+{
+  *param_2 = *param_1;
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: to_binary<unsigned_short>
+// Entry: 00001680
+// Signature: ulong __cdecl to_binary<unsigned_short>(uchar * param_1, uchar * param_2)
+// ========================================
+
+
+/* unsigned long cv::base64::to_binary<unsigned short>(unsigned char const*, unsigned char*) */
+
+ulong cv::base64::to_binary<unsigned_short>(uchar *param_1,uchar *param_2)
+
+{
+  *(undefined2 *)param_2 = *(undefined2 *)param_1;
+  return 2;
+}
+
+
+
+
+// ========================================
+// Function: to_binary<unsigned_int>
+// Entry: 00001690
+// Signature: ulong __cdecl to_binary<unsigned_int>(uchar * param_1, uchar * param_2)
+// ========================================
+
+
+/* unsigned long cv::base64::to_binary<unsigned int>(unsigned char const*, unsigned char*) */
+
+ulong cv::base64::to_binary<unsigned_int>(uchar *param_1,uchar *param_2)
+
+{
+  *(undefined4 *)param_2 = *(undefined4 *)param_1;
+  return 4;
+}
+
+
+
+
+// ========================================
+// Function: to_binary<float>
+// Entry: 000016a0
+// Signature: ulong __cdecl to_binary<float>(uchar * param_1, uchar * param_2)
+// ========================================
+
+
+/* unsigned long cv::base64::to_binary<float>(unsigned char const*, unsigned char*) */
+
+ulong cv::base64::to_binary<float>(uchar *param_1,uchar *param_2)
+
+{
+  *(undefined4 *)param_2 = *(undefined4 *)param_1;
+  return 4;
+}
+
+
+
+
+// ========================================
+// Function: to_binary<double>
+// Entry: 000016b0
+// Signature: ulong __cdecl to_binary<double>(uchar * param_1, uchar * param_2)
+// ========================================
+
+
+/* unsigned long cv::base64::to_binary<double>(unsigned char const*, unsigned char*) */
+
+ulong cv::base64::to_binary<double>(uchar *param_1,uchar *param_2)
+
+{
+  *(undefined8 *)param_2 = *(undefined8 *)param_1;
+  return 8;
+}
+
+
+
+
+// ========================================
+// Function: ~istringstream
+// Entry: 000016c0
+// Signature: undefined __thiscall ~istringstream(istringstream * this)
+// ========================================
+
+
+/* std::istringstream::~istringstream() */
+
+istringstream * __thiscall std::istringstream::~istringstream(istringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this + 0x78) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1;
+  *(long *)(this + 0x10) = lVar2 + 0x10;
+  if ((char)this[0x67] < '\0') {
+    operator_delete(*(void **)(this + 0x50));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x10));
+  std::istream::~istream((istream *)this);
+  std::ios::~ios((ios *)(this + 0x78));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~ostringstream
+// Entry: 0000174c
+// Signature: undefined __thiscall ~ostringstream(ostringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::ostringstream::~ostringstream() */
+
+void __thiscall std::ostringstream::~ostringstream(ostringstream *this)
+
+{
+  undefined *puVar1;
+  ostream *this_00;
+  long lVar2;
+  
+  this_00 = (ostream *)(this + *(long *)(*(long *)this + -0x18));
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x70) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this_00 = puVar1;
+  *(long *)(this_00 + 8) = lVar2 + 0x10;
+  if ((char)this_00[0x5f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 8));
+  std::ostream::~ostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x70));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ostringstream
+// Entry: 000017d8
+// Signature: undefined __thiscall ~ostringstream(ostringstream * this)
+// ========================================
+
+
+/* std::ostringstream::~ostringstream() */
+
+void __thiscall std::ostringstream::~ostringstream(ostringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this + 0x70) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1;
+  *(long *)(this + 8) = lVar2 + 0x10;
+  if ((char)this[0x5f] < '\0') {
+    operator_delete(*(void **)(this + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 8));
+  std::ostream::~ostream((ostream *)this);
+  std::ios::~ios((ios *)(this + 0x70));
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ostringstream
+// Entry: 00001864
+// Signature: undefined __thiscall ~ostringstream(ostringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::ostringstream::~ostringstream() */
+
+void __thiscall std::ostringstream::~ostringstream(ostringstream *this)
+
+{
+  undefined *puVar1;
+  ostream *this_00;
+  long lVar2;
+  
+  this_00 = (ostream *)(this + *(long *)(*(long *)this + -0x18));
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x70) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this_00 = puVar1;
+  *(long *)(this_00 + 8) = lVar2 + 0x10;
+  if ((char)this_00[0x5f] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x48));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 8));
+  std::ostream::~ostream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x70));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 000018f8
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    std::streambuf::~streambuf((streambuf *)this);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  std::streambuf::~streambuf((streambuf *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~stringbuf
+// Entry: 00001948
+// Signature: undefined __thiscall ~stringbuf(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::~stringbuf() */
+
+void __thiscall std::stringbuf::~stringbuf(stringbuf *this)
+
+{
+  void *pvVar1;
+  
+  *(long *)this = vtable + 0x10;
+  if (-1 < (char)this[0x57]) {
+    pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+    operator_delete(pvVar1);
+    return;
+  }
+  operator_delete(*(void **)(this + 0x40));
+  pvVar1 = (void *)std::streambuf::~streambuf((streambuf *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekoff
+// Entry: 000019a0
+// Signature: undefined __cdecl seekoff(longlong param_1, seekdir param_2, uint param_3)
+// ========================================
+
+
+/* std::stringbuf::seekoff(long long, std::ios_base::seekdir, unsigned int) */
+
+void std::stringbuf::seekoff
+               (undefined8 *param_1_00,long param_1,long param_3,uint param_4,uint param_5)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  undefined8 *puVar4;
+  ulong uVar5;
+  long lVar6;
+  
+  uVar3 = *(ulong *)(param_1 + 0x30);
+  uVar2 = *(ulong *)(param_1 + 0x58);
+  if (*(ulong *)(param_1 + 0x58) < uVar3) {
+    *(ulong *)(param_1 + 0x58) = uVar3;
+    uVar2 = uVar3;
+  }
+  if (((param_5 & 0x18) == 0) || ((param_4 == 1 && ((param_5 & 0x18) == 0x18)))) {
+LAB_00001a18:
+    lVar6 = -1;
+  }
+  else {
+    if (uVar2 == 0) {
+      uVar5 = 0;
+      if (param_4 == 0) goto LAB_00001a40;
+LAB_000019ec:
+      uVar1 = uVar5;
+      if (param_4 != 2) {
+        if (param_4 != 1) goto LAB_00001a18;
+        if ((param_5 >> 3 & 1) == 0) {
+          uVar1 = uVar3 - *(long *)(param_1 + 0x28);
+        }
+        else {
+          uVar1 = *(long *)(param_1 + 0x18) - *(long *)(param_1 + 0x10);
+        }
+      }
+    }
+    else {
+      puVar4 = (undefined8 *)(param_1 + 0x40);
+      if (*(char *)(param_1 + 0x57) < '\0') {
+        puVar4 = (undefined8 *)*puVar4;
+      }
+      uVar5 = uVar2 - (long)puVar4;
+      if (param_4 != 0) goto LAB_000019ec;
+LAB_00001a40:
+      uVar1 = (ulong)param_4;
+    }
+    param_3 = uVar1 + param_3;
+    lVar6 = -1;
+    if (((-1 < param_3) && (lVar6 = -1, param_3 <= (long)uVar5)) &&
+       ((param_3 == 0 ||
+        ((((param_5 >> 3 & 1) == 0 || (*(long *)(param_1 + 0x18) != 0)) &&
+         (((param_5 >> 4 & 1) == 0 || (uVar3 != 0)))))))) {
+      if ((param_5 >> 3 & 1) != 0) {
+        *(long *)(param_1 + 0x18) = *(long *)(param_1 + 0x10) + param_3;
+        *(ulong *)(param_1 + 0x20) = uVar2;
+      }
+      lVar6 = param_3;
+      if ((param_5 >> 4 & 1) != 0) {
+        *(long *)(param_1 + 0x30) = *(long *)(param_1 + 0x28) + param_3;
+      }
+    }
+  }
+  param_1_00[0xd] = 0;
+  param_1_00[0xc] = 0;
+  param_1_00[0xf] = 0;
+  param_1_00[0xe] = 0;
+  param_1_00[9] = 0;
+  param_1_00[8] = 0;
+  param_1_00[0xb] = 0;
+  param_1_00[10] = 0;
+  param_1_00[5] = 0;
+  param_1_00[4] = 0;
+  param_1_00[7] = 0;
+  param_1_00[6] = 0;
+  param_1_00[1] = 0;
+  *param_1_00 = 0;
+  param_1_00[3] = 0;
+  param_1_00[2] = 0;
+  param_1_00[0x10] = lVar6;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: seekpos
+// Entry: 00001ac4
+// Signature: undefined __thiscall seekpos(stringbuf * this, fpos param_1, uint param_2)
+// ========================================
+
+
+/* std::stringbuf::seekpos(std::fpos<__mbstate_t>, unsigned int) */
+
+void __thiscall std::stringbuf::seekpos(stringbuf *this,long param_2,undefined8 param_3)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00001ad8. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*(long *)this + 0x20))(this,*(undefined8 *)(param_2 + 0x80),0,param_3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: underflow
+// Entry: 00001adc
+// Signature: undefined __thiscall underflow(stringbuf * this)
+// ========================================
+
+
+/* std::stringbuf::underflow() */
+
+ulong __thiscall std::stringbuf::underflow(stringbuf *this)
+
+{
+  byte *pbVar1;
+  byte *pbVar2;
+  
+  pbVar2 = *(byte **)(this + 0x30);
+  pbVar1 = *(byte **)(this + 0x58);
+  if (*(byte **)(this + 0x58) < pbVar2) {
+    *(byte **)(this + 0x58) = pbVar2;
+    pbVar1 = pbVar2;
+  }
+  if (((byte)this[0x60] >> 3 & 1) != 0) {
+    pbVar2 = *(byte **)(this + 0x20);
+    if (*(byte **)(this + 0x20) < pbVar1) {
+      *(byte **)(this + 0x20) = pbVar1;
+      pbVar2 = pbVar1;
+    }
+    if (*(byte **)(this + 0x18) < pbVar2) {
+      return (ulong)**(byte **)(this + 0x18);
+    }
+  }
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: pbackfail
+// Entry: 00001b2c
+// Signature: undefined __thiscall pbackfail(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::pbackfail(int) */
+
+int __thiscall std::stringbuf::pbackfail(stringbuf *this,int param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  
+  uVar2 = *(ulong *)(this + 0x30);
+  uVar1 = *(ulong *)(this + 0x58);
+  if (*(ulong *)(this + 0x58) < uVar2) {
+    *(ulong *)(this + 0x58) = uVar2;
+    uVar1 = uVar2;
+  }
+  uVar2 = *(ulong *)(this + 0x18);
+  if (*(ulong *)(this + 0x10) < uVar2) {
+    if (param_1 == -1) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      return 0;
+    }
+    if ((((byte)this[0x60] >> 4 & 1) != 0) || ((uint)*(byte *)(uVar2 - 1) == (param_1 & 0xffU))) {
+      *(ulong *)(this + 0x18) = uVar2 - 1;
+      *(ulong *)(this + 0x20) = uVar1;
+      *(char *)(uVar2 - 1) = (char)param_1;
+      return param_1;
+    }
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: overflow
+// Entry: 00001b98
+// Signature: undefined __thiscall overflow(stringbuf * this, int param_1)
+// ========================================
+
+
+/* std::stringbuf::overflow(int) */
+
+ulong __thiscall std::stringbuf::overflow(stringbuf *this,int param_1)
+
+{
+  stringbuf *psVar1;
+  stringbuf *psVar2;
+  long lVar3;
+  stringbuf *psVar4;
+  long lVar5;
+  stringbuf *psVar6;
+  stringbuf sVar7;
+  ulong uVar8;
+  char cVar9;
+  stringbuf *psVar10;
+  long lVar11;
+  long lVar12;
+  
+  if (param_1 == -1) {
+    return 0;
+  }
+  lVar3 = *(long *)(this + 0x10);
+  lVar5 = *(long *)(this + 0x18);
+  psVar4 = *(stringbuf **)(this + 0x30);
+  psVar6 = *(stringbuf **)(this + 0x38);
+  if (psVar4 == psVar6) {
+    if (((byte)this[0x60] >> 4 & 1) == 0) {
+      return 0xffffffff;
+    }
+    lVar11 = *(long *)(this + 0x28);
+    lVar12 = *(long *)(this + 0x58);
+    psVar10 = this + 0x40;
+    std::string::push_back((char)psVar10);
+    if ((char)this[0x57] < '\0') {
+      cVar9 = (char)*(undefined8 *)(this + 0x50) + -1;
+    }
+    else {
+      cVar9 = '\x16';
+    }
+    std::string::resize((ulong)psVar10,cVar9);
+    if ((char)this[0x57] < '\0') {
+      psVar10 = *(stringbuf **)(this + 0x40);
+      uVar8 = *(ulong *)(this + 0x48);
+    }
+    else {
+      uVar8 = (ulong)(byte)this[0x57];
+    }
+    psVar6 = psVar10 + uVar8;
+    psVar4 = psVar10 + ((long)psVar4 - lVar11);
+    *(stringbuf **)(this + 0x28) = psVar10;
+    *(stringbuf **)(this + 0x30) = psVar4;
+    *(stringbuf **)(this + 0x38) = psVar6;
+    psVar10 = psVar10 + (lVar12 - lVar11);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  else {
+    psVar10 = *(stringbuf **)(this + 0x58);
+    psVar1 = psVar4 + 1;
+    if (psVar10 <= psVar1) {
+      psVar10 = psVar4 + 1;
+    }
+    *(stringbuf **)(this + 0x58) = psVar10;
+    sVar7 = this[0x60];
+  }
+  if (((byte)sVar7 >> 3 & 1) != 0) {
+    psVar2 = this + 0x40;
+    if ((char)this[0x57] < '\0') {
+      *(long *)(this + 0x10) = *(long *)psVar2;
+      *(long *)(this + 0x18) = *(long *)psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+    else {
+      *(stringbuf **)(this + 0x10) = psVar2;
+      *(stringbuf **)(this + 0x18) = psVar2 + (lVar5 - lVar3);
+      *(stringbuf **)(this + 0x20) = psVar10;
+    }
+  }
+  if (psVar4 == psVar6) {
+                    /* WARNING: Could not recover jumptable at 0x00001d28. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    uVar8 = (**(code **)(*(long *)this + 0x68))(this,param_1 & 0xff);
+    return uVar8;
+  }
+  *(stringbuf **)(this + 0x30) = psVar1;
+  *psVar4 = SUB41(param_1,0);
+  return (ulong)(param_1 & 0xff);
+}
+
+
+
+
+// ========================================
+// Function: Base64ContextEmitter
+// Entry: 00001d54
+// Signature: undefined __thiscall Base64ContextEmitter(Base64ContextEmitter * this, Impl * param_1, bool param_2)
+// ========================================
+
+
+/* cv::base64::Base64ContextEmitter::Base64ContextEmitter(cv::FileStorage::Impl&, bool) */
+
+Base64ContextEmitter * __thiscall
+cv::base64::Base64ContextEmitter::Base64ContextEmitter
+          (Base64ContextEmitter *this,Impl *param_1,bool param_2)
+
+{
+  undefined8 *puVar1;
+  code *pcVar2;
+  undefined8 *puVar3;
+  undefined8 *puVar4;
+  string asStack_68 [24];
+  
+  *(Impl **)this = param_1;
+  this[8] = (Base64ContextEmitter)param_2;
+  *(undefined8 *)(this + 0x10) = 0;
+  *(undefined8 *)(this + 0x18) = 0;
+  *(undefined8 *)(this + 0x20) = 0;
+  puVar3 = operator_new(0x30);
+  *(undefined8 **)(this + 0x10) = puVar3;
+  puVar1 = puVar3 + 6;
+  puVar3[1] = 0;
+  *puVar3 = 0;
+  puVar3[3] = 0;
+  puVar3[2] = 0;
+  puVar3[5] = 0;
+  puVar3[4] = 0;
+  *(undefined8 **)(this + 0x18) = puVar1;
+  *(undefined8 **)(this + 0x20) = puVar1;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(undefined8 *)(this + 0x30) = 0;
+  *(undefined8 *)(this + 0x38) = 0;
+  puVar4 = operator_new(0x41);
+  puVar4[1] = 0;
+  *puVar4 = 0;
+  puVar4[3] = 0;
+  puVar4[2] = 0;
+  puVar4[5] = 0;
+  puVar4[4] = 0;
+  puVar4[7] = 0;
+  puVar4[6] = 0;
+  *(undefined1 *)(puVar4 + 8) = 0;
+  *(undefined8 **)(this + 0x28) = puVar4;
+  *(long *)(this + 0x30) = (long)puVar4 + 0x41;
+  *(long *)(this + 0x38) = (long)puVar4 + 0x41;
+  *(undefined8 **)(this + 0x40) = puVar3;
+  *(undefined8 **)(this + 0x48) = puVar3;
+  *(undefined8 **)(this + 0x50) = puVar1;
+  if (param_1[0x42] != (Impl)0x0) {
+    if (param_2) {
+      (**(code **)(*(long *)param_1 + 0x70))(param_1);
+    }
+    return this;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (asStack_68,"fs.write_mode");
+  cv::error(-0xd7,asStack_68,"Base64ContextEmitter",
+            "M3T/third_party/opencv-src/modules/core/src/persistence_base64_encoding.cpp",0x1c);
+                    /* WARNING: Does not return */
+  pcVar2 = (code *)SoftwareBreakpoint(1,0x1e58);
+  (*pcVar2)();
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00001ed0
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___clang_call_terminate(void)
+
+{
+  char *pcVar1;
+  length_error *this;
+  
+  ___cxa_begin_catch();
+  pcVar1 = (char *)std::terminate();
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  std::length_error::length_error_abi_ne180100_(this,pcVar1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00001ee0
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00001f30
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 00001f54
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: flush
+// Entry: 00001f7c
+// Signature: undefined __thiscall flush(Base64ContextEmitter * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::base64::Base64ContextEmitter::flush() */
+
+void __thiscall cv::base64::Base64ContextEmitter::flush(Base64ContextEmitter *this)
+
+{
+  long lVar1;
+  ulong in_x4;
+  ulong uVar2;
+  long *plVar3;
+  size_t sVar4;
+  undefined2 local_9a;
+  undefined1 auStack_98 [80];
+  long local_48;
+  
+  local_48 = *____stack_chk_guard;
+  lVar1 = base64_encode(*(base64 **)(this + 0x40),*(uchar **)(this + 0x28),(uchar *)0x0,
+                        *(long *)(this + 0x48) - (long)*(base64 **)(this + 0x40),in_x4);
+  if (lVar1 != 0) {
+    *(undefined8 *)(this + 0x48) = *(undefined8 *)(this + 0x40);
+    if (this[8] == (Base64ContextEmitter)0x0) {
+      (**(code **)(**(long **)this + 0x18))(*(long **)this,*(undefined8 *)(this + 0x28));
+    }
+    else {
+      local_9a = 10;
+      plVar3 = *(long **)this;
+      uVar2 = (plVar3[0x14] + plVar3[0x13]) - 1;
+      sVar4 = (size_t)*(int *)(*(long *)(plVar3[0x10] + (uVar2 >> 4 & 0xffffffffffffff8)) +
+                               (uVar2 & 0x7f) * 0x20 + 0x1c);
+      _memset(auStack_98,0x20,sVar4);
+      auStack_98[sVar4] = 0;
+      (**(code **)(*plVar3 + 0x18))(plVar3,auStack_98);
+      (**(code **)(**(long **)this + 0x18))(*(long **)this,*(undefined8 *)(this + 0x28));
+      (**(code **)(**(long **)this + 0x18))(*(long **)this,&local_9a);
+      (**(code **)(**(long **)this + 0x70))();
+    }
+  }
+  if (*____stack_chk_guard == local_48) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(lVar1 != 0);
+}
+
+
+
+
+// ========================================
+// Function: ~istringstream
+// Entry: 000020c4
+// Signature: undefined __thiscall ~istringstream(istringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::istringstream::~istringstream() */
+
+void __thiscall std::istringstream::~istringstream(istringstream *this)
+
+{
+  undefined *puVar1;
+  istream *this_00;
+  long lVar2;
+  
+  this_00 = (istream *)(this + *(long *)(*(long *)this + -0x18));
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x78) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this_00 = puVar1;
+  *(long *)(this_00 + 0x10) = lVar2 + 0x10;
+  if ((char)this_00[0x67] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x50));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x10));
+  std::istream::~istream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x78));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~istringstream
+// Entry: 00002150
+// Signature: undefined __thiscall ~istringstream(istringstream * this)
+// ========================================
+
+
+/* std::istringstream::~istringstream() */
+
+void __thiscall std::istringstream::~istringstream(istringstream *this)
+
+{
+  undefined *puVar1;
+  long lVar2;
+  
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this + 0x78) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this = puVar1;
+  *(long *)(this + 0x10) = lVar2 + 0x10;
+  if ((char)this[0x67] < '\0') {
+    operator_delete(*(void **)(this + 0x50));
+  }
+  std::streambuf::~streambuf((streambuf *)(this + 0x10));
+  std::istream::~istream((istream *)this);
+  std::ios::~ios((ios *)(this + 0x78));
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~istringstream
+// Entry: 000021dc
+// Signature: undefined __thiscall ~istringstream(istringstream * this)
+// ========================================
+
+
+/* virtual thunk to std::istringstream::~istringstream() */
+
+void __thiscall std::istringstream::~istringstream(istringstream *this)
+
+{
+  undefined *puVar1;
+  istream *this_00;
+  long lVar2;
+  
+  this_00 = (istream *)(this + *(long *)(*(long *)this + -0x18));
+  puVar1 = vtable + 0x18;
+  *(undefined **)(this_00 + 0x78) = vtable + 0x40;
+  lVar2 = stringbuf::vtable;
+  *(undefined **)this_00 = puVar1;
+  *(long *)(this_00 + 0x10) = lVar2 + 0x10;
+  if ((char)this_00[0x67] < '\0') {
+    operator_delete(*(void **)(this_00 + 0x50));
+  }
+  std::streambuf::~streambuf((streambuf *)(this_00 + 0x10));
+  std::istream::~istream(this_00);
+  std::ios::~ios((ios *)(this_00 + 0x78));
+  operator_delete(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002270
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 00002284
+// Signature: ostream * __put_character_sequence[abi:ne180100]<char,std::char_traits<char>>(ostream * param_1, char * param_2, ulong param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ostream& std::__put_character_sequence[abi:ne180100]<char, std::char_traits<char>
+   >(std::ostream&, char const*, unsigned long) */
+
+ostream * std::__put_character_sequence_abi_ne180100_<char,std::char_traits<char>>
+                    (ostream *param_1,char *param_2,ulong param_3)
+
+{
+  ostream *poVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  long *plVar5;
+  long lVar6;
+  undefined8 uVar7;
+  sentry local_68 [16];
+  id aiStack_58 [8];
+  
+  std::ostream::sentry::sentry(local_68,param_1);
+  if (local_68[0] != (sentry)0x0) {
+    poVar1 = param_1 + *(long *)(*(long *)param_1 + -0x18);
+    uVar7 = *(undefined8 *)(poVar1 + 0x28);
+    uVar3 = *(uint *)(poVar1 + 8);
+    iVar4 = *(int *)(poVar1 + 0x90);
+    if (iVar4 == -1) {
+      std::ios_base::getloc();
+      plVar5 = (long *)std::locale::use_facet(aiStack_58);
+      iVar4 = (**(code **)(*plVar5 + 0x38))(plVar5,0x20);
+      std::locale::~locale((locale *)aiStack_58);
+      *(int *)(poVar1 + 0x90) = iVar4;
+    }
+    pcVar2 = param_2 + param_3;
+    if ((uVar3 & 0xb0) != 0x20) {
+      pcVar2 = param_2;
+    }
+    lVar6 = __pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                      (uVar7,param_2,pcVar2,param_2 + param_3,poVar1,(int)(char)iVar4);
+    if (lVar6 == 0) {
+      std::ios_base::clear((int)param_1 + (int)*(undefined8 *)(*(long *)param_1 + -0x18));
+    }
+  }
+  std::ostream::sentry::~sentry(local_68);
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __pad_and_output[abi:ne180100]<char,std::char_traits<char>>
+// Entry: 000023e8
+// Signature: ostreambuf_iterator __pad_and_output[abi:ne180100]<char,std::char_traits<char>>(ostreambuf_iterator param_1, char * param_2, char * param_3, char * param_4, ios_base * param_5, char param_6)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* std::ostreambuf_iterator<char, std::char_traits<char> > std::__pad_and_output[abi:ne180100]<char,
+   std::char_traits<char> >(std::ostreambuf_iterator<char, std::char_traits<char> >, char const*,
+   char const*, char const*, std::ios_base&, char) */
+
+long * std::__pad_and_output_abi_ne180100_<char,std::char_traits<char>>
+                 (long *param_1,long param_2,long param_3,long param_4,long param_5,int param_6)
+
+{
+  long lVar1;
+  undefined8 *******pppppppuVar2;
+  ulong uVar3;
+  _Unwind_Exception *exception_object;
+  long *extraout_x0;
+  long *plVar4;
+  long *extraout_x8;
+  long *plVar5;
+  long *plVar6;
+  undefined1 *puVar7;
+  ulong uVar8;
+  long *plVar9;
+  undefined1 *puVar10;
+  undefined1 *puVar11;
+  ulong uVar12;
+  undefined1 *puVar13;
+  long lVar14;
+  long lVar15;
+  undefined8 *******local_68;
+  ulong local_60;
+  undefined8 uStack_58;
+  
+  if (param_1 == (long *)0x0) {
+    return (long *)0x0;
+  }
+  uVar12 = *(long *)(param_5 + 0x18) - (param_4 - param_2);
+  if (uVar12 == 0 || *(long *)(param_5 + 0x18) < param_4 - param_2) {
+    uVar12 = 0;
+  }
+  lVar14 = param_3 - param_2;
+  if ((lVar14 < 1) ||
+     (lVar1 = (**(code **)(*param_1 + 0x60))(param_1,param_2,lVar14), lVar1 == lVar14)) {
+    if (0 < (long)uVar12) {
+      if (0x7ffffffffffffff7 < uVar12) {
+        exception_object = (_Unwind_Exception *)string::__throw_length_error_abi_ne180100_();
+        if ((long)uStack_58 < 0) {
+          operator_delete(local_68);
+        }
+        __Unwind_Resume(exception_object);
+        plVar5 = extraout_x8;
+        plVar4 = extraout_x0;
+        if ((*(uint *)(extraout_x0 + 0xc) >> 4 & 1) == 0) {
+          if ((*(uint *)(extraout_x0 + 0xc) >> 3 & 1) == 0) {
+            *extraout_x8 = 0;
+            extraout_x8[1] = 0;
+            extraout_x8[2] = 0;
+            return extraout_x0;
+          }
+          puVar13 = (undefined1 *)extraout_x0[2];
+          puVar10 = (undefined1 *)extraout_x0[4];
+          uVar12 = (long)puVar10 - (long)puVar13;
+          if (0x7ffffffffffffff7 < uVar12) {
+LAB_000027dc:
+            string::__throw_length_error_abi_ne180100_();
+                    /* WARNING: Subroutine does not return */
+            __throw_out_of_range_abi_ne180100_("basic_string");
+          }
+          if (uVar12 < 0x17) {
+            *(char *)((long)extraout_x8 + 0x17) = (char)uVar12;
+          }
+          else {
+            uVar3 = (uVar12 & 0xfffffffffffffff8) + 8;
+            if ((uVar12 | 7) != 0x17) {
+              uVar3 = uVar12 | 7;
+            }
+            plVar4 = operator_new(uVar3 + 1);
+            extraout_x8[1] = uVar12;
+            extraout_x8[2] = uVar3 + 1 | 0x8000000000000000;
+            *extraout_x8 = (long)plVar4;
+            plVar5 = plVar4;
+          }
+          if (puVar13 == puVar10) {
+LAB_0000278c:
+            *(undefined1 *)plVar5 = 0;
+            return plVar4;
+          }
+          if ((0x1f < uVar12) && (0x1f < (ulong)((long)plVar5 - (long)puVar13))) {
+            uVar8 = uVar12 & 0xffffffffffffffe0;
+            plVar6 = (long *)((long)plVar5 + uVar8);
+            plVar5 = plVar5 + 2;
+            plVar9 = (long *)(puVar13 + 0x10);
+            uVar3 = uVar8;
+            do {
+              lVar14 = plVar9[-2];
+              lVar15 = plVar9[1];
+              lVar1 = *plVar9;
+              plVar5[-1] = plVar9[-1];
+              plVar5[-2] = lVar14;
+              plVar5[1] = lVar15;
+              *plVar5 = lVar1;
+              plVar5 = plVar5 + 4;
+              plVar9 = plVar9 + 4;
+              uVar3 = uVar3 - 0x20;
+            } while (uVar3 != 0);
+            plVar5 = plVar6;
+            puVar13 = puVar13 + uVar8;
+            if (uVar12 == uVar8) goto LAB_000027c0;
+          }
+          do {
+            puVar7 = puVar13 + 1;
+            plVar6 = (long *)((long)plVar5 + 1);
+            *(undefined1 *)plVar5 = *puVar13;
+            plVar5 = plVar6;
+            puVar13 = puVar7;
+          } while (puVar7 != puVar10);
+        }
+        else {
+          puVar13 = (undefined1 *)extraout_x0[0xb];
+          puVar7 = (undefined1 *)extraout_x0[6];
+          puVar10 = puVar13;
+          if (puVar13 < puVar7) {
+            extraout_x0[0xb] = (long)puVar7;
+            puVar10 = puVar7;
+          }
+          puVar11 = (undefined1 *)extraout_x0[5];
+          uVar12 = (long)puVar10 - (long)puVar11;
+          if (0x7ffffffffffffff7 < uVar12) goto LAB_000027dc;
+          if (uVar12 < 0x17) {
+            *(char *)((long)extraout_x8 + 0x17) = (char)uVar12;
+          }
+          else {
+            uVar3 = (uVar12 & 0xfffffffffffffff8) + 8;
+            if ((uVar12 | 7) != 0x17) {
+              uVar3 = uVar12 | 7;
+            }
+            plVar4 = operator_new(uVar3 + 1);
+            extraout_x8[1] = uVar12;
+            extraout_x8[2] = uVar3 + 1 | 0x8000000000000000;
+            *extraout_x8 = (long)plVar4;
+            plVar5 = plVar4;
+          }
+          if (puVar11 == puVar10) goto LAB_0000278c;
+          if (puVar13 <= puVar7) {
+            puVar13 = puVar7;
+          }
+          uVar12 = (long)puVar13 - (long)puVar11;
+          if ((0x1f < uVar12) && (0x1f < (ulong)((long)plVar5 - (long)puVar11))) {
+            uVar8 = uVar12 & 0xffffffffffffffe0;
+            plVar6 = (long *)((long)plVar5 + uVar8);
+            plVar5 = plVar5 + 2;
+            plVar9 = (long *)(puVar11 + 0x10);
+            uVar3 = uVar8;
+            do {
+              lVar14 = plVar9[-2];
+              lVar15 = plVar9[1];
+              lVar1 = *plVar9;
+              plVar5[-1] = plVar9[-1];
+              plVar5[-2] = lVar14;
+              plVar5[1] = lVar15;
+              *plVar5 = lVar1;
+              plVar5 = plVar5 + 4;
+              plVar9 = plVar9 + 4;
+              uVar3 = uVar3 - 0x20;
+            } while (uVar3 != 0);
+            plVar5 = plVar6;
+            puVar11 = puVar11 + uVar8;
+            if (uVar12 == uVar8) goto LAB_000027c0;
+          }
+          do {
+            puVar13 = puVar11 + 1;
+            plVar6 = (long *)((long)plVar5 + 1);
+            *(undefined1 *)plVar5 = *puVar11;
+            plVar5 = plVar6;
+            puVar11 = puVar13;
+          } while (puVar13 != puVar10);
+        }
+LAB_000027c0:
+        *(undefined1 *)plVar6 = 0;
+        return plVar4;
+      }
+      if (uVar12 < 0x17) {
+        uStack_58 = CONCAT17((char)uVar12,(undefined7)uStack_58);
+        pppppppuVar2 = &local_68;
+      }
+      else {
+        uVar3 = (uVar12 & 0xfffffffffffffff8) + 8;
+        if ((uVar12 | 7) != 0x17) {
+          uVar3 = uVar12 | 7;
+        }
+        pppppppuVar2 = operator_new(uVar3 + 1);
+        uStack_58 = uVar3 + 1 | 0x8000000000000000;
+        local_68 = pppppppuVar2;
+        local_60 = uVar12;
+      }
+      _memset(pppppppuVar2,param_6,uVar12);
+      *(undefined1 *)((long)pppppppuVar2 + uVar12) = 0;
+      pppppppuVar2 = local_68;
+      if (-1 < (long)uStack_58) {
+        pppppppuVar2 = &local_68;
+      }
+      uVar3 = (**(code **)(*param_1 + 0x60))(param_1,pppppppuVar2,uVar12);
+      if ((long)uStack_58 < 0) {
+        operator_delete(local_68);
+      }
+      if (uVar3 != uVar12) {
+        return (long *)0x0;
+      }
+    }
+    param_4 = param_4 - param_3;
+    if ((param_4 < 1) ||
+       (lVar14 = (**(code **)(*param_1 + 0x60))(param_1,param_3,param_4), lVar14 == param_4)) {
+      *(undefined8 *)(param_5 + 0x18) = 0;
+      return param_1;
+    }
+  }
+  return (long *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: str
+// Entry: 0000258c
+// Signature: undefined __cdecl str(void)
+// ========================================
+
+
+/* std::stringbuf::str() const */
+
+void std::stringbuf::str(void)
+
+{
+  long in_x0;
+  undefined8 *puVar1;
+  undefined8 *in_x8;
+  undefined8 *puVar2;
+  undefined1 *puVar3;
+  ulong uVar4;
+  undefined8 *puVar5;
+  ulong uVar6;
+  undefined1 *puVar7;
+  undefined1 *puVar8;
+  ulong uVar9;
+  undefined1 *puVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  
+  if ((*(uint *)(in_x0 + 0x60) >> 4 & 1) == 0) {
+    if ((*(uint *)(in_x0 + 0x60) >> 3 & 1) == 0) {
+      *in_x8 = 0;
+      in_x8[1] = 0;
+      in_x8[2] = 0;
+      return;
+    }
+    puVar10 = *(undefined1 **)(in_x0 + 0x10);
+    puVar7 = *(undefined1 **)(in_x0 + 0x20);
+    uVar9 = (long)puVar7 - (long)puVar10;
+    if (0x7ffffffffffffff7 < uVar9) {
+LAB_000027dc:
+      string::__throw_length_error_abi_ne180100_();
+                    /* WARNING: Subroutine does not return */
+      __throw_out_of_range_abi_ne180100_("basic_string");
+    }
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar10 == puVar7) {
+LAB_0000278c:
+      *(undefined1 *)in_x8 = 0;
+      return;
+    }
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar10))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar10 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar10 = puVar10 + uVar4;
+      if (uVar9 == uVar4) goto LAB_000027c0;
+    }
+    do {
+      puVar3 = puVar10 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar10;
+      in_x8 = puVar2;
+      puVar10 = puVar3;
+    } while (puVar3 != puVar7);
+  }
+  else {
+    puVar10 = *(undefined1 **)(in_x0 + 0x58);
+    puVar3 = *(undefined1 **)(in_x0 + 0x30);
+    puVar7 = puVar10;
+    if (puVar10 < puVar3) {
+      *(undefined1 **)(in_x0 + 0x58) = puVar3;
+      puVar7 = puVar3;
+    }
+    puVar8 = *(undefined1 **)(in_x0 + 0x28);
+    uVar9 = (long)puVar7 - (long)puVar8;
+    if (0x7ffffffffffffff7 < uVar9) goto LAB_000027dc;
+    if (uVar9 < 0x17) {
+      *(char *)((long)in_x8 + 0x17) = (char)uVar9;
+    }
+    else {
+      uVar6 = (uVar9 & 0xfffffffffffffff8) + 8;
+      if ((uVar9 | 7) != 0x17) {
+        uVar6 = uVar9 | 7;
+      }
+      puVar1 = operator_new(uVar6 + 1);
+      in_x8[1] = uVar9;
+      in_x8[2] = uVar6 + 1 | 0x8000000000000000;
+      *in_x8 = puVar1;
+      in_x8 = puVar1;
+    }
+    if (puVar8 == puVar7) goto LAB_0000278c;
+    if (puVar10 <= puVar3) {
+      puVar10 = puVar3;
+    }
+    uVar9 = (long)puVar10 - (long)puVar8;
+    if ((0x1f < uVar9) && (0x1f < (ulong)((long)in_x8 - (long)puVar8))) {
+      uVar4 = uVar9 & 0xffffffffffffffe0;
+      puVar2 = (undefined8 *)((long)in_x8 + uVar4);
+      puVar1 = in_x8 + 2;
+      puVar5 = (undefined8 *)(puVar8 + 0x10);
+      uVar6 = uVar4;
+      do {
+        uVar11 = puVar5[-2];
+        uVar13 = puVar5[1];
+        uVar12 = *puVar5;
+        puVar1[-1] = puVar5[-1];
+        puVar1[-2] = uVar11;
+        puVar1[1] = uVar13;
+        *puVar1 = uVar12;
+        puVar1 = puVar1 + 4;
+        puVar5 = puVar5 + 4;
+        uVar6 = uVar6 - 0x20;
+      } while (uVar6 != 0);
+      in_x8 = puVar2;
+      puVar8 = puVar8 + uVar4;
+      if (uVar9 == uVar4) goto LAB_000027c0;
+    }
+    do {
+      puVar10 = puVar8 + 1;
+      puVar2 = (undefined8 *)((long)in_x8 + 1);
+      *(undefined1 *)in_x8 = *puVar8;
+      in_x8 = puVar2;
+      puVar8 = puVar10;
+    } while (puVar10 != puVar7);
+  }
+LAB_000027c0:
+  *(undefined1 *)puVar2 = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 000027e4
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_out_of_range[abi:ne180100]() const */
+
+void std::string::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 000027f8
+// Signature: noreturn undefined __throw_out_of_range[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_out_of_range[abi:ne180100](char const*) */
+
+void std::__throw_out_of_range_abi_ne180100_(char *param_1)
+
+{
+  out_of_range *this;
+  
+  this = (out_of_range *)___cxa_allocate_exception(0x10);
+  out_of_range::out_of_range_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__out_of_range);
+}
+
+
+
+
+// ========================================
+// Function: out_of_range[abi:ne180100]
+// Entry: 00002848
+// Signature: undefined __thiscall out_of_range[abi:ne180100](out_of_range * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::out_of_range::out_of_range[abi:ne180100](char const*) */
+
+void __thiscall std::out_of_range::out_of_range_abi_ne180100_(out_of_range *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: str
+// Entry: 0000286c
+// Signature: undefined __thiscall str(stringbuf * this, string * param_1)
+// ========================================
+
+
+/* std::stringbuf::str(std::string const&) */
+
+void __thiscall std::stringbuf::str(stringbuf *this,string *param_1)
+
+{
+  string *this_00;
+  uint uVar1;
+  stringbuf sVar2;
+  ulong uVar3;
+  ulong uVar4;
+  string *psVar5;
+  
+  this_00 = (string *)(this + 0x40);
+  std::string::operator=(this_00,param_1);
+  *(undefined8 *)(this + 0x58) = 0;
+  sVar2 = this[0x57];
+  uVar3 = (ulong)(byte)sVar2;
+  if ((char)sVar2 < '\0') {
+    uVar3 = *(ulong *)(this + 0x48);
+    uVar1 = *(uint *)(this + 0x60);
+    psVar5 = *(string **)(this + 0x40);
+  }
+  else {
+    uVar1 = *(uint *)(this + 0x60);
+    psVar5 = this_00;
+  }
+  if ((uVar1 >> 3 & 1) != 0) {
+    *(string **)(this + 0x58) = psVar5 + uVar3;
+    *(string **)(this + 0x10) = psVar5;
+    *(string **)(this + 0x18) = psVar5;
+    *(string **)(this + 0x20) = psVar5 + uVar3;
+  }
+  if ((uVar1 >> 4 & 1) != 0) {
+    *(string **)(this + 0x58) = psVar5 + uVar3;
+    if ((char)sVar2 < '\0') {
+      std::string::resize((ulong)this_00,(char)*(undefined8 *)(this + 0x50) + -1);
+      sVar2 = this[0x57];
+    }
+    else {
+      std::string::resize((ulong)this_00,'\x16');
+      sVar2 = this[0x57];
+    }
+    if ((char)sVar2 < '\0') {
+      *(string **)(this + 0x28) = psVar5;
+      *(string **)(this + 0x30) = psVar5;
+      *(string **)(this + 0x38) = psVar5 + *(long *)(this + 0x48);
+      sVar2 = this[0x60];
+    }
+    else {
+      *(string **)(this + 0x28) = psVar5;
+      *(string **)(this + 0x30) = psVar5;
+      *(string **)(this + 0x38) = psVar5 + (byte)sVar2;
+      sVar2 = this[0x60];
+    }
+    if (((byte)sVar2 & 3) != 0) {
+      if (uVar3 >> 0x1f != 0) {
+        uVar4 = (uVar3 - 0x80000000) / 0x7fffffff;
+        psVar5 = psVar5 + uVar4 * 0x7fffffff + 0x7fffffff;
+        uVar3 = (uVar3 + uVar4 * -0x7fffffff) - 0x7fffffff;
+        *(string **)(this + 0x30) = psVar5;
+      }
+      if (uVar3 != 0) {
+        *(string **)(this + 0x30) = psVar5 + (uVar3 & 0xffffffff);
+        return;
+      }
+    }
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000029c4
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t,
+   std::allocator<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t>
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t,std::allocator<cv::base64::RawDataToBinaryConvertor::elem_to_binary_t>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00004000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: calcElemSize
+// Entry: 00004100
+// Signature: undefined calcElemSize(char * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::fs::calcElemSize(char *param_1,int param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00004200
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: use_facet
+// Entry: 00004300
+// Signature: undefined use_facet(id * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::locale::use_facet(id *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getloc
+// Entry: 00004400
+// Signature: undefined getloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::getloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00004500
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00004600
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~out_of_range
+// Entry: 00004700
+// Signature: undefined __thiscall ~out_of_range(out_of_range * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::out_of_range::~out_of_range() */
+
+void __thiscall std::out_of_range::~out_of_range(out_of_range *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00004800
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00004900
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 00004a00
+// Signature: undefined assign(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::assign(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 00004b00
+// Signature: undefined resize(ulong param_1, char param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::resize(ulong param_1,char param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: reserve
+// Entry: 00004c00
+// Signature: undefined reserve(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::reserve(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: push_back
+// Entry: 00004d00
+// Signature: undefined push_back(char param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::push_back(char param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004e00
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sentry
+// Entry: 00004f00
+// Signature: undefined __thiscall sentry(sentry * this, istream * param_1, bool param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::istream::sentry::sentry(sentry *this,istream *param_1,bool param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00005000
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00005100
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::istream::~istream() */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00005200
+// Signature: undefined __thiscall ~istream(istream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::istream::~istream(istream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator>>
+// Entry: 00005300
+// Signature: undefined __thiscall operator>>(istream * this, ulong * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::istream::operator>>(istream *this,ulong *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sentry
+// Entry: 00005400
+// Signature: undefined __thiscall sentry(sentry * this, ostream * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::sentry(sentry *this,ostream *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~sentry
+// Entry: 00005500
+// Signature: undefined __thiscall ~sentry(sentry * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::sentry::~sentry(sentry *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00005600
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00005700
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::ostream::~ostream() */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00005800
+// Signature: undefined __thiscall ~ostream(ostream * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ostream::~ostream(ostream *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sync
+// Entry: 00005900
+// Signature: undefined sync(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::sync() */
+
+void std::streambuf::sync(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: imbue
+// Entry: 00005a00
+// Signature: undefined imbue(locale * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::imbue(std::locale const&) */
+
+void std::streambuf::imbue(locale *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: uflow
+// Entry: 00005b00
+// Signature: undefined uflow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::uflow() */
+
+void std::streambuf::uflow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: setbuf
+// Entry: 00005c00
+// Signature: undefined setbuf(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::setbuf(char*, long) */
+
+void std::streambuf::setbuf(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsgetn
+// Entry: 00005d00
+// Signature: undefined xsgetn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsgetn(char*, long) */
+
+void std::streambuf::xsgetn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: xsputn
+// Entry: 00005e00
+// Signature: undefined xsputn(char * param_1, long param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::xsputn(char const*, long) */
+
+void std::streambuf::xsputn(char *param_1,long param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: showmanyc
+// Entry: 00005f00
+// Signature: undefined showmanyc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::streambuf::showmanyc() */
+
+void std::streambuf::showmanyc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: streambuf
+// Entry: 00006000
+// Signature: undefined __thiscall streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~streambuf
+// Entry: 00006100
+// Signature: undefined __thiscall ~streambuf(streambuf * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::streambuf::~streambuf(streambuf *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~locale
+// Entry: 00006300
+// Signature: undefined __thiscall ~locale(locale * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::locale::~locale(locale *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __set_badbit_and_consider_rethrow
+// Entry: 00006400
+// Signature: undefined __set_badbit_and_consider_rethrow(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::ios_base::__set_badbit_and_consider_rethrow() */
+
+void std::ios_base::__set_badbit_and_consider_rethrow(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: init
+// Entry: 00006500
+// Signature: undefined init(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::init(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 00006600
+// Signature: undefined clear(uint param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::ios_base::clear(uint param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ios
+// Entry: 00006700
+// Signature: undefined __thiscall ~ios(ios * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::ios::~ios(ios *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00006800
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00007200
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~istream
+// Entry: 00007300
+// Signature: undefined ~istream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::istream::~istream() */
+
+void std::istream::~istream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00007400
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ostream
+// Entry: 00007500
+// Signature: undefined ~ostream(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* virtual thunk to std::ostream::~ostream() */
+
+void std::ostream::~ostream(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00007600
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00007700
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00007800
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00007900
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00007d00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00007f00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00008100
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00008200
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00008300
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00008400
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memset
+// Entry: 00008500
+// Signature: void * _memset(void * param_1, int param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memset(void *param_1,int param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00008600
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 108
+// Failed: 0
+// Skipped external functions: 0

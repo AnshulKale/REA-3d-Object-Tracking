@@ -1,0 +1,3837 @@
+Program: nldiffusion_functions.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: gaussian_2D_convolution
+// Entry: 00000000
+// Signature: undefined __cdecl gaussian_2D_convolution(Mat * param_1, Mat * param_2, int param_3, int param_4, float param_5)
+// ========================================
+
+
+/* cv::gaussian_2D_convolution(cv::Mat const&, cv::Mat&, int, int, float) */
+
+void cv::gaussian_2D_convolution(Mat *param_1,Mat *param_2,int param_3,int param_4,float param_5)
+
+{
+  bool bVar1;
+  ulong uVar2;
+  int iVar3;
+  float fVar4;
+  undefined4 local_40 [2];
+  Mat *local_38;
+  undefined8 uStack_30;
+  undefined4 local_28 [2];
+  Mat *local_20;
+  undefined8 uStack_18;
+  
+  bVar1 = true;
+  if (((param_5 <= (float)param_3 && param_4 != 0) && param_3 != 0) &&
+     (bVar1 = false, !NAN((float)param_4) && !NAN(param_5))) {
+    bVar1 = (float)param_4 < param_5;
+  }
+  if (bVar1) {
+    fVar4 = (param_5 + -0.8) / 0.3 + 1.0;
+    fVar4 = fVar4 + fVar4;
+    iVar3 = (int)fVar4;
+    if ((float)(int)fVar4 < fVar4) {
+      iVar3 = iVar3 + 1;
+    }
+    uVar2 = CONCAT44(iVar3,iVar3) | 0x100000001;
+  }
+  else {
+    uVar2 = 0x100000001;
+  }
+  uStack_18 = 0;
+  local_28[0] = 0x1010000;
+  local_40[0] = 0x2010000;
+  uStack_30 = 0;
+  local_38 = param_2;
+  local_20 = param_1;
+  cv::GaussianBlur((double)param_5,(double)param_5,local_28,local_40,uVar2,1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: image_derivatives_scharr
+// Entry: 000000b4
+// Signature: undefined __cdecl image_derivatives_scharr(Mat * param_1, Mat * param_2, int param_3, int param_4)
+// ========================================
+
+
+/* cv::image_derivatives_scharr(cv::Mat const&, cv::Mat&, int, int) */
+
+void cv::image_derivatives_scharr(Mat *param_1,Mat *param_2,int param_3,int param_4)
+
+{
+  undefined4 local_40 [2];
+  Mat *local_38;
+  undefined8 uStack_30;
+  undefined4 local_28 [2];
+  Mat *local_20;
+  undefined8 uStack_18;
+  
+  uStack_18 = 0;
+  local_28[0] = 0x1010000;
+  local_40[0] = 0x2010000;
+  uStack_30 = 0;
+  local_38 = param_2;
+  local_20 = param_1;
+  cv::Scharr((_InputArray *)local_28,(_OutputArray *)local_40,5,param_3,param_4,1.0,0.0,4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: pm_g1
+// Entry: 00000108
+// Signature: undefined __cdecl pm_g1(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3, float param_4)
+// ========================================
+
+
+/* cv::pm_g1(cv::_InputArray const&, cv::_InputArray const&, cv::_OutputArray const&, float) */
+
+void cv::pm_g1(_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3,float param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
+  float *pfVar10;
+  float *pfVar11;
+  float *pfVar12;
+  float *pfVar13;
+  float *pfVar14;
+  float *pfVar15;
+  ulong uVar16;
+  ulong uVar17;
+  long lVar18;
+  long lVar19;
+  long lVar20;
+  ulong uVar21;
+  ulong uVar22;
+  float *pfVar23;
+  float *pfVar24;
+  ulong uVar25;
+  long lVar26;
+  ulong uVar27;
+  float fVar28;
+  float fVar29;
+  float fVar30;
+  float fVar31;
+  float fVar32;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  float fVar36;
+  float fVar37;
+  float fVar38;
+  float fVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  float fVar44;
+  undefined4 local_1a0 [2];
+  Mat *local_198;
+  undefined8 uStack_190;
+  undefined4 local_188 [2];
+  Mat *local_180;
+  undefined8 uStack_178;
+  Mat aMStack_170 [16];
+  float *local_160;
+  long *local_128;
+  Mat aMStack_110 [16];
+  float *local_100;
+  long *local_c8;
+  Mat aMStack_b0 [16];
+  float *local_a0;
+  uint *local_70;
+  long *local_68;
+  
+  iVar3 = (int)param_1;
+  uVar4 = cv::_InputArray::size(iVar3);
+  uVar5 = cv::_InputArray::type(iVar3);
+  cv::_OutputArray::create(param_3,uVar4,uVar5,0xffffffff,0,0);
+  iVar2 = cv::_InputArray::kind();
+  if (iVar2 == 0x10000) {
+    cv::Mat::Mat(aMStack_b0,*(Mat **)(param_1 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_(iVar3);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_110,*(Mat **)(param_2 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_2);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_170,*(Mat **)(param_3 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_3);
+  }
+  uVar16 = (ulong)*local_70;
+  if (0 < (int)*local_70) {
+    uVar1 = local_70[1];
+    uVar17 = (ulong)uVar1;
+    if (0 < (int)uVar1) {
+      lVar18 = *local_68;
+      lVar19 = *local_c8;
+      lVar20 = *local_128;
+      fVar28 = -1.0 / (param_4 * param_4);
+      if (uVar1 < 8) {
+        local_a0 = local_a0 + 3;
+        local_100 = local_100 + 3;
+        local_160 = local_160 + 3;
+        do {
+          local_160[-3] = fVar28 * (local_100[-3] * local_100[-3] + local_a0[-3] * local_a0[-3]);
+          if ((((uVar1 != 1) &&
+               (local_160[-2] =
+                     fVar28 * (local_100[-2] * local_100[-2] + local_a0[-2] * local_a0[-2]),
+               uVar1 != 2)) &&
+              (local_160[-1] =
+                    fVar28 * (local_100[-1] * local_100[-1] + local_a0[-1] * local_a0[-1]),
+              uVar1 != 3)) &&
+             (((*local_160 = fVar28 * (*local_100 * *local_100 + *local_a0 * *local_a0), uVar1 != 4
+               && (local_160[1] = fVar28 * (local_100[1] * local_100[1] + local_a0[1] * local_a0[1])
+                  , uVar1 != 5)) &&
+              (local_160[2] = fVar28 * (local_100[2] * local_100[2] + local_a0[2] * local_a0[2]),
+              uVar1 != 6)))) {
+            local_160[3] = fVar28 * (local_100[3] * local_100[3] + local_a0[3] * local_a0[3]);
+          }
+          local_a0 = (float *)((long)local_a0 + lVar18);
+          local_100 = (float *)((long)local_100 + lVar19);
+          local_160 = (float *)((long)local_160 + lVar20);
+          uVar16 = uVar16 - 1;
+        } while (uVar16 != 0);
+      }
+      else {
+        uVar21 = uVar17 & 0xfffffff8;
+        if (uVar21 == uVar17) {
+          uVar22 = 0;
+          pfVar6 = local_a0 + 4;
+          pfVar7 = local_160 + 4;
+          pfVar8 = local_100 + 4;
+          pfVar9 = local_a0;
+          pfVar10 = local_100;
+          pfVar11 = local_160;
+          do {
+            pfVar13 = pfVar9;
+            pfVar15 = pfVar10;
+            pfVar24 = pfVar11;
+            uVar25 = uVar17;
+            if (((long)local_160 + (lVar20 * uVar22 - (long)((long)local_a0 + lVar18 * uVar22)) <
+                 0x20) ||
+               (pfVar12 = pfVar8, pfVar14 = pfVar7, pfVar23 = pfVar6, uVar27 = uVar21,
+               (long)local_160 + (lVar20 * uVar22 - (long)((long)local_100 + lVar19 * uVar22)) <
+               0x20)) {
+              do {
+                *pfVar24 = fVar28 * (*pfVar15 * *pfVar15 + *pfVar13 * *pfVar13);
+                uVar25 = uVar25 - 1;
+                pfVar13 = pfVar13 + 1;
+                pfVar15 = pfVar15 + 1;
+                pfVar24 = pfVar24 + 1;
+              } while (uVar25 != 0);
+            }
+            else {
+              do {
+                fVar37 = (float)*(undefined8 *)(pfVar12 + -4);
+                fVar38 = (float)((ulong)*(undefined8 *)(pfVar12 + -4) >> 0x20);
+                fVar39 = (float)*(undefined8 *)(pfVar12 + -2);
+                fVar40 = (float)((ulong)*(undefined8 *)(pfVar12 + -2) >> 0x20);
+                fVar41 = (float)*(undefined8 *)pfVar12;
+                fVar42 = (float)((ulong)*(undefined8 *)pfVar12 >> 0x20);
+                fVar43 = (float)*(undefined8 *)(pfVar12 + 2);
+                fVar44 = (float)((ulong)*(undefined8 *)(pfVar12 + 2) >> 0x20);
+                fVar29 = (float)*(undefined8 *)(pfVar23 + -4);
+                fVar30 = (float)((ulong)*(undefined8 *)(pfVar23 + -4) >> 0x20);
+                fVar31 = (float)*(undefined8 *)(pfVar23 + -2);
+                fVar32 = (float)((ulong)*(undefined8 *)(pfVar23 + -2) >> 0x20);
+                fVar33 = (float)*(undefined8 *)pfVar23;
+                fVar34 = (float)((ulong)*(undefined8 *)pfVar23 >> 0x20);
+                fVar35 = (float)*(undefined8 *)(pfVar23 + 2);
+                fVar36 = (float)((ulong)*(undefined8 *)(pfVar23 + 2) >> 0x20);
+                *(ulong *)(pfVar14 + -2) =
+                     CONCAT44((fVar40 * fVar40 + fVar32 * fVar32) * fVar28,
+                              (fVar39 * fVar39 + fVar31 * fVar31) * fVar28);
+                *(ulong *)(pfVar14 + -4) =
+                     CONCAT44((fVar38 * fVar38 + fVar30 * fVar30) * fVar28,
+                              (fVar37 * fVar37 + fVar29 * fVar29) * fVar28);
+                *(ulong *)(pfVar14 + 2) =
+                     CONCAT44((fVar44 * fVar44 + fVar36 * fVar36) * fVar28,
+                              (fVar43 * fVar43 + fVar35 * fVar35) * fVar28);
+                *(ulong *)pfVar14 =
+                     CONCAT44((fVar42 * fVar42 + fVar34 * fVar34) * fVar28,
+                              (fVar41 * fVar41 + fVar33 * fVar33) * fVar28);
+                pfVar23 = pfVar23 + 8;
+                pfVar14 = pfVar14 + 8;
+                pfVar12 = pfVar12 + 8;
+                uVar27 = uVar27 - 8;
+              } while (uVar27 != 0);
+            }
+            uVar22 = uVar22 + 1;
+            pfVar6 = (float *)((long)pfVar6 + lVar18);
+            pfVar7 = (float *)((long)pfVar7 + lVar20);
+            pfVar8 = (float *)((long)pfVar8 + lVar19);
+            pfVar11 = (float *)((long)pfVar11 + lVar20);
+            pfVar10 = (float *)((long)pfVar10 + lVar19);
+            pfVar9 = (float *)((long)pfVar9 + lVar18);
+          } while (uVar22 != uVar16);
+        }
+        else {
+          uVar22 = 0;
+          pfVar6 = local_a0 + 4;
+          pfVar7 = local_160 + 4;
+          pfVar8 = local_100 + 4;
+          pfVar9 = local_160;
+          pfVar10 = local_100;
+          pfVar11 = local_a0;
+          do {
+            uVar25 = 0;
+            if ((0x1f < (long)local_160 +
+                        (lVar20 * uVar22 - (long)((long)local_a0 + lVar18 * uVar22))) &&
+               (pfVar13 = pfVar8, pfVar15 = pfVar7, pfVar24 = pfVar6, uVar27 = uVar21,
+               0x1f < (long)local_160 +
+                      (lVar20 * uVar22 - (long)((long)local_100 + lVar19 * uVar22)))) {
+              do {
+                fVar37 = (float)*(undefined8 *)(pfVar13 + -4);
+                fVar38 = (float)((ulong)*(undefined8 *)(pfVar13 + -4) >> 0x20);
+                fVar39 = (float)*(undefined8 *)(pfVar13 + -2);
+                fVar40 = (float)((ulong)*(undefined8 *)(pfVar13 + -2) >> 0x20);
+                fVar41 = (float)*(undefined8 *)pfVar13;
+                fVar42 = (float)((ulong)*(undefined8 *)pfVar13 >> 0x20);
+                fVar43 = (float)*(undefined8 *)(pfVar13 + 2);
+                fVar44 = (float)((ulong)*(undefined8 *)(pfVar13 + 2) >> 0x20);
+                fVar29 = (float)*(undefined8 *)(pfVar24 + -4);
+                fVar30 = (float)((ulong)*(undefined8 *)(pfVar24 + -4) >> 0x20);
+                fVar31 = (float)*(undefined8 *)(pfVar24 + -2);
+                fVar32 = (float)((ulong)*(undefined8 *)(pfVar24 + -2) >> 0x20);
+                fVar33 = (float)*(undefined8 *)pfVar24;
+                fVar34 = (float)((ulong)*(undefined8 *)pfVar24 >> 0x20);
+                fVar35 = (float)*(undefined8 *)(pfVar24 + 2);
+                fVar36 = (float)((ulong)*(undefined8 *)(pfVar24 + 2) >> 0x20);
+                *(ulong *)(pfVar15 + -2) =
+                     CONCAT44((fVar40 * fVar40 + fVar32 * fVar32) * fVar28,
+                              (fVar39 * fVar39 + fVar31 * fVar31) * fVar28);
+                *(ulong *)(pfVar15 + -4) =
+                     CONCAT44((fVar38 * fVar38 + fVar30 * fVar30) * fVar28,
+                              (fVar37 * fVar37 + fVar29 * fVar29) * fVar28);
+                *(ulong *)(pfVar15 + 2) =
+                     CONCAT44((fVar44 * fVar44 + fVar36 * fVar36) * fVar28,
+                              (fVar43 * fVar43 + fVar35 * fVar35) * fVar28);
+                *(ulong *)pfVar15 =
+                     CONCAT44((fVar42 * fVar42 + fVar34 * fVar34) * fVar28,
+                              (fVar41 * fVar41 + fVar33 * fVar33) * fVar28);
+                uVar27 = uVar27 - 8;
+                pfVar13 = pfVar13 + 8;
+                pfVar15 = pfVar15 + 8;
+                uVar25 = uVar21;
+                pfVar24 = pfVar24 + 8;
+              } while (uVar27 != 0);
+            }
+            lVar26 = uVar17 - uVar25;
+            pfVar13 = pfVar11 + uVar25;
+            pfVar15 = pfVar10 + uVar25;
+            pfVar24 = pfVar9 + uVar25;
+            do {
+              *pfVar24 = fVar28 * (*pfVar15 * *pfVar15 + *pfVar13 * *pfVar13);
+              lVar26 = lVar26 + -1;
+              pfVar13 = pfVar13 + 1;
+              pfVar15 = pfVar15 + 1;
+              pfVar24 = pfVar24 + 1;
+            } while (lVar26 != 0);
+            uVar22 = uVar22 + 1;
+            pfVar6 = (float *)((long)pfVar6 + lVar18);
+            pfVar7 = (float *)((long)pfVar7 + lVar20);
+            pfVar8 = (float *)((long)pfVar8 + lVar19);
+            pfVar11 = (float *)((long)pfVar11 + lVar18);
+            pfVar10 = (float *)((long)pfVar10 + lVar19);
+            pfVar9 = (float *)((long)pfVar9 + lVar20);
+          } while (uVar22 != uVar16);
+        }
+      }
+    }
+  }
+  local_188[0] = 0x1010000;
+  local_198 = aMStack_170;
+  uStack_178 = 0;
+  local_1a0[0] = 0x2010000;
+  uStack_190 = 0;
+  local_180 = local_198;
+  cv::exp((_InputArray *)local_188,(_OutputArray *)local_1a0);
+  cv::Mat::~Mat(aMStack_170);
+  cv::Mat::~Mat(aMStack_110);
+  cv::Mat::~Mat(aMStack_b0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: pm_g2
+// Entry: 000005c4
+// Signature: undefined __cdecl pm_g2(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3, float param_4)
+// ========================================
+
+
+/* cv::pm_g2(cv::_InputArray const&, cv::_InputArray const&, cv::_OutputArray const&, float) */
+
+void cv::pm_g2(_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3,float param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  ulong uVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  undefined8 *puVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  undefined8 *puVar13;
+  float *pfVar14;
+  undefined8 *puVar15;
+  ulong uVar16;
+  undefined8 *puVar17;
+  float *pfVar18;
+  ulong uVar19;
+  long lVar20;
+  float *pfVar21;
+  long lVar22;
+  long lVar23;
+  long lVar24;
+  ulong uVar25;
+  ulong uVar26;
+  undefined8 *puVar27;
+  undefined8 *puVar28;
+  ulong uVar29;
+  float fVar30;
+  undefined1 auVar31 [16];
+  float fVar32;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  float fVar36;
+  float fVar37;
+  float fVar38;
+  float fVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  float fVar44;
+  float fVar45;
+  float fVar46;
+  float fVar47;
+  float fVar48;
+  float fVar49;
+  float fVar50;
+  float fVar51;
+  Mat aMStack_180 [16];
+  long local_170;
+  long *local_138;
+  Mat aMStack_120 [16];
+  long local_110;
+  long *local_d8;
+  uint local_c0 [4];
+  long local_b0;
+  uint *local_80;
+  long *local_78;
+  Region aRStack_60 [8];
+  int local_58;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_60,
+             (LocationStaticStorage *)
+             &pm_g2(cv::_InputArray_const&,cv::_InputArray_const&,cv::_OutputArray_const&,float)::
+              __cv_trace_location_fn126);
+  iVar5 = (int)param_1;
+  uVar6 = cv::_InputArray::size(iVar5);
+  uVar7 = cv::_InputArray::type(iVar5);
+  cv::_OutputArray::create(param_3,uVar6,uVar7,0xffffffff,0,0);
+  iVar4 = cv::_InputArray::kind();
+  if (iVar4 == 0x10000) {
+    cv::Mat::Mat((Mat *)local_c0,*(Mat **)(param_1 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_(iVar5);
+  }
+  iVar5 = cv::_InputArray::kind();
+  if (iVar5 == 0x10000) {
+    cv::Mat::Mat(aMStack_120,*(Mat **)(param_2 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_2);
+  }
+  iVar5 = cv::_InputArray::kind();
+  if (iVar5 == 0x10000) {
+    cv::Mat::Mat(aMStack_180,*(Mat **)(param_3 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_3);
+  }
+  uVar1 = *local_80;
+  uVar29 = (ulong)uVar1;
+  uVar2 = local_80[1];
+  uVar3 = (ulong)uVar2;
+  cv::Mat::create(aMStack_180,CONCAT44(uVar1,uVar2),local_c0[0] & 0xfff);
+  if ((0 < (int)uVar1) && (0 < (int)uVar2)) {
+    lVar22 = *local_78;
+    lVar23 = *local_d8;
+    lVar24 = *local_138;
+    fVar30 = 1.0 / (param_4 * param_4);
+    if (uVar2 < 8) {
+      pfVar14 = (float *)(local_b0 + 0xc);
+      pfVar18 = (float *)(local_110 + 0xc);
+      pfVar21 = (float *)(local_170 + 0xc);
+      do {
+        pfVar21[-3] = 1.0 / (fVar30 * (pfVar18[-3] * pfVar18[-3] + pfVar14[-3] * pfVar14[-3]) + 1.0)
+        ;
+        if ((((uVar2 != 1) &&
+             (pfVar21[-2] = 1.0 / (fVar30 * (pfVar18[-2] * pfVar18[-2] + pfVar14[-2] * pfVar14[-2])
+                                  + 1.0), uVar2 != 2)) &&
+            (pfVar21[-1] = 1.0 / (fVar30 * (pfVar18[-1] * pfVar18[-1] + pfVar14[-1] * pfVar14[-1]) +
+                                 1.0), uVar2 != 3)) &&
+           (((*pfVar21 = 1.0 / (fVar30 * (*pfVar18 * *pfVar18 + *pfVar14 * *pfVar14) + 1.0),
+             uVar2 != 4 &&
+             (pfVar21[1] = 1.0 / (fVar30 * (pfVar18[1] * pfVar18[1] + pfVar14[1] * pfVar14[1]) + 1.0
+                                 ), uVar2 != 5)) &&
+            (pfVar21[2] = 1.0 / (fVar30 * (pfVar18[2] * pfVar18[2] + pfVar14[2] * pfVar14[2]) + 1.0)
+            , uVar2 != 6)))) {
+          pfVar21[3] = 1.0 / (fVar30 * (pfVar18[3] * pfVar18[3] + pfVar14[3] * pfVar14[3]) + 1.0);
+        }
+        pfVar14 = (float *)((long)pfVar14 + lVar22);
+        pfVar18 = (float *)((long)pfVar18 + lVar23);
+        pfVar21 = (float *)((long)pfVar21 + lVar24);
+        uVar29 = uVar29 - 1;
+      } while (uVar29 != 0);
+    }
+    else {
+      uVar25 = 0;
+      uVar26 = uVar3 & 0xfffffff8;
+      puVar27 = (undefined8 *)(local_b0 + 0x10);
+      puVar28 = (undefined8 *)(local_170 + 0x10);
+      puVar8 = (undefined8 *)(local_110 + 0x10);
+      auVar31 = NEON_fmov(0x3f800000,4);
+      lVar9 = local_170;
+      lVar10 = local_110;
+      lVar11 = local_b0;
+      do {
+        lVar12 = local_170 + lVar24 * uVar25;
+        uVar16 = 0;
+        if ((lVar12 - (local_b0 + lVar22 * uVar25) < 0x20) ||
+           (puVar13 = puVar8, puVar15 = puVar28, puVar17 = puVar27, uVar19 = uVar26,
+           lVar12 - (local_110 + lVar23 * uVar25) < 0x20)) {
+LAB_00000928:
+          lVar20 = uVar16 * 4;
+          lVar12 = uVar3 - uVar16;
+          pfVar14 = (float *)(lVar11 + lVar20);
+          pfVar18 = (float *)(lVar10 + lVar20);
+          pfVar21 = (float *)(lVar9 + lVar20);
+          do {
+            *pfVar21 = 1.0 / (fVar30 * (*pfVar18 * *pfVar18 + *pfVar14 * *pfVar14) + 1.0);
+            lVar12 = lVar12 + -1;
+            pfVar14 = pfVar14 + 1;
+            pfVar18 = pfVar18 + 1;
+            pfVar21 = pfVar21 + 1;
+          } while (lVar12 != 0);
+        }
+        else {
+          do {
+            fVar44 = (float)puVar13[-2];
+            fVar45 = (float)((ulong)puVar13[-2] >> 0x20);
+            fVar46 = (float)puVar13[-1];
+            fVar47 = (float)((ulong)puVar13[-1] >> 0x20);
+            fVar48 = (float)*puVar13;
+            fVar49 = (float)((ulong)*puVar13 >> 0x20);
+            fVar50 = (float)puVar13[1];
+            fVar51 = (float)((ulong)puVar13[1] >> 0x20);
+            fVar32 = (float)puVar17[-2];
+            fVar34 = (float)((ulong)puVar17[-2] >> 0x20);
+            fVar36 = (float)puVar17[-1];
+            fVar38 = (float)((ulong)puVar17[-1] >> 0x20);
+            fVar40 = (float)*puVar17;
+            fVar41 = (float)((ulong)*puVar17 >> 0x20);
+            fVar42 = (float)puVar17[1];
+            fVar43 = (float)((ulong)puVar17[1] >> 0x20);
+            fVar33 = auVar31._0_4_;
+            fVar35 = auVar31._4_4_;
+            fVar37 = auVar31._8_4_;
+            fVar39 = auVar31._12_4_;
+            puVar15[-1] = CONCAT44(fVar39 / (fVar39 + fVar30 * (fVar47 * fVar47 + fVar38 * fVar38)),
+                                   fVar37 / (fVar37 + fVar30 * (fVar46 * fVar46 + fVar36 * fVar36)))
+            ;
+            puVar15[-2] = CONCAT44(fVar35 / (fVar35 + fVar30 * (fVar45 * fVar45 + fVar34 * fVar34)),
+                                   fVar33 / (fVar33 + fVar30 * (fVar44 * fVar44 + fVar32 * fVar32)))
+            ;
+            puVar15[1] = CONCAT44(fVar39 / (fVar39 + fVar30 * (fVar51 * fVar51 + fVar43 * fVar43)),
+                                  fVar37 / (fVar37 + fVar30 * (fVar50 * fVar50 + fVar42 * fVar42)));
+            *puVar15 = CONCAT44(fVar35 / (fVar35 + fVar30 * (fVar49 * fVar49 + fVar41 * fVar41)),
+                                fVar33 / (fVar33 + fVar30 * (fVar48 * fVar48 + fVar40 * fVar40)));
+            uVar19 = uVar19 - 8;
+            puVar13 = puVar13 + 4;
+            puVar15 = puVar15 + 4;
+            puVar17 = puVar17 + 4;
+          } while (uVar19 != 0);
+          uVar16 = uVar26;
+          if (uVar26 != uVar3) goto LAB_00000928;
+        }
+        uVar25 = uVar25 + 1;
+        puVar27 = (undefined8 *)((long)puVar27 + lVar22);
+        puVar28 = (undefined8 *)((long)puVar28 + lVar24);
+        puVar8 = (undefined8 *)((long)puVar8 + lVar23);
+        lVar11 = lVar11 + lVar22;
+        lVar10 = lVar10 + lVar23;
+        lVar9 = lVar9 + lVar24;
+      } while (uVar25 != uVar29);
+    }
+  }
+  cv::Mat::~Mat(aMStack_180);
+  cv::Mat::~Mat(aMStack_120);
+  cv::Mat::~Mat((Mat *)local_c0);
+  if (local_58 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00000a10
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: weickert_diffusivity
+// Entry: 00000a44
+// Signature: undefined __cdecl weickert_diffusivity(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3, float param_4)
+// ========================================
+
+
+/* cv::weickert_diffusivity(cv::_InputArray const&, cv::_InputArray const&, cv::_OutputArray const&,
+   float) */
+
+void cv::weickert_diffusivity
+               (_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3,float param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 *puVar6;
+  undefined8 *puVar7;
+  undefined8 *puVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  undefined8 *puVar13;
+  float *pfVar14;
+  ulong uVar15;
+  ulong uVar16;
+  long lVar17;
+  long lVar18;
+  long lVar19;
+  float *pfVar20;
+  float *pfVar21;
+  ulong uVar22;
+  ulong uVar23;
+  undefined8 *puVar24;
+  undefined8 *puVar25;
+  long lVar26;
+  ulong uVar27;
+  ulong uVar28;
+  float fVar29;
+  float fVar30;
+  float fVar31;
+  float fVar32;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  float fVar36;
+  float fVar37;
+  float fVar38;
+  float fVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  float fVar44;
+  float fVar45;
+  undefined8 local_2f0;
+  Mat *local_2e8;
+  undefined8 local_2e0;
+  undefined8 uStack_2d8;
+  undefined4 local_2d0;
+  undefined4 uStack_2cc;
+  Mat *local_2c8;
+  undefined8 auStack_2c0 [12];
+  Mat aMStack_260 [96];
+  Mat aMStack_200 [144];
+  Mat aMStack_170 [16];
+  long local_160;
+  long *local_128;
+  Mat aMStack_110 [16];
+  long local_100;
+  long *local_c8;
+  Mat aMStack_b0 [16];
+  long local_a0;
+  uint *local_70;
+  long *local_68;
+  
+  iVar3 = (int)param_1;
+  uVar4 = cv::_InputArray::size(iVar3);
+  uVar5 = cv::_InputArray::type(iVar3);
+  cv::_OutputArray::create(param_3,uVar4,uVar5,0xffffffff,0,0);
+  iVar2 = cv::_InputArray::kind();
+  if (iVar2 == 0x10000) {
+    cv::Mat::Mat(aMStack_b0,*(Mat **)(param_1 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_(iVar3);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_110,*(Mat **)(param_2 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_2);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_170,*(Mat **)(param_3 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_3);
+  }
+  uVar15 = (ulong)*local_70;
+  if (0 < (int)*local_70) {
+    uVar1 = local_70[1];
+    uVar16 = (ulong)uVar1;
+    if (0 < (int)uVar1) {
+      lVar17 = *local_68;
+      lVar18 = *local_c8;
+      lVar19 = *local_128;
+      fVar29 = 1.0 / (param_4 * param_4);
+      if (uVar1 < 8) {
+        pfVar14 = (float *)(local_a0 + 0xc);
+        pfVar20 = (float *)(local_100 + 0xc);
+        pfVar21 = (float *)(local_160 + 0xc);
+        do {
+          fVar30 = fVar29 * (pfVar20[-3] * pfVar20[-3] + pfVar14[-3] * pfVar14[-3]);
+          pfVar21[-3] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+          if (uVar1 != 1) {
+            fVar30 = fVar29 * (pfVar20[-2] * pfVar20[-2] + pfVar14[-2] * pfVar14[-2]);
+            pfVar21[-2] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+            if (uVar1 != 2) {
+              fVar30 = fVar29 * (pfVar20[-1] * pfVar20[-1] + pfVar14[-1] * pfVar14[-1]);
+              pfVar21[-1] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+              if (uVar1 != 3) {
+                fVar30 = fVar29 * (*pfVar20 * *pfVar20 + *pfVar14 * *pfVar14);
+                *pfVar21 = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+                if (uVar1 != 4) {
+                  fVar30 = fVar29 * (pfVar20[1] * pfVar20[1] + pfVar14[1] * pfVar14[1]);
+                  pfVar21[1] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+                  if (uVar1 != 5) {
+                    fVar30 = fVar29 * (pfVar20[2] * pfVar20[2] + pfVar14[2] * pfVar14[2]);
+                    pfVar21[2] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+                    if (uVar1 != 6) {
+                      fVar30 = fVar29 * (pfVar20[3] * pfVar20[3] + pfVar14[3] * pfVar14[3]);
+                      pfVar21[3] = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          pfVar14 = (float *)((long)pfVar14 + lVar17);
+          pfVar20 = (float *)((long)pfVar20 + lVar18);
+          pfVar21 = (float *)((long)pfVar21 + lVar19);
+          uVar15 = uVar15 - 1;
+        } while (uVar15 != 0);
+      }
+      else {
+        uVar22 = 0;
+        uVar23 = uVar16 & 0xfffffff8;
+        puVar6 = (undefined8 *)(local_a0 + 0x10);
+        puVar7 = (undefined8 *)(local_160 + 0x10);
+        puVar8 = (undefined8 *)(local_100 + 0x10);
+        lVar9 = local_160;
+        lVar10 = local_100;
+        lVar11 = local_a0;
+        do {
+          lVar12 = local_160 + lVar19 * uVar22;
+          uVar28 = 0;
+          if ((lVar12 - (local_a0 + lVar17 * uVar22) < 0x20) ||
+             (puVar13 = puVar8, puVar24 = puVar7, puVar25 = puVar6, uVar27 = uVar23,
+             lVar12 - (local_100 + lVar18 * uVar22) < 0x20)) {
+LAB_00000e0c:
+            lVar26 = uVar28 * 4;
+            lVar12 = uVar16 - uVar28;
+            pfVar14 = (float *)(lVar11 + lVar26);
+            pfVar20 = (float *)(lVar10 + lVar26);
+            pfVar21 = (float *)(lVar9 + lVar26);
+            do {
+              fVar30 = fVar29 * (*pfVar20 * *pfVar20 + *pfVar14 * *pfVar14);
+              *pfVar21 = -3.315 / (fVar30 * fVar30 * fVar30 * fVar30);
+              lVar12 = lVar12 + -1;
+              pfVar14 = pfVar14 + 1;
+              pfVar20 = pfVar20 + 1;
+              pfVar21 = pfVar21 + 1;
+            } while (lVar12 != 0);
+          }
+          else {
+            do {
+              fVar38 = (float)puVar13[-2];
+              fVar39 = (float)((ulong)puVar13[-2] >> 0x20);
+              fVar40 = (float)puVar13[-1];
+              fVar41 = (float)((ulong)puVar13[-1] >> 0x20);
+              fVar42 = (float)*puVar13;
+              fVar43 = (float)((ulong)*puVar13 >> 0x20);
+              fVar44 = (float)puVar13[1];
+              fVar45 = (float)((ulong)puVar13[1] >> 0x20);
+              fVar30 = (float)puVar25[-2];
+              fVar31 = (float)((ulong)puVar25[-2] >> 0x20);
+              fVar32 = (float)puVar25[-1];
+              fVar33 = (float)((ulong)puVar25[-1] >> 0x20);
+              fVar34 = (float)*puVar25;
+              fVar35 = (float)((ulong)*puVar25 >> 0x20);
+              fVar36 = (float)puVar25[1];
+              fVar37 = (float)((ulong)puVar25[1] >> 0x20);
+              fVar30 = (fVar38 * fVar38 + fVar30 * fVar30) * fVar29;
+              fVar31 = (fVar39 * fVar39 + fVar31 * fVar31) * fVar29;
+              fVar32 = (fVar40 * fVar40 + fVar32 * fVar32) * fVar29;
+              fVar33 = (fVar41 * fVar41 + fVar33 * fVar33) * fVar29;
+              fVar34 = (fVar42 * fVar42 + fVar34 * fVar34) * fVar29;
+              fVar35 = (fVar43 * fVar43 + fVar35 * fVar35) * fVar29;
+              fVar36 = (fVar44 * fVar44 + fVar36 * fVar36) * fVar29;
+              fVar37 = (fVar45 * fVar45 + fVar37 * fVar37) * fVar29;
+              puVar24[-1] = CONCAT44(-3.315 / (fVar33 * fVar33 * fVar33 * fVar33),
+                                     -3.315 / (fVar32 * fVar32 * fVar32 * fVar32));
+              puVar24[-2] = CONCAT44(-3.315 / (fVar31 * fVar31 * fVar31 * fVar31),
+                                     -3.315 / (fVar30 * fVar30 * fVar30 * fVar30));
+              puVar24[1] = CONCAT44(-3.315 / (fVar37 * fVar37 * fVar37 * fVar37),
+                                    -3.315 / (fVar36 * fVar36 * fVar36 * fVar36));
+              *puVar24 = CONCAT44(-3.315 / (fVar35 * fVar35 * fVar35 * fVar35),
+                                  -3.315 / (fVar34 * fVar34 * fVar34 * fVar34));
+              uVar27 = uVar27 - 8;
+              puVar13 = puVar13 + 4;
+              puVar24 = puVar24 + 4;
+              puVar25 = puVar25 + 4;
+            } while (uVar27 != 0);
+            uVar28 = uVar23;
+            if (uVar23 != uVar16) goto LAB_00000e0c;
+          }
+          uVar22 = uVar22 + 1;
+          puVar6 = (undefined8 *)((long)puVar6 + lVar17);
+          puVar7 = (undefined8 *)((long)puVar7 + lVar19);
+          puVar8 = (undefined8 *)((long)puVar8 + lVar18);
+          lVar11 = lVar11 + lVar17;
+          lVar10 = lVar10 + lVar18;
+          lVar9 = lVar9 + lVar19;
+        } while (uVar22 != uVar15);
+      }
+    }
+  }
+  local_2d0 = 0x1010000;
+  local_2e8 = aMStack_170;
+  auStack_2c0[0] = 0;
+  local_2f0 = CONCAT44(local_2f0._4_4_,0x2010000);
+  local_2e0 = 0;
+  local_2c8 = local_2e8;
+  cv::exp((_InputArray *)&local_2d0,(_OutputArray *)&local_2f0);
+  local_2f0 = 0x3ff0000000000000;
+  local_2e8 = (Mat *)0x0;
+  local_2e0 = 0;
+  uStack_2d8 = 0;
+  cv::operator-((Scalar_ *)&local_2f0,aMStack_170);
+  (**(code **)(*(long *)CONCAT44(uStack_2cc,local_2d0) + 0x18))
+            ((long *)CONCAT44(uStack_2cc,local_2d0),&local_2d0,aMStack_170,0xffffffff);
+  cv::Mat::~Mat(aMStack_200);
+  cv::Mat::~Mat(aMStack_260);
+  cv::Mat::~Mat((Mat *)auStack_2c0);
+  cv::Mat::~Mat(aMStack_170);
+  cv::Mat::~Mat(aMStack_110);
+  cv::Mat::~Mat(aMStack_b0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~MatExpr
+// Entry: 00000f70
+// Signature: undefined __thiscall ~MatExpr(MatExpr * this)
+// ========================================
+
+
+/* cv::MatExpr::~MatExpr() */
+
+MatExpr * __thiscall cv::MatExpr::~MatExpr(MatExpr *this)
+
+{
+  cv::Mat::~Mat((Mat *)(this + 0xd0));
+  cv::Mat::~Mat((Mat *)(this + 0x70));
+  cv::Mat::~Mat((Mat *)(this + 0x10));
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: charbonnier_diffusivity
+// Entry: 00000fa8
+// Signature: undefined __cdecl charbonnier_diffusivity(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3, float param_4)
+// ========================================
+
+
+/* cv::charbonnier_diffusivity(cv::_InputArray const&, cv::_InputArray const&, cv::_OutputArray
+   const&, float) */
+
+void cv::charbonnier_diffusivity
+               (_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3,float param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 *puVar6;
+  undefined8 *puVar7;
+  undefined8 *puVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  undefined8 *puVar13;
+  float *pfVar14;
+  undefined8 *puVar15;
+  float *pfVar16;
+  ulong uVar17;
+  ulong uVar18;
+  long lVar19;
+  long lVar20;
+  long lVar21;
+  float *pfVar22;
+  ulong uVar23;
+  ulong uVar24;
+  undefined8 *puVar25;
+  ulong uVar26;
+  ulong uVar27;
+  long lVar28;
+  float fVar29;
+  undefined1 auVar30 [16];
+  float fVar31;
+  float fVar32;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  float fVar36;
+  float fVar37;
+  float fVar38;
+  float fVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  float fVar44;
+  float fVar45;
+  float fVar46;
+  float fVar47;
+  float fVar48;
+  float fVar49;
+  float fVar50;
+  Mat aMStack_170 [16];
+  long local_160;
+  long *local_128;
+  Mat aMStack_110 [16];
+  long local_100;
+  long *local_c8;
+  Mat aMStack_b0 [16];
+  long local_a0;
+  uint *local_70;
+  long *local_68;
+  
+  iVar3 = (int)param_1;
+  uVar4 = cv::_InputArray::size(iVar3);
+  uVar5 = cv::_InputArray::type(iVar3);
+  cv::_OutputArray::create(param_3,uVar4,uVar5,0xffffffff,0,0);
+  iVar2 = cv::_InputArray::kind();
+  if (iVar2 == 0x10000) {
+    cv::Mat::Mat(aMStack_b0,*(Mat **)(param_1 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_(iVar3);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_110,*(Mat **)(param_2 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_2);
+  }
+  iVar3 = cv::_InputArray::kind();
+  if (iVar3 == 0x10000) {
+    cv::Mat::Mat(aMStack_170,*(Mat **)(param_3 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_3);
+  }
+  uVar17 = (ulong)*local_70;
+  if (0 < (int)*local_70) {
+    uVar1 = local_70[1];
+    uVar18 = (ulong)uVar1;
+    if (0 < (int)uVar1) {
+      lVar19 = *local_68;
+      lVar20 = *local_c8;
+      lVar21 = *local_128;
+      fVar29 = 1.0 / (param_4 * param_4);
+      if (uVar1 < 8) {
+        pfVar14 = (float *)(local_a0 + 0xc);
+        pfVar16 = (float *)(local_100 + 0xc);
+        pfVar22 = (float *)(local_160 + 0xc);
+        do {
+          pfVar22[-3] = 1.0 / SQRT((pfVar16[-3] * pfVar16[-3] + pfVar14[-3] * pfVar14[-3]) * fVar29
+                                   + 1.0);
+          if ((((uVar1 != 1) &&
+               (pfVar22[-2] = 1.0 / SQRT((pfVar16[-2] * pfVar16[-2] + pfVar14[-2] * pfVar14[-2]) *
+                                         fVar29 + 1.0), uVar1 != 2)) &&
+              (pfVar22[-1] = 1.0 / SQRT((pfVar16[-1] * pfVar16[-1] + pfVar14[-1] * pfVar14[-1]) *
+                                        fVar29 + 1.0), uVar1 != 3)) &&
+             (((*pfVar22 = 1.0 / SQRT((*pfVar16 * *pfVar16 + *pfVar14 * *pfVar14) * fVar29 + 1.0),
+               uVar1 != 4 &&
+               (pfVar22[1] = 1.0 / SQRT((pfVar16[1] * pfVar16[1] + pfVar14[1] * pfVar14[1]) * fVar29
+                                        + 1.0), uVar1 != 5)) &&
+              (pfVar22[2] = 1.0 / SQRT((pfVar16[2] * pfVar16[2] + pfVar14[2] * pfVar14[2]) * fVar29
+                                       + 1.0), uVar1 != 6)))) {
+            pfVar22[3] = 1.0 / SQRT((pfVar16[3] * pfVar16[3] + pfVar14[3] * pfVar14[3]) * fVar29 +
+                                    1.0);
+          }
+          pfVar14 = (float *)((long)pfVar14 + lVar19);
+          pfVar16 = (float *)((long)pfVar16 + lVar20);
+          pfVar22 = (float *)((long)pfVar22 + lVar21);
+          uVar17 = uVar17 - 1;
+        } while (uVar17 != 0);
+      }
+      else {
+        uVar23 = 0;
+        uVar24 = uVar18 & 0xfffffff8;
+        puVar6 = (undefined8 *)(local_a0 + 0x10);
+        puVar7 = (undefined8 *)(local_160 + 0x10);
+        puVar8 = (undefined8 *)(local_100 + 0x10);
+        auVar30 = NEON_fmov(0x3f800000,4);
+        lVar9 = local_160;
+        lVar10 = local_100;
+        lVar11 = local_a0;
+        do {
+          lVar12 = local_160 + lVar21 * uVar23;
+          uVar26 = 0;
+          if ((lVar12 - (local_a0 + lVar19 * uVar23) < 0x20) ||
+             (puVar13 = puVar8, puVar15 = puVar7, puVar25 = puVar6, uVar27 = uVar24,
+             lVar12 - (local_100 + lVar20 * uVar23) < 0x20)) {
+LAB_0000130c:
+            lVar28 = uVar26 * 4;
+            lVar12 = uVar18 - uVar26;
+            pfVar14 = (float *)(lVar11 + lVar28);
+            pfVar16 = (float *)(lVar10 + lVar28);
+            pfVar22 = (float *)(lVar9 + lVar28);
+            do {
+              *pfVar22 = 1.0 / SQRT((*pfVar16 * *pfVar16 + *pfVar14 * *pfVar14) * fVar29 + 1.0);
+              lVar12 = lVar12 + -1;
+              pfVar14 = pfVar14 + 1;
+              pfVar16 = pfVar16 + 1;
+              pfVar22 = pfVar22 + 1;
+            } while (lVar12 != 0);
+          }
+          else {
+            do {
+              fVar43 = (float)puVar13[-2];
+              fVar44 = (float)((ulong)puVar13[-2] >> 0x20);
+              fVar45 = (float)puVar13[-1];
+              fVar46 = (float)((ulong)puVar13[-1] >> 0x20);
+              fVar47 = (float)*puVar13;
+              fVar48 = (float)((ulong)*puVar13 >> 0x20);
+              fVar49 = (float)puVar13[1];
+              fVar50 = (float)((ulong)puVar13[1] >> 0x20);
+              fVar31 = (float)puVar25[-2];
+              fVar33 = (float)((ulong)puVar25[-2] >> 0x20);
+              fVar35 = (float)puVar25[-1];
+              fVar37 = (float)((ulong)puVar25[-1] >> 0x20);
+              fVar39 = (float)*puVar25;
+              fVar40 = (float)((ulong)*puVar25 >> 0x20);
+              fVar41 = (float)puVar25[1];
+              fVar42 = (float)((ulong)puVar25[1] >> 0x20);
+              fVar32 = auVar30._0_4_;
+              fVar34 = auVar30._4_4_;
+              fVar36 = auVar30._8_4_;
+              fVar38 = auVar30._12_4_;
+              puVar15[-1] = CONCAT44(fVar38 / SQRT(fVar38 + (fVar46 * fVar46 + fVar37 * fVar37) *
+                                                            fVar29),
+                                     fVar36 / SQRT(fVar36 + (fVar45 * fVar45 + fVar35 * fVar35) *
+                                                            fVar29));
+              puVar15[-2] = CONCAT44(fVar34 / SQRT(fVar34 + (fVar44 * fVar44 + fVar33 * fVar33) *
+                                                            fVar29),
+                                     fVar32 / SQRT(fVar32 + (fVar43 * fVar43 + fVar31 * fVar31) *
+                                                            fVar29));
+              puVar15[1] = CONCAT44(fVar38 / SQRT(fVar38 + (fVar50 * fVar50 + fVar42 * fVar42) *
+                                                           fVar29),
+                                    fVar36 / SQRT(fVar36 + (fVar49 * fVar49 + fVar41 * fVar41) *
+                                                           fVar29));
+              *puVar15 = CONCAT44(fVar34 / SQRT(fVar34 + (fVar48 * fVar48 + fVar40 * fVar40) *
+                                                         fVar29),
+                                  fVar32 / SQRT(fVar32 + (fVar47 * fVar47 + fVar39 * fVar39) *
+                                                         fVar29));
+              uVar27 = uVar27 - 8;
+              puVar13 = puVar13 + 4;
+              puVar15 = puVar15 + 4;
+              puVar25 = puVar25 + 4;
+            } while (uVar27 != 0);
+            uVar26 = uVar24;
+            if (uVar24 != uVar18) goto LAB_0000130c;
+          }
+          uVar23 = uVar23 + 1;
+          puVar6 = (undefined8 *)((long)puVar6 + lVar19);
+          puVar7 = (undefined8 *)((long)puVar7 + lVar21);
+          puVar8 = (undefined8 *)((long)puVar8 + lVar20);
+          lVar11 = lVar11 + lVar19;
+          lVar10 = lVar10 + lVar20;
+          lVar9 = lVar9 + lVar21;
+        } while (uVar23 != uVar17);
+      }
+    }
+  }
+  cv::Mat::~Mat(aMStack_170);
+  cv::Mat::~Mat(aMStack_110);
+  cv::Mat::~Mat(aMStack_b0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: compute_k_percentile
+// Entry: 000013b0
+// Signature: undefined __cdecl compute_k_percentile(Mat * param_1, float param_2, float param_3, int param_4, int param_5, int param_6)
+// ========================================
+
+
+/* cv::compute_k_percentile(cv::Mat const&, float, float, int, int, int) */
+
+float cv::compute_k_percentile
+                (Mat *param_1,float param_2,float param_3,int param_4,int param_5,int param_6)
+
+{
+  void *pvVar1;
+  uint uVar2;
+  code *pcVar3;
+  void *pvVar4;
+  ulong uVar5;
+  int iVar6;
+  int iVar7;
+  long lVar8;
+  float *pfVar9;
+  float *pfVar10;
+  long lVar11;
+  long lVar12;
+  long lVar13;
+  float *pfVar14;
+  float *pfVar15;
+  long lVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  Mat aMStack_330 [16];
+  long local_320;
+  long *local_2e8;
+  Mat aMStack_2d0 [16];
+  long local_2c0;
+  long *local_288;
+  undefined4 local_270;
+  undefined4 uStack_26c;
+  Mat *local_268;
+  undefined8 auStack_260 [12];
+  Mat aMStack_200 [96];
+  Mat aMStack_1a0 [144];
+  Mat aMStack_110 [8];
+  int local_108;
+  int local_104;
+  void *local_b0;
+  void *local_a8;
+  void *local_a0;
+  Region aRStack_98 [8];
+  int local_90;
+  undefined4 local_88 [2];
+  Mat *local_80;
+  undefined8 uStack_78;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_98,
+             (LocationStaticStorage *)
+             &compute_k_percentile(cv::Mat_const&,float,float,int,int,int)::
+              __cv_trace_location_fn230);
+  lVar16 = (long)param_4;
+  local_b0 = (void *)0x0;
+  local_a8 = (void *)0x0;
+  local_a0 = (void *)0x0;
+  if (param_4 == 0) {
+    pvVar4 = (void *)0x0;
+  }
+  else {
+    if (param_4 < 0) {
+      std::vector<int,std::allocator<int>>::__throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar3 = (code *)SoftwareBreakpoint(1,0x1880);
+      (*pcVar3)();
+    }
+    pvVar4 = operator_new(lVar16 << 2);
+    pvVar1 = (void *)((long)pvVar4 + lVar16 * 4);
+    local_b0 = pvVar4;
+    local_a0 = pvVar1;
+    _bzero(pvVar4,lVar16 << 2);
+    local_a8 = pvVar1;
+  }
+  cv::Mat::zeros(*(int *)(param_1 + 8),*(int *)(param_1 + 0xc),5);
+  cv::Mat::Mat(aMStack_110);
+  (**(code **)(*(long *)CONCAT44(uStack_26c,local_270) + 0x18))
+            ((long *)CONCAT44(uStack_26c,local_270),&local_270,aMStack_110,0xffffffff);
+  cv::Mat::~Mat(aMStack_1a0);
+  cv::Mat::~Mat(aMStack_200);
+  cv::Mat::~Mat((Mat *)auStack_260);
+  cv::Mat::zeros(*(int *)(param_1 + 8),*(int *)(param_1 + 0xc),5);
+  cv::Mat::Mat(aMStack_2d0);
+  (**(code **)(*(long *)CONCAT44(uStack_26c,local_270) + 0x18))
+            ((long *)CONCAT44(uStack_26c,local_270),&local_270,aMStack_2d0,0xffffffff);
+  cv::Mat::~Mat(aMStack_1a0);
+  cv::Mat::~Mat(aMStack_200);
+  cv::Mat::~Mat((Mat *)auStack_260);
+  cv::Mat::zeros(*(int *)(param_1 + 8),*(int *)(param_1 + 0xc),5);
+  cv::Mat::Mat(aMStack_330);
+  (**(code **)(*(long *)CONCAT44(uStack_26c,local_270) + 0x18))
+            ((long *)CONCAT44(uStack_26c,local_270),&local_270,aMStack_330,0xffffffff);
+  cv::Mat::~Mat(aMStack_1a0);
+  cv::Mat::~Mat(aMStack_200);
+  cv::Mat::~Mat((Mat *)auStack_260);
+  if (((((float)param_5 < param_3) || (param_6 == 0)) || (param_5 == 0)) ||
+     ((float)param_6 < param_3)) {
+    fVar17 = (param_3 + -0.8) / 0.3 + 1.0;
+    fVar17 = fVar17 + fVar17;
+    iVar6 = (int)fVar17;
+    if ((float)(int)fVar17 < fVar17) {
+      iVar6 = iVar6 + 1;
+    }
+    uVar5 = CONCAT44(iVar6,iVar6) | 0x100000001;
+  }
+  else {
+    uVar5 = 0x100000001;
+  }
+  auStack_260[0] = 0;
+  local_270 = 0x1010000;
+  local_88[0] = 0x2010000;
+  uStack_78 = 0;
+  local_268 = param_1;
+  local_80 = aMStack_110;
+  cv::GaussianBlur((double)param_3,(double)param_3,&local_270,local_88,uVar5,1);
+  auStack_260[0] = 0;
+  local_270 = 0x1010000;
+  local_88[0] = 0x2010000;
+  local_80 = aMStack_2d0;
+  uStack_78 = 0;
+  local_268 = aMStack_110;
+  cv::Scharr((_InputArray *)&local_270,(_OutputArray *)local_88,5,1,0,1.0,0.0,4);
+  local_270 = 0x1010000;
+  local_268 = aMStack_110;
+  auStack_260[0] = 0;
+  local_88[0] = 0x2010000;
+  uStack_78 = 0;
+  local_80 = aMStack_330;
+  cv::Scharr((_InputArray *)&local_270,(_OutputArray *)local_88,5,0,1,1.0,0.0,4);
+  fVar17 = 0.0;
+  fVar18 = 0.0;
+  if (2 < local_108) {
+    if (2 < local_104) {
+      pfVar15 = (float *)(*local_288 + local_2c0 + 4);
+      pfVar14 = (float *)(*local_2e8 + local_320 + 4);
+      lVar11 = (ulong)(local_104 - 1) - 1;
+      uVar5 = 1;
+      lVar12 = lVar11;
+      pfVar10 = pfVar14;
+      pfVar9 = pfVar15;
+      do {
+        do {
+          fVar18 = *pfVar14 * *pfVar14 + *pfVar15 * *pfVar15;
+          if (fVar18 <= fVar17) {
+            fVar18 = fVar17;
+          }
+          fVar17 = fVar18;
+          lVar12 = lVar12 + -1;
+          pfVar14 = pfVar14 + 1;
+          pfVar15 = pfVar15 + 1;
+        } while (lVar12 != 0);
+        uVar5 = uVar5 + 1;
+        pfVar15 = (float *)((long)pfVar9 + *local_288);
+        pfVar14 = (float *)((long)pfVar10 + *local_2e8);
+        lVar12 = lVar11;
+        pfVar10 = pfVar14;
+        pfVar9 = pfVar15;
+      } while (uVar5 != local_108 - 1U);
+      fVar17 = SQRT(fVar17);
+    }
+    fVar18 = 0.0;
+    if (2 < local_104) {
+      lVar11 = *local_288;
+      lVar8 = *local_2e8;
+      fVar18 = 0.0;
+      lVar12 = 1;
+      do {
+        local_2c0 = local_2c0 + lVar11;
+        local_320 = local_320 + lVar8;
+        lVar13 = 1;
+        do {
+          fVar19 = *(float *)(local_2c0 + lVar13 * 4);
+          fVar20 = *(float *)(local_320 + lVar13 * 4);
+          fVar19 = fVar20 * fVar20 + fVar19 * fVar19;
+          if (fVar19 != 0.0) {
+            iVar6 = (int)((SQRT(fVar19) / fVar17) * (float)param_4);
+            uVar2 = iVar6 - (uint)(iVar6 == param_4);
+            uVar5 = -(ulong)(uVar2 >> 0x1f) & 0xfffffffc00000000 | (ulong)uVar2 << 2;
+            *(int *)((long)pvVar4 + uVar5) = *(int *)((long)pvVar4 + uVar5) + 1;
+            fVar18 = fVar18 + 1.0;
+          }
+          lVar13 = lVar13 + 1;
+        } while (lVar13 < (long)local_104 + -1);
+        lVar12 = lVar12 + 1;
+      } while (lVar12 < (int)(local_108 - 1U));
+    }
+  }
+  iVar6 = (int)(fVar18 * param_2);
+  if (iVar6 < 1 || param_4 < 1) {
+    if (0 < iVar6) {
+LAB_000017f8:
+      fVar17 = 0.03;
+      goto LAB_00001818;
+    }
+    fVar18 = 0.0;
+  }
+  else {
+    lVar12 = 0;
+    iVar7 = 0;
+    do {
+      iVar7 = *(int *)((long)pvVar4 + lVar12 * 4) + iVar7;
+      lVar12 = lVar12 + 1;
+    } while (iVar7 < iVar6 && lVar12 < lVar16);
+    if (iVar7 < iVar6) goto LAB_000017f8;
+    fVar18 = (float)(int)lVar12;
+  }
+  fVar17 = fVar17 * (fVar18 / (float)param_4);
+LAB_00001818:
+  cv::Mat::~Mat(aMStack_330);
+  cv::Mat::~Mat(aMStack_2d0);
+  cv::Mat::~Mat(aMStack_110);
+  if (pvVar4 != (void *)0x0) {
+    operator_delete(pvVar4);
+  }
+  if (local_90 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return fVar17;
+}
+
+
+
+
+// ========================================
+// Function: compute_scharr_derivatives
+// Entry: 00001938
+// Signature: undefined __cdecl compute_scharr_derivatives(Mat * param_1, Mat * param_2, int param_3, int param_4, int param_5)
+// ========================================
+
+
+/* cv::compute_scharr_derivatives(cv::Mat const&, cv::Mat&, int, int, int) */
+
+void cv::compute_scharr_derivatives(Mat *param_1,Mat *param_2,int param_3,int param_4,int param_5)
+
+{
+  undefined4 local_180 [2];
+  Mat *local_178;
+  undefined8 local_170;
+  undefined4 local_168 [2];
+  Mat *local_160;
+  undefined8 local_158;
+  undefined4 local_150 [2];
+  Mat *local_148;
+  undefined8 uStack_140;
+  undefined4 local_138 [2];
+  Mat *local_130;
+  undefined8 local_128;
+  Mat aMStack_120 [96];
+  Mat aMStack_c0 [96];
+  
+  cv::Mat::Mat(aMStack_c0);
+  cv::Mat::Mat(aMStack_120);
+  local_138[0] = 0x2010000;
+  local_128 = 0;
+  local_150[0] = 0x2010000;
+  uStack_140 = 0;
+  local_148 = aMStack_120;
+  local_130 = aMStack_c0;
+  compute_derivative_kernels
+            ((_OutputArray *)local_138,(_OutputArray *)local_150,param_3,param_4,param_5);
+  local_128 = 0;
+  local_138[0] = 0x1010000;
+  local_150[0] = 0x2010000;
+  uStack_140 = 0;
+  local_158 = 0;
+  local_168[0] = 0x1010000;
+  local_170 = 0;
+  local_180[0] = 0x1010000;
+  local_178 = aMStack_120;
+  local_160 = aMStack_c0;
+  local_148 = param_2;
+  local_130 = param_1;
+  cv::sepFilter2D(0,local_138,local_150,5,local_168,local_180,0xffffffffffffffff,4);
+  cv::Mat::~Mat(aMStack_120);
+  cv::Mat::~Mat(aMStack_c0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: compute_derivative_kernels
+// Entry: 00001a58
+// Signature: undefined __cdecl compute_derivative_kernels(_OutputArray * param_1, _OutputArray * param_2, int param_3, int param_4, int param_5)
+// ========================================
+
+
+/* cv::compute_derivative_kernels(cv::_OutputArray const&, cv::_OutputArray const&, int, int, int)
+    */
+
+void cv::compute_derivative_kernels
+               (_OutputArray *param_1,_OutputArray *param_2,int param_3,int param_4,int param_5)
+
+{
+  uint uVar1;
+  long lVar2;
+  int iVar3;
+  ulong uVar4;
+  float fVar5;
+  float local_1a8 [24];
+  float *local_148;
+  float *local_140;
+  undefined8 local_138;
+  Mat aMStack_130 [8];
+  int local_128;
+  int iStack_124;
+  Mat aMStack_d0 [8];
+  int local_c8;
+  int iStack_c4;
+  Region aRStack_70 [8];
+  int local_68;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_70,
+             (LocationStaticStorage *)
+             &compute_derivative_kernels(cv::_OutputArray_const&,cv::_OutputArray_const&,int,int,int)
+              ::__cv_trace_location_fn329);
+  if (param_5 == 1) {
+    cv::getDerivKernels(param_1,param_2,param_3,param_4,0,true,5);
+  }
+  else {
+    uVar1 = param_5 << 1 | 1;
+    cv::_OutputArray::create(param_1,uVar1,1,5,0xffffffff,1,0);
+    cv::_OutputArray::create(param_2,uVar1,1,5,0xffffffff,1,0);
+    iVar3 = cv::_InputArray::kind();
+    if (iVar3 == 0x10000) {
+      cv::Mat::Mat(aMStack_d0,*(Mat **)(param_1 + 8));
+    }
+    else {
+      cv::_InputArray::getMat_((int)param_1);
+    }
+    iVar3 = cv::_InputArray::kind();
+    if (iVar3 == 0x10000) {
+      cv::Mat::Mat(aMStack_130,*(Mat **)(param_2 + 8));
+    }
+    else {
+      cv::_InputArray::getMat_((int)param_2);
+    }
+    local_148 = (float *)0x0;
+    local_140 = (float *)0x0;
+    local_138 = 0;
+    uVar4 = (ulong)(int)uVar1;
+    if ((int)uVar1 < 0) {
+      uVar1 = uVar1 + 1;
+    }
+    local_1a8[0] = 0.0;
+    std::vector<float,std::allocator<float>>::assign
+              ((vector<float,std::allocator<float>> *)&local_148,uVar4,local_1a8);
+    iVar3 = param_5 << 1;
+    fVar5 = 1.0 / (((float)param_5 + (float)param_5) * 5.333333);
+    lVar2 = (long)((ulong)uVar1 << 0x20) >> 0x21;
+    if (param_3 == 0) {
+      *local_148 = fVar5;
+      local_148[lVar2] = fVar5 * 3.3333333;
+      local_148[iVar3] = fVar5;
+    }
+    else if (param_3 == 1) {
+      *local_148 = -1.0;
+      local_148[lVar2] = 0.0;
+      local_148[iVar3] = 1.0;
+    }
+    cv::Mat::Mat((Mat *)local_1a8,local_c8,iStack_c4,5,local_148,0);
+    cv::Mat::copyTo((_OutputArray *)local_1a8);
+    cv::Mat::~Mat((Mat *)local_1a8);
+    local_1a8[0] = 0.0;
+    std::vector<float,std::allocator<float>>::assign
+              ((vector<float,std::allocator<float>> *)&local_148,uVar4,local_1a8);
+    if (param_4 == 0) {
+      *local_148 = fVar5;
+      local_148[lVar2] = fVar5 * 3.3333333;
+      local_148[iVar3] = fVar5;
+    }
+    else if (param_4 == 1) {
+      *local_148 = -1.0;
+      local_148[lVar2] = 0.0;
+      local_148[iVar3] = 1.0;
+    }
+    cv::Mat::Mat((Mat *)local_1a8,local_128,iStack_124,5,local_148,0);
+    cv::Mat::copyTo((_OutputArray *)local_1a8);
+    cv::Mat::~Mat((Mat *)local_1a8);
+    if (local_148 != (float *)0x0) {
+      local_140 = local_148;
+      operator_delete(local_148);
+    }
+    cv::Mat::~Mat(aMStack_130);
+    cv::Mat::~Mat(aMStack_d0);
+  }
+  if (local_68 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 00001dc0
+// Signature: undefined __thiscall assign(vector<float,std::allocator<float>> * this, ulong param_1, float * param_2)
+// ========================================
+
+
+/* std::vector<float, std::allocator<float> >::assign(unsigned long, float const&) */
+
+void __thiscall
+std::vector<float,std::allocator<float>>::assign
+          (vector<float,std::allocator<float>> *this,ulong param_1,float *param_2)
+
+{
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  long lVar4;
+  long lVar5;
+  _InputArray *p_Var6;
+  long extraout_x1;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  ulong uVar13;
+  ulong uVar14;
+  ulong uVar15;
+  long lVar16;
+  float *pfVar17;
+  long lVar18;
+  ulong uVar19;
+  float *pfVar20;
+  float *pfVar21;
+  long *plVar22;
+  long lVar23;
+  ulong uVar24;
+  long lVar25;
+  long lVar26;
+  undefined8 *puVar27;
+  undefined8 *puVar28;
+  undefined8 *puVar29;
+  undefined8 *puVar30;
+  undefined8 *puVar31;
+  float fVar32;
+  float extraout_s0;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  float fVar36;
+  undefined8 uVar37;
+  undefined8 uVar38;
+  undefined8 uVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  float fVar44;
+  float fVar45;
+  undefined8 uVar46;
+  undefined8 uVar47;
+  undefined8 uVar48;
+  undefined8 uVar49;
+  undefined8 uVar50;
+  undefined **ppuStack_108;
+  long lStack_100;
+  long lStack_f8;
+  float *pfStack_f0;
+  float fStack_e8;
+  Region aRStack_e0 [8];
+  int iStack_d8;
+  undefined4 auStack_d0 [2];
+  long lStack_c8;
+  undefined8 uStack_c0;
+  undefined4 uStack_b8;
+  int iStack_b4;
+  float *pfStack_b0;
+  undefined8 uStack_a8;
+  
+  uVar15 = *(ulong *)(this + 0x10);
+  pfVar17 = *(float **)this;
+  if ((ulong)((long)(uVar15 - (long)pfVar17) >> 2) < param_1) {
+    pfVar3 = param_2;
+    if (pfVar17 != (float *)0x0) {
+      *(float **)(this + 8) = pfVar17;
+      operator_delete(pfVar17);
+      uVar15 = 0;
+      *(undefined8 *)this = 0;
+      *(undefined8 *)(this + 8) = 0;
+      *(undefined8 *)(this + 0x10) = 0;
+    }
+    if (param_1 >> 0x3e == 0) {
+      uVar24 = (long)uVar15 >> 1;
+      if ((ulong)((long)uVar15 >> 1) <= param_1) {
+        uVar24 = param_1;
+      }
+      if (0x7ffffffffffffffb < uVar15) {
+        uVar24 = 0x3fffffffffffffff;
+      }
+      if (uVar24 >> 0x3e == 0) {
+        pfVar3 = operator_new(uVar24 * 4);
+        *(float **)this = pfVar3;
+        *(float **)(this + 0x10) = pfVar3 + uVar24;
+        pfVar17 = pfVar3 + param_1;
+        fVar32 = *param_2;
+        uVar15 = param_1 - 1 & 0x3fffffffffffffff;
+        if (6 < uVar15) {
+          uVar15 = uVar15 + 1;
+          uVar19 = uVar15 & 0x7ffffffffffffff8;
+          pfVar20 = pfVar3 + 4;
+          uVar24 = uVar19;
+          do {
+            *(ulong *)(pfVar20 + -2) = CONCAT44(fVar32,fVar32);
+            *(ulong *)(pfVar20 + -4) = CONCAT44(fVar32,fVar32);
+            *(ulong *)(pfVar20 + 2) = CONCAT44(fVar32,fVar32);
+            *(ulong *)pfVar20 = CONCAT44(fVar32,fVar32);
+            pfVar20 = pfVar20 + 8;
+            uVar24 = uVar24 - 8;
+          } while (uVar24 != 0);
+          pfVar3 = pfVar3 + uVar19;
+          if (uVar15 == uVar19) goto LAB_00001fc8;
+        }
+        do {
+          pfVar20 = pfVar3 + 1;
+          *pfVar3 = fVar32;
+          pfVar3 = pfVar20;
+        } while (pfVar20 != pfVar17);
+        goto LAB_00001fc8;
+      }
+    }
+    lVar4 = __throw_length_error_abi_ne180100_();
+    cv::utils::trace::details::Region::Region
+              (aRStack_e0,
+               (LocationStaticStorage *)
+               &cv::nld_step_scalar(cv::Mat&,cv::Mat_const&,cv::Mat&,float)::
+                __cv_trace_location_fn427);
+    iStack_b4 = (int)pfVar3[2] + -1;
+    uStack_b8 = 1;
+    ppuStack_108 = &PTR__Nld_Step_Scalar_Invoker_00003448;
+    lStack_100 = lVar4;
+    lStack_f8 = extraout_x1;
+    pfStack_f0 = pfVar3;
+    fStack_e8 = extraout_s0;
+    uVar15 = cv::Mat::total();
+    cv::parallel_for_((Range *)&uStack_b8,(ParallelLoopBody *)&ppuStack_108,
+                      (double)uVar15 * 1.52587890625e-05);
+    cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)&ppuStack_108);
+    pfVar21 = *(float **)(pfVar3 + 4);
+    plVar22 = *(long **)(pfVar3 + 0x12);
+    pfVar17 = *(float **)(extraout_x1 + 0x10);
+    lVar16 = **(long **)(extraout_x1 + 0x48);
+    pfVar20 = *(float **)(lVar4 + 0x10);
+    lVar18 = **(long **)(lVar4 + 0x48);
+    fVar32 = pfVar3[3];
+    uVar15 = (ulong)((int)fVar32 - 1U);
+    if (2 < (int)fVar32) {
+      fVar33 = extraout_s0 * 0.5;
+      uVar24 = uVar15 - 1;
+      if (uVar24 < 8) {
+        uVar19 = 1;
+      }
+      else {
+        pfVar8 = pfVar21 + 1;
+        pfVar9 = pfVar21 + uVar15;
+        uVar19 = 1;
+        if ((((pfVar9 <= (float *)((long)pfVar17 + lVar16 + 4) ||
+               (float *)((long)pfVar17 + uVar15 * 4 + lVar16) <= pfVar8) &&
+             (pfVar17 + uVar15 + 1 <= pfVar8 || pfVar9 <= pfVar17)) &&
+            ((float *)((long)pfVar20 + uVar15 * 4 + lVar18) <= pfVar8 ||
+             pfVar9 <= (float *)((long)pfVar20 + lVar18 + 4))) &&
+           (pfVar20 + uVar15 + 1 <= pfVar8 || pfVar9 <= pfVar20)) {
+          uVar14 = uVar24 & 0xfffffffffffffffc;
+          uVar19 = uVar14 | 1;
+          pfVar8 = pfVar20 + 1;
+          pfVar9 = pfVar17 + 1;
+          pfVar7 = pfVar21 + 1;
+          uVar13 = uVar14;
+          do {
+            uVar37 = *(undefined8 *)(pfVar9 + 1);
+            fVar36 = (float)*(undefined8 *)pfVar9;
+            fVar44 = (float)((ulong)*(undefined8 *)pfVar9 >> 0x20);
+            fVar45 = (float)*(undefined8 *)(pfVar9 + 2);
+            fVar34 = (float)((ulong)*(undefined8 *)(pfVar9 + 2) >> 0x20);
+            uVar38 = *(undefined8 *)(pfVar8 + 1);
+            fVar35 = (float)*(undefined8 *)pfVar8;
+            fVar40 = (float)((ulong)*(undefined8 *)pfVar8 >> 0x20);
+            fVar41 = (float)*(undefined8 *)(pfVar8 + 2);
+            fVar42 = (float)((ulong)*(undefined8 *)(pfVar8 + 2) >> 0x20);
+            uVar39 = *(undefined8 *)(pfVar9 + -1);
+            uVar46 = *(undefined8 *)(pfVar8 + -1);
+            uVar49 = ((undefined8 *)((long)pfVar9 + lVar16))[1];
+            uVar47 = *(undefined8 *)((long)pfVar9 + lVar16);
+            uVar50 = ((undefined8 *)((long)pfVar8 + lVar18))[1];
+            uVar48 = *(undefined8 *)((long)pfVar8 + lVar18);
+            *(ulong *)(pfVar7 + 2) =
+                 CONCAT44((((fVar34 + (float)((ulong)*(undefined8 *)(pfVar9 + 3) >> 0x20)) *
+                            ((float)((ulong)*(undefined8 *)(pfVar8 + 3) >> 0x20) - fVar42) -
+                           (fVar34 + (float)((ulong)*(undefined8 *)(pfVar9 + 1) >> 0x20)) *
+                           (fVar42 - (float)((ulong)*(undefined8 *)(pfVar8 + 1) >> 0x20))) +
+                          (fVar34 + (float)((ulong)uVar49 >> 0x20)) *
+                          ((float)((ulong)uVar50 >> 0x20) - fVar42)) * fVar33,
+                          (((fVar45 + (float)*(undefined8 *)(pfVar9 + 3)) *
+                            ((float)*(undefined8 *)(pfVar8 + 3) - fVar41) -
+                           (fVar45 + (float)*(undefined8 *)(pfVar9 + 1)) *
+                           (fVar41 - (float)*(undefined8 *)(pfVar8 + 1))) +
+                          (fVar45 + (float)uVar49) * ((float)uVar50 - fVar41)) * fVar33);
+            *(ulong *)pfVar7 =
+                 CONCAT44((((fVar44 + (float)((ulong)uVar37 >> 0x20)) *
+                            ((float)((ulong)uVar38 >> 0x20) - fVar40) -
+                           (fVar44 + (float)((ulong)uVar39 >> 0x20)) *
+                           (fVar40 - (float)((ulong)uVar46 >> 0x20))) +
+                          (fVar44 + (float)((ulong)uVar47 >> 0x20)) *
+                          ((float)((ulong)uVar48 >> 0x20) - fVar40)) * fVar33,
+                          (((fVar36 + (float)uVar37) * ((float)uVar38 - fVar35) -
+                           (fVar36 + (float)uVar39) * (fVar35 - (float)uVar46)) +
+                          (fVar36 + (float)uVar47) * ((float)uVar48 - fVar35)) * fVar33);
+            pfVar8 = pfVar8 + 4;
+            pfVar9 = pfVar9 + 4;
+            uVar13 = uVar13 - 4;
+            pfVar7 = pfVar7 + 4;
+          } while (uVar13 != 0);
+          if (uVar24 == uVar14) goto LAB_00002244;
+        }
+      }
+      lVar5 = (long)pfVar17 + lVar16;
+      lVar23 = (long)pfVar20 + lVar18;
+      lVar25 = uVar15 - uVar19;
+      pfVar9 = pfVar20 + -1;
+      pfVar7 = pfVar17 + -1;
+      pfVar8 = pfVar21;
+      do {
+        pfVar1 = pfVar7 + uVar19;
+        fVar36 = pfVar1[1];
+        pfVar2 = pfVar9 + uVar19;
+        fVar44 = pfVar2[1];
+        pfVar8[uVar19] =
+             fVar33 * (((fVar36 + pfVar1[2]) * (pfVar2[2] - fVar44) -
+                       (fVar36 + *pfVar1) * (fVar44 - *pfVar2)) +
+                      (fVar36 + *(float *)(lVar5 + uVar19 * 4)) *
+                      (*(float *)(lVar23 + uVar19 * 4) - fVar44));
+        pfVar8 = pfVar8 + 1;
+        lVar23 = lVar23 + 4;
+        lVar5 = lVar5 + 4;
+        pfVar9 = pfVar9 + 1;
+        pfVar7 = pfVar7 + 1;
+        lVar25 = lVar25 + -1;
+      } while (lVar25 != 0);
+    }
+LAB_00002244:
+    fVar33 = pfVar3[2];
+    lVar23 = *plVar22;
+    if (2 < (int)fVar32) {
+      lVar25 = (long)(int)((int)fVar33 - 1U);
+      lVar10 = lVar23 * lVar25;
+      lVar5 = lVar16 * lVar25;
+      lVar11 = lVar16 * ((long)(int)fVar33 + -2);
+      lVar25 = lVar18 * lVar25;
+      fVar36 = extraout_s0 * 0.5;
+      uVar24 = uVar15 - 1;
+      lVar12 = lVar18 * ((long)(int)fVar33 + -2);
+      if (uVar24 < 8) {
+        uVar13 = 1;
+      }
+      else {
+        uVar19 = (long)pfVar21 + lVar10 + 4;
+        lVar26 = uVar15 * 4;
+        pfVar8 = (float *)((long)pfVar21 + lVar26 + lVar10);
+        uVar13 = 1;
+        if (((pfVar8 <= (float *)((long)pfVar17 + lVar11 + 4) ||
+              (ulong)((long)pfVar17 + lVar26 + lVar11) <= uVar19) &&
+            ((ulong)((long)pfVar17 + lVar5 + lVar26 + 4) <= uVar19 ||
+             pfVar8 <= (float *)((long)pfVar17 + lVar5))) &&
+           (((ulong)((long)pfVar20 + lVar26 + lVar12) <= uVar19 ||
+             pfVar8 <= (float *)((long)pfVar20 + lVar12 + 4) &&
+            ((ulong)((long)pfVar20 + lVar25 + lVar26 + 4) <= uVar19 ||
+             pfVar8 <= (float *)((long)pfVar20 + lVar25))))) {
+          uVar14 = uVar24 & 0xfffffffffffffffc;
+          uVar13 = uVar14 | 1;
+          puVar30 = (undefined8 *)((long)pfVar17 + lVar5 + 4);
+          puVar31 = (undefined8 *)((long)pfVar20 + lVar25 + 4);
+          puVar27 = (undefined8 *)((long)pfVar21 + lVar10 + 4);
+          puVar28 = (undefined8 *)((long)pfVar20 + lVar12 + 4);
+          puVar29 = (undefined8 *)((long)pfVar17 + lVar11 + 4);
+          uVar19 = uVar14;
+          do {
+            uVar37 = *(undefined8 *)((long)puVar30 + 4);
+            fVar44 = (float)*puVar30;
+            fVar45 = (float)((ulong)*puVar30 >> 0x20);
+            fVar34 = (float)puVar30[1];
+            fVar35 = (float)((ulong)puVar30[1] >> 0x20);
+            uVar38 = *(undefined8 *)((long)puVar31 + 4);
+            fVar40 = (float)*puVar31;
+            fVar41 = (float)((ulong)*puVar31 >> 0x20);
+            fVar42 = (float)puVar31[1];
+            fVar43 = (float)((ulong)puVar31[1] >> 0x20);
+            uVar39 = *(undefined8 *)((long)puVar30 + -4);
+            uVar46 = *(undefined8 *)((long)puVar31 + -4);
+            uVar47 = *puVar29;
+            uVar48 = *puVar28;
+            puVar27[1] = CONCAT44((((fVar35 + (float)((ulong)*(undefined8 *)((long)puVar30 + 0xc) >>
+                                                     0x20)) *
+                                    ((float)((ulong)*(undefined8 *)((long)puVar31 + 0xc) >> 0x20) -
+                                    fVar43) -
+                                   (fVar35 + (float)((ulong)*(undefined8 *)((long)puVar30 + 4) >>
+                                                    0x20)) *
+                                   (fVar43 - (float)((ulong)*(undefined8 *)((long)puVar31 + 4) >>
+                                                    0x20))) -
+                                  (fVar35 + (float)((ulong)puVar29[1] >> 0x20)) *
+                                  (fVar43 - (float)((ulong)puVar28[1] >> 0x20))) * fVar36,
+                                  (((fVar34 + (float)*(undefined8 *)((long)puVar30 + 0xc)) *
+                                    ((float)*(undefined8 *)((long)puVar31 + 0xc) - fVar42) -
+                                   (fVar34 + (float)*(undefined8 *)((long)puVar30 + 4)) *
+                                   (fVar42 - (float)*(undefined8 *)((long)puVar31 + 4))) -
+                                  (fVar34 + (float)puVar29[1]) * (fVar42 - (float)puVar28[1])) *
+                                  fVar36);
+            *puVar27 = CONCAT44((((fVar45 + (float)((ulong)uVar37 >> 0x20)) *
+                                  ((float)((ulong)uVar38 >> 0x20) - fVar41) -
+                                 (fVar45 + (float)((ulong)uVar39 >> 0x20)) *
+                                 (fVar41 - (float)((ulong)uVar46 >> 0x20))) -
+                                (fVar45 + (float)((ulong)uVar47 >> 0x20)) *
+                                (fVar41 - (float)((ulong)uVar48 >> 0x20))) * fVar36,
+                                (((fVar44 + (float)uVar37) * ((float)uVar38 - fVar40) -
+                                 (fVar44 + (float)uVar39) * (fVar40 - (float)uVar46)) -
+                                (fVar44 + (float)uVar47) * (fVar40 - (float)uVar48)) * fVar36);
+            puVar30 = puVar30 + 2;
+            puVar31 = puVar31 + 2;
+            uVar19 = uVar19 - 4;
+            puVar27 = puVar27 + 2;
+            puVar28 = puVar28 + 2;
+            puVar29 = puVar29 + 2;
+          } while (uVar19 != 0);
+          if (uVar24 == uVar14) goto LAB_0000244c;
+        }
+      }
+      pfVar8 = (float *)((long)pfVar21 + lVar10);
+      pfVar7 = (float *)((long)pfVar17 + lVar11);
+      pfVar9 = (float *)((long)pfVar20 + lVar12);
+      lVar10 = uVar15 - uVar13;
+      lVar25 = (long)pfVar20 + lVar25 + -4;
+      lVar5 = (long)pfVar17 + lVar5 + -4;
+      do {
+        pfVar1 = (float *)(lVar5 + uVar13 * 4);
+        fVar44 = pfVar1[1];
+        pfVar2 = (float *)(lVar25 + uVar13 * 4);
+        fVar45 = pfVar2[1];
+        pfVar8[uVar13] =
+             fVar36 * (((fVar44 + pfVar1[2]) * (pfVar2[2] - fVar45) -
+                       (fVar44 + *pfVar1) * (fVar45 - *pfVar2)) -
+                      (fVar44 + pfVar7[uVar13]) * (fVar45 - pfVar9[uVar13]));
+        pfVar8 = pfVar8 + 1;
+        pfVar9 = pfVar9 + 1;
+        pfVar7 = pfVar7 + 1;
+        lVar25 = lVar25 + 4;
+        lVar5 = lVar5 + 4;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+    }
+LAB_0000244c:
+    if (2 < (int)fVar33) {
+      uVar24 = -(ulong)((int)fVar32 - 1U >> 0x1f) & 0xfffffffc00000000 | uVar15 << 2;
+      lVar5 = (ulong)((int)fVar33 - 1U) - 1;
+      uVar15 = -(ulong)((int)fVar32 - 2U >> 0x1f) & 0xfffffffc00000000 |
+               (ulong)((int)fVar32 - 2U) << 2;
+      do {
+        pfVar21 = (float *)((long)pfVar21 + lVar23);
+        pfVar8 = (float *)((long)pfVar20 + lVar18);
+        pfVar9 = (float *)((long)pfVar17 + lVar16);
+        fVar32 = *pfVar9;
+        fVar33 = *pfVar8;
+        *pfVar21 = extraout_s0 * 0.5 *
+                   (((fVar32 + pfVar9[1]) * (pfVar8[1] - fVar33) +
+                    (fVar32 + *(float *)((long)pfVar17 + lVar16 * 2)) *
+                    (*(float *)((long)pfVar20 + lVar18 * 2) - fVar33)) -
+                   (fVar32 + *pfVar17) * (fVar33 - *pfVar20));
+        fVar32 = *(float *)((long)pfVar17 + lVar16 + uVar24);
+        fVar33 = *(float *)((long)pfVar20 + lVar18 + uVar24);
+        *(float *)((long)pfVar21 + uVar24) =
+             extraout_s0 * 0.5 *
+             (((fVar32 + *(float *)((long)pfVar17 + uVar24 + lVar16 * 2)) *
+               (*(float *)((long)pfVar20 + uVar24 + lVar18 * 2) - fVar33) -
+              (*(float *)((long)pfVar17 + lVar16 + uVar15) + fVar32) *
+              (fVar33 - *(float *)((long)pfVar20 + lVar18 + uVar15))) -
+             (fVar32 + *(float *)((long)pfVar17 + uVar24)) *
+             (fVar33 - *(float *)((long)pfVar20 + uVar24)));
+        lVar5 = lVar5 + -1;
+        pfVar17 = pfVar9;
+        pfVar20 = pfVar8;
+      } while (lVar5 != 0);
+    }
+    lStack_f8 = 0;
+    ppuStack_108 = (undefined **)CONCAT44(ppuStack_108._4_4_,0x1010000);
+    uStack_a8 = 0;
+    uStack_b8 = 0x1010000;
+    auStack_d0[0] = 0xc2010000;
+    uStack_c0 = 0;
+    lStack_100 = lVar4;
+    lStack_c8 = lVar4;
+    pfStack_b0 = pfVar3;
+    p_Var6 = (_InputArray *)cv::noArray();
+    cv::add((_InputArray *)&ppuStack_108,(_InputArray *)&uStack_b8,(_OutputArray *)auStack_d0,p_Var6
+            ,-1);
+    if (iStack_d8 != 0) {
+      cv::utils::trace::details::Region::destroy();
+    }
+    return;
+  }
+  pfVar3 = *(float **)(this + 8);
+  uVar24 = (long)pfVar3 - (long)pfVar17 >> 2;
+  uVar15 = uVar24;
+  if (param_1 <= uVar24) {
+    uVar15 = param_1;
+  }
+  if (uVar15 != 0) {
+    pfVar20 = pfVar17;
+    uVar19 = uVar15;
+    if ((7 < uVar15) && ((param_2 + 1 <= pfVar17 || (pfVar17 + uVar15 <= param_2)))) {
+      uVar14 = uVar15 & 0xfffffffffffffff8;
+      uVar19 = uVar15 & 7;
+      fVar32 = *param_2;
+      pfVar20 = pfVar17 + 4;
+      uVar13 = uVar14;
+      do {
+        *(ulong *)(pfVar20 + -2) = CONCAT44(fVar32,fVar32);
+        *(ulong *)(pfVar20 + -4) = CONCAT44(fVar32,fVar32);
+        *(ulong *)(pfVar20 + 2) = CONCAT44(fVar32,fVar32);
+        *(ulong *)pfVar20 = CONCAT44(fVar32,fVar32);
+        pfVar20 = pfVar20 + 8;
+        uVar13 = uVar13 - 8;
+      } while (uVar13 != 0);
+      pfVar20 = pfVar17 + uVar14;
+      if (uVar15 == uVar14) goto LAB_00001f28;
+    }
+    do {
+      *pfVar20 = *param_2;
+      uVar19 = uVar19 - 1;
+      pfVar20 = pfVar20 + 1;
+    } while (uVar19 != 0);
+  }
+LAB_00001f28:
+  if (param_1 < uVar24 || param_1 - uVar24 == 0) {
+    pfVar17 = pfVar17 + param_1;
+LAB_00001fc8:
+    *(float **)(this + 8) = pfVar17;
+    return;
+  }
+  lVar4 = param_1 * 4 - ((long)pfVar3 - (long)pfVar17 & 0xfffffffffffffffcU);
+  uVar15 = lVar4 - 4;
+  pfVar17 = pfVar3;
+  if ((0x4b < uVar15) && ((param_2 + 1 <= pfVar3 || ((float *)((long)pfVar3 + lVar4) <= param_2))))
+  {
+    uVar15 = (uVar15 >> 2) + 1;
+    uVar13 = uVar15 & 0x7ffffffffffffff8;
+    fVar32 = *param_2;
+    pfVar17 = pfVar3 + 4;
+    uVar19 = uVar13;
+    do {
+      *(ulong *)(pfVar17 + -2) = CONCAT44(fVar32,fVar32);
+      *(ulong *)(pfVar17 + -4) = CONCAT44(fVar32,fVar32);
+      *(ulong *)(pfVar17 + 2) = CONCAT44(fVar32,fVar32);
+      *(ulong *)pfVar17 = CONCAT44(fVar32,fVar32);
+      pfVar17 = pfVar17 + 8;
+      uVar19 = uVar19 - 8;
+    } while (uVar19 != 0);
+    pfVar17 = pfVar3 + uVar13;
+    if (uVar15 == uVar13) goto LAB_00001fb0;
+  }
+  do {
+    pfVar20 = pfVar17 + 1;
+    *pfVar17 = *param_2;
+    pfVar17 = pfVar20;
+  } while (pfVar20 != pfVar3 + (param_1 - uVar24));
+LAB_00001fb0:
+  *(float **)(this + 8) = pfVar3 + (param_1 - uVar24);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: nld_step_scalar
+// Entry: 00001fe4
+// Signature: undefined __cdecl nld_step_scalar(Mat * param_1, Mat * param_2, Mat * param_3, float param_4)
+// ========================================
+
+
+/* cv::nld_step_scalar(cv::Mat&, cv::Mat const&, cv::Mat&, float) */
+
+void cv::nld_step_scalar(Mat *param_1,Mat *param_2,Mat *param_3,float param_4)
+
+{
+  float *pfVar1;
+  float *pfVar2;
+  int iVar3;
+  int iVar4;
+  ulong uVar5;
+  long lVar6;
+  _InputArray *p_Var7;
+  float *pfVar8;
+  float *pfVar9;
+  float *pfVar10;
+  long lVar11;
+  long lVar12;
+  long lVar13;
+  ulong uVar14;
+  ulong uVar15;
+  long lVar16;
+  long lVar17;
+  float *pfVar18;
+  float *pfVar19;
+  float *pfVar20;
+  long *plVar21;
+  long lVar22;
+  ulong uVar23;
+  ulong uVar24;
+  long lVar25;
+  long lVar26;
+  undefined8 *puVar27;
+  undefined8 *puVar28;
+  undefined8 *puVar29;
+  undefined8 *puVar30;
+  undefined8 *puVar31;
+  float fVar32;
+  float fVar33;
+  float fVar34;
+  float fVar35;
+  undefined8 uVar36;
+  undefined8 uVar37;
+  undefined8 uVar38;
+  float fVar39;
+  float fVar40;
+  float fVar41;
+  float fVar42;
+  float fVar43;
+  undefined8 uVar44;
+  undefined8 uVar45;
+  undefined8 uVar46;
+  undefined8 uVar47;
+  undefined8 uVar48;
+  undefined **local_d8;
+  Mat *local_d0;
+  Mat *local_c8;
+  Mat *pMStack_c0;
+  float local_b8;
+  Region aRStack_b0 [8];
+  int local_a8;
+  undefined4 local_a0 [2];
+  Mat *local_98;
+  undefined8 uStack_90;
+  undefined4 local_88;
+  int iStack_84;
+  Mat *local_80;
+  undefined8 local_78;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_b0,
+             (LocationStaticStorage *)
+             &nld_step_scalar(cv::Mat&,cv::Mat_const&,cv::Mat&,float)::__cv_trace_location_fn427);
+  iStack_84 = *(int *)(param_3 + 8) + -1;
+  local_88 = 1;
+  local_d8 = &PTR__Nld_Step_Scalar_Invoker_00003448;
+  local_d0 = param_1;
+  local_c8 = param_2;
+  pMStack_c0 = param_3;
+  local_b8 = param_4;
+  uVar5 = cv::Mat::total();
+  cv::parallel_for_((Range *)&local_88,(ParallelLoopBody *)&local_d8,
+                    (double)uVar5 * 1.52587890625e-05);
+  cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)&local_d8);
+  pfVar20 = *(float **)(param_3 + 0x10);
+  plVar21 = *(long **)(param_3 + 0x48);
+  pfVar18 = *(float **)(param_2 + 0x10);
+  lVar16 = **(long **)(param_2 + 0x48);
+  pfVar19 = *(float **)(param_1 + 0x10);
+  lVar17 = **(long **)(param_1 + 0x48);
+  iVar3 = *(int *)(param_3 + 0xc);
+  uVar5 = (ulong)(iVar3 - 1U);
+  if (2 < iVar3) {
+    fVar32 = param_4 * 0.5;
+    uVar23 = uVar5 - 1;
+    if (uVar23 < 8) {
+      uVar24 = 1;
+    }
+    else {
+      pfVar9 = pfVar20 + 1;
+      pfVar10 = pfVar20 + uVar5;
+      uVar24 = 1;
+      if ((((pfVar10 <= (float *)((long)pfVar18 + lVar16 + 4) ||
+             (float *)((long)pfVar18 + uVar5 * 4 + lVar16) <= pfVar9) &&
+           (pfVar18 + uVar5 + 1 <= pfVar9 || pfVar10 <= pfVar18)) &&
+          ((float *)((long)pfVar19 + uVar5 * 4 + lVar17) <= pfVar9 ||
+           pfVar10 <= (float *)((long)pfVar19 + lVar17 + 4))) &&
+         (pfVar19 + uVar5 + 1 <= pfVar9 || pfVar10 <= pfVar19)) {
+        uVar15 = uVar23 & 0xfffffffffffffffc;
+        uVar24 = uVar15 | 1;
+        pfVar9 = pfVar19 + 1;
+        pfVar10 = pfVar18 + 1;
+        pfVar8 = pfVar20 + 1;
+        uVar14 = uVar15;
+        do {
+          uVar36 = *(undefined8 *)(pfVar10 + 1);
+          fVar35 = (float)*(undefined8 *)pfVar10;
+          fVar43 = (float)((ulong)*(undefined8 *)pfVar10 >> 0x20);
+          fVar33 = (float)*(undefined8 *)(pfVar10 + 2);
+          fVar34 = (float)((ulong)*(undefined8 *)(pfVar10 + 2) >> 0x20);
+          uVar37 = *(undefined8 *)(pfVar9 + 1);
+          fVar39 = (float)*(undefined8 *)pfVar9;
+          fVar40 = (float)((ulong)*(undefined8 *)pfVar9 >> 0x20);
+          fVar41 = (float)*(undefined8 *)(pfVar9 + 2);
+          fVar42 = (float)((ulong)*(undefined8 *)(pfVar9 + 2) >> 0x20);
+          uVar38 = *(undefined8 *)(pfVar10 + -1);
+          uVar44 = *(undefined8 *)(pfVar9 + -1);
+          uVar47 = ((undefined8 *)((long)pfVar10 + lVar16))[1];
+          uVar45 = *(undefined8 *)((long)pfVar10 + lVar16);
+          uVar48 = ((undefined8 *)((long)pfVar9 + lVar17))[1];
+          uVar46 = *(undefined8 *)((long)pfVar9 + lVar17);
+          *(ulong *)(pfVar8 + 2) =
+               CONCAT44((((fVar34 + (float)((ulong)*(undefined8 *)(pfVar10 + 3) >> 0x20)) *
+                          ((float)((ulong)*(undefined8 *)(pfVar9 + 3) >> 0x20) - fVar42) -
+                         (fVar34 + (float)((ulong)*(undefined8 *)(pfVar10 + 1) >> 0x20)) *
+                         (fVar42 - (float)((ulong)*(undefined8 *)(pfVar9 + 1) >> 0x20))) +
+                        (fVar34 + (float)((ulong)uVar47 >> 0x20)) *
+                        ((float)((ulong)uVar48 >> 0x20) - fVar42)) * fVar32,
+                        (((fVar33 + (float)*(undefined8 *)(pfVar10 + 3)) *
+                          ((float)*(undefined8 *)(pfVar9 + 3) - fVar41) -
+                         (fVar33 + (float)*(undefined8 *)(pfVar10 + 1)) *
+                         (fVar41 - (float)*(undefined8 *)(pfVar9 + 1))) +
+                        (fVar33 + (float)uVar47) * ((float)uVar48 - fVar41)) * fVar32);
+          *(ulong *)pfVar8 =
+               CONCAT44((((fVar43 + (float)((ulong)uVar36 >> 0x20)) *
+                          ((float)((ulong)uVar37 >> 0x20) - fVar40) -
+                         (fVar43 + (float)((ulong)uVar38 >> 0x20)) *
+                         (fVar40 - (float)((ulong)uVar44 >> 0x20))) +
+                        (fVar43 + (float)((ulong)uVar45 >> 0x20)) *
+                        ((float)((ulong)uVar46 >> 0x20) - fVar40)) * fVar32,
+                        (((fVar35 + (float)uVar36) * ((float)uVar37 - fVar39) -
+                         (fVar35 + (float)uVar38) * (fVar39 - (float)uVar44)) +
+                        (fVar35 + (float)uVar45) * ((float)uVar46 - fVar39)) * fVar32);
+          pfVar9 = pfVar9 + 4;
+          pfVar10 = pfVar10 + 4;
+          uVar14 = uVar14 - 4;
+          pfVar8 = pfVar8 + 4;
+        } while (uVar14 != 0);
+        if (uVar23 == uVar15) goto LAB_00002244;
+      }
+    }
+    lVar6 = (long)pfVar18 + lVar16;
+    lVar22 = (long)pfVar19 + lVar17;
+    lVar25 = uVar5 - uVar24;
+    pfVar10 = pfVar19 + -1;
+    pfVar8 = pfVar18 + -1;
+    pfVar9 = pfVar20;
+    do {
+      pfVar1 = pfVar8 + uVar24;
+      fVar35 = pfVar1[1];
+      pfVar2 = pfVar10 + uVar24;
+      fVar43 = pfVar2[1];
+      pfVar9[uVar24] =
+           fVar32 * (((fVar35 + pfVar1[2]) * (pfVar2[2] - fVar43) -
+                     (fVar35 + *pfVar1) * (fVar43 - *pfVar2)) +
+                    (fVar35 + *(float *)(lVar6 + uVar24 * 4)) *
+                    (*(float *)(lVar22 + uVar24 * 4) - fVar43));
+      pfVar9 = pfVar9 + 1;
+      lVar22 = lVar22 + 4;
+      lVar6 = lVar6 + 4;
+      pfVar10 = pfVar10 + 1;
+      pfVar8 = pfVar8 + 1;
+      lVar25 = lVar25 + -1;
+    } while (lVar25 != 0);
+  }
+LAB_00002244:
+  iVar4 = *(int *)(param_3 + 8);
+  lVar22 = *plVar21;
+  if (2 < iVar3) {
+    lVar25 = (long)(int)(iVar4 - 1U);
+    lVar11 = lVar22 * lVar25;
+    lVar6 = lVar16 * lVar25;
+    lVar12 = lVar16 * ((long)iVar4 + -2);
+    lVar25 = lVar17 * lVar25;
+    fVar32 = param_4 * 0.5;
+    uVar23 = uVar5 - 1;
+    lVar13 = lVar17 * ((long)iVar4 + -2);
+    if (uVar23 < 8) {
+      uVar14 = 1;
+    }
+    else {
+      uVar24 = (long)pfVar20 + lVar11 + 4;
+      lVar26 = uVar5 * 4;
+      pfVar9 = (float *)((long)pfVar20 + lVar26 + lVar11);
+      uVar14 = 1;
+      if (((pfVar9 <= (float *)((long)pfVar18 + lVar12 + 4) ||
+            (ulong)((long)pfVar18 + lVar26 + lVar12) <= uVar24) &&
+          ((ulong)((long)pfVar18 + lVar6 + lVar26 + 4) <= uVar24 ||
+           pfVar9 <= (float *)((long)pfVar18 + lVar6))) &&
+         (((ulong)((long)pfVar19 + lVar26 + lVar13) <= uVar24 ||
+           pfVar9 <= (float *)((long)pfVar19 + lVar13 + 4) &&
+          ((ulong)((long)pfVar19 + lVar25 + lVar26 + 4) <= uVar24 ||
+           pfVar9 <= (float *)((long)pfVar19 + lVar25))))) {
+        uVar15 = uVar23 & 0xfffffffffffffffc;
+        uVar14 = uVar15 | 1;
+        puVar30 = (undefined8 *)((long)pfVar18 + lVar6 + 4);
+        puVar31 = (undefined8 *)((long)pfVar19 + lVar25 + 4);
+        puVar27 = (undefined8 *)((long)pfVar20 + lVar11 + 4);
+        puVar28 = (undefined8 *)((long)pfVar19 + lVar13 + 4);
+        puVar29 = (undefined8 *)((long)pfVar18 + lVar12 + 4);
+        uVar24 = uVar15;
+        do {
+          uVar36 = *(undefined8 *)((long)puVar30 + 4);
+          fVar35 = (float)*puVar30;
+          fVar43 = (float)((ulong)*puVar30 >> 0x20);
+          fVar33 = (float)puVar30[1];
+          fVar34 = (float)((ulong)puVar30[1] >> 0x20);
+          uVar37 = *(undefined8 *)((long)puVar31 + 4);
+          fVar39 = (float)*puVar31;
+          fVar40 = (float)((ulong)*puVar31 >> 0x20);
+          fVar41 = (float)puVar31[1];
+          fVar42 = (float)((ulong)puVar31[1] >> 0x20);
+          uVar38 = *(undefined8 *)((long)puVar30 + -4);
+          uVar44 = *(undefined8 *)((long)puVar31 + -4);
+          uVar45 = *puVar29;
+          uVar46 = *puVar28;
+          puVar27[1] = CONCAT44((((fVar34 + (float)((ulong)*(undefined8 *)((long)puVar30 + 0xc) >>
+                                                   0x20)) *
+                                  ((float)((ulong)*(undefined8 *)((long)puVar31 + 0xc) >> 0x20) -
+                                  fVar42) -
+                                 (fVar34 + (float)((ulong)*(undefined8 *)((long)puVar30 + 4) >> 0x20
+                                                  )) *
+                                 (fVar42 - (float)((ulong)*(undefined8 *)((long)puVar31 + 4) >> 0x20
+                                                  ))) -
+                                (fVar34 + (float)((ulong)puVar29[1] >> 0x20)) *
+                                (fVar42 - (float)((ulong)puVar28[1] >> 0x20))) * fVar32,
+                                (((fVar33 + (float)*(undefined8 *)((long)puVar30 + 0xc)) *
+                                  ((float)*(undefined8 *)((long)puVar31 + 0xc) - fVar41) -
+                                 (fVar33 + (float)*(undefined8 *)((long)puVar30 + 4)) *
+                                 (fVar41 - (float)*(undefined8 *)((long)puVar31 + 4))) -
+                                (fVar33 + (float)puVar29[1]) * (fVar41 - (float)puVar28[1])) *
+                                fVar32);
+          *puVar27 = CONCAT44((((fVar43 + (float)((ulong)uVar36 >> 0x20)) *
+                                ((float)((ulong)uVar37 >> 0x20) - fVar40) -
+                               (fVar43 + (float)((ulong)uVar38 >> 0x20)) *
+                               (fVar40 - (float)((ulong)uVar44 >> 0x20))) -
+                              (fVar43 + (float)((ulong)uVar45 >> 0x20)) *
+                              (fVar40 - (float)((ulong)uVar46 >> 0x20))) * fVar32,
+                              (((fVar35 + (float)uVar36) * ((float)uVar37 - fVar39) -
+                               (fVar35 + (float)uVar38) * (fVar39 - (float)uVar44)) -
+                              (fVar35 + (float)uVar45) * (fVar39 - (float)uVar46)) * fVar32);
+          puVar30 = puVar30 + 2;
+          puVar31 = puVar31 + 2;
+          uVar24 = uVar24 - 4;
+          puVar27 = puVar27 + 2;
+          puVar28 = puVar28 + 2;
+          puVar29 = puVar29 + 2;
+        } while (uVar24 != 0);
+        if (uVar23 == uVar15) goto LAB_0000244c;
+      }
+    }
+    pfVar9 = (float *)((long)pfVar20 + lVar11);
+    pfVar8 = (float *)((long)pfVar18 + lVar12);
+    pfVar10 = (float *)((long)pfVar19 + lVar13);
+    lVar11 = uVar5 - uVar14;
+    lVar25 = (long)pfVar19 + lVar25 + -4;
+    lVar6 = (long)pfVar18 + lVar6 + -4;
+    do {
+      pfVar1 = (float *)(lVar6 + uVar14 * 4);
+      fVar35 = pfVar1[1];
+      pfVar2 = (float *)(lVar25 + uVar14 * 4);
+      fVar43 = pfVar2[1];
+      pfVar9[uVar14] =
+           fVar32 * (((fVar35 + pfVar1[2]) * (pfVar2[2] - fVar43) -
+                     (fVar35 + *pfVar1) * (fVar43 - *pfVar2)) -
+                    (fVar35 + pfVar8[uVar14]) * (fVar43 - pfVar10[uVar14]));
+      pfVar9 = pfVar9 + 1;
+      pfVar10 = pfVar10 + 1;
+      pfVar8 = pfVar8 + 1;
+      lVar25 = lVar25 + 4;
+      lVar6 = lVar6 + 4;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+  }
+LAB_0000244c:
+  if (2 < iVar4) {
+    uVar23 = -(ulong)(iVar3 - 1U >> 0x1f) & 0xfffffffc00000000 | uVar5 << 2;
+    lVar6 = (ulong)(iVar4 - 1U) - 1;
+    uVar5 = -(ulong)(iVar3 - 2U >> 0x1f) & 0xfffffffc00000000 | (ulong)(iVar3 - 2U) << 2;
+    do {
+      pfVar20 = (float *)((long)pfVar20 + lVar22);
+      pfVar9 = (float *)((long)pfVar19 + lVar17);
+      pfVar10 = (float *)((long)pfVar18 + lVar16);
+      fVar32 = *pfVar10;
+      fVar35 = *pfVar9;
+      *pfVar20 = param_4 * 0.5 *
+                 (((fVar32 + pfVar10[1]) * (pfVar9[1] - fVar35) +
+                  (fVar32 + *(float *)((long)pfVar18 + lVar16 * 2)) *
+                  (*(float *)((long)pfVar19 + lVar17 * 2) - fVar35)) -
+                 (fVar32 + *pfVar18) * (fVar35 - *pfVar19));
+      fVar32 = *(float *)((long)pfVar18 + lVar16 + uVar23);
+      fVar35 = *(float *)((long)pfVar19 + lVar17 + uVar23);
+      *(float *)((long)pfVar20 + uVar23) =
+           param_4 * 0.5 *
+           (((fVar32 + *(float *)((long)pfVar18 + uVar23 + lVar16 * 2)) *
+             (*(float *)((long)pfVar19 + uVar23 + lVar17 * 2) - fVar35) -
+            (*(float *)((long)pfVar18 + lVar16 + uVar5) + fVar32) *
+            (fVar35 - *(float *)((long)pfVar19 + lVar17 + uVar5))) -
+           (fVar32 + *(float *)((long)pfVar18 + uVar23)) *
+           (fVar35 - *(float *)((long)pfVar19 + uVar23)));
+      lVar6 = lVar6 + -1;
+      pfVar18 = pfVar10;
+      pfVar19 = pfVar9;
+    } while (lVar6 != 0);
+  }
+  local_c8 = (Mat *)0x0;
+  local_d8 = (undefined **)CONCAT44(local_d8._4_4_,0x1010000);
+  local_78 = 0;
+  local_88 = 0x1010000;
+  local_a0[0] = 0xc2010000;
+  uStack_90 = 0;
+  local_d0 = param_1;
+  local_98 = param_1;
+  local_80 = param_3;
+  p_Var7 = (_InputArray *)cv::noArray();
+  cv::add((_InputArray *)&local_d8,(_InputArray *)&local_88,(_OutputArray *)local_a0,p_Var7,-1);
+  if (local_a8 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~Nld_Step_Scalar_Invoker
+// Entry: 000025fc
+// Signature: undefined __thiscall ~Nld_Step_Scalar_Invoker(Nld_Step_Scalar_Invoker * this)
+// ========================================
+
+
+/* cv::Nld_Step_Scalar_Invoker::~Nld_Step_Scalar_Invoker() */
+
+void __thiscall cv::Nld_Step_Scalar_Invoker::~Nld_Step_Scalar_Invoker(Nld_Step_Scalar_Invoker *this)
+
+{
+  cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: halfsample_image
+// Entry: 00002600
+// Signature: undefined __cdecl halfsample_image(Mat * param_1, Mat * param_2)
+// ========================================
+
+
+/* cv::halfsample_image(cv::Mat const&, cv::Mat&) */
+
+void cv::halfsample_image(Mat *param_1,Mat *param_2)
+
+{
+  int iVar1;
+  code *pcVar2;
+  undefined4 local_50 [2];
+  Mat *local_48;
+  undefined8 uStack_40;
+  undefined4 local_38 [2];
+  Mat *local_30;
+  undefined8 uStack_28;
+  
+  iVar1 = *(int *)(param_1 + 0xc);
+  if (iVar1 < 0) {
+    iVar1 = iVar1 + 1;
+  }
+  if (*(int *)(param_2 + 0xc) == iVar1 >> 1) {
+    iVar1 = *(int *)(param_1 + 8);
+    if (iVar1 < 0) {
+      iVar1 = iVar1 + 1;
+    }
+    if (*(int *)(param_2 + 8) == iVar1 >> 1) {
+      uStack_28 = 0;
+      local_38[0] = 0x1010000;
+      local_50[0] = 0x2010000;
+      uStack_40 = 0;
+      local_48 = param_2;
+      local_30 = param_1;
+      cv::resize(0,0,local_38,local_50,
+                 CONCAT44(**(undefined4 **)(param_2 + 0x40),(*(undefined4 **)(param_2 + 0x40))[1]),3
+                );
+      return;
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (local_38,"src.rows / 2 == dst.rows");
+    cv::error(-0xd7,(string *)local_38,"halfsample_image",
+              "M3T/third_party/opencv-src/modules/features2d/src/kaze/nldiffusion_functions.cpp",499
+             );
+  }
+  else {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (local_38,"src.cols / 2 == dst.cols");
+    cv::error(-0xd7,(string *)local_38,"halfsample_image",
+              "M3T/third_party/opencv-src/modules/features2d/src/kaze/nldiffusion_functions.cpp",
+              0x1f2);
+  }
+                    /* WARNING: Does not return */
+  pcVar2 = (code *)SoftwareBreakpoint(1,0x26f4);
+  (*pcVar2)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00002714
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_000027a0;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_000027a0:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: check_maximum_neighbourhood
+// Entry: 000027c4
+// Signature: undefined __cdecl check_maximum_neighbourhood(Mat * param_1, int param_2, float param_3, int param_4, int param_5, bool param_6)
+// ========================================
+
+
+/* cv::check_maximum_neighbourhood(cv::Mat const&, int, float, int, int, bool) */
+
+bool cv::check_maximum_neighbourhood
+               (Mat *param_1,int param_2,float param_3,int param_4,int param_5,bool param_6)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  bool bVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  bool bVar9;
+  long lVar10;
+  long *plVar11;
+  uint uVar12;
+  
+  uVar8 = param_4 - param_2;
+  uVar1 = param_4 + param_2;
+  if (((int)uVar1 < (int)uVar8) || (uVar3 = param_5 - param_2, param_5 + param_2 < (int)uVar3)) {
+    bVar9 = true;
+  }
+  else {
+    iVar2 = *(int *)(param_1 + 0xc);
+    lVar10 = *(long *)(param_1 + 0x10);
+    plVar11 = *(long **)(param_1 + 0x48);
+    bVar9 = false;
+    if (param_6) {
+      uVar12 = param_2 << 1 | 1;
+      do {
+        if ((-1 < (int)uVar8) && ((int)uVar8 < *(int *)(param_1 + 8))) {
+          uVar7 = uVar3;
+          uVar6 = uVar12;
+          iVar5 = -param_2;
+          if (uVar8 == param_4) {
+            do {
+              uVar7 = param_5 + iVar5;
+              if ((((-1 < (int)uVar7) && ((int)uVar7 < iVar2)) && (iVar5 != 0)) &&
+                 (param_3 < *(float *)(lVar10 + *plVar11 * (ulong)uVar8 + (ulong)uVar7 * 4))) {
+                return bVar9;
+              }
+              iVar5 = iVar5 + 1;
+              uVar6 = uVar6 - 1;
+            } while (uVar6 != 0);
+          }
+          else {
+            do {
+              if (((-1 < (int)uVar7) && ((int)uVar7 < iVar2)) &&
+                 (param_3 < *(float *)(lVar10 + *plVar11 * (ulong)uVar8 + (ulong)uVar7 * 4))) {
+                return bVar9;
+              }
+              uVar6 = uVar6 - 1;
+              uVar7 = uVar7 + 1;
+            } while (uVar6 != 0);
+          }
+        }
+        bVar4 = uVar8 != uVar1;
+        bVar9 = (int)uVar1 <= (int)uVar8;
+        uVar8 = uVar8 + 1;
+      } while (bVar4);
+    }
+    else {
+      do {
+        if ((-1 < (int)uVar8) &&
+           (uVar6 = uVar3, uVar12 = param_2 << 1 | 1, (int)uVar8 < *(int *)(param_1 + 8))) {
+          do {
+            if ((-1 < (int)uVar6) &&
+               (((int)uVar6 < iVar2 &&
+                (param_3 < *(float *)(lVar10 + *plVar11 * (ulong)uVar8 + (ulong)uVar6 * 4))))) {
+              return bVar9;
+            }
+            uVar12 = uVar12 - 1;
+            uVar6 = uVar6 + 1;
+          } while (uVar12 != 0);
+        }
+        bVar4 = uVar8 != uVar1;
+        bVar9 = (int)uVar1 <= (int)uVar8;
+        uVar8 = uVar8 + 1;
+      } while (bVar4);
+    }
+  }
+  return bVar9;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 0000291c
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ParallelLoopBody *this;
+  void *pvVar1;
+  
+  ___cxa_begin_catch();
+  this = (ParallelLoopBody *)std::terminate();
+  pvVar1 = (void *)cv::ParallelLoopBody::~ParallelLoopBody(this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~Nld_Step_Scalar_Invoker
+// Entry: 0000292c
+// Signature: undefined __thiscall ~Nld_Step_Scalar_Invoker(Nld_Step_Scalar_Invoker * this)
+// ========================================
+
+
+/* cv::Nld_Step_Scalar_Invoker::~Nld_Step_Scalar_Invoker() */
+
+void __thiscall cv::Nld_Step_Scalar_Invoker::~Nld_Step_Scalar_Invoker(Nld_Step_Scalar_Invoker *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 00002940
+// Signature: undefined __thiscall operator()(Nld_Step_Scalar_Invoker * this, Range * param_1)
+// ========================================
+
+
+/* cv::Nld_Step_Scalar_Invoker::TEMPNAMEPLACEHOLDERVALUE(cv::Range const&) const */
+
+void __thiscall
+cv::Nld_Step_Scalar_Invoker::operator()(Nld_Step_Scalar_Invoker *this,Range *param_1)
+
+{
+  Nld_Step_Scalar_Invoker *pNVar1;
+  float *pfVar2;
+  float *pfVar3;
+  Nld_Step_Scalar_Invoker *pNVar4;
+  Nld_Step_Scalar_Invoker *pNVar5;
+  undefined8 *puVar6;
+  undefined8 *puVar7;
+  int iVar8;
+  long lVar9;
+  long lVar10;
+  long lVar11;
+  long lVar12;
+  long lVar13;
+  long lVar14;
+  long lVar15;
+  long lVar16;
+  long lVar17;
+  long lVar18;
+  long lVar19;
+  long lVar20;
+  long lVar21;
+  long lVar22;
+  long lVar23;
+  long lVar24;
+  long lVar25;
+  long lVar26;
+  long lVar27;
+  ulong uVar28;
+  ulong uVar29;
+  long lVar30;
+  long lVar31;
+  ulong uVar32;
+  long lVar33;
+  ulong uVar34;
+  long lVar35;
+  long lVar36;
+  long lVar37;
+  long lVar38;
+  long lVar39;
+  long lVar40;
+  long lVar41;
+  long lVar42;
+  long lVar43;
+  long lVar44;
+  long lVar45;
+  long lVar46;
+  long lVar47;
+  long lVar48;
+  float fVar49;
+  float fVar50;
+  float fVar51;
+  float fVar52;
+  undefined8 uVar53;
+  float fVar54;
+  undefined8 uVar55;
+  undefined8 uVar56;
+  float fVar57;
+  float fVar58;
+  float fVar59;
+  float fVar60;
+  undefined8 uVar61;
+  undefined8 uVar62;
+  undefined8 uVar63;
+  undefined8 uVar64;
+  undefined8 uVar65;
+  undefined8 uVar66;
+  undefined8 uVar67;
+  undefined8 uVar68;
+  undefined8 uVar69;
+  long local_68;
+  
+  lVar18 = (long)*(int *)param_1;
+  iVar8 = *(int *)(param_1 + 4);
+  if (*(int *)param_1 < iVar8) {
+    lVar24 = *(long *)(this + 0x18);
+    if (2 < *(int *)(lVar24 + 0xc)) {
+      lVar15 = *(long *)(*(long *)(this + 0x10) + 0x10);
+      lVar44 = **(long **)(*(long *)(this + 0x10) + 0x48);
+      lVar30 = *(long *)(*(long *)(this + 8) + 0x10);
+      lVar23 = **(long **)(*(long *)(this + 8) + 0x48);
+      lVar31 = *(long *)(lVar24 + 0x10);
+      lVar48 = **(long **)(lVar24 + 0x48);
+      pNVar1 = this + 0x20;
+      uVar29 = (ulong)(*(int *)(lVar24 + 0xc) - 1);
+      lVar19 = lVar18 + -1;
+      lVar24 = lVar18 + 1;
+      uVar34 = uVar29 - 1;
+      if (uVar34 < 8) {
+        lVar31 = lVar31 + lVar48 * lVar18 + 4;
+        lVar12 = lVar30 + lVar23 * lVar19 + 4;
+        lVar19 = lVar15 + lVar44 * lVar19 + 4;
+        lVar11 = lVar30 + lVar23 * lVar24 + 4;
+        lVar24 = lVar15 + lVar44 * lVar24 + 4;
+        lVar30 = lVar30 + lVar23 * lVar18 + 4;
+        lVar15 = lVar15 + lVar44 * lVar18;
+        do {
+          lVar20 = 0;
+          lVar18 = lVar18 + 1;
+          do {
+            pfVar2 = (float *)(lVar15 + lVar20);
+            fVar49 = pfVar2[1];
+            pfVar3 = (float *)(lVar30 + lVar20);
+            fVar54 = *pfVar3;
+            *(float *)(lVar31 + lVar20) =
+                 *(float *)pNVar1 * 0.5 *
+                 ((((fVar49 + pfVar2[2]) * (pfVar3[1] - fVar54) -
+                   (fVar49 + *pfVar2) * (fVar54 - pfVar3[-1])) +
+                  (fVar49 + *(float *)(lVar24 + lVar20)) * (*(float *)(lVar11 + lVar20) - fVar54)) -
+                 (fVar49 + *(float *)(lVar19 + lVar20)) * (fVar54 - *(float *)(lVar12 + lVar20)));
+            lVar20 = lVar20 + 4;
+          } while (uVar29 * 4 + -4 != lVar20);
+          lVar31 = lVar31 + lVar48;
+          lVar12 = lVar12 + lVar23;
+          lVar19 = lVar19 + lVar44;
+          lVar11 = lVar11 + lVar23;
+          lVar24 = lVar24 + lVar44;
+          lVar15 = lVar15 + lVar44;
+          lVar30 = lVar30 + lVar23;
+        } while (lVar18 != iVar8);
+      }
+      else {
+        lVar13 = 0;
+        lVar25 = lVar48 * lVar18;
+        lVar9 = uVar29 * 4;
+        lVar26 = lVar44 * lVar18;
+        lVar27 = lVar23 * lVar18;
+        uVar28 = uVar34 & 0xfffffffffffffffc;
+        lVar10 = lVar31 + lVar48 * lVar18;
+        lVar12 = lVar10 + 4;
+        lVar35 = lVar30 + lVar23 * lVar19;
+        lVar11 = lVar35 + 4;
+        lVar21 = lVar15 + lVar44 * lVar19;
+        lVar20 = lVar21 + 4;
+        lVar43 = lVar15 + lVar44 * lVar18;
+        lVar17 = lVar43 + 4;
+        lVar22 = lVar30 + lVar23 * lVar18;
+        lVar38 = lVar22 + 4;
+        local_68 = lVar15 + lVar44 * lVar24;
+        lVar40 = local_68 + 4;
+        lVar47 = lVar30 + lVar23 * lVar24;
+        lVar42 = lVar47 + 4;
+        do {
+          lVar16 = lVar23 * lVar13;
+          lVar45 = lVar44 * lVar13;
+          pNVar4 = (Nld_Step_Scalar_Invoker *)(lVar31 + lVar25 + 4 + lVar48 * lVar13);
+          pNVar5 = (Nld_Step_Scalar_Invoker *)(lVar31 + lVar25 + lVar9 + lVar48 * lVar13);
+          if ((Nld_Step_Scalar_Invoker *)(lVar15 + lVar44 * lVar19 + 4 + lVar45) < pNVar5 &&
+              pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar15 + lVar44 * lVar19 + lVar9 + lVar45)) {
+            uVar32 = 1;
+LAB_00002e00:
+            lVar46 = uVar29 - uVar32;
+            lVar37 = uVar32 * 4;
+            lVar14 = lVar21;
+            lVar45 = lVar43;
+            lVar33 = lVar35;
+            lVar36 = lVar22;
+            lVar39 = local_68;
+            lVar41 = lVar47;
+            lVar16 = lVar10;
+            do {
+              pfVar2 = (float *)(lVar45 + lVar37);
+              fVar49 = *pfVar2;
+              pfVar3 = (float *)(lVar36 + lVar37);
+              fVar54 = *pfVar3;
+              *(float *)(lVar16 + lVar37) =
+                   *(float *)pNVar1 * 0.5 *
+                   ((((fVar49 + pfVar2[1]) * (pfVar3[1] - fVar54) -
+                     (fVar49 + pfVar2[-1]) * (fVar54 - pfVar3[-1])) +
+                    (fVar49 + *(float *)(lVar39 + lVar37)) * (*(float *)(lVar41 + lVar37) - fVar54))
+                   - (fVar49 + *(float *)(lVar14 + lVar37)) * (fVar54 - *(float *)(lVar33 + lVar37))
+                   );
+              lVar16 = lVar16 + 4;
+              lVar45 = lVar45 + 4;
+              lVar36 = lVar36 + 4;
+              lVar39 = lVar39 + 4;
+              lVar41 = lVar41 + 4;
+              lVar14 = lVar14 + 4;
+              lVar33 = lVar33 + 4;
+              lVar46 = lVar46 + -1;
+            } while (lVar46 != 0);
+          }
+          else {
+            if (pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar15 + lVar44 * lVar24 + lVar9 + lVar45) &&
+                (Nld_Step_Scalar_Invoker *)(lVar15 + lVar44 * lVar24 + 4 + lVar45) < pNVar5) {
+              uVar32 = 1;
+              goto LAB_00002e00;
+            }
+            if (pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar15 + lVar26 + lVar9 + 4 + lVar45) &&
+                (Nld_Step_Scalar_Invoker *)(lVar15 + lVar26 + lVar45) < pNVar5) {
+              uVar32 = 1;
+              goto LAB_00002e00;
+            }
+            uVar32 = 1;
+            if ((((pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar30 + lVar23 * lVar19 + lVar9 + lVar16)
+                   && (Nld_Step_Scalar_Invoker *)(lVar30 + lVar23 * lVar19 + 4 + lVar16) < pNVar5)
+                 || (pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar30 + lVar23 * lVar24 + lVar9 + lVar16)
+                     && (Nld_Step_Scalar_Invoker *)(lVar30 + lVar23 * lVar24 + 4 + lVar16) < pNVar5)
+                 ) || (pNVar4 < (Nld_Step_Scalar_Invoker *)(lVar30 + lVar27 + lVar9 + 4 + lVar16) &&
+                       (Nld_Step_Scalar_Invoker *)(lVar30 + lVar27 + lVar16) < pNVar5)) ||
+               (pNVar4 < this + 0x24 && pNVar1 < pNVar5)) goto LAB_00002e00;
+            lVar16 = 0;
+            fVar49 = *(float *)pNVar1 * 0.5;
+            uVar32 = uVar28;
+            do {
+              puVar6 = (undefined8 *)(lVar17 + lVar16);
+              uVar53 = *(undefined8 *)((long)puVar6 + 4);
+              fVar54 = (float)*puVar6;
+              fVar50 = (float)((ulong)*puVar6 >> 0x20);
+              fVar51 = (float)puVar6[1];
+              fVar52 = (float)((ulong)puVar6[1] >> 0x20);
+              puVar7 = (undefined8 *)(lVar38 + lVar16);
+              uVar55 = *(undefined8 *)((long)puVar7 + 4);
+              fVar57 = (float)*puVar7;
+              fVar58 = (float)((ulong)*puVar7 >> 0x20);
+              fVar59 = (float)puVar7[1];
+              fVar60 = (float)((ulong)puVar7[1] >> 0x20);
+              uVar56 = *(undefined8 *)((long)puVar6 + -4);
+              uVar61 = *(undefined8 *)((long)puVar7 + -4);
+              uVar63 = ((undefined8 *)(lVar40 + lVar16))[1];
+              uVar62 = *(undefined8 *)(lVar40 + lVar16);
+              uVar67 = ((undefined8 *)(lVar42 + lVar16))[1];
+              uVar64 = *(undefined8 *)(lVar42 + lVar16);
+              uVar68 = ((undefined8 *)(lVar20 + lVar16))[1];
+              uVar65 = *(undefined8 *)(lVar20 + lVar16);
+              uVar69 = ((undefined8 *)(lVar11 + lVar16))[1];
+              uVar66 = *(undefined8 *)(lVar11 + lVar16);
+              ((undefined8 *)(lVar12 + lVar16))[1] =
+                   CONCAT44(((((fVar52 + (float)((ulong)*(undefined8 *)((long)puVar6 + 0xc) >> 0x20)
+                               ) * ((float)((ulong)*(undefined8 *)((long)puVar7 + 0xc) >> 0x20) -
+                                   fVar60) -
+                              (fVar52 + (float)((ulong)*(undefined8 *)((long)puVar6 + 4) >> 0x20)) *
+                              (fVar60 - (float)((ulong)*(undefined8 *)((long)puVar7 + 4) >> 0x20)))
+                             + (fVar52 + (float)((ulong)uVar63 >> 0x20)) *
+                               ((float)((ulong)uVar67 >> 0x20) - fVar60)) -
+                            (fVar52 + (float)((ulong)uVar68 >> 0x20)) *
+                            (fVar60 - (float)((ulong)uVar69 >> 0x20))) * fVar49,
+                            ((((fVar51 + (float)*(undefined8 *)((long)puVar6 + 0xc)) *
+                               ((float)*(undefined8 *)((long)puVar7 + 0xc) - fVar59) -
+                              (fVar51 + (float)*(undefined8 *)((long)puVar6 + 4)) *
+                              (fVar59 - (float)*(undefined8 *)((long)puVar7 + 4))) +
+                             (fVar51 + (float)uVar63) * ((float)uVar67 - fVar59)) -
+                            (fVar51 + (float)uVar68) * (fVar59 - (float)uVar69)) * fVar49);
+              *(undefined8 *)(lVar12 + lVar16) =
+                   CONCAT44(((((fVar50 + (float)((ulong)uVar53 >> 0x20)) *
+                               ((float)((ulong)uVar55 >> 0x20) - fVar58) -
+                              (fVar50 + (float)((ulong)uVar56 >> 0x20)) *
+                              (fVar58 - (float)((ulong)uVar61 >> 0x20))) +
+                             (fVar50 + (float)((ulong)uVar62 >> 0x20)) *
+                             ((float)((ulong)uVar64 >> 0x20) - fVar58)) -
+                            (fVar50 + (float)((ulong)uVar65 >> 0x20)) *
+                            (fVar58 - (float)((ulong)uVar66 >> 0x20))) * fVar49,
+                            ((((fVar54 + (float)uVar53) * ((float)uVar55 - fVar57) -
+                              (fVar54 + (float)uVar56) * (fVar57 - (float)uVar61)) +
+                             (fVar54 + (float)uVar62) * ((float)uVar64 - fVar57)) -
+                            (fVar54 + (float)uVar65) * (fVar57 - (float)uVar66)) * fVar49);
+              lVar16 = lVar16 + 0x10;
+              uVar32 = uVar32 - 4;
+            } while (uVar32 != 0);
+            uVar32 = uVar28 | 1;
+            if (uVar34 != uVar28) goto LAB_00002e00;
+          }
+          lVar18 = lVar18 + 1;
+          lVar13 = lVar13 + 1;
+          lVar12 = lVar12 + lVar48;
+          lVar11 = lVar11 + lVar23;
+          lVar20 = lVar20 + lVar44;
+          lVar17 = lVar17 + lVar44;
+          lVar38 = lVar38 + lVar23;
+          lVar40 = lVar40 + lVar44;
+          lVar42 = lVar42 + lVar23;
+          lVar10 = lVar10 + lVar48;
+          lVar43 = lVar43 + lVar44;
+          lVar22 = lVar22 + lVar23;
+          local_68 = local_68 + lVar44;
+          lVar47 = lVar47 + lVar23;
+          lVar21 = lVar21 + lVar44;
+          lVar35 = lVar35 + lVar23;
+        } while (lVar18 != iVar8);
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002ef8
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002f0c
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00002f5c
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002f80
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<int, std::allocator<int> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<int,std::allocator<int>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002f94
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<float, std::allocator<float> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: sepFilter2D
+// Entry: 00004100
+// Signature: undefined sepFilter2D(_InputArray * param_1, _OutputArray * param_2, int param_3, _InputArray * param_4, _InputArray * param_5, Point_ param_6, double param_7, int param_8)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::sepFilter2D(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: GaussianBlur
+// Entry: 00004200
+// Signature: undefined GaussianBlur(_InputArray * param_1, _OutputArray * param_2, Size_ param_3, double param_4, double param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::GaussianBlur(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: parallel_for_
+// Entry: 00004300
+// Signature: undefined parallel_for_(Range * param_1, ParallelLoopBody * param_2, double param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::parallel_for_(Range *param_1,ParallelLoopBody *param_2,double param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getDerivKernels
+// Entry: 00004400
+// Signature: undefined getDerivKernels(_OutputArray * param_1, _OutputArray * param_2, int param_3, int param_4, int param_5, bool param_6, int param_7)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::getDerivKernels(_OutputArray *param_1,_OutputArray *param_2,int param_3,int param_4,
+                        int param_5,bool param_6,int param_7)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ParallelLoopBody
+// Entry: 00004500
+// Signature: undefined __thiscall ~ParallelLoopBody(ParallelLoopBody * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::ParallelLoopBody::~ParallelLoopBody(ParallelLoopBody *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: zeros
+// Entry: 00004600
+// Signature: undefined zeros(int param_1, int param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::zeros(int param_1,int param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00004700
+// Signature: undefined create(Size_ param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::Mat::create(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004800
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004900
+// Signature: undefined __thiscall Mat(Mat * this, int param_1, int param_2, int param_3, void * param_4, ulong param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::Mat::Mat(Mat *this,int param_1,int param_2,int param_3,void *param_4,ulong param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004a00
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00004b00
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: add
+// Entry: 00004c00
+// Signature: undefined add(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3, _InputArray * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::add(_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3,_InputArray *param_4,
+            int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: exp
+// Entry: 00004d00
+// Signature: undefined exp(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::exp(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00004e00
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00004f00
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00005000
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Scharr
+// Entry: 00005100
+// Signature: undefined Scharr(_InputArray * param_1, _OutputArray * param_2, int param_3, int param_4, int param_5, double param_6, double param_7, int param_8)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Scharr(_InputArray *param_1,_OutputArray *param_2,int param_3,int param_4,int param_5,
+               double param_6,double param_7,int param_8)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 00005200
+// Signature: undefined resize(_InputArray * param_1, _OutputArray * param_2, Size_ param_3, double param_4, double param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::resize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: noArray
+// Entry: 00005300
+// Signature: undefined noArray(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::noArray(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator-
+// Entry: 00005400
+// Signature: undefined operator-(Scalar_ * param_1, Mat * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::operator-(Scalar_ *param_1,Mat *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: kind
+// Entry: 00005500
+// Signature: undefined kind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::kind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: size
+// Entry: 00005600
+// Signature: undefined size(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::size(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: type
+// Entry: 00005700
+// Signature: undefined type(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::type(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getMat_
+// Entry: 00005800
+// Signature: undefined getMat_(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::getMat_(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00005900
+// Signature: undefined create(Size_ param_1, int param_2, int param_3, bool param_4, DepthMask param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::_OutputArray::create(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00005a00
+// Signature: undefined create(int param_1, int param_2, int param_3, int param_4, bool param_5, DepthMask param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::_OutputArray::create(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: total
+// Entry: 00005b00
+// Signature: undefined total(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::total(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: copyTo
+// Entry: 00005c00
+// Signature: undefined copyTo(_OutputArray * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::copyTo(_OutputArray *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00005d00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00005e00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00005f00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00006400
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00006500
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00006600
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00006700
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00006900
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00006b00
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00006c00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00006d00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 64
+// Failed: 0
+// Skipped external functions: 0

@@ -1,0 +1,193 @@
+Program: infback.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _inflateBackInit_
+// Entry: 00000000
+// Signature: int __cdecl _inflateBackInit_(z_streamp strm, int windowBits, uchar * window, char * version, int stream_size)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int _inflateBackInit_(z_streamp strm,int windowBits,uchar *window,char *version,int stream_size)
+
+{
+  alloc_func paVar1;
+  internal_state *piVar2;
+  alloc_func paVar3;
+  free_func pfVar4;
+  
+  if (version == (char *)0x0) {
+    return -6;
+  }
+  if (stream_size != 0x70) {
+    return -6;
+  }
+  if (*version != '1') {
+    return -6;
+  }
+  if (0xfffffff7 < windowBits - 0x10U) {
+    if (strm == (z_streamp)0x0) {
+      return -2;
+    }
+    if (window != (uchar *)0x0) {
+      strm->msg = (char *)0x0;
+      paVar1 = __zcalloc;
+      paVar3 = strm->zalloc;
+      if (paVar3 == _inflateBackInit_) {
+        strm->zalloc = __zcalloc;
+        strm->opaque = (voidpf)0x0;
+        pfVar4 = strm->zfree;
+        paVar3 = paVar1;
+      }
+      else {
+        pfVar4 = strm->zfree;
+      }
+      if (pfVar4 == _inflateBackInit_) {
+        strm->zfree = __zcfree;
+        piVar2 = (*paVar3)(strm->opaque,1,0x1bf8);
+      }
+      else {
+        piVar2 = (*paVar3)(strm->opaque,1,0x1bf8);
+      }
+      if (piVar2 == (internal_state *)0x0) {
+        return -4;
+      }
+      strm->state = piVar2;
+      piVar2[7].dummy = 0x8000;
+      piVar2[0xe].dummy = windowBits;
+      piVar2[0xf].dummy = 1 << (ulong)(windowBits & 0x1f);
+      *(undefined8 *)(piVar2 + 0x10) = 0;
+      *(uchar **)(piVar2 + 0x12) = window;
+      piVar2[0x6fa].dummy = 1;
+      return 0;
+    }
+    return -2;
+  }
+  return -2;
+}
+
+
+
+
+// ========================================
+// Function: _inflateBack
+// Entry: 00000108
+// Signature: int __cdecl _inflateBack(z_streamp strm, in_func in, void * in_desc, out_func out, void * out_desc)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x0000123c) */
+/* WARNING: Removing unreachable block (ram,0x00001270) */
+/* WARNING: Removing unreachable block (ram,0x0000128c) */
+/* WARNING: Removing unreachable block (ram,0x00001290) */
+
+int _inflateBack(z_streamp strm,in_func in,void *in_desc,out_func out,void *out_desc)
+
+{
+  int iVar1;
+  internal_state *piVar2;
+  
+  if ((strm != (z_streamp)0x0) && (piVar2 = strm->state, piVar2 != (internal_state *)0x0)) {
+    strm->msg = (char *)0x0;
+    *(double *)(piVar2 + 2) = l001;
+    piVar2[0x10].dummy = 0;
+                    /* WARNING: Could not recover jumptable at 0x00000210. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    iVar1 = (*(code *)((ulong)lJTI1_0 * 4 + 0x214))();
+    return iVar1;
+  }
+  return -2;
+}
+
+
+
+
+// ========================================
+// Function: _inflateBackEnd
+// Entry: 000012ec
+// Signature: int __cdecl _inflateBackEnd(z_streamp strm)
+// ========================================
+
+
+int _inflateBackEnd(z_streamp strm)
+
+{
+  if (strm == (z_streamp)0x0) {
+    return -2;
+  }
+  if ((strm->state != (internal_state *)0x0) && (strm->zfree != _inflateBackInit_)) {
+    (*strm->zfree)(strm->opaque,strm->state);
+    strm->state = (internal_state *)0x0;
+    return 0;
+  }
+  return -2;
+}
+
+
+
+
+// ========================================
+// Function: _inflate_fast
+// Entry: 00002000
+// Signature: undefined _inflate_fast(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _inflate_fast(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _inflate_table
+// Entry: 00002100
+// Signature: undefined _inflate_table(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _inflate_table(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00002200
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 6
+// Failed: 0
+// Skipped external functions: 0

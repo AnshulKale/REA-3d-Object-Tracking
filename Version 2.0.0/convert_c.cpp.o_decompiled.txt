@@ -1,0 +1,1459 @@
+Program: convert_c.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _cvSplit
+// Entry: 00000000
+// Signature: undefined _cvSplit(void)
+// ========================================
+
+
+void _cvSplit(cv *param_1,cv *param_2,cv *param_3,cv *param_4,cv *param_5,AutoBuffer *param_6)
+
+{
+  uint uVar1;
+  Mat *pMVar2;
+  code *pcVar3;
+  int *piVar4;
+  uint uVar5;
+  ulong uVar6;
+  int iVar7;
+  ulong uVar8;
+  undefined4 local_140 [2];
+  Mat **local_138;
+  undefined8 uStack_130;
+  undefined4 local_128 [2];
+  uint *local_120;
+  undefined8 uStack_118;
+  Mat *local_c8;
+  Mat *local_c0;
+  uint local_b0 [16];
+  int *local_70;
+  
+  cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+  uVar5 = (uint)(param_3 != (cv *)0x0);
+  if (param_2 != (cv *)0x0) {
+    uVar5 = uVar5 + 1;
+  }
+  if (param_4 != (cv *)0x0) {
+    uVar5 = uVar5 + 1;
+  }
+  if (param_5 != (cv *)0x0) {
+    uVar5 = uVar5 + 1;
+  }
+  uVar6 = (ulong)uVar5;
+  if (uVar5 == 0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (local_128,"nz > 0");
+    cv::error(-0xd7,(string *)local_128,"cvSplit",
+              "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x12);
+    goto LAB_000004e0;
+  }
+  std::vector<cv::Mat,std::allocator<cv::Mat>>::vector
+            ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_c8,uVar6);
+  piVar4 = operator_new((ulong)(uVar5 << 3));
+  _bzero(piVar4,(ulong)(uVar5 << 3));
+  uVar8 = 0;
+  if (param_2 == (cv *)0x0) {
+LAB_00000104:
+    if (param_3 == (cv *)0x0) {
+LAB_000001b0:
+      if (param_4 != (cv *)0x0) {
+        cv::cvarrToMat(param_4,(void *)0x0,true,false,0,param_6);
+        cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+        cv::Mat::~Mat((Mat *)local_128);
+        if ((*(int **)(local_c8 + uVar8 * 0x60 + 0x40))[1] != local_70[1] ||
+            **(int **)(local_c8 + uVar8 * 0x60 + 0x40) != *local_70) goto LAB_000003e0;
+        if (((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) != 0) goto LAB_00000414;
+        if ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) != 0) goto LAB_00000448;
+        if ((local_b0[0] & 0xff0) == 0) goto LAB_0000047c;
+        iVar7 = (int)uVar8;
+        piVar4[(uint)(iVar7 << 1)] = 2;
+        piVar4[iVar7 << 1 | 1] = iVar7;
+        uVar8 = (ulong)(iVar7 + 1);
+      }
+      if (param_5 == (cv *)0x0) {
+        uVar1 = local_b0[0] >> 3 & 0x1ff;
+joined_r0x0000035c:
+        if (uVar5 == uVar1 + 1) {
+          local_128[0] = 0x1010000;
+          local_120 = local_b0;
+          uStack_118 = 0;
+          local_140[0] = 0x2050000;
+          local_138 = &local_c8;
+          uStack_130 = 0;
+          cv::split((_InputArray *)local_128,(_OutputArray *)local_140);
+        }
+        else {
+          cv::mixChannels((Mat *)local_b0,1,local_c8,uVar6,piVar4,uVar6);
+        }
+        operator_delete(piVar4);
+        pMVar2 = local_c8;
+        if (local_c8 != (Mat *)0x0) {
+          for (; local_c0 != pMVar2; local_c0 = (Mat *)cv::Mat::~Mat(local_c0 + -0x60)) {
+          }
+          local_c0 = pMVar2;
+          operator_delete(local_c8);
+        }
+        cv::Mat::~Mat((Mat *)local_b0);
+        return;
+      }
+      cv::cvarrToMat(param_5,(void *)0x0,true,false,0,param_6);
+      cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+      cv::Mat::~Mat((Mat *)local_128);
+      if ((*(int **)(local_c8 + uVar8 * 0x60 + 0x40))[1] == local_70[1] &&
+          **(int **)(local_c8 + uVar8 * 0x60 + 0x40) == *local_70) {
+        if (((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) != 0) goto LAB_00000414;
+        if ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) != 0) goto LAB_00000448;
+        uVar1 = local_b0[0] >> 3 & 0x1ff;
+        if (2 < uVar1) {
+          iVar7 = (int)uVar8;
+          piVar4[(uint)(iVar7 << 1)] = 3;
+          piVar4[iVar7 << 1 | 1] = iVar7;
+          goto joined_r0x0000035c;
+        }
+        goto LAB_0000047c;
+      }
+    }
+    else {
+      cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+      cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+      cv::Mat::~Mat((Mat *)local_128);
+      if ((*(int **)(local_c8 + uVar8 * 0x60 + 0x40))[1] == local_70[1] &&
+          **(int **)(local_c8 + uVar8 * 0x60 + 0x40) == *local_70) {
+        if (((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) != 0) goto LAB_00000414;
+        if ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) != 0) goto LAB_00000448;
+        if ((local_b0[0] & 0xff8) != 0) {
+          iVar7 = (int)uVar8;
+          piVar4[(uint)(iVar7 << 1)] = 1;
+          piVar4[iVar7 << 1 | 1] = iVar7;
+          uVar8 = (ulong)(iVar7 + 1);
+          goto LAB_000001b0;
+        }
+LAB_0000047c:
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (local_128,"i < src.channels()");
+        cv::error(-0xd7,(string *)local_128,"cvSplit",
+                  "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x1e);
+        goto LAB_000004e0;
+      }
+    }
+  }
+  else {
+    cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(local_c8,(Mat *)local_128);
+    cv::Mat::~Mat((Mat *)local_128);
+    if ((*(int **)(local_c8 + 0x40))[1] == local_70[1] && **(int **)(local_c8 + 0x40) == *local_70)
+    {
+      if (((local_b0[0] ^ *(uint *)local_c8) & 7) == 0) {
+        if ((*(uint *)local_c8 & 0xff8) == 0) {
+          piVar4[0] = 0;
+          piVar4[1] = 0;
+          uVar8 = 1;
+          goto LAB_00000104;
+        }
+LAB_00000448:
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (local_128,"dvec[j].channels() == 1");
+        cv::error(-0xd7,(string *)local_128,"cvSplit",
+                  "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x1d);
+        goto LAB_000004e0;
+      }
+LAB_00000414:
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (local_128,"dvec[j].depth() == src.depth()");
+      cv::error(-0xd7,(string *)local_128,"cvSplit",
+                "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x1c);
+      goto LAB_000004e0;
+    }
+  }
+LAB_000003e0:
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_128,"dvec[j].size() == src.size()");
+  cv::error(-0xd7,(string *)local_128,"cvSplit",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x1b);
+LAB_000004e0:
+                    /* WARNING: Does not return */
+  pcVar3 = (code *)SoftwareBreakpoint(1,0x4e4);
+  (*pcVar3)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 000005a8
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000634;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000634:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 00000658
+// Signature: undefined __thiscall vector(vector<cv::Mat,std::allocator<cv::Mat>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::vector(unsigned long) */
+
+vector<cv::Mat,std::allocator<cv::Mat>> * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::vector
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this,ulong param_1)
+
+{
+  Mat *pMVar1;
+  code *pcVar2;
+  Mat *this_00;
+  long lVar3;
+  ulong uVar4;
+  
+  *(undefined8 *)this = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  if (param_1 != 0) {
+    if (0x2aaaaaaaaaaaaaa < param_1) {
+      __throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar2 = (code *)SoftwareBreakpoint(1,0x6dc);
+      (*pcVar2)();
+    }
+    uVar4 = param_1 * 0x60;
+    this_00 = operator_new(uVar4);
+    *(Mat **)this = this_00;
+    *(Mat **)(this + 8) = this_00;
+    pMVar1 = this_00 + uVar4;
+    *(Mat **)(this + 0x10) = pMVar1;
+    do {
+      lVar3 = cv::Mat::Mat(this_00);
+      this_00 = (Mat *)(lVar3 + 0x60);
+      uVar4 = uVar4 - 0x60;
+    } while (uVar4 != 0);
+    *(Mat **)(this + 8) = pMVar1;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 000006fc
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<cv::Mat,std::allocator<cv::Mat>> * this)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::~vector[abi:ne180100]() */
+
+vector<cv::Mat,std::allocator<cv::Mat>> * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::~vector_abi_ne180100_
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar3 = *(void **)this;
+  if (pvVar3 != (void *)0x0) {
+    pvVar1 = *(void **)(this + 8);
+    pvVar2 = pvVar3;
+    if (pvVar1 != pvVar3) {
+      do {
+        pvVar1 = (void *)cv::Mat::~Mat((Mat *)((long)pvVar1 + -0x60));
+      } while (pvVar1 != pvVar3);
+      pvVar2 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar3;
+    operator_delete(pvVar2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: _cvMerge
+// Entry: 00000754
+// Signature: undefined _cvMerge(void)
+// ========================================
+
+
+void _cvMerge(cv *param_1,cv *param_2,cv *param_3,cv *param_4,cv *param_5,AutoBuffer *param_6)
+
+{
+  uint uVar1;
+  Mat *pMVar2;
+  code *pcVar3;
+  int iVar4;
+  int *piVar5;
+  uint uVar6;
+  ulong uVar7;
+  ulong uVar8;
+  undefined4 local_140 [2];
+  uint *local_138;
+  undefined8 uStack_130;
+  undefined4 local_128 [2];
+  Mat **local_120;
+  undefined8 uStack_118;
+  Mat *local_c8;
+  Mat *local_c0;
+  uint local_b0 [16];
+  MatSize aMStack_70 [32];
+  
+  cv::cvarrToMat(param_5,(void *)0x0,true,false,0,param_6);
+  uVar6 = (uint)(param_2 != (cv *)0x0);
+  if (param_1 != (cv *)0x0) {
+    uVar6 = uVar6 + 1;
+  }
+  if (param_3 != (cv *)0x0) {
+    uVar6 = uVar6 + 1;
+  }
+  if (param_4 != (cv *)0x0) {
+    uVar6 = uVar6 + 1;
+  }
+  uVar7 = (ulong)uVar6;
+  if (uVar6 == 0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (local_128,"nz > 0");
+    cv::error(-0xd7,(string *)local_128,"cvMerge",
+              "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x36);
+    goto LAB_00000b78;
+  }
+  std::vector<cv::Mat,std::allocator<cv::Mat>>::vector
+            ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_c8,uVar7);
+  piVar5 = operator_new((ulong)(uVar6 << 3));
+  _bzero(piVar5,(ulong)(uVar6 << 3));
+  uVar8 = 0;
+  if (param_1 == (cv *)0x0) {
+LAB_00000858:
+    if (param_2 != (cv *)0x0) {
+      cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+      cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+      cv::Mat::~Mat((Mat *)local_128);
+      iVar4 = cv::MatSize::operator==((MatSize *)(local_c8 + uVar8 * 0x60 + 0x40),aMStack_70);
+      if (((iVar4 == 0) ||
+          ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) != 0 ||
+           ((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) != 0)) ||
+         ((local_b0[0] & 0xff8) == 0)) goto LAB_00000b14;
+      iVar4 = (int)uVar8;
+      piVar5[(uint)(iVar4 << 1)] = iVar4;
+      piVar5[iVar4 << 1 | 1] = 1;
+      uVar8 = (ulong)(iVar4 + 1);
+    }
+    if (param_3 != (cv *)0x0) {
+      cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+      cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+      cv::Mat::~Mat((Mat *)local_128);
+      iVar4 = cv::MatSize::operator==((MatSize *)(local_c8 + uVar8 * 0x60 + 0x40),aMStack_70);
+      if (((iVar4 == 0) ||
+          ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) != 0 ||
+           ((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) != 0)) ||
+         ((local_b0[0] & 0xff0) == 0)) goto LAB_00000b14;
+      iVar4 = (int)uVar8;
+      piVar5[(uint)(iVar4 << 1)] = iVar4;
+      piVar5[iVar4 << 1 | 1] = 2;
+      uVar8 = (ulong)(iVar4 + 1);
+    }
+    if (param_4 == (cv *)0x0) {
+      uVar1 = local_b0[0] >> 3 & 0x1ff;
+joined_r0x00000a90:
+      if (uVar6 == uVar1 + 1) {
+        local_128[0] = 0x1050000;
+        local_120 = &local_c8;
+        uStack_118 = 0;
+        local_140[0] = 0x2010000;
+        local_138 = local_b0;
+        uStack_130 = 0;
+        cv::merge((_InputArray *)local_128,(_OutputArray *)local_140);
+      }
+      else {
+        cv::mixChannels(local_c8,uVar7,(Mat *)local_b0,1,piVar5,uVar7);
+      }
+      operator_delete(piVar5);
+      pMVar2 = local_c8;
+      if (local_c8 != (Mat *)0x0) {
+        for (; local_c0 != pMVar2; local_c0 = (Mat *)cv::Mat::~Mat(local_c0 + -0x60)) {
+        }
+        local_c0 = pMVar2;
+        operator_delete(local_c8);
+      }
+      cv::Mat::~Mat((Mat *)local_b0);
+      return;
+    }
+    cv::cvarrToMat(param_4,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(local_c8 + uVar8 * 0x60,(Mat *)local_128);
+    cv::Mat::~Mat((Mat *)local_128);
+    iVar4 = cv::MatSize::operator==((MatSize *)(local_c8 + uVar8 * 0x60 + 0x40),aMStack_70);
+    if (((iVar4 != 0) &&
+        ((*(uint *)(local_c8 + uVar8 * 0x60) & 0xff8) == 0 &&
+         ((local_b0[0] ^ *(uint *)(local_c8 + uVar8 * 0x60)) & 7) == 0)) &&
+       (uVar1 = local_b0[0] >> 3 & 0x1ff, 2 < uVar1)) {
+      iVar4 = (int)uVar8;
+      piVar5[(uint)(iVar4 << 1)] = iVar4;
+      piVar5[iVar4 << 1 | 1] = 3;
+      goto joined_r0x00000a90;
+    }
+  }
+  else {
+    cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(local_c8,(Mat *)local_128);
+    cv::Mat::~Mat((Mat *)local_128);
+    iVar4 = cv::MatSize::operator==((MatSize *)(local_c8 + 0x40),aMStack_70);
+    if ((iVar4 != 0) &&
+       ((*(uint *)local_c8 & 0xff8) == 0 && ((local_b0[0] ^ *(uint *)local_c8) & 7) == 0)) {
+      piVar5[0] = 0;
+      piVar5[1] = 0;
+      uVar8 = 1;
+      goto LAB_00000858;
+    }
+  }
+LAB_00000b14:
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_128,
+             "svec[j].size == dst.size && svec[j].depth() == dst.depth() && svec[j].channels() == 1 && i < dst.channels()"
+            );
+  cv::error(-0xd7,(string *)local_128,"cvMerge",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x41);
+LAB_00000b78:
+                    /* WARNING: Does not return */
+  pcVar3 = (code *)SoftwareBreakpoint(1,0xb7c);
+  (*pcVar3)();
+}
+
+
+
+
+// ========================================
+// Function: _cvMixChannels
+// Entry: 00000c28
+// Signature: undefined _cvMixChannels(void)
+// ========================================
+
+
+void _cvMixChannels(undefined8 *param_1,uint param_2,undefined8 *param_3,uint param_4,int *param_5,
+                   AutoBuffer *param_6)
+
+{
+  AutoBuffer *pAVar1;
+  ulong uVar2;
+  long lVar3;
+  Mat aMStack_790 [96];
+  Mat *local_730 [218];
+  
+  pAVar1 = param_6;
+  cv::AutoBuffer<cv::Mat,18ul>::AutoBuffer
+            ((AutoBuffer<cv::Mat,18ul> *)local_730,(long)(int)(param_4 + param_2));
+  if (0 < (int)param_2) {
+    lVar3 = 0;
+    do {
+      cv::cvarrToMat((cv *)*param_1,(void *)0x0,true,false,0,pAVar1);
+      cv::Mat::operator=(local_730[0] + lVar3,aMStack_790);
+      cv::Mat::~Mat(aMStack_790);
+      param_1 = param_1 + 1;
+      lVar3 = lVar3 + 0x60;
+    } while ((ulong)param_2 * 0x60 - lVar3 != 0);
+  }
+  if (0 < (int)param_4) {
+    uVar2 = (ulong)param_4;
+    lVar3 = (long)(int)param_2 * 0x60;
+    do {
+      cv::cvarrToMat((cv *)*param_3,(void *)0x0,true,false,0,pAVar1);
+      cv::Mat::operator=(local_730[0] + lVar3,aMStack_790);
+      cv::Mat::~Mat(aMStack_790);
+      lVar3 = lVar3 + 0x60;
+      param_3 = param_3 + 1;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  cv::mixChannels(local_730[0],(long)(int)param_2,local_730[0] + (long)(int)param_2 * 0x60,
+                  (long)(int)param_4,param_5,(long)(int)param_6);
+  cv::AutoBuffer<cv::Mat,18ul>::~AutoBuffer((AutoBuffer<cv::Mat,18ul> *)local_730);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _cvConvertScaleAbs
+// Entry: 00000dc8
+// Signature: undefined _cvConvertScaleAbs(void)
+// ========================================
+
+
+void _cvConvertScaleAbs(double param_1,double param_2,cv *param_3,cv *param_4)
+
+{
+  code *pcVar1;
+  int iVar2;
+  AutoBuffer *in_x5;
+  undefined4 local_130 [2];
+  uint *local_128;
+  undefined8 uStack_120;
+  undefined4 local_118 [2];
+  uint *local_110;
+  undefined8 uStack_108;
+  uint local_100 [16];
+  MatSize aMStack_c0 [32];
+  uint local_a0 [16];
+  MatSize aMStack_60 [32];
+  
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,in_x5);
+  cv::cvarrToMat(param_4,(void *)0x0,true,false,0,in_x5);
+  iVar2 = cv::MatSize::operator==(aMStack_60,aMStack_c0);
+  if ((iVar2 != 0) && ((local_100[0] & 0xfff) == (local_a0[0] & 0xff8))) {
+    local_118[0] = 0x1010000;
+    local_110 = local_a0;
+    uStack_108 = 0;
+    local_130[0] = 0x2010000;
+    local_128 = local_100;
+    uStack_120 = 0;
+    cv::convertScaleAbs((_InputArray *)local_118,(_OutputArray *)local_130,param_1,param_2);
+    cv::Mat::~Mat((Mat *)local_100);
+    cv::Mat::~Mat((Mat *)local_a0);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_118,"src.size == dst.size && dst.type() == CV_8UC(src.channels())");
+  cv::error(-0xd7,(string *)local_118,"cvConvertScaleAbs",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x66);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0xee0);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: _cvConvertScale
+// Entry: 00000f2c
+// Signature: undefined _cvConvertScale(void)
+// ========================================
+
+
+void _cvConvertScale(double param_1,double param_2,cv *param_3,cv *param_4)
+
+{
+  code *pcVar1;
+  int iVar2;
+  AutoBuffer *in_x5;
+  undefined4 local_118 [2];
+  uint *local_110;
+  undefined8 uStack_108;
+  uint local_100 [16];
+  MatSize aMStack_c0 [32];
+  uint local_a0 [16];
+  MatSize aMStack_60 [32];
+  
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,in_x5);
+  cv::cvarrToMat(param_4,(void *)0x0,true,false,0,in_x5);
+  iVar2 = cv::MatSize::operator==(aMStack_60,aMStack_c0);
+  if ((iVar2 != 0) && (((local_100[0] ^ local_a0[0]) & 0xff8) == 0)) {
+    local_118[0] = 0x2010000;
+    local_110 = local_100;
+    uStack_108 = 0;
+    cv::Mat::convertTo((_OutputArray *)local_a0,(int)local_118,param_1,param_2);
+    cv::Mat::~Mat((Mat *)local_100);
+    cv::Mat::~Mat((Mat *)local_a0);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_118,"src.size == dst.size && src.channels() == dst.channels()");
+  cv::error(-0xd7,(string *)local_118,"cvConvertScale",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x71);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1034);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: _cvLUT
+// Entry: 00001080
+// Signature: undefined _cvLUT(void)
+// ========================================
+
+
+void _cvLUT(cv *param_1,cv *param_2,cv *param_3,undefined8 param_4,undefined8 param_5,
+           AutoBuffer *param_6)
+
+{
+  code *pcVar1;
+  undefined4 local_198 [2];
+  uint *local_190;
+  undefined8 uStack_188;
+  undefined4 local_180 [2];
+  uint *local_178;
+  undefined8 local_170;
+  undefined4 local_168 [2];
+  uint *local_160;
+  undefined8 local_158;
+  uint local_150 [24];
+  uint local_f0 [16];
+  int *local_b0;
+  uint local_90 [16];
+  int *local_50;
+  
+  cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+  if ((local_b0[1] == local_50[1] && *local_b0 == *local_50) &&
+     ((local_f0[0] & 0xfff) == (local_90[0] & 0xff8 | local_150[0] & 7))) {
+    local_158 = 0;
+    local_168[0] = 0x1010000;
+    local_160 = local_90;
+    local_170 = 0;
+    local_180[0] = 0x1010000;
+    local_178 = local_150;
+    local_198[0] = 0x2010000;
+    local_190 = local_f0;
+    uStack_188 = 0;
+    cv::LUT((_InputArray *)local_168,(_InputArray *)local_180,(_OutputArray *)local_198);
+    cv::Mat::~Mat((Mat *)local_150);
+    cv::Mat::~Mat((Mat *)local_f0);
+    cv::Mat::~Mat((Mat *)local_90);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_168,
+             "dst.size() == src.size() && dst.type() == CV_MAKETYPE(lut.depth(), src.channels())");
+  cv::error(-0xd7,(string *)local_168,"cvLUT",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x7a);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x11d0);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: _cvNormalize
+// Entry: 0000122c
+// Signature: undefined _cvNormalize(void)
+// ========================================
+
+
+void _cvNormalize(double param_1,double param_2,cv *param_3,cv *param_4,int param_5,cv *param_6,
+                 undefined8 param_7,AutoBuffer *param_8)
+
+{
+  code *pcVar1;
+  undefined4 local_1f0 [2];
+  Mat *local_1e8;
+  undefined8 local_1e0;
+  undefined4 local_1d8 [2];
+  uint *local_1d0;
+  undefined8 uStack_1c8;
+  undefined4 local_1c0 [2];
+  uint *local_1b8;
+  undefined8 local_1b0;
+  Mat aMStack_160 [96];
+  uint local_100 [16];
+  int *local_c0;
+  uint local_a0 [16];
+  int *local_60;
+  
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_8);
+  cv::cvarrToMat(param_4,(void *)0x0,true,false,0,param_8);
+  cv::Mat::Mat(aMStack_160);
+  if (param_6 != (cv *)0x0) {
+    cv::cvarrToMat(param_6,(void *)0x0,true,false,0,param_8);
+    cv::Mat::operator=(aMStack_160,(Mat *)local_1c0);
+    cv::Mat::~Mat((Mat *)local_1c0);
+  }
+  if ((local_c0[1] == local_60[1] && *local_c0 == *local_60) &&
+     (((local_100[0] ^ local_a0[0]) & 0xff8) == 0)) {
+    local_1b0 = 0;
+    local_1c0[0] = 0x1010000;
+    local_1b8 = local_a0;
+    local_1d8[0] = 0x3010000;
+    local_1d0 = local_100;
+    uStack_1c8 = 0;
+    local_1e0 = 0;
+    local_1f0[0] = 0x1010000;
+    local_1e8 = aMStack_160;
+    cv::normalize((_InputArray *)local_1c0,(_InputOutputArray *)local_1d8,param_1,param_2,param_5,
+                  local_100[0] & 0xfff,(_InputArray *)local_1f0);
+    cv::Mat::~Mat(aMStack_160);
+    cv::Mat::~Mat((Mat *)local_100);
+    cv::Mat::~Mat((Mat *)local_a0);
+    return;
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (local_1c0,"dst.size() == src.size() && src.channels() == dst.channels()");
+  cv::error(-0xd7,(string *)local_1c0,"cvNormalize",
+            "M3T/third_party/opencv-src/modules/core/src/convert_c.cpp",0x85);
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x13b4);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 0000141c
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00001430
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00001480
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000014a4
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<cv::Mat,std::allocator<cv::Mat>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: AutoBuffer
+// Entry: 000014b8
+// Signature: undefined __thiscall AutoBuffer(AutoBuffer<cv::Mat,18ul> * this, ulong param_1)
+// ========================================
+
+
+/* cv::AutoBuffer<cv::Mat, 18ul>::AutoBuffer(unsigned long) */
+
+AutoBuffer<cv::Mat,18ul> * __thiscall
+cv::AutoBuffer<cv::Mat,18ul>::AutoBuffer(AutoBuffer<cv::Mat,18ul> *this,ulong param_1)
+
+{
+  undefined1 auVar1 [16];
+  undefined8 *puVar2;
+  long lVar3;
+  ulong uVar4;
+  long lVar5;
+  Mat *this_00;
+  
+  cv::Mat::Mat((Mat *)(this + 0x10));
+  cv::Mat::Mat((Mat *)(this + 0x70));
+  cv::Mat::Mat((Mat *)(this + 0xd0));
+  cv::Mat::Mat((Mat *)(this + 0x130));
+  cv::Mat::Mat((Mat *)(this + 400));
+  cv::Mat::Mat((Mat *)(this + 0x1f0));
+  cv::Mat::Mat((Mat *)(this + 0x250));
+  cv::Mat::Mat((Mat *)(this + 0x2b0));
+  cv::Mat::Mat((Mat *)(this + 0x310));
+  cv::Mat::Mat((Mat *)(this + 0x370));
+  cv::Mat::Mat((Mat *)(this + 0x3d0));
+  cv::Mat::Mat((Mat *)(this + 0x430));
+  cv::Mat::Mat((Mat *)(this + 0x490));
+  cv::Mat::Mat((Mat *)(this + 0x4f0));
+  cv::Mat::Mat((Mat *)(this + 0x550));
+  cv::Mat::Mat((Mat *)(this + 0x5b0));
+  cv::Mat::Mat((Mat *)(this + 0x610));
+  cv::Mat::Mat((Mat *)(this + 0x670));
+  *(Mat **)this = (Mat *)(this + 0x10);
+  *(ulong *)(this + 8) = param_1;
+  if (0x12 < param_1) {
+    auVar1._8_8_ = 0;
+    auVar1._0_8_ = param_1;
+    uVar4 = param_1 * 0x60 | 0x10;
+    if (SUB168(auVar1 * ZEXT816(0x60),8) != 0) {
+      uVar4 = 0xffffffffffffffff;
+    }
+    puVar2 = operator_new__(uVar4);
+    *puVar2 = 0x60;
+    puVar2[1] = param_1;
+    lVar5 = param_1 * 0x60;
+    this_00 = (Mat *)(puVar2 + 2);
+    do {
+      lVar3 = cv::Mat::Mat(this_00);
+      this_00 = (Mat *)(lVar3 + 0x60);
+      lVar5 = lVar5 + -0x60;
+    } while (lVar5 != 0);
+    *(Mat **)this = (Mat *)(puVar2 + 2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~AutoBuffer
+// Entry: 000016d0
+// Signature: undefined __thiscall ~AutoBuffer(AutoBuffer<cv::Mat,18ul> * this)
+// ========================================
+
+
+/* cv::AutoBuffer<cv::Mat, 18ul>::~AutoBuffer() */
+
+AutoBuffer<cv::Mat,18ul> * __thiscall
+cv::AutoBuffer<cv::Mat,18ul>::~AutoBuffer(AutoBuffer<cv::Mat,18ul> *this)
+
+{
+  Mat *pMVar1;
+  Mat *this_00;
+  long lVar2;
+  
+  this_00 = (Mat *)(this + 0x10);
+  pMVar1 = *(Mat **)this;
+  if (pMVar1 != this_00) {
+    if (pMVar1 != (Mat *)0x0) {
+      if (*(long *)(pMVar1 + -8) != 0) {
+        lVar2 = *(long *)(pMVar1 + -8) * 0x60;
+        do {
+          cv::Mat::~Mat(pMVar1 + lVar2 + -0x60);
+          lVar2 = lVar2 + -0x60;
+        } while (lVar2 != 0);
+      }
+      operator_delete__(pMVar1 + -0x10);
+    }
+    *(Mat **)this = this_00;
+    *(undefined8 *)(this + 8) = 0x12;
+  }
+  cv::Mat::~Mat((Mat *)(this + 0x670));
+  cv::Mat::~Mat((Mat *)(this + 0x610));
+  cv::Mat::~Mat((Mat *)(this + 0x5b0));
+  cv::Mat::~Mat((Mat *)(this + 0x550));
+  cv::Mat::~Mat((Mat *)(this + 0x4f0));
+  cv::Mat::~Mat((Mat *)(this + 0x490));
+  cv::Mat::~Mat((Mat *)(this + 0x430));
+  cv::Mat::~Mat((Mat *)(this + 0x3d0));
+  cv::Mat::~Mat((Mat *)(this + 0x370));
+  cv::Mat::~Mat((Mat *)(this + 0x310));
+  cv::Mat::~Mat((Mat *)(this + 0x2b0));
+  cv::Mat::~Mat((Mat *)(this + 0x250));
+  cv::Mat::~Mat((Mat *)(this + 0x1f0));
+  cv::Mat::~Mat((Mat *)(this + 400));
+  cv::Mat::~Mat((Mat *)(this + 0x130));
+  cv::Mat::~Mat((Mat *)(this + 0xd0));
+  cv::Mat::~Mat((Mat *)(this + 0x70));
+  cv::Mat::~Mat(this_00);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 000017dc
+// Signature: undefined __cdecl vector(ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::vector(unsigned long) [clone .cold.1] */
+
+void std::vector<cv::Mat,std::allocator<cv::Mat>>::vector(ulong param_1)
+
+{
+  void *pvVar1;
+  void *in_x1;
+  undefined8 *in_x2;
+  void *pvVar2;
+  
+  pvVar1 = *(void **)param_1;
+  pvVar2 = in_x1;
+  if (pvVar1 != in_x1) {
+    do {
+      pvVar1 = (void *)cv::Mat::~Mat((Mat *)((long)pvVar1 + -0x60));
+    } while (pvVar1 != in_x1);
+    pvVar2 = (void *)*in_x2;
+  }
+  *(void **)param_1 = in_x1;
+  operator_delete(pvVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: cvarrToMat
+// Entry: 00002100
+// Signature: undefined __thiscall cvarrToMat(cv * this, void * param_1, bool param_2, bool param_3, int param_4, AutoBuffer * param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::cvarrToMat(cv *this,void *param_1,bool param_2,bool param_3,int param_4,AutoBuffer *param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: mixChannels
+// Entry: 00002200
+// Signature: undefined mixChannels(Mat * param_1, ulong param_2, Mat * param_3, ulong param_4, int * param_5, ulong param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::mixChannels(Mat *param_1,ulong param_2,Mat *param_3,ulong param_4,int *param_5,
+                    ulong param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: convertScaleAbs
+// Entry: 00002300
+// Signature: undefined convertScaleAbs(_InputArray * param_1, _OutputArray * param_2, double param_3, double param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::convertScaleAbs(_InputArray *param_1,_OutputArray *param_2,double param_3,double param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: LUT
+// Entry: 00002400
+// Signature: undefined LUT(_InputArray * param_1, _InputArray * param_2, _OutputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::LUT(_InputArray *param_1,_InputArray *param_2,_OutputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00002500
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00002600
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00002700
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00002800
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: merge
+// Entry: 00002900
+// Signature: undefined merge(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::merge(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: split
+// Entry: 00002a00
+// Signature: undefined split(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::split(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: normalize
+// Entry: 00002b00
+// Signature: undefined normalize(_InputArray * param_1, _InputOutputArray * param_2, double param_3, double param_4, int param_5, int param_6, _InputArray * param_7)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::normalize(_InputArray *param_1,_InputOutputArray *param_2,double param_3,double param_4,
+                  int param_5,int param_6,_InputArray *param_7)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: convertTo
+// Entry: 00002c00
+// Signature: undefined convertTo(_OutputArray * param_1, int param_2, double param_3, double param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::convertTo(_OutputArray *param_1,int param_2,double param_3,double param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator==
+// Entry: 00002d00
+// Signature: undefined __thiscall operator==(MatSize * this, MatSize * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::MatSize::operator==(MatSize *this,MatSize *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00002e00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00002f00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete[]
+// Entry: 00003200
+// Signature: void operator.delete[](void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete__(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00003300
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new[]
+// Entry: 00003400
+// Signature: void * operator.new[](ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new__(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00003500
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00003600
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00003800
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00003a00
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00003b00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00003c00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 41
+// Failed: 0
+// Skipped external functions: 0

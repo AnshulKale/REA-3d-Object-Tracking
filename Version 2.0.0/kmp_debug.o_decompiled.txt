@@ -1,0 +1,443 @@
+Program: kmp_debug.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ___kmp_debug_printf
+// Entry: 00000000
+// Signature: undefined ___kmp_debug_printf(void)
+// ========================================
+
+
+void ___kmp_debug_printf(undefined8 param_1)
+
+{
+  ___kmp_vprintf(1,param_1,&stack0x00000000);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00000038
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_debug_assert(undefined8 param_1,long param_2,undefined4 param_3)
+
+{
+  undefined1 auVar1 [12];
+  undefined1 auStack_48 [24];
+  long local_30;
+  undefined4 local_24;
+  long local_20;
+  undefined8 local_18;
+  
+  local_24 = param_3;
+  local_20 = param_2;
+  local_18 = param_1;
+  if (param_2 == 0) {
+    local_20 = ___kmp_i18n_catgets(0x20002);
+  }
+  else {
+    local_30 = __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPKci(param_2,0x2f);
+    if (local_30 != 0) {
+      local_20 = local_30 + 1;
+    }
+  }
+  ___kmp_msg_format(0x4000d);
+  ___kmp_msg_format(0x50001);
+  auVar1 = ___kmp_fatal(auStack_48);
+  __libcpp_strrchr_abi_v15006_(auVar1._0_8_,auVar1._8_4_);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPKci
+// Entry: 00000120
+// Signature: undefined __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPKci(void)
+// ========================================
+
+
+void __Z7strrchrB6v15006Ua9enable_ifIXLb1EEEPKci(char *param_1,int param_2)
+
+{
+  __libcpp_strrchr_abi_v15006_(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_dump_debug_buffer
+// Entry: 0000014c
+// Signature: undefined ___kmp_dump_debug_buffer(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_dump_debug_buffer(void)
+
+{
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  int *piVar4;
+  int *piVar5;
+  long *plVar6;
+  char *pcVar7;
+  int iVar8;
+  long lVar9;
+  char *local_30;
+  char *local_20;
+  int local_14;
+  
+  plVar6 = ____kmp_debug_buffer;
+  piVar5 = ____kmp_debug_buf_lines;
+  piVar4 = ____kmp_debug_buf_chars;
+  if (*____kmp_debug_buffer != 0) {
+    iVar8 = std::__atomic_base::operator_cast_to_int_abi_v15006_(____kmp_debug_count);
+    iVar1 = *piVar5;
+    iVar2 = 0;
+    if (iVar1 != 0) {
+      iVar2 = iVar8 / iVar1;
+    }
+    local_20 = (char *)(*plVar6 + (long)((iVar8 - iVar2 * iVar1) * *piVar4));
+    lVar9 = *plVar6;
+    iVar1 = *piVar5;
+    iVar2 = *piVar4;
+    __kmp_acquire_bootstrap_lock(____kmp_stdio_lock);
+    ___kmp_printf_no_lock(0x5a0);
+    for (local_14 = 0; local_14 < *piVar5; local_14 = local_14 + 1) {
+      pcVar7 = local_20;
+      if (*local_20 != '\0') {
+        do {
+          pcVar3 = pcVar7;
+          local_30 = pcVar3 + 1;
+          if (local_20 + (long)*piVar4 + -1 <= local_30) goto LAB_000002fc;
+          pcVar7 = local_30;
+        } while (*local_30 != '\0');
+        if (*pcVar3 != '\n') {
+          *local_30 = '\n';
+          pcVar3[2] = '\0';
+        }
+LAB_000002fc:
+        if (((local_30 == local_20 + (long)*piVar4 + -1) && (*local_30 == '\0')) &&
+           (*pcVar3 != '\n')) {
+          *pcVar3 = '\n';
+        }
+        ___kmp_printf_no_lock(0x5cd);
+        *local_20 = '\0';
+      }
+      local_20 = local_20 + *piVar4;
+      if ((char *)(lVar9 + iVar1 * iVar2) <= local_20) {
+        local_20 = (char *)*plVar6;
+      }
+    }
+    ___kmp_printf_no_lock(0x5d7);
+    __kmp_release_bootstrap_lock(____kmp_stdio_lock);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator.cast.to.int[abi:v15006]
+// Entry: 00000450
+// Signature: int __thiscall operator.cast.to.int[abi:v15006](__atomic_base * this)
+// ========================================
+
+
+/* std::__atomic_base<int, false>::operator int[abi:v15006]() const */
+
+int __thiscall std::__atomic_base::operator_cast_to_int_abi_v15006_(__atomic_base *this)
+
+{
+  int iVar1;
+  
+  iVar1 = __atomic_base<int,false>::load_abi_v15006_((__atomic_base<int,false> *)this,5);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_acquire_bootstrap_lock
+// Entry: 00000478
+// Signature: undefined __cdecl __kmp_acquire_bootstrap_lock(kmp_ticket_lock * param_1)
+// ========================================
+
+
+/* __kmp_acquire_bootstrap_lock(kmp_ticket_lock*) */
+
+void __kmp_acquire_bootstrap_lock(kmp_ticket_lock *param_1)
+
+{
+  ___kmp_acquire_ticket_lock(param_1,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_bootstrap_lock
+// Entry: 000004a0
+// Signature: undefined __cdecl __kmp_release_bootstrap_lock(kmp_ticket_lock * param_1)
+// ========================================
+
+
+/* __kmp_release_bootstrap_lock(kmp_ticket_lock*) */
+
+void __kmp_release_bootstrap_lock(kmp_ticket_lock *param_1)
+
+{
+  ___kmp_release_ticket_lock(param_1,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __libcpp_strrchr[abi:v15006]
+// Entry: 000004c8
+// Signature: undefined __cdecl __libcpp_strrchr[abi:v15006](char * param_1, int param_2)
+// ========================================
+
+
+/* __libcpp_strrchr[abi:v15006](char const*, int) */
+
+void __libcpp_strrchr_abi_v15006_(char *param_1,int param_2)
+
+{
+  _strrchr(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: load[abi:v15006]
+// Entry: 000004f4
+// Signature: undefined __thiscall load[abi:v15006](__atomic_base<int,false> * this, memory_order param_1)
+// ========================================
+
+
+/* std::__atomic_base<int, false>::load[abi:v15006](std::memory_order) const */
+
+int __thiscall
+std::__atomic_base<int,false>::load_abi_v15006_(__atomic_base<int,false> *this,undefined4 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxx_atomic_load_abi_v15006_<int>(this,param_2);
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: __cxx_atomic_load[abi:v15006]<int>
+// Entry: 00000520
+// Signature: int __cxx_atomic_load[abi:v15006]<int>(__cxx_atomic_base_impl * param_1, memory_order param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* int std::__cxx_atomic_load[abi:v15006]<int>(std::__cxx_atomic_base_impl<int> const*,
+   std::memory_order) */
+
+int std::__cxx_atomic_load_abi_v15006_<int>(int *param_1,int param_2)
+
+{
+  undefined4 local_10;
+  
+  if (param_2 - 1U < 2) {
+    local_10 = *param_1;
+  }
+  else if (param_2 == 5) {
+    local_10 = *param_1;
+  }
+  else {
+    local_10 = *param_1;
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_acquire_ticket_lock
+// Entry: 00001000
+// Signature: undefined ___kmp_acquire_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_acquire_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00001500
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 00001600
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00001700
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_printf_no_lock
+// Entry: 00001900
+// Signature: undefined ___kmp_printf_no_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_printf_no_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_release_ticket_lock
+// Entry: 00001a00
+// Signature: undefined ___kmp_release_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_release_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_vprintf
+// Entry: 00001c00
+// Signature: undefined ___kmp_vprintf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_vprintf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strrchr
+// Entry: 00001d00
+// Signature: char * _strrchr(char * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strrchr(char *param_1,int param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 18
+// Failed: 0
+// Skipped external functions: 0

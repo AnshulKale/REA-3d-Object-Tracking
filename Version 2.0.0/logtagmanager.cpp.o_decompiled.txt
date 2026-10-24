@@ -1,0 +1,5294 @@
+Program: logtagmanager.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: LogTagManager
+// Entry: 00000000
+// Signature: undefined __thiscall LogTagManager(LogTagManager * this, LogLevel param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::LogTagManager(cv::utils::logging::LogLevel) */
+
+LogTagManager * __thiscall
+cv::utils::logging::LogTagManager::LogTagManager(LogTagManager *this,undefined8 param_2)
+
+{
+  ulong uVar1;
+  undefined *puVar2;
+  undefined8 *puVar3;
+  undefined8 uVar4;
+  size_t sVar5;
+  undefined8 ***pppuVar6;
+  undefined8 **local_58;
+  size_t local_50;
+  undefined8 uStack_48;
+  
+  std::recursive_mutex::recursive_mutex((recursive_mutex *)this);
+  puVar3 = operator_new(0x10);
+  *puVar3 = m_globalName;
+  *(int *)(puVar3 + 1) = (int)param_2;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(undefined8 *)(this + 0x48) = 0;
+  *(undefined8 **)(this + 0x40) = puVar3;
+  *(undefined8 *)(this + 0x60) = 0;
+  *(undefined8 *)(this + 0x58) = 0;
+  *(undefined8 *)(this + 0x70) = 0;
+  *(undefined8 *)(this + 0x68) = 0;
+  *(undefined8 *)(this + 0x80) = 0;
+  *(undefined8 *)(this + 0x78) = 0;
+  *(undefined8 *)(this + 0x90) = 0;
+  *(undefined8 *)(this + 0x88) = 0;
+  *(undefined4 *)(this + 0x98) = 0x3f800000;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0xb8) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined4 *)(this + 0xc0) = 0x3f800000;
+  *(undefined8 *)(this + 0xd0) = 0;
+  *(undefined8 *)(this + 200) = 0;
+  *(undefined8 *)(this + 0xe0) = 0;
+  *(undefined8 *)(this + 0xd8) = 0;
+  *(undefined4 *)(this + 0xe8) = 0x3f800000;
+  *(undefined8 *)(this + 0x108) = 0;
+  *(undefined8 *)(this + 0x100) = 0;
+  *(undefined8 *)(this + 0xf8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0x110) = 0x3f800000;
+  puVar3 = operator_new(0xb0);
+  puVar3[1] = 0;
+  puVar3[2] = 0;
+  *puVar3 = &PTR____shared_ptr_emplace_00003f28;
+  uVar4 = cv::utils::logging::LogTagConfigParser::LogTagConfigParser
+                    ((LogTagConfigParser *)(puVar3 + 3),param_2);
+  *(undefined8 *)(this + 0x118) = uVar4;
+  *(undefined8 **)(this + 0x120) = puVar3;
+  puVar2 = m_globalName;
+  sVar5 = _strlen(m_globalName);
+  if (0x7ffffffffffffff7 < sVar5) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar5 < 0x17) {
+    uStack_48 = CONCAT17((char)sVar5,(undefined7)uStack_48);
+    pppuVar6 = &local_58;
+    if (sVar5 == 0) goto LAB_00000118;
+  }
+  else {
+    uVar1 = (sVar5 & 0xfffffffffffffff8) + 8;
+    if ((sVar5 | 7) != 0x17) {
+      uVar1 = sVar5 | 7;
+    }
+    pppuVar6 = operator_new(uVar1 + 1);
+    uStack_48 = uVar1 + 1 | 0x8000000000000000;
+    local_58 = pppuVar6;
+    local_50 = sVar5;
+  }
+  _memmove(pppuVar6,puVar2,sVar5);
+LAB_00000118:
+  *(undefined1 *)((long)pppuVar6 + sVar5) = 0;
+  assign(this,(string *)&local_58,*(LogTag **)(this + 0x40));
+  if ((long)uStack_48 < 0) {
+    operator_delete(local_58);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 000001e0
+// Signature: undefined __thiscall assign(LogTagManager * this, string * param_1, LogTag * param_2)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000002f8) */
+/* cv::utils::logging::LogTagManager::assign(std::string const&, cv::utils::logging::LogTag*) */
+
+void __thiscall
+cv::utils::logging::LogTagManager::assign(LogTagManager *this,string *param_1,LogTag *param_2)
+
+{
+  LogTagManager *this_00;
+  void *local_c0;
+  undefined8 uStack_b8;
+  long local_b0;
+  void *local_a8;
+  void *pvStack_a0;
+  undefined8 local_98;
+  undefined8 uStack_90;
+  void *local_88;
+  void *pvStack_80;
+  undefined8 local_78;
+  undefined8 *puStack_70;
+  undefined1 local_68;
+  void *local_60;
+  void *local_58;
+  undefined8 local_50;
+  Region aRStack_40 [8];
+  int local_38;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_40,
+             (LocationStaticStorage *)
+             &assign(std::string_const&,cv::utils::logging::LogTag*)::__cv_trace_location_fn72);
+  std::recursive_mutex::lock();
+  if ((char)param_1[0x17] < '\0') {
+    std::string::__init_copy_ctor_external
+              ((string *)&local_c0,*(char **)param_1,*(ulong *)(param_1 + 8));
+  }
+  else {
+    uStack_b8 = *(undefined8 *)(param_1 + 8);
+    local_c0 = *(void **)param_1;
+    local_b0 = *(long *)(param_1 + 0x10);
+  }
+  local_60 = (void *)0x0;
+  local_58 = (void *)0x0;
+  local_50 = 0;
+  pvStack_a0 = (void *)0x0;
+  local_a8 = (void *)0x0;
+  uStack_90 = 0;
+  local_98 = 0;
+  pvStack_80 = (void *)0x0;
+  local_88 = (void *)0x0;
+  puStack_70 = (undefined8 *)0x0;
+  local_78 = 0;
+  local_68 = 1;
+  this_00 = (LogTagManager *)
+            NameTable::addOrLookupFullName
+                      ((NameTable *)(this + 0x48),(FullNameLookupResult *)&local_c0);
+  if (((LogTag *)*puStack_70 != param_2) && (*puStack_70 = param_2, param_2 != (LogTag *)0x0)) {
+    if (*(int *)((long)puStack_70 + 0xc) == 1) {
+      *(undefined4 *)(param_2 + 8) = *(undefined4 *)(puStack_70 + 1);
+    }
+    else {
+      internal_applyNamePartConfigToSpecificTag(this_00,(FullNameLookupResult *)&local_c0);
+    }
+  }
+  if (local_60 != (void *)0x0) {
+    local_58 = local_60;
+    operator_delete(local_60);
+  }
+  if (local_88 != (void *)0x0) {
+    pvStack_80 = local_88;
+    operator_delete(local_88);
+  }
+  if (local_a8 != (void *)0x0) {
+    for (; pvStack_a0 != local_a8; pvStack_a0 = (void *)((long)pvStack_a0 + -0x18)) {
+    }
+    pvStack_a0 = local_a8;
+    operator_delete(local_a8);
+  }
+  if (local_b0 < 0) {
+    operator_delete(local_c0);
+    std::recursive_mutex::unlock();
+  }
+  else {
+    std::recursive_mutex::unlock();
+  }
+  if (local_38 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 000003a8
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000434;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000434:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: ~shared_ptr[abi:ne180100]
+// Entry: 00000458
+// Signature: undefined __thiscall ~shared_ptr[abi:ne180100](shared_ptr<cv::utils::logging::LogTagConfigParser> * this)
+// ========================================
+
+
+/* std::shared_ptr<cv::utils::logging::LogTagConfigParser>::~shared_ptr[abi:ne180100]() */
+
+shared_ptr<cv::utils::logging::LogTagConfigParser> * __thiscall
+std::shared_ptr<cv::utils::logging::LogTagConfigParser>::~shared_ptr_abi_ne180100_
+          (shared_ptr<cv::utils::logging::LogTagConfigParser> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: LogTagManager
+// Entry: 000004c0
+// Signature: undefined __thiscall LogTagManager(LogTagManager * this, LogLevel param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::LogTagManager(cv::utils::logging::LogLevel) */
+
+LogTagManager * __thiscall
+cv::utils::logging::LogTagManager::LogTagManager(LogTagManager *this,undefined8 param_2)
+
+{
+  ulong uVar1;
+  undefined *puVar2;
+  undefined8 *puVar3;
+  undefined8 uVar4;
+  size_t sVar5;
+  undefined8 ***pppuVar6;
+  undefined8 **ppuStack_58;
+  size_t sStack_50;
+  undefined8 uStack_48;
+  
+  std::recursive_mutex::recursive_mutex((recursive_mutex *)this);
+  puVar3 = operator_new(0x10);
+  *puVar3 = m_globalName;
+  *(int *)(puVar3 + 1) = (int)param_2;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(undefined8 *)(this + 0x48) = 0;
+  *(undefined8 **)(this + 0x40) = puVar3;
+  *(undefined8 *)(this + 0x60) = 0;
+  *(undefined8 *)(this + 0x58) = 0;
+  *(undefined8 *)(this + 0x70) = 0;
+  *(undefined8 *)(this + 0x68) = 0;
+  *(undefined8 *)(this + 0x80) = 0;
+  *(undefined8 *)(this + 0x78) = 0;
+  *(undefined8 *)(this + 0x90) = 0;
+  *(undefined8 *)(this + 0x88) = 0;
+  *(undefined4 *)(this + 0x98) = 0x3f800000;
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  *(undefined8 *)(this + 0xb8) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined4 *)(this + 0xc0) = 0x3f800000;
+  *(undefined8 *)(this + 0xd0) = 0;
+  *(undefined8 *)(this + 200) = 0;
+  *(undefined8 *)(this + 0xe0) = 0;
+  *(undefined8 *)(this + 0xd8) = 0;
+  *(undefined4 *)(this + 0xe8) = 0x3f800000;
+  *(undefined8 *)(this + 0x108) = 0;
+  *(undefined8 *)(this + 0x100) = 0;
+  *(undefined8 *)(this + 0xf8) = 0;
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined4 *)(this + 0x110) = 0x3f800000;
+  puVar3 = operator_new(0xb0);
+  puVar3[1] = 0;
+  puVar3[2] = 0;
+  *puVar3 = &PTR____shared_ptr_emplace_00003f28;
+  uVar4 = cv::utils::logging::LogTagConfigParser::LogTagConfigParser
+                    ((LogTagConfigParser *)(puVar3 + 3),param_2);
+  *(undefined8 *)(this + 0x118) = uVar4;
+  *(undefined8 **)(this + 0x120) = puVar3;
+  puVar2 = m_globalName;
+  sVar5 = _strlen(m_globalName);
+  if (0x7ffffffffffffff7 < sVar5) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar5 < 0x17) {
+    uStack_48 = CONCAT17((char)sVar5,(undefined7)uStack_48);
+    pppuVar6 = &ppuStack_58;
+    if (sVar5 == 0) goto LAB_00000118;
+  }
+  else {
+    uVar1 = (sVar5 & 0xfffffffffffffff8) + 8;
+    if ((sVar5 | 7) != 0x17) {
+      uVar1 = sVar5 | 7;
+    }
+    pppuVar6 = operator_new(uVar1 + 1);
+    uStack_48 = uVar1 + 1 | 0x8000000000000000;
+    ppuStack_58 = pppuVar6;
+    sStack_50 = sVar5;
+  }
+  _memmove(pppuVar6,puVar2,sVar5);
+LAB_00000118:
+  *(undefined1 *)((long)pppuVar6 + sVar5) = 0;
+  assign(this,(string *)&ppuStack_58,*(LogTag **)(this + 0x40));
+  if ((long)uStack_48 < 0) {
+    operator_delete(ppuStack_58);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~LogTagManager
+// Entry: 000004c4
+// Signature: undefined __thiscall ~LogTagManager(LogTagManager * this)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::~LogTagManager() */
+
+void __thiscall cv::utils::logging::LogTagManager::~LogTagManager(LogTagManager *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  long lVar5;
+  long *plVar6;
+  
+  plVar6 = *(long **)(this + 0x120);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+      NameTable::~NameTable((NameTable *)(this + 0x48));
+      pvVar4 = *(void **)(this + 0x40);
+      *(undefined8 *)(this + 0x40) = 0;
+      goto joined_r0x00000504;
+    }
+  }
+  NameTable::~NameTable((NameTable *)(this + 0x48));
+  pvVar4 = *(void **)(this + 0x40);
+  *(undefined8 *)(this + 0x40) = 0;
+joined_r0x00000504:
+  if (pvVar4 != (void *)0x0) {
+    operator_delete(pvVar4);
+  }
+  std::recursive_mutex::~recursive_mutex((recursive_mutex *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~LogTagManager
+// Entry: 0000054c
+// Signature: undefined __thiscall ~LogTagManager(LogTagManager * this)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::~LogTagManager() */
+
+void __thiscall cv::utils::logging::LogTagManager::~LogTagManager(LogTagManager *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  long lVar5;
+  long *plVar6;
+  
+  plVar6 = *(long **)(this + 0x120);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+      NameTable::~NameTable((NameTable *)(this + 0x48));
+      pvVar4 = *(void **)(this + 0x40);
+      *(undefined8 *)(this + 0x40) = 0;
+      goto joined_r0x0000058c;
+    }
+  }
+  NameTable::~NameTable((NameTable *)(this + 0x48));
+  pvVar4 = *(void **)(this + 0x40);
+  *(undefined8 *)(this + 0x40) = 0;
+joined_r0x0000058c:
+  if (pvVar4 != (void *)0x0) {
+    operator_delete(pvVar4);
+  }
+  std::recursive_mutex::~recursive_mutex((recursive_mutex *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: setConfigString
+// Entry: 000005d4
+// Signature: undefined __thiscall setConfigString(LogTagManager * this, string * param_1, bool param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::setConfigString(std::string const&, bool) */
+
+void __thiscall
+cv::utils::logging::LogTagManager::setConfigString(LogTagManager *this,string *param_1,bool param_2)
+
+{
+  long lVar1;
+  ulong uVar2;
+  long lVar3;
+  long *plVar4;
+  
+  cv::utils::logging::LogTagConfigParser::parse(*(string **)(this + 0x118));
+  uVar2 = cv::utils::logging::LogTagConfigParser::hasMalformed();
+  if (((uVar2 & 1) == 0) && (param_2)) {
+    lVar3 = cv::utils::logging::LogTagConfigParser::getGlobalConfig();
+    *(undefined4 *)(*(long *)(this + 0x40) + 8) = *(undefined4 *)(lVar3 + 0x18);
+    plVar4 = (long *)cv::utils::logging::LogTagConfigParser::getFirstPartConfigs();
+    lVar1 = plVar4[1];
+    for (lVar3 = *plVar4; lVar3 != lVar1; lVar3 = lVar3 + 0x20) {
+      setLevelByNamePart(this,lVar3,*(undefined4 *)(lVar3 + 0x18),2);
+    }
+    plVar4 = (long *)cv::utils::logging::LogTagConfigParser::getAnyPartConfigs();
+    lVar1 = plVar4[1];
+    for (lVar3 = *plVar4; lVar3 != lVar1; lVar3 = lVar3 + 0x20) {
+      setLevelByNamePart(this,lVar3,*(undefined4 *)(lVar3 + 0x18),3);
+    }
+    plVar4 = (long *)cv::utils::logging::LogTagConfigParser::getFullNameConfigs();
+    lVar1 = plVar4[1];
+    for (lVar3 = *plVar4; lVar3 != lVar1; lVar3 = lVar3 + 0x20) {
+      setLevelByFullName(this,lVar3,*(undefined4 *)(lVar3 + 0x18));
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: setLevelByFirstPart
+// Entry: 000006c0
+// Signature: undefined __cdecl setLevelByFirstPart(string * param_1, LogLevel param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::setLevelByFirstPart(std::string const&,
+   cv::utils::logging::LogLevel) */
+
+void cv::utils::logging::LogTagManager::setLevelByFirstPart(void)
+
+{
+  setLevelByNamePart();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: setLevelByAnyPart
+// Entry: 000006c8
+// Signature: undefined __cdecl setLevelByAnyPart(string * param_1, LogLevel param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::setLevelByAnyPart(std::string const&,
+   cv::utils::logging::LogLevel) */
+
+void cv::utils::logging::LogTagManager::setLevelByAnyPart(void)
+
+{
+  setLevelByNamePart();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: setLevelByFullName
+// Entry: 000006d0
+// Signature: undefined __thiscall setLevelByFullName(LogTagManager * this, string * param_1, LogLevel param_2)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000007dc) */
+/* cv::utils::logging::LogTagManager::setLevelByFullName(std::string const&,
+   cv::utils::logging::LogLevel) */
+
+void __thiscall
+cv::utils::logging::LogTagManager::setLevelByFullName
+          (LogTagManager *this,undefined8 *param_1,int param_3)
+
+{
+  void *local_c0;
+  undefined8 uStack_b8;
+  long local_b0;
+  void *local_a8;
+  void *pvStack_a0;
+  undefined8 local_98;
+  undefined8 uStack_90;
+  void *local_88;
+  void *pvStack_80;
+  undefined8 local_78;
+  long *plStack_70;
+  undefined1 local_68;
+  void *local_60;
+  void *local_58;
+  undefined8 local_50;
+  Region aRStack_40 [8];
+  int local_38;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_40,
+             (LocationStaticStorage *)
+             &setLevelByFullName(std::string_const&,cv::utils::logging::LogLevel)::
+              __cv_trace_location_fn116);
+  std::recursive_mutex::lock();
+  if (*(char *)((long)param_1 + 0x17) < '\0') {
+    std::string::__init_copy_ctor_external((string *)&local_c0,(char *)*param_1,param_1[1]);
+  }
+  else {
+    uStack_b8 = param_1[1];
+    local_c0 = (void *)*param_1;
+    local_b0 = param_1[2];
+  }
+  local_60 = (void *)0x0;
+  local_58 = (void *)0x0;
+  local_50 = 0;
+  pvStack_a0 = (void *)0x0;
+  local_a8 = (void *)0x0;
+  uStack_90 = 0;
+  local_98 = 0;
+  pvStack_80 = (void *)0x0;
+  local_88 = (void *)0x0;
+  plStack_70 = (long *)0x0;
+  local_78 = 0;
+  local_68 = 0;
+  NameTable::addOrLookupFullName((NameTable *)(this + 0x48),(FullNameLookupResult *)&local_c0);
+  if ((*(int *)((long)plStack_70 + 0xc) != 1) || ((int)plStack_70[1] != param_3)) {
+    *(int *)(plStack_70 + 1) = param_3;
+    *(undefined4 *)((long)plStack_70 + 0xc) = 1;
+    if (*plStack_70 != 0) {
+      *(int *)(*plStack_70 + 8) = param_3;
+    }
+  }
+  if (local_60 != (void *)0x0) {
+    local_58 = local_60;
+    operator_delete(local_60);
+  }
+  if (local_88 != (void *)0x0) {
+    pvStack_80 = local_88;
+    operator_delete(local_88);
+  }
+  if (local_a8 != (void *)0x0) {
+    for (; pvStack_a0 != local_a8; pvStack_a0 = (void *)((long)pvStack_a0 + -0x18)) {
+    }
+    pvStack_a0 = local_a8;
+    operator_delete(local_a8);
+  }
+  if (local_b0 < 0) {
+    operator_delete(local_c0);
+    std::recursive_mutex::unlock();
+  }
+  else {
+    std::recursive_mutex::unlock();
+  }
+  if (local_38 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getConfigParser
+// Entry: 00000888
+// Signature: undefined __thiscall getConfigParser(LogTagManager * this)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::getConfigParser() const */
+
+undefined8 __thiscall cv::utils::logging::LogTagManager::getConfigParser(LogTagManager *this)
+
+{
+  return *(undefined8 *)(this + 0x118);
+}
+
+
+
+
+// ========================================
+// Function: addOrLookupFullName
+// Entry: 00000890
+// Signature: undefined __thiscall addOrLookupFullName(NameTable * this, FullNameLookupResult * param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000008fc) */
+/* cv::utils::logging::LogTagManager::NameTable::addOrLookupFullName(cv::utils::logging::LogTagManager::FullNameLookupResult&)
+    */
+
+void __thiscall
+cv::utils::logging::LogTagManager::NameTable::addOrLookupFullName
+          (NameTable *this,FullNameLookupResult *param_1)
+
+{
+  void *pvVar1;
+  vector *pvVar2;
+  void *pvVar3;
+  void *pvVar4;
+  undefined1 auVar5 [16];
+  undefined8 local_60;
+  undefined8 uStack_58;
+  undefined8 local_50;
+  
+  auVar5 = internal_addOrLookupFullName(this,(string *)param_1);
+  *(long *)(param_1 + 0x30) = auVar5._0_8_;
+  splitNameParts((LogTagManager *)param_1,auVar5._8_8_);
+  pvVar2 = (vector *)(param_1 + 0x18);
+  pvVar3 = *(void **)pvVar2;
+  if (pvVar3 != (void *)0x0) {
+    pvVar4 = *(void **)(param_1 + 0x20);
+    pvVar1 = pvVar3;
+    if (pvVar4 != pvVar3) {
+      do {
+        pvVar4 = (void *)((long)pvVar4 + -0x18);
+      } while (pvVar4 != pvVar3);
+      pvVar1 = *(void **)pvVar2;
+    }
+    *(void **)(param_1 + 0x20) = pvVar3;
+    operator_delete(pvVar1);
+  }
+  *(undefined8 *)(param_1 + 0x20) = uStack_58;
+  *(undefined8 *)(param_1 + 0x18) = local_60;
+  *(undefined8 *)(param_1 + 0x28) = local_50;
+  internal_addOrLookupNameParts(this,pvVar2,(vector *)(param_1 + 0x38));
+  if (((ulong)auVar5._8_8_ & 1) != 0) {
+    internal_addCrossReference(this,*(ulong *)(param_1 + 0x30),(vector *)(param_1 + 0x38));
+  }
+  if (*(ulong *)(param_1 + 0x30) < (ulong)(*(long *)(this + 8) - *(long *)this >> 4)) {
+    *(ulong *)(param_1 + 0x50) = *(long *)this + *(ulong *)(param_1 + 0x30) * 0x10;
+    if (param_1[0x58] != (FullNameLookupResult)0x0) {
+      internal_findMatchingNamePartsForFullName(this,param_1);
+    }
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  std::
+  vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+  ::__throw_out_of_range_abi_ne180100_();
+}
+
+
+
+
+// ========================================
+// Function: internal_applyFullNameConfigToTag
+// Entry: 0000099c
+// Signature: undefined __thiscall internal_applyFullNameConfigToTag(LogTagManager * this, FullNameInfo * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::internal_applyFullNameConfigToTag(cv::utils::logging::LogTagManager::FullNameInfo&)
+    */
+
+bool __thiscall
+cv::utils::logging::LogTagManager::internal_applyFullNameConfigToTag
+          (LogTagManager *this,FullNameInfo *param_1)
+
+{
+  int iVar1;
+  long lVar2;
+  
+  lVar2 = *(long *)param_1;
+  iVar1 = *(int *)(param_1 + 0xc);
+  if (lVar2 != 0 && iVar1 == 1) {
+    *(undefined4 *)(lVar2 + 8) = *(undefined4 *)(param_1 + 8);
+  }
+  return lVar2 != 0 && iVar1 == 1;
+}
+
+
+
+
+// ========================================
+// Function: internal_applyNamePartConfigToSpecificTag
+// Entry: 000009c0
+// Signature: undefined __thiscall internal_applyNamePartConfigToSpecificTag(LogTagManager * this, FullNameLookupResult * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::internal_applyNamePartConfigToSpecificTag(cv::utils::logging::LogTagManager::FullNameLookupResult&)
+    */
+
+undefined8 __thiscall
+cv::utils::logging::LogTagManager::internal_applyNamePartConfigToSpecificTag
+          (LogTagManager *this,FullNameLookupResult *param_1)
+
+{
+  int iVar1;
+  long lVar2;
+  code *pcVar3;
+  ulong uVar4;
+  undefined8 *puVar5;
+  string asStack_38 [24];
+  
+  if (**(long **)(param_1 + 0x50) != 0) {
+    if (param_1[0x58] == (FullNameLookupResult)0x0) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_38,"fullNameResult.m_findCrossReferences");
+      cv::error(-0xd7,asStack_38,"internal_applyNamePartConfigToSpecificTag",
+                "M3T/third_party/opencv-src/modules/core/src/utils/logtagmanager.cpp",0xe5);
+                    /* WARNING: Does not return */
+      pcVar3 = (code *)SoftwareBreakpoint(1,0xaa4);
+      (*pcVar3)();
+    }
+    lVar2 = *(long *)(param_1 + 0x68) - *(long *)(param_1 + 0x60);
+    if (lVar2 != 0) {
+      uVar4 = lVar2 / 0x28;
+      if (uVar4 < 2) {
+        uVar4 = 1;
+      }
+      puVar5 = (undefined8 *)(*(long *)(param_1 + 0x60) + 0x20);
+      do {
+        iVar1 = ((undefined4 *)*puVar5)[1];
+        if (iVar1 == 2) {
+          if (puVar5[-2] == 0) goto LAB_00000a40;
+        }
+        else if (iVar1 == 3) {
+LAB_00000a40:
+          *(undefined4 *)(**(long **)(param_1 + 0x50) + 8) = *(undefined4 *)*puVar5;
+          return 1;
+        }
+        puVar5 = puVar5 + 5;
+        uVar4 = uVar4 - 1;
+      } while (uVar4 != 0);
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: ~FullNameLookupResult
+// Entry: 00000ac0
+// Signature: undefined __thiscall ~FullNameLookupResult(FullNameLookupResult * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00000b24) */
+/* cv::utils::logging::LogTagManager::FullNameLookupResult::~FullNameLookupResult() */
+
+FullNameLookupResult * __thiscall
+cv::utils::logging::LogTagManager::FullNameLookupResult::~FullNameLookupResult
+          (FullNameLookupResult *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar1 = *(void **)(this + 0x60);
+  if (pvVar1 != (void *)0x0) {
+    *(void **)(this + 0x68) = pvVar1;
+    operator_delete(pvVar1);
+  }
+  pvVar1 = *(void **)(this + 0x38);
+  if (pvVar1 != (void *)0x0) {
+    *(void **)(this + 0x40) = pvVar1;
+    operator_delete(pvVar1);
+  }
+  pvVar1 = *(void **)(this + 0x18);
+  if (pvVar1 != (void *)0x0) {
+    pvVar3 = *(void **)(this + 0x20);
+    pvVar2 = pvVar1;
+    if (pvVar3 != pvVar1) {
+      do {
+        pvVar3 = (void *)((long)pvVar3 + -0x18);
+      } while (pvVar3 != pvVar1);
+      pvVar2 = *(void **)(this + 0x18);
+    }
+    *(void **)(this + 0x20) = pvVar1;
+    operator_delete(pvVar2);
+  }
+  if (-1 < (char)this[0x17]) {
+    return this;
+  }
+  operator_delete(*(void **)this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00000b74
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: unassign
+// Entry: 00000ba8
+// Signature: undefined __thiscall unassign(LogTagManager * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::unassign(std::string const&) */
+
+void __thiscall cv::utils::logging::LogTagManager::unassign(LogTagManager *this,string *param_1)
+
+{
+  assign(this,param_1,(LogTag *)0x0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get
+// Entry: 00000bb0
+// Signature: undefined __thiscall get(LogTagManager * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::get(std::string const&) */
+
+long __thiscall cv::utils::logging::LogTagManager::get(LogTagManager *this,string *param_1)
+
+{
+  long lVar1;
+  long lVar2;
+  Region aRStack_30 [8];
+  int local_28;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_30,(LocationStaticStorage *)&get(std::string_const&)::__cv_trace_location_fn104
+            );
+  std::recursive_mutex::lock();
+  lVar2 = std::
+          __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+          ::find<std::string>((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                               *)(this + 0x78),param_1);
+  if (lVar2 != 0) {
+    lVar1 = *(long *)(this + 0x48);
+    if ((ulong)(*(long *)(this + 0x50) - lVar1 >> 4) <= *(ulong *)(lVar2 + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+      std::
+      vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+      ::__throw_out_of_range_abi_ne180100_();
+    }
+    if ((lVar1 != 0) && (lVar2 = *(long *)(lVar1 + *(ulong *)(lVar2 + 0x28) * 0x10), lVar2 != 0)) {
+      std::recursive_mutex::unlock();
+      goto joined_r0x00000c38;
+    }
+  }
+  lVar2 = 0;
+  std::recursive_mutex::unlock();
+joined_r0x00000c38:
+  if (local_28 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return lVar2;
+}
+
+
+
+
+// ========================================
+// Function: getFullNameInfo
+// Entry: 00000c98
+// Signature: undefined __thiscall getFullNameInfo(NameTable * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::getFullNameInfo(std::string const&) */
+
+long __thiscall
+cv::utils::logging::LogTagManager::NameTable::getFullNameInfo(NameTable *this,string *param_1)
+
+{
+  long lVar1;
+  long lVar2;
+  
+  lVar1 = std::
+          __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+          ::find<std::string>((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                               *)(this + 0x30),param_1);
+  lVar2 = 0;
+  if (lVar1 != 0) {
+    if ((ulong)(*(long *)(this + 8) - *(long *)this >> 4) <= *(ulong *)(lVar1 + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+      std::
+      vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+      ::__throw_out_of_range_abi_ne180100_();
+    }
+    lVar2 = *(long *)this + *(ulong *)(lVar1 + 0x28) * 0x10;
+  }
+  return lVar2;
+}
+
+
+
+
+// ========================================
+// Function: setLevelByNamePart
+// Entry: 00000ce0
+// Signature: undefined __thiscall setLevelByNamePart(LogTagManager * this, string * param_1, LogLevel param_2, MatchingScope param_3)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::setLevelByNamePart(std::string const&,
+   cv::utils::logging::LogLevel, cv::utils::logging::LogTagManager::MatchingScope) */
+
+void __thiscall
+cv::utils::logging::LogTagManager::setLevelByNamePart
+          (LogTagManager *this,undefined8 *param_1,int param_3,int param_4)
+
+{
+  LogTagManager *this_00;
+  void *local_90;
+  undefined8 uStack_88;
+  long local_80;
+  LogTagManager *local_78;
+  int *local_70;
+  char local_68;
+  void *local_60;
+  void *local_58;
+  undefined8 local_50;
+  Region aRStack_40 [8];
+  int local_38;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_40,
+             (LocationStaticStorage *)
+             &setLevelByNamePart(std::string_const&,cv::utils::logging::LogLevel,cv::utils::logging::LogTagManager::MatchingScope)
+              ::__cv_trace_location_fn153);
+  std::recursive_mutex::lock();
+  if (*(char *)((long)param_1 + 0x17) < '\0') {
+    std::string::__init_copy_ctor_external((string *)&local_90,(char *)*param_1,param_1[1]);
+  }
+  else {
+    uStack_88 = param_1[1];
+    local_90 = (void *)*param_1;
+    local_80 = param_1[2];
+  }
+  local_60 = (void *)0x0;
+  local_58 = (void *)0x0;
+  local_50 = 0;
+  local_78 = (LogTagManager *)0x0;
+  local_70 = (int *)0x0;
+  local_68 = '\x01';
+  this_00 = (LogTagManager *)
+            NameTable::internal_addOrLookupNamePart((NameTable *)(this + 0x48),(string *)&local_90);
+  local_78 = this_00;
+  if (this_00 < (LogTagManager *)(*(long *)(this + 0x68) - *(long *)(this + 0x60) >> 3)) {
+    local_70 = (int *)(*(long *)(this + 0x60) + (long)this_00 * 8);
+    if (local_68 != '\0') {
+      this_00 = (LogTagManager *)
+                NameTable::internal_findMatchingFullNamesForNamePart
+                          ((NameTable *)(this + 0x48),(NamePartLookupResult *)&local_90);
+    }
+    if ((local_70[1] != param_4) || (*local_70 != param_3)) {
+      *local_70 = param_3;
+      local_70[1] = param_4;
+      internal_applyNamePartConfigToMatchingTags(this_00,(NamePartLookupResult *)&local_90);
+    }
+    if (local_60 != (void *)0x0) {
+      local_58 = local_60;
+      operator_delete(local_60);
+    }
+    if (local_80 < 0) {
+      operator_delete(local_90);
+      std::recursive_mutex::unlock();
+    }
+    else {
+      std::recursive_mutex::unlock();
+    }
+    if (local_38 != 0) {
+      cv::utils::trace::details::Region::destroy();
+    }
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  std::
+  vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+  ::__throw_out_of_range_abi_ne180100_();
+}
+
+
+
+
+// ========================================
+// Function: addOrLookupNamePart
+// Entry: 00000e8c
+// Signature: undefined __thiscall addOrLookupNamePart(NameTable * this, NamePartLookupResult * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::addOrLookupNamePart(cv::utils::logging::LogTagManager::NamePartLookupResult&)
+    */
+
+void __thiscall
+cv::utils::logging::LogTagManager::NameTable::addOrLookupNamePart
+          (NameTable *this,NamePartLookupResult *param_1)
+
+{
+  ulong uVar1;
+  
+  uVar1 = internal_addOrLookupNamePart(this,(string *)param_1);
+  *(ulong *)(param_1 + 0x18) = uVar1;
+  if ((ulong)(*(long *)(this + 0x20) - *(long *)(this + 0x18) >> 3) <= uVar1) {
+                    /* WARNING: Subroutine does not return */
+    std::
+    vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+    ::__throw_out_of_range_abi_ne180100_();
+  }
+  *(ulong *)(param_1 + 0x20) = *(long *)(this + 0x18) + uVar1 * 8;
+  if (param_1[0x28] != (NamePartLookupResult)0x0) {
+    internal_findMatchingFullNamesForNamePart(this,param_1);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: internal_applyNamePartConfigToMatchingTags
+// Entry: 00000ef4
+// Signature: undefined __thiscall internal_applyNamePartConfigToMatchingTags(LogTagManager * this, NamePartLookupResult * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::internal_applyNamePartConfigToMatchingTags(cv::utils::logging::LogTagManager::NamePartLookupResult&)
+    */
+
+void __thiscall
+cv::utils::logging::LogTagManager::internal_applyNamePartConfigToMatchingTags
+          (LogTagManager *this,NamePartLookupResult *param_1)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  code *pcVar3;
+  ulong uVar4;
+  undefined8 *puVar5;
+  long lVar6;
+  string asStack_38 [24];
+  
+  if (param_1[0x28] == (NamePartLookupResult)0x0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_38,"namePartResult.m_findCrossReferences");
+    cv::error(-0xd7,asStack_38,"internal_applyNamePartConfigToMatchingTags",
+              "M3T/third_party/opencv-src/modules/core/src/utils/logtagmanager.cpp",0xfc);
+LAB_0000104c:
+                    /* WARNING: Does not return */
+    pcVar3 = (code *)SoftwareBreakpoint(1,0x1050);
+    (*pcVar3)();
+  }
+  iVar1 = (*(undefined4 **)(param_1 + 0x20))[1];
+  if (iVar1 != 0) {
+    if (iVar1 == 1) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_38,"scope != MatchingScope::Full");
+      cv::error(-0xd7,asStack_38,"internal_applyNamePartConfigToMatchingTags",
+                "M3T/third_party/opencv-src/modules/core/src/utils/logtagmanager.cpp",0x101);
+      goto LAB_0000104c;
+    }
+    lVar6 = *(long *)(param_1 + 0x30);
+    if (*(long *)(param_1 + 0x38) != lVar6) {
+      uVar4 = (*(long *)(param_1 + 0x38) - lVar6) / 0x28;
+      uVar2 = **(undefined4 **)(param_1 + 0x20);
+      if (iVar1 == 2) {
+        if (uVar4 < 2) {
+          uVar4 = 1;
+        }
+        puVar5 = (undefined8 *)(lVar6 + 0x18);
+        do {
+          lVar6 = *(long *)*puVar5;
+          if (((lVar6 != 0) && (*(int *)((long)*puVar5 + 0xc) != 1)) && (puVar5[-1] == 0)) {
+            *(undefined4 *)(lVar6 + 8) = uVar2;
+          }
+          puVar5 = puVar5 + 5;
+          uVar4 = uVar4 - 1;
+        } while (uVar4 != 0);
+      }
+      else if (iVar1 == 3) {
+        if (uVar4 < 2) {
+          uVar4 = 1;
+        }
+        puVar5 = (undefined8 *)(lVar6 + 0x18);
+        do {
+          lVar6 = *(long *)*puVar5;
+          if ((lVar6 != 0) && (*(int *)((long)*puVar5 + 0xc) != 1)) {
+            *(undefined4 *)(lVar6 + 8) = uVar2;
+          }
+          puVar5 = puVar5 + 5;
+          uVar4 = uVar4 - 1;
+        } while (uVar4 != 0);
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~NamePartLookupResult
+// Entry: 00001070
+// Signature: undefined __thiscall ~NamePartLookupResult(NamePartLookupResult * this)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NamePartLookupResult::~NamePartLookupResult() */
+
+NamePartLookupResult * __thiscall
+cv::utils::logging::LogTagManager::NamePartLookupResult::~NamePartLookupResult
+          (NamePartLookupResult *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = *(void **)(this + 0x30);
+  if (pvVar1 != (void *)0x0) {
+    *(void **)(this + 0x38) = pvVar1;
+    operator_delete(pvVar1);
+  }
+  if (-1 < (char)this[0x17]) {
+    return this;
+  }
+  operator_delete(*(void **)this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: splitNameParts
+// Entry: 000010c0
+// Signature: undefined __thiscall splitNameParts(LogTagManager * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::splitNameParts(std::string const&) */
+
+void __thiscall
+cv::utils::logging::LogTagManager::splitNameParts(LogTagManager *this,string *param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  LogTagManager LVar3;
+  LogTagManager *pLVar4;
+  code *pcVar5;
+  ulong uVar6;
+  undefined8 ****ppppuVar7;
+  string *psVar8;
+  vector<std::string,std::allocator<std::string>> *in_x8;
+  undefined8 *puVar9;
+  ulong uVar10;
+  ulong uVar11;
+  undefined8 ***local_78;
+  ulong uStack_70;
+  undefined8 local_68;
+  
+  uVar1 = *(ulong *)(this + 8);
+  if (-1 < (char)this[0x17]) {
+    uVar1 = (ulong)(byte)this[0x17];
+  }
+  *(undefined8 *)(in_x8 + 8) = 0;
+  *(undefined8 *)(in_x8 + 0x10) = 0;
+  *(undefined8 *)in_x8 = 0;
+  if (uVar1 != 0) {
+    uVar11 = 0;
+    do {
+      uVar6 = std::string::find((char)this,0x2e);
+      uVar2 = uVar1;
+      if (uVar6 != 0xffffffffffffffff) {
+        uVar2 = uVar6;
+      }
+      uVar6 = uVar2 - uVar11;
+      if (uVar11 <= uVar2 && uVar6 != 0) {
+        LVar3 = this[0x17];
+        if ((char)LVar3 < '\0') {
+          if (*(ulong *)(this + 8) < uVar11) goto LAB_00001264;
+          uVar10 = *(ulong *)(this + 8) - uVar11;
+          pLVar4 = *(LogTagManager **)this;
+          if (uVar6 <= uVar10) {
+            uVar10 = uVar6;
+          }
+        }
+        else {
+          if ((byte)LVar3 < uVar11) {
+LAB_00001264:
+            std::string::__throw_out_of_range_abi_ne180100_();
+                    /* WARNING: Does not return */
+            pcVar5 = (code *)SoftwareBreakpoint(1,0x127c);
+            (*pcVar5)();
+          }
+          uVar10 = (byte)LVar3 - uVar11;
+          pLVar4 = this;
+          if (uVar6 <= uVar10) {
+            uVar10 = uVar6;
+          }
+        }
+        if (0x7ffffffffffffff7 < uVar10) {
+                    /* WARNING: Subroutine does not return */
+          std::string::__throw_length_error_abi_ne180100_();
+        }
+        if (uVar10 < 0x17) {
+          local_68 = CONCAT17((char)uVar10,(undefined7)local_68);
+          ppppuVar7 = &local_78;
+          if (uVar10 != 0) goto LAB_00001200;
+                    /* WARNING: Ignoring partial resolution of indirect */
+          local_78._0_1_ = (string)0x0;
+          puVar9 = *(undefined8 **)(in_x8 + 8);
+          if (puVar9 < *(undefined8 **)(in_x8 + 0x10)) goto LAB_00001114;
+        }
+        else {
+          uVar6 = (uVar10 & 0xfffffffffffffff8) + 8;
+          if ((uVar10 | 7) != 0x17) {
+            uVar6 = uVar10 | 7;
+          }
+          ppppuVar7 = operator_new(uVar6 + 1);
+          local_68 = uVar6 + 1 | 0x8000000000000000;
+          local_78 = ppppuVar7;
+          uStack_70 = uVar10;
+LAB_00001200:
+          _memmove(ppppuVar7,pLVar4 + uVar11,uVar10);
+          *(undefined1 *)((long)ppppuVar7 + uVar10) = 0;
+          puVar9 = *(undefined8 **)(in_x8 + 8);
+          if (puVar9 < *(undefined8 **)(in_x8 + 0x10)) {
+LAB_00001114:
+            puVar9[2] = local_68;
+            puVar9[1] = uStack_70;
+            *puVar9 = local_78;
+            *(undefined8 **)(in_x8 + 8) = puVar9 + 3;
+            goto LAB_00001128;
+          }
+        }
+        psVar8 = std::vector<std::string,std::allocator<std::string>>::
+                 __emplace_back_slow_path<std::string>(in_x8,(string *)&local_78);
+        *(string **)(in_x8 + 8) = psVar8;
+        if ((long)local_68 < 0) {
+          operator_delete(local_78);
+        }
+      }
+LAB_00001128:
+      uVar11 = uVar2 + 1;
+    } while (uVar11 < uVar1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 000012c8
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<std::string,std::allocator<std::string>> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x0000130c) */
+/* std::vector<std::string, std::allocator<std::string > >::~vector[abi:ne180100]() */
+
+vector<std::string,std::allocator<std::string>> * __thiscall
+std::vector<std::string,std::allocator<std::string>>::~vector_abi_ne180100_
+          (vector<std::string,std::allocator<std::string>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar2 = *(void **)this;
+  if (pvVar2 != (void *)0x0) {
+    pvVar3 = *(void **)(this + 8);
+    pvVar1 = pvVar2;
+    if (pvVar3 != pvVar2) {
+      do {
+        pvVar3 = (void *)((long)pvVar3 + -0x18);
+      } while (pvVar3 != pvVar2);
+      pvVar1 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar2;
+    operator_delete(pvVar1);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: internal_isNamePartMatch
+// Entry: 00001338
+// Signature: undefined __cdecl internal_isNamePartMatch(MatchingScope param_1, ulong param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::internal_isNamePartMatch(cv::utils::logging::LogTagManager::MatchingScope,
+   unsigned long) */
+
+bool cv::utils::logging::LogTagManager::internal_isNamePartMatch(int param_1,long param_2)
+
+{
+  return param_1 == 3 || param_1 == 2 && param_2 == 0;
+}
+
+
+
+
+// ========================================
+// Function: internal_addOrLookupFullName
+// Entry: 00001358
+// Signature: undefined __thiscall internal_addOrLookupFullName(NameTable * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupFullName(std::string const&) */
+
+undefined1  [16] __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupFullName
+          (NameTable *this,string *param_1)
+
+{
+  ulong uVar1;
+  undefined8 *puVar2;
+  undefined8 *puVar3;
+  long lVar4;
+  void *pvVar5;
+  undefined8 uVar6;
+  ulong uVar7;
+  undefined8 *puVar8;
+  ulong uVar9;
+  undefined8 *puVar10;
+  ulong uVar11;
+  undefined8 *puVar12;
+  undefined1 auVar13 [16];
+  ulong local_58;
+  
+  lVar4 = std::
+          __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+          ::find<std::string>((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                               *)(this + 0x30),param_1);
+  if (lVar4 == 0) {
+    puVar2 = *(undefined8 **)this;
+    puVar10 = *(undefined8 **)(this + 8);
+    uVar11 = (long)puVar10 - (long)puVar2 >> 4;
+    local_58 = uVar11;
+    if (puVar10 < *(undefined8 **)(this + 0x10)) {
+      puVar12 = puVar10 + 2;
+      *puVar10 = 0;
+      puVar10[1] = 0;
+    }
+    else {
+      uVar1 = uVar11 + 1;
+      if (uVar1 >> 0x3c != 0) {
+        std::
+        vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+        ::__throw_length_error_abi_ne180100_();
+LAB_000014b0:
+                    /* WARNING: Subroutine does not return */
+        std::__throw_bad_array_new_length_abi_ne180100_();
+      }
+      uVar7 = (long)*(undefined8 **)(this + 0x10) - (long)puVar2;
+      uVar9 = (long)uVar7 >> 3;
+      if (uVar9 <= uVar1) {
+        uVar9 = uVar1;
+      }
+      if (0x7fffffffffffffef < uVar7) {
+        uVar9 = 0xfffffffffffffff;
+      }
+      if (uVar9 == 0) {
+        puVar8 = (undefined8 *)(uVar11 * 0x10);
+        pvVar5 = (void *)0x0;
+        *puVar8 = 0;
+        puVar8[1] = 0;
+      }
+      else {
+        if (uVar9 >> 0x3c != 0) goto LAB_000014b0;
+        pvVar5 = operator_new(uVar9 << 4);
+        puVar8 = (undefined8 *)((long)pvVar5 + uVar11 * 0x10);
+        pvVar5 = (void *)((long)pvVar5 + uVar9 * 0x10);
+        *puVar8 = 0;
+        puVar8[1] = 0;
+      }
+      puVar12 = puVar8 + 2;
+      if (puVar10 != puVar2) {
+        do {
+          puVar3 = puVar10 + -1;
+          uVar6 = puVar10[-2];
+          puVar10 = puVar10 + -2;
+          puVar8[-1] = *puVar3;
+          puVar8[-2] = uVar6;
+          puVar8 = puVar8 + -2;
+        } while (puVar10 != puVar2);
+        puVar10 = *(undefined8 **)this;
+      }
+      *(undefined8 **)this = puVar8;
+      *(undefined8 **)(this + 8) = puVar12;
+      *(void **)(this + 0x10) = pvVar5;
+      if (puVar10 != (undefined8 *)0x0) {
+        operator_delete(puVar10);
+      }
+    }
+    *(undefined8 **)(this + 8) = puVar12;
+    std::
+    __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+    ::__emplace_unique_key_args<std::string,std::string_const&,unsigned_long_const&>
+              ((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                *)(this + 0x30),param_1,param_1,&local_58);
+    uVar6 = 1;
+  }
+  else {
+    uVar6 = 0;
+    local_58 = *(ulong *)(lVar4 + 0x28);
+  }
+  auVar13._8_8_ = uVar6;
+  auVar13._0_8_ = local_58;
+  return auVar13;
+}
+
+
+
+
+// ========================================
+// Function: internal_addOrLookupNameParts
+// Entry: 000014b4
+// Signature: undefined __thiscall internal_addOrLookupNameParts(NameTable * this, vector * param_1, vector * param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupNameParts(std::vector<std::string,
+   std::allocator<std::string > > const&, std::vector<unsigned long, std::allocator<unsigned long>
+   >&) */
+
+NameTable * __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupNameParts
+          (NameTable *this,vector *param_1,vector *param_2)
+
+{
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *this_00;
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *this_01;
+  long lVar1;
+  NameTable *pNVar2;
+  _Unwind_Exception *exception_object;
+  _Unwind_Exception *exception_object_00;
+  long *extraout_x0;
+  undefined8 uVar3;
+  ulong extraout_x1;
+  vector *pvVar4;
+  long lVar5;
+  ulong uVar6;
+  __hash_node *p_Var7;
+  __hash_node *p_Var8;
+  long lVar9;
+  code *pcVar10;
+  ulong uVar11;
+  undefined8 uVar12;
+  undefined1 auVar13 [16];
+  undefined8 local_58;
+  
+  lVar9 = *(long *)param_1;
+  lVar1 = *(long *)(param_1 + 8);
+  lVar5 = lVar1 - lVar9 >> 3;
+  pcVar10 = (code *)(lVar5 * -0x5555555555555555);
+  local_58 = 0xffffffffffffffff;
+  p_Var7 = (__hash_node *)(*(long *)(param_2 + 8) - *(long *)param_2 >> 3);
+  if (pcVar10 < p_Var7 || (long)pcVar10 - (long)p_Var7 == 0) {
+    pNVar2 = this;
+    pvVar4 = param_2;
+    if (pcVar10 < p_Var7) {
+      *(long *)(param_2 + 8) = *(long *)param_2 + lVar5 * 0x5555555555555558;
+    }
+  }
+  else {
+    pvVar4 = (vector *)&local_58;
+    pNVar2 = (NameTable *)
+             std::vector<unsigned_long,std::allocator<unsigned_long>>::__append
+                       ((vector<unsigned_long,std::allocator<unsigned_long>> *)param_2,
+                        (long)pcVar10 - (long)p_Var7,(ulong *)pvVar4);
+  }
+  if (lVar1 != lVar9) {
+    lVar9 = 0;
+    p_Var7 = (__hash_node *)0x0;
+    if (pcVar10 < (__hash_node *)0x2) {
+      pcVar10 = (code *)0x1;
+    }
+    do {
+      p_Var8 = (__hash_node *)
+               ((*(long *)(param_1 + 8) - *(long *)param_1 >> 3) * -0x5555555555555555);
+      if (p_Var8 < p_Var7 || (long)p_Var8 - (long)p_Var7 == 0) {
+        std::vector<std::string,std::allocator<std::string>>::__throw_out_of_range_abi_ne180100_();
+LAB_000015b8:
+        auVar13 = std::vector<unsigned_long,std::allocator<unsigned_long>>::
+                  __throw_out_of_range_abi_ne180100_();
+        uVar3 = auVar13._8_8_;
+        pNVar2 = auVar13._0_8_;
+        if (*(ulong *)(pvVar4 + 8) - *(ulong *)pvVar4 != 0) {
+          uVar11 = 0;
+          uVar6 = (long)(*(ulong *)(pvVar4 + 8) - *(ulong *)pvVar4) >> 3;
+          this_00 = (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+                     *)(pNVar2 + 0x80);
+          this_01 = (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+                     *)(pNVar2 + 0xa8);
+          if (uVar6 < 2) {
+            uVar6 = 1;
+          }
+          do {
+            if ((ulong)((long)(*(ulong *)(pvVar4 + 8) - *(ulong *)pvVar4) >> 3) <= uVar11) {
+              exception_object =
+                   (_Unwind_Exception *)
+                   std::vector<unsigned_long,std::allocator<unsigned_long>>::
+                   __throw_out_of_range_abi_ne180100_();
+              operator_delete(p_Var7);
+              __Unwind_Resume(exception_object);
+              operator_delete(p_Var7);
+              __Unwind_Resume(exception_object_00);
+              if ((ulong)(extraout_x0[1] - *extraout_x0 >> 4) <= extraout_x1) {
+                    /* WARNING: Subroutine does not return */
+                std::
+                vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+                ::__throw_out_of_range_abi_ne180100_();
+              }
+              return (NameTable *)(*extraout_x0 + extraout_x1 * 0x10);
+            }
+            uVar12 = *(undefined8 *)(*(ulong *)pvVar4 + uVar11 * 8);
+            p_Var7 = operator_new(0x28);
+            *(undefined8 *)(p_Var7 + 0x10) = uVar3;
+            *(undefined8 *)(p_Var7 + 0x18) = uVar12;
+            *(ulong *)(p_Var7 + 0x20) = uVar11;
+            *(undefined8 *)p_Var7 = 0;
+            *(undefined8 *)(p_Var7 + 8) = uVar3;
+            std::
+            __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+            ::__node_insert_multi(this_00,p_Var7);
+            p_Var7 = operator_new(0x28);
+            *(undefined8 *)(p_Var7 + 0x10) = uVar12;
+            *(undefined8 *)(p_Var7 + 0x18) = uVar3;
+            *(ulong *)(p_Var7 + 0x20) = uVar11;
+            *(undefined8 *)p_Var7 = 0;
+            *(undefined8 *)(p_Var7 + 8) = uVar12;
+            pNVar2 = (NameTable *)
+                     std::
+                     __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+                     ::__node_insert_multi(this_01,p_Var7);
+            uVar11 = uVar11 + 1;
+          } while (uVar6 != uVar11);
+        }
+        return pNVar2;
+      }
+      pNVar2 = (NameTable *)internal_addOrLookupNamePart(this,(string *)(*(long *)param_1 + lVar9));
+      if ((__hash_node *)(*(long *)(param_2 + 8) - *(long *)param_2 >> 3) <= p_Var7)
+      goto LAB_000015b8;
+      *(NameTable **)(*(long *)param_2 + (long)p_Var7 * 8) = pNVar2;
+      p_Var7 = p_Var7 + 1;
+      lVar9 = lVar9 + 0x18;
+    } while ((__hash_node *)pcVar10 != p_Var7);
+  }
+  return pNVar2;
+}
+
+
+
+
+// ========================================
+// Function: internal_addCrossReference
+// Entry: 000015c0
+// Signature: undefined __thiscall internal_addCrossReference(NameTable * this, ulong param_1, vector * param_2)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_addCrossReference(unsigned long,
+   std::vector<unsigned long, std::allocator<unsigned long> > const&) */
+
+NameTable * __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_addCrossReference
+          (NameTable *this,ulong param_1,vector *param_2)
+
+{
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *this_00;
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *this_01;
+  __hash_node *p_Var1;
+  _Unwind_Exception *exception_object;
+  _Unwind_Exception *exception_object_00;
+  long *extraout_x0;
+  ulong extraout_x1;
+  ulong uVar2;
+  __hash_node *unaff_x23;
+  ulong uVar3;
+  undefined8 uVar4;
+  
+  if (*(long *)(param_2 + 8) - *(long *)param_2 != 0) {
+    uVar3 = 0;
+    uVar2 = *(long *)(param_2 + 8) - *(long *)param_2 >> 3;
+    this_00 = (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+               *)(this + 0x80);
+    this_01 = (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+               *)(this + 0xa8);
+    if (uVar2 < 2) {
+      uVar2 = 1;
+    }
+    do {
+      if ((ulong)(*(long *)(param_2 + 8) - *(long *)param_2 >> 3) <= uVar3) {
+        exception_object =
+             (_Unwind_Exception *)
+             std::vector<unsigned_long,std::allocator<unsigned_long>>::
+             __throw_out_of_range_abi_ne180100_();
+        operator_delete(unaff_x23);
+        __Unwind_Resume(exception_object);
+        operator_delete(unaff_x23);
+        __Unwind_Resume(exception_object_00);
+        if ((ulong)(extraout_x0[1] - *extraout_x0 >> 4) <= extraout_x1) {
+                    /* WARNING: Subroutine does not return */
+          std::
+          vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+          ::__throw_out_of_range_abi_ne180100_();
+        }
+        return (NameTable *)(*extraout_x0 + extraout_x1 * 0x10);
+      }
+      uVar4 = *(undefined8 *)(*(long *)param_2 + uVar3 * 8);
+      p_Var1 = operator_new(0x28);
+      *(ulong *)(p_Var1 + 0x10) = param_1;
+      *(undefined8 *)(p_Var1 + 0x18) = uVar4;
+      *(ulong *)(p_Var1 + 0x20) = uVar3;
+      *(undefined8 *)p_Var1 = 0;
+      *(ulong *)(p_Var1 + 8) = param_1;
+      std::
+      __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+      ::__node_insert_multi(this_00,p_Var1);
+      unaff_x23 = operator_new(0x28);
+      *(undefined8 *)(unaff_x23 + 0x10) = uVar4;
+      *(ulong *)(unaff_x23 + 0x18) = param_1;
+      *(ulong *)(unaff_x23 + 0x20) = uVar3;
+      *(undefined8 *)unaff_x23 = 0;
+      *(undefined8 *)(unaff_x23 + 8) = uVar4;
+      this = (NameTable *)
+             std::
+             __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+             ::__node_insert_multi(this_01,unaff_x23);
+      uVar3 = uVar3 + 1;
+    } while (uVar2 != uVar3);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: internal_getFullNameInfo
+// Entry: 000016b4
+// Signature: undefined __thiscall internal_getFullNameInfo(NameTable * this, ulong param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_getFullNameInfo(unsigned long) */
+
+long __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_getFullNameInfo
+          (NameTable *this,ulong param_1)
+
+{
+  if (param_1 < (ulong)(*(long *)(this + 8) - *(long *)this >> 4)) {
+    return *(long *)this + param_1 * 0x10;
+  }
+                    /* WARNING: Subroutine does not return */
+  std::
+  vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+  ::__throw_out_of_range_abi_ne180100_();
+}
+
+
+
+
+// ========================================
+// Function: internal_findMatchingNamePartsForFullName
+// Entry: 000016dc
+// Signature: undefined __thiscall internal_findMatchingNamePartsForFullName(NameTable * this, FullNameLookupResult * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_findMatchingNamePartsForFullName(cv::utils::logging::LogTagManager::FullNameLookupResult&)
+    */
+
+void __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_findMatchingNamePartsForFullName
+          (NameTable *this,FullNameLookupResult *param_1)
+
+{
+  undefined8 *puVar1;
+  ulong uVar2;
+  void *pvVar3;
+  undefined8 uVar4;
+  ulong uVar5;
+  long lVar6;
+  undefined8 *puVar7;
+  undefined8 uVar8;
+  FullNameLookupResult *pFVar9;
+  undefined8 *puVar10;
+  ulong uVar11;
+  ulong uVar12;
+  undefined8 *puVar13;
+  long lVar14;
+  ulong uVar15;
+  void *pvVar16;
+  undefined8 *puVar17;
+  long lVar18;
+  undefined8 uVar19;
+  undefined8 uVar20;
+  undefined8 uVar21;
+  undefined8 uVar22;
+  
+  lVar14 = *(long *)(param_1 + 0x38);
+  uVar8 = *(undefined8 *)(param_1 + 0x30);
+  uVar4 = *(undefined8 *)(param_1 + 0x50);
+  lVar18 = *(long *)(param_1 + 0x40);
+  uVar5 = lVar18 - lVar14;
+  uVar12 = (long)uVar5 >> 3;
+  pFVar9 = param_1 + 0x60;
+  pvVar16 = *(void **)pFVar9;
+  *(void **)(param_1 + 0x68) = pvVar16;
+  if ((ulong)((*(long *)(param_1 + 0x70) - (long)pvVar16 >> 3) * -0x3333333333333333) < uVar12) {
+    if (0x3333333333333330 < uVar5) {
+LAB_00001950:
+      std::
+      vector<cv::utils::logging::LogTagManager::CrossReference,std::allocator<cv::utils::logging::LogTagManager::CrossReference>>
+      ::__throw_length_error_abi_ne180100_();
+LAB_00001958:
+                    /* WARNING: Subroutine does not return */
+      std::__throw_bad_array_new_length_abi_ne180100_();
+    }
+    pvVar3 = operator_new(uVar12 * 0x28);
+    *(void **)(param_1 + 0x60) = pvVar3;
+    *(void **)(param_1 + 0x68) = pvVar3;
+    *(void **)(param_1 + 0x70) = (void *)((long)pvVar3 + uVar12 * 0x28);
+    if (pvVar16 != (void *)0x0) {
+      operator_delete(pvVar16);
+    }
+  }
+  if (lVar18 == lVar14) {
+    return;
+  }
+  uVar5 = 0;
+  if (uVar12 < 2) {
+    uVar12 = 1;
+  }
+LAB_000017e8:
+  do {
+    if ((ulong)(*(long *)(param_1 + 0x40) - *(long *)(param_1 + 0x38) >> 3) <= uVar5) {
+      std::vector<unsigned_long,std::allocator<unsigned_long>>::__throw_out_of_range_abi_ne180100_()
+      ;
+LAB_00001948:
+                    /* WARNING: Subroutine does not return */
+      std::
+      vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+      ::__throw_out_of_range_abi_ne180100_();
+    }
+    uVar15 = *(ulong *)(*(long *)(param_1 + 0x38) + uVar5 * 8);
+    if ((ulong)(*(long *)(this + 0x20) - *(long *)(this + 0x18) >> 3) <= uVar15) goto LAB_00001948;
+    lVar14 = *(long *)(this + 0x18) + uVar15 * 8;
+    puVar17 = *(undefined8 **)(param_1 + 0x68);
+    if (puVar17 < *(undefined8 **)(param_1 + 0x70)) {
+      *puVar17 = uVar8;
+      puVar17[1] = uVar15;
+      puVar17[2] = uVar5;
+      puVar17[3] = uVar4;
+      puVar17[4] = lVar14;
+      *(undefined8 **)(param_1 + 0x68) = puVar17 + 5;
+      uVar5 = uVar5 + 1;
+      if (uVar5 == uVar12) {
+        return;
+      }
+      goto LAB_000017e8;
+    }
+    puVar13 = *(undefined8 **)pFVar9;
+    lVar18 = (long)puVar17 - (long)puVar13 >> 3;
+    uVar2 = lVar18 * -0x3333333333333333 + 1;
+    if (0x666666666666666 < uVar2) goto LAB_00001950;
+    lVar6 = (long)*(undefined8 **)(param_1 + 0x70) - (long)puVar13 >> 3;
+    uVar11 = lVar6 * -0x6666666666666666;
+    if (uVar11 < uVar2 || uVar11 - uVar2 == 0) {
+      uVar11 = uVar2;
+    }
+    if (0x333333333333332 < (ulong)(lVar6 * -0x3333333333333333)) {
+      uVar11 = 0x666666666666666;
+    }
+    if (uVar11 == 0) {
+      pvVar16 = (void *)0x0;
+    }
+    else {
+      if (0x666666666666666 < uVar11) goto LAB_00001958;
+      pvVar16 = operator_new(uVar11 * 0x28);
+    }
+    puVar7 = (undefined8 *)((long)pvVar16 + lVar18 * 8);
+    *puVar7 = uVar8;
+    puVar7[1] = uVar15;
+    puVar7[2] = uVar5;
+    puVar7[3] = uVar4;
+    puVar7[4] = lVar14;
+    puVar10 = puVar7;
+    if (puVar17 != puVar13) {
+      do {
+        uVar20 = puVar17[-4];
+        uVar19 = puVar17[-5];
+        uVar22 = puVar17[-2];
+        uVar21 = puVar17[-3];
+        puVar1 = puVar17 + -1;
+        puVar17 = puVar17 + -5;
+        puVar10[-1] = *puVar1;
+        puVar10[-2] = uVar22;
+        puVar10[-3] = uVar21;
+        puVar10[-4] = uVar20;
+        puVar10[-5] = uVar19;
+        puVar10 = puVar10 + -5;
+      } while (puVar17 != puVar13);
+      puVar17 = *(undefined8 **)pFVar9;
+    }
+    *(undefined8 **)(param_1 + 0x60) = puVar10;
+    *(undefined8 **)(param_1 + 0x68) = puVar7 + 5;
+    *(void **)(param_1 + 0x70) = (void *)((long)pvVar16 + uVar11 * 0x28);
+    if (puVar17 != (undefined8 *)0x0) {
+      operator_delete(puVar17);
+    }
+    *(undefined8 **)(param_1 + 0x68) = puVar7 + 5;
+    uVar5 = uVar5 + 1;
+    if (uVar5 == uVar12) {
+      return;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: internal_addOrLookupNamePart
+// Entry: 0000195c
+// Signature: undefined __thiscall internal_addOrLookupNamePart(NameTable * this, string * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupNamePart(std::string const&) */
+
+ulong __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_addOrLookupNamePart
+          (NameTable *this,string *param_1)
+
+{
+  void *pvVar1;
+  undefined8 *puVar2;
+  long lVar3;
+  void *pvVar4;
+  ulong uVar5;
+  undefined8 *puVar6;
+  ulong uVar7;
+  ulong uVar8;
+  undefined8 *puVar9;
+  undefined8 *puVar10;
+  undefined8 *puVar11;
+  undefined8 *puVar12;
+  ulong uVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  ulong local_68;
+  
+  lVar3 = std::
+          __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+          ::find<std::string>((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                               *)(this + 0x58),param_1);
+  if (lVar3 != 0) {
+    return *(long *)(lVar3 + 0x28);
+  }
+  puVar2 = *(undefined8 **)(this + 0x18);
+  puVar11 = *(undefined8 **)(this + 0x20);
+  uVar13 = (long)puVar11 - (long)puVar2 >> 3;
+  local_68 = uVar13;
+  if (puVar11 < *(undefined8 **)(this + 0x28)) {
+    puVar12 = puVar11 + 1;
+    *puVar11 = 0;
+    goto LAB_00001ad4;
+  }
+  uVar8 = uVar13 + 1;
+  if (uVar8 >> 0x3d != 0) {
+    std::
+    vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+    ::__throw_length_error_abi_ne180100_();
+LAB_00001b18:
+                    /* WARNING: Subroutine does not return */
+    std::__throw_bad_array_new_length_abi_ne180100_();
+  }
+  uVar5 = (long)*(undefined8 **)(this + 0x28) - (long)puVar2;
+  uVar7 = (long)uVar5 >> 2;
+  if (uVar7 <= uVar8) {
+    uVar7 = uVar8;
+  }
+  if (0x7ffffffffffffff7 < uVar5) {
+    uVar7 = 0x1fffffffffffffff;
+  }
+  if (uVar7 == 0) {
+    pvVar4 = (void *)0x0;
+    puVar6 = (undefined8 *)(uVar13 * 8);
+    pvVar1 = (void *)0x0;
+    *puVar6 = 0;
+  }
+  else {
+    if (uVar7 >> 0x3d != 0) goto LAB_00001b18;
+    pvVar4 = operator_new(uVar7 << 3);
+    puVar6 = (undefined8 *)((long)pvVar4 + uVar13 * 8);
+    pvVar1 = (void *)((long)pvVar4 + uVar7 * 8);
+    *puVar6 = 0;
+  }
+  puVar12 = puVar6 + 1;
+  if ((long)puVar11 - (long)puVar2 != 0) {
+    uVar8 = ((long)puVar11 - (long)puVar2) - 8;
+    puVar10 = puVar11;
+    if ((uVar8 < 0x58) ||
+       ((long)puVar11 - (((long)puVar11 - (long)puVar2 & 0xfffffffffffffff8U) + (long)pvVar4) < 0x20
+       )) {
+LAB_00001aac:
+      do {
+        puVar10 = puVar10 + -1;
+        puVar6 = puVar6 + -1;
+        *puVar6 = *puVar10;
+      } while (puVar10 != puVar2);
+    }
+    else {
+      uVar8 = (uVar8 >> 3) + 1;
+      uVar7 = uVar8 & 0x3ffffffffffffffc;
+      puVar10 = puVar11 + -uVar7;
+      puVar6 = puVar6 + -uVar7;
+      puVar9 = (undefined8 *)((long)pvVar4 + uVar13 * 8 + -0x10);
+      puVar11 = puVar11 + -2;
+      uVar13 = uVar7;
+      do {
+        uVar16 = puVar11[-2];
+        uVar15 = puVar11[1];
+        uVar14 = *puVar11;
+        puVar9[-1] = puVar11[-1];
+        puVar9[-2] = uVar16;
+        puVar9[1] = uVar15;
+        *puVar9 = uVar14;
+        puVar9 = puVar9 + -4;
+        puVar11 = puVar11 + -4;
+        uVar13 = uVar13 - 4;
+      } while (uVar13 != 0);
+      if (uVar8 != uVar7) goto LAB_00001aac;
+    }
+    puVar11 = *(undefined8 **)(this + 0x18);
+  }
+  *(undefined8 **)(this + 0x18) = puVar6;
+  *(undefined8 **)(this + 0x20) = puVar12;
+  *(void **)(this + 0x28) = pvVar1;
+  if (puVar11 != (undefined8 *)0x0) {
+    operator_delete(puVar11);
+  }
+LAB_00001ad4:
+  *(undefined8 **)(this + 0x20) = puVar12;
+  std::
+  __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+  ::__emplace_unique_key_args<std::string,std::string_const&,unsigned_long_const&>
+            ((__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+              *)(this + 0x58),param_1,param_1,&local_68);
+  return local_68;
+}
+
+
+
+
+// ========================================
+// Function: internal_getNamePartInfo
+// Entry: 00001b1c
+// Signature: undefined __thiscall internal_getNamePartInfo(NameTable * this, ulong param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_getNamePartInfo(unsigned long) */
+
+long __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_getNamePartInfo
+          (NameTable *this,ulong param_1)
+
+{
+  if (param_1 < (ulong)(*(long *)(this + 0x20) - *(long *)(this + 0x18) >> 3)) {
+    return *(long *)(this + 0x18) + param_1 * 8;
+  }
+                    /* WARNING: Subroutine does not return */
+  std::
+  vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+  ::__throw_out_of_range_abi_ne180100_();
+}
+
+
+
+
+// ========================================
+// Function: internal_findMatchingFullNamesForNamePart
+// Entry: 00001b44
+// Signature: undefined __thiscall internal_findMatchingFullNamesForNamePart(NameTable * this, NamePartLookupResult * param_1)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::internal_findMatchingFullNamesForNamePart(cv::utils::logging::LogTagManager::NamePartLookupResult&)
+    */
+
+NameTable * __thiscall
+cv::utils::logging::LogTagManager::NameTable::internal_findMatchingFullNamesForNamePart
+          (NameTable *this,NamePartLookupResult *param_1)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  NameTable *pNVar3;
+  NameTable *extraout_x0;
+  NameTable *extraout_x0_00;
+  long *plVar4;
+  ulong *puVar5;
+  long lVar6;
+  NameTable *pNVar7;
+  ulong uVar8;
+  long lVar9;
+  NameTable *pNVar10;
+  ulong uVar11;
+  ulong uVar12;
+  undefined8 *puVar13;
+  NamePartLookupResult *pNVar14;
+  ulong uVar15;
+  ulong *puVar16;
+  long *plVar17;
+  void *pvVar18;
+  ulong *puVar19;
+  ulong uVar20;
+  ulong uVar21;
+  undefined2 uVar22;
+  undefined8 uVar23;
+  
+  uVar1 = *(ulong *)(param_1 + 0x18);
+  uVar2 = *(ulong *)(param_1 + 0x20);
+  uVar21 = *(ulong *)(this + 0xb0);
+  pNVar3 = this;
+  uVar20 = uVar1;
+  if (uVar21 != 0) {
+    uVar23 = CONCAT17(POPCOUNT((char)(uVar21 >> 0x38)),
+                      CONCAT16(POPCOUNT((char)(uVar21 >> 0x30)),
+                               CONCAT15(POPCOUNT((char)(uVar21 >> 0x28)),
+                                        CONCAT14(POPCOUNT((char)(uVar21 >> 0x20)),
+                                                 CONCAT13(POPCOUNT((char)(uVar21 >> 0x18)),
+                                                          CONCAT12(POPCOUNT((char)(uVar21 >> 0x10)),
+                                                                   CONCAT11(POPCOUNT((char)(uVar21 
+                                                  >> 8)),POPCOUNT((char)uVar21))))))));
+    uVar22 = NEON_uaddlv(uVar23,1);
+    uVar15 = CONCAT62((int6)((ulong)uVar23 >> 0x10),uVar22) & 0xffffffff;
+    if (uVar15 < 2) {
+      uVar8 = uVar21 - 1 & uVar1;
+    }
+    else {
+      uVar8 = uVar1;
+      if (uVar21 <= uVar1) {
+        uVar8 = 0;
+        if (uVar21 != 0) {
+          uVar8 = uVar1 / uVar21;
+        }
+        uVar8 = uVar1 - uVar8 * uVar21;
+      }
+    }
+    plVar4 = *(long **)(*(long *)(this + 0xa8) + uVar8 * 8);
+    if ((plVar4 != (long *)0x0) && (plVar4 = (long *)*plVar4, plVar4 != (long *)0x0)) {
+      if (uVar15 < 2) {
+        do {
+          if (uVar1 == plVar4[1]) {
+            if (plVar4[2] == uVar1) goto LAB_00001c78;
+          }
+          else if ((plVar4[1] & uVar21 - 1) != uVar8) break;
+          plVar4 = (long *)*plVar4;
+        } while (plVar4 != (long *)0x0);
+      }
+      else {
+        do {
+          uVar15 = plVar4[1];
+          if (uVar1 == uVar15) {
+            if (plVar4[2] == uVar1) goto LAB_00001c78;
+          }
+          else {
+            if (uVar21 <= uVar15) {
+              uVar11 = 0;
+              if (uVar21 != 0) {
+                uVar11 = uVar15 / uVar21;
+              }
+              uVar15 = uVar15 - uVar11 * uVar21;
+            }
+            if (uVar15 != uVar8) break;
+          }
+          plVar4 = (long *)*plVar4;
+        } while (plVar4 != (long *)0x0);
+      }
+    }
+  }
+  *(undefined8 *)(param_1 + 0x38) = *(undefined8 *)(param_1 + 0x30);
+  goto LAB_00001c24;
+  while (plVar4[2] == uVar20) {
+LAB_00001dd4:
+    plVar4 = (long *)*plVar4;
+    if (plVar4 == (long *)0x0) break;
+  }
+  do {
+    if (plVar17 == plVar4) {
+      return pNVar3;
+    }
+    while( true ) {
+      uVar20 = plVar17[3];
+      if ((ulong)(*(long *)(this + 8) - *(long *)this >> 4) <= uVar20) {
+                    /* WARNING: Subroutine does not return */
+        std::
+        vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+        ::__throw_out_of_range_abi_ne180100_();
+      }
+      uVar15 = plVar17[4];
+      uVar21 = *(long *)this + uVar20 * 0x10;
+      puVar16 = *(ulong **)pNVar14;
+      puVar5 = *(ulong **)(param_1 + 0x40);
+      if (puVar16 < puVar5) break;
+      puVar19 = *(ulong **)(param_1 + 0x30);
+      lVar9 = (long)puVar16 - (long)puVar19 >> 3;
+      uVar8 = lVar9 * -0x3333333333333333 + 1;
+      if (0x666666666666666 < uVar8) {
+        std::
+        vector<cv::utils::logging::LogTagManager::CrossReference,std::allocator<cv::utils::logging::LogTagManager::CrossReference>>
+        ::__throw_length_error_abi_ne180100_();
+LAB_00001fe4:
+                    /* WARNING: Subroutine does not return */
+        std::__throw_bad_array_new_length_abi_ne180100_();
+      }
+      lVar6 = (long)puVar5 - (long)puVar19 >> 3;
+      uVar11 = lVar6 * -0x6666666666666666;
+      if (uVar11 < uVar8 || uVar11 - uVar8 == 0) {
+        uVar11 = uVar8;
+      }
+      if (0x333333333333332 < (ulong)(lVar6 * -0x3333333333333333)) {
+        uVar11 = 0x666666666666666;
+      }
+      if (uVar11 == 0) {
+        pNVar3 = (NameTable *)0x0;
+      }
+      else {
+        if (0x666666666666666 < uVar11) goto LAB_00001fe4;
+        pNVar3 = operator_new(uVar11 * 0x28);
+      }
+      pNVar7 = pNVar3 + lVar9 * 8;
+      *(ulong *)pNVar7 = uVar20;
+      *(ulong *)(pNVar7 + 8) = uVar1;
+      *(ulong *)(pNVar7 + 0x10) = uVar15;
+      *(ulong *)(pNVar7 + 0x18) = uVar21;
+      *(ulong *)(pNVar7 + 0x20) = uVar2;
+      puVar5 = puVar16;
+      pNVar10 = pNVar7;
+      for (; puVar16 != puVar19; puVar16 = puVar16 + -5) {
+        uVar21 = puVar16[-4];
+        uVar20 = puVar16[-5];
+        uVar8 = puVar16[-2];
+        uVar15 = puVar16[-3];
+        *(ulong *)(pNVar10 + -8) = puVar16[-1];
+        *(ulong *)(pNVar10 + -0x10) = uVar8;
+        *(ulong *)(pNVar10 + -0x18) = uVar15;
+        *(ulong *)(pNVar10 + -0x20) = uVar21;
+        *(ulong *)(pNVar10 + -0x28) = uVar20;
+        pNVar10 = pNVar10 + -0x28;
+        puVar5 = puVar19;
+      }
+      *(NameTable **)(param_1 + 0x30) = pNVar10;
+      *(NameTable **)pNVar14 = pNVar7 + 0x28;
+      *(NameTable **)(param_1 + 0x40) = pNVar3 + uVar11 * 0x28;
+      if (puVar5 != (ulong *)0x0) {
+        operator_delete(puVar5);
+        pNVar3 = extraout_x0_00;
+      }
+      *(NameTable **)pNVar14 = pNVar7 + 0x28;
+      plVar17 = (long *)*plVar17;
+      if (plVar17 == plVar4) {
+        return pNVar3;
+      }
+    }
+    *puVar16 = uVar20;
+    puVar16[1] = uVar1;
+    puVar16[2] = uVar15;
+    puVar16[3] = uVar21;
+    puVar16[4] = uVar2;
+    *(ulong **)pNVar14 = puVar16 + 5;
+    plVar17 = (long *)*plVar17;
+  } while( true );
+LAB_00001c78:
+  uVar15 = 1;
+  uVar8 = 0x28;
+  do {
+    uVar12 = uVar8;
+    uVar11 = uVar15;
+    plVar4 = (long *)*plVar4;
+    if (plVar4 == (long *)0x0) break;
+    uVar15 = uVar11 + 1;
+    uVar8 = uVar12 + 0x28;
+  } while (plVar4[2] == uVar1);
+  pvVar18 = *(void **)(param_1 + 0x30);
+  *(void **)(param_1 + 0x38) = pvVar18;
+  if ((ulong)((*(long *)(param_1 + 0x40) - (long)pvVar18 >> 3) * -0x3333333333333333) < uVar11) {
+    if (0x666666666666666 < uVar11) {
+      std::
+      vector<cv::utils::logging::LogTagManager::CrossReference,std::allocator<cv::utils::logging::LogTagManager::CrossReference>>
+      ::__throw_length_error_abi_ne180100_();
+      ___cxa_begin_catch();
+      pNVar3 = (NameTable *)std::terminate();
+      puVar13 = *(void **)(pNVar3 + 0xb8);
+      while (puVar13 != (void *)0x0) {
+        pvVar18 = (void *)*puVar13;
+        operator_delete(puVar13);
+        puVar13 = pvVar18;
+      }
+      pvVar18 = *(void **)(pNVar3 + 0xa8);
+      *(undefined8 *)(pNVar3 + 0xa8) = 0;
+      if (pvVar18 != (void *)0x0) {
+        operator_delete(pvVar18);
+      }
+      puVar13 = *(void **)(pNVar3 + 0x90);
+      while (puVar13 != (void *)0x0) {
+        pvVar18 = (void *)*puVar13;
+        operator_delete(puVar13);
+        puVar13 = pvVar18;
+      }
+      pvVar18 = *(void **)(pNVar3 + 0x80);
+      *(undefined8 *)(pNVar3 + 0x80) = 0;
+      if (pvVar18 != (void *)0x0) {
+        operator_delete(pvVar18);
+      }
+      puVar13 = *(void **)(pNVar3 + 0x68);
+      while (puVar13 != (void *)0x0) {
+        pvVar18 = (void *)*puVar13;
+        if (*(char *)((long)puVar13 + 0x27) < '\0') {
+          operator_delete((void *)puVar13[2]);
+        }
+        operator_delete(puVar13);
+        puVar13 = pvVar18;
+      }
+      pvVar18 = *(void **)(pNVar3 + 0x58);
+      *(undefined8 *)(pNVar3 + 0x58) = 0;
+      if (pvVar18 != (void *)0x0) {
+        operator_delete(pvVar18);
+      }
+      puVar13 = *(void **)(pNVar3 + 0x40);
+      while (puVar13 != (void *)0x0) {
+        pvVar18 = (void *)*puVar13;
+        if (*(char *)((long)puVar13 + 0x27) < '\0') {
+          operator_delete((void *)puVar13[2]);
+        }
+        operator_delete(puVar13);
+        puVar13 = pvVar18;
+      }
+      pvVar18 = *(void **)(pNVar3 + 0x30);
+      *(undefined8 *)(pNVar3 + 0x30) = 0;
+      if (pvVar18 != (void *)0x0) {
+        operator_delete(pvVar18);
+      }
+      pvVar18 = *(void **)(pNVar3 + 0x18);
+      if (pvVar18 != (void *)0x0) {
+        *(void **)(pNVar3 + 0x20) = pvVar18;
+        operator_delete(pvVar18);
+      }
+      pvVar18 = *(void **)pNVar3;
+      if (pvVar18 != (void *)0x0) {
+        *(void **)(pNVar3 + 8) = pvVar18;
+        operator_delete(pvVar18);
+      }
+      return pNVar3;
+    }
+    pNVar3 = operator_new(uVar12);
+    *(NameTable **)(param_1 + 0x30) = pNVar3;
+    *(NameTable **)(param_1 + 0x38) = pNVar3;
+    *(NameTable **)(param_1 + 0x40) = pNVar3 + uVar12;
+    if (pvVar18 != (void *)0x0) {
+      operator_delete(pvVar18);
+      uVar21 = *(ulong *)(this + 0xb0);
+      pNVar3 = extraout_x0;
+      uVar20 = *(ulong *)(param_1 + 0x18);
+    }
+  }
+LAB_00001c24:
+  pNVar14 = param_1 + 0x38;
+  if (uVar21 != 0) {
+    uVar23 = CONCAT17(POPCOUNT((char)(uVar21 >> 0x38)),
+                      CONCAT16(POPCOUNT((char)(uVar21 >> 0x30)),
+                               CONCAT15(POPCOUNT((char)(uVar21 >> 0x28)),
+                                        CONCAT14(POPCOUNT((char)(uVar21 >> 0x20)),
+                                                 CONCAT13(POPCOUNT((char)(uVar21 >> 0x18)),
+                                                          CONCAT12(POPCOUNT((char)(uVar21 >> 0x10)),
+                                                                   CONCAT11(POPCOUNT((char)(uVar21 
+                                                  >> 8)),POPCOUNT((char)uVar21))))))));
+    uVar22 = NEON_uaddlv(uVar23,1);
+    uVar15 = CONCAT62((int6)((ulong)uVar23 >> 0x10),uVar22) & 0xffffffff;
+    if (uVar15 < 2) {
+      uVar8 = uVar21 - 1 & uVar20;
+    }
+    else {
+      uVar8 = uVar20;
+      if (uVar21 <= uVar20) {
+        uVar8 = 0;
+        if (uVar21 != 0) {
+          uVar8 = uVar20 / uVar21;
+        }
+        uVar8 = uVar20 - uVar8 * uVar21;
+      }
+    }
+    puVar13 = *(undefined8 **)(*(long *)(this + 0xa8) + uVar8 * 8);
+    if ((puVar13 != (undefined8 *)0x0) && (plVar4 = (long *)*puVar13, plVar4 != (long *)0x0)) {
+      if (uVar15 < 2) {
+        do {
+          if (plVar4[1] == uVar20) {
+            plVar17 = plVar4;
+            if (plVar4[2] == uVar20) goto LAB_00001dd4;
+          }
+          else if ((plVar4[1] & uVar21 - 1) != uVar8) {
+            return pNVar3;
+          }
+          plVar4 = (long *)*plVar4;
+        } while (plVar4 != (long *)0x0);
+      }
+      else {
+        do {
+          uVar15 = plVar4[1];
+          if (uVar15 == uVar20) {
+            plVar17 = plVar4;
+            if (plVar4[2] == uVar20) goto LAB_00001dd4;
+          }
+          else {
+            if (uVar21 <= uVar15) {
+              uVar11 = 0;
+              if (uVar21 != 0) {
+                uVar11 = uVar15 / uVar21;
+              }
+              uVar15 = uVar15 - uVar11 * uVar21;
+            }
+            if (uVar15 != uVar8) {
+              return pNVar3;
+            }
+          }
+          plVar4 = (long *)*plVar4;
+        } while (plVar4 != (long *)0x0);
+      }
+    }
+  }
+  return pNVar3;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00001ff0
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+undefined8 * ___clang_call_terminate(void)
+
+{
+  undefined8 *puVar1;
+  undefined8 *puVar2;
+  void *pvVar3;
+  
+  ___cxa_begin_catch();
+  puVar2 = (undefined8 *)std::terminate();
+  puVar1 = (void *)puVar2[0x17];
+  while (puVar1 != (void *)0x0) {
+    pvVar3 = (void *)*puVar1;
+    operator_delete(puVar1);
+    puVar1 = pvVar3;
+  }
+  pvVar3 = (void *)puVar2[0x15];
+  puVar2[0x15] = 0;
+  if (pvVar3 != (void *)0x0) {
+    operator_delete(pvVar3);
+  }
+  puVar1 = (void *)puVar2[0x12];
+  while (puVar1 != (void *)0x0) {
+    pvVar3 = (void *)*puVar1;
+    operator_delete(puVar1);
+    puVar1 = pvVar3;
+  }
+  pvVar3 = (void *)puVar2[0x10];
+  puVar2[0x10] = 0;
+  if (pvVar3 != (void *)0x0) {
+    operator_delete(pvVar3);
+  }
+  puVar1 = (void *)puVar2[0xd];
+  while (puVar1 != (void *)0x0) {
+    pvVar3 = (void *)*puVar1;
+    if (*(char *)((long)puVar1 + 0x27) < '\0') {
+      operator_delete((void *)puVar1[2]);
+    }
+    operator_delete(puVar1);
+    puVar1 = pvVar3;
+  }
+  pvVar3 = (void *)puVar2[0xb];
+  puVar2[0xb] = 0;
+  if (pvVar3 != (void *)0x0) {
+    operator_delete(pvVar3);
+  }
+  puVar1 = (void *)puVar2[8];
+  while (puVar1 != (void *)0x0) {
+    pvVar3 = (void *)*puVar1;
+    if (*(char *)((long)puVar1 + 0x27) < '\0') {
+      operator_delete((void *)puVar1[2]);
+    }
+    operator_delete(puVar1);
+    puVar1 = pvVar3;
+  }
+  pvVar3 = (void *)puVar2[6];
+  puVar2[6] = 0;
+  if (pvVar3 != (void *)0x0) {
+    operator_delete(pvVar3);
+  }
+  pvVar3 = (void *)puVar2[3];
+  if (pvVar3 != (void *)0x0) {
+    puVar2[4] = pvVar3;
+    operator_delete(pvVar3);
+  }
+  pvVar3 = (void *)*puVar2;
+  if (pvVar3 != (void *)0x0) {
+    puVar2[1] = pvVar3;
+    operator_delete(pvVar3);
+  }
+  return puVar2;
+}
+
+
+
+
+// ========================================
+// Function: ~NameTable
+// Entry: 00002000
+// Signature: undefined __thiscall ~NameTable(NameTable * this)
+// ========================================
+
+
+/* cv::utils::logging::LogTagManager::NameTable::~NameTable() */
+
+NameTable * __thiscall cv::utils::logging::LogTagManager::NameTable::~NameTable(NameTable *this)
+
+{
+  undefined8 *puVar1;
+  void *pvVar2;
+  
+  puVar1 = *(void **)(this + 0xb8);
+  while (puVar1 != (void *)0x0) {
+    pvVar2 = (void *)*puVar1;
+    operator_delete(puVar1);
+    puVar1 = pvVar2;
+  }
+  pvVar2 = *(void **)(this + 0xa8);
+  *(undefined8 *)(this + 0xa8) = 0;
+  if (pvVar2 != (void *)0x0) {
+    operator_delete(pvVar2);
+  }
+  puVar1 = *(void **)(this + 0x90);
+  while (puVar1 != (void *)0x0) {
+    pvVar2 = (void *)*puVar1;
+    operator_delete(puVar1);
+    puVar1 = pvVar2;
+  }
+  pvVar2 = *(void **)(this + 0x80);
+  *(undefined8 *)(this + 0x80) = 0;
+  if (pvVar2 != (void *)0x0) {
+    operator_delete(pvVar2);
+  }
+  puVar1 = *(void **)(this + 0x68);
+  while (puVar1 != (void *)0x0) {
+    pvVar2 = (void *)*puVar1;
+    if (*(char *)((long)puVar1 + 0x27) < '\0') {
+      operator_delete((void *)puVar1[2]);
+    }
+    operator_delete(puVar1);
+    puVar1 = pvVar2;
+  }
+  pvVar2 = *(void **)(this + 0x58);
+  *(undefined8 *)(this + 0x58) = 0;
+  if (pvVar2 != (void *)0x0) {
+    operator_delete(pvVar2);
+  }
+  puVar1 = *(void **)(this + 0x40);
+  while (puVar1 != (void *)0x0) {
+    pvVar2 = (void *)*puVar1;
+    if (*(char *)((long)puVar1 + 0x27) < '\0') {
+      operator_delete((void *)puVar1[2]);
+    }
+    operator_delete(puVar1);
+    puVar1 = pvVar2;
+  }
+  pvVar2 = *(void **)(this + 0x30);
+  *(undefined8 *)(this + 0x30) = 0;
+  if (pvVar2 != (void *)0x0) {
+    operator_delete(pvVar2);
+  }
+  pvVar2 = *(void **)(this + 0x18);
+  if (pvVar2 != (void *)0x0) {
+    *(void **)(this + 0x20) = pvVar2;
+    operator_delete(pvVar2);
+  }
+  pvVar2 = *(void **)this;
+  if (pvVar2 != (void *)0x0) {
+    *(void **)(this + 8) = pvVar2;
+    operator_delete(pvVar2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 00002118
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000021a4
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000021b8
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00002208
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 0000222c
+// Signature: noreturn undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00002254
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,
+   std::allocator<cv::utils::logging::LogTagConfigParser> >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::
+__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+::~__shared_ptr_emplace
+          (__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+           *this)
+
+{
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003f28;
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00002264
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,
+   std::allocator<cv::utils::logging::LogTagConfigParser> >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::
+__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+::~__shared_ptr_emplace
+          (__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+           *this)
+
+{
+  void *pvVar1;
+  
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003f28;
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 00002284
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,
+   std::allocator<cv::utils::logging::LogTagConfigParser> >::__on_zero_shared() */
+
+void __thiscall
+std::
+__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+::__on_zero_shared(__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+                   *this)
+
+{
+  cv::utils::logging::LogTagConfigParser::~LogTagConfigParser((LogTagConfigParser *)(this + 0x18));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 0000228c
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,
+   std::allocator<cv::utils::logging::LogTagConfigParser> >::__on_zero_shared_weak() */
+
+void __thiscall
+std::
+__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+::__on_zero_shared_weak
+          (__shared_ptr_emplace<cv::utils::logging::LogTagConfigParser,std::allocator<cv::utils::logging::LogTagConfigParser>>
+           *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 00002290
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_out_of_range[abi:ne180100]() const */
+
+void std::string::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 000022a4
+// Signature: noreturn undefined __throw_out_of_range[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_out_of_range[abi:ne180100](char const*) */
+
+void std::__throw_out_of_range_abi_ne180100_(char *param_1)
+
+{
+  out_of_range *this;
+  
+  this = (out_of_range *)___cxa_allocate_exception(0x10);
+  out_of_range::out_of_range_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__out_of_range);
+}
+
+
+
+
+// ========================================
+// Function: out_of_range[abi:ne180100]
+// Entry: 000022f4
+// Signature: undefined __thiscall out_of_range[abi:ne180100](out_of_range * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::out_of_range::out_of_range[abi:ne180100](char const*) */
+
+void __thiscall std::out_of_range::out_of_range_abi_ne180100_(out_of_range *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __emplace_back_slow_path<std::string>
+// Entry: 00002318
+// Signature: string * __thiscall __emplace_back_slow_path<std::string>(vector<std::string,std::allocator<std::string>> * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00002434) */
+/* std::string* std::vector<std::string, std::allocator<std::string >
+   >::__emplace_back_slow_path<std::string >(std::string&&) */
+
+string * __thiscall
+std::vector<std::string,std::allocator<std::string>>::__emplace_back_slow_path<std::string>
+          (vector<std::string,std::allocator<std::string>> *this,string *param_1)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  void *pvVar3;
+  void *pvVar4;
+  long lVar5;
+  undefined8 *puVar6;
+  long lVar7;
+  ulong uVar8;
+  void *pvVar9;
+  void *pvVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  
+  lVar7 = *(long *)(this + 8) - *(long *)this >> 3;
+  uVar1 = lVar7 * -0x5555555555555555 + 1;
+  if (0xaaaaaaaaaaaaaaa < uVar1) {
+    __throw_length_error_abi_ne180100_();
+LAB_0000247c:
+                    /* WARNING: Subroutine does not return */
+    __throw_bad_array_new_length_abi_ne180100_();
+  }
+  lVar5 = *(long *)(this + 0x10) - *(long *)this >> 3;
+  uVar8 = lVar5 * 0x5555555555555556;
+  if (uVar8 < uVar1 || uVar8 - uVar1 == 0) {
+    uVar8 = uVar1;
+  }
+  if (0x555555555555554 < (ulong)(lVar5 * -0x5555555555555555)) {
+    uVar8 = 0xaaaaaaaaaaaaaaa;
+  }
+  if (uVar8 == 0) {
+    pvVar4 = (void *)0x0;
+  }
+  else {
+    if (0xaaaaaaaaaaaaaaa < uVar8) goto LAB_0000247c;
+    pvVar4 = operator_new(uVar8 * 0x18);
+  }
+  puVar6 = (undefined8 *)((long)pvVar4 + lVar7 * 8);
+  pvVar4 = (void *)((long)pvVar4 + uVar8 * 0x18);
+  uVar11 = *(undefined8 *)param_1;
+  puVar6[1] = *(undefined8 *)(param_1 + 8);
+  *puVar6 = uVar11;
+  puVar6[2] = *(undefined8 *)(param_1 + 0x10);
+  *(undefined8 *)(param_1 + 8) = 0;
+  *(undefined8 *)(param_1 + 0x10) = 0;
+  *(undefined8 *)param_1 = 0;
+  psVar2 = (string *)(puVar6 + 3);
+  pvVar3 = *(void **)this;
+  pvVar9 = *(void **)(this + 8);
+  if (pvVar9 == pvVar3) {
+    *(undefined8 **)this = puVar6;
+    *(string **)(this + 8) = psVar2;
+    *(void **)(this + 0x10) = pvVar4;
+  }
+  else {
+    do {
+      uVar12 = *(undefined8 *)((long)pvVar9 + -0x10);
+      uVar11 = *(undefined8 *)((long)pvVar9 + -0x18);
+      puVar6[-1] = *(undefined8 *)((long)pvVar9 + -8);
+      puVar6[-2] = uVar12;
+      puVar6[-3] = uVar11;
+      puVar6 = puVar6 + -3;
+      *(undefined8 *)((long)pvVar9 + -0x10) = 0;
+      *(undefined8 *)((long)pvVar9 + -8) = 0;
+      *(undefined8 *)((long)pvVar9 + -0x18) = 0;
+      pvVar9 = (void *)((long)pvVar9 + -0x18);
+    } while (pvVar9 != pvVar3);
+    pvVar3 = *(void **)this;
+    pvVar10 = *(void **)(this + 8);
+    *(undefined8 **)this = puVar6;
+    *(string **)(this + 8) = psVar2;
+    *(void **)(this + 0x10) = pvVar4;
+    pvVar9 = pvVar10;
+    for (; pvVar10 != pvVar3; pvVar10 = (void *)((long)pvVar10 + -0x18)) {
+      pvVar9 = pvVar3;
+    }
+  }
+  if (pvVar9 != (void *)0x0) {
+    operator_delete(pvVar9);
+  }
+  return psVar2;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002480
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::string, std::allocator<std::string > >::__throw_length_error[abi:ne180100]()
+   const */
+
+void std::vector<std::string,std::allocator<std::string>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: find<std::string>
+// Entry: 00002494
+// Signature: __hash_iterator __thiscall find<std::string>(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>> * this, string * param_1)
+// ========================================
+
+
+/* std::__hash_iterator<std::__hash_node<std::__hash_value_type<std::string, unsigned long>,
+   void*>*> std::__hash_table<std::__hash_value_type<std::string, unsigned long>,
+   std::__unordered_map_hasher<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::hash<std::string >, std::equal_to<std::string >, true>,
+   std::__unordered_map_equal<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::equal_to<std::string >, std::hash<std::string >, true>,
+   std::allocator<std::__hash_value_type<std::string, unsigned long> > >::find<std::string
+   >(std::string const&) */
+
+long * __thiscall
+std::
+__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+::find<std::string>(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                    *this,string *param_1)
+
+{
+  string *psVar1;
+  size_t sVar2;
+  byte bVar3;
+  ulong uVar4;
+  size_t sVar5;
+  int iVar6;
+  ulong uVar7;
+  long *plVar8;
+  ulong uVar9;
+  ulong uVar10;
+  ulong uVar11;
+  undefined2 uVar12;
+  undefined8 uVar13;
+  __murmur2_or_cityhash<unsigned_long,64ul> _Stack_41;
+  
+  uVar7 = *(ulong *)(param_1 + 8);
+  psVar1 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    uVar7 = (ulong)(byte)param_1[0x17];
+    psVar1 = param_1;
+  }
+  uVar7 = __murmur2_or_cityhash<unsigned_long,64ul>::operator()[abi_ne180100_
+                    (&_Stack_41,psVar1,uVar7);
+  uVar11 = *(ulong *)(this + 8);
+  if (uVar11 != 0) {
+    uVar13 = CONCAT17(POPCOUNT((char)(uVar11 >> 0x38)),
+                      CONCAT16(POPCOUNT((char)(uVar11 >> 0x30)),
+                               CONCAT15(POPCOUNT((char)(uVar11 >> 0x28)),
+                                        CONCAT14(POPCOUNT((char)(uVar11 >> 0x20)),
+                                                 CONCAT13(POPCOUNT((char)(uVar11 >> 0x18)),
+                                                          CONCAT12(POPCOUNT((char)(uVar11 >> 0x10)),
+                                                                   CONCAT11(POPCOUNT((char)(uVar11 
+                                                  >> 8)),POPCOUNT((char)uVar11))))))));
+    uVar12 = NEON_uaddlv(uVar13,1);
+    uVar9 = CONCAT62((int6)((ulong)uVar13 >> 0x10),uVar12) & 0xffffffff;
+    if (uVar9 < 2) {
+      uVar10 = uVar11 - 1 & uVar7;
+    }
+    else {
+      uVar10 = uVar7;
+      if (uVar11 <= uVar7) {
+        uVar10 = 0;
+        if (uVar11 != 0) {
+          uVar10 = uVar7 / uVar11;
+        }
+        uVar10 = uVar7 - uVar10 * uVar11;
+      }
+    }
+    plVar8 = *(long **)(*(long *)this + uVar10 * 8);
+    if ((plVar8 == (long *)0x0) || (plVar8 = (long *)*plVar8, plVar8 == (long *)0x0)) {
+      return (long *)0x0;
+    }
+    psVar1 = *(string **)param_1;
+    sVar5 = *(size_t *)(param_1 + 8);
+    if (-1 < (char)param_1[0x17]) {
+      psVar1 = param_1;
+      sVar5 = (ulong)(byte)param_1[0x17];
+    }
+    if (uVar9 < 2) {
+      do {
+        if (plVar8[1] == uVar7) {
+          bVar3 = *(byte *)((long)plVar8 + 0x27);
+          sVar2 = plVar8[3];
+          if (-1 < (char)bVar3) {
+            sVar2 = (ulong)bVar3;
+          }
+          if (sVar2 == sVar5) {
+            if ((char)bVar3 < '\0') {
+              iVar6 = _memcmp((void *)plVar8[2],psVar1,plVar8[3]);
+              if (iVar6 == 0) {
+                return plVar8;
+              }
+            }
+            else {
+              if (bVar3 == 0) {
+                return plVar8;
+              }
+              uVar9 = 0;
+              while (*(string *)((long)plVar8 + uVar9 + 0x10) == psVar1[uVar9]) {
+                uVar9 = uVar9 + 1;
+                if (bVar3 == uVar9) {
+                  return plVar8;
+                }
+              }
+            }
+          }
+        }
+        else if ((plVar8[1] & uVar11 - 1) != uVar10) {
+          return (long *)0x0;
+        }
+        plVar8 = (long *)*plVar8;
+      } while (plVar8 != (long *)0x0);
+    }
+    else {
+      do {
+        uVar9 = plVar8[1];
+        if (uVar9 == uVar7) {
+          bVar3 = *(byte *)((long)plVar8 + 0x27);
+          sVar2 = plVar8[3];
+          if (-1 < (char)bVar3) {
+            sVar2 = (ulong)bVar3;
+          }
+          if (sVar2 == sVar5) {
+            if ((char)bVar3 < '\0') {
+              iVar6 = _memcmp((void *)plVar8[2],psVar1,plVar8[3]);
+              if (iVar6 == 0) {
+                return plVar8;
+              }
+            }
+            else {
+              if (bVar3 == 0) {
+                return plVar8;
+              }
+              uVar9 = 0;
+              while (*(string *)((long)plVar8 + uVar9 + 0x10) == psVar1[uVar9]) {
+                uVar9 = uVar9 + 1;
+                if (bVar3 == uVar9) {
+                  return plVar8;
+                }
+              }
+            }
+          }
+        }
+        else {
+          if (uVar11 <= uVar9) {
+            uVar4 = 0;
+            if (uVar11 != 0) {
+              uVar4 = uVar9 / uVar11;
+            }
+            uVar9 = uVar9 - uVar4 * uVar11;
+          }
+          if (uVar9 != uVar10) {
+            return (long *)0x0;
+          }
+        }
+        plVar8 = (long *)*plVar8;
+      } while (plVar8 != (long *)0x0);
+    }
+  }
+  return (long *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: operator()[abi:ne180100]
+// Entry: 000026c0
+// Signature: undefined __thiscall operator()[abi:ne180100](__murmur2_or_cityhash<unsigned_long,64ul> * this, void * param_1, ulong param_2)
+// ========================================
+
+
+/* std::__murmur2_or_cityhash<unsigned long, 64ul>::operator()[abi:ne180100](void const*, unsigned
+   long) const */
+
+ulong __thiscall
+std::__murmur2_or_cityhash<unsigned_long,64ul>::operator()[abi_ne180100_
+          (__murmur2_or_cityhash<unsigned_long,64ul> *this,void *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  long lVar3;
+  long lVar4;
+  long lVar5;
+  long *plVar6;
+  ulong uVar7;
+  ulong uVar8;
+  ulong uVar9;
+  long lVar10;
+  ulong uVar11;
+  ulong uVar12;
+  long lVar13;
+  ulong uVar14;
+  long lVar15;
+  
+  if (param_2 < 0x21) {
+    if (0x10 < param_2) {
+      lVar13 = *(long *)((long)param_1 + (param_2 - 8));
+      uVar8 = lVar13 * -0x651e95c4d06fbfb1;
+      uVar9 = *(long *)param_1 * -0x4b6d499041670d8d - *(ulong *)((long)param_1 + 8);
+      uVar7 = *(ulong *)((long)param_1 + 8) ^ 0xc949d7c7509e6557;
+      uVar7 = *(long *)param_1 * -0x4b6d499041670d8d + param_2 + (uVar7 >> 0x14 | uVar7 << 0x2c) +
+              lVar13 * 0x651e95c4d06fbfb1;
+      uVar8 = ((uVar8 >> 0x1e | uVar8 << 0x22) + (uVar9 >> 0x2b | uVar9 * 0x200000) +
+               *(long *)((long)param_1 + (param_2 - 0x10)) * -0x3c5a37a36834ced9 ^ uVar7) *
+              -0x622015f714c7d297;
+      uVar7 = (uVar7 ^ uVar8 >> 0x2f ^ uVar8) * -0x622015f714c7d297;
+      return (uVar7 ^ uVar7 >> 0x2f) * -0x622015f714c7d297;
+    }
+    if (8 < param_2) {
+      uVar8 = *(ulong *)((long)param_1 + (param_2 - 8));
+      uVar7 = uVar8 + param_2;
+      uVar9 = uVar7 >> (param_2 & 0x3f) | uVar7 << 0x40 - (param_2 & 0x3f);
+      uVar7 = (uVar9 ^ *(ulong *)param_1) * -0x622015f714c7d297;
+      uVar7 = (uVar9 ^ uVar7 >> 0x2f ^ uVar7) * -0x622015f714c7d297;
+      return (uVar7 ^ uVar7 >> 0x2f) * -0x622015f714c7d297 ^ uVar8;
+    }
+    if (3 < param_2) {
+      uVar8 = (ulong)*(uint *)((long)param_1 + (param_2 - 4));
+      uVar7 = ((uint)(*(int *)param_1 << 3) + param_2 ^ uVar8) * -0x622015f714c7d297;
+      uVar7 = (uVar8 ^ uVar7 >> 0x2f ^ uVar7) * -0x622015f714c7d297;
+      return (uVar7 ^ uVar7 >> 0x2f) * -0x622015f714c7d297;
+    }
+    uVar7 = 0x9ae16a3b2f90404f;
+    if (param_2 != 0) {
+      uVar7 = (param_2 + (ulong)*(byte *)((long)param_1 + (param_2 - 1)) * 4) * -0x36b62838af619aa9
+              ^ (ulong)CONCAT11(*(undefined1 *)((long)param_1 + (param_2 >> 1)),
+                                *(undefined1 *)param_1) * -0x651e95c4d06fbfb1;
+      return (uVar7 ^ uVar7 >> 0x2f) * -0x651e95c4d06fbfb1;
+    }
+  }
+  else {
+    if (param_2 < 0x41) {
+      lVar10 = *(long *)((long)param_1 + (param_2 - 0x10));
+      uVar11 = *(long *)param_1 + (lVar10 + param_2) * -0x3c5a37a36834ced9;
+      lVar3 = *(long *)((long)param_1 + 0x18);
+      uVar7 = uVar11 + *(long *)((long)param_1 + 8);
+      uVar8 = uVar7 + *(long *)((long)param_1 + 0x10);
+      uVar9 = *(long *)((long)param_1 + (param_2 - 0x20)) + *(long *)((long)param_1 + 0x10);
+      lVar13 = *(long *)((long)param_1 + (param_2 - 8)) + lVar3;
+      uVar12 = lVar13 + uVar9;
+      uVar1 = *(long *)((long)param_1 + (param_2 - 0x18)) + uVar9;
+      lVar15 = (uVar7 >> 7 | uVar7 << 0x39) + (uVar11 >> 0x25 | uVar11 * 0x8000000) +
+               (uVar11 + lVar3 >> 0x34 | (uVar11 + lVar3) * 0x1000) +
+               (uVar8 >> 0x1f | uVar8 << 0x21);
+      uVar7 = uVar1 + lVar10;
+      uVar7 = (uVar7 + lVar13 + lVar15) * -0x3c5a37a36834ced9 +
+              (uVar8 + lVar3 + (uVar9 >> 0x25 | uVar9 * 0x8000000) + (uVar1 >> 7 | uVar1 << 0x39) +
+                       (uVar12 >> 0x34 | uVar12 * 0x1000) + (uVar7 >> 0x1f | uVar7 << 0x21)) *
+              -0x651e95c4d06fbfb1;
+      uVar7 = lVar15 + (uVar7 ^ uVar7 >> 0x2f) * -0x3c5a37a36834ced9;
+      return (uVar7 ^ uVar7 >> 0x2f) * -0x651e95c4d06fbfb1;
+    }
+    lVar15 = *(long *)((long)param_1 + (param_2 - 0x30));
+    lVar3 = *(long *)((long)param_1 + (param_2 - 0x28));
+    uVar1 = *(ulong *)((long)param_1 + (param_2 - 0x18));
+    uVar8 = (uVar1 ^ lVar15 + param_2) * -0x622015f714c7d297;
+    lVar4 = *(long *)((long)param_1 + (param_2 - 0x38));
+    lVar10 = *(long *)((long)param_1 + (param_2 - 0x10));
+    lVar5 = *(long *)((long)param_1 + (param_2 - 8));
+    uVar7 = lVar4 + lVar10;
+    uVar8 = (uVar1 ^ uVar8 >> 0x2f ^ uVar8) * -0x622015f714c7d297;
+    uVar14 = (uVar8 ^ uVar8 >> 0x2f) * -0x622015f714c7d297;
+    lVar13 = *(long *)((long)param_1 + (param_2 - 0x40)) + param_2;
+    uVar8 = lVar13 + lVar4 + lVar15;
+    uVar9 = lVar3 + lVar13 + uVar14;
+    uVar12 = uVar8 + lVar3;
+    uVar8 = (uVar8 >> 0x2c | uVar8 * 0x100000) + lVar13 + (uVar9 >> 0x15 | uVar9 << 0x2b);
+    lVar13 = uVar7 + *(long *)((long)param_1 + (param_2 - 0x20)) + -0x4b6d499041670d8d;
+    uVar9 = lVar13 + lVar3 + lVar5;
+    uVar1 = lVar13 + uVar1 + lVar10;
+    uVar11 = uVar1 + lVar5;
+    uVar9 = (uVar1 >> 0x2c | uVar1 * 0x100000) + lVar13 + (uVar9 >> 0x15 | uVar9 << 0x2b);
+    plVar6 = (long *)((long)param_1 + 0x20);
+    lVar15 = *(long *)param_1 + lVar3 * -0x4b6d499041670d8d;
+    lVar13 = -(param_2 - 1 & 0xffffffffffffffc0);
+    do {
+      uVar1 = lVar15 + uVar12 + uVar7 + plVar6[-3];
+      uVar7 = uVar7 + uVar8 + plVar6[2];
+      uVar7 = plVar6[1] + uVar12 + (uVar7 >> 0x2a | uVar7 * 0x400000) * -0x4b6d499041670d8d;
+      uVar2 = uVar14 + uVar11;
+      lVar10 = plVar6[-4] + uVar8 * -0x4b6d499041670d8d;
+      uVar8 = lVar10 + plVar6[-3] + plVar6[-2];
+      uVar12 = uVar8 + plVar6[-1];
+      uVar14 = (uVar1 >> 0x25 | uVar1 * 0x8000000) * -0x4b6d499041670d8d ^ uVar9;
+      lVar15 = (uVar2 >> 0x21 | uVar2 * 0x80000000) * -0x4b6d499041670d8d;
+      uVar1 = lVar10 + uVar11 + plVar6[-1] + uVar14;
+      uVar8 = (uVar8 >> 0x2c | uVar8 * 0x100000) + lVar10 + (uVar1 >> 0x15 | uVar1 << 0x2b);
+      lVar10 = lVar15 + uVar9 + *plVar6;
+      uVar9 = uVar7 + plVar6[-2] + lVar10 + plVar6[3];
+      uVar1 = lVar10 + plVar6[1] + plVar6[2];
+      uVar11 = uVar1 + plVar6[3];
+      uVar9 = (uVar1 >> 0x2c | uVar1 * 0x100000) + lVar10 + (uVar9 >> 0x15 | uVar9 << 0x2b);
+      plVar6 = plVar6 + 8;
+      lVar13 = lVar13 + 0x40;
+    } while (lVar13 != 0);
+    uVar12 = (uVar11 ^ uVar12) * -0x622015f714c7d297;
+    uVar12 = (uVar11 ^ uVar12 >> 0x2f ^ uVar12) * -0x622015f714c7d297;
+    uVar8 = (uVar9 ^ uVar8) * -0x622015f714c7d297;
+    uVar8 = (uVar9 ^ uVar8 >> 0x2f ^ uVar8) * -0x622015f714c7d297;
+    uVar8 = lVar15 + (uVar8 ^ uVar8 >> 0x2f) * -0x622015f714c7d297;
+    uVar7 = (uVar8 ^ uVar14 + (uVar7 ^ uVar7 >> 0x2f) * -0x4b6d499041670d8d +
+                     (uVar12 ^ uVar12 >> 0x2f) * -0x622015f714c7d297) * -0x622015f714c7d297;
+    uVar7 = (uVar8 ^ uVar7 >> 0x2f ^ uVar7) * -0x622015f714c7d297;
+    uVar7 = (uVar7 ^ uVar7 >> 0x2f) * -0x622015f714c7d297;
+  }
+  return uVar7;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002b0c
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::utils::logging::LogTagManager::FullNameInfo,
+   std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __emplace_unique_key_args<std::string,std::string_const&,unsigned_long_const&>
+// Entry: 00002b20
+// Signature: pair __thiscall __emplace_unique_key_args<std::string,std::string_const&,unsigned_long_const&>(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>> * this, string * param_1, string * param_2, ulong * param_3)
+// ========================================
+
+
+/* std::pair<std::__hash_iterator<std::__hash_node<std::__hash_value_type<std::string, unsigned
+   long>, void*>*>, bool> std::__hash_table<std::__hash_value_type<std::string, unsigned long>,
+   std::__unordered_map_hasher<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::hash<std::string >, std::equal_to<std::string >, true>,
+   std::__unordered_map_equal<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::equal_to<std::string >, std::hash<std::string >, true>,
+   std::allocator<std::__hash_value_type<std::string, unsigned long> >
+   >::__emplace_unique_key_args<std::string, std::string const&, unsigned long const&>(std::string
+   const&, std::string const&, unsigned long const&) */
+
+undefined1  [16] __thiscall
+std::
+__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+::__emplace_unique_key_args<std::string,std::string_const&,unsigned_long_const&>
+          (__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+           *this,string *param_1,string *param_2,ulong *param_3)
+
+{
+  __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+  *p_Var1;
+  string *psVar2;
+  size_t sVar3;
+  byte bVar4;
+  size_t sVar5;
+  int iVar6;
+  ulong uVar7;
+  ulong uVar8;
+  undefined8 uVar9;
+  undefined8 *puVar10;
+  ulong uVar11;
+  long *plVar12;
+  ulong uVar13;
+  ulong unaff_x26;
+  undefined2 uVar14;
+  undefined1 auVar15 [16];
+  long *local_78;
+  __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+  *p_Stack_70;
+  undefined1 local_68;
+  
+  uVar13 = *(ulong *)(param_1 + 8);
+  psVar2 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    uVar13 = (ulong)(byte)param_1[0x17];
+    psVar2 = param_1;
+  }
+  uVar7 = __murmur2_or_cityhash<unsigned_long,64ul>::operator()[abi_ne180100_
+                    ((__murmur2_or_cityhash<unsigned_long,64ul> *)&local_78,psVar2,uVar13);
+  uVar13 = *(ulong *)(this + 8);
+  if (uVar13 != 0) {
+    uVar9 = CONCAT17(POPCOUNT((char)(uVar13 >> 0x38)),
+                     CONCAT16(POPCOUNT((char)(uVar13 >> 0x30)),
+                              CONCAT15(POPCOUNT((char)(uVar13 >> 0x28)),
+                                       CONCAT14(POPCOUNT((char)(uVar13 >> 0x20)),
+                                                CONCAT13(POPCOUNT((char)(uVar13 >> 0x18)),
+                                                         CONCAT12(POPCOUNT((char)(uVar13 >> 0x10)),
+                                                                  CONCAT11(POPCOUNT((char)(uVar13 >>
+                                                                                          8)),
+                                                                           POPCOUNT((char)uVar13))))
+                                               ))));
+    uVar14 = NEON_uaddlv(uVar9,1);
+    uVar11 = CONCAT62((int6)((ulong)uVar9 >> 0x10),uVar14) & 0xffffffff;
+    if (uVar11 < 2) {
+      unaff_x26 = uVar13 - 1 & uVar7;
+    }
+    else {
+      unaff_x26 = uVar7;
+      if (uVar13 <= uVar7) {
+        uVar8 = 0;
+        if (uVar13 != 0) {
+          uVar8 = uVar7 / uVar13;
+        }
+        unaff_x26 = uVar7 - uVar8 * uVar13;
+      }
+    }
+    puVar10 = *(undefined8 **)(*(long *)this + unaff_x26 * 8);
+    if ((puVar10 != (undefined8 *)0x0) && (plVar12 = (long *)*puVar10, plVar12 != (long *)0x0)) {
+      psVar2 = *(string **)param_1;
+      sVar5 = *(size_t *)(param_1 + 8);
+      if (-1 < (char)param_1[0x17]) {
+        psVar2 = param_1;
+        sVar5 = (ulong)(byte)param_1[0x17];
+      }
+      if (uVar11 < 2) {
+        do {
+          if (plVar12[1] == uVar7) {
+            bVar4 = *(byte *)((long)plVar12 + 0x27);
+            sVar3 = plVar12[3];
+            if (-1 < (char)bVar4) {
+              sVar3 = (ulong)bVar4;
+            }
+            if (sVar3 == sVar5) {
+              if ((char)bVar4 < '\0') {
+                iVar6 = _memcmp((void *)plVar12[2],psVar2,plVar12[3]);
+                if (iVar6 == 0) goto LAB_00002d00;
+              }
+              else {
+                if (bVar4 == 0) goto LAB_00002d00;
+                uVar11 = 0;
+                while (*(string *)((long)plVar12 + uVar11 + 0x10) == psVar2[uVar11]) {
+                  uVar11 = uVar11 + 1;
+                  if (bVar4 == uVar11) goto LAB_00002d00;
+                }
+              }
+            }
+          }
+          else if ((plVar12[1] & uVar13 - 1) != unaff_x26) break;
+          plVar12 = (long *)*plVar12;
+        } while (plVar12 != (long *)0x0);
+      }
+      else {
+        do {
+          uVar11 = plVar12[1];
+          if (uVar11 == uVar7) {
+            bVar4 = *(byte *)((long)plVar12 + 0x27);
+            sVar3 = plVar12[3];
+            if (-1 < (char)bVar4) {
+              sVar3 = (ulong)bVar4;
+            }
+            if (sVar3 == sVar5) {
+              if ((char)bVar4 < '\0') {
+                iVar6 = _memcmp((void *)plVar12[2],psVar2,plVar12[3]);
+                if (iVar6 == 0) goto LAB_00002d00;
+              }
+              else {
+                if (bVar4 == 0) goto LAB_00002d00;
+                uVar11 = 0;
+                while (*(string *)((long)plVar12 + uVar11 + 0x10) == psVar2[uVar11]) {
+                  uVar11 = uVar11 + 1;
+                  if (bVar4 == uVar11) goto LAB_00002d00;
+                }
+              }
+            }
+          }
+          else {
+            if (uVar13 <= uVar11) {
+              uVar8 = 0;
+              if (uVar13 != 0) {
+                uVar8 = uVar11 / uVar13;
+              }
+              uVar11 = uVar11 - uVar8 * uVar13;
+            }
+            if (uVar11 != unaff_x26) break;
+          }
+          plVar12 = (long *)*plVar12;
+        } while (plVar12 != (long *)0x0);
+      }
+    }
+  }
+  p_Var1 = this + 0x10;
+  plVar12 = operator_new(0x30);
+  local_68 = 0;
+  *plVar12 = 0;
+  plVar12[1] = uVar7;
+  local_78 = plVar12;
+  p_Stack_70 = p_Var1;
+  if ((char)param_2[0x17] < '\0') {
+    string::__init_copy_ctor_external
+              ((string *)(plVar12 + 2),*(char **)param_2,*(ulong *)(param_2 + 8));
+  }
+  else {
+    uVar9 = *(undefined8 *)param_2;
+    plVar12[3] = *(long *)(param_2 + 8);
+    *(undefined8 *)(plVar12 + 2) = uVar9;
+    plVar12[4] = *(long *)(param_2 + 0x10);
+  }
+  plVar12[5] = *param_3;
+  local_68 = 1;
+  if ((uVar13 == 0) ||
+     (*(float *)(this + 0x20) * (float)uVar13 < (float)(*(long *)(this + 0x18) + 1))) {
+    uVar11 = 1;
+    if (2 < uVar13) {
+      uVar11 = (ulong)((uVar13 & uVar13 - 1) != 0);
+    }
+    uVar11 = uVar11 | uVar13 << 1;
+    uVar13 = (ulong)((float)(*(long *)(this + 0x18) + 1) / *(float *)(this + 0x20));
+    if (uVar11 <= uVar13) {
+      uVar11 = uVar13;
+    }
+    if (uVar11 - 1 == 0) {
+      uVar11 = 2;
+    }
+    else if ((uVar11 & uVar11 - 1) != 0) {
+      uVar11 = std::__next_prime(uVar11);
+    }
+    uVar13 = *(ulong *)(this + 8);
+    if (uVar13 < uVar11) {
+LAB_00002e00:
+      __do_rehash<true>(this,uVar11);
+    }
+    else if (uVar11 < uVar13) {
+      uVar8 = (ulong)((float)*(ulong *)(this + 0x18) / *(float *)(this + 0x20));
+      if ((uVar13 < 3) ||
+         (uVar9 = CONCAT17(POPCOUNT((char)(uVar13 >> 0x38)),
+                           CONCAT16(POPCOUNT((char)(uVar13 >> 0x30)),
+                                    CONCAT15(POPCOUNT((char)(uVar13 >> 0x28)),
+                                             CONCAT14(POPCOUNT((char)(uVar13 >> 0x20)),
+                                                      CONCAT13(POPCOUNT((char)(uVar13 >> 0x18)),
+                                                               CONCAT12(POPCOUNT((char)(uVar13 >>
+                                                                                       0x10)),
+                                                                        CONCAT11(POPCOUNT((char)(
+                                                  uVar13 >> 8)),POPCOUNT((char)uVar13)))))))),
+         uVar14 = NEON_uaddlv(uVar9,1), 1 < (uint)CONCAT62((int6)((ulong)uVar9 >> 0x10),uVar14))) {
+        uVar8 = std::__next_prime(uVar8);
+      }
+      else if (1 < uVar8) {
+        uVar8 = 1L << (-LZCOUNT(uVar8 - 1) & 0x3fU);
+      }
+      if (uVar11 <= uVar8) {
+        uVar11 = uVar8;
+      }
+      if (uVar11 < uVar13) goto LAB_00002e00;
+    }
+    uVar13 = *(ulong *)(this + 8);
+    if ((uVar13 & uVar13 - 1) == 0) {
+      unaff_x26 = uVar13 - 1 & uVar7;
+      plVar12 = *(long **)(*(long *)this + unaff_x26 * 8);
+      goto joined_r0x00002ef4;
+    }
+    if (uVar7 < uVar13) {
+      plVar12 = *(long **)(*(long *)this + uVar7 * 8);
+      unaff_x26 = uVar7;
+      goto joined_r0x00002ef4;
+    }
+    uVar11 = 0;
+    if (uVar13 != 0) {
+      uVar11 = uVar7 / uVar13;
+    }
+    unaff_x26 = uVar7 - uVar11 * uVar13;
+    plVar12 = *(long **)(*(long *)this + unaff_x26 * 8);
+    if (plVar12 == (long *)0x0) goto LAB_00002ea0;
+LAB_00002d8c:
+    *local_78 = *plVar12;
+    *plVar12 = (long)local_78;
+  }
+  else {
+    plVar12 = *(long **)(*(long *)this + unaff_x26 * 8);
+joined_r0x00002ef4:
+    if (plVar12 != (long *)0x0) goto LAB_00002d8c;
+LAB_00002ea0:
+    *local_78 = *(long *)(this + 0x10);
+    *(long **)(this + 0x10) = local_78;
+    *(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+      **)(*(long *)this + unaff_x26 * 8) = p_Var1;
+    if (*local_78 != 0) {
+      uVar7 = *(ulong *)(*local_78 + 8);
+      if ((uVar13 & uVar13 - 1) == 0) {
+        uVar7 = uVar7 & uVar13 - 1;
+      }
+      else if (uVar13 <= uVar7) {
+        uVar11 = 0;
+        if (uVar13 != 0) {
+          uVar11 = uVar7 / uVar13;
+        }
+        uVar7 = uVar7 - uVar11 * uVar13;
+      }
+      *(long **)(*(long *)this + uVar7 * 8) = local_78;
+    }
+  }
+  *(long *)(this + 0x18) = *(long *)(this + 0x18) + 1;
+  uVar9 = 1;
+LAB_00002f44:
+  auVar15._8_8_ = uVar9;
+  auVar15._0_8_ = local_78;
+  return auVar15;
+LAB_00002d00:
+  uVar9 = 0;
+  local_78 = plVar12;
+  goto LAB_00002f44;
+}
+
+
+
+
+// ========================================
+// Function: ~unique_ptr[abi:ne180100]
+// Entry: 00002f94
+// Signature: undefined __thiscall ~unique_ptr[abi:ne180100](unique_ptr<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>,std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>>>> * this)
+// ========================================
+
+
+/* std::unique_ptr<std::__hash_node<std::__hash_value_type<std::string, unsigned long>, void*>,
+   std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,
+   unsigned long>, void*> > > >::~unique_ptr[abi:ne180100]() */
+
+unique_ptr<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>,std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>>>>
+* __thiscall
+std::
+unique_ptr<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>,std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>>>>
+::~unique_ptr_abi_ne180100_
+          (unique_ptr<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>,std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>>>>
+           *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = *(void **)this;
+  *(undefined8 *)this = 0;
+  if (pvVar1 != (void *)0x0) {
+    if ((this[0x10] !=
+         (unique_ptr<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>,std::__hash_node_destructor<std::allocator<std::__hash_node<std::__hash_value_type<std::string,unsigned_long>,void*>>>>
+          )0x0) && (*(char *)((long)pvVar1 + 0x27) < '\0')) {
+      operator_delete(*(void **)((long)pvVar1 + 0x10));
+    }
+    operator_delete(pvVar1);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __do_rehash<true>
+// Entry: 00002fe0
+// Signature: void __thiscall __do_rehash<true>(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>> * this, ulong param_1)
+// ========================================
+
+
+/* void std::__hash_table<std::__hash_value_type<std::string, unsigned long>,
+   std::__unordered_map_hasher<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::hash<std::string >, std::equal_to<std::string >, true>,
+   std::__unordered_map_equal<std::string, std::__hash_value_type<std::string, unsigned long>,
+   std::equal_to<std::string >, std::hash<std::string >, true>,
+   std::allocator<std::__hash_value_type<std::string, unsigned long> > >::__do_rehash<true>(unsigned
+   long) */
+
+void __thiscall
+std::
+__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+::__do_rehash<true>(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+                    *this,ulong param_1)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  ulong uVar3;
+  long *plVar4;
+  ulong uVar5;
+  long *plVar6;
+  __hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+  *p_Var7;
+  ulong uVar8;
+  
+  if (param_1 == 0) {
+    pvVar1 = *(void **)this;
+    *(undefined8 *)this = 0;
+    if (pvVar1 != (void *)0x0) {
+      operator_delete(pvVar1);
+    }
+    *(undefined8 *)(this + 8) = 0;
+  }
+  else {
+    if (param_1 >> 0x3d != 0) {
+                    /* WARNING: Subroutine does not return */
+      __throw_bad_array_new_length_abi_ne180100_();
+    }
+    pvVar1 = operator_new(param_1 << 3);
+    pvVar2 = *(void **)this;
+    *(void **)this = pvVar1;
+    if (pvVar2 != (void *)0x0) {
+      operator_delete(pvVar2);
+    }
+    uVar3 = 0;
+    *(ulong *)(this + 8) = param_1;
+    do {
+      *(undefined8 *)(*(long *)this + uVar3 * 8) = 0;
+      uVar3 = uVar3 + 1;
+    } while (param_1 != uVar3);
+    p_Var7 = this + 0x10;
+    plVar4 = *(long **)p_Var7;
+    if (plVar4 != (long *)0x0) {
+      uVar3 = plVar4[1];
+      uVar5 = param_1 - 1;
+      if ((param_1 & uVar5) != 0) {
+        if (param_1 <= uVar3) {
+          uVar5 = 0;
+          if (param_1 != 0) {
+            uVar5 = uVar3 / param_1;
+          }
+          uVar3 = uVar3 - uVar5 * param_1;
+        }
+        *(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+          **)(*(long *)this + uVar3 * 8) = p_Var7;
+        plVar6 = (long *)*plVar4;
+joined_r0x00003104:
+        if (plVar6 == (long *)0x0) {
+          return;
+        }
+        do {
+          uVar5 = plVar6[1];
+          if (param_1 <= uVar5) {
+            uVar8 = 0;
+            if (param_1 != 0) {
+              uVar8 = uVar5 / param_1;
+            }
+            uVar5 = uVar5 - uVar8 * param_1;
+          }
+          if (uVar5 != uVar3) {
+            if (*(long *)(*(long *)this + uVar5 * 8) == 0) goto code_r0x00003170;
+            *plVar4 = *plVar6;
+            *plVar6 = **(long **)(*(long *)this + uVar5 * 8);
+            **(undefined8 **)(*(long *)this + uVar5 * 8) = plVar6;
+            plVar6 = plVar4;
+          }
+          plVar4 = plVar6;
+          plVar6 = (long *)*plVar4;
+          if (plVar6 == (long *)0x0) {
+            return;
+          }
+        } while( true );
+      }
+      *(__hash_table<std::__hash_value_type<std::string,unsigned_long>,std::__unordered_map_hasher<std::string,std::__hash_value_type<std::string,unsigned_long>,std::hash<std::string>,std::equal_to<std::string>,true>,std::__unordered_map_equal<std::string,std::__hash_value_type<std::string,unsigned_long>,std::equal_to<std::string>,std::hash<std::string>,true>,std::allocator<std::__hash_value_type<std::string,unsigned_long>>>
+        **)(*(long *)this + (uVar3 & uVar5) * 8) = p_Var7;
+      uVar3 = uVar3 & uVar5;
+      while (plVar6 = plVar4, plVar4 = (long *)*plVar6, plVar4 != (long *)0x0) {
+        uVar8 = plVar4[1] & uVar5;
+        if (uVar8 != uVar3) {
+          if (*(long *)(*(long *)this + uVar8 * 8) == 0) {
+            *(long **)(*(long *)this + uVar8 * 8) = plVar6;
+            uVar3 = uVar8;
+          }
+          else {
+            *plVar6 = *plVar4;
+            *plVar4 = **(long **)(*(long *)this + uVar8 * 8);
+            **(undefined8 **)(*(long *)this + uVar8 * 8) = plVar4;
+            plVar4 = plVar6;
+          }
+        }
+      }
+    }
+  }
+  return;
+code_r0x00003170:
+  *(long **)(*(long *)this + uVar5 * 8) = plVar4;
+  plVar4 = plVar6;
+  plVar6 = (long *)*plVar6;
+  uVar3 = uVar5;
+  goto joined_r0x00003104;
+}
+
+
+
+
+// ========================================
+// Function: __append
+// Entry: 0000318c
+// Signature: undefined __thiscall __append(vector<unsigned_long,std::allocator<unsigned_long>> * this, ulong param_1, ulong * param_2)
+// ========================================
+
+
+/* std::vector<unsigned long, std::allocator<unsigned long> >::__append(unsigned long, unsigned long
+   const&) */
+
+void __thiscall
+std::vector<unsigned_long,std::allocator<unsigned_long>>::__append
+          (vector<unsigned_long,std::allocator<unsigned_long>> *this,ulong param_1,ulong *param_2)
+
+{
+  ulong *puVar1;
+  void *pvVar2;
+  ulong uVar3;
+  ulong *puVar4;
+  ulong uVar5;
+  ulong *puVar6;
+  ulong uVar7;
+  ulong uVar8;
+  ulong *puVar9;
+  ulong *puVar10;
+  ulong *puVar11;
+  long lVar12;
+  long lVar13;
+  ulong uVar14;
+  ulong uVar15;
+  ulong uVar16;
+  
+  puVar10 = *(ulong **)(this + 8);
+  if (param_1 <= (ulong)(*(long *)(this + 0x10) - (long)puVar10 >> 3)) {
+    puVar11 = puVar10;
+    if (param_1 != 0) {
+      puVar11 = puVar10 + param_1;
+      uVar7 = param_1 - 1 & 0x1fffffffffffffff;
+      if ((0xe < uVar7) && ((param_2 + 1 <= puVar10 || (puVar10 + param_1 <= param_2)))) {
+        uVar7 = uVar7 + 1;
+        uVar3 = uVar7 & 0x3ffffffffffffffc;
+        uVar8 = *param_2;
+        puVar4 = puVar10 + 2;
+        uVar5 = uVar3;
+        do {
+          puVar4[-1] = uVar8;
+          puVar4[-2] = uVar8;
+          puVar4[1] = uVar8;
+          *puVar4 = uVar8;
+          puVar4 = puVar4 + 4;
+          uVar5 = uVar5 - 4;
+        } while (uVar5 != 0);
+        puVar10 = puVar10 + uVar3;
+        if (uVar7 == uVar3) goto LAB_00003290;
+      }
+      do {
+        puVar4 = puVar10 + 1;
+        *puVar10 = *param_2;
+        puVar10 = puVar4;
+      } while (puVar4 != puVar11);
+    }
+LAB_00003290:
+    *(ulong **)(this + 8) = puVar11;
+    return;
+  }
+  puVar11 = *(ulong **)this;
+  lVar13 = (long)puVar10 - (long)puVar11;
+  lVar12 = lVar13 >> 3;
+  uVar7 = lVar12 + param_1;
+  if (uVar7 >> 0x3d != 0) {
+    __throw_length_error_abi_ne180100_();
+LAB_000033f0:
+                    /* WARNING: Subroutine does not return */
+    __throw_bad_array_new_length_abi_ne180100_();
+  }
+  uVar3 = *(long *)(this + 0x10) - (long)puVar11;
+  uVar5 = (long)uVar3 >> 2;
+  if (uVar5 <= uVar7) {
+    uVar5 = uVar7;
+  }
+  if (0x7ffffffffffffff7 < uVar3) {
+    uVar5 = 0x1fffffffffffffff;
+  }
+  if (uVar5 == 0) {
+    pvVar2 = (void *)0x0;
+  }
+  else {
+    if (uVar5 >> 0x3d != 0) goto LAB_000033f0;
+    pvVar2 = operator_new(uVar5 << 3);
+  }
+  puVar4 = (ulong *)((long)pvVar2 + lVar12 * 8);
+  puVar1 = puVar4 + param_1;
+  uVar7 = param_1 - 1 & 0x1fffffffffffffff;
+  puVar6 = puVar4;
+  if ((uVar7 < 0x13) ||
+     ((puVar4 < param_2 + 1 && (param_2 < (ulong *)((long)pvVar2 + lVar13 + param_1 * 8))))) {
+LAB_00003310:
+    do {
+      puVar9 = puVar6 + 1;
+      *puVar6 = *param_2;
+      puVar6 = puVar9;
+    } while (puVar9 != puVar1);
+  }
+  else {
+    uVar7 = uVar7 + 1;
+    uVar8 = uVar7 & 0x3ffffffffffffffc;
+    uVar14 = *param_2;
+    puVar6 = (ulong *)((long)pvVar2 + lVar12 * 8 + 0x10);
+    uVar3 = uVar8;
+    do {
+      puVar6[-1] = uVar14;
+      puVar6[-2] = uVar14;
+      puVar6[1] = uVar14;
+      *puVar6 = uVar14;
+      puVar6 = puVar6 + 4;
+      uVar3 = uVar3 - 4;
+    } while (uVar3 != 0);
+    puVar6 = puVar4 + uVar8;
+    if (uVar7 != uVar8) goto LAB_00003310;
+  }
+  if ((long)puVar10 - (long)puVar11 != 0) {
+    uVar7 = ((long)puVar10 - (long)puVar11) - 8;
+    puVar6 = puVar10;
+    if ((0x57 < uVar7) && (0x1f < (ulong)((long)puVar10 - (lVar13 + (long)pvVar2)))) {
+      uVar7 = (uVar7 >> 3) + 1;
+      uVar8 = uVar7 & 0x3ffffffffffffffc;
+      puVar6 = puVar10 + -uVar8;
+      puVar4 = puVar4 + -uVar8;
+      puVar9 = (ulong *)((long)pvVar2 + lVar12 * 8 + -0x10);
+      puVar10 = puVar10 + -2;
+      uVar3 = uVar8;
+      do {
+        uVar16 = puVar10[-2];
+        uVar15 = puVar10[1];
+        uVar14 = *puVar10;
+        puVar9[-1] = puVar10[-1];
+        puVar9[-2] = uVar16;
+        puVar9[1] = uVar15;
+        *puVar9 = uVar14;
+        puVar9 = puVar9 + -4;
+        puVar10 = puVar10 + -4;
+        uVar3 = uVar3 - 4;
+      } while (uVar3 != 0);
+      if (uVar7 == uVar8) goto LAB_000033a0;
+    }
+    do {
+      puVar6 = puVar6 + -1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar6;
+    } while (puVar6 != puVar11);
+  }
+LAB_000033a0:
+  *(ulong **)this = puVar4;
+  *(ulong **)(this + 8) = puVar1;
+  *(void **)(this + 0x10) = (void *)((long)pvVar2 + uVar5 * 8);
+  if (puVar11 == (ulong *)0x0) {
+    return;
+  }
+  operator_delete(puVar11);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000033f4
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<unsigned long, std::allocator<unsigned long> >::__throw_length_error[abi:ne180100]()
+   const */
+
+void std::vector<unsigned_long,std::allocator<unsigned_long>>::__throw_length_error_abi_ne180100_
+               (void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 00003408
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::string, std::allocator<std::string > >::__throw_out_of_range[abi:ne180100]()
+   const */
+
+void std::vector<std::string,std::allocator<std::string>>::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 0000341c
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<unsigned long, std::allocator<unsigned long> >::__throw_out_of_range[abi:ne180100]()
+   const */
+
+void std::vector<unsigned_long,std::allocator<unsigned_long>>::__throw_out_of_range_abi_ne180100_
+               (void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00003430
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::utils::logging::LogTagManager::NamePartInfo,
+   std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __node_insert_multi
+// Entry: 00003444
+// Signature: undefined __thiscall __node_insert_multi(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>> * this, __hash_node * param_1)
+// ========================================
+
+
+/* std::__hash_table<std::__hash_value_type<unsigned long, std::pair<unsigned long, unsigned long>
+   >, std::__unordered_map_hasher<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::hash<unsigned long>, std::equal_to<unsigned
+   long>, true>, std::__unordered_map_equal<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::equal_to<unsigned long>, std::hash<unsigned
+   long>, true>, std::allocator<std::__hash_value_type<unsigned long, std::pair<unsigned long,
+   unsigned long> > > >::__node_insert_multi(std::__hash_node<std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, void*>*) */
+
+__hash_node * __thiscall
+std::
+__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+::__node_insert_multi
+          (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+           *this,__hash_node *param_1)
+
+{
+  undefined8 *puVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *p_Var5;
+  ulong uVar6;
+  undefined2 uVar7;
+  undefined8 uVar8;
+  
+  uVar2 = *(ulong *)(param_1 + 0x10);
+  *(ulong *)(param_1 + 8) = uVar2;
+  puVar1 = (undefined8 *)
+           __node_insert_multi_prepare(this,uVar2,(__hash_value_type *)(param_1 + 0x10));
+  uVar2 = *(ulong *)(this + 8);
+  uVar3 = *(ulong *)(param_1 + 8);
+  uVar8 = CONCAT17(POPCOUNT((char)(uVar2 >> 0x38)),
+                   CONCAT16(POPCOUNT((char)(uVar2 >> 0x30)),
+                            CONCAT15(POPCOUNT((char)(uVar2 >> 0x28)),
+                                     CONCAT14(POPCOUNT((char)(uVar2 >> 0x20)),
+                                              CONCAT13(POPCOUNT((char)(uVar2 >> 0x18)),
+                                                       CONCAT12(POPCOUNT((char)(uVar2 >> 0x10)),
+                                                                CONCAT11(POPCOUNT((char)(uVar2 >> 8)
+                                                                                 ),
+                                                                         POPCOUNT((char)uVar2)))))))
+                  );
+  uVar7 = NEON_uaddlv(uVar8,1);
+  uVar6 = CONCAT62((int6)((ulong)uVar8 >> 0x10),uVar7) & 0xffffffff;
+  if (uVar6 < 2) {
+    uVar3 = uVar2 - 1 & uVar3;
+  }
+  else if (uVar2 <= uVar3) {
+    uVar4 = 0;
+    if (uVar2 != 0) {
+      uVar4 = uVar3 / uVar2;
+    }
+    uVar3 = uVar3 - uVar4 * uVar2;
+  }
+  if (puVar1 == (undefined8 *)0x0) {
+    p_Var5 = this + 0x10;
+    *(undefined8 *)param_1 = *(undefined8 *)p_Var5;
+    *(__hash_node **)p_Var5 = param_1;
+    *(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+      **)(*(long *)this + uVar3 * 8) = p_Var5;
+    if (*(long *)param_1 == 0) goto LAB_00003548;
+    uVar4 = *(ulong *)(*(long *)param_1 + 8);
+    if (uVar6 < 2) {
+      uVar4 = uVar4 & uVar2 - 1;
+    }
+    else if (uVar2 <= uVar4) {
+      uVar3 = 0;
+      if (uVar2 != 0) {
+        uVar3 = uVar4 / uVar2;
+      }
+      uVar4 = uVar4 - uVar3 * uVar2;
+    }
+  }
+  else {
+    *(undefined8 *)param_1 = *puVar1;
+    *puVar1 = param_1;
+    if (*(long *)param_1 == 0) goto LAB_00003548;
+    uVar4 = *(ulong *)(*(long *)param_1 + 8);
+    if (uVar6 < 2) {
+      uVar4 = uVar4 & uVar2 - 1;
+    }
+    else if (uVar2 <= uVar4) {
+      uVar6 = 0;
+      if (uVar2 != 0) {
+        uVar6 = uVar4 / uVar2;
+      }
+      uVar4 = uVar4 - uVar6 * uVar2;
+    }
+    if (uVar4 == uVar3) goto LAB_00003548;
+  }
+  *(__hash_node **)(*(long *)this + uVar4 * 8) = param_1;
+LAB_00003548:
+  *(long *)(this + 0x18) = *(long *)(this + 0x18) + 1;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: __node_insert_multi_prepare
+// Entry: 00003568
+// Signature: undefined __thiscall __node_insert_multi_prepare(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>> * this, ulong param_1, __hash_value_type * param_2)
+// ========================================
+
+
+/* std::__hash_table<std::__hash_value_type<unsigned long, std::pair<unsigned long, unsigned long>
+   >, std::__unordered_map_hasher<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::hash<unsigned long>, std::equal_to<unsigned
+   long>, true>, std::__unordered_map_equal<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::equal_to<unsigned long>, std::hash<unsigned
+   long>, true>, std::allocator<std::__hash_value_type<unsigned long, std::pair<unsigned long,
+   unsigned long> > > >::__node_insert_multi_prepare(unsigned long, std::__hash_value_type<unsigned
+   long, std::pair<unsigned long, unsigned long> >&) */
+
+long * __thiscall
+std::
+__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+::__node_insert_multi_prepare
+          (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+           *this,ulong param_1,__hash_value_type *param_2)
+
+{
+  bool bVar1;
+  bool bVar2;
+  long *plVar3;
+  ulong uVar4;
+  ulong uVar5;
+  long *plVar6;
+  ulong uVar7;
+  ulong uVar8;
+  undefined2 uVar9;
+  undefined8 uVar10;
+  
+  uVar8 = *(ulong *)(this + 8);
+  if ((uVar8 != 0) &&
+     ((float)(*(long *)(this + 0x18) + 1) <= *(float *)(this + 0x20) * (float)uVar8)) {
+    uVar4 = uVar8 - 1;
+    uVar5 = uVar8 & uVar4;
+    goto joined_r0x00003728;
+  }
+  uVar5 = 1;
+  if (2 < uVar8) {
+    uVar5 = (ulong)((uVar8 & uVar8 - 1) != 0);
+  }
+  uVar5 = uVar5 | uVar8 << 1;
+  uVar4 = (ulong)((float)(*(long *)(this + 0x18) + 1) / *(float *)(this + 0x20));
+  if (uVar5 <= uVar4) {
+    uVar5 = uVar4;
+  }
+  if (uVar5 - 1 == 0) {
+    uVar5 = 2;
+  }
+  else if ((uVar5 & uVar5 - 1) != 0) {
+    uVar5 = std::__next_prime(uVar5);
+    uVar8 = *(ulong *)(this + 8);
+  }
+  if (uVar5 < uVar8 || uVar5 == uVar8) {
+    if (uVar5 < uVar8) {
+      uVar4 = (ulong)((float)*(ulong *)(this + 0x18) / *(float *)(this + 0x20));
+      if ((uVar8 < 3) ||
+         (uVar10 = CONCAT17(POPCOUNT((char)(uVar8 >> 0x38)),
+                            CONCAT16(POPCOUNT((char)(uVar8 >> 0x30)),
+                                     CONCAT15(POPCOUNT((char)(uVar8 >> 0x28)),
+                                              CONCAT14(POPCOUNT((char)(uVar8 >> 0x20)),
+                                                       CONCAT13(POPCOUNT((char)(uVar8 >> 0x18)),
+                                                                CONCAT12(POPCOUNT((char)(uVar8 >> 
+                                                  0x10)),CONCAT11(POPCOUNT((char)(uVar8 >> 8)),
+                                                                  POPCOUNT((char)uVar8)))))))),
+         uVar9 = NEON_uaddlv(uVar10,1), 1 < (uint)CONCAT62((int6)((ulong)uVar10 >> 0x10),uVar9))) {
+        uVar4 = std::__next_prime(uVar4);
+        if (uVar5 <= uVar4) {
+          uVar5 = uVar4;
+        }
+      }
+      else {
+        if (1 < uVar4) {
+          uVar4 = 1L << (-LZCOUNT(uVar4 - 1) & 0x3fU);
+        }
+        if (uVar5 <= uVar4) {
+          uVar5 = uVar4;
+        }
+      }
+      if (uVar5 < uVar8) goto LAB_00003690;
+    }
+  }
+  else {
+LAB_00003690:
+    __do_rehash<false>(this,uVar5);
+  }
+  uVar8 = *(ulong *)(this + 8);
+  uVar4 = uVar8 - 1;
+  uVar5 = uVar8 & uVar4;
+joined_r0x00003728:
+  if (uVar5 == 0) {
+    plVar6 = *(long **)(*(long *)this + (uVar4 & param_1) * 8);
+    if (plVar6 == (long *)0x0) {
+      return (long *)0x0;
+    }
+    bVar2 = false;
+    do {
+      while( true ) {
+        plVar3 = plVar6;
+        plVar6 = (long *)*plVar3;
+        if (plVar6 == (long *)0x0) {
+          return plVar3;
+        }
+        if ((plVar6[1] & uVar4) != (uVar4 & param_1)) {
+          return plVar3;
+        }
+        if (plVar6[1] == param_1) break;
+        if (bVar2) {
+          return plVar3;
+        }
+      }
+      bVar1 = (bool)(bVar2 & plVar6[2] != *(long *)param_2);
+      bVar2 = (bool)(bVar2 | plVar6[2] == *(long *)param_2);
+    } while (!bVar1);
+  }
+  else {
+    uVar5 = param_1;
+    if (uVar8 <= param_1) {
+      uVar5 = 0;
+      if (uVar8 != 0) {
+        uVar5 = param_1 / uVar8;
+      }
+      uVar5 = param_1 - uVar5 * uVar8;
+    }
+    plVar6 = *(long **)(*(long *)this + uVar5 * 8);
+    if (plVar6 == (long *)0x0) {
+      return (long *)0x0;
+    }
+    bVar2 = false;
+    do {
+      while( true ) {
+        plVar3 = plVar6;
+        plVar6 = (long *)*plVar3;
+        if (plVar6 == (long *)0x0) {
+          return plVar3;
+        }
+        uVar7 = plVar6[1];
+        uVar4 = uVar7;
+        if (uVar8 <= uVar7) {
+          uVar4 = 0;
+          if (uVar8 != 0) {
+            uVar4 = uVar7 / uVar8;
+          }
+          uVar4 = uVar7 - uVar4 * uVar8;
+        }
+        if (uVar4 != uVar5) {
+          return plVar3;
+        }
+        if (uVar7 == param_1) break;
+        if (bVar2) {
+          return plVar3;
+        }
+      }
+      bVar1 = (bool)(bVar2 & plVar6[2] != *(long *)param_2);
+      bVar2 = (bool)(bVar2 | plVar6[2] == *(long *)param_2);
+    } while (!bVar1);
+  }
+  return plVar3;
+}
+
+
+
+
+// ========================================
+// Function: __do_rehash<false>
+// Entry: 000037f0
+// Signature: void __thiscall __do_rehash<false>(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>> * this, ulong param_1)
+// ========================================
+
+
+/* void std::__hash_table<std::__hash_value_type<unsigned long, std::pair<unsigned long, unsigned
+   long> >, std::__unordered_map_hasher<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::hash<unsigned long>, std::equal_to<unsigned
+   long>, true>, std::__unordered_map_equal<unsigned long, std::__hash_value_type<unsigned long,
+   std::pair<unsigned long, unsigned long> >, std::equal_to<unsigned long>, std::hash<unsigned
+   long>, true>, std::allocator<std::__hash_value_type<unsigned long, std::pair<unsigned long,
+   unsigned long> > > >::__do_rehash<false>(unsigned long) */
+
+void __thiscall
+std::
+__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+::__do_rehash<false>
+          (__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+           *this,ulong param_1)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  ulong uVar3;
+  long *plVar4;
+  long *plVar5;
+  ulong uVar6;
+  __hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+  *p_Var7;
+  ulong uVar8;
+  long *plVar9;
+  long *plVar10;
+  
+  if (param_1 == 0) {
+    pvVar1 = *(void **)this;
+    *(undefined8 *)this = 0;
+    if (pvVar1 != (void *)0x0) {
+      operator_delete(pvVar1);
+    }
+    *(undefined8 *)(this + 8) = 0;
+  }
+  else {
+    if (param_1 >> 0x3d != 0) {
+                    /* WARNING: Subroutine does not return */
+      __throw_bad_array_new_length_abi_ne180100_();
+    }
+    pvVar1 = operator_new(param_1 << 3);
+    pvVar2 = *(void **)this;
+    *(void **)this = pvVar1;
+    if (pvVar2 != (void *)0x0) {
+      operator_delete(pvVar2);
+    }
+    uVar3 = 0;
+    *(ulong *)(this + 8) = param_1;
+    do {
+      *(undefined8 *)(*(long *)this + uVar3 * 8) = 0;
+      uVar3 = uVar3 + 1;
+    } while (param_1 != uVar3);
+    p_Var7 = this + 0x10;
+    plVar4 = *(long **)p_Var7;
+    if (plVar4 != (long *)0x0) {
+      uVar3 = plVar4[1];
+      uVar6 = param_1 - 1;
+      if ((param_1 & uVar6) == 0) {
+        *(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+          **)(*(long *)this + (uVar3 & uVar6) * 8) = p_Var7;
+        uVar3 = uVar3 & uVar6;
+        while (plVar5 = plVar4, plVar4 = (long *)*plVar5, plVar4 != (long *)0x0) {
+          uVar8 = plVar4[1] & uVar6;
+          if (uVar8 != uVar3) {
+            plVar10 = plVar4;
+            if (*(long *)(*(long *)this + uVar8 * 8) == 0) {
+              *(long **)(*(long *)this + uVar8 * 8) = plVar5;
+              uVar3 = uVar8;
+            }
+            else {
+              do {
+                plVar9 = plVar10;
+                plVar10 = (long *)*plVar9;
+                if (plVar10 == (long *)0x0) break;
+              } while (plVar4[2] == plVar10[2]);
+              *plVar5 = (long)plVar10;
+              *plVar9 = **(long **)(*(long *)this + uVar8 * 8);
+              **(undefined8 **)(*(long *)this + uVar8 * 8) = plVar4;
+              plVar4 = plVar5;
+            }
+          }
+        }
+      }
+      else {
+        if (param_1 <= uVar3) {
+          uVar6 = 0;
+          if (param_1 != 0) {
+            uVar6 = uVar3 / param_1;
+          }
+          uVar3 = uVar3 - uVar6 * param_1;
+        }
+        *(__hash_table<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::__unordered_map_hasher<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::hash<unsigned_long>,std::equal_to<unsigned_long>,true>,std::__unordered_map_equal<unsigned_long,std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>,std::equal_to<unsigned_long>,std::hash<unsigned_long>,true>,std::allocator<std::__hash_value_type<unsigned_long,std::pair<unsigned_long,unsigned_long>>>>
+          **)(*(long *)this + uVar3 * 8) = p_Var7;
+        while (plVar5 = plVar4, plVar4 = (long *)*plVar5, plVar4 != (long *)0x0) {
+          uVar6 = plVar4[1];
+          if (param_1 <= uVar6) {
+            uVar8 = 0;
+            if (param_1 != 0) {
+              uVar8 = uVar6 / param_1;
+            }
+            uVar6 = uVar6 - uVar8 * param_1;
+          }
+          if (uVar6 != uVar3) {
+            plVar10 = plVar4;
+            if (*(long *)(*(long *)this + uVar6 * 8) == 0) {
+              *(long **)(*(long *)this + uVar6 * 8) = plVar5;
+              uVar3 = uVar6;
+            }
+            else {
+              do {
+                plVar9 = plVar10;
+                plVar10 = (long *)*plVar9;
+                if (plVar10 == (long *)0x0) break;
+              } while (plVar4[2] == plVar10[2]);
+              *plVar5 = (long)plVar10;
+              *plVar9 = **(long **)(*(long *)this + uVar6 * 8);
+              **(long **)(*(long *)this + uVar6 * 8) = (long)plVar4;
+              plVar4 = plVar5;
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 000039c0
+// Signature: noreturn undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::utils::logging::LogTagManager::FullNameInfo,
+   std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>
+   >::__throw_out_of_range[abi:ne180100]() const */
+
+void std::
+     vector<cv::utils::logging::LogTagManager::FullNameInfo,std::allocator<cv::utils::logging::LogTagManager::FullNameInfo>>
+     ::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 000039d4
+// Signature: noreturn undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::utils::logging::LogTagManager::NamePartInfo,
+   std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>
+   >::__throw_out_of_range[abi:ne180100]() const */
+
+void std::
+     vector<cv::utils::logging::LogTagManager::NamePartInfo,std::allocator<cv::utils::logging::LogTagManager::NamePartInfo>>
+     ::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000039e8
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::utils::logging::LogTagManager::CrossReference,
+   std::allocator<cv::utils::logging::LogTagManager::CrossReference>
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<cv::utils::logging::LogTagManager::CrossReference,std::allocator<cv::utils::logging::LogTagManager::CrossReference>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00005000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00005100
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00005200
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00005300
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: parse
+// Entry: 00005400
+// Signature: undefined parse(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::parse(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: LogTagConfigParser
+// Entry: 00005500
+// Signature: undefined __thiscall LogTagConfigParser(LogTagConfigParser * this, LogLevel param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::utils::logging::LogTagConfigParser::LogTagConfigParser(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~LogTagConfigParser
+// Entry: 00005600
+// Signature: undefined __thiscall ~LogTagConfigParser(LogTagConfigParser * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* cv::utils::logging::LogTagConfigParser::~LogTagConfigParser() */
+
+void __thiscall
+cv::utils::logging::LogTagConfigParser::~LogTagConfigParser(LogTagConfigParser *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: hasMalformed
+// Entry: 00005700
+// Signature: undefined hasMalformed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::hasMalformed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getGlobalConfig
+// Entry: 00005800
+// Signature: undefined getGlobalConfig(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::getGlobalConfig(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getAnyPartConfigs
+// Entry: 00005900
+// Signature: undefined getAnyPartConfigs(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::getAnyPartConfigs(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getFullNameConfigs
+// Entry: 00005a00
+// Signature: undefined getFullNameConfigs(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::getFullNameConfigs(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getFirstPartConfigs
+// Entry: 00005b00
+// Signature: undefined getFirstPartConfigs(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::logging::LogTagConfigParser::getFirstPartConfigs(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: find
+// Entry: 00005c00
+// Signature: undefined find(char param_1, ulong param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::find(char param_1,ulong param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __get_deleter
+// Entry: 00005d00
+// Signature: undefined __get_deleter(type_info * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__shared_weak_count::__get_deleter(std::type_info const&) const */
+
+void std::__shared_weak_count::__get_deleter(type_info *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00005e00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00005f00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~out_of_range
+// Entry: 00006000
+// Signature: undefined __thiscall ~out_of_range(out_of_range * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::out_of_range::~out_of_range() */
+
+void __thiscall std::out_of_range::~out_of_range(out_of_range *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00006100
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00006200
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __next_prime
+// Entry: 00006300
+// Signature: undefined __next_prime(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__next_prime(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: lock
+// Entry: 00006400
+// Signature: undefined lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::recursive_mutex::lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: unlock
+// Entry: 00006500
+// Signature: undefined unlock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::recursive_mutex::unlock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: recursive_mutex
+// Entry: 00006600
+// Signature: undefined __thiscall recursive_mutex(recursive_mutex * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::recursive_mutex::recursive_mutex(recursive_mutex *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~recursive_mutex
+// Entry: 00006700
+// Signature: undefined __thiscall ~recursive_mutex(recursive_mutex * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::recursive_mutex::~recursive_mutex(recursive_mutex *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __release_weak
+// Entry: 00006800
+// Signature: undefined __release_weak(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__shared_weak_count::__release_weak(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_weak_count
+// Entry: 00006900
+// Signature: undefined __thiscall ~__shared_weak_count(__shared_weak_count * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::__shared_weak_count::~__shared_weak_count(__shared_weak_count *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00006a00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00007200
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00007300
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00007400
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00007500
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00007700
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00007900
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00007a00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00007b00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 103
+// Failed: 0
+// Skipped external functions: 0

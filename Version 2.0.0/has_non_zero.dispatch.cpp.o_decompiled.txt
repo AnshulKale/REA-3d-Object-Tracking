@@ -1,0 +1,2051 @@
+Program: has_non_zero.dispatch.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: getHasNonZeroTab
+// Entry: 00000000
+// Signature: undefined __cdecl getHasNonZeroTab(int param_1)
+// ========================================
+
+
+/* cv::cpu_baseline::getHasNonZeroTab(int) */
+
+undefined8 cv::cpu_baseline::getHasNonZeroTab(int param_1)
+
+{
+  return *(undefined8 *)((long)param_1 * 8 + 0xb98);
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero8u
+// Entry: 00000010
+// Signature: undefined __cdecl hasNonZero8u(uchar * param_1, ulong param_2)
+// ========================================
+
+
+/* cv::cpu_baseline::hasNonZero8u(unsigned char const*, unsigned long) */
+
+bool cv::cpu_baseline::hasNonZero8u(uchar *param_1,ulong param_2)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  int iVar3;
+  uint uVar4;
+  ulong uVar5;
+  undefined1 auVar6 [16];
+  undefined4 uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  bool bVar10;
+  uchar *puVar11;
+  ulong uVar13;
+  char cVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  uchar *puVar12;
+  
+  puVar11 = param_1;
+  if (0x1f < (uint)param_2) {
+    iVar3 = (int)(uint)param_2 >> 5;
+    puVar12 = param_1;
+    do {
+      iVar3 = iVar3 + -1;
+      puVar11 = puVar12 + 0x20;
+      uVar9 = *(undefined8 *)(puVar12 + 8);
+      uVar8 = *(undefined8 *)puVar12;
+      uVar16 = *(undefined8 *)(puVar12 + 0x18);
+      uVar15 = *(undefined8 *)(puVar12 + 0x10);
+      auVar6[1] = -((char)((ulong)uVar15 >> 8) != '\0' || (char)((ulong)uVar8 >> 8) != '\0');
+      auVar6[0] = -((char)uVar15 != '\0' || (char)uVar8 != '\0');
+      auVar6[2] = -((char)((ulong)uVar15 >> 0x10) != '\0' || (char)((ulong)uVar8 >> 0x10) != '\0');
+      auVar6[3] = -((char)((ulong)uVar15 >> 0x18) != '\0' || (char)((ulong)uVar8 >> 0x18) != '\0');
+      auVar6[4] = -((char)((ulong)uVar15 >> 0x20) != '\0' || (char)((ulong)uVar8 >> 0x20) != '\0');
+      auVar6[5] = -((char)((ulong)uVar15 >> 0x28) != '\0' || (char)((ulong)uVar8 >> 0x28) != '\0');
+      auVar6[6] = -((char)((ulong)uVar15 >> 0x30) != '\0' || (char)((ulong)uVar8 >> 0x30) != '\0');
+      auVar6[7] = -((char)((ulong)uVar15 >> 0x38) != '\0' || (char)((ulong)uVar8 >> 0x38) != '\0');
+      auVar6[8] = -((char)uVar16 != '\0' || (char)uVar9 != '\0');
+      auVar6[9] = -((char)((ulong)uVar16 >> 8) != '\0' || (char)((ulong)uVar9 >> 8) != '\0');
+      auVar6[10] = -((char)((ulong)uVar16 >> 0x10) != '\0' || (char)((ulong)uVar9 >> 0x10) != '\0');
+      auVar6[0xb] = -((char)((ulong)uVar16 >> 0x18) != '\0' || (char)((ulong)uVar9 >> 0x18) != '\0')
+      ;
+      auVar6[0xc] = -((char)((ulong)uVar16 >> 0x20) != '\0' || (char)((ulong)uVar9 >> 0x20) != '\0')
+      ;
+      auVar6[0xd] = -((char)((ulong)uVar16 >> 0x28) != '\0' || (char)((ulong)uVar9 >> 0x28) != '\0')
+      ;
+      auVar6[0xe] = -((char)((ulong)uVar16 >> 0x30) != '\0' || (char)((ulong)uVar9 >> 0x30) != '\0')
+      ;
+      auVar6[0xf] = -((char)((ulong)uVar16 >> 0x38) != '\0' || (char)((ulong)uVar9 >> 0x38) != '\0')
+      ;
+      cVar14 = NEON_umaxv(auVar6,1);
+      if (cVar14 < '\0') break;
+      puVar12 = puVar11;
+    } while (iVar3 != 0);
+    if (cVar14 < '\0') {
+      return true;
+    }
+  }
+  uVar5 = (long)(param_1 + param_2) - (long)puVar11;
+  if (param_1 + param_2 != puVar11) {
+    if (uVar5 < 4) {
+      bVar10 = false;
+      uVar13 = 0;
+    }
+    else {
+      uVar13 = 0;
+      do {
+        uVar7 = *(undefined4 *)(puVar11 + uVar13);
+        uVar4 = (uint)CONCAT12((char)((uint)uVar7 >> 8),(ushort)(byte)uVar7);
+        uVar4 = uVar4 | (uint)(CONCAT16((char)((uint)uVar7 >> 0x18),
+                                        (uint6)CONCAT14((char)((uint)uVar7 >> 0x10),uVar4)) >> 0x20)
+        ;
+        uVar1 = uVar4 >> 0x10;
+        uVar4 = uVar4 & 0xff;
+        bVar10 = uVar4 != 0 || uVar1 != 0;
+        uVar2 = uVar13 + 8;
+        uVar13 = uVar13 + 4;
+      } while ((uVar4 == 0 && uVar1 == 0) && uVar2 <= uVar5);
+    }
+    if ((bVar10 == false) && (uVar13 < uVar5)) {
+      do {
+        puVar12 = puVar11 + uVar13;
+        bVar10 = *puVar12 != '\0';
+        uVar13 = uVar13 + 1;
+      } while (*puVar12 == '\0' && uVar13 < uVar5);
+    }
+    return bVar10;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero16u
+// Entry: 000000e4
+// Signature: undefined __cdecl hasNonZero16u(ushort * param_1, ulong param_2)
+// ========================================
+
+
+/* cv::cpu_baseline::hasNonZero16u(unsigned short const*, unsigned long) */
+
+bool cv::cpu_baseline::hasNonZero16u(ushort *param_1,ulong param_2)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  int iVar3;
+  uint uVar4;
+  undefined1 auVar5 [16];
+  undefined8 uVar6;
+  short sVar7;
+  short sVar8;
+  short sVar9;
+  short sVar10;
+  undefined8 uVar11;
+  short sVar12;
+  short sVar13;
+  short sVar14;
+  bool bVar15;
+  ushort *puVar16;
+  ulong uVar17;
+  ulong uVar18;
+  ushort *puVar19;
+  undefined8 uVar20;
+  undefined8 uVar21;
+  undefined8 uVar22;
+  undefined8 uVar23;
+  undefined8 uVar24;
+  undefined8 uVar25;
+  
+  puVar16 = param_1;
+  if (0x1f < (uint)param_2) {
+    iVar3 = (int)(uint)param_2 >> 5;
+    do {
+      iVar3 = iVar3 + -1;
+      uVar11 = *(undefined8 *)(puVar16 + 4);
+      uVar6 = *(undefined8 *)puVar16;
+      uVar21 = *(undefined8 *)(puVar16 + 0xc);
+      uVar20 = *(undefined8 *)(puVar16 + 8);
+      uVar23 = *(undefined8 *)(puVar16 + 0x14);
+      uVar22 = *(undefined8 *)(puVar16 + 0x10);
+      uVar25 = *(undefined8 *)(puVar16 + 0x1c);
+      uVar24 = *(undefined8 *)(puVar16 + 0x18);
+      puVar16 = puVar16 + 0x20;
+      sVar7 = -(ushort)(CONCAT11((byte)((ulong)uVar20 >> 0x18) | (byte)((ulong)uVar6 >> 0x18) |
+                                 (byte)((ulong)uVar22 >> 0x18) | (byte)((ulong)uVar24 >> 0x18),
+                                 (byte)((ulong)uVar20 >> 0x10) | (byte)((ulong)uVar6 >> 0x10) |
+                                 (byte)((ulong)uVar22 >> 0x10) | (byte)((ulong)uVar24 >> 0x10)) != 0
+                       );
+      sVar8 = -(ushort)(CONCAT11((byte)((ulong)uVar20 >> 0x28) | (byte)((ulong)uVar6 >> 0x28) |
+                                 (byte)((ulong)uVar22 >> 0x28) | (byte)((ulong)uVar24 >> 0x28),
+                                 (byte)((ulong)uVar20 >> 0x20) | (byte)((ulong)uVar6 >> 0x20) |
+                                 (byte)((ulong)uVar22 >> 0x20) | (byte)((ulong)uVar24 >> 0x20)) != 0
+                       );
+      sVar9 = -(ushort)(CONCAT11((byte)((ulong)uVar20 >> 0x38) | (byte)((ulong)uVar6 >> 0x38) |
+                                 (byte)((ulong)uVar22 >> 0x38) | (byte)((ulong)uVar24 >> 0x38),
+                                 (byte)((ulong)uVar20 >> 0x30) | (byte)((ulong)uVar6 >> 0x30) |
+                                 (byte)((ulong)uVar22 >> 0x30) | (byte)((ulong)uVar24 >> 0x30)) != 0
+                       );
+      sVar10 = -(ushort)(CONCAT11((byte)((ulong)uVar21 >> 8) | (byte)((ulong)uVar11 >> 8) |
+                                  (byte)((ulong)uVar23 >> 8) | (byte)((ulong)uVar25 >> 8),
+                                  (byte)uVar21 | (byte)uVar11 | (byte)uVar23 | (byte)uVar25) != 0);
+      sVar12 = -(ushort)(CONCAT11((byte)((ulong)uVar21 >> 0x18) | (byte)((ulong)uVar11 >> 0x18) |
+                                  (byte)((ulong)uVar23 >> 0x18) | (byte)((ulong)uVar25 >> 0x18),
+                                  (byte)((ulong)uVar21 >> 0x10) | (byte)((ulong)uVar11 >> 0x10) |
+                                  (byte)((ulong)uVar23 >> 0x10) | (byte)((ulong)uVar25 >> 0x10)) !=
+                        0);
+      sVar13 = -(ushort)(CONCAT11((byte)((ulong)uVar21 >> 0x28) | (byte)((ulong)uVar11 >> 0x28) |
+                                  (byte)((ulong)uVar23 >> 0x28) | (byte)((ulong)uVar25 >> 0x28),
+                                  (byte)((ulong)uVar21 >> 0x20) | (byte)((ulong)uVar11 >> 0x20) |
+                                  (byte)((ulong)uVar23 >> 0x20) | (byte)((ulong)uVar25 >> 0x20)) !=
+                        0);
+      sVar14 = -(ushort)(CONCAT11((byte)((ulong)uVar21 >> 0x38) | (byte)((ulong)uVar11 >> 0x38) |
+                                  (byte)((ulong)uVar23 >> 0x38) | (byte)((ulong)uVar25 >> 0x38),
+                                  (byte)((ulong)uVar21 >> 0x30) | (byte)((ulong)uVar11 >> 0x30) |
+                                  (byte)((ulong)uVar23 >> 0x30) | (byte)((ulong)uVar25 >> 0x30)) !=
+                        0);
+      auVar5[2] = (char)sVar7;
+      auVar5._0_2_ = -(ushort)(CONCAT11((byte)((ulong)uVar20 >> 8) | (byte)((ulong)uVar6 >> 8) |
+                                        (byte)((ulong)uVar22 >> 8) | (byte)((ulong)uVar24 >> 8),
+                                        (byte)uVar20 | (byte)uVar6 | (byte)uVar22 | (byte)uVar24) !=
+                              0);
+      auVar5[3] = (char)((ushort)sVar7 >> 8);
+      auVar5[4] = (char)sVar8;
+      auVar5[5] = (char)((ushort)sVar8 >> 8);
+      auVar5[6] = (char)sVar9;
+      auVar5[7] = (char)((ushort)sVar9 >> 8);
+      auVar5[8] = (char)sVar10;
+      auVar5[9] = (char)((ushort)sVar10 >> 8);
+      auVar5[10] = (char)sVar12;
+      auVar5[0xb] = (char)((ushort)sVar12 >> 8);
+      auVar5[0xc] = (char)sVar13;
+      auVar5[0xd] = (char)((ushort)sVar13 >> 8);
+      auVar5[0xe] = (char)sVar14;
+      auVar5[0xf] = (char)((ushort)sVar14 >> 8);
+      sVar7 = NEON_umaxv(auVar5,2);
+      if (sVar7 < 0) break;
+    } while (iVar3 != 0);
+    if (sVar7 < 0) {
+      return true;
+    }
+  }
+  uVar18 = (long)param_1 + (param_2 * 2 - (long)puVar16);
+  if (uVar18 != 0) {
+    uVar17 = (long)uVar18 >> 1;
+    if (uVar18 < 8) {
+      bVar15 = false;
+      uVar18 = 0;
+    }
+    else {
+      uVar18 = 0;
+      puVar19 = puVar16;
+      do {
+        uVar4 = (uint)*(undefined8 *)puVar19 | (uint)((ulong)*(undefined8 *)puVar19 >> 0x20);
+        uVar1 = uVar4 >> 0x10;
+        uVar4 = uVar4 & 0xffff;
+        bVar15 = uVar4 != 0 || uVar1 != 0;
+        uVar2 = uVar18 + 8;
+        uVar18 = uVar18 + 4;
+        puVar19 = puVar19 + 4;
+      } while ((uVar4 == 0 && uVar1 == 0) && uVar2 <= uVar17);
+    }
+    if ((bVar15 == false) && (uVar18 < uVar17)) {
+      do {
+        puVar19 = puVar16 + uVar18;
+        bVar15 = *puVar19 != 0;
+        uVar18 = uVar18 + 1;
+      } while (*puVar19 == 0 && uVar18 < uVar17);
+    }
+    return bVar15;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero32s
+// Entry: 000001c8
+// Signature: undefined __cdecl hasNonZero32s(int * param_1, ulong param_2)
+// ========================================
+
+
+/* cv::cpu_baseline::hasNonZero32s(int const*, unsigned long) */
+
+bool cv::cpu_baseline::hasNonZero32s(int *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  int iVar2;
+  byte *pbVar3;
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  uint uVar6;
+  undefined8 uVar7;
+  int iVar8;
+  undefined8 uVar9;
+  int iVar10;
+  byte *pbVar11;
+  byte *pbVar12;
+  byte *pbVar13;
+  byte *pbVar14;
+  byte *pbVar15;
+  byte *pbVar16;
+  byte *pbVar17;
+  byte *pbVar18;
+  byte *pbVar19;
+  byte *pbVar20;
+  byte *pbVar21;
+  byte *pbVar22;
+  byte *pbVar23;
+  byte *pbVar24;
+  byte *pbVar25;
+  bool bVar26;
+  int *piVar27;
+  ulong uVar28;
+  ulong uVar29;
+  int *piVar30;
+  int iVar31;
+  byte bVar32;
+  byte bVar33;
+  byte bVar34;
+  byte bVar35;
+  byte bVar36;
+  byte bVar37;
+  byte bVar38;
+  byte bVar39;
+  byte bVar40;
+  byte bVar41;
+  undefined1 uVar42;
+  byte bVar43;
+  undefined1 uVar44;
+  byte bVar45;
+  undefined1 uVar46;
+  byte bVar47;
+  undefined1 uVar48;
+  byte bVar49;
+  undefined1 uVar50;
+  byte bVar51;
+  undefined1 uVar52;
+  byte bVar53;
+  undefined1 uVar54;
+  undefined1 auVar55 [16];
+  undefined8 uVar56;
+  undefined8 uVar57;
+  undefined8 uVar58;
+  undefined8 uVar59;
+  undefined8 uVar60;
+  undefined8 uVar61;
+  undefined8 uVar62;
+  undefined8 uVar63;
+  undefined8 uVar64;
+  undefined8 uVar65;
+  undefined8 uVar66;
+  undefined8 uVar67;
+  
+  piVar27 = param_1;
+  if (0x1f < (uint)param_2) {
+    iVar2 = (int)(uint)param_2 >> 5;
+    do {
+      iVar2 = iVar2 + -1;
+      uVar9 = *(undefined8 *)(piVar27 + 2);
+      uVar7 = *(undefined8 *)piVar27;
+      pbVar3 = (byte *)(piVar27 + 4);
+      pbVar11 = (byte *)((long)piVar27 + 0x11);
+      pbVar12 = (byte *)((long)piVar27 + 0x12);
+      pbVar13 = (byte *)((long)piVar27 + 0x13);
+      pbVar14 = (byte *)(piVar27 + 5);
+      pbVar15 = (byte *)((long)piVar27 + 0x15);
+      pbVar16 = (byte *)((long)piVar27 + 0x16);
+      pbVar17 = (byte *)((long)piVar27 + 0x17);
+      pbVar18 = (byte *)(piVar27 + 6);
+      pbVar19 = (byte *)((long)piVar27 + 0x19);
+      pbVar20 = (byte *)((long)piVar27 + 0x1a);
+      pbVar21 = (byte *)((long)piVar27 + 0x1b);
+      pbVar22 = (byte *)(piVar27 + 7);
+      pbVar23 = (byte *)((long)piVar27 + 0x1d);
+      pbVar24 = (byte *)((long)piVar27 + 0x1e);
+      pbVar25 = (byte *)((long)piVar27 + 0x1f);
+      uVar57 = *(undefined8 *)(piVar27 + 10);
+      uVar56 = *(undefined8 *)(piVar27 + 8);
+      uVar59 = *(undefined8 *)(piVar27 + 0xe);
+      uVar58 = *(undefined8 *)(piVar27 + 0xc);
+      uVar61 = *(undefined8 *)(piVar27 + 0x12);
+      uVar60 = *(undefined8 *)(piVar27 + 0x10);
+      uVar63 = *(undefined8 *)(piVar27 + 0x16);
+      uVar62 = *(undefined8 *)(piVar27 + 0x14);
+      uVar65 = *(undefined8 *)(piVar27 + 0x1a);
+      uVar64 = *(undefined8 *)(piVar27 + 0x18);
+      uVar67 = *(undefined8 *)(piVar27 + 0x1e);
+      uVar66 = *(undefined8 *)(piVar27 + 0x1c);
+      piVar27 = piVar27 + 0x20;
+      bVar32 = *pbVar3 | (byte)uVar7 | (byte)uVar56 | (byte)uVar58 |
+               (byte)uVar60 | (byte)uVar62 | (byte)uVar64 | (byte)uVar66;
+      bVar33 = *pbVar11 | (byte)((ulong)uVar7 >> 8) |
+               (byte)((ulong)uVar56 >> 8) | (byte)((ulong)uVar58 >> 8) |
+               (byte)((ulong)uVar60 >> 8) | (byte)((ulong)uVar62 >> 8) | (byte)((ulong)uVar64 >> 8)
+               | (byte)((ulong)uVar66 >> 8);
+      bVar34 = *pbVar12 | (byte)((ulong)uVar7 >> 0x10) |
+               (byte)((ulong)uVar56 >> 0x10) | (byte)((ulong)uVar58 >> 0x10) |
+               (byte)((ulong)uVar60 >> 0x10) | (byte)((ulong)uVar62 >> 0x10) |
+               (byte)((ulong)uVar64 >> 0x10) | (byte)((ulong)uVar66 >> 0x10);
+      bVar35 = *pbVar13 | (byte)((ulong)uVar7 >> 0x18) |
+               (byte)((ulong)uVar56 >> 0x18) | (byte)((ulong)uVar58 >> 0x18) |
+               (byte)((ulong)uVar60 >> 0x18) | (byte)((ulong)uVar62 >> 0x18) |
+               (byte)((ulong)uVar64 >> 0x18) | (byte)((ulong)uVar66 >> 0x18);
+      bVar36 = *pbVar14 | (byte)((ulong)uVar7 >> 0x20) |
+               (byte)((ulong)uVar56 >> 0x20) | (byte)((ulong)uVar58 >> 0x20) |
+               (byte)((ulong)uVar60 >> 0x20) | (byte)((ulong)uVar62 >> 0x20) |
+               (byte)((ulong)uVar64 >> 0x20) | (byte)((ulong)uVar66 >> 0x20);
+      bVar37 = *pbVar15 | (byte)((ulong)uVar7 >> 0x28) |
+               (byte)((ulong)uVar56 >> 0x28) | (byte)((ulong)uVar58 >> 0x28) |
+               (byte)((ulong)uVar60 >> 0x28) | (byte)((ulong)uVar62 >> 0x28) |
+               (byte)((ulong)uVar64 >> 0x28) | (byte)((ulong)uVar66 >> 0x28);
+      bVar38 = *pbVar16 | (byte)((ulong)uVar7 >> 0x30) |
+               (byte)((ulong)uVar56 >> 0x30) | (byte)((ulong)uVar58 >> 0x30) |
+               (byte)((ulong)uVar60 >> 0x30) | (byte)((ulong)uVar62 >> 0x30) |
+               (byte)((ulong)uVar64 >> 0x30) | (byte)((ulong)uVar66 >> 0x30);
+      bVar39 = *pbVar17 | (byte)((ulong)uVar7 >> 0x38) |
+               (byte)((ulong)uVar56 >> 0x38) | (byte)((ulong)uVar58 >> 0x38) |
+               (byte)((ulong)uVar60 >> 0x38) | (byte)((ulong)uVar62 >> 0x38) |
+               (byte)((ulong)uVar64 >> 0x38) | (byte)((ulong)uVar66 >> 0x38);
+      bVar40 = *pbVar18 | (byte)uVar9 | (byte)uVar57 | (byte)uVar59 |
+               (byte)uVar61 | (byte)uVar63 | (byte)uVar65 | (byte)uVar67;
+      bVar41 = *pbVar19 | (byte)((ulong)uVar9 >> 8) |
+               (byte)((ulong)uVar57 >> 8) | (byte)((ulong)uVar59 >> 8) |
+               (byte)((ulong)uVar61 >> 8) | (byte)((ulong)uVar63 >> 8) | (byte)((ulong)uVar65 >> 8)
+               | (byte)((ulong)uVar67 >> 8);
+      bVar43 = *pbVar20 | (byte)((ulong)uVar9 >> 0x10) |
+               (byte)((ulong)uVar57 >> 0x10) | (byte)((ulong)uVar59 >> 0x10) |
+               (byte)((ulong)uVar61 >> 0x10) | (byte)((ulong)uVar63 >> 0x10) |
+               (byte)((ulong)uVar65 >> 0x10) | (byte)((ulong)uVar67 >> 0x10);
+      bVar45 = *pbVar21 | (byte)((ulong)uVar9 >> 0x18) |
+               (byte)((ulong)uVar57 >> 0x18) | (byte)((ulong)uVar59 >> 0x18) |
+               (byte)((ulong)uVar61 >> 0x18) | (byte)((ulong)uVar63 >> 0x18) |
+               (byte)((ulong)uVar65 >> 0x18) | (byte)((ulong)uVar67 >> 0x18);
+      bVar47 = *pbVar22 | (byte)((ulong)uVar9 >> 0x20) |
+               (byte)((ulong)uVar57 >> 0x20) | (byte)((ulong)uVar59 >> 0x20) |
+               (byte)((ulong)uVar61 >> 0x20) | (byte)((ulong)uVar63 >> 0x20) |
+               (byte)((ulong)uVar65 >> 0x20) | (byte)((ulong)uVar67 >> 0x20);
+      bVar49 = *pbVar23 | (byte)((ulong)uVar9 >> 0x28) |
+               (byte)((ulong)uVar57 >> 0x28) | (byte)((ulong)uVar59 >> 0x28) |
+               (byte)((ulong)uVar61 >> 0x28) | (byte)((ulong)uVar63 >> 0x28) |
+               (byte)((ulong)uVar65 >> 0x28) | (byte)((ulong)uVar67 >> 0x28);
+      bVar51 = *pbVar24 | (byte)((ulong)uVar9 >> 0x30) |
+               (byte)((ulong)uVar57 >> 0x30) | (byte)((ulong)uVar59 >> 0x30) |
+               (byte)((ulong)uVar61 >> 0x30) | (byte)((ulong)uVar63 >> 0x30) |
+               (byte)((ulong)uVar65 >> 0x30) | (byte)((ulong)uVar67 >> 0x30);
+      bVar53 = *pbVar25 | (byte)((ulong)uVar9 >> 0x38) |
+               (byte)((ulong)uVar57 >> 0x38) | (byte)((ulong)uVar59 >> 0x38) |
+               (byte)((ulong)uVar61 >> 0x38) | (byte)((ulong)uVar63 >> 0x38) |
+               (byte)((ulong)uVar65 >> 0x38) | (byte)((ulong)uVar67 >> 0x38);
+      iVar31 = -(uint)((CONCAT13(bVar39,CONCAT12(bVar38,CONCAT11(bVar37,bVar36))) &
+                       CONCAT13(bVar39,CONCAT12(bVar38,CONCAT11(bVar37,bVar36)))) != 0);
+      iVar8 = -(uint)((CONCAT13(bVar45,CONCAT12(bVar43,CONCAT11(bVar41,bVar40))) &
+                      CONCAT13(bVar45,CONCAT12(bVar43,CONCAT11(bVar41,bVar40)))) != 0);
+      iVar10 = -(uint)((CONCAT13(bVar53,CONCAT12(bVar51,CONCAT11(bVar49,bVar47))) &
+                       CONCAT13(bVar53,CONCAT12(bVar51,CONCAT11(bVar49,bVar47)))) != 0);
+      auVar55[4] = (char)iVar31;
+      auVar55._0_4_ =
+           -(uint)((CONCAT13(bVar35,CONCAT12(bVar34,CONCAT11(bVar33,bVar32))) &
+                   CONCAT13(bVar35,CONCAT12(bVar34,CONCAT11(bVar33,bVar32)))) != 0);
+      auVar55[5] = (char)((uint)iVar31 >> 8);
+      auVar55[6] = (char)((uint)iVar31 >> 0x10);
+      auVar55[7] = (char)((uint)iVar31 >> 0x18);
+      auVar55[8] = (char)iVar8;
+      auVar55[9] = (char)((uint)iVar8 >> 8);
+      auVar55[10] = (char)((uint)iVar8 >> 0x10);
+      auVar55[0xb] = (char)((uint)iVar8 >> 0x18);
+      auVar55[0xc] = (char)iVar10;
+      auVar55[0xd] = (char)((uint)iVar10 >> 8);
+      auVar55[0xe] = (char)((uint)iVar10 >> 0x10);
+      auVar55[0xf] = (char)((uint)iVar10 >> 0x18);
+      uVar6 = NEON_umaxv(auVar55,4);
+      if ((int)(uVar6 & 0xff000000) < 0) break;
+    } while (iVar2 != 0);
+    if ((int)(uVar6 & 0xff000000) < 0) {
+      return true;
+    }
+  }
+  uVar29 = (long)param_1 + (param_2 * 4 - (long)piVar27);
+  if (uVar29 != 0) {
+    uVar28 = (long)uVar29 >> 2;
+    if (uVar29 < 0x10) {
+      bVar26 = false;
+      uVar29 = 0;
+    }
+    else {
+      uVar29 = 0;
+      piVar30 = piVar27;
+      do {
+        uVar7 = *(undefined8 *)(piVar30 + 2);
+        uVar42 = (undefined1)((ulong)uVar7 >> 8);
+        uVar44 = (undefined1)((ulong)uVar7 >> 0x10);
+        uVar46 = (undefined1)((ulong)uVar7 >> 0x18);
+        uVar48 = (undefined1)((ulong)uVar7 >> 0x20);
+        uVar50 = (undefined1)((ulong)uVar7 >> 0x28);
+        uVar52 = (undefined1)((ulong)uVar7 >> 0x30);
+        uVar54 = (undefined1)((ulong)uVar7 >> 0x38);
+        uVar7 = *(undefined8 *)piVar30;
+        auVar4[9] = uVar42;
+        auVar4._0_9_ = *(unkbyte9 *)piVar30;
+        auVar4[10] = uVar44;
+        auVar4[0xb] = uVar46;
+        auVar4[0xc] = uVar48;
+        auVar4[0xd] = uVar50;
+        auVar4[0xe] = uVar52;
+        auVar4[0xf] = uVar54;
+        auVar5[9] = uVar42;
+        auVar5._0_9_ = *(unkbyte9 *)piVar30;
+        auVar5[10] = uVar44;
+        auVar5[0xb] = uVar46;
+        auVar5[0xc] = uVar48;
+        auVar5[0xd] = uVar50;
+        auVar5[0xe] = uVar52;
+        auVar5[0xf] = uVar54;
+        auVar55 = NEON_ext(auVar4,auVar5,8,1);
+        iVar2 = CONCAT13((byte)((ulong)uVar7 >> 0x18) | auVar55[3],
+                         CONCAT12((byte)((ulong)uVar7 >> 0x10) | auVar55[2],
+                                  CONCAT11((byte)((ulong)uVar7 >> 8) | auVar55[1],
+                                           (byte)uVar7 | auVar55[0])));
+        iVar31 = (int)(CONCAT17((byte)((ulong)uVar7 >> 0x38) | auVar55[7],
+                                CONCAT16((byte)((ulong)uVar7 >> 0x30) | auVar55[6],
+                                         CONCAT15((byte)((ulong)uVar7 >> 0x28) | auVar55[5],
+                                                  CONCAT14((byte)((ulong)uVar7 >> 0x20) | auVar55[4]
+                                                           ,iVar2)))) >> 0x20);
+        bVar26 = iVar2 != 0 || iVar31 != 0;
+        uVar1 = uVar29 + 8;
+        uVar29 = uVar29 + 4;
+        piVar30 = piVar30 + 4;
+      } while ((iVar2 == 0 && iVar31 == 0) && uVar1 <= uVar28);
+    }
+    if ((bVar26 == false) && (uVar29 < uVar28)) {
+      do {
+        piVar30 = piVar27 + uVar29;
+        bVar26 = *piVar30 != 0;
+        uVar29 = uVar29 + 1;
+      } while (*piVar30 == 0 && uVar29 < uVar28);
+    }
+    return bVar26;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero32f
+// Entry: 000002cc
+// Signature: undefined __cdecl hasNonZero32f(float * param_1, ulong param_2)
+// ========================================
+
+
+/* cv::cpu_baseline::hasNonZero32f(float const*, unsigned long) */
+
+bool cv::cpu_baseline::hasNonZero32f(float *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  int iVar2;
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  uint uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar9;
+  int iVar10;
+  byte *pbVar11;
+  byte *pbVar12;
+  byte *pbVar13;
+  float *pfVar14;
+  byte *pbVar15;
+  byte *pbVar16;
+  byte *pbVar17;
+  float *pfVar18;
+  byte *pbVar19;
+  byte *pbVar20;
+  byte *pbVar21;
+  float *pfVar22;
+  byte *pbVar23;
+  byte *pbVar24;
+  byte *pbVar25;
+  bool bVar26;
+  float *pfVar27;
+  ulong uVar28;
+  ulong uVar29;
+  float *pfVar30;
+  undefined1 uVar31;
+  undefined1 uVar32;
+  undefined1 uVar33;
+  undefined1 uVar34;
+  undefined1 uVar35;
+  undefined1 uVar36;
+  undefined1 uVar37;
+  undefined1 auVar38 [16];
+  undefined8 uVar39;
+  undefined8 uVar40;
+  undefined8 uVar41;
+  undefined8 uVar42;
+  undefined8 uVar43;
+  undefined8 uVar44;
+  undefined8 uVar45;
+  undefined8 uVar46;
+  undefined8 uVar47;
+  undefined8 uVar48;
+  undefined8 uVar49;
+  undefined8 uVar50;
+  
+  pfVar27 = param_1;
+  if (0x1f < (uint)param_2) {
+    iVar2 = (int)(uint)param_2 >> 5;
+    do {
+      iVar2 = iVar2 + -1;
+      uVar9 = *(undefined8 *)(pfVar27 + 2);
+      uVar6 = *(undefined8 *)pfVar27;
+      pfVar30 = pfVar27 + 4;
+      pbVar11 = (byte *)((long)pfVar27 + 0x11);
+      pbVar12 = (byte *)((long)pfVar27 + 0x12);
+      pbVar13 = (byte *)((long)pfVar27 + 0x13);
+      pfVar14 = pfVar27 + 5;
+      pbVar15 = (byte *)((long)pfVar27 + 0x15);
+      pbVar16 = (byte *)((long)pfVar27 + 0x16);
+      pbVar17 = (byte *)((long)pfVar27 + 0x17);
+      pfVar18 = pfVar27 + 6;
+      pbVar19 = (byte *)((long)pfVar27 + 0x19);
+      pbVar20 = (byte *)((long)pfVar27 + 0x1a);
+      pbVar21 = (byte *)((long)pfVar27 + 0x1b);
+      pfVar22 = pfVar27 + 7;
+      pbVar23 = (byte *)((long)pfVar27 + 0x1d);
+      pbVar24 = (byte *)((long)pfVar27 + 0x1e);
+      pbVar25 = (byte *)((long)pfVar27 + 0x1f);
+      uVar40 = *(undefined8 *)(pfVar27 + 10);
+      uVar39 = *(undefined8 *)(pfVar27 + 8);
+      uVar42 = *(undefined8 *)(pfVar27 + 0xe);
+      uVar41 = *(undefined8 *)(pfVar27 + 0xc);
+      uVar44 = *(undefined8 *)(pfVar27 + 0x12);
+      uVar43 = *(undefined8 *)(pfVar27 + 0x10);
+      uVar46 = *(undefined8 *)(pfVar27 + 0x16);
+      uVar45 = *(undefined8 *)(pfVar27 + 0x14);
+      uVar48 = *(undefined8 *)(pfVar27 + 0x1a);
+      uVar47 = *(undefined8 *)(pfVar27 + 0x18);
+      uVar50 = *(undefined8 *)(pfVar27 + 0x1e);
+      uVar49 = *(undefined8 *)(pfVar27 + 0x1c);
+      pfVar27 = pfVar27 + 0x20;
+      iVar7 = -(uint)((CONCAT13(*pbVar17 | (byte)((ulong)uVar6 >> 0x38) |
+                                (byte)((ulong)uVar39 >> 0x38) | (byte)((ulong)uVar41 >> 0x38) |
+                                (byte)((ulong)uVar43 >> 0x38) | (byte)((ulong)uVar45 >> 0x38) |
+                                (byte)((ulong)uVar47 >> 0x38) | (byte)((ulong)uVar49 >> 0x38),
+                                CONCAT12(*pbVar16 | (byte)((ulong)uVar6 >> 0x30) |
+                                         (byte)((ulong)uVar39 >> 0x30) |
+                                         (byte)((ulong)uVar41 >> 0x30) |
+                                         (byte)((ulong)uVar43 >> 0x30) |
+                                         (byte)((ulong)uVar45 >> 0x30) |
+                                         (byte)((ulong)uVar47 >> 0x30) |
+                                         (byte)((ulong)uVar49 >> 0x30),
+                                         CONCAT11(*pbVar15 | (byte)((ulong)uVar6 >> 0x28) |
+                                                  (byte)((ulong)uVar39 >> 0x28) |
+                                                  (byte)((ulong)uVar41 >> 0x28) |
+                                                  (byte)((ulong)uVar43 >> 0x28) |
+                                                  (byte)((ulong)uVar45 >> 0x28) |
+                                                  (byte)((ulong)uVar47 >> 0x28) |
+                                                  (byte)((ulong)uVar49 >> 0x28),
+                                                  *(byte *)pfVar14 | (byte)((ulong)uVar6 >> 0x20) |
+                                                  (byte)((ulong)uVar39 >> 0x20) |
+                                                  (byte)((ulong)uVar41 >> 0x20) |
+                                                  (byte)((ulong)uVar43 >> 0x20) |
+                                                  (byte)((ulong)uVar45 >> 0x20) |
+                                                  (byte)((ulong)uVar47 >> 0x20) |
+                                                  (byte)((ulong)uVar49 >> 0x20)))) & 0x7fffffff) ==
+                     0);
+      iVar8 = -(uint)((CONCAT13(*pbVar21 | (byte)((ulong)uVar9 >> 0x18) |
+                                (byte)((ulong)uVar40 >> 0x18) | (byte)((ulong)uVar42 >> 0x18) |
+                                (byte)((ulong)uVar44 >> 0x18) | (byte)((ulong)uVar46 >> 0x18) |
+                                (byte)((ulong)uVar48 >> 0x18) | (byte)((ulong)uVar50 >> 0x18),
+                                CONCAT12(*pbVar20 | (byte)((ulong)uVar9 >> 0x10) |
+                                         (byte)((ulong)uVar40 >> 0x10) |
+                                         (byte)((ulong)uVar42 >> 0x10) |
+                                         (byte)((ulong)uVar44 >> 0x10) |
+                                         (byte)((ulong)uVar46 >> 0x10) |
+                                         (byte)((ulong)uVar48 >> 0x10) |
+                                         (byte)((ulong)uVar50 >> 0x10),
+                                         CONCAT11(*pbVar19 | (byte)((ulong)uVar9 >> 8) |
+                                                  (byte)((ulong)uVar40 >> 8) |
+                                                  (byte)((ulong)uVar42 >> 8) |
+                                                  (byte)((ulong)uVar44 >> 8) |
+                                                  (byte)((ulong)uVar46 >> 8) |
+                                                  (byte)((ulong)uVar48 >> 8) |
+                                                  (byte)((ulong)uVar50 >> 8),
+                                                  *(byte *)pfVar18 | (byte)uVar9 |
+                                                  (byte)uVar40 | (byte)uVar42 |
+                                                  (byte)uVar44 | (byte)uVar46 | (byte)uVar48 |
+                                                  (byte)uVar50))) & 0x7fffffff) == 0);
+      iVar10 = -(uint)((CONCAT13(*pbVar25 | (byte)((ulong)uVar9 >> 0x38) |
+                                 (byte)((ulong)uVar40 >> 0x38) | (byte)((ulong)uVar42 >> 0x38) |
+                                 (byte)((ulong)uVar44 >> 0x38) | (byte)((ulong)uVar46 >> 0x38) |
+                                 (byte)((ulong)uVar48 >> 0x38) | (byte)((ulong)uVar50 >> 0x38),
+                                 CONCAT12(*pbVar24 | (byte)((ulong)uVar9 >> 0x30) |
+                                          (byte)((ulong)uVar40 >> 0x30) |
+                                          (byte)((ulong)uVar42 >> 0x30) |
+                                          (byte)((ulong)uVar44 >> 0x30) |
+                                          (byte)((ulong)uVar46 >> 0x30) |
+                                          (byte)((ulong)uVar48 >> 0x30) |
+                                          (byte)((ulong)uVar50 >> 0x30),
+                                          CONCAT11(*pbVar23 | (byte)((ulong)uVar9 >> 0x28) |
+                                                   (byte)((ulong)uVar40 >> 0x28) |
+                                                   (byte)((ulong)uVar42 >> 0x28) |
+                                                   (byte)((ulong)uVar44 >> 0x28) |
+                                                   (byte)((ulong)uVar46 >> 0x28) |
+                                                   (byte)((ulong)uVar48 >> 0x28) |
+                                                   (byte)((ulong)uVar50 >> 0x28),
+                                                   *(byte *)pfVar22 | (byte)((ulong)uVar9 >> 0x20) |
+                                                   (byte)((ulong)uVar40 >> 0x20) |
+                                                   (byte)((ulong)uVar42 >> 0x20) |
+                                                   (byte)((ulong)uVar44 >> 0x20) |
+                                                   (byte)((ulong)uVar46 >> 0x20) |
+                                                   (byte)((ulong)uVar48 >> 0x20) |
+                                                   (byte)((ulong)uVar50 >> 0x20)))) & 0x7fffffff) ==
+                      0);
+      auVar38[4] = (char)iVar7;
+      auVar38._0_4_ =
+           -(uint)((CONCAT13(*pbVar13 | (byte)((ulong)uVar6 >> 0x18) |
+                             (byte)((ulong)uVar39 >> 0x18) | (byte)((ulong)uVar41 >> 0x18) |
+                             (byte)((ulong)uVar43 >> 0x18) | (byte)((ulong)uVar45 >> 0x18) |
+                             (byte)((ulong)uVar47 >> 0x18) | (byte)((ulong)uVar49 >> 0x18),
+                             CONCAT12(*pbVar12 | (byte)((ulong)uVar6 >> 0x10) |
+                                      (byte)((ulong)uVar39 >> 0x10) | (byte)((ulong)uVar41 >> 0x10)
+                                      | (byte)((ulong)uVar43 >> 0x10) |
+                                        (byte)((ulong)uVar45 >> 0x10) |
+                                        (byte)((ulong)uVar47 >> 0x10) |
+                                      (byte)((ulong)uVar49 >> 0x10),
+                                      CONCAT11(*pbVar11 | (byte)((ulong)uVar6 >> 8) |
+                                               (byte)((ulong)uVar39 >> 8) |
+                                               (byte)((ulong)uVar41 >> 8) |
+                                               (byte)((ulong)uVar43 >> 8) |
+                                               (byte)((ulong)uVar45 >> 8) |
+                                               (byte)((ulong)uVar47 >> 8) |
+                                               (byte)((ulong)uVar49 >> 8),
+                                               *(byte *)pfVar30 | (byte)uVar6 |
+                                               (byte)uVar39 | (byte)uVar41 |
+                                               (byte)uVar43 | (byte)uVar45 | (byte)uVar47 |
+                                               (byte)uVar49))) & 0x7fffffff) == 0);
+      auVar38[5] = (char)((uint)iVar7 >> 8);
+      auVar38[6] = (char)((uint)iVar7 >> 0x10);
+      auVar38[7] = (char)((uint)iVar7 >> 0x18);
+      auVar38[8] = (char)iVar8;
+      auVar38[9] = (char)((uint)iVar8 >> 8);
+      auVar38[10] = (char)((uint)iVar8 >> 0x10);
+      auVar38[0xb] = (char)((uint)iVar8 >> 0x18);
+      auVar38[0xc] = (char)iVar10;
+      auVar38[0xd] = (char)((uint)iVar10 >> 8);
+      auVar38[0xe] = (char)((uint)iVar10 >> 0x10);
+      auVar38[0xf] = (char)((uint)iVar10 >> 0x18);
+      uVar5 = NEON_uminv(auVar38,4);
+      if (-1 < (int)(uVar5 & 0xff000000)) break;
+    } while (iVar2 != 0);
+    if (-1 < (int)(uVar5 & 0xff000000)) {
+      return true;
+    }
+  }
+  uVar29 = (long)param_1 + (param_2 * 4 - (long)pfVar27);
+  if (uVar29 != 0) {
+    uVar28 = (long)uVar29 >> 2;
+    if (uVar29 < 0x10) {
+      uVar29 = 0;
+      bVar26 = false;
+    }
+    else {
+      uVar29 = 0;
+      pfVar30 = pfVar27;
+      do {
+        uVar6 = *(undefined8 *)(pfVar30 + 2);
+        uVar31 = (undefined1)((ulong)uVar6 >> 8);
+        uVar32 = (undefined1)((ulong)uVar6 >> 0x10);
+        uVar33 = (undefined1)((ulong)uVar6 >> 0x18);
+        uVar34 = (undefined1)((ulong)uVar6 >> 0x20);
+        uVar35 = (undefined1)((ulong)uVar6 >> 0x28);
+        uVar36 = (undefined1)((ulong)uVar6 >> 0x30);
+        uVar37 = (undefined1)((ulong)uVar6 >> 0x38);
+        uVar6 = *(undefined8 *)pfVar30;
+        auVar3[9] = uVar31;
+        auVar3._0_9_ = *(unkbyte9 *)pfVar30;
+        auVar3[10] = uVar32;
+        auVar3[0xb] = uVar33;
+        auVar3[0xc] = uVar34;
+        auVar3[0xd] = uVar35;
+        auVar3[0xe] = uVar36;
+        auVar3[0xf] = uVar37;
+        auVar4[9] = uVar31;
+        auVar4._0_9_ = *(unkbyte9 *)pfVar30;
+        auVar4[10] = uVar32;
+        auVar4[0xb] = uVar33;
+        auVar4[0xc] = uVar34;
+        auVar4[0xd] = uVar35;
+        auVar4[0xe] = uVar36;
+        auVar4[0xf] = uVar37;
+        auVar38 = NEON_ext(auVar3,auVar4,8,1);
+        uVar5 = CONCAT13((byte)((ulong)uVar6 >> 0x18) | auVar38[3],
+                         CONCAT12((byte)((ulong)uVar6 >> 0x10) | auVar38[2],
+                                  CONCAT11((byte)((ulong)uVar6 >> 8) | auVar38[1],
+                                           (byte)uVar6 | auVar38[0])));
+        uVar5 = (uVar5 | (uint)(CONCAT17((byte)((ulong)uVar6 >> 0x38) | auVar38[7],
+                                         CONCAT16((byte)((ulong)uVar6 >> 0x30) | auVar38[6],
+                                                  CONCAT15((byte)((ulong)uVar6 >> 0x28) | auVar38[5]
+                                                           ,CONCAT14((byte)((ulong)uVar6 >> 0x20) |
+                                                                     auVar38[4],uVar5)))) >> 0x20))
+                & 0x7fffffff;
+        bVar26 = uVar5 != 0;
+        uVar1 = uVar29 + 8;
+        uVar29 = uVar29 + 4;
+        pfVar30 = pfVar30 + 4;
+      } while (uVar5 == 0 && uVar1 <= uVar28);
+    }
+    if ((bVar26 == false) && (uVar29 < uVar28)) {
+      do {
+        bVar26 = pfVar27[uVar29] != 0.0;
+        uVar29 = uVar29 + 1;
+      } while (!bVar26 && uVar29 < uVar28);
+    }
+    return bVar26;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero64f
+// Entry: 000003d0
+// Signature: undefined __cdecl hasNonZero64f(double * param_1, ulong param_2)
+// ========================================
+
+
+/* cv::cpu_baseline::hasNonZero64f(double const*, unsigned long) */
+
+bool cv::cpu_baseline::hasNonZero64f(double *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  ulong uVar2;
+  bool bVar3;
+  undefined1 auVar4 [16];
+  bool bVar5;
+  double *pdVar6;
+  int iVar7;
+  ulong uVar8;
+  ulong uVar9;
+  double *pdVar10;
+  byte bVar11;
+  byte bVar12;
+  byte bVar13;
+  byte bVar14;
+  byte bVar15;
+  byte bVar16;
+  byte bVar17;
+  byte bVar18;
+  byte bVar19;
+  byte bVar20;
+  byte bVar21;
+  byte bVar22;
+  byte bVar23;
+  byte bVar24;
+  byte bVar25;
+  byte bVar26;
+  undefined1 auVar27 [16];
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  double dVar38;
+  double dVar39;
+  double dVar40;
+  double dVar41;
+  double dVar42;
+  double dVar43;
+  double dVar44;
+  double dVar45;
+  double dVar46;
+  double dVar47;
+  double dVar48;
+  double dVar49;
+  double dVar50;
+  double dVar51;
+  double dVar52;
+  double dVar53;
+  double dVar54;
+  double dVar55;
+  double dVar56;
+  double dVar57;
+  double dVar58;
+  double dVar59;
+  
+  pdVar6 = param_1;
+  if (0x1f < (uint)param_2) {
+    iVar7 = (int)(uint)param_2 >> 5;
+    do {
+      iVar7 = iVar7 + -1;
+      dVar29 = pdVar6[1];
+      dVar28 = *pdVar6;
+      dVar31 = pdVar6[3];
+      dVar30 = pdVar6[2];
+      dVar33 = pdVar6[5];
+      dVar32 = pdVar6[4];
+      dVar35 = pdVar6[7];
+      dVar34 = pdVar6[6];
+      dVar37 = pdVar6[9];
+      dVar36 = pdVar6[8];
+      dVar39 = pdVar6[0xb];
+      dVar38 = pdVar6[10];
+      dVar41 = pdVar6[0xd];
+      dVar40 = pdVar6[0xc];
+      dVar43 = pdVar6[0xf];
+      dVar42 = pdVar6[0xe];
+      dVar45 = pdVar6[0x11];
+      dVar44 = pdVar6[0x10];
+      dVar47 = pdVar6[0x13];
+      dVar46 = pdVar6[0x12];
+      dVar49 = pdVar6[0x15];
+      dVar48 = pdVar6[0x14];
+      dVar51 = pdVar6[0x17];
+      dVar50 = pdVar6[0x16];
+      dVar53 = pdVar6[0x19];
+      dVar52 = pdVar6[0x18];
+      dVar55 = pdVar6[0x1b];
+      dVar54 = pdVar6[0x1a];
+      dVar57 = pdVar6[0x1d];
+      dVar56 = pdVar6[0x1c];
+      dVar59 = pdVar6[0x1f];
+      dVar58 = pdVar6[0x1e];
+      pdVar6 = pdVar6 + 0x20;
+      bVar5 = (CONCAT17((byte)((ulong)dVar30 >> 0x38) | (byte)((ulong)dVar28 >> 0x38) |
+                        (byte)((ulong)dVar32 >> 0x38) | (byte)((ulong)dVar34 >> 0x38) |
+                        (byte)((ulong)dVar36 >> 0x38) | (byte)((ulong)dVar38 >> 0x38) |
+                        (byte)((ulong)dVar40 >> 0x38) |
+                        (byte)((ulong)dVar42 >> 0x38) | (byte)((ulong)dVar44 >> 0x38) |
+                        (byte)((ulong)dVar46 >> 0x38) | (byte)((ulong)dVar48 >> 0x38) |
+                        (byte)((ulong)dVar50 >> 0x38) | (byte)((ulong)dVar52 >> 0x38) |
+                        (byte)((ulong)dVar54 >> 0x38) | (byte)((ulong)dVar56 >> 0x38) |
+                        (byte)((ulong)dVar58 >> 0x38),
+                        CONCAT16((byte)((ulong)dVar30 >> 0x30) | (byte)((ulong)dVar28 >> 0x30) |
+                                 (byte)((ulong)dVar32 >> 0x30) | (byte)((ulong)dVar34 >> 0x30) |
+                                 (byte)((ulong)dVar36 >> 0x30) | (byte)((ulong)dVar38 >> 0x30) |
+                                 (byte)((ulong)dVar40 >> 0x30) |
+                                 (byte)((ulong)dVar42 >> 0x30) | (byte)((ulong)dVar44 >> 0x30) |
+                                 (byte)((ulong)dVar46 >> 0x30) | (byte)((ulong)dVar48 >> 0x30) |
+                                 (byte)((ulong)dVar50 >> 0x30) | (byte)((ulong)dVar52 >> 0x30) |
+                                 (byte)((ulong)dVar54 >> 0x30) | (byte)((ulong)dVar56 >> 0x30) |
+                                 (byte)((ulong)dVar58 >> 0x30),
+                                 CONCAT15((byte)((ulong)dVar30 >> 0x28) |
+                                          (byte)((ulong)dVar28 >> 0x28) |
+                                          (byte)((ulong)dVar32 >> 0x28) |
+                                          (byte)((ulong)dVar34 >> 0x28) |
+                                          (byte)((ulong)dVar36 >> 0x28) |
+                                          (byte)((ulong)dVar38 >> 0x28) |
+                                          (byte)((ulong)dVar40 >> 0x28) |
+                                          (byte)((ulong)dVar42 >> 0x28) |
+                                          (byte)((ulong)dVar44 >> 0x28) |
+                                          (byte)((ulong)dVar46 >> 0x28) |
+                                          (byte)((ulong)dVar48 >> 0x28) |
+                                          (byte)((ulong)dVar50 >> 0x28) |
+                                          (byte)((ulong)dVar52 >> 0x28) |
+                                          (byte)((ulong)dVar54 >> 0x28) |
+                                          (byte)((ulong)dVar56 >> 0x28) |
+                                          (byte)((ulong)dVar58 >> 0x28),
+                                          CONCAT14((byte)((ulong)dVar30 >> 0x20) |
+                                                   (byte)((ulong)dVar28 >> 0x20) |
+                                                   (byte)((ulong)dVar32 >> 0x20) |
+                                                   (byte)((ulong)dVar34 >> 0x20) |
+                                                   (byte)((ulong)dVar36 >> 0x20) |
+                                                   (byte)((ulong)dVar38 >> 0x20) |
+                                                   (byte)((ulong)dVar40 >> 0x20) |
+                                                   (byte)((ulong)dVar42 >> 0x20) |
+                                                   (byte)((ulong)dVar44 >> 0x20) |
+                                                   (byte)((ulong)dVar46 >> 0x20) |
+                                                   (byte)((ulong)dVar48 >> 0x20) |
+                                                   (byte)((ulong)dVar50 >> 0x20) |
+                                                   (byte)((ulong)dVar52 >> 0x20) |
+                                                   (byte)((ulong)dVar54 >> 0x20) |
+                                                   (byte)((ulong)dVar56 >> 0x20) |
+                                                   (byte)((ulong)dVar58 >> 0x20),
+                                                   CONCAT13((byte)((ulong)dVar30 >> 0x18) |
+                                                            (byte)((ulong)dVar28 >> 0x18) |
+                                                            (byte)((ulong)dVar32 >> 0x18) |
+                                                            (byte)((ulong)dVar34 >> 0x18) |
+                                                            (byte)((ulong)dVar36 >> 0x18) |
+                                                            (byte)((ulong)dVar38 >> 0x18) |
+                                                            (byte)((ulong)dVar40 >> 0x18) |
+                                                            (byte)((ulong)dVar42 >> 0x18) |
+                                                            (byte)((ulong)dVar44 >> 0x18) |
+                                                            (byte)((ulong)dVar46 >> 0x18) |
+                                                            (byte)((ulong)dVar48 >> 0x18) |
+                                                            (byte)((ulong)dVar50 >> 0x18) |
+                                                            (byte)((ulong)dVar52 >> 0x18) |
+                                                            (byte)((ulong)dVar54 >> 0x18) |
+                                                            (byte)((ulong)dVar56 >> 0x18) |
+                                                            (byte)((ulong)dVar58 >> 0x18),
+                                                            CONCAT12((byte)((ulong)dVar30 >> 0x10) |
+                                                                     (byte)((ulong)dVar28 >> 0x10) |
+                                                                     (byte)((ulong)dVar32 >> 0x10) |
+                                                                     (byte)((ulong)dVar34 >> 0x10) |
+                                                                     (byte)((ulong)dVar36 >> 0x10) |
+                                                                     (byte)((ulong)dVar38 >> 0x10) |
+                                                                     (byte)((ulong)dVar40 >> 0x10) |
+                                                                     (byte)((ulong)dVar42 >> 0x10) |
+                                                                     (byte)((ulong)dVar44 >> 0x10) |
+                                                                     (byte)((ulong)dVar46 >> 0x10) |
+                                                                     (byte)((ulong)dVar48 >> 0x10) |
+                                                                     (byte)((ulong)dVar50 >> 0x10) |
+                                                                     (byte)((ulong)dVar52 >> 0x10) |
+                                                                     (byte)((ulong)dVar54 >> 0x10) |
+                                                                     (byte)((ulong)dVar56 >> 0x10) |
+                                                                     (byte)((ulong)dVar58 >> 0x10),
+                                                                     CONCAT11((byte)((ulong)dVar30
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar28
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar32
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar34
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar36
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar38
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar40
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar42
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar44
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar46
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar48
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar50
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar52
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar54
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar56
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar58
+                                                                                    >> 8),
+                                                                              SUB81(dVar30,0) |
+                                                                              SUB81(dVar28,0) |
+                                                                              SUB81(dVar32,0) |
+                                                                              SUB81(dVar34,0) |
+                                                                              SUB81(dVar36,0) |
+                                                                              SUB81(dVar38,0) |
+                                                                              SUB81(dVar40,0) |
+                                                                              SUB81(dVar42,0) |
+                                                                              SUB81(dVar44,0) |
+                                                                              SUB81(dVar46,0) |
+                                                                              SUB81(dVar48,0) |
+                                                                              SUB81(dVar50,0) |
+                                                                              SUB81(dVar52,0) |
+                                                                              SUB81(dVar54,0) |
+                                                                              SUB81(dVar56,0) |
+                                                                              SUB81(dVar58,0))))))))
+              & 0x7fffffffffffffff) == 0;
+      bVar3 = (CONCAT17((byte)((ulong)dVar31 >> 0x38) | (byte)((ulong)dVar29 >> 0x38) |
+                        (byte)((ulong)dVar33 >> 0x38) | (byte)((ulong)dVar35 >> 0x38) |
+                        (byte)((ulong)dVar37 >> 0x38) | (byte)((ulong)dVar39 >> 0x38) |
+                        (byte)((ulong)dVar41 >> 0x38) |
+                        (byte)((ulong)dVar43 >> 0x38) | (byte)((ulong)dVar45 >> 0x38) |
+                        (byte)((ulong)dVar47 >> 0x38) | (byte)((ulong)dVar49 >> 0x38) |
+                        (byte)((ulong)dVar51 >> 0x38) | (byte)((ulong)dVar53 >> 0x38) |
+                        (byte)((ulong)dVar55 >> 0x38) | (byte)((ulong)dVar57 >> 0x38) |
+                        (byte)((ulong)dVar59 >> 0x38),
+                        CONCAT16((byte)((ulong)dVar31 >> 0x30) | (byte)((ulong)dVar29 >> 0x30) |
+                                 (byte)((ulong)dVar33 >> 0x30) | (byte)((ulong)dVar35 >> 0x30) |
+                                 (byte)((ulong)dVar37 >> 0x30) | (byte)((ulong)dVar39 >> 0x30) |
+                                 (byte)((ulong)dVar41 >> 0x30) |
+                                 (byte)((ulong)dVar43 >> 0x30) | (byte)((ulong)dVar45 >> 0x30) |
+                                 (byte)((ulong)dVar47 >> 0x30) | (byte)((ulong)dVar49 >> 0x30) |
+                                 (byte)((ulong)dVar51 >> 0x30) | (byte)((ulong)dVar53 >> 0x30) |
+                                 (byte)((ulong)dVar55 >> 0x30) | (byte)((ulong)dVar57 >> 0x30) |
+                                 (byte)((ulong)dVar59 >> 0x30),
+                                 CONCAT15((byte)((ulong)dVar31 >> 0x28) |
+                                          (byte)((ulong)dVar29 >> 0x28) |
+                                          (byte)((ulong)dVar33 >> 0x28) |
+                                          (byte)((ulong)dVar35 >> 0x28) |
+                                          (byte)((ulong)dVar37 >> 0x28) |
+                                          (byte)((ulong)dVar39 >> 0x28) |
+                                          (byte)((ulong)dVar41 >> 0x28) |
+                                          (byte)((ulong)dVar43 >> 0x28) |
+                                          (byte)((ulong)dVar45 >> 0x28) |
+                                          (byte)((ulong)dVar47 >> 0x28) |
+                                          (byte)((ulong)dVar49 >> 0x28) |
+                                          (byte)((ulong)dVar51 >> 0x28) |
+                                          (byte)((ulong)dVar53 >> 0x28) |
+                                          (byte)((ulong)dVar55 >> 0x28) |
+                                          (byte)((ulong)dVar57 >> 0x28) |
+                                          (byte)((ulong)dVar59 >> 0x28),
+                                          CONCAT14((byte)((ulong)dVar31 >> 0x20) |
+                                                   (byte)((ulong)dVar29 >> 0x20) |
+                                                   (byte)((ulong)dVar33 >> 0x20) |
+                                                   (byte)((ulong)dVar35 >> 0x20) |
+                                                   (byte)((ulong)dVar37 >> 0x20) |
+                                                   (byte)((ulong)dVar39 >> 0x20) |
+                                                   (byte)((ulong)dVar41 >> 0x20) |
+                                                   (byte)((ulong)dVar43 >> 0x20) |
+                                                   (byte)((ulong)dVar45 >> 0x20) |
+                                                   (byte)((ulong)dVar47 >> 0x20) |
+                                                   (byte)((ulong)dVar49 >> 0x20) |
+                                                   (byte)((ulong)dVar51 >> 0x20) |
+                                                   (byte)((ulong)dVar53 >> 0x20) |
+                                                   (byte)((ulong)dVar55 >> 0x20) |
+                                                   (byte)((ulong)dVar57 >> 0x20) |
+                                                   (byte)((ulong)dVar59 >> 0x20),
+                                                   CONCAT13((byte)((ulong)dVar31 >> 0x18) |
+                                                            (byte)((ulong)dVar29 >> 0x18) |
+                                                            (byte)((ulong)dVar33 >> 0x18) |
+                                                            (byte)((ulong)dVar35 >> 0x18) |
+                                                            (byte)((ulong)dVar37 >> 0x18) |
+                                                            (byte)((ulong)dVar39 >> 0x18) |
+                                                            (byte)((ulong)dVar41 >> 0x18) |
+                                                            (byte)((ulong)dVar43 >> 0x18) |
+                                                            (byte)((ulong)dVar45 >> 0x18) |
+                                                            (byte)((ulong)dVar47 >> 0x18) |
+                                                            (byte)((ulong)dVar49 >> 0x18) |
+                                                            (byte)((ulong)dVar51 >> 0x18) |
+                                                            (byte)((ulong)dVar53 >> 0x18) |
+                                                            (byte)((ulong)dVar55 >> 0x18) |
+                                                            (byte)((ulong)dVar57 >> 0x18) |
+                                                            (byte)((ulong)dVar59 >> 0x18),
+                                                            CONCAT12((byte)((ulong)dVar31 >> 0x10) |
+                                                                     (byte)((ulong)dVar29 >> 0x10) |
+                                                                     (byte)((ulong)dVar33 >> 0x10) |
+                                                                     (byte)((ulong)dVar35 >> 0x10) |
+                                                                     (byte)((ulong)dVar37 >> 0x10) |
+                                                                     (byte)((ulong)dVar39 >> 0x10) |
+                                                                     (byte)((ulong)dVar41 >> 0x10) |
+                                                                     (byte)((ulong)dVar43 >> 0x10) |
+                                                                     (byte)((ulong)dVar45 >> 0x10) |
+                                                                     (byte)((ulong)dVar47 >> 0x10) |
+                                                                     (byte)((ulong)dVar49 >> 0x10) |
+                                                                     (byte)((ulong)dVar51 >> 0x10) |
+                                                                     (byte)((ulong)dVar53 >> 0x10) |
+                                                                     (byte)((ulong)dVar55 >> 0x10) |
+                                                                     (byte)((ulong)dVar57 >> 0x10) |
+                                                                     (byte)((ulong)dVar59 >> 0x10),
+                                                                     CONCAT11((byte)((ulong)dVar31
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar29
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar33
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar35
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar37
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar39
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar41
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar43
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar45
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar47
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar49
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar51
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar53
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar55
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar57
+                                                                                    >> 8) |
+                                                                              (byte)((ulong)dVar59
+                                                                                    >> 8),
+                                                                              SUB81(dVar31,0) |
+                                                                              SUB81(dVar29,0) |
+                                                                              SUB81(dVar33,0) |
+                                                                              SUB81(dVar35,0) |
+                                                                              SUB81(dVar37,0) |
+                                                                              SUB81(dVar39,0) |
+                                                                              SUB81(dVar41,0) |
+                                                                              SUB81(dVar43,0) |
+                                                                              SUB81(dVar45,0) |
+                                                                              SUB81(dVar47,0) |
+                                                                              SUB81(dVar49,0) |
+                                                                              SUB81(dVar51,0) |
+                                                                              SUB81(dVar53,0) |
+                                                                              SUB81(dVar55,0) |
+                                                                              SUB81(dVar57,0) |
+                                                                              SUB81(dVar59,0))))))))
+              & 0x7fffffffffffffff) == 0;
+    } while ((bVar5 && bVar3) && iVar7 != 0);
+    if (!bVar5 || !bVar3) {
+      return true;
+    }
+  }
+  uVar9 = (long)param_1 + (param_2 * 8 - (long)pdVar6);
+  if (uVar9 != 0) {
+    uVar8 = (long)uVar9 >> 3;
+    if (uVar9 < 0x20) {
+      uVar9 = 0;
+      bVar5 = false;
+    }
+    else {
+      uVar9 = 0;
+      pdVar10 = pdVar6;
+      do {
+        dVar29 = pdVar10[3];
+        dVar28 = pdVar10[2];
+        bVar11 = *(byte *)pdVar10 | SUB81(dVar28,0);
+        bVar12 = *(byte *)((long)pdVar10 + 1) | (byte)((ulong)dVar28 >> 8);
+        bVar13 = *(byte *)((long)pdVar10 + 2) | (byte)((ulong)dVar28 >> 0x10);
+        bVar14 = *(byte *)((long)pdVar10 + 3) | (byte)((ulong)dVar28 >> 0x18);
+        bVar15 = *(byte *)((long)pdVar10 + 4) | (byte)((ulong)dVar28 >> 0x20);
+        bVar16 = *(byte *)((long)pdVar10 + 5) | (byte)((ulong)dVar28 >> 0x28);
+        bVar17 = *(byte *)((long)pdVar10 + 6) | (byte)((ulong)dVar28 >> 0x30);
+        bVar18 = *(byte *)((long)pdVar10 + 7) | (byte)((ulong)dVar28 >> 0x38);
+        bVar19 = *(byte *)(pdVar10 + 1) | SUB81(dVar29,0);
+        bVar20 = *(byte *)((long)pdVar10 + 9) | (byte)((ulong)dVar29 >> 8);
+        bVar21 = *(byte *)((long)pdVar10 + 10) | (byte)((ulong)dVar29 >> 0x10);
+        bVar22 = *(byte *)((long)pdVar10 + 0xb) | (byte)((ulong)dVar29 >> 0x18);
+        bVar23 = *(byte *)((long)pdVar10 + 0xc) | (byte)((ulong)dVar29 >> 0x20);
+        bVar24 = *(byte *)((long)pdVar10 + 0xd) | (byte)((ulong)dVar29 >> 0x28);
+        bVar25 = *(byte *)((long)pdVar10 + 0xe) | (byte)((ulong)dVar29 >> 0x30);
+        bVar26 = *(byte *)((long)pdVar10 + 0xf) | (byte)((ulong)dVar29 >> 0x38);
+        auVar27[1] = bVar12;
+        auVar27[0] = bVar11;
+        auVar27[2] = bVar13;
+        auVar27[3] = bVar14;
+        auVar27[4] = bVar15;
+        auVar27[5] = bVar16;
+        auVar27[6] = bVar17;
+        auVar27[7] = bVar18;
+        auVar27[8] = bVar19;
+        auVar27[9] = bVar20;
+        auVar27[10] = bVar21;
+        auVar27[0xb] = bVar22;
+        auVar27[0xc] = bVar23;
+        auVar27[0xd] = bVar24;
+        auVar27[0xe] = bVar25;
+        auVar27[0xf] = bVar26;
+        auVar4[1] = bVar12;
+        auVar4[0] = bVar11;
+        auVar4[2] = bVar13;
+        auVar4[3] = bVar14;
+        auVar4[4] = bVar15;
+        auVar4[5] = bVar16;
+        auVar4[6] = bVar17;
+        auVar4[7] = bVar18;
+        auVar4[8] = bVar19;
+        auVar4[9] = bVar20;
+        auVar4[10] = bVar21;
+        auVar4[0xb] = bVar22;
+        auVar4[0xc] = bVar23;
+        auVar4[0xd] = bVar24;
+        auVar4[0xe] = bVar25;
+        auVar4[0xf] = bVar26;
+        auVar27 = NEON_ext(auVar27,auVar4,8,1);
+        uVar2 = CONCAT17(bVar18 | auVar27[7],
+                         CONCAT16(bVar17 | auVar27[6],
+                                  CONCAT15(bVar16 | auVar27[5],
+                                           CONCAT14(bVar15 | auVar27[4],
+                                                    CONCAT13(bVar14 | auVar27[3],
+                                                             CONCAT12(bVar13 | auVar27[2],
+                                                                      CONCAT11(bVar12 | auVar27[1],
+                                                                               bVar11 | auVar27[0]))
+                                                            ))))) & 0x7fffffffffffffff;
+        bVar5 = uVar2 != 0;
+        uVar1 = uVar9 + 8;
+        uVar9 = uVar9 + 4;
+        pdVar10 = pdVar10 + 4;
+      } while (uVar2 == 0 && uVar1 <= uVar8);
+    }
+    if ((bVar5 == false) && (uVar9 < uVar8)) {
+      do {
+        bVar5 = pdVar6[uVar9] != 0.0;
+        uVar9 = uVar9 + 1;
+      } while (!bVar5 && uVar9 < uVar8);
+    }
+    return bVar5;
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: hasNonZero
+// Entry: 00000518
+// Signature: undefined __cdecl hasNonZero(_InputArray * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::hasNonZero(cv::_InputArray const&) */
+
+uint cv::hasNonZero(_InputArray *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  long lVar3;
+  int iVar4;
+  uint uVar5;
+  ulong uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  code *pcVar9;
+  ulong uVar10;
+  NAryMatIterator aNStack_178 [8];
+  long local_170;
+  ulong local_158;
+  undefined4 local_138;
+  int local_134;
+  uint local_130;
+  int local_12c;
+  long local_128;
+  long *local_f0;
+  Region aRStack_d8 [8];
+  int local_d0;
+  Region aRStack_c8 [8];
+  int local_c0;
+  Mat *local_68;
+  undefined8 uStack_60;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_d8,
+             (LocationStaticStorage *)&hasNonZero(cv::_InputArray_const&)::__cv_trace_location_fn62)
+  ;
+  uVar6 = cv::_InputArray::type((int)param_1);
+  if ((uVar6 & 0xff8) == 0) {
+    iVar4 = cv::_InputArray::kind();
+    if (iVar4 == 0x10000) {
+      cv::Mat::Mat((Mat *)&local_138,*(Mat **)(param_1 + 8));
+    }
+    else {
+      cv::_InputArray::getMat_((int)param_1);
+    }
+    uVar6 = (ulong)local_138;
+    cv::utils::trace::details::Region::Region
+              (aRStack_c8,(LocationStaticStorage *)&getHasNonZeroTab(int)::__cv_trace_location_fn17)
+    ;
+    pcVar9 = *(code **)((uVar6 & 7) * 8 + 0xb98);
+    if (local_c0 != 0) {
+      cv::utils::trace::details::Region::destroy();
+    }
+    if ((int)(uVar6 & 7) != 7) {
+      if (local_134 == 2) {
+        if ((local_138._1_1_ >> 6 & 1) == 0) {
+          if ((int)local_130 < 1) {
+            uVar5 = 0;
+            cv::Mat::~Mat((Mat *)&local_138);
+            goto joined_r0x00000780;
+          }
+          uVar6 = 0;
+          do {
+            uVar5 = (*pcVar9)(local_128 + *local_f0 * uVar6,(long)local_12c);
+            uVar6 = uVar6 + 1;
+            uVar1 = uVar5;
+            if (local_130 <= uVar6) {
+              uVar1 = 1;
+            }
+          } while ((uVar1 & 1) == 0);
+        }
+        else {
+          uVar7 = cv::Mat::total();
+          uVar5 = (*pcVar9)(local_128,uVar7);
+        }
+        cv::Mat::~Mat((Mat *)&local_138);
+      }
+      else {
+        local_68 = (Mat *)&local_138;
+        uStack_60 = 0;
+        cv::Mat::Mat((Mat *)aRStack_c8);
+        cv::NAryMatIterator::NAryMatIterator(aNStack_178,&local_68,(Mat *)aRStack_c8,1);
+        uVar5 = 0;
+        for (uVar6 = 0; (lVar3 = local_170, (uVar5 & 1) == 0 && (uVar6 < local_158));
+            uVar6 = uVar6 + 1) {
+          if ((*(byte *)(local_170 + 1) >> 6 & 1) == 0) {
+            uVar1 = *(uint *)(local_170 + 8);
+            if ((int)uVar1 < 1) {
+              uVar5 = 0;
+            }
+            else {
+              uVar10 = 0;
+              do {
+                uVar5 = (*pcVar9)(*(long *)(lVar3 + 0x10) + **(long **)(lVar3 + 0x48) * uVar10,
+                                  (long)*(int *)(lVar3 + 0xc));
+                uVar10 = uVar10 + 1;
+                uVar2 = uVar5;
+                if (uVar1 <= uVar10) {
+                  uVar2 = 1;
+                }
+              } while ((uVar2 & 1) == 0);
+            }
+          }
+          else {
+            uVar8 = *(undefined8 *)(local_170 + 0x10);
+            uVar7 = cv::Mat::total();
+            uVar5 = (*pcVar9)(uVar8,uVar7);
+          }
+          cv::NAryMatIterator::operator++(aNStack_178);
+        }
+        cv::Mat::~Mat((Mat *)aRStack_c8);
+        cv::Mat::~Mat((Mat *)&local_138);
+      }
+joined_r0x00000780:
+      if (local_d0 != 0) {
+        cv::utils::trace::details::Region::destroy();
+      }
+      if (*____stack_chk_guard == local_58) {
+        return uVar5 & 1;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aRStack_c8,0xb55);
+    cv::error(-0xd7,(string *)aRStack_c8,"hasNonZero",
+              "M3T/third_party/opencv-src/modules/core/src/has_non_zero.dispatch.cpp",0x4e);
+  }
+  else {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (&local_138,0xb42);
+    cv::error(-0xd7,(string *)&local_138,"hasNonZero",
+              "M3T/third_party/opencv-src/modules/core/src/has_non_zero.dispatch.cpp",0x41);
+  }
+                    /* WARNING: Does not return */
+  pcVar9 = (code *)SoftwareBreakpoint(1,0x7f0);
+  (*pcVar9)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 000008cc
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000958;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000958:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 0000097c
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 000009b0
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000009c0
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000009d4
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000a24
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: NAryMatIterator
+// Entry: 00001100
+// Signature: undefined __thiscall NAryMatIterator(NAryMatIterator * this, Mat * * param_1, Mat * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::NAryMatIterator::NAryMatIterator(NAryMatIterator *this,Mat **param_1,Mat *param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator++
+// Entry: 00001200
+// Signature: undefined __thiscall operator++(NAryMatIterator * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::NAryMatIterator::operator++(NAryMatIterator *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00001300
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00001400
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00001500
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00001600
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00001700
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00001800
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: kind
+// Entry: 00001900
+// Signature: undefined kind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::kind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: type
+// Entry: 00001a00
+// Signature: undefined type(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::type(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getMat_
+// Entry: 00001b00
+// Signature: undefined getMat_(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::getMat_(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: total
+// Entry: 00001c00
+// Signature: undefined total(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::total(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00001d00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00001e00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00001f00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00002200
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* operator delete(void*) */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00002300
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00002400
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00002500
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00002700
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00002900
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00002b00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00002c00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 36
+// Failed: 0
+// Skipped external functions: 0

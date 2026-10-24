@@ -1,0 +1,4497 @@
+Program: affine_feature.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: AffineFeature_Impl
+// Entry: 00000000
+// Signature: undefined __thiscall AffineFeature_Impl(AffineFeature_Impl * this, Ptr * param_1, int param_2, int param_3, float param_4, float param_5)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::AffineFeature_Impl(cv::Ptr<cv::Feature2D> const&, int, int, float, float)
+    */
+
+AffineFeature_Impl * __thiscall
+cv::AffineFeature_Impl::AffineFeature_Impl
+          (AffineFeature_Impl *this,Ptr *param_1,int param_2,int param_3,float param_4,float param_5
+          )
+
+{
+  long *plVar1;
+  char cVar2;
+  int iVar3;
+  code *pcVar4;
+  bool bVar5;
+  undefined4 *puVar6;
+  void *pvVar7;
+  int in_w4;
+  long lVar8;
+  ulong uVar9;
+  float *pfVar10;
+  ulong uVar11;
+  ulong uVar12;
+  ulong uVar13;
+  undefined8 *puVar14;
+  float *pfVar15;
+  int iVar16;
+  float *pfVar17;
+  float *pfVar18;
+  float *pfVar19;
+  float *pfVar20;
+  long lVar21;
+  undefined8 uVar22;
+  undefined8 uVar23;
+  float fVar24;
+  undefined8 uVar25;
+  float fVar26;
+  float fVar27;
+  
+  lVar8 = *(long *)(param_1 + 0x10);
+  *(long *)this = lVar8;
+  *(undefined8 *)(this + *(long *)(lVar8 + -0x50)) = *(undefined8 *)(param_1 + 0x18);
+  lVar8 = *(long *)(param_1 + 8);
+  *(long *)this = lVar8;
+  *(undefined8 *)(this + *(long *)(lVar8 + -0x50)) = *(undefined8 *)(param_1 + 0x20);
+  lVar8 = *(long *)param_1;
+  *(long *)this = lVar8;
+  *(undefined8 *)(this + *(long *)(lVar8 + -0x50)) = *(undefined8 *)(param_1 + 0x28);
+  lVar8 = ((undefined8 *)(ulong)(uint)param_2)[1];
+  *(undefined8 *)(this + 8) = *(undefined8 *)(ulong)(uint)param_2;
+  *(long *)(this + 0x10) = lVar8;
+  if (lVar8 != 0) {
+    plVar1 = (long *)(lVar8 + 8);
+    do {
+      cVar2 = '\x01';
+      bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar5) {
+        *plVar1 = *plVar1 + 1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+  }
+  *(undefined8 *)(this + 0x30) = 0;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(int *)(this + 0x18) = param_3;
+  *(int *)(this + 0x1c) = in_w4;
+  *(float *)(this + 0x20) = param_4;
+  *(float *)(this + 0x24) = param_5;
+  *(undefined8 *)(this + 0x40) = 0;
+  *(undefined8 *)(this + 0x38) = 0;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(undefined8 *)(this + 0x48) = 0;
+  if (in_w4 == 0) {
+    puVar6 = operator_new(4);
+    *puVar6 = 0x3f800000;
+    *(undefined4 **)(this + 0x30) = puVar6 + 1;
+    *(undefined4 **)(this + 0x38) = puVar6 + 1;
+    *(undefined4 **)(this + 0x28) = puVar6;
+    puVar6 = operator_new(4);
+    pfVar17 = (float *)(puVar6 + 1);
+    *puVar6 = 0;
+    *(float **)(this + 0x48) = pfVar17;
+    *(float **)(this + 0x50) = pfVar17;
+    *(undefined4 **)(this + 0x40) = puVar6;
+    in_w4 = 1;
+    if (param_3 < 1) {
+      return this;
+    }
+  }
+  else {
+    pfVar17 = (float *)0x0;
+    if (param_3 < in_w4) {
+      return this;
+    }
+  }
+  fVar26 = 1.0;
+  do {
+    fVar26 = fVar26 * *(float *)(this + 0x20);
+    fVar27 = *(float *)(this + 0x24) / fVar26;
+    fVar24 = 180.0 / fVar27;
+    iVar3 = (int)fVar24 - (uint)(fVar24 < (float)(int)fVar24);
+    bVar5 = fVar27 * (float)iVar3 == 180.0;
+    if (-1 < (int)(iVar3 - (uint)bVar5)) {
+      iVar16 = 0;
+      iVar3 = (((int)fVar24 - (uint)(fVar24 < (float)(int)fVar24)) - (uint)bVar5) + 1;
+LAB_000001e0:
+      do {
+        pfVar19 = *(float **)(this + 0x30);
+        pfVar18 = pfVar17;
+        if (pfVar19 < *(float **)(this + 0x38)) {
+          pfVar15 = pfVar19 + 1;
+          *pfVar19 = fVar26;
+        }
+        else {
+          pfVar17 = *(float **)(this + 0x28);
+          lVar8 = (long)pfVar19 - (long)pfVar17 >> 2;
+          uVar11 = lVar8 + 1;
+          if (uVar11 >> 0x3e != 0) {
+            std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_();
+            goto LAB_000004c0;
+          }
+          uVar9 = (long)*(float **)(this + 0x38) - (long)pfVar17;
+          uVar12 = (long)uVar9 >> 1;
+          if (uVar12 <= uVar11) {
+            uVar12 = uVar11;
+          }
+          if (0x7ffffffffffffffb < uVar9) {
+            uVar12 = 0x3fffffffffffffff;
+          }
+          if (uVar12 == 0) {
+            pvVar7 = (void *)0x0;
+            pfVar10 = (float *)(lVar8 * 4);
+            *pfVar10 = fVar26;
+          }
+          else {
+            if (uVar12 >> 0x3e != 0) {
+                    /* WARNING: Subroutine does not return */
+              std::__throw_bad_array_new_length_abi_ne180100_();
+            }
+            pvVar7 = operator_new(uVar12 << 2);
+            pfVar10 = (float *)((long)pvVar7 + lVar8 * 4);
+            *pfVar10 = fVar26;
+          }
+          pfVar15 = pfVar10 + 1;
+          if (pfVar19 != pfVar17) {
+            uVar11 = (long)pfVar19 + (-4 - (long)pfVar17);
+            pfVar20 = pfVar19;
+            if ((0x2b < uVar11) &&
+               (0x1f < (ulong)((long)pfVar19 - ((long)pvVar7 + ((long)pfVar19 - (long)pfVar17))))) {
+              uVar11 = (uVar11 >> 2) + 1;
+              uVar13 = uVar11 & 0x7ffffffffffffff8;
+              pfVar20 = pfVar19 + -uVar13;
+              pfVar10 = pfVar10 + -uVar13;
+              puVar14 = (undefined8 *)((long)pvVar7 + lVar8 * 4 + -0x10);
+              pfVar19 = pfVar19 + -4;
+              uVar9 = uVar13;
+              do {
+                uVar25 = *(undefined8 *)(pfVar19 + -4);
+                uVar23 = *(undefined8 *)(pfVar19 + 2);
+                uVar22 = *(undefined8 *)pfVar19;
+                puVar14[-1] = *(undefined8 *)(pfVar19 + -2);
+                puVar14[-2] = uVar25;
+                puVar14[1] = uVar23;
+                *puVar14 = uVar22;
+                puVar14 = puVar14 + -4;
+                pfVar19 = pfVar19 + -8;
+                uVar9 = uVar9 - 8;
+              } while (uVar9 != 0);
+              if (uVar11 == uVar13) goto LAB_000002f8;
+            }
+            do {
+              pfVar20 = pfVar20 + -1;
+              pfVar10 = pfVar10 + -1;
+              *pfVar10 = *pfVar20;
+            } while (pfVar20 != pfVar17);
+          }
+LAB_000002f8:
+          *(float **)(this + 0x28) = pfVar10;
+          *(float **)(this + 0x30) = pfVar15;
+          *(void **)(this + 0x38) = (void *)((long)pvVar7 + uVar12 * 4);
+          if (pfVar17 != (float *)0x0) {
+            operator_delete(pfVar17);
+            pfVar18 = *(float **)(this + 0x48);
+          }
+        }
+        *(float **)(this + 0x30) = pfVar15;
+        fVar24 = fVar27 * (float)iVar16;
+        if (pfVar18 < *(float **)(this + 0x50)) {
+          pfVar17 = pfVar18 + 1;
+          *pfVar18 = fVar24;
+          *(float **)(this + 0x48) = pfVar17;
+          iVar16 = iVar16 + 1;
+          if (iVar16 == iVar3) break;
+          goto LAB_000001e0;
+        }
+        pfVar19 = *(float **)(this + 0x40);
+        lVar21 = (long)pfVar18 - (long)pfVar19;
+        lVar8 = lVar21 >> 2;
+        uVar11 = lVar8 + 1;
+        if (uVar11 >> 0x3e != 0) {
+          std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_();
+LAB_000004c0:
+                    /* WARNING: Does not return */
+          pcVar4 = (code *)SoftwareBreakpoint(1,0x4c4);
+          (*pcVar4)();
+        }
+        uVar9 = (long)*(float **)(this + 0x50) - (long)pfVar19;
+        uVar12 = (long)uVar9 >> 1;
+        if (uVar12 <= uVar11) {
+          uVar12 = uVar11;
+        }
+        if (0x7ffffffffffffffb < uVar9) {
+          uVar12 = 0x3fffffffffffffff;
+        }
+        if (uVar12 == 0) {
+          pvVar7 = (void *)0x0;
+          pfVar10 = (float *)(lVar8 * 4);
+          *pfVar10 = fVar24;
+        }
+        else {
+          if (uVar12 >> 0x3e != 0) {
+                    /* WARNING: Subroutine does not return */
+            std::__throw_bad_array_new_length_abi_ne180100_();
+          }
+          pvVar7 = operator_new(uVar12 << 2);
+          pfVar10 = (float *)((long)pvVar7 + lVar8 * 4);
+          *pfVar10 = fVar24;
+        }
+        pfVar17 = pfVar10 + 1;
+        if (pfVar18 != pfVar19) {
+          pfVar15 = pfVar18 + -1;
+          uVar11 = (long)pfVar15 - (long)pfVar19;
+          if ((((0xbb < uVar11) &&
+               (uVar9 = (long)pvVar7 + lVar21 + -4, uVar9 - (uVar11 & 0xfffffffffffffffc) <= uVar9))
+              && ((float *)((long)pfVar15 - (uVar11 & 0xfffffffffffffffc)) <= pfVar15)) &&
+             (0x1f < (ulong)((long)pfVar15 + (-lVar21 - (long)pvVar7) + 4))) {
+            uVar11 = (uVar11 >> 2) + 1;
+            uVar13 = uVar11 & 0x7ffffffffffffff8;
+            pfVar10 = pfVar10 + -uVar13;
+            puVar14 = (undefined8 *)((long)pvVar7 + lVar8 * 4 + -0x10);
+            pfVar15 = pfVar18 + -4;
+            uVar9 = uVar13;
+            do {
+              uVar25 = *(undefined8 *)(pfVar15 + -4);
+              uVar23 = *(undefined8 *)(pfVar15 + 2);
+              uVar22 = *(undefined8 *)pfVar15;
+              puVar14[-1] = *(undefined8 *)(pfVar15 + -2);
+              puVar14[-2] = uVar25;
+              puVar14[1] = uVar23;
+              *puVar14 = uVar22;
+              puVar14 = puVar14 + -4;
+              pfVar15 = pfVar15 + -8;
+              uVar9 = uVar9 - 8;
+            } while (uVar9 != 0);
+            pfVar18 = pfVar18 + -uVar13;
+            if (uVar11 == uVar13) goto LAB_000003d0;
+          }
+          do {
+            pfVar18 = pfVar18 + -1;
+            pfVar10 = pfVar10 + -1;
+            *pfVar10 = *pfVar18;
+          } while (pfVar18 != pfVar19);
+        }
+LAB_000003d0:
+        *(float **)(this + 0x40) = pfVar10;
+        *(float **)(this + 0x48) = pfVar17;
+        *(void **)(this + 0x50) = (void *)((long)pvVar7 + uVar12 * 4);
+        if (pfVar19 != (float *)0x0) {
+          operator_delete(pfVar19);
+        }
+        *(float **)(this + 0x48) = pfVar17;
+        iVar16 = iVar16 + 1;
+      } while (iVar16 != iVar3);
+      param_3 = *(int *)(this + 0x18);
+    }
+    bVar5 = param_3 <= in_w4;
+    in_w4 = in_w4 + 1;
+    if (bVar5) {
+      return this;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: ~Ptr
+// Entry: 00000528
+// Signature: undefined __thiscall ~Ptr(Ptr<cv::Feature2D> * this)
+// ========================================
+
+
+/* cv::Ptr<cv::Feature2D>::~Ptr() */
+
+Ptr<cv::Feature2D> * __thiscall cv::Ptr<cv::Feature2D>::~Ptr(Ptr<cv::Feature2D> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: AffineFeature_Impl
+// Entry: 00000590
+// Signature: undefined __thiscall AffineFeature_Impl(AffineFeature_Impl * this, Ptr * param_1, int param_2, int param_3, float param_4, float param_5)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::AffineFeature_Impl(cv::Ptr<cv::Feature2D> const&, int, int, float, float)
+    */
+
+AffineFeature_Impl * __thiscall
+cv::AffineFeature_Impl::AffineFeature_Impl
+          (AffineFeature_Impl *this,Ptr *param_1,int param_2,int param_3,float param_4,float param_5
+          )
+
+{
+  long *plVar1;
+  char cVar2;
+  int iVar3;
+  code *pcVar4;
+  bool bVar5;
+  undefined8 *puVar6;
+  undefined4 *puVar7;
+  void *pvVar8;
+  ulong uVar9;
+  float *pfVar10;
+  ulong uVar11;
+  ulong uVar12;
+  ulong uVar13;
+  float *pfVar14;
+  long lVar15;
+  float *pfVar16;
+  float *pfVar17;
+  float *pfVar18;
+  float *pfVar19;
+  long lVar20;
+  int iVar21;
+  undefined8 uVar22;
+  undefined8 uVar23;
+  float fVar24;
+  undefined8 uVar25;
+  float fVar26;
+  float fVar27;
+  
+  puVar6 = (undefined8 *)cv::Algorithm::Algorithm((Algorithm *)this);
+  *puVar6 = &PTR__AffineFeature_Impl_000033d8;
+  lVar15 = *(long *)(param_1 + 8);
+  puVar6[1] = *(undefined8 *)param_1;
+  puVar6[2] = lVar15;
+  if (lVar15 != 0) {
+    plVar1 = (long *)(lVar15 + 8);
+    do {
+      cVar2 = '\x01';
+      bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar5) {
+        *plVar1 = *plVar1 + 1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+  }
+  *(undefined8 *)(this + 0x30) = 0;
+  *(undefined8 *)(this + 0x28) = 0;
+  *(int *)(this + 0x18) = param_2;
+  *(int *)(this + 0x1c) = param_3;
+  *(float *)(this + 0x20) = param_4;
+  *(float *)(this + 0x24) = param_5;
+  *(undefined8 *)(this + 0x40) = 0;
+  *(undefined8 *)(this + 0x38) = 0;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(undefined8 *)(this + 0x48) = 0;
+  if (param_3 == 0) {
+    puVar7 = operator_new(4);
+    *puVar7 = 0x3f800000;
+    *(undefined4 **)(this + 0x30) = puVar7 + 1;
+    *(undefined4 **)(this + 0x38) = puVar7 + 1;
+    *(undefined4 **)(this + 0x28) = puVar7;
+    puVar7 = operator_new(4);
+    pfVar16 = (float *)(puVar7 + 1);
+    *puVar7 = 0;
+    *(float **)(this + 0x48) = pfVar16;
+    *(float **)(this + 0x50) = pfVar16;
+    *(undefined4 **)(this + 0x40) = puVar7;
+    param_3 = 1;
+    if (param_2 < 1) {
+      return this;
+    }
+  }
+  else {
+    pfVar16 = (float *)0x0;
+    if (param_2 < param_3) {
+      return this;
+    }
+  }
+  fVar26 = 1.0;
+  do {
+    fVar26 = fVar26 * *(float *)(this + 0x20);
+    fVar27 = *(float *)(this + 0x24) / fVar26;
+    fVar24 = 180.0 / fVar27;
+    iVar3 = (int)fVar24 - (uint)(fVar24 < (float)(int)fVar24);
+    bVar5 = fVar27 * (float)iVar3 == 180.0;
+    if (-1 < (int)(iVar3 - (uint)bVar5)) {
+      iVar21 = 0;
+      iVar3 = (((int)fVar24 - (uint)(fVar24 < (float)(int)fVar24)) - (uint)bVar5) + 1;
+LAB_00000748:
+      do {
+        pfVar18 = *(float **)(this + 0x30);
+        pfVar17 = pfVar16;
+        if (pfVar18 < *(float **)(this + 0x38)) {
+          pfVar14 = pfVar18 + 1;
+          *pfVar18 = fVar26;
+        }
+        else {
+          pfVar16 = *(float **)(this + 0x28);
+          lVar15 = (long)pfVar18 - (long)pfVar16 >> 2;
+          uVar11 = lVar15 + 1;
+          if (uVar11 >> 0x3e != 0) {
+            std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_();
+            goto LAB_00000a28;
+          }
+          uVar9 = (long)*(float **)(this + 0x38) - (long)pfVar16;
+          uVar12 = (long)uVar9 >> 1;
+          if (uVar12 <= uVar11) {
+            uVar12 = uVar11;
+          }
+          if (0x7ffffffffffffffb < uVar9) {
+            uVar12 = 0x3fffffffffffffff;
+          }
+          if (uVar12 == 0) {
+            pvVar8 = (void *)0x0;
+            pfVar10 = (float *)(lVar15 * 4);
+            *pfVar10 = fVar26;
+          }
+          else {
+            if (uVar12 >> 0x3e != 0) {
+                    /* WARNING: Subroutine does not return */
+              std::__throw_bad_array_new_length_abi_ne180100_();
+            }
+            pvVar8 = operator_new(uVar12 << 2);
+            pfVar10 = (float *)((long)pvVar8 + lVar15 * 4);
+            *pfVar10 = fVar26;
+          }
+          pfVar14 = pfVar10 + 1;
+          if (pfVar18 != pfVar16) {
+            uVar11 = (long)pfVar18 + (-4 - (long)pfVar16);
+            pfVar19 = pfVar18;
+            if ((0x2b < uVar11) &&
+               (0x1f < (ulong)((long)pfVar18 - ((long)pvVar8 + ((long)pfVar18 - (long)pfVar16))))) {
+              uVar11 = (uVar11 >> 2) + 1;
+              uVar13 = uVar11 & 0x7ffffffffffffff8;
+              pfVar19 = pfVar18 + -uVar13;
+              pfVar10 = pfVar10 + -uVar13;
+              puVar6 = (undefined8 *)((long)pvVar8 + lVar15 * 4 + -0x10);
+              pfVar18 = pfVar18 + -4;
+              uVar9 = uVar13;
+              do {
+                uVar25 = *(undefined8 *)(pfVar18 + -4);
+                uVar23 = *(undefined8 *)(pfVar18 + 2);
+                uVar22 = *(undefined8 *)pfVar18;
+                puVar6[-1] = *(undefined8 *)(pfVar18 + -2);
+                puVar6[-2] = uVar25;
+                puVar6[1] = uVar23;
+                *puVar6 = uVar22;
+                puVar6 = puVar6 + -4;
+                pfVar18 = pfVar18 + -8;
+                uVar9 = uVar9 - 8;
+              } while (uVar9 != 0);
+              if (uVar11 == uVar13) goto LAB_00000860;
+            }
+            do {
+              pfVar19 = pfVar19 + -1;
+              pfVar10 = pfVar10 + -1;
+              *pfVar10 = *pfVar19;
+            } while (pfVar19 != pfVar16);
+          }
+LAB_00000860:
+          *(float **)(this + 0x28) = pfVar10;
+          *(float **)(this + 0x30) = pfVar14;
+          *(void **)(this + 0x38) = (void *)((long)pvVar8 + uVar12 * 4);
+          if (pfVar16 != (float *)0x0) {
+            operator_delete(pfVar16);
+            pfVar17 = *(float **)(this + 0x48);
+          }
+        }
+        *(float **)(this + 0x30) = pfVar14;
+        fVar24 = fVar27 * (float)iVar21;
+        if (pfVar17 < *(float **)(this + 0x50)) {
+          pfVar16 = pfVar17 + 1;
+          *pfVar17 = fVar24;
+          *(float **)(this + 0x48) = pfVar16;
+          iVar21 = iVar21 + 1;
+          if (iVar21 == iVar3) break;
+          goto LAB_00000748;
+        }
+        pfVar18 = *(float **)(this + 0x40);
+        lVar20 = (long)pfVar17 - (long)pfVar18;
+        lVar15 = lVar20 >> 2;
+        uVar11 = lVar15 + 1;
+        if (uVar11 >> 0x3e != 0) {
+          std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_();
+LAB_00000a28:
+                    /* WARNING: Does not return */
+          pcVar4 = (code *)SoftwareBreakpoint(1,0xa2c);
+          (*pcVar4)();
+        }
+        uVar9 = (long)*(float **)(this + 0x50) - (long)pfVar18;
+        uVar12 = (long)uVar9 >> 1;
+        if (uVar12 <= uVar11) {
+          uVar12 = uVar11;
+        }
+        if (0x7ffffffffffffffb < uVar9) {
+          uVar12 = 0x3fffffffffffffff;
+        }
+        if (uVar12 == 0) {
+          pvVar8 = (void *)0x0;
+          pfVar10 = (float *)(lVar15 * 4);
+          *pfVar10 = fVar24;
+        }
+        else {
+          if (uVar12 >> 0x3e != 0) {
+                    /* WARNING: Subroutine does not return */
+            std::__throw_bad_array_new_length_abi_ne180100_();
+          }
+          pvVar8 = operator_new(uVar12 << 2);
+          pfVar10 = (float *)((long)pvVar8 + lVar15 * 4);
+          *pfVar10 = fVar24;
+        }
+        pfVar16 = pfVar10 + 1;
+        if (pfVar17 != pfVar18) {
+          pfVar14 = pfVar17 + -1;
+          uVar11 = (long)pfVar14 - (long)pfVar18;
+          if ((((0xbb < uVar11) &&
+               (uVar9 = (long)pvVar8 + lVar20 + -4, uVar9 - (uVar11 & 0xfffffffffffffffc) <= uVar9))
+              && ((float *)((long)pfVar14 - (uVar11 & 0xfffffffffffffffc)) <= pfVar14)) &&
+             (0x1f < (ulong)((long)pfVar14 + (-lVar20 - (long)pvVar8) + 4))) {
+            uVar11 = (uVar11 >> 2) + 1;
+            uVar13 = uVar11 & 0x7ffffffffffffff8;
+            pfVar10 = pfVar10 + -uVar13;
+            puVar6 = (undefined8 *)((long)pvVar8 + lVar15 * 4 + -0x10);
+            pfVar14 = pfVar17 + -4;
+            uVar9 = uVar13;
+            do {
+              uVar25 = *(undefined8 *)(pfVar14 + -4);
+              uVar23 = *(undefined8 *)(pfVar14 + 2);
+              uVar22 = *(undefined8 *)pfVar14;
+              puVar6[-1] = *(undefined8 *)(pfVar14 + -2);
+              puVar6[-2] = uVar25;
+              puVar6[1] = uVar23;
+              *puVar6 = uVar22;
+              puVar6 = puVar6 + -4;
+              pfVar14 = pfVar14 + -8;
+              uVar9 = uVar9 - 8;
+            } while (uVar9 != 0);
+            pfVar17 = pfVar17 + -uVar13;
+            if (uVar11 == uVar13) goto LAB_00000938;
+          }
+          do {
+            pfVar17 = pfVar17 + -1;
+            pfVar10 = pfVar10 + -1;
+            *pfVar10 = *pfVar17;
+          } while (pfVar17 != pfVar18);
+        }
+LAB_00000938:
+        *(float **)(this + 0x40) = pfVar10;
+        *(float **)(this + 0x48) = pfVar16;
+        *(void **)(this + 0x50) = (void *)((long)pvVar8 + uVar12 * 4);
+        if (pfVar18 != (float *)0x0) {
+          operator_delete(pfVar18);
+        }
+        *(float **)(this + 0x48) = pfVar16;
+        iVar21 = iVar21 + 1;
+      } while (iVar21 != iVar3);
+      param_2 = *(int *)(this + 0x18);
+    }
+    bVar5 = param_2 <= param_3;
+    param_3 = param_3 + 1;
+    if (bVar5) {
+      return this;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: setViewParams
+// Entry: 00000a98
+// Signature: undefined __thiscall setViewParams(AffineFeature_Impl * this, vector * param_1, vector * param_2)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::setViewParams(std::vector<float, std::allocator<float> > const&,
+   std::vector<float, std::allocator<float> > const&) */
+
+void __thiscall
+cv::AffineFeature_Impl::setViewParams(AffineFeature_Impl *this,vector *param_1,vector *param_2)
+
+{
+  code *pcVar1;
+  long lVar2;
+  string asStack_38 [24];
+  
+  lVar2 = (long)*(float **)(param_1 + 8) - (long)*(float **)param_1 >> 2;
+  if (lVar2 != *(long *)(param_2 + 8) - *(long *)param_2 >> 2) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_38,"tilts.size() == rolls.size()");
+    cv::error(-0xd7,asStack_38,"setViewParams",
+              "M3T/third_party/opencv-src/modules/features2d/src/affine_feature.cpp",0x81);
+                    /* WARNING: Does not return */
+    pcVar1 = (code *)SoftwareBreakpoint(1,0xb4c);
+    (*pcVar1)();
+  }
+  if ((vector<float,std::allocator<float>> *)(this + 0x28) !=
+      (vector<float,std::allocator<float>> *)param_1) {
+    std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+              ((vector<float,std::allocator<float>> *)(this + 0x28),*(float **)param_1,
+               *(float **)(param_1 + 8),lVar2);
+  }
+  if ((vector<float,std::allocator<float>> *)(this + 0x40) !=
+      (vector<float,std::allocator<float>> *)param_2) {
+    std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+              ((vector<float,std::allocator<float>> *)(this + 0x40),*(float **)param_2,
+               *(float **)(param_2 + 8),
+               (long)*(float **)(param_2 + 8) - (long)*(float **)param_2 >> 2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000b68
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2,vector<float,std::allocator<float>> *param_3)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  undefined8 *puVar4;
+  undefined8 *extraout_x0;
+  undefined8 *extraout_x0_00;
+  undefined1 auVar5 [16];
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+    auVar5 = std::string::__throw_length_error_abi_ne180100_();
+    puVar4 = auVar5._0_8_;
+    puVar3 = puVar4;
+    if ((vector<float,std::allocator<float>> *)(puVar4 + 5) != auVar5._8_8_) {
+      std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+                (auVar5._8_8_,(float *)puVar4[5],(float *)puVar4[6],
+                 (long)puVar4[6] - (long)puVar4[5] >> 2);
+      puVar3 = extraout_x0;
+    }
+    if ((vector<float,std::allocator<float>> *)(puVar4 + 8) == param_3) {
+      return puVar3;
+    }
+    std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+              (param_3,(float *)puVar4[8],(float *)puVar4[9],(long)puVar4[9] - (long)puVar4[8] >> 2)
+    ;
+    return extraout_x0_00;
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000bf4;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000bf4:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: getViewParams
+// Entry: 00000c18
+// Signature: undefined __thiscall getViewParams(AffineFeature_Impl * this, vector * param_1, vector * param_2)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::getViewParams(std::vector<float, std::allocator<float> >&,
+   std::vector<float, std::allocator<float> >&) const */
+
+void __thiscall
+cv::AffineFeature_Impl::getViewParams(AffineFeature_Impl *this,vector *param_1,vector *param_2)
+
+{
+  if (this + 0x28 != (AffineFeature_Impl *)param_1) {
+    std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+              ((vector<float,std::allocator<float>> *)param_1,*(float **)(this + 0x28),
+               *(float **)(this + 0x30),
+               (long)*(float **)(this + 0x30) - (long)*(float **)(this + 0x28) >> 2);
+  }
+  if (this + 0x40 != (AffineFeature_Impl *)param_2) {
+    std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+              ((vector<float,std::allocator<float>> *)param_2,*(float **)(this + 0x40),
+               *(float **)(this + 0x48),
+               (long)*(float **)(this + 0x48) - (long)*(float **)(this + 0x40) >> 2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: splitKeypointsByView
+// Entry: 00000c84
+// Signature: undefined __thiscall splitKeypointsByView(AffineFeature_Impl * this, vector * param_1, vector * param_2)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::splitKeypointsByView(std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> > const&, std::vector<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> >, std::allocator<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> > > >&) const */
+
+void __thiscall
+cv::AffineFeature_Impl::splitKeypointsByView
+          (AffineFeature_Impl *this,vector *param_1,vector *param_2)
+
+{
+  uint uVar1;
+  undefined8 *puVar2;
+  code *pcVar3;
+  void *pvVar4;
+  undefined8 *puVar5;
+  long lVar6;
+  long lVar7;
+  ulong uVar8;
+  ulong uVar9;
+  undefined8 *puVar10;
+  undefined8 *puVar11;
+  ulong *puVar12;
+  ulong uVar13;
+  undefined8 *puVar14;
+  ulong *puVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  string asStack_78 [24];
+  
+  lVar7 = *(long *)param_1;
+  if (*(long *)(param_1 + 8) != lVar7) {
+    uVar13 = 0;
+    do {
+      puVar10 = (undefined8 *)(lVar7 + uVar13 * 0x1c);
+      uVar1 = *(uint *)(puVar10 + 3);
+      if (((int)uVar1 < 0) ||
+         ((int)((ulong)(*(long *)(this + 0x30) - *(long *)(this + 0x28)) >> 2) <= (int)uVar1)) {
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (asStack_78,"kp.class_id >= 0 && kp.class_id < (int)tilts_.size()");
+        cv::error(-0xd7,asStack_78,"splitKeypointsByView",
+                  "M3T/third_party/opencv-src/modules/features2d/src/affine_feature.cpp",0x93);
+                    /* WARNING: Does not return */
+        pcVar3 = (code *)SoftwareBreakpoint(1,0xec8);
+        (*pcVar3)();
+      }
+      puVar12 = (ulong *)(*(long *)param_2 + (ulong)uVar1 * 0x18);
+      puVar15 = puVar12 + 1;
+      puVar11 = (undefined8 *)*puVar15;
+      puVar5 = (undefined8 *)puVar12[2];
+      if (puVar11 < puVar5) {
+        uVar17 = puVar10[1];
+        uVar16 = *puVar10;
+        uVar18 = *(undefined8 *)((long)puVar10 + 0xc);
+        *(undefined8 *)((long)puVar11 + 0x14) = *(undefined8 *)((long)puVar10 + 0x14);
+        *(undefined8 *)((long)puVar11 + 0xc) = uVar18;
+        puVar11[1] = uVar17;
+        *puVar11 = uVar16;
+        uVar9 = (long)puVar11 + 0x1c;
+      }
+      else {
+        puVar14 = (undefined8 *)*puVar12;
+        lVar7 = (long)puVar11 - (long)puVar14 >> 2;
+        uVar9 = lVar7 * 0x6db6db6db6db6db7 + 1;
+        if (0x924924924924924 < uVar9) {
+          std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__throw_length_error_abi_ne180100_
+                    ();
+LAB_00000ed0:
+                    /* WARNING: Subroutine does not return */
+          std::__throw_bad_array_new_length_abi_ne180100_();
+        }
+        lVar6 = (long)puVar5 - (long)puVar14 >> 2;
+        uVar8 = lVar6 * -0x2492492492492492;
+        if (uVar8 < uVar9 || uVar8 - uVar9 == 0) {
+          uVar8 = uVar9;
+        }
+        if (0x492492492492491 < (ulong)(lVar6 * 0x6db6db6db6db6db7)) {
+          uVar8 = 0x924924924924924;
+        }
+        if (uVar8 == 0) {
+          pvVar4 = (void *)0x0;
+        }
+        else {
+          if (0x924924924924924 < uVar8) goto LAB_00000ed0;
+          pvVar4 = operator_new(uVar8 * 0x1c);
+        }
+        uVar17 = puVar10[1];
+        uVar16 = *puVar10;
+        uVar18 = *(undefined8 *)((long)puVar10 + 0xc);
+        puVar5 = (undefined8 *)((long)pvVar4 + lVar7 * 4);
+        *(undefined8 *)((long)puVar5 + 0x14) = *(undefined8 *)((long)puVar10 + 0x14);
+        *(undefined8 *)((long)puVar5 + 0xc) = uVar18;
+        puVar5[1] = uVar17;
+        *puVar5 = uVar16;
+        puVar10 = puVar5;
+        if (puVar11 != puVar14) {
+          do {
+            uVar17 = *(undefined8 *)((long)puVar11 - 0x14);
+            uVar16 = *(undefined8 *)((long)puVar11 - 0x1c);
+            puVar2 = puVar11 + -1;
+            uVar18 = puVar11[-2];
+            puVar11 = (undefined8 *)((long)puVar11 - 0x1c);
+            puVar10[-1] = *puVar2;
+            puVar10[-2] = uVar18;
+            *(undefined8 *)((long)puVar10 + -0x14) = uVar17;
+            *(undefined8 *)((long)puVar10 + -0x1c) = uVar16;
+            puVar10 = (undefined8 *)((long)puVar10 + -0x1c);
+          } while (puVar11 != puVar14);
+          puVar11 = (undefined8 *)*puVar12;
+        }
+        *puVar12 = (ulong)puVar10;
+        uVar9 = (long)puVar5 + 0x1c;
+        *puVar15 = uVar9;
+        puVar12[2] = (ulong)((long)pvVar4 + uVar8 * 0x1c);
+        if (puVar11 != (undefined8 *)0x0) {
+          operator_delete(puVar11);
+        }
+      }
+      *puVar15 = uVar9;
+      uVar13 = uVar13 + 1;
+      lVar7 = *(long *)param_1;
+    } while (uVar13 < (ulong)((*(long *)(param_1 + 8) - lVar7 >> 2) * 0x6db6db6db6db6db7));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: detectAndCompute
+// Entry: 00000ef0
+// Signature: undefined __thiscall detectAndCompute(AffineFeature_Impl * this, _InputArray * param_1, _InputArray * param_2, vector * param_3, _OutputArray * param_4, bool param_5)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::detectAndCompute(cv::_InputArray const&, cv::_InputArray const&,
+   std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >&, cv::_OutputArray const&, bool) */
+
+void __thiscall
+cv::AffineFeature_Impl::detectAndCompute
+          (AffineFeature_Impl *this,_InputArray *param_1,_InputArray *param_2,vector *param_3,
+          _OutputArray *param_4,bool param_5)
+
+{
+  AffineFeature_Impl *pAVar1;
+  _OutputArray *p_Var2;
+  uint uVar3;
+  long lVar4;
+  long lVar5;
+  void *pvVar6;
+  undefined8 *puVar7;
+  undefined8 *puVar8;
+  uint uVar9;
+  int iVar10;
+  ulong uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  ulong uVar14;
+  void *pvVar15;
+  long lVar16;
+  undefined4 local_238;
+  int iStack_234;
+  undefined8 local_230;
+  undefined8 uStack_228;
+  undefined **local_220;
+  AffineFeature_Impl *pAStack_218;
+  AffineFeature_Impl *local_210;
+  undefined8 **ppuStack_208;
+  void **local_200;
+  Mat *pMStack_1f8;
+  Mat *local_1f0;
+  undefined1 local_1e8;
+  undefined1 local_1e7;
+  AffineFeature_Impl *local_1e0;
+  void *local_1c0;
+  void *local_1b8;
+  undefined8 *local_1a8;
+  undefined8 *local_1a0;
+  Mat aMStack_190 [12];
+  undefined4 local_184;
+  Mat aMStack_130 [96];
+  Mat aMStack_d0 [96];
+  Region aRStack_70 [8];
+  int local_68;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_70,
+             (LocationStaticStorage *)
+             &detectAndCompute(cv::_InputArray_const&,cv::_InputArray_const&,std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>&,cv::_OutputArray_const&,bool)
+              ::__cv_trace_location_fn300);
+  uVar9 = cv::_OutputArray::needed();
+  iVar10 = cv::_InputArray::kind();
+  if (iVar10 == 0x10000) {
+    cv::Mat::Mat(aMStack_d0,*(Mat **)(param_1 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_1);
+  }
+  iVar10 = cv::_InputArray::kind();
+  if (iVar10 == 0x10000) {
+    cv::Mat::Mat(aMStack_130,*(Mat **)(param_2 + 8));
+  }
+  else {
+    cv::_InputArray::getMat_((int)param_2);
+  }
+  uVar3 = param_5 ^ 1;
+  cv::Mat::Mat(aMStack_190);
+  if (((uVar3 | uVar9) == 1) && (uVar11 = cv::_InputArray::empty(), (uVar11 & 1) == 0)) {
+    std::
+    vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+    ::vector((vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+              *)&local_1a8,*(long *)(this + 0x30) - *(long *)(this + 0x28) >> 2);
+    std::vector<cv::Mat,std::allocator<cv::Mat>>::vector
+              ((vector<cv::Mat,std::allocator<cv::Mat>> *)&local_1c0,
+               *(long *)(this + 0x30) - *(long *)(this + 0x28) >> 2);
+    if (param_5 == 0) {
+      *(undefined8 *)(param_3 + 8) = *(undefined8 *)param_3;
+    }
+    else {
+      splitKeypointsByView(this,param_3,(vector *)&local_1a8);
+    }
+    iStack_234 = (int)((ulong)(*(long *)(this + 0x30) - *(long *)(this + 0x28)) >> 2);
+    local_238 = 0;
+    local_210 = this + 0x40;
+    pAVar1 = this + 8;
+    local_220 = &PTR__skewedDetectAndCompute_00003878;
+    ppuStack_208 = &local_1a8;
+    local_200 = &local_1c0;
+    pMStack_1f8 = aMStack_d0;
+    local_1f0 = aMStack_130;
+    local_1e8 = (undefined1)uVar3;
+    local_1e7 = (undefined1)uVar9;
+    pAStack_218 = this + 0x28;
+    local_1e0 = pAVar1;
+    cv::parallel_for_((Range *)&local_238,(ParallelLoopBody *)&local_220,-1.0);
+    cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)&local_220);
+    if ((!param_5) && (local_1a0 != local_1a8)) {
+      lVar16 = 0;
+      uVar11 = 0;
+      do {
+        lVar4 = *(long *)((long)local_1a8 + lVar16);
+        lVar5 = ((long *)((long)local_1a8 + lVar16))[1];
+        std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::
+        __insert_with_size_abi_ne180100_<std::__wrap_iter<cv::KeyPoint_const*>,std::__wrap_iter<cv::KeyPoint_const*>>
+                  ((vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *)param_3,
+                   *(undefined8 *)(param_3 + 8),lVar4,lVar5,
+                   (lVar5 - lVar4 >> 2) * 0x6db6db6db6db6db7);
+        uVar11 = uVar11 + 1;
+        lVar16 = lVar16 + 0x18;
+      } while (uVar11 < (ulong)(((long)local_1a0 - (long)local_1a8 >> 3) * -0x5555555555555555));
+    }
+    pvVar15 = local_1c0;
+    if ((uVar9 & 1) != 0) {
+      lVar16 = *(long *)param_3;
+      lVar4 = *(long *)(param_3 + 8);
+      uVar12 = (**(code **)(**(long **)pAVar1 + 0x68))();
+      uVar13 = (**(code **)(**(long **)pAVar1 + 0x70))();
+      cv::_OutputArray::create
+                (param_4,(int)((ulong)(lVar4 - lVar16) >> 2) * -0x49249249,uVar12,uVar13,0xffffffff,
+                 0,0);
+      iVar10 = cv::_InputArray::kind();
+      if (iVar10 == 0x10000) {
+        cv::Mat::Mat((Mat *)&local_220,*(Mat **)(param_4 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_4);
+      }
+      cv::Mat::operator=(aMStack_190,(Mat *)&local_220);
+      cv::Mat::~Mat((Mat *)&local_220);
+      pvVar15 = local_1b8;
+      if (local_1b8 != local_1c0) {
+        lVar16 = 0;
+        uVar11 = 0;
+        iVar10 = 0;
+        do {
+          pvVar15 = local_1c0;
+          p_Var2 = (_OutputArray *)((long)local_1c0 + lVar16);
+          uVar14 = cv::Mat::empty();
+          if ((uVar14 & 1) == 0) {
+            local_238 = 0;
+            local_230 = (undefined ***)
+                        CONCAT44(*(undefined4 *)((long)pvVar15 + lVar16 + 8),local_184);
+            iStack_234 = iVar10;
+            cv::Mat::Mat((Mat *)&local_220,aMStack_190,(Rect_ *)&local_238);
+            local_238 = 0x2010000;
+            uStack_228 = 0;
+            local_230 = &local_220;
+            cv::Mat::copyTo(p_Var2);
+            iVar10 = *(int *)((long)pvVar15 + lVar16 + 8) + iVar10;
+            cv::Mat::~Mat((Mat *)&local_220);
+          }
+          uVar11 = uVar11 + 1;
+          lVar16 = lVar16 + 0x60;
+          pvVar15 = local_1c0;
+        } while (uVar11 < (ulong)(((long)local_1b8 - (long)local_1c0 >> 5) * -0x5555555555555555));
+      }
+    }
+    pvVar6 = pvVar15;
+    if (pvVar15 != (void *)0x0) {
+      while (local_1b8 != pvVar15) {
+        local_1b8 = (void *)cv::Mat::~Mat((Mat *)((long)local_1b8 + -0x60));
+        pvVar6 = local_1c0;
+      }
+      operator_delete(pvVar6);
+    }
+    puVar8 = local_1a8;
+    if (local_1a8 != (undefined8 *)0x0) {
+      while (puVar7 = local_1a0, puVar7 != puVar8) {
+        local_1a0 = puVar7 + -3;
+        pvVar15 = (void *)*local_1a0;
+        if (pvVar15 != (void *)0x0) {
+          puVar7[-2] = pvVar15;
+          operator_delete(pvVar15);
+        }
+      }
+      local_1a0 = puVar8;
+      operator_delete(local_1a8);
+    }
+  }
+  cv::Mat::~Mat(aMStack_190);
+  cv::Mat::~Mat(aMStack_130);
+  cv::Mat::~Mat(aMStack_d0);
+  if (local_68 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 000013d4
+// Signature: undefined __thiscall vector(vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >,
+   std::allocator<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> > > >::vector(unsigned
+   long) */
+
+vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+* __thiscall
+std::
+vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+::vector(vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+         *this,ulong param_1)
+
+{
+  code *pcVar1;
+  void *pvVar2;
+  size_t sVar3;
+  
+  *(undefined8 *)this = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  if (param_1 != 0) {
+    if (0xaaaaaaaaaaaaaaa < param_1) {
+      __throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar1 = (code *)SoftwareBreakpoint(1,0x147c);
+      (*pcVar1)();
+    }
+    pvVar2 = operator_new(param_1 * 0x18);
+    *(void **)this = pvVar2;
+    *(void **)(this + 0x10) = (void *)((long)pvVar2 + param_1 * 0x18);
+    sVar3 = ((param_1 * 0x18 - 0x18) / 0x18) * 0x18 + 0x18;
+    _bzero(pvVar2,sVar3);
+    *(size_t *)(this + 8) = (long)pvVar2 + sVar3;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 0000149c
+// Signature: undefined __thiscall vector(vector<cv::Mat,std::allocator<cv::Mat>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::vector(unsigned long) */
+
+vector<cv::Mat,std::allocator<cv::Mat>> * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::vector
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this,ulong param_1)
+
+{
+  Mat *pMVar1;
+  code *pcVar2;
+  Mat *this_00;
+  long lVar3;
+  ulong uVar4;
+  
+  *(undefined8 *)this = 0;
+  *(undefined8 *)(this + 8) = 0;
+  *(undefined8 *)(this + 0x10) = 0;
+  if (param_1 != 0) {
+    if (0x2aaaaaaaaaaaaaa < param_1) {
+      __throw_length_error_abi_ne180100_();
+                    /* WARNING: Does not return */
+      pcVar2 = (code *)SoftwareBreakpoint(1,0x1520);
+      (*pcVar2)();
+    }
+    uVar4 = param_1 * 0x60;
+    this_00 = operator_new(uVar4);
+    *(Mat **)this = this_00;
+    *(Mat **)(this + 8) = this_00;
+    pMVar1 = this_00 + uVar4;
+    *(Mat **)(this + 0x10) = pMVar1;
+    do {
+      lVar3 = cv::Mat::Mat(this_00);
+      this_00 = (Mat *)(lVar3 + 0x60);
+      uVar4 = uVar4 - 0x60;
+    } while (uVar4 != 0);
+    *(Mat **)(this + 8) = pMVar1;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~skewedDetectAndCompute
+// Entry: 00001540
+// Signature: undefined __thiscall ~skewedDetectAndCompute(skewedDetectAndCompute * this)
+// ========================================
+
+
+/* cv::skewedDetectAndCompute::~skewedDetectAndCompute() */
+
+void __thiscall cv::skewedDetectAndCompute::~skewedDetectAndCompute(skewedDetectAndCompute *this)
+
+{
+  cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 00001544
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<cv::Mat,std::allocator<cv::Mat>> * this)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::~vector[abi:ne180100]() */
+
+vector<cv::Mat,std::allocator<cv::Mat>> * __thiscall
+std::vector<cv::Mat,std::allocator<cv::Mat>>::~vector_abi_ne180100_
+          (vector<cv::Mat,std::allocator<cv::Mat>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar3 = *(void **)this;
+  if (pvVar3 != (void *)0x0) {
+    pvVar1 = *(void **)(this + 8);
+    pvVar2 = pvVar3;
+    if (pvVar1 != pvVar3) {
+      do {
+        pvVar1 = (void *)cv::Mat::~Mat((Mat *)((long)pvVar1 + -0x60));
+      } while (pvVar1 != pvVar3);
+      pvVar2 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar3;
+    operator_delete(pvVar2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 0000159c
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>> * this)
+// ========================================
+
+
+/* std::vector<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >,
+   std::allocator<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> > >
+   >::~vector[abi:ne180100]() */
+
+vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+* __thiscall
+std::
+vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+::~vector_abi_ne180100_
+          (vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+           *this)
+
+{
+  void *pvVar1;
+  undefined8 *puVar2;
+  undefined8 *puVar3;
+  undefined8 *puVar4;
+  
+  puVar4 = *(undefined8 **)this;
+  if (puVar4 != (undefined8 *)0x0) {
+    puVar3 = *(undefined8 **)(this + 8);
+    puVar2 = puVar4;
+    if (puVar3 != puVar4) {
+      do {
+        puVar2 = puVar3 + -3;
+        pvVar1 = (void *)*puVar2;
+        if (pvVar1 != (void *)0x0) {
+          puVar3[-2] = pvVar1;
+          operator_delete(pvVar1);
+        }
+        puVar3 = puVar2;
+      } while (puVar2 != puVar4);
+      puVar2 = *(undefined8 **)this;
+    }
+    *(undefined8 **)(this + 8) = puVar4;
+    operator_delete(puVar2);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00001610
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00001644
+// Signature: undefined __thiscall create(AffineFeature * this, Ptr * param_1, int param_2, int param_3, float param_4, float param_5)
+// ========================================
+
+
+/* cv::AffineFeature::create(cv::Ptr<cv::Feature2D> const&, int, int, float, float) */
+
+void __thiscall
+cv::AffineFeature::create
+          (AffineFeature *this,Ptr *param_1,int param_2,int param_3,float param_4,float param_5)
+
+{
+  code *pcVar1;
+  undefined8 *puVar2;
+  undefined8 uVar3;
+  undefined8 *in_x8;
+  string asStack_68 [24];
+  
+  if (param_2 < (int)param_1) {
+    if (param_4 <= 0.0) {
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_68,"tiltStep > 0",param_2,param_3);
+      cv::error(-0xd7,asStack_68,"create",
+                "M3T/third_party/opencv-src/modules/features2d/src/affine_feature.cpp",0x15e);
+    }
+    else {
+      if (0.0 < param_5) {
+        puVar2 = operator_new(0x70);
+        puVar2[1] = 0;
+        puVar2[2] = 0;
+        *puVar2 = &PTR____shared_ptr_emplace_000038d8;
+        uVar3 = AffineFeature_Impl::AffineFeature_Impl
+                          ((AffineFeature_Impl *)(puVar2 + 3),(Ptr *)this,(int)param_1,param_2,
+                           param_4,param_5);
+        *in_x8 = uVar3;
+        in_x8[1] = puVar2;
+        return;
+      }
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (asStack_68,"rotateStepBase > 0",param_2,param_3);
+      cv::error(-0xd7,asStack_68,"create",
+                "M3T/third_party/opencv-src/modules/features2d/src/affine_feature.cpp",0x15f);
+    }
+  }
+  else {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (asStack_68,"minTilt < maxTilt",param_2,param_3);
+    cv::error(-0xd7,asStack_68,"create",
+              "M3T/third_party/opencv-src/modules/features2d/src/affine_feature.cpp",0x15d);
+  }
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x1780);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: getDefaultName
+// Entry: 000017b4
+// Signature: undefined __thiscall getDefaultName(AffineFeature * this)
+// ========================================
+
+
+/* cv::AffineFeature::getDefaultName() const */
+
+void __thiscall cv::AffineFeature::getDefaultName(AffineFeature *this)
+
+{
+  undefined8 *puVar1;
+  undefined8 *in_x8;
+  undefined8 uVar2;
+  void *local_38 [2];
+  char local_21;
+  
+  cv::Feature2D::getDefaultName();
+  puVar1 = (undefined8 *)std::string::append((char *)local_38);
+  uVar2 = *puVar1;
+  in_x8[1] = puVar1[1];
+  *in_x8 = uVar2;
+  in_x8[2] = puVar1[2];
+  puVar1[1] = 0;
+  puVar1[2] = 0;
+  *puVar1 = 0;
+  if (-1 < local_21) {
+    return;
+  }
+  operator_delete(local_38[0]);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getDefaultName
+// Entry: 00001844
+// Signature: undefined __thiscall getDefaultName(AffineFeature * this)
+// ========================================
+
+
+/* virtual thunk to cv::AffineFeature::getDefaultName() const */
+
+void __thiscall cv::AffineFeature::getDefaultName(AffineFeature *this)
+
+{
+  undefined8 *puVar1;
+  undefined8 *in_x8;
+  undefined8 uVar2;
+  void *local_38 [2];
+  char local_21;
+  
+  cv::Feature2D::getDefaultName();
+  puVar1 = (undefined8 *)std::string::append((char *)local_38);
+  uVar2 = *puVar1;
+  in_x8[1] = puVar1[1];
+  *in_x8 = uVar2;
+  in_x8[2] = puVar1[2];
+  puVar1[1] = 0;
+  puVar1[2] = 0;
+  *puVar1 = 0;
+  if (-1 < local_21) {
+    return;
+  }
+  operator_delete(local_38[0]);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 000018e0
+// Signature: undefined __cdecl clear(void)
+// ========================================
+
+
+/* cv::Algorithm::clear() */
+
+void cv::Algorithm::clear(void)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~AffineFeature_Impl
+// Entry: 000018e4
+// Signature: undefined __thiscall ~AffineFeature_Impl(AffineFeature_Impl * this)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::~AffineFeature_Impl() */
+
+void __thiscall cv::AffineFeature_Impl::~AffineFeature_Impl(AffineFeature_Impl *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  Algorithm *this_00;
+  long lVar5;
+  long *plVar6;
+  
+  pvVar4 = *(void **)(this + 0x40);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x48) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  pvVar4 = *(void **)(this + 0x28);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x30) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  plVar6 = *(long **)(this + 0x10);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  this_00 = (Algorithm *)cv::Feature2D::~Feature2D((Feature2D *)this);
+  cv::Algorithm::~Algorithm(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~AffineFeature_Impl
+// Entry: 00001968
+// Signature: undefined __thiscall ~AffineFeature_Impl(AffineFeature_Impl * this)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::~AffineFeature_Impl() */
+
+void __thiscall cv::AffineFeature_Impl::~AffineFeature_Impl(AffineFeature_Impl *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  Algorithm *this_00;
+  long lVar5;
+  long *plVar6;
+  
+  pvVar4 = *(void **)(this + 0x40);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x48) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  pvVar4 = *(void **)(this + 0x28);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x30) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  plVar6 = *(long **)(this + 0x10);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  this_00 = (Algorithm *)cv::Feature2D::~Feature2D((Feature2D *)this);
+  pvVar4 = (void *)cv::Algorithm::~Algorithm(this_00);
+  operator_delete(pvVar4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: descriptorSize
+// Entry: 000019f0
+// Signature: undefined __thiscall descriptorSize(AffineFeature_Impl * this)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::descriptorSize() const */
+
+void __thiscall cv::AffineFeature_Impl::descriptorSize(AffineFeature_Impl *this)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x000019fc. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(**(long **)(this + 8) + 0x68))();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: descriptorType
+// Entry: 00001a00
+// Signature: undefined __thiscall descriptorType(AffineFeature_Impl * this)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::descriptorType() const */
+
+void __thiscall cv::AffineFeature_Impl::descriptorType(AffineFeature_Impl *this)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00001a0c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(**(long **)(this + 8) + 0x70))();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: defaultNorm
+// Entry: 00001a10
+// Signature: undefined __thiscall defaultNorm(AffineFeature_Impl * this)
+// ========================================
+
+
+/* cv::AffineFeature_Impl::defaultNorm() const */
+
+void __thiscall cv::AffineFeature_Impl::defaultNorm(AffineFeature_Impl *this)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00001a1c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(**(long **)(this + 8) + 0x78))();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~skewedDetectAndCompute
+// Entry: 00001a20
+// Signature: undefined __thiscall ~skewedDetectAndCompute(skewedDetectAndCompute * this)
+// ========================================
+
+
+/* cv::skewedDetectAndCompute::~skewedDetectAndCompute() */
+
+void __thiscall cv::skewedDetectAndCompute::~skewedDetectAndCompute(skewedDetectAndCompute *this)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = (void *)cv::ParallelLoopBody::~ParallelLoopBody((ParallelLoopBody *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 00001a34
+// Signature: undefined __thiscall operator()(skewedDetectAndCompute * this, Range * param_1)
+// ========================================
+
+
+/* cv::skewedDetectAndCompute::TEMPNAMEPLACEHOLDERVALUE(cv::Range const&) const */
+
+void __thiscall cv::skewedDetectAndCompute::operator()(skewedDetectAndCompute *this,Range *param_1)
+
+{
+  undefined8 *puVar1;
+  int iVar2;
+  bool bVar3;
+  vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *this_00;
+  skewedDetectAndCompute sVar4;
+  undefined8 *puVar5;
+  long lVar6;
+  ulong uVar7;
+  long lVar8;
+  vector *pvVar9;
+  long lVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined4 local_258 [2];
+  undefined8 *local_250;
+  undefined8 uStack_248;
+  undefined4 local_240 [2];
+  undefined1 **local_238;
+  undefined8 uStack_230;
+  void *local_228;
+  undefined1 **local_220;
+  undefined8 local_218;
+  Mat *local_210;
+  Mat *local_208;
+  undefined8 local_200;
+  Mat *local_1f8;
+  Mat *local_1f0;
+  undefined8 local_1e8;
+  undefined1 *local_1e0;
+  undefined8 *local_1d8;
+  undefined8 uStack_1d0;
+  void *local_180;
+  undefined8 *local_178;
+  undefined8 local_170;
+  undefined8 local_168;
+  undefined8 uStack_160;
+  undefined8 local_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  Mat aMStack_138 [96];
+  Mat aMStack_d8 [96];
+  Region aRStack_78 [8];
+  int local_70;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_78,
+             (LocationStaticStorage *)&operator()(cv::Range_const&)::__cv_trace_location_fn177);
+  iVar2 = *(int *)(param_1 + 4);
+  lVar10 = (long)*(int *)param_1;
+  if (*(int *)param_1 < iVar2) {
+    do {
+      cv::Mat::Mat(aMStack_d8);
+      cv::Mat::Mat(aMStack_138);
+      local_150 = 0;
+      uStack_148 = 0;
+      local_140 = 0;
+      local_168 = 0;
+      uStack_160 = 0;
+      local_158 = 0;
+      affineSkew(this,*(float *)(**(long **)(this + 8) + lVar10 * 4),
+                 *(float *)(**(long **)(this + 0x10) + lVar10 * 4),aMStack_d8,aMStack_138,
+                 (Matx *)&local_150);
+      local_1e0._0_4_ = 0xc1020005;
+      local_1d8 = &local_150;
+      uStack_1d0 = 0x200000003;
+      local_180 = (void *)CONCAT44(local_180._4_4_,0xc2020005);
+      local_170 = 0x200000003;
+      local_178 = &local_168;
+      cv::invertAffineTransform((_InputArray *)&local_1e0,(_OutputArray *)&local_180);
+      local_180 = (void *)0x0;
+      local_178 = (void *)0x0;
+      local_170 = 0;
+      cv::Mat::Mat((Mat *)&local_1e0);
+      if (this[0x38] == (skewedDetectAndCompute)0x0) {
+        pvVar9 = (vector *)(**(long **)(this + 0x18) + lVar10 * 0x18);
+        if (*(long *)(pvVar9 + 8) != *(long *)pvVar9) {
+          local_1f8 = (Mat *)0x0;
+          local_1f0 = (Mat *)0x0;
+          local_1e8 = 0;
+          local_210 = (Mat *)0x0;
+          local_208 = (Mat *)0x0;
+          local_200 = 0;
+          local_228 = (void *)0x0;
+          local_220 = (undefined1 **)0x0;
+          local_218 = 0;
+          cv::KeyPoint::convert(pvVar9,(vector *)&local_1f8,(vector *)&local_228);
+          if (local_228 != (void *)0x0) {
+            local_220 = local_228;
+            operator_delete(local_228);
+          }
+          local_228 = (void *)CONCAT44(local_228._4_4_,0x8103000d);
+          local_220 = &local_1f8;
+          local_218 = 0;
+          local_240[0] = 0x8203000d;
+          local_238 = &local_210;
+          uStack_230 = 0;
+          local_258[0] = 0xc1020005;
+          local_250 = &local_150;
+          uStack_248 = 0x200000003;
+          cv::transform((_InputArray *)&local_228,(_OutputArray *)local_240,(_InputArray *)local_258
+                       );
+          lVar6 = *(long *)(pvVar9 + 8) - *(long *)pvVar9 >> 2;
+          uVar7 = lVar6 * 0x6db6db6db6db6db7;
+          lVar8 = (long)local_178 - (long)local_180 >> 2;
+          bVar3 = uVar7 < (ulong)(lVar8 * 0x6db6db6db6db6db7);
+          uVar7 = uVar7 + lVar8 * -0x6db6db6db6db6db7;
+          if (bVar3 || uVar7 == 0) {
+            if (bVar3) {
+              local_178 = (undefined8 *)((long)local_180 + lVar6 * 4);
+            }
+          }
+          else {
+            std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__append
+                      ((vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *)&local_180,uVar7);
+          }
+          if (local_178 != local_180) {
+            lVar6 = 0;
+            uVar7 = 0;
+            do {
+              puVar5 = (undefined8 *)(*(long *)pvVar9 + lVar6);
+              puVar1 = (undefined8 *)((long)local_180 + lVar6);
+              uVar12 = *(undefined8 *)((long)puVar5 + 0x14);
+              uVar11 = *(undefined8 *)((long)puVar5 + 0xc);
+              uVar13 = *puVar5;
+              puVar1[1] = puVar5[1];
+              *puVar1 = uVar13;
+              *(undefined8 *)((long)puVar1 + 0x14) = uVar12;
+              *(undefined8 *)((long)puVar1 + 0xc) = uVar11;
+              *puVar1 = *(undefined8 *)(local_210 + uVar7 * 8);
+              uVar7 = uVar7 + 1;
+              lVar6 = lVar6 + 0x1c;
+            } while (uVar7 < (ulong)(((long)local_178 - (long)local_180 >> 2) * 0x6db6db6db6db6db7))
+            ;
+          }
+          if (local_210 != (Mat *)0x0) {
+            local_208 = local_210;
+            operator_delete(local_210);
+          }
+          if (local_1f8 != (Mat *)0x0) {
+            local_1f0 = local_1f8;
+            operator_delete(local_1f8);
+          }
+          sVar4 = this[0x38];
+          goto LAB_00001cc0;
+        }
+      }
+      else {
+        sVar4 = (skewedDetectAndCompute)0x1;
+LAB_00001cc0:
+        local_1e8 = 0;
+        local_1f8 = (Mat *)CONCAT44(local_1f8._4_4_,0x1010000);
+        local_1f0 = aMStack_d8;
+        local_200 = 0;
+        local_210 = (Mat *)CONCAT44(local_210._4_4_,0x1010000);
+        local_208 = aMStack_138;
+        local_228 = (void *)CONCAT44(local_228._4_4_,0x2010000);
+        local_220 = &local_1e0;
+        local_218 = 0;
+        (**(code **)(*(long *)**(undefined8 **)(this + 0x40) + 0x60))
+                  ((long *)**(undefined8 **)(this + 0x40),&local_1f8,&local_210,&local_180,
+                   &local_228,sVar4 == (skewedDetectAndCompute)0x0);
+        if (this[0x38] != (skewedDetectAndCompute)0x0) {
+          if (local_178 == local_180) {
+            puVar5 = (undefined8 *)(**(long **)(this + 0x18) + lVar10 * 0x18);
+            puVar5[1] = *puVar5;
+            goto LAB_00001f08;
+          }
+          local_1f8 = (Mat *)0x0;
+          local_1f0 = (Mat *)0x0;
+          local_1e8 = 0;
+          local_210 = (Mat *)0x0;
+          local_208 = (Mat *)0x0;
+          local_200 = 0;
+          local_228 = (void *)0x0;
+          local_220 = (undefined1 **)0x0;
+          local_218 = 0;
+          cv::KeyPoint::convert((vector *)&local_180,(vector *)&local_1f8,(vector *)&local_228);
+          if (local_228 != (void *)0x0) {
+            local_220 = local_228;
+            operator_delete(local_228);
+          }
+          local_228 = (void *)CONCAT44(local_228._4_4_,0x8103000d);
+          local_220 = &local_1f8;
+          local_218 = 0;
+          local_240[0] = 0x8203000d;
+          local_238 = &local_210;
+          uStack_230 = 0;
+          local_258[0] = 0xc1020005;
+          uStack_248 = 0x200000003;
+          local_250 = &local_168;
+          cv::transform((_InputArray *)&local_228,(_OutputArray *)local_240,(_InputArray *)local_258
+                       );
+          this_00 = (vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *)
+                    (**(long **)(this + 0x18) + lVar10 * 0x18);
+          lVar6 = (long)local_178 - (long)local_180 >> 2;
+          uVar7 = lVar6 * 0x6db6db6db6db6db7;
+          lVar8 = *(long *)(this_00 + 8) - *(long *)this_00 >> 2;
+          bVar3 = uVar7 < (ulong)(lVar8 * 0x6db6db6db6db6db7);
+          uVar7 = uVar7 + lVar8 * -0x6db6db6db6db6db7;
+          if (bVar3 || uVar7 == 0) {
+            if (bVar3) {
+              *(long *)(this_00 + 8) = *(long *)this_00 + lVar6 * 4;
+            }
+          }
+          else {
+            std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__append(this_00,uVar7);
+          }
+          if (local_178 != local_180) {
+            lVar6 = 0;
+            uVar7 = 0;
+            lVar8 = *(long *)(**(long **)(this + 0x18) + lVar10 * 0x18);
+            do {
+              puVar5 = (undefined8 *)((long)local_180 + lVar6);
+              puVar1 = (undefined8 *)(lVar8 + lVar6);
+              uVar12 = *(undefined8 *)((long)puVar5 + 0x14);
+              uVar11 = *(undefined8 *)((long)puVar5 + 0xc);
+              uVar13 = *puVar5;
+              puVar1[1] = puVar5[1];
+              *puVar1 = uVar13;
+              *(undefined8 *)((long)puVar1 + 0x14) = uVar12;
+              *(undefined8 *)((long)puVar1 + 0xc) = uVar11;
+              *(undefined8 *)(*(long *)(**(long **)(this + 0x18) + lVar10 * 0x18) + lVar6) =
+                   *(undefined8 *)(local_210 + uVar7 * 8);
+              lVar8 = *(long *)(**(long **)(this + 0x18) + lVar10 * 0x18);
+              *(int *)(lVar8 + lVar6 + 0x18) = (int)lVar10;
+              uVar7 = uVar7 + 1;
+              lVar6 = lVar6 + 0x1c;
+            } while (uVar7 < (ulong)(((long)local_178 - (long)local_180 >> 2) * 0x6db6db6db6db6db7))
+            ;
+          }
+          if (local_210 != (Mat *)0x0) {
+            local_208 = local_210;
+            operator_delete(local_210);
+          }
+          if (local_1f8 != (Mat *)0x0) {
+            local_1f0 = local_1f8;
+            operator_delete(local_1f8);
+          }
+        }
+        if (this[0x39] != (skewedDetectAndCompute)0x0) {
+          local_1f0 = (Mat *)(**(long **)(this + 0x20) + lVar10 * 0x60);
+          local_1f8 = (Mat *)CONCAT44(local_1f8._4_4_,0x2010000);
+          local_1e8 = 0;
+          cv::Mat::copyTo((_OutputArray *)&local_1e0);
+        }
+      }
+LAB_00001f08:
+      cv::Mat::~Mat((Mat *)&local_1e0);
+      if (local_180 != (void *)0x0) {
+        local_178 = local_180;
+        operator_delete(local_180);
+      }
+      cv::Mat::~Mat(aMStack_138);
+      cv::Mat::~Mat(aMStack_d8);
+      lVar10 = lVar10 + 1;
+    } while (iVar2 != (int)lVar10);
+  }
+  if (local_70 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: affineSkew
+// Entry: 00002030
+// Signature: undefined __thiscall affineSkew(skewedDetectAndCompute * this, float param_1, float param_2, Mat * param_3, Mat * param_4, Matx * param_5)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::skewedDetectAndCompute::affineSkew(float, float, cv::Mat&, cv::Mat&, cv::Matx<float, 2, 3>&)
+   const */
+
+void __thiscall
+cv::skewedDetectAndCompute::affineSkew
+          (skewedDetectAndCompute *this,float param_1,float param_2,Mat *param_3,Mat *param_4,
+          Matx *param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  _OutputArray *p_Var5;
+  Mat *this_00;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  undefined1 auVar13 [16];
+  undefined4 local_260 [2];
+  Matx *local_258;
+  undefined8 uStack_250;
+  undefined4 local_248 [2];
+  Mat *local_240;
+  undefined8 uStack_238;
+  undefined8 local_230;
+  undefined8 uStack_228;
+  undefined8 local_220;
+  undefined8 local_218;
+  undefined8 local_210;
+  Mat *pMStack_208;
+  undefined8 local_200;
+  undefined8 uStack_1f8;
+  undefined8 local_1f0;
+  undefined8 uStack_1e8;
+  undefined8 uStack_1e0;
+  undefined8 uStack_1d8;
+  ulong local_1d0;
+  undefined8 *puStack_1c8;
+  undefined8 local_1c0;
+  undefined8 uStack_1b8;
+  Mat aMStack_1a8 [96];
+  Mat aMStack_148 [96];
+  undefined4 local_e8 [2];
+  Matx *local_e0;
+  undefined8 uStack_d8;
+  undefined8 local_d0;
+  Mat *pMStack_c8;
+  undefined8 uStack_c0;
+  undefined8 uStack_b8;
+  
+  iVar1 = **(int **)(*(long *)(this + 0x28) + 0x40);
+  iVar2 = (*(int **)(*(long *)(this + 0x28) + 0x40))[1];
+  cv::Mat::Mat(aMStack_148);
+  cv::Mat::Mat(aMStack_1a8);
+  iVar4 = cv::Mat::empty();
+  if (iVar4 == 0) {
+    cv::Mat::operator=(aMStack_1a8,*(Mat **)(this + 0x30));
+  }
+  else {
+    local_210 = 0x406fe00000000000;
+    pMStack_208 = (Mat *)0x0;
+    local_200 = 0;
+    uStack_1f8 = 0;
+    cv::Mat::Mat((Mat *)&local_d0,iVar1,iVar2,0,(Scalar_ *)&local_210);
+    cv::Mat::operator=(aMStack_1a8,(Mat *)&local_d0);
+    cv::Mat::~Mat((Mat *)&local_d0);
+  }
+  uVar3 = _DAT_00003d00;
+  *(undefined8 *)(param_5 + 8) = uRam0000000000003d08;
+  *(undefined8 *)param_5 = uVar3;
+  *(double *)(param_5 + 0x10) = l004;
+  if (param_2 == 0.0) {
+    local_d0 = CONCAT44(local_d0._4_4_,0x2010000);
+    pMStack_c8 = aMStack_148;
+    uStack_c0 = 0;
+    cv::Mat::copyTo(*(_OutputArray **)(this + 0x28));
+  }
+  else {
+    fVar8 = 180.0;
+    param_2 = (param_2 * 3.1415927) / 180.0;
+    fVar6 = (float)___sincosf_stret(param_2);
+    fVar7 = (float)iVar2;
+    fVar9 = (float)iVar1;
+    fVar10 = fVar8 * 0.0 + 0.0;
+    local_230._0_4_ = fVar10 - fVar6 * 0.0;
+    fVar12 = fVar6 * 0.0 + 0.0;
+    local_230._4_4_ = fVar12 + fVar8 * 0.0;
+    fVar11 = fVar8 * fVar7 + 0.0;
+    fVar7 = fVar6 * fVar7 + 0.0;
+    uStack_228 = (Mat *)CONCAT44(fVar7 + fVar8 * 0.0,fVar11 - fVar6 * 0.0);
+    local_220 = CONCAT44(fVar7 + fVar8 * fVar9,fVar11 - fVar6 * fVar9);
+    local_218 = CONCAT44(fVar12 + fVar8 * fVar9,fVar10 - fVar6 * fVar9);
+    local_1d0 = (ulong)&local_210 | 8;
+    pMStack_208 = pMRam0000000000003e08;
+    local_210 = _DAT_00003e00;
+    uStack_1f8 = 0;
+    local_200 = 0;
+    uStack_1e8 = 0;
+    local_1f0 = 0;
+    uStack_1d8 = 0;
+    uStack_1e0 = 0;
+    puStack_1c8 = &local_1c0;
+    local_1c0 = 0;
+    uStack_1b8 = 0;
+    p_Var5 = (_OutputArray *)cv::Mat::Mat((Mat *)&local_d0,4,2,5,&local_230,0);
+    local_e8[0] = 0x2010000;
+    uStack_d8 = 0;
+    local_e0 = (Matx *)&local_210;
+    cv::Mat::copyTo(p_Var5);
+    this_00 = (Mat *)cv::Mat::~Mat((Mat *)&local_d0);
+    cv::Mat::Mat(this_00);
+    local_230._0_4_ = 9.477423e-38;
+    local_220 = 0;
+    uStack_228 = (Mat *)&local_d0;
+    cv::Mat::convertTo((_OutputArray *)&local_210,(int)&local_230,1.0,0.0);
+    local_220 = 0;
+    local_230 = CONCAT44(local_230._4_4_,0x1010000);
+    uStack_228 = (Mat *)&local_d0;
+    auVar13 = cv::boundingRect((_InputArray *)&local_230);
+    *(float *)param_5 = fVar8;
+    *(float *)(param_5 + 4) = -fVar6;
+    *(float *)(param_5 + 8) = -(float)auVar13._0_4_;
+    *(float *)(param_5 + 0xc) = fVar6;
+    *(float *)(param_5 + 0x10) = fVar8;
+    *(float *)(param_5 + 0x14) = -(float)auVar13._4_4_;
+    local_e0 = *(Matx **)(this + 0x28);
+    uStack_d8 = 0;
+    local_e8[0] = 0x1010000;
+    local_248[0] = 0x2010000;
+    local_240 = aMStack_148;
+    uStack_238 = 0;
+    local_260[0] = 0xc1020005;
+    uStack_250 = 0x200000003;
+    uStack_228 = (Mat *)0x0;
+    local_230 = 0;
+    local_218 = 0;
+    local_220 = 0;
+    local_258 = param_5;
+    cv::warpAffine(local_e8,local_248,local_260,auVar13._8_8_,1,1,&local_230);
+    cv::Mat::~Mat((Mat *)&local_d0);
+    cv::Mat::~Mat((Mat *)&local_210);
+  }
+  if (param_1 == 1.0) {
+    cv::Mat::operator=(param_3,aMStack_148);
+    if (param_2 == 0.0) {
+      cv::Mat::operator=(param_4,aMStack_1a8);
+      goto LAB_00002438;
+    }
+  }
+  else {
+    local_d0._4_4_ = (undefined4)((ulong)local_d0 >> 0x20);
+    local_d0._0_4_ = 0x1010000;
+    uStack_c0 = 0;
+    local_210._4_4_ = (undefined4)((ulong)local_210 >> 0x20);
+    local_210._0_4_ = 0x2010000;
+    local_200 = 0;
+    pMStack_208 = aMStack_148;
+    pMStack_c8 = aMStack_148;
+    cv::GaussianBlur((double)(SQRT(param_1 * param_1 + -1.0) * 0.8),l005,&local_d0,&local_210,0,4);
+    uStack_c0 = 0;
+    local_d0 = CONCAT44(local_d0._4_4_,0x1010000);
+    local_210 = CONCAT44(local_210._4_4_,0x2010000);
+    local_200 = 0;
+    pMStack_208 = param_3;
+    pMStack_c8 = aMStack_148;
+    cv::resize(1.0 / (double)param_1,&local_d0,&local_210,0,0);
+    *(ulong *)param_5 =
+         CONCAT44((float)((ulong)*(undefined8 *)param_5 >> 0x20) / param_1,
+                  (float)*(undefined8 *)param_5 / param_1);
+    *(float *)(param_5 + 8) = *(float *)(param_5 + 8) / param_1;
+  }
+  local_210._4_4_ = (undefined4)((ulong)local_210 >> 0x20);
+  local_210 = CONCAT44(local_210._4_4_,0x1010000);
+  pMStack_208 = aMStack_1a8;
+  local_200 = 0;
+  local_230._4_4_ = (float)((ulong)local_230 >> 0x20);
+  local_230 = CONCAT44(local_230._4_4_,0x2010000);
+  local_220 = 0;
+  local_e8[0] = 0xc1020005;
+  uStack_d8 = 0x200000003;
+  pMStack_c8 = (Mat *)0x0;
+  local_d0 = 0;
+  uStack_b8 = 0;
+  uStack_c0 = 0;
+  uStack_228 = param_4;
+  local_e0 = param_5;
+  cv::warpAffine(&local_210,&local_230,local_e8,
+                 CONCAT44(**(undefined4 **)(param_3 + 0x40),(*(undefined4 **)(param_3 + 0x40))[1]),0
+                 ,0,&local_d0);
+LAB_00002438:
+  cv::Mat::~Mat(aMStack_1a8);
+  cv::Mat::~Mat(aMStack_148);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 000024e4
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___clang_call_terminate(void)
+
+{
+  undefined8 *puVar1;
+  undefined8 *puVar2;
+  void *pvVar3;
+  void *pvVar4;
+  long lVar5;
+  undefined8 *puVar6;
+  undefined8 *puVar7;
+  long lVar8;
+  ulong uVar9;
+  ulong uVar10;
+  undefined8 *puVar11;
+  ulong uVar12;
+  undefined8 *puVar13;
+  ulong uVar14;
+  undefined8 *puVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  undefined1 auVar19 [16];
+  
+  ___cxa_begin_catch();
+  auVar19 = std::terminate();
+  uVar17 = uRam0000000000003f08;
+  uVar16 = _DAT_00003f00;
+  uVar10 = auVar19._8_8_;
+  puVar2 = auVar19._0_8_;
+  puVar13 = (undefined8 *)puVar2[1];
+  if (uVar10 <= (ulong)((puVar2[2] - (long)puVar13 >> 2) * 0x6db6db6db6db6db7)) {
+    puVar15 = puVar13;
+    if (uVar10 != 0) {
+      puVar15 = (undefined8 *)((long)puVar13 + uVar10 * 0x1c);
+      uVar10 = uVar10 * 0x1c - 0x1c;
+      puVar7 = puVar13;
+      if (0x1b < uVar10) {
+        uVar10 = uVar10 / 0x1c + 1;
+        uVar9 = uVar10 & 0x1ffffffffffffffe;
+        puVar7 = (undefined8 *)((long)puVar13 + uVar9 * 0x1c);
+        puVar13 = (undefined8 *)((long)puVar13 + 0x1c);
+        uVar14 = uVar9;
+        do {
+          *(undefined8 *)((long)puVar13 + -0x14) = uVar17;
+          *(undefined8 *)((long)puVar13 + -0x1c) = uVar16;
+          puVar13[1] = uVar17;
+          *puVar13 = uVar16;
+          *(undefined4 *)((long)puVar13 + -0xc) = 0;
+          *(undefined4 *)(puVar13 + 2) = 0;
+          puVar13[-1] = 0xffffffff00000000;
+          *(undefined8 *)((long)puVar13 + 0x14) = 0xffffffff00000000;
+          puVar13 = puVar13 + 7;
+          uVar14 = uVar14 - 2;
+        } while (uVar14 != 0);
+        uVar17 = uRam0000000000003f08;
+        uVar16 = _DAT_00003f00;
+        if (uVar10 == uVar9) goto LAB_00002678;
+      }
+      do {
+        puVar7[1] = uVar17;
+        *puVar7 = uVar16;
+        *(undefined4 *)(puVar7 + 2) = 0;
+        *(undefined8 *)((long)puVar7 + 0x14) = 0xffffffff00000000;
+        puVar7 = (undefined8 *)((long)puVar7 + 0x1c);
+      } while (puVar7 != puVar15);
+    }
+LAB_00002678:
+    puVar2[1] = puVar15;
+    return;
+  }
+  puVar15 = (undefined8 *)*puVar2;
+  lVar8 = (long)puVar13 - (long)puVar15 >> 2;
+  uVar14 = lVar8 * 0x6db6db6db6db6db7 + uVar10;
+  if (0x924924924924924 < uVar14) {
+    std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__throw_length_error_abi_ne180100_();
+LAB_000027e8:
+                    /* WARNING: Subroutine does not return */
+    std::__throw_bad_array_new_length_abi_ne180100_();
+  }
+  lVar5 = puVar2[2] - (long)puVar15 >> 2;
+  uVar9 = lVar5 * -0x2492492492492492;
+  if (uVar9 < uVar14 || uVar9 - uVar14 == 0) {
+    uVar9 = uVar14;
+  }
+  if (0x492492492492491 < (ulong)(lVar5 * 0x6db6db6db6db6db7)) {
+    uVar9 = 0x924924924924924;
+  }
+  if (uVar9 == 0) {
+    pvVar3 = (void *)0x0;
+  }
+  else {
+    if (0x924924924924924 < uVar9) goto LAB_000027e8;
+    pvVar3 = operator_new(uVar9 * 0x1c);
+  }
+  uVar16 = uRam0000000000003f08;
+  uVar17 = _DAT_00003f00;
+  puVar6 = (undefined8 *)((long)pvVar3 + lVar8 * 4);
+  puVar1 = (undefined8 *)((long)puVar6 + uVar10 * 0x1c);
+  uVar10 = uVar10 * 0x1c - 0x1c;
+  puVar7 = puVar6;
+  if (0x1b < uVar10) {
+    uVar10 = uVar10 / 0x1c + 1;
+    uVar12 = uVar10 & 0x1ffffffffffffffe;
+    puVar7 = (undefined8 *)((long)puVar6 + uVar12 * 0x1c);
+    puVar11 = (undefined8 *)((long)pvVar3 + lVar8 * 4 + 0x1c);
+    uVar14 = uVar12;
+    do {
+      *(undefined8 *)((long)puVar11 + -0x14) = uVar16;
+      *(undefined8 *)((long)puVar11 + -0x1c) = uVar17;
+      puVar11[1] = uVar16;
+      *puVar11 = uVar17;
+      *(undefined4 *)((long)puVar11 + -0xc) = 0;
+      *(undefined4 *)(puVar11 + 2) = 0;
+      puVar11[-1] = 0xffffffff00000000;
+      *(undefined8 *)((long)puVar11 + 0x14) = 0xffffffff00000000;
+      puVar11 = puVar11 + 7;
+      uVar14 = uVar14 - 2;
+    } while (uVar14 != 0);
+    uVar16 = uRam0000000000003f08;
+    uVar17 = _DAT_00003f00;
+    if (uVar10 == uVar12) goto LAB_00002750;
+  }
+  do {
+    puVar7[1] = uVar16;
+    *puVar7 = uVar17;
+    *(undefined4 *)(puVar7 + 2) = 0;
+    *(undefined8 *)((long)puVar7 + 0x14) = 0xffffffff00000000;
+    puVar7 = (undefined8 *)((long)puVar7 + 0x1c);
+  } while (puVar7 != puVar1);
+LAB_00002750:
+  pvVar3 = (void *)((long)pvVar3 + uVar9 * 0x1c);
+  if (puVar13 == puVar15) {
+    pvVar4 = (void *)*puVar2;
+    *puVar2 = puVar6;
+    puVar2[1] = puVar1;
+    puVar2[2] = pvVar3;
+  }
+  else {
+    do {
+      uVar17 = *(undefined8 *)((long)puVar13 + -0x14);
+      uVar16 = *(undefined8 *)((long)puVar13 + -0x1c);
+      puVar7 = puVar13 + -1;
+      uVar18 = puVar13[-2];
+      puVar13 = (undefined8 *)((long)puVar13 + -0x1c);
+      puVar11 = (undefined8 *)((long)puVar6 + -0x1c);
+      puVar6[-1] = *puVar7;
+      puVar6[-2] = uVar18;
+      *(undefined8 *)((long)puVar6 + -0x14) = uVar17;
+      *(undefined8 *)((long)puVar6 + -0x1c) = uVar16;
+      puVar6 = puVar11;
+    } while (puVar13 != puVar15);
+    pvVar4 = (void *)*puVar2;
+    *puVar2 = puVar11;
+    puVar2[1] = puVar1;
+    puVar2[2] = pvVar3;
+  }
+  if (pvVar4 == (void *)0x0) {
+    return;
+  }
+  operator_delete(pvVar4);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __append
+// Entry: 000024f4
+// Signature: undefined __thiscall __append(vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> * this, ulong param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >::__append(unsigned long) */
+
+void __thiscall
+std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__append
+          (vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *this,ulong param_1)
+
+{
+  undefined8 *puVar1;
+  void *pvVar2;
+  void *pvVar3;
+  long lVar4;
+  undefined8 *puVar5;
+  undefined8 *puVar6;
+  long lVar7;
+  ulong uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  undefined8 *puVar11;
+  ulong uVar12;
+  undefined8 *puVar13;
+  undefined8 *puVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  
+  uVar16 = uRam0000000000003f08;
+  uVar15 = _DAT_00003f00;
+  puVar13 = *(undefined8 **)(this + 8);
+  if (param_1 <= (ulong)((*(long *)(this + 0x10) - (long)puVar13 >> 2) * 0x6db6db6db6db6db7)) {
+    puVar14 = puVar13;
+    if (param_1 != 0) {
+      puVar14 = (undefined8 *)((long)puVar13 + param_1 * 0x1c);
+      uVar10 = param_1 * 0x1c - 0x1c;
+      puVar6 = puVar13;
+      if (0x1b < uVar10) {
+        uVar10 = uVar10 / 0x1c + 1;
+        uVar9 = uVar10 & 0x1ffffffffffffffe;
+        puVar6 = (undefined8 *)((long)puVar13 + uVar9 * 0x1c);
+        puVar13 = (undefined8 *)((long)puVar13 + 0x1c);
+        uVar8 = uVar9;
+        do {
+          *(undefined8 *)((long)puVar13 + -0x14) = uVar16;
+          *(undefined8 *)((long)puVar13 + -0x1c) = uVar15;
+          puVar13[1] = uVar16;
+          *puVar13 = uVar15;
+          *(undefined4 *)((long)puVar13 + -0xc) = 0;
+          *(undefined4 *)(puVar13 + 2) = 0;
+          puVar13[-1] = 0xffffffff00000000;
+          *(undefined8 *)((long)puVar13 + 0x14) = 0xffffffff00000000;
+          puVar13 = puVar13 + 7;
+          uVar8 = uVar8 - 2;
+        } while (uVar8 != 0);
+        uVar16 = uRam0000000000003f08;
+        uVar15 = _DAT_00003f00;
+        if (uVar10 == uVar9) goto LAB_00002678;
+      }
+      do {
+        puVar6[1] = uVar16;
+        *puVar6 = uVar15;
+        *(undefined4 *)(puVar6 + 2) = 0;
+        *(undefined8 *)((long)puVar6 + 0x14) = 0xffffffff00000000;
+        puVar6 = (undefined8 *)((long)puVar6 + 0x1c);
+      } while (puVar6 != puVar14);
+    }
+LAB_00002678:
+    *(undefined8 **)(this + 8) = puVar14;
+    return;
+  }
+  puVar14 = *(undefined8 **)this;
+  lVar7 = (long)puVar13 - (long)puVar14 >> 2;
+  uVar10 = lVar7 * 0x6db6db6db6db6db7 + param_1;
+  if (0x924924924924924 < uVar10) {
+    __throw_length_error_abi_ne180100_();
+LAB_000027e8:
+                    /* WARNING: Subroutine does not return */
+    __throw_bad_array_new_length_abi_ne180100_();
+  }
+  lVar4 = *(long *)(this + 0x10) - (long)puVar14 >> 2;
+  uVar8 = lVar4 * -0x2492492492492492;
+  if (uVar8 < uVar10 || uVar8 - uVar10 == 0) {
+    uVar8 = uVar10;
+  }
+  if (0x492492492492491 < (ulong)(lVar4 * 0x6db6db6db6db6db7)) {
+    uVar8 = 0x924924924924924;
+  }
+  if (uVar8 == 0) {
+    pvVar2 = (void *)0x0;
+  }
+  else {
+    if (0x924924924924924 < uVar8) goto LAB_000027e8;
+    pvVar2 = operator_new(uVar8 * 0x1c);
+  }
+  uVar15 = uRam0000000000003f08;
+  uVar16 = _DAT_00003f00;
+  puVar5 = (undefined8 *)((long)pvVar2 + lVar7 * 4);
+  puVar1 = (undefined8 *)((long)puVar5 + param_1 * 0x1c);
+  uVar10 = param_1 * 0x1c - 0x1c;
+  puVar6 = puVar5;
+  if (0x1b < uVar10) {
+    uVar10 = uVar10 / 0x1c + 1;
+    uVar12 = uVar10 & 0x1ffffffffffffffe;
+    puVar6 = (undefined8 *)((long)puVar5 + uVar12 * 0x1c);
+    puVar11 = (undefined8 *)((long)pvVar2 + lVar7 * 4 + 0x1c);
+    uVar9 = uVar12;
+    do {
+      *(undefined8 *)((long)puVar11 + -0x14) = uVar15;
+      *(undefined8 *)((long)puVar11 + -0x1c) = uVar16;
+      puVar11[1] = uVar15;
+      *puVar11 = uVar16;
+      *(undefined4 *)((long)puVar11 + -0xc) = 0;
+      *(undefined4 *)(puVar11 + 2) = 0;
+      puVar11[-1] = 0xffffffff00000000;
+      *(undefined8 *)((long)puVar11 + 0x14) = 0xffffffff00000000;
+      puVar11 = puVar11 + 7;
+      uVar9 = uVar9 - 2;
+    } while (uVar9 != 0);
+    uVar15 = uRam0000000000003f08;
+    uVar16 = _DAT_00003f00;
+    if (uVar10 == uVar12) goto LAB_00002750;
+  }
+  do {
+    puVar6[1] = uVar15;
+    *puVar6 = uVar16;
+    *(undefined4 *)(puVar6 + 2) = 0;
+    *(undefined8 *)((long)puVar6 + 0x14) = 0xffffffff00000000;
+    puVar6 = (undefined8 *)((long)puVar6 + 0x1c);
+  } while (puVar6 != puVar1);
+LAB_00002750:
+  pvVar2 = (void *)((long)pvVar2 + uVar8 * 0x1c);
+  if (puVar13 == puVar14) {
+    pvVar3 = *(void **)this;
+    *(undefined8 **)this = puVar5;
+    *(undefined8 **)(this + 8) = puVar1;
+    *(void **)(this + 0x10) = pvVar2;
+  }
+  else {
+    do {
+      uVar16 = *(undefined8 *)((long)puVar13 + -0x14);
+      uVar15 = *(undefined8 *)((long)puVar13 + -0x1c);
+      puVar6 = puVar13 + -1;
+      uVar17 = puVar13[-2];
+      puVar13 = (undefined8 *)((long)puVar13 + -0x1c);
+      puVar11 = (undefined8 *)((long)puVar5 + -0x1c);
+      puVar5[-1] = *puVar6;
+      puVar5[-2] = uVar17;
+      *(undefined8 *)((long)puVar5 + -0x14) = uVar16;
+      *(undefined8 *)((long)puVar5 + -0x1c) = uVar15;
+      puVar5 = puVar11;
+    } while (puVar13 != puVar14);
+    pvVar3 = *(void **)this;
+    *(undefined8 **)this = puVar11;
+    *(undefined8 **)(this + 8) = puVar1;
+    *(void **)(this + 0x10) = pvVar2;
+  }
+  if (pvVar3 == (void *)0x0) {
+    return;
+  }
+  operator_delete(pvVar3);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000027ec
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >::__throw_length_error[abi:ne180100]()
+   const */
+
+void std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::__throw_length_error_abi_ne180100_
+               (void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002800
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00002850
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 00002874
+// Signature: noreturn undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 0000289c
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000028b0
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<float, std::allocator<float> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<float,std::allocator<float>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __assign_with_size[abi:ne180100]<float*,float*>
+// Entry: 000028c4
+// Signature: void __thiscall __assign_with_size[abi:ne180100]<float*,float*>(vector<float,std::allocator<float>> * this, float * param_1, float * param_2, long param_3)
+// ========================================
+
+
+/* void std::vector<float, std::allocator<float> >::__assign_with_size[abi:ne180100]<float*,
+   float*>(float*, float*, long) */
+
+void __thiscall
+std::vector<float,std::allocator<float>>::__assign_with_size_abi_ne180100_<float*,float*>
+          (vector<float,std::allocator<float>> *this,float *param_1,float *param_2,long param_3)
+
+{
+  float *pfVar1;
+  ulong uVar2;
+  size_t sVar3;
+  ulong uVar4;
+  void *pvVar5;
+  void *pvVar6;
+  
+  uVar4 = *(ulong *)(this + 0x10);
+  pvVar6 = *(void **)this;
+  if ((ulong)param_3 <= (ulong)((long)(uVar4 - (long)pvVar6) >> 2)) {
+    pvVar5 = *(void **)(this + 8);
+    sVar3 = (long)pvVar5 - (long)pvVar6;
+    uVar4 = (long)sVar3 >> 2;
+    pfVar1 = param_1;
+    if ((uVar4 < (ulong)param_3) && (pfVar1 = param_1 + uVar4, pvVar5 != pvVar6)) {
+      _memmove(pvVar6,param_1,sVar3);
+      pvVar6 = *(void **)(this + 8);
+    }
+    sVar3 = (long)param_2 - (long)pfVar1;
+    if (sVar3 != 0) {
+      _memmove(pvVar6,pfVar1,sVar3);
+    }
+LAB_000029e4:
+    *(size_t *)(this + 8) = (long)pvVar6 + sVar3;
+    return;
+  }
+  if (pvVar6 != (void *)0x0) {
+    *(void **)(this + 8) = pvVar6;
+    operator_delete(pvVar6);
+    uVar4 = 0;
+    *(undefined8 *)this = 0;
+    *(undefined8 *)(this + 8) = 0;
+    *(undefined8 *)(this + 0x10) = 0;
+  }
+  if ((ulong)param_3 >> 0x3e == 0) {
+    uVar2 = (long)uVar4 >> 1;
+    if ((ulong)((long)uVar4 >> 1) <= (ulong)param_3) {
+      uVar2 = param_3;
+    }
+    if (0x7ffffffffffffffb < uVar4) {
+      uVar2 = 0x3fffffffffffffff;
+    }
+    if (uVar2 >> 0x3e == 0) {
+      pvVar6 = operator_new(uVar2 * 4);
+      *(void **)this = pvVar6;
+      *(void **)(this + 8) = pvVar6;
+      *(void **)(this + 0x10) = (void *)((long)pvVar6 + uVar2 * 4);
+      sVar3 = (long)param_2 - (long)param_1;
+      if (sVar3 != 0) {
+        _memcpy(pvVar6,param_1,sVar3);
+      }
+      goto LAB_000029e4;
+    }
+  }
+  __throw_length_error_abi_ne180100_();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002a08
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >,
+   std::allocator<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> > >
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002a1c
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::__throw_length_error[abi:ne180100]() const */
+
+void std::vector<cv::Mat,std::allocator<cv::Mat>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __insert_with_size[abi:ne180100]<std::__wrap_iter<cv::KeyPoint_const*>,std::__wrap_iter<cv::KeyPoint_const*>>
+// Entry: 00002a30
+// Signature: __wrap_iter __thiscall __insert_with_size[abi:ne180100]<std::__wrap_iter<cv::KeyPoint_const*>,std::__wrap_iter<cv::KeyPoint_const*>>(vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> * this, __wrap_iter param_1, __wrap_iter param_2, __wrap_iter param_3, long param_4)
+// ========================================
+
+
+/* std::__wrap_iter<cv::KeyPoint*> std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint>
+   >::__insert_with_size[abi:ne180100]<std::__wrap_iter<cv::KeyPoint const*>,
+   std::__wrap_iter<cv::KeyPoint const*> >(std::__wrap_iter<cv::KeyPoint const*>,
+   std::__wrap_iter<cv::KeyPoint const*>, std::__wrap_iter<cv::KeyPoint const*>, long) */
+
+undefined8 * __thiscall
+std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>::
+__insert_with_size_abi_ne180100_<std::__wrap_iter<cv::KeyPoint_const*>,std::__wrap_iter<cv::KeyPoint_const*>>
+          (vector<cv::KeyPoint,std::allocator<cv::KeyPoint>> *this,long param_2,undefined8 *param_3,
+          long param_4,long param_5)
+
+{
+  void *pvVar1;
+  undefined8 *puVar2;
+  void *pvVar3;
+  void *pvVar4;
+  size_t sVar5;
+  long lVar6;
+  long lVar7;
+  undefined8 *puVar8;
+  undefined8 *puVar9;
+  ulong uVar10;
+  ulong uVar11;
+  undefined8 *puVar12;
+  undefined8 *puVar13;
+  undefined8 *puVar14;
+  undefined8 *puVar15;
+  undefined8 uVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  
+  lVar6 = *(long *)this;
+  lVar7 = (param_2 - lVar6) / 0x1c;
+  puVar13 = (undefined8 *)(lVar6 + lVar7 * 0x1c);
+  puVar14 = puVar13;
+  if (0 < param_5) {
+    puVar12 = *(undefined8 **)(this + 8);
+    if ((*(long *)(this + 0x10) - (long)puVar12 >> 2) * 0x6db6db6db6db6db7 < param_5) {
+      uVar11 = param_5 + ((long)puVar12 - lVar6 >> 2) * 0x6db6db6db6db6db7;
+      if (0x924924924924924 < uVar11) {
+        __throw_length_error_abi_ne180100_();
+LAB_00002cd0:
+                    /* WARNING: Subroutine does not return */
+        __throw_bad_array_new_length_abi_ne180100_();
+      }
+      lVar6 = *(long *)(this + 0x10) - lVar6 >> 2;
+      uVar10 = lVar6 * -0x2492492492492492;
+      if (uVar10 < uVar11 || uVar10 - uVar11 == 0) {
+        uVar10 = uVar11;
+      }
+      if (0x492492492492491 < (ulong)(lVar6 * 0x6db6db6db6db6db7)) {
+        uVar10 = 0x924924924924924;
+      }
+      if (uVar10 == 0) {
+        pvVar3 = (void *)0x0;
+      }
+      else {
+        if (0x924924924924924 < uVar10) goto LAB_00002cd0;
+        pvVar3 = operator_new(uVar10 * 0x1c);
+      }
+      puVar14 = (undefined8 *)((long)pvVar3 + lVar7 * 0x1c);
+      param_5 = param_5 * 0x1c;
+      pvVar1 = (void *)((long)puVar14 + param_5);
+      puVar8 = puVar14;
+      do {
+        uVar17 = param_3[1];
+        uVar16 = *param_3;
+        uVar18 = *(undefined8 *)((long)param_3 + 0xc);
+        *(undefined8 *)((long)puVar8 + 0x14) = *(undefined8 *)((long)param_3 + 0x14);
+        *(undefined8 *)((long)puVar8 + 0xc) = uVar18;
+        puVar8[1] = uVar17;
+        *puVar8 = uVar16;
+        param_3 = (undefined8 *)((long)param_3 + 0x1c);
+        param_5 = param_5 + -0x1c;
+        puVar8 = (undefined8 *)((long)puVar8 + 0x1c);
+      } while (param_5 != 0);
+      puVar9 = *(undefined8 **)this;
+      puVar8 = puVar13;
+      puVar15 = puVar14;
+      if (puVar9 != puVar13) {
+        do {
+          uVar17 = *(undefined8 *)((long)puVar8 + -0x14);
+          uVar16 = *(undefined8 *)((long)puVar8 + -0x1c);
+          uVar18 = puVar8[-2];
+          puVar12 = (undefined8 *)((long)puVar8 + -0x1c);
+          puVar15[-1] = puVar8[-1];
+          puVar15[-2] = uVar18;
+          *(undefined8 *)((long)puVar15 + -0x14) = uVar17;
+          *(undefined8 *)((long)puVar15 + -0x1c) = uVar16;
+          puVar15 = (undefined8 *)((long)puVar15 + -0x1c);
+          puVar8 = puVar12;
+        } while (puVar12 != puVar9);
+        puVar12 = *(undefined8 **)(this + 8);
+      }
+      sVar5 = (long)puVar12 - (long)puVar13;
+      if (sVar5 != 0) {
+        _memmove(pvVar1,puVar13,sVar5);
+      }
+      pvVar4 = *(void **)this;
+      *(undefined8 **)this = puVar15;
+      *(size_t *)(this + 8) = (long)pvVar1 + sVar5;
+      *(void **)(this + 0x10) = (void *)((long)pvVar3 + uVar10 * 0x1c);
+      if (pvVar4 != (void *)0x0) {
+        operator_delete(pvVar4);
+      }
+    }
+    else {
+      lVar7 = (long)puVar12 - (long)puVar13 >> 2;
+      if (lVar7 * 0x6db6db6db6db6db7 < param_5) {
+        pvVar3 = (void *)((long)param_3 + lVar7 * 4);
+        sVar5 = param_4 - (long)pvVar3;
+        if (sVar5 != 0) {
+          _memmove(puVar12,pvVar3,sVar5);
+        }
+        *(undefined8 **)(this + 8) = (undefined8 *)((long)puVar12 + sVar5);
+        puVar8 = (undefined8 *)((long)puVar12 + sVar5);
+        if ((long)puVar12 - (long)puVar13 < 1) {
+          return puVar13;
+        }
+      }
+      else {
+        pvVar3 = (void *)((long)param_3 + param_5 * 0x1c);
+        puVar8 = puVar12;
+      }
+      puVar9 = (undefined8 *)((long)puVar13 + param_5 * 0x1c);
+      puVar2 = puVar8;
+      for (puVar15 = (undefined8 *)((long)puVar8 + param_5 * -0x1c); puVar15 < puVar12;
+          puVar15 = (undefined8 *)((long)puVar15 + 0x1c)) {
+        uVar17 = puVar15[1];
+        uVar16 = *puVar15;
+        uVar18 = *(undefined8 *)((long)puVar15 + 0xc);
+        *(undefined8 *)((long)puVar2 + 0x14) = *(undefined8 *)((long)puVar15 + 0x14);
+        *(undefined8 *)((long)puVar2 + 0xc) = uVar18;
+        puVar2[1] = uVar17;
+        *puVar2 = uVar16;
+        puVar2 = (undefined8 *)((long)puVar2 + 0x1c);
+      }
+      *(undefined8 **)(this + 8) = puVar2;
+      if (puVar8 != puVar9) {
+        sVar5 = (long)puVar8 - (long)puVar9;
+        _memmove((void *)((long)puVar8 - sVar5),puVar13,sVar5);
+      }
+      if ((long)pvVar3 - (long)param_3 != 0) {
+        _memmove(puVar13,param_3,(long)pvVar3 - (long)param_3);
+      }
+    }
+  }
+  return puVar14;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00002cd4
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::AffineFeature_Impl, std::allocator<cv::AffineFeature_Impl>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> *this
+          )
+
+{
+  *(undefined ***)this = &PTR____shared_ptr_emplace_000038d8;
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00002ce4
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::AffineFeature_Impl, std::allocator<cv::AffineFeature_Impl>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> *this
+          )
+
+{
+  void *pvVar1;
+  
+  *(undefined ***)this = &PTR____shared_ptr_emplace_000038d8;
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 00002d04
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::AffineFeature_Impl, std::allocator<cv::AffineFeature_Impl>
+   >::__on_zero_shared() */
+
+void __thiscall
+std::__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>>::
+__on_zero_shared(__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>>
+                 *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  Algorithm *this_00;
+  long lVar5;
+  long *plVar6;
+  
+  pvVar4 = *(void **)(this + 0x58);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x60) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  pvVar4 = *(void **)(this + 0x40);
+  if (pvVar4 != (void *)0x0) {
+    *(void **)(this + 0x48) = pvVar4;
+    operator_delete(pvVar4);
+  }
+  plVar6 = *(long **)(this + 0x28);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  this_00 = (Algorithm *)cv::Feature2D::~Feature2D((Feature2D *)(this + 0x18));
+  cv::Algorithm::~Algorithm(this_00);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 00002d88
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<cv::AffineFeature_Impl, std::allocator<cv::AffineFeature_Impl>
+   >::__on_zero_shared_weak() */
+
+void __thiscall
+std::__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>>::
+__on_zero_shared_weak
+          (__shared_ptr_emplace<cv::AffineFeature_Impl,std::allocator<cv::AffineFeature_Impl>> *this
+          )
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _OUTLINED_FUNCTION_0
+// Entry: 00002d8c
+// Signature: undefined _OUTLINED_FUNCTION_0(void)
+// ========================================
+
+
+void _OUTLINED_FUNCTION_0(void *param_1)
+
+{
+  operator_delete(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~AffineFeature
+// Entry: 00002d98
+// Signature: undefined __thiscall ~AffineFeature(AffineFeature * this)
+// ========================================
+
+
+/* cv::AffineFeature::~AffineFeature() */
+
+void __thiscall cv::AffineFeature::~AffineFeature(AffineFeature *this)
+
+{
+  code *pcVar1;
+  
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x2d9c);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: ~AffineFeature
+// Entry: 00002d9c
+// Signature: undefined __thiscall ~AffineFeature(AffineFeature * this)
+// ========================================
+
+
+/* cv::AffineFeature::~AffineFeature() */
+
+void __thiscall cv::AffineFeature::~AffineFeature(AffineFeature *this)
+
+{
+  code *pcVar1;
+  
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x2da0);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 00002da0
+// Signature: undefined __cdecl vector(ulong param_1)
+// ========================================
+
+
+/* std::vector<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >,
+   std::allocator<std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> > > >::vector(unsigned
+   long) [clone .cold.1] */
+
+void std::
+     vector<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>,std::allocator<std::vector<cv::KeyPoint,std::allocator<cv::KeyPoint>>>>
+     ::vector(ulong param_1)
+
+{
+  undefined8 *puVar1;
+  void *pvVar2;
+  undefined8 *in_x1;
+  undefined8 *puVar3;
+  
+  puVar3 = *(undefined8 **)param_1;
+  while (puVar1 = puVar3, puVar1 != in_x1) {
+    puVar3 = puVar1 + -3;
+    pvVar2 = (void *)*puVar3;
+    if (pvVar2 != (void *)0x0) {
+      puVar1[-2] = pvVar2;
+      operator_delete(pvVar2);
+    }
+  }
+  *(undefined8 **)param_1 = in_x1;
+  _OUTLINED_FUNCTION_0();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: vector
+// Entry: 00002dfc
+// Signature: undefined __cdecl vector(ulong param_1)
+// ========================================
+
+
+/* std::vector<cv::Mat, std::allocator<cv::Mat> >::vector(unsigned long) [clone .cold.1] */
+
+void std::vector<cv::Mat,std::allocator<cv::Mat>>::vector(ulong param_1)
+
+{
+  long lVar1;
+  long in_x1;
+  long *in_x2;
+  long lVar2;
+  
+  lVar1 = *(long *)param_1;
+  lVar2 = in_x1;
+  if (lVar1 != in_x1) {
+    do {
+      lVar1 = cv::Mat::~Mat((Mat *)(lVar1 + -0x60));
+    } while (lVar1 != in_x1);
+    lVar2 = *in_x2;
+  }
+  *(long *)param_1 = in_x1;
+  _OUTLINED_FUNCTION_0(lVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: warpAffine
+// Entry: 00004100
+// Signature: undefined warpAffine(_InputArray * param_1, _OutputArray * param_2, _InputArray * param_3, Size_ param_4, int param_5, int param_6, Scalar_ * param_7)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::warpAffine(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: GaussianBlur
+// Entry: 00004200
+// Signature: undefined GaussianBlur(_InputArray * param_1, _OutputArray * param_2, Size_ param_3, double param_4, double param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::GaussianBlur(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: boundingRect
+// Entry: 00004300
+// Signature: undefined boundingRect(_InputArray * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::boundingRect(_InputArray *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: parallel_for_
+// Entry: 00004400
+// Signature: undefined parallel_for_(Range * param_1, ParallelLoopBody * param_2, double param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::parallel_for_(Range *param_1,ParallelLoopBody *param_2,double param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~ParallelLoopBody
+// Entry: 00004500
+// Signature: undefined __thiscall ~ParallelLoopBody(ParallelLoopBody * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::ParallelLoopBody::~ParallelLoopBody(ParallelLoopBody *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: invertAffineTransform
+// Entry: 00004600
+// Signature: undefined invertAffineTransform(_InputArray * param_1, _OutputArray * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::invertAffineTransform(_InputArray *param_1,_OutputArray *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004700
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004800
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1, Rect_ * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1,Rect_ *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004900
+// Signature: undefined __thiscall Mat(Mat * this, int param_1, int param_2, int param_3, void * param_4, ulong param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::Mat::Mat(Mat *this,int param_1,int param_2,int param_3,void *param_4,ulong param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004a00
+// Signature: undefined __thiscall Mat(Mat * this, int param_1, int param_2, int param_3, Scalar_ * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,int param_1,int param_2,int param_3,Scalar_ *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004b00
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00004c00
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004d00
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004e00
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00004f00
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00005000
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00005100
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 00005200
+// Signature: undefined resize(_InputArray * param_1, _OutputArray * param_2, Size_ param_3, double param_4, double param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::resize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: convert
+// Entry: 00005300
+// Signature: undefined convert(vector * param_1, vector * param_2, vector * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::KeyPoint::convert(vector *param_1,vector *param_2,vector *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Algorithm
+// Entry: 00005400
+// Signature: undefined __thiscall Algorithm(Algorithm * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Algorithm::Algorithm(Algorithm *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Algorithm
+// Entry: 00005500
+// Signature: undefined __thiscall ~Algorithm(Algorithm * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Algorithm::~Algorithm(Algorithm *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: detectAndCompute
+// Entry: 00005600
+// Signature: undefined detectAndCompute(_InputArray * param_1, _InputArray * param_2, vector * param_3, _OutputArray * param_4, bool param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::detectAndCompute(cv::_InputArray const&, cv::_InputArray const&,
+   std::vector<cv::KeyPoint, std::allocator<cv::KeyPoint> >&, cv::_OutputArray const&, bool) */
+
+void cv::Feature2D::detectAndCompute
+               (_InputArray *param_1,_InputArray *param_2,vector *param_3,_OutputArray *param_4,
+               bool param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: read
+// Entry: 00005700
+// Signature: undefined read(FileNode * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::read(cv::FileNode const&) */
+
+void cv::Feature2D::read(FileNode *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: detect
+// Entry: 00005800
+// Signature: undefined detect(_InputArray * param_1, vector * param_2, _InputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::detect(cv::_InputArray const&, std::vector<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> >, std::allocator<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> > > >&, cv::_InputArray const&) */
+
+void cv::Feature2D::detect(_InputArray *param_1,vector *param_2,_InputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: detect
+// Entry: 00005900
+// Signature: undefined detect(_InputArray * param_1, vector * param_2, _InputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::detect(cv::_InputArray const&, std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> >&, cv::_InputArray const&) */
+
+void cv::Feature2D::detect(_InputArray *param_1,vector *param_2,_InputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: compute
+// Entry: 00005a00
+// Signature: undefined compute(_InputArray * param_1, vector * param_2, _OutputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::compute(cv::_InputArray const&, std::vector<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> >, std::allocator<std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> > > >&, cv::_OutputArray const&) */
+
+void cv::Feature2D::compute(_InputArray *param_1,vector *param_2,_OutputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: compute
+// Entry: 00005b00
+// Signature: undefined compute(_InputArray * param_1, vector * param_2, _OutputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::compute(cv::_InputArray const&, std::vector<cv::KeyPoint,
+   std::allocator<cv::KeyPoint> >&, cv::_OutputArray const&) */
+
+void cv::Feature2D::compute(_InputArray *param_1,vector *param_2,_OutputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Feature2D
+// Entry: 00005c00
+// Signature: undefined __thiscall ~Feature2D(Feature2D * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* cv::Feature2D::~Feature2D() */
+
+void __thiscall cv::Feature2D::~Feature2D(Feature2D *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Feature2D
+// Entry: 00005d00
+// Signature: undefined __thiscall ~Feature2D(Feature2D * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* cv::Feature2D::~Feature2D() */
+
+void __thiscall cv::Feature2D::~Feature2D(Feature2D *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Feature2D
+// Entry: 00005e00
+// Signature: undefined __thiscall ~Feature2D(Feature2D * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Feature2D::~Feature2D(Feature2D *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: transform
+// Entry: 00005f00
+// Signature: undefined transform(_InputArray * param_1, _OutputArray * param_2, _InputArray * param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::transform(_InputArray *param_1,_OutputArray *param_2,_InputArray *param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: kind
+// Entry: 00006000
+// Signature: undefined kind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::kind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: empty
+// Entry: 00006100
+// Signature: undefined empty(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::empty(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getMat_
+// Entry: 00006200
+// Signature: undefined getMat_(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::getMat_(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: create
+// Entry: 00006300
+// Signature: undefined create(int param_1, int param_2, int param_3, int param_4, bool param_5, DepthMask param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void cv::_OutputArray::create(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: needed
+// Entry: 00006400
+// Signature: undefined needed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_OutputArray::needed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: empty
+// Entry: 00006500
+// Signature: undefined empty(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::empty(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: copyTo
+// Entry: 00006600
+// Signature: undefined copyTo(_OutputArray * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::copyTo(_OutputArray *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: convertTo
+// Entry: 00006700
+// Signature: undefined convertTo(_OutputArray * param_1, int param_2, double param_3, double param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::convertTo(_OutputArray *param_1,int param_2,double param_3,double param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: save
+// Entry: 00006800
+// Signature: undefined save(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Algorithm::save(std::string const&) const */
+
+void cv::Algorithm::save(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: defaultNorm
+// Entry: 00006900
+// Signature: undefined defaultNorm(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::defaultNorm() const */
+
+void cv::Feature2D::defaultNorm(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: descriptorSize
+// Entry: 00006a00
+// Signature: undefined descriptorSize(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::descriptorSize() const */
+
+void cv::Feature2D::descriptorSize(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: descriptorType
+// Entry: 00006b00
+// Signature: undefined descriptorType(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::descriptorType() const */
+
+void cv::Feature2D::descriptorType(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getDefaultName
+// Entry: 00006c00
+// Signature: undefined getDefaultName(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Feature2D::getDefaultName(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: empty
+// Entry: 00006d00
+// Signature: undefined empty(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::empty() const */
+
+void cv::Feature2D::empty(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: write
+// Entry: 00006e00
+// Signature: undefined write(FileStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::Feature2D::write(cv::FileStorage&) const */
+
+void cv::Feature2D::write(FileStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __get_deleter
+// Entry: 00006f00
+// Signature: undefined __get_deleter(type_info * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__shared_weak_count::__get_deleter(std::type_info const&) const */
+
+void std::__shared_weak_count::__get_deleter(type_info *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00007000
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00007100
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00007200
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00007300
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: append
+// Entry: 00007400
+// Signature: undefined append(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::append(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __release_weak
+// Entry: 00007500
+// Signature: undefined __release_weak(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__shared_weak_count::__release_weak(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_weak_count
+// Entry: 00007600
+// Signature: undefined __thiscall ~__shared_weak_count(__shared_weak_count * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::__shared_weak_count::~__shared_weak_count(__shared_weak_count *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00007700
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00007f00
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00008000
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00008100
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00008200
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00008500
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___sincosf_stret
+// Entry: 00008700
+// Signature: undefined ___sincosf_stret(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___sincosf_stret(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00008800
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00008900
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00008a00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00008b00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 112
+// Failed: 0
+// Skipped external functions: 0

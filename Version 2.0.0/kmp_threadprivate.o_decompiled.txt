@@ -1,0 +1,1086 @@
+Program: kmp_threadprivate.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ___kmp_common_initialize
+// Entry: 00000000
+// Signature: undefined ___kmp_common_initialize(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_common_initialize(void)
+
+{
+  int local_4;
+  
+  if (*____kmp_init_common == 0) {
+    *____kmp_threadpriv_cache_list = 0;
+    for (local_4 = 0; local_4 < 0x200; local_4 = local_4 + 1) {
+      *(undefined8 *)(&___kmp_threadprivate_d_table + (long)local_4 * 8) = 0;
+    }
+    *____kmp_init_common = 1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_common_destroy
+// Entry: 0000008c
+// Signature: undefined ___kmp_common_destroy(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_common_destroy(void)
+
+{
+  long *plVar1;
+  ulong uVar2;
+  long lVar3;
+  undefined8 *local_28;
+  int local_18;
+  int local_14;
+  
+  plVar1 = ____kmp_threads;
+  if (*____kmp_init_common != 0) {
+    *____kmp_init_common = 0;
+    for (local_14 = 0; local_14 < 0x200; local_14 = local_14 + 1) {
+      for (local_28 = *(undefined8 **)(&___kmp_threadprivate_d_table + (long)local_14 * 8);
+          local_28 != (undefined8 *)0x0; local_28 = (undefined8 *)*local_28) {
+        if (*(int *)(local_28 + 8) == 0) {
+          if (local_28[6] != 0) {
+            for (local_18 = 0; local_18 < *____kmp_all_nth; local_18 = local_18 + 1) {
+              if (*(long *)(*plVar1 + (long)local_18 * 8) != 0) {
+                if (*____kmp_foreign_tp == 0) {
+                  uVar2 = KMP_UBER_GTID(local_18);
+                  if ((uVar2 & 1) == 0) goto LAB_0000032c;
+                }
+                else if (local_18 != 0) {
+LAB_0000032c:
+                  lVar3 = __kmp_threadprivate_find_task_common
+                                    (*(common_table **)
+                                      (*(long *)(*plVar1 + (long)local_18 * 8) + 0x180),local_18,
+                                     (void *)local_28[3]);
+                  if (lVar3 != 0) {
+                    (*(code *)local_28[6])(*(undefined8 *)(lVar3 + 0x18));
+                  }
+                }
+              }
+            }
+            if (local_28[2] != 0) {
+              (*(code *)local_28[6])(local_28[2]);
+            }
+          }
+        }
+        else if (local_28[6] != 0) {
+          for (local_18 = 0; local_18 < *____kmp_all_nth; local_18 = local_18 + 1) {
+            if (*(long *)(*plVar1 + (long)local_18 * 8) != 0) {
+              if (*____kmp_foreign_tp == 0) {
+                uVar2 = KMP_UBER_GTID(local_18);
+                if ((uVar2 & 1) == 0) goto LAB_000001d0;
+              }
+              else if (local_18 != 0) {
+LAB_000001d0:
+                lVar3 = __kmp_threadprivate_find_task_common
+                                  (*(common_table **)
+                                    (*(long *)(*plVar1 + (long)local_18 * 8) + 0x180),local_18,
+                                   (void *)local_28[3]);
+                if (lVar3 != 0) {
+                  (*(code *)local_28[6])(*(undefined8 *)(lVar3 + 0x18),local_28[7]);
+                }
+              }
+            }
+          }
+          if (local_28[2] != 0) {
+            (*(code *)local_28[6])(local_28[2],local_28[7]);
+          }
+        }
+      }
+      *(undefined8 *)(&___kmp_threadprivate_d_table + (long)local_14 * 8) = 0;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: KMP_UBER_GTID
+// Entry: 00000420
+// Signature: undefined __cdecl KMP_UBER_GTID(int param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* KMP_UBER_GTID(int) */
+
+bool KMP_UBER_GTID(int param_1)
+
+{
+  bool bVar1;
+  
+  bVar1 = false;
+  if (((-1 < param_1) && (bVar1 = false, *(long *)(*____kmp_root + (long)param_1 * 8) != 0)) &&
+     (bVar1 = false, *(long *)(*____kmp_threads + (long)param_1 * 8) != 0)) {
+    bVar1 = *(long *)(*____kmp_threads + (long)param_1 * 8) ==
+            *(long *)(*(long *)(*____kmp_root + (long)param_1 * 8) + 0x18);
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_threadprivate_find_task_common
+// Entry: 000004e8
+// Signature: undefined __cdecl __kmp_threadprivate_find_task_common(common_table * param_1, int param_2, void * param_3)
+// ========================================
+
+
+/* __kmp_threadprivate_find_task_common(common_table*, int, void*) */
+
+undefined8 * __kmp_threadprivate_find_task_common(common_table *param_1,int param_2,void *param_3)
+
+{
+  undefined8 *local_28;
+  
+  local_28 = *(undefined8 **)(param_1 + ((ulong)param_3 >> 3 & 0x1ff) * 8);
+  while( true ) {
+    if (local_28 == (undefined8 *)0x0) {
+      return (undefined8 *)0x0;
+    }
+    if ((void *)local_28[2] == param_3) break;
+    local_28 = (undefined8 *)*local_28;
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_common_destroy_gtid
+// Entry: 00000578
+// Signature: undefined ___kmp_common_destroy_gtid(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_common_destroy_gtid(int param_1)
+
+{
+  ulong uVar1;
+  long lVar2;
+  long local_20;
+  
+  if (*____kmp_init_gtid != 0) {
+    if (*____kmp_foreign_tp == 0) {
+      uVar1 = KMP_UBER_GTID(param_1);
+      if ((uVar1 & 1) != 0) {
+        return;
+      }
+    }
+    else if (param_1 == 0) {
+      return;
+    }
+    if (*____kmp_init_common != 0) {
+      for (local_20 = *(long *)(*(long *)(*____kmp_threads + (long)param_1 * 8) + 0x110);
+          local_20 != 0; local_20 = *(long *)(local_20 + 8)) {
+        lVar2 = __kmp_find_shared_task_common
+                          ((shared_table *)&___kmp_threadprivate_d_table,param_1,
+                           *(void **)(local_20 + 0x10));
+        if (lVar2 != 0) {
+          if (*(int *)(lVar2 + 0x40) == 0) {
+            if (*(long *)(lVar2 + 0x30) != 0) {
+              (**(code **)(lVar2 + 0x30))(*(undefined8 *)(local_20 + 0x18));
+            }
+            if (*(long *)(lVar2 + 0x10) != 0) {
+              (**(code **)(lVar2 + 0x30))(*(undefined8 *)(lVar2 + 0x10));
+            }
+          }
+          else {
+            if (*(long *)(lVar2 + 0x30) != 0) {
+              (**(code **)(lVar2 + 0x30))
+                        (*(undefined8 *)(local_20 + 0x18),*(undefined8 *)(lVar2 + 0x38));
+            }
+            if (*(long *)(lVar2 + 0x10) != 0) {
+              (**(code **)(lVar2 + 0x30))
+                        (*(undefined8 *)(lVar2 + 0x10),*(undefined8 *)(lVar2 + 0x38));
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_find_shared_task_common
+// Entry: 00000788
+// Signature: undefined __cdecl __kmp_find_shared_task_common(shared_table * param_1, int param_2, void * param_3)
+// ========================================
+
+
+/* __kmp_find_shared_task_common(shared_table*, int, void*) */
+
+undefined8 * __kmp_find_shared_task_common(shared_table *param_1,int param_2,void *param_3)
+
+{
+  undefined8 *local_28;
+  
+  local_28 = *(undefined8 **)(param_1 + ((ulong)param_3 >> 3 & 0x1ff) * 8);
+  while( true ) {
+    if (local_28 == (undefined8 *)0x0) {
+      return (undefined8 *)0x0;
+    }
+    if ((void *)local_28[3] == param_3) break;
+    local_28 = (undefined8 *)*local_28;
+  }
+  return local_28;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_threadprivate_insert_private_data
+// Entry: 00000818
+// Signature: undefined _kmp_threadprivate_insert_private_data(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _kmp_threadprivate_insert_private_data(int param_1,void *param_2,void *param_3,ulong param_4)
+
+{
+  kmp_ticket_lock *pkVar1;
+  long lVar2;
+  long *plVar3;
+  
+  lVar2 = __kmp_find_shared_task_common
+                    ((shared_table *)&___kmp_threadprivate_d_table,param_1,param_2);
+  if (lVar2 == 0) {
+    plVar3 = (long *)____kmp_allocate(0x50);
+    plVar3[3] = (long)param_2;
+    lVar2 = __kmp_init_common_data(param_3,param_4);
+    plVar3[1] = lVar2;
+    plVar3[9] = param_4;
+    pkVar1 = ____kmp_global_lock;
+    __kmp_acquire_lock(____kmp_global_lock,param_1);
+    *plVar3 = *(long *)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8);
+    *(long **)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8) = plVar3;
+    __kmp_release_lock(pkVar1,param_1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_init_common_data
+// Entry: 00000900
+// Signature: undefined __cdecl __kmp_init_common_data(void * param_1, ulong param_2)
+// ========================================
+
+
+/* __kmp_init_common_data(void*, unsigned long) */
+
+long __kmp_init_common_data(void *param_1,ulong param_2)
+
+{
+  long lVar1;
+  undefined8 uVar2;
+  char *local_38;
+  ulong local_30;
+  
+  lVar1 = ____kmp_allocate(0x20);
+  *(ulong *)(lVar1 + 0x18) = param_2;
+  *(undefined4 *)(lVar1 + 0x10) = 1;
+  local_38 = param_1;
+  local_30 = param_2;
+  while( true ) {
+    if (local_30 == 0) {
+      return lVar1;
+    }
+    if (*local_38 != '\0') break;
+    local_30 = local_30 - 1;
+    local_38 = local_38 + 1;
+  }
+  uVar2 = ____kmp_allocate(param_2);
+  *(undefined8 *)(lVar1 + 8) = uVar2;
+  _memcpy(*(void **)(lVar1 + 8),param_1,param_2);
+  return lVar1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_acquire_lock
+// Entry: 000009cc
+// Signature: undefined __cdecl __kmp_acquire_lock(kmp_ticket_lock * param_1, int param_2)
+// ========================================
+
+
+/* __kmp_acquire_lock(kmp_ticket_lock*, int) */
+
+void __kmp_acquire_lock(kmp_ticket_lock *param_1,int param_2)
+
+{
+  ___kmp_acquire_ticket_lock(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_lock
+// Entry: 000009f8
+// Signature: undefined __cdecl __kmp_release_lock(kmp_ticket_lock * param_1, int param_2)
+// ========================================
+
+
+/* __kmp_release_lock(kmp_ticket_lock*, int) */
+
+void __kmp_release_lock(kmp_ticket_lock *param_1,int param_2)
+
+{
+  ___kmp_release_ticket_lock(param_1,param_2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _kmp_threadprivate_insert
+// Entry: 00000a24
+// Signature: undefined _kmp_threadprivate_insert(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 * _kmp_threadprivate_insert(int param_1,void *param_2,void *param_3,ulong param_4)
+
+{
+  long *plVar1;
+  undefined8 uVar2;
+  ulong uVar3;
+  undefined1 auStack_70 [24];
+  undefined8 *local_58;
+  undefined8 *local_50;
+  undefined8 *local_48;
+  undefined8 *local_40;
+  ulong local_38;
+  void *local_30;
+  void *local_28;
+  int local_1c;
+  
+  plVar1 = ____kmp_threads;
+  local_38 = param_4;
+  local_30 = param_3;
+  local_28 = param_2;
+  local_1c = param_1;
+  __kmp_acquire_lock(____kmp_global_lock,param_1);
+  local_40 = (undefined8 *)____kmp_allocate(0x28);
+  local_40[2] = local_28;
+  local_50 = (undefined8 *)
+             __kmp_find_shared_task_common
+                       ((shared_table *)&___kmp_threadprivate_d_table,local_1c,local_28);
+  if (local_50 == (undefined8 *)0x0) {
+    local_50 = (undefined8 *)____kmp_allocate(0x50);
+    local_50[3] = local_28;
+    local_50[9] = local_38;
+    uVar2 = __kmp_init_common_data(local_30,local_38);
+    local_50[1] = uVar2;
+    local_58 = (undefined8 *)(&___kmp_threadprivate_d_table + ((ulong)local_28 >> 3 & 0x1ff) * 8);
+    *local_50 = *local_58;
+    *local_58 = local_50;
+  }
+  else if ((local_50[1] == 0) && (local_50[2] == 0)) {
+    local_50[9] = local_38;
+    if (*(int *)(local_50 + 8) == 0) {
+      if (local_50[4] == 0) {
+        if (local_50[5] == 0) {
+          uVar2 = __kmp_init_common_data(local_30,local_50[9]);
+          local_50[1] = uVar2;
+        }
+        else {
+          uVar2 = ____kmp_allocate(local_50[9]);
+          local_50[2] = uVar2;
+          (*(code *)local_50[5])(local_50[2],local_28);
+        }
+      }
+      else {
+        local_50[2] = 0;
+      }
+    }
+    else if (local_50[4] == 0) {
+      if (local_50[5] == 0) {
+        uVar2 = __kmp_init_common_data(local_30,local_50[9]);
+        local_50[1] = uVar2;
+      }
+      else {
+        uVar2 = ____kmp_allocate(local_50[9]);
+        local_50[2] = uVar2;
+        (*(code *)local_50[5])(local_50[2],local_28,local_50[7]);
+      }
+    }
+    else {
+      local_50[2] = 0;
+    }
+  }
+  local_40[4] = local_50[9];
+  if (*____kmp_foreign_tp == 0) {
+    uVar3 = KMP_UBER_GTID(local_1c);
+    if ((uVar3 & 1) == 0) goto LAB_00000cfc;
+  }
+  else if (local_1c != 0) {
+LAB_00000cfc:
+    uVar2 = ____kmp_allocate(local_40[4]);
+    local_40[3] = uVar2;
+    goto LAB_00000d14;
+  }
+  local_40[3] = local_28;
+LAB_00000d14:
+  __kmp_release_lock(____kmp_global_lock,local_1c);
+  if ((ulong)local_50[9] < local_38) {
+    ___kmp_msg_format(0x40086);
+    ___kmp_fatal(auStack_70);
+  }
+  local_48 = (undefined8 *)
+             (*(long *)(*(long *)(*plVar1 + (long)local_1c * 8) + 0x180) +
+             ((ulong)local_28 >> 3 & 0x1ff) * 8);
+  *local_40 = *local_48;
+  *local_48 = local_40;
+  local_40[1] = *(undefined8 *)(*(long *)(*plVar1 + (long)local_1c * 8) + 0x110);
+  *(undefined8 **)(*(long *)(*plVar1 + (long)local_1c * 8) + 0x110) = local_40;
+  if (*____kmp_foreign_tp == 0) {
+    uVar3 = KMP_UBER_GTID(local_1c);
+    if ((uVar3 & 1) != 0) {
+      return local_40;
+    }
+  }
+  else if (local_1c == 0) {
+    return local_40;
+  }
+  if (*(int *)(local_50 + 8) == 0) {
+    if (local_50[4] == 0) {
+      if (local_50[5] == 0) {
+        if (local_40[3] != local_40[2]) {
+          __kmp_copy_common_data((void *)local_40[3],(private_data *)local_50[1]);
+        }
+      }
+      else {
+        (*(code *)local_50[5])(local_40[3],local_50[2]);
+      }
+    }
+    else {
+      (*(code *)local_50[4])(local_40[3]);
+    }
+  }
+  else if (local_50[4] == 0) {
+    if (local_50[5] == 0) {
+      if (local_40[3] != local_40[2]) {
+        __kmp_copy_common_data((void *)local_40[3],(private_data *)local_50[1]);
+      }
+    }
+    else {
+      (*(code *)local_50[5])(local_40[3],local_50[2],local_50[7]);
+    }
+  }
+  else {
+    (*(code *)local_50[4])(local_40[3],local_50[7]);
+  }
+  return local_40;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_copy_common_data
+// Entry: 00000fdc
+// Signature: undefined __cdecl __kmp_copy_common_data(void * param_1, private_data * param_2)
+// ========================================
+
+
+/* __kmp_copy_common_data(void*, private_data*) */
+
+void __kmp_copy_common_data(void *param_1,private_data *param_2)
+
+{
+  int local_34;
+  long local_30;
+  private_data *local_20;
+  
+  local_30 = 0;
+  for (local_20 = param_2; local_20 != (private_data *)0x0; local_20 = *(private_data **)local_20) {
+    for (local_34 = *(int *)(local_20 + 0x10); 0 < local_34; local_34 = local_34 + -1) {
+      if (*(long *)(local_20 + 8) == 0) {
+        _bzero((void *)((long)param_1 + local_30),*(size_t *)(local_20 + 0x18));
+      }
+      else {
+        _memcpy((void *)((long)param_1 + local_30),*(void **)(local_20 + 8),
+                *(size_t *)(local_20 + 0x18));
+      }
+      local_30 = local_30 + *(long *)(local_20 + 0x18);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_threadprivate_register
+// Entry: 000010d8
+// Signature: undefined ___kmpc_threadprivate_register(void)
+// ========================================
+
+
+void ___kmpc_threadprivate_register
+               (undefined8 param_1,void *param_2,long param_3,long param_4,long param_5)
+
+{
+  long lVar1;
+  long *plVar2;
+  
+  if (param_4 != 0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_threadprivate.cpp"
+                        ,0x200);
+  }
+  lVar1 = __kmp_find_shared_task_common((shared_table *)&___kmp_threadprivate_d_table,-1,param_2);
+  if (lVar1 == 0) {
+    plVar2 = (long *)____kmp_allocate(0x50);
+    plVar2[3] = (long)param_2;
+    plVar2[4] = param_3;
+    plVar2[5] = param_4;
+    plVar2[6] = param_5;
+    *plVar2 = *(long *)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8);
+    *(long **)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8) = plVar2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_threadprivate
+// Entry: 000011d8
+// Signature: undefined ___kmpc_threadprivate(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void * ___kmpc_threadprivate(undefined8 param_1,int param_2,void *param_3,ulong param_4)
+
+{
+  undefined8 *puVar1;
+  undefined1 auStack_88 [24];
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined1 auStack_58 [24];
+  long local_40;
+  void *local_38;
+  ulong local_30;
+  void *local_28;
+  int local_1c;
+  undefined8 local_18;
+  
+  puVar1 = ____kmp_msg_null;
+  local_30 = param_4;
+  local_28 = param_3;
+  local_1c = param_2;
+  local_18 = param_1;
+  if (*____kmp_init_serial == 0) {
+    ___kmp_msg_format(0x40085);
+    uStack_68 = puVar1[1];
+    local_70 = *puVar1;
+    local_60 = puVar1[2];
+    ___kmp_fatal(auStack_58);
+  }
+  if ((**(int **)(*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x48) == 0) &&
+     (*____kmp_foreign_tp == 0)) {
+    _kmp_threadprivate_insert_private_data(local_1c,local_28,local_28,local_30);
+    local_38 = local_28;
+  }
+  else {
+    local_40 = __kmp_threadprivate_find_task_common
+                         (*(common_table **)
+                           (*(long *)(*____kmp_threads + (long)local_1c * 8) + 0x180),local_1c,
+                          local_28);
+    if (local_40 == 0) {
+      local_40 = _kmp_threadprivate_insert(local_1c,local_28,local_28,local_30);
+    }
+    else if (*(ulong *)(local_40 + 0x20) < local_30) {
+      ___kmp_msg_format(0x40086);
+      ___kmp_fatal(auStack_88);
+    }
+    local_38 = *(void **)(local_40 + 0x18);
+  }
+  return local_38;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_threadprivate_cached
+// Entry: 00001394
+// Signature: undefined ___kmpc_threadprivate_cached(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+long ___kmpc_threadprivate_cached
+               (undefined8 param_1,int param_2,void *param_3,undefined8 param_4,long *param_5)
+
+{
+  long *plVar1;
+  long *plVar2;
+  long local_50;
+  long local_40;
+  
+  if (*param_5 == 0) {
+    __kmp_acquire_lock(____kmp_global_lock,param_2);
+    if (*param_5 == 0) {
+      __kmp_acquire_bootstrap_lock(____kmp_tp_cached_lock);
+      plVar2 = (long *)__kmp_find_cache(param_3);
+      if (plVar2 == (long *)0x0) {
+        *____kmp_tp_cached = 1;
+        local_40 = ____kmp_allocate((long)*____kmp_tp_capacity * 8 + 0x20);
+        plVar2 = (long *)(local_40 + (long)*____kmp_tp_capacity * 8);
+        *plVar2 = local_40;
+        plVar2[2] = (long)param_3;
+        plVar2[1] = (long)param_5;
+        plVar1 = ____kmp_threadpriv_cache_list;
+        plVar2[3] = *____kmp_threadpriv_cache_list;
+        *plVar1 = (long)plVar2;
+      }
+      else {
+        local_40 = *plVar2;
+        plVar2[1] = (long)param_5;
+      }
+      DataMemoryBarrier(2,3);
+      *param_5 = local_40;
+      __kmp_release_bootstrap_lock(____kmp_tp_cached_lock);
+      DataMemoryBarrier(2,3);
+    }
+    __kmp_release_lock(____kmp_global_lock,param_2);
+  }
+  local_50 = *(long *)(*param_5 + (long)param_2 * 8);
+  if (local_50 == 0) {
+    local_50 = ___kmpc_threadprivate(param_1,param_2,param_3,param_4);
+    *(long *)(*param_5 + (long)param_2 * 8) = local_50;
+  }
+  return local_50;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_acquire_bootstrap_lock
+// Entry: 00001570
+// Signature: undefined __cdecl __kmp_acquire_bootstrap_lock(kmp_ticket_lock * param_1)
+// ========================================
+
+
+/* __kmp_acquire_bootstrap_lock(kmp_ticket_lock*) */
+
+void __kmp_acquire_bootstrap_lock(kmp_ticket_lock *param_1)
+
+{
+  ___kmp_acquire_ticket_lock(param_1,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_find_cache
+// Entry: 00001598
+// Signature: undefined __cdecl __kmp_find_cache(void * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __kmp_find_cache(void*) */
+
+long __kmp_find_cache(void *param_1)
+
+{
+  bool bVar1;
+  undefined8 local_10;
+  
+  local_10 = *____kmp_threadpriv_cache_list;
+  while( true ) {
+    bVar1 = false;
+    if (local_10 != 0) {
+      bVar1 = *(void **)(local_10 + 0x10) != param_1;
+    }
+    if (!bVar1) break;
+    local_10 = *(long *)(local_10 + 0x18);
+  }
+  return local_10;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_release_bootstrap_lock
+// Entry: 00001614
+// Signature: undefined __cdecl __kmp_release_bootstrap_lock(kmp_ticket_lock * param_1)
+// ========================================
+
+
+/* __kmp_release_bootstrap_lock(kmp_ticket_lock*) */
+
+void __kmp_release_bootstrap_lock(kmp_ticket_lock *param_1)
+
+{
+  ___kmp_release_ticket_lock(param_1,0xfffffffe);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_threadprivate_resize_cache
+// Entry: 0000163c
+// Signature: undefined ___kmp_threadprivate_resize_cache(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_threadprivate_resize_cache(int param_1)
+
+{
+  char cVar1;
+  bool bVar2;
+  long *plVar3;
+  long lVar4;
+  long lVar5;
+  long *plVar6;
+  int local_34;
+  long *local_20;
+  
+  plVar3 = ____kmp_threadpriv_cache_list;
+  local_20 = (long *)*____kmp_threadpriv_cache_list;
+  do {
+    if (local_20 == (long *)0x0) {
+      *____kmp_tp_capacity = param_1;
+      return;
+    }
+    if (local_20[2] != 0) {
+      lVar4 = ____kmp_allocate((long)param_1 * 8 + 0x20);
+      lVar5 = *local_20;
+      for (local_34 = 0; local_34 < *____kmp_tp_capacity; local_34 = local_34 + 1) {
+        *(undefined8 *)(lVar4 + (long)local_34 * 8) = *(undefined8 *)(lVar5 + (long)local_34 * 8);
+      }
+      plVar6 = (long *)(lVar4 + (long)param_1 * 8);
+      *plVar6 = lVar4;
+      plVar6[2] = local_20[2];
+      plVar6[1] = local_20[1];
+      plVar6[3] = *plVar3;
+      *plVar3 = (long)plVar6;
+      plVar6 = (long *)plVar6[1];
+      do {
+        if (*plVar6 != lVar5) break;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+        if (bVar2) {
+          *plVar6 = lVar4;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      local_20[2] = 0;
+    }
+    local_20 = (long *)local_20[3];
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_threadprivate_register_vec
+// Entry: 000017c0
+// Signature: undefined ___kmpc_threadprivate_register_vec(void)
+// ========================================
+
+
+void ___kmpc_threadprivate_register_vec
+               (undefined8 param_1,void *param_2,long param_3,long param_4,long param_5,long param_6
+               )
+
+{
+  long lVar1;
+  long *plVar2;
+  
+  if (param_4 != 0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_threadprivate.cpp"
+                        ,0x2f4);
+  }
+  lVar1 = __kmp_find_shared_task_common((shared_table *)&___kmp_threadprivate_d_table,-1,param_2);
+  if (lVar1 == 0) {
+    plVar2 = (long *)____kmp_allocate(0x50);
+    plVar2[3] = (long)param_2;
+    plVar2[4] = param_3;
+    plVar2[5] = param_4;
+    plVar2[6] = param_5;
+    *(undefined4 *)(plVar2 + 8) = 1;
+    plVar2[7] = param_6;
+    *plVar2 = *(long *)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8);
+    *(long **)(&___kmp_threadprivate_d_table + ((ulong)param_2 >> 3 & 0x1ff) * 8) = plVar2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_cleanup_threadprivate_caches
+// Entry: 000018dc
+// Signature: undefined ___kmp_cleanup_threadprivate_caches(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void ___kmp_cleanup_threadprivate_caches(void)
+
+{
+  undefined8 *puVar1;
+  undefined8 uVar2;
+  undefined8 *local_18;
+  
+  puVar1 = ____kmp_threadpriv_cache_list;
+  local_18 = (undefined8 *)*____kmp_threadpriv_cache_list;
+  while (local_18 != (undefined8 *)0x0) {
+    uVar2 = *local_18;
+    *puVar1 = local_18[3];
+    if (*(long *)local_18[1] != 0) {
+      *(undefined8 *)local_18[1] = 0;
+    }
+    local_18[1] = 0;
+    local_18[2] = 0;
+    *local_18 = 0;
+    local_18[3] = 0;
+    ____kmp_free(uVar2);
+    local_18 = (undefined8 *)*puVar1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_allocate
+// Entry: 00003000
+// Signature: undefined ____kmp_allocate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_allocate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_free
+// Entry: 00003100
+// Signature: undefined ____kmp_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_acquire_ticket_lock
+// Entry: 00003200
+// Signature: undefined ___kmp_acquire_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_acquire_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00003400
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 00003500
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00003b00
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_release_ticket_lock
+// Entry: 00003d00
+// Signature: undefined ___kmp_release_ticket_lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_release_ticket_lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00004400
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00004500
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 30
+// Failed: 0
+// Skipped external functions: 0

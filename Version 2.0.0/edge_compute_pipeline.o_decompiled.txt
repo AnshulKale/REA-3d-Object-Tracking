@@ -1,0 +1,4161 @@
+Program: edge_compute_pipeline.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ~EdgeComputePipeline
+// Entry: 00000000
+// Signature: undefined __thiscall ~EdgeComputePipeline(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::~EdgeComputePipeline() */
+
+EdgeComputePipeline * __thiscall
+m3t::EdgeComputePipeline::~EdgeComputePipeline(EdgeComputePipeline *this)
+
+{
+  Destroy(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: Destroy
+// Entry: 00000028
+// Signature: undefined __thiscall Destroy(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::Destroy() */
+
+void __thiscall m3t::EdgeComputePipeline::Destroy(EdgeComputePipeline *this)
+
+{
+  long lVar1;
+  long lVar2;
+  
+  lVar1 = *(long *)this;
+  if ((lVar1 != 0) && (lVar2 = *(long *)(lVar1 + 0x18), lVar2 != 0)) {
+    if (*(char *)(lVar1 + 0x240) != '\0') {
+      _vkDeviceWaitIdle(lVar2);
+    }
+    DestroyImages(this);
+    DestroyBuffers(this);
+    if (*(long *)(this + 400) != 0) {
+      _vkDestroyFence(lVar2,*(long *)(this + 400),0);
+      *(undefined8 *)(this + 400) = 0;
+    }
+    if (*(long *)(this + 0x188) != 0) {
+      _vkFreeCommandBuffers(lVar2,*(undefined8 *)(*(long *)this + 0x30),1,this + 0x188);
+      *(undefined8 *)(this + 0x188) = 0;
+    }
+    if (*(long *)(this + 0x58) != 0) {
+      _vkDestroyDescriptorPool(lVar2,*(long *)(this + 0x58),0);
+      *(undefined8 *)(this + 0x58) = 0;
+    }
+    if (*(long *)(this + 0x18) != 0) {
+      _vkDestroyPipeline(lVar2,*(long *)(this + 0x18),0);
+      *(undefined8 *)(this + 0x18) = 0;
+    }
+    if (*(long *)(this + 0x20) != 0) {
+      _vkDestroyPipeline(lVar2,*(long *)(this + 0x20),0);
+      *(undefined8 *)(this + 0x20) = 0;
+    }
+    if (*(long *)(this + 0x28) != 0) {
+      _vkDestroyPipeline(lVar2,*(long *)(this + 0x28),0);
+      *(undefined8 *)(this + 0x28) = 0;
+    }
+    if (*(long *)(this + 0x30) != 0) {
+      _vkDestroyPipelineLayout(lVar2,*(long *)(this + 0x30),0);
+      *(undefined8 *)(this + 0x30) = 0;
+    }
+    if (*(long *)(this + 0x38) != 0) {
+      _vkDestroyPipelineLayout(lVar2,*(long *)(this + 0x38),0);
+      *(undefined8 *)(this + 0x38) = 0;
+    }
+    if (*(long *)(this + 0x40) != 0) {
+      _vkDestroyPipelineLayout(lVar2,*(long *)(this + 0x40),0);
+      *(undefined8 *)(this + 0x40) = 0;
+    }
+    if (*(long *)(this + 0x48) != 0) {
+      _vkDestroyDescriptorSetLayout(lVar2,*(long *)(this + 0x48),0);
+      *(undefined8 *)(this + 0x48) = 0;
+    }
+    if (*(long *)(this + 0x50) != 0) {
+      _vkDestroyDescriptorSetLayout(lVar2,*(long *)(this + 0x50),0);
+      *(undefined8 *)(this + 0x50) = 0;
+    }
+    if (*(long *)(this + 0x180) != 0) {
+      _vkDestroySampler(lVar2,*(long *)(this + 0x180),0);
+      *(undefined8 *)(this + 0x180) = 0;
+    }
+    this[8] = (EdgeComputePipeline)0x0;
+    *(undefined8 *)this = 0;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 000001a8
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+EdgeComputePipeline * ___clang_call_terminate(void)
+
+{
+  EdgeComputePipeline *this;
+  
+  ___cxa_begin_catch();
+  this = (EdgeComputePipeline *)std::terminate();
+  m3t::EdgeComputePipeline::Destroy(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~EdgeComputePipeline
+// Entry: 000001b8
+// Signature: undefined __thiscall ~EdgeComputePipeline(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::~EdgeComputePipeline() */
+
+EdgeComputePipeline * __thiscall
+m3t::EdgeComputePipeline::~EdgeComputePipeline(EdgeComputePipeline *this)
+
+{
+  Destroy(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: Initialize
+// Entry: 000001e0
+// Signature: undefined __thiscall Initialize(EdgeComputePipeline * this, VulkanContext * param_1, int param_2)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::Initialize(m3t::VulkanContext*, int) */
+
+bool __thiscall
+m3t::EdgeComputePipeline::Initialize(EdgeComputePipeline *this,VulkanContext *param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  ulong uVar5;
+  void *local_88 [2];
+  char local_71;
+  code *local_70;
+  undefined8 uStack_68;
+  undefined4 local_60;
+  undefined4 uStack_5c;
+  code *local_50;
+  undefined8 local_48;
+  long lStack_40;
+  double local_38;
+  
+  if (this[8] != (EdgeComputePipeline)0x0) {
+    return true;
+  }
+  if ((param_1 == (VulkanContext *)0x0) ||
+     (uVar5 = (**(code **)(*(long *)param_1 + 0x20))(param_1), (uVar5 & 1) == 0)) {
+    local_50 = operator_new(0x30);
+    uVar3 = LC35._16_8_;
+    uVar2 = LC35._0_8_;
+    lStack_40 = _UNK_00007108;
+    local_48 = _DAT_00007100;
+    uVar1 = CONCAT44(LC35._28_4_,LC35._24_4_);
+    *(undefined8 *)(local_50 + 8) = LC35._8_8_;
+    *(undefined8 *)local_50 = uVar2;
+    *(undefined8 *)(local_50 + 0x18) = uVar1;
+    *(undefined8 *)(local_50 + 0x10) = uVar3;
+    uVar1 = CONCAT44(LC35._32_4_,LC35._28_4_);
+    *(undefined8 *)(local_50 + 0x24) = LC35._36_8_;
+    *(undefined8 *)(local_50 + 0x1c) = uVar1;
+    local_50[0x2c] = (code)0x0;
+    m3t::M3TLogError((string *)&local_50);
+    local_70 = local_50;
+    if (-1 < lStack_40) {
+      return false;
+    }
+  }
+  else {
+    *(VulkanContext **)this = param_1;
+    *(int *)(this + 0x14) = param_2;
+    iVar4 = CreateSampler(this);
+    if (iVar4 == 0) {
+      return false;
+    }
+    iVar4 = CreateDescriptorLayouts(this);
+    if (iVar4 == 0) {
+      return false;
+    }
+    iVar4 = CreateComputePipelines(this);
+    if (iVar4 == 0) {
+      return false;
+    }
+    local_48 = 0;
+    local_50 = Destroy;
+    lStack_40 = *(long *)(*(long *)this + 0x30);
+    local_38 = l001;
+    iVar4 = _vkAllocateCommandBuffers(*(undefined8 *)(*(long *)this + 0x18),&local_50,this + 0x188);
+    if (iVar4 == 0) {
+      uStack_68 = _UNK_00003998;
+      local_70 = 
+      _l___const__ZN3m3t19EdgeComputePipeline10InitializeEPNS_13VulkanContextEi_fence_info;
+      _local_60 = CONCAT44((int)((ulong)DAT_000039a0 >> 0x20),1);
+      iVar4 = _vkCreateFence(*(undefined8 *)(*(long *)this + 0x18),&local_70,0,this + 400);
+      if (iVar4 == 0) {
+        this[8] = (EdgeComputePipeline)0x1;
+        return true;
+      }
+      __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                (local_88,"EdgeComputePipeline: failed to create fence");
+      m3t::M3TLogError((string *)local_88);
+      if (-1 < local_71) {
+        return iVar4 == 0;
+      }
+      operator_delete(local_88[0]);
+      return iVar4 == 0;
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (&local_70,"EdgeComputePipeline: failed to allocate command buffer");
+    m3t::M3TLogError((string *)&local_70);
+    if (-1 < uStack_5c._3_1_) {
+      return false;
+    }
+  }
+  operator_delete(local_70);
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000414
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_000004a0;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_000004a0:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: CreateSampler
+// Entry: 000004c4
+// Signature: undefined __thiscall CreateSampler(EdgeComputePipeline * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::CreateSampler() */
+
+bool __thiscall m3t::EdgeComputePipeline::CreateSampler(EdgeComputePipeline *this)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  char *local_88;
+  undefined8 local_80;
+  long lStack_78;
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 uStack_60;
+  undefined8 local_58;
+  undefined8 local_50;
+  undefined8 uStack_48;
+  undefined8 local_40;
+  undefined8 uStack_38;
+  undefined8 uStack_30;
+  undefined8 uStack_28;
+  
+  uStack_68 = 0;
+  uStack_60 = 0;
+  uStack_38 = 0;
+  local_40 = 0;
+  uStack_28 = 0;
+  uStack_30 = 0;
+  local_70 = 0x1f;
+  local_58 = 0;
+  local_50 = 0x200000002;
+  uStack_48 = 2;
+  iVar4 = _vkCreateSampler(*(undefined8 *)(*(long *)this + 0x18),&local_70,0,this + 0x180);
+  if (iVar4 != 0) {
+    local_88 = operator_new(0x30);
+    uVar3 = LC40._16_8_;
+    uVar2 = LC40._0_8_;
+    lStack_78 = _UNK_00007208;
+    local_80 = _DAT_00007200;
+    uVar1 = CONCAT35(LC40._29_3_,LC40._24_5_);
+    *(undefined8 *)(local_88 + 8) = LC40._8_8_;
+    *(undefined8 *)local_88 = uVar2;
+    *(undefined8 *)(local_88 + 0x18) = uVar1;
+    *(undefined8 *)(local_88 + 0x10) = uVar3;
+    uVar1 = CONCAT53(LC40._32_5_,LC40._29_3_);
+    *(undefined8 *)(local_88 + 0x25) = LC40._37_8_;
+    *(undefined8 *)(local_88 + 0x1d) = uVar1;
+    local_88[0x2d] = '\0';
+    m3t::M3TLogError((string *)&local_88);
+    if (lStack_78 < 0) {
+      operator_delete(local_88);
+      return iVar4 == 0;
+    }
+  }
+  return iVar4 == 0;
+}
+
+
+
+
+// ========================================
+// Function: CreateDescriptorLayouts
+// Entry: 000005bc
+// Signature: undefined __thiscall CreateDescriptorLayouts(EdgeComputePipeline * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::CreateDescriptorLayouts() */
+
+bool __thiscall m3t::EdgeComputePipeline::CreateDescriptorLayouts(EdgeComputePipeline *this)
+
+{
+  EdgeComputePipeline *pEVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined4 uVar6;
+  bool bVar7;
+  int iVar8;
+  undefined8 uVar9;
+  char *local_128;
+  undefined8 local_120;
+  long lStack_118;
+  undefined8 local_110;
+  undefined8 uStack_108;
+  undefined4 local_100;
+  undefined4 uStack_fc;
+  undefined4 *puStack_f8;
+  undefined4 local_f0;
+  undefined4 uStack_ec;
+  undefined4 uStack_e8;
+  undefined4 uStack_e4;
+  EdgeComputePipeline *local_e0;
+  undefined8 uStack_d8;
+  undefined8 local_d0;
+  EdgeComputePipeline *pEStack_c8;
+  undefined8 local_c0;
+  undefined8 uStack_b8;
+  undefined8 local_b0;
+  undefined8 uStack_a8;
+  undefined8 local_a0;
+  undefined8 uStack_98;
+  undefined8 uStack_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 uStack_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined8 uStack_58;
+  undefined8 local_50;
+  long local_48;
+  
+  uVar5 = _UNK_00007408;
+  uVar4 = _DAT_00007400;
+  uVar3 = _UNK_000039e8;
+  uVar2 = _l___const__ZN3m3t19EdgeComputePipeline23CreateDescriptorLayoutsEv_info_12;
+  local_48 = *____stack_chk_guard;
+  puStack_f8 = &local_f0;
+  uVar9 = *(undefined8 *)(*(long *)this + 0x18);
+  local_f0 = 0;
+  local_b0 = 0;
+  uStack_ec = 1;
+  uStack_e8 = 1;
+  uStack_e4 = 0x20;
+  pEVar1 = this + 0x180;
+  pEStack_c8 = (EdgeComputePipeline *)0x0;
+  uStack_b8 = _UNK_00007408;
+  local_c0 = _DAT_00007400;
+  local_d0 = _UNK_00007308;
+  uStack_d8 = _DAT_00007300;
+  uStack_108 = _UNK_000039e8;
+  local_110 = _l___const__ZN3m3t19EdgeComputePipeline23CreateDescriptorLayoutsEv_info_12;
+  local_100 = (undefined4)DAT_000039f0;
+  uVar6 = local_100;
+  _local_100 = CONCAT44(3,local_100);
+  local_e0 = pEVar1;
+  iVar8 = _vkCreateDescriptorSetLayout(uVar9,&local_110,0,this + 0x48);
+  if (iVar8 == 0) {
+    local_f0 = 0;
+    local_50 = 0;
+    uStack_98 = 0;
+    uStack_88 = _UNK_00007808;
+    uStack_90 = _DAT_00007800;
+    local_b0 = 0;
+    local_80 = 0;
+    uStack_68 = 0;
+    uStack_ec = 1;
+    uStack_e8 = 1;
+    local_d0 = _UNK_00007608;
+    uStack_d8 = _DAT_00007600;
+    uStack_e4 = 0x20;
+    uStack_b8 = uVar5;
+    local_c0 = uVar4;
+    local_a0 = _UNK_00007708;
+    uStack_a8 = _DAT_00007700;
+    uStack_70 = _UNK_00007908;
+    uStack_78 = _DAT_00007900;
+    uStack_58 = _UNK_00007a08;
+    local_60 = _DAT_00007a00;
+    uStack_108 = uVar3;
+    local_110 = uVar2;
+    puStack_f8 = &local_f0;
+    _local_100 = CONCAT44(7,uVar6);
+    local_e0 = pEVar1;
+    pEStack_c8 = pEVar1;
+    iVar8 = _vkCreateDescriptorSetLayout(uVar9,&local_110,0,this + 0x50);
+    bVar7 = iVar8 == 0;
+    if (iVar8 != 0) {
+      local_128 = operator_new(0x40);
+      uVar4 = LC42._24_8_;
+      uVar3 = LC42._16_8_;
+      uVar2 = LC42._0_8_;
+      lStack_118 = _UNK_00007508;
+      local_120 = _DAT_00007500;
+      *(undefined8 *)(local_128 + 8) = LC42._8_8_;
+      *(undefined8 *)local_128 = uVar2;
+      *(undefined8 *)(local_128 + 0x18) = uVar4;
+      *(undefined8 *)(local_128 + 0x10) = uVar3;
+      uVar2 = LC42._32_8_;
+      *(ulong *)(local_128 + 0x28) = CONCAT35(LC42._45_3_,LC42._40_5_);
+      *(undefined8 *)(local_128 + 0x20) = uVar2;
+      uVar2 = CONCAT53(LC42._48_5_,LC42._45_3_);
+      *(undefined8 *)(local_128 + 0x35) = LC42._53_8_;
+      *(undefined8 *)(local_128 + 0x2d) = uVar2;
+      local_128[0x3d] = '\0';
+      m3t::M3TLogError((string *)&local_128);
+      if (lStack_118 < 0) {
+        operator_delete(local_128);
+      }
+    }
+  }
+  else {
+    local_128 = operator_new(0x40);
+    uVar4 = LC41._24_8_;
+    uVar3 = LC41._16_8_;
+    uVar2 = LC41._0_8_;
+    lStack_118 = _UNK_00007508;
+    local_120 = _DAT_00007500;
+    *(undefined8 *)(local_128 + 8) = LC41._8_8_;
+    *(undefined8 *)local_128 = uVar2;
+    *(undefined8 *)(local_128 + 0x18) = uVar4;
+    *(undefined8 *)(local_128 + 0x10) = uVar3;
+    uVar2 = LC41._32_8_;
+    *(ulong *)(local_128 + 0x28) = CONCAT35(LC41._45_3_,LC41._40_5_);
+    *(undefined8 *)(local_128 + 0x20) = uVar2;
+    uVar2 = CONCAT53(LC41._48_5_,LC41._45_3_);
+    *(undefined8 *)(local_128 + 0x35) = LC41._53_8_;
+    *(undefined8 *)(local_128 + 0x2d) = uVar2;
+    local_128[0x3d] = '\0';
+    m3t::M3TLogError((string *)&local_128);
+    if (lStack_118 < 0) {
+      operator_delete(local_128);
+    }
+    bVar7 = false;
+  }
+  if (*____stack_chk_guard == local_48) {
+    return bVar7;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: CreateComputePipelines
+// Entry: 0000082c
+// Signature: undefined __thiscall CreateComputePipelines(EdgeComputePipeline * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::CreateComputePipelines() */
+
+bool __thiscall m3t::EdgeComputePipeline::CreateComputePipelines(EdgeComputePipeline *this)
+
+{
+  bool bVar1;
+  char *pcVar2;
+  long lVar3;
+  double dVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  undefined8 uVar8;
+  char *local_120;
+  undefined8 uStack_118;
+  long lStack_110;
+  undefined *local_108;
+  undefined1 *local_100;
+  undefined8 uStack_f8;
+  double local_f0;
+  char *pcStack_e8;
+  undefined8 local_e0;
+  undefined8 uStack_d8;
+  undefined8 uStack_d0;
+  undefined8 uStack_c8;
+  char *local_c0;
+  undefined8 local_b8;
+  long lStack_b0;
+  double local_a8;
+  undefined8 local_a0;
+  undefined8 uStack_98;
+  undefined8 uStack_90;
+  EdgeComputePipeline *local_88;
+  undefined8 local_80;
+  double *pdStack_78;
+  double local_70;
+  undefined4 local_68;
+  
+  dVar4 = l002;
+  uVar8 = *(undefined8 *)(*(long *)this + 0x18);
+  local_70 = l002;
+  local_68 = 0x18;
+  uStack_98 = 0;
+  local_a0 = 0x1e;
+  uStack_90 = 0x100000000;
+  local_88 = this + 0x48;
+  local_80 = 1;
+  pdStack_78 = &local_70;
+  iVar7 = _vkCreatePipelineLayout(uVar8,&local_a0,0,this + 0x30);
+  if (iVar7 != 0) {
+    local_120 = operator_new(0x48);
+    lStack_110 = _UNK_00007b08;
+    uStack_118 = _DAT_00007b00;
+    local_120[0x40] = 't';
+    uVar6 = LC43._24_8_;
+    uVar5 = LC43._16_8_;
+    uVar8 = LC43._0_8_;
+    local_120[0x41] = '\0';
+    *(undefined8 *)(local_120 + 8) = LC43._8_8_;
+    *(undefined8 *)local_120 = uVar8;
+    *(undefined8 *)(local_120 + 0x18) = uVar6;
+    *(undefined8 *)(local_120 + 0x10) = uVar5;
+    uVar6 = LC43._56_8_;
+    uVar5 = LC43._48_8_;
+    uVar8 = LC43._32_8_;
+    *(undefined8 *)(local_120 + 0x28) = LC43._40_8_;
+    *(undefined8 *)(local_120 + 0x20) = uVar8;
+    *(undefined8 *)(local_120 + 0x38) = uVar6;
+    *(undefined8 *)(local_120 + 0x30) = uVar5;
+    m3t::M3TLogError((string *)&local_120);
+    pcVar2 = local_120;
+    lVar3 = lStack_110;
+joined_r0x00000a44:
+    if (lVar3 < 0) {
+      operator_delete(pcVar2);
+    }
+    return false;
+  }
+  local_a8 = 0.0;
+  uStack_118 = 0;
+  local_120 = "\x06";
+  lStack_110 = 0;
+  local_108 = &DAT_00004764;
+  local_100 = &k_edge_detect_comp_spv;
+  iVar7 = _vkCreateShaderModule(uVar8,&local_120,0,&local_a8);
+  if (iVar7 != 0) {
+    local_c0 = operator_new(0x40);
+    uVar6 = LC44._24_8_;
+    uVar5 = LC44._16_8_;
+    uVar8 = LC44._0_8_;
+    lStack_b0 = _UNK_00007c08;
+    local_b8 = _DAT_00007c00;
+    *(undefined8 *)(local_c0 + 8) = LC44._8_8_;
+    *(undefined8 *)local_c0 = uVar8;
+    *(undefined8 *)(local_c0 + 0x18) = uVar6;
+    *(undefined8 *)(local_c0 + 0x10) = uVar5;
+    uVar8 = LC44._32_8_;
+    *(ulong *)(local_c0 + 0x28) = CONCAT17(LC44[0x2f],LC44._40_7_);
+    *(undefined8 *)(local_c0 + 0x20) = uVar8;
+    uVar8 = CONCAT71(LC44._48_7_,LC44[0x2f]);
+    *(undefined8 *)(local_c0 + 0x37) = LC44._55_8_;
+    *(undefined8 *)(local_c0 + 0x2f) = uVar8;
+    local_c0[0x3f] = '\0';
+    m3t::M3TLogError((string *)&local_c0);
+    pcVar2 = local_c0;
+    lVar3 = lStack_b0;
+    goto joined_r0x00000a44;
+  }
+  uStack_118 = 0;
+  lStack_110 = 0;
+  local_100 = (undefined1 *)0x0;
+  local_e0 = 0;
+  uStack_c8 = 0;
+  uStack_d0 = 0;
+  local_120 = (char *)0x1d;
+  local_108 = (undefined *)0x12;
+  uStack_f8 = 0x2000000000;
+  uStack_d8 = *(undefined8 *)(this + 0x30);
+  local_f0 = local_a8;
+  pcStack_e8 = "main";
+  iVar7 = _vkCreateComputePipelines(uVar8,0,1,&local_120,0,this + 0x18);
+  _vkDestroyShaderModule(uVar8,local_a8,0);
+  if (iVar7 != 0) {
+    local_c0 = operator_new(0x48);
+    lStack_b0 = _UNK_00007d08;
+    local_b8 = _DAT_00007d00;
+    local_c0[0x40] = 'n';
+    uVar6 = LC46._24_8_;
+    uVar5 = LC46._16_8_;
+    uVar8 = LC46._0_8_;
+    local_c0[0x41] = 'e';
+    *(undefined8 *)(local_c0 + 8) = LC46._8_8_;
+    *(undefined8 *)local_c0 = uVar8;
+    *(undefined8 *)(local_c0 + 0x18) = uVar6;
+    *(undefined8 *)(local_c0 + 0x10) = uVar5;
+    uVar6 = LC46._56_8_;
+    uVar5 = LC46._48_8_;
+    uVar8 = LC46._32_8_;
+    *(undefined8 *)(local_c0 + 0x28) = LC46._40_8_;
+    *(undefined8 *)(local_c0 + 0x20) = uVar8;
+    *(undefined8 *)(local_c0 + 0x38) = uVar6;
+    *(undefined8 *)(local_c0 + 0x30) = uVar5;
+    local_c0[0x42] = '\0';
+    m3t::M3TLogError((string *)&local_c0);
+    pcVar2 = local_c0;
+    lVar3 = lStack_b0;
+    goto joined_r0x00000a44;
+  }
+  uStack_98 = 0;
+  pdStack_78 = (double *)0x0;
+  local_80 = 0;
+  local_a0 = 0x1e;
+  uStack_90 = 0x100000000;
+  local_88 = this + 0x50;
+  iVar7 = _vkCreatePipelineLayout(uVar8,&local_a0,0,this + 0x38);
+  if (iVar7 != 0) {
+    local_120 = operator_new(0x48);
+    lStack_110 = _UNK_00007b08;
+    uStack_118 = _DAT_00007b00;
+    local_120[0x40] = 't';
+    uVar6 = LC47._24_8_;
+    uVar5 = LC47._16_8_;
+    uVar8 = LC47._0_8_;
+    local_120[0x41] = '\0';
+    *(undefined8 *)(local_120 + 8) = LC47._8_8_;
+    *(undefined8 *)local_120 = uVar8;
+    *(undefined8 *)(local_120 + 0x18) = uVar6;
+    *(undefined8 *)(local_120 + 0x10) = uVar5;
+    uVar6 = LC47._56_8_;
+    uVar5 = LC47._48_8_;
+    uVar8 = LC47._32_8_;
+    *(undefined8 *)(local_120 + 0x28) = LC47._40_8_;
+    *(undefined8 *)(local_120 + 0x20) = uVar8;
+    *(undefined8 *)(local_120 + 0x38) = uVar6;
+    *(undefined8 *)(local_120 + 0x30) = uVar5;
+    m3t::M3TLogError((string *)&local_120);
+    pcVar2 = local_120;
+    lVar3 = lStack_110;
+    goto joined_r0x00000a44;
+  }
+  local_70 = 0.0;
+  uStack_118 = 0;
+  local_120 = "\x06";
+  lStack_110 = 0;
+  local_108 = &DAT_000055dc;
+  local_100 = &k_edge_sites_comp_spv;
+  iVar7 = _vkCreateShaderModule(uVar8,&local_120,0,&local_70);
+  if (iVar7 != 0) {
+    local_c0 = operator_new(0x40);
+    uVar6 = LC48._24_8_;
+    uVar5 = LC48._16_8_;
+    uVar8 = LC48._0_8_;
+    lStack_b0 = _UNK_00007c08;
+    local_b8 = _DAT_00007c00;
+    *(undefined8 *)(local_c0 + 8) = LC48._8_8_;
+    *(undefined8 *)local_c0 = uVar8;
+    *(undefined8 *)(local_c0 + 0x18) = uVar6;
+    *(undefined8 *)(local_c0 + 0x10) = uVar5;
+    uVar8 = LC48._32_8_;
+    *(ulong *)(local_c0 + 0x28) = CONCAT17(LC48[0x2f],LC48._40_7_);
+    *(undefined8 *)(local_c0 + 0x20) = uVar8;
+    uVar8 = CONCAT71(LC48._48_7_,LC48[0x2f]);
+    *(undefined8 *)(local_c0 + 0x37) = LC48._55_8_;
+    *(undefined8 *)(local_c0 + 0x2f) = uVar8;
+    local_c0[0x3f] = '\0';
+    m3t::M3TLogError((string *)&local_c0);
+    pcVar2 = local_c0;
+    lVar3 = lStack_b0;
+    goto joined_r0x00000a44;
+  }
+  uStack_118 = 0;
+  lStack_110 = 0;
+  local_100 = (undefined1 *)0x0;
+  local_e0 = 0;
+  uStack_c8 = 0;
+  uStack_d0 = 0;
+  local_120 = (char *)0x1d;
+  local_108 = (undefined *)0x12;
+  uStack_f8 = 0x2000000000;
+  uStack_d8 = *(undefined8 *)(this + 0x38);
+  local_f0 = local_70;
+  pcStack_e8 = "main";
+  iVar7 = _vkCreateComputePipelines(uVar8,0,1,&local_120,0,this + 0x20);
+  _vkDestroyShaderModule(uVar8,local_70,0);
+  if (iVar7 != 0) {
+    local_c0 = operator_new(0x48);
+    lStack_b0 = _UNK_00007d08;
+    local_b8 = _DAT_00007d00;
+    local_c0[0x40] = 'n';
+    uVar6 = LC49._24_8_;
+    uVar5 = LC49._16_8_;
+    uVar8 = LC49._0_8_;
+    local_c0[0x41] = 'e';
+    *(undefined8 *)(local_c0 + 8) = LC49._8_8_;
+    *(undefined8 *)local_c0 = uVar8;
+    *(undefined8 *)(local_c0 + 0x18) = uVar6;
+    *(undefined8 *)(local_c0 + 0x10) = uVar5;
+    uVar6 = LC49._56_8_;
+    uVar5 = LC49._48_8_;
+    uVar8 = LC49._32_8_;
+    *(undefined8 *)(local_c0 + 0x28) = LC49._40_8_;
+    *(undefined8 *)(local_c0 + 0x20) = uVar8;
+    *(undefined8 *)(local_c0 + 0x38) = uVar6;
+    *(undefined8 *)(local_c0 + 0x30) = uVar5;
+    local_c0[0x42] = '\0';
+    m3t::M3TLogError((string *)&local_c0);
+    pcVar2 = local_c0;
+    lVar3 = lStack_b0;
+    goto joined_r0x00000a44;
+  }
+  local_70 = dVar4;
+  local_68 = 4;
+  uStack_98 = 0;
+  local_a0 = 0x1e;
+  uStack_90 = 0x100000000;
+  local_80 = 1;
+  pdStack_78 = &local_70;
+  local_88 = this + 0x50;
+  iVar7 = _vkCreatePipelineLayout(uVar8,&local_a0,0,this + 0x40);
+  if (iVar7 == 0) {
+    local_a8 = 0.0;
+    uStack_118 = 0;
+    local_120 = "\x06";
+    lStack_110 = 0;
+    local_108 = &DAT_00004f38;
+    local_100 = &k_edge_crease_comp_spv;
+    iVar7 = _vkCreateShaderModule(uVar8,&local_120,0,&local_a8);
+    if (iVar7 == 0) {
+      uStack_118 = 0;
+      lStack_110 = 0;
+      local_100 = (undefined1 *)0x0;
+      local_e0 = 0;
+      uStack_c8 = 0;
+      uStack_d0 = 0;
+      local_120 = (char *)0x1d;
+      local_108 = (undefined *)0x12;
+      uStack_f8 = 0x2000000000;
+      local_f0 = local_a8;
+      pcStack_e8 = "main";
+      uStack_d8 = *(undefined8 *)(this + 0x40);
+      iVar7 = _vkCreateComputePipelines(uVar8,0,1,&local_120,0,this + 0x28);
+      _vkDestroyShaderModule(uVar8,local_a8,0);
+      if (iVar7 == 0) {
+        bVar1 = false;
+        goto LAB_00000e0c;
+      }
+      local_c0 = operator_new(0x48);
+      lStack_b0 = _UNK_00007d08;
+      local_b8 = _DAT_00007d00;
+      local_c0[0x40] = 'n';
+      uVar6 = LC52._24_8_;
+      uVar5 = LC52._16_8_;
+      uVar8 = LC52._0_8_;
+      local_c0[0x41] = 'e';
+      *(undefined8 *)(local_c0 + 8) = LC52._8_8_;
+      *(undefined8 *)local_c0 = uVar8;
+      *(undefined8 *)(local_c0 + 0x18) = uVar6;
+      *(undefined8 *)(local_c0 + 0x10) = uVar5;
+      uVar6 = LC52._56_8_;
+      uVar5 = LC52._48_8_;
+      uVar8 = LC52._32_8_;
+      *(undefined8 *)(local_c0 + 0x28) = LC52._40_8_;
+      *(undefined8 *)(local_c0 + 0x20) = uVar8;
+      *(undefined8 *)(local_c0 + 0x38) = uVar6;
+      *(undefined8 *)(local_c0 + 0x30) = uVar5;
+      local_c0[0x42] = '\0';
+      m3t::M3TLogError((string *)&local_c0);
+      pcVar2 = local_c0;
+      lVar3 = lStack_b0;
+    }
+    else {
+      local_c0 = operator_new(0x40);
+      uVar6 = LC51._24_8_;
+      uVar5 = LC51._16_8_;
+      uVar8 = LC51._0_8_;
+      lStack_b0 = _UNK_00007c08;
+      local_b8 = _DAT_00007c00;
+      *(undefined8 *)(local_c0 + 8) = LC51._8_8_;
+      *(undefined8 *)local_c0 = uVar8;
+      *(undefined8 *)(local_c0 + 0x18) = uVar6;
+      *(undefined8 *)(local_c0 + 0x10) = uVar5;
+      uVar8 = LC51._32_8_;
+      *(ulong *)(local_c0 + 0x28) = CONCAT17(LC51[0x2f],LC51._40_7_);
+      *(undefined8 *)(local_c0 + 0x20) = uVar8;
+      uVar8 = CONCAT71(LC51._48_7_,LC51[0x2f]);
+      *(undefined8 *)(local_c0 + 0x37) = LC51._55_8_;
+      *(undefined8 *)(local_c0 + 0x2f) = uVar8;
+      local_c0[0x3f] = '\0';
+      m3t::M3TLogError((string *)&local_c0);
+      pcVar2 = local_c0;
+      lVar3 = lStack_b0;
+    }
+  }
+  else {
+    local_120 = operator_new(0x48);
+    lStack_110 = _UNK_00007b08;
+    uStack_118 = _DAT_00007b00;
+    local_120[0x40] = 't';
+    uVar6 = LC50._24_8_;
+    uVar5 = LC50._16_8_;
+    uVar8 = LC50._0_8_;
+    local_120[0x41] = '\0';
+    *(undefined8 *)(local_120 + 8) = LC50._8_8_;
+    *(undefined8 *)local_120 = uVar8;
+    *(undefined8 *)(local_120 + 0x18) = uVar6;
+    *(undefined8 *)(local_120 + 0x10) = uVar5;
+    uVar6 = LC50._56_8_;
+    uVar5 = LC50._48_8_;
+    uVar8 = LC50._32_8_;
+    *(undefined8 *)(local_120 + 0x28) = LC50._40_8_;
+    *(undefined8 *)(local_120 + 0x20) = uVar8;
+    *(undefined8 *)(local_120 + 0x38) = uVar6;
+    *(undefined8 *)(local_120 + 0x30) = uVar5;
+    m3t::M3TLogError((string *)&local_120);
+    pcVar2 = local_120;
+    lVar3 = lStack_110;
+  }
+  if (lVar3 < 0) {
+    operator_delete(pcVar2);
+  }
+  bVar1 = true;
+LAB_00000e0c:
+  return !bVar1;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000e6c
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000e80
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000ed0
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 00000ef4
+// Signature: noreturn undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: DestroyImages
+// Entry: 00000f1c
+// Signature: undefined __thiscall DestroyImages(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::DestroyImages() */
+
+void __thiscall m3t::EdgeComputePipeline::DestroyImages(EdgeComputePipeline *this)
+
+{
+  long lVar1;
+  undefined8 uVar2;
+  
+  uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+  if (*(long *)(this + 0x88) != 0) {
+    _vkDestroyImageView(uVar2,*(long *)(this + 0x88),0);
+  }
+  lVar1 = *(long *)(this + 0x78);
+  if (lVar1 != 0) {
+    _vkDestroyImage(uVar2,lVar1,0);
+    if (*(long *)(this + 0x80) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x80),0);
+    }
+  }
+  *(undefined8 *)(this + 0x78) = 0;
+  *(undefined8 *)(this + 0x80) = 0;
+  *(undefined8 *)(this + 0x88) = 0;
+  uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+  if (*(long *)(this + 0xa0) != 0) {
+    _vkDestroyImageView(uVar2,*(long *)(this + 0xa0),0);
+  }
+  lVar1 = *(long *)(this + 0x90);
+  if (lVar1 != 0) {
+    _vkDestroyImage(uVar2,lVar1,0);
+    if (*(long *)(this + 0x98) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x98),0);
+    }
+  }
+  *(undefined8 *)(this + 0x90) = 0;
+  *(undefined8 *)(this + 0x98) = 0;
+  *(undefined8 *)(this + 0xa0) = 0;
+  uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+  if (*(long *)(this + 0xb8) != 0) {
+    _vkDestroyImageView(uVar2,*(long *)(this + 0xb8),0);
+  }
+  lVar1 = *(long *)(this + 0xa8);
+  if (lVar1 != 0) {
+    _vkDestroyImage(uVar2,lVar1,0);
+    if (*(long *)(this + 0xb0) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0xb0),0);
+    }
+  }
+  *(undefined8 *)(this + 0xa8) = 0;
+  *(undefined8 *)(this + 0xb0) = 0;
+  *(undefined8 *)(this + 0xb8) = 0;
+  uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+  if (*(long *)(this + 0xd0) != 0) {
+    _vkDestroyImageView(uVar2,*(long *)(this + 0xd0),0);
+  }
+  lVar1 = *(long *)(this + 0xc0);
+  if (lVar1 != 0) {
+    _vkDestroyImage(uVar2,lVar1,0);
+    if (*(long *)(this + 200) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 200),0);
+    }
+  }
+  *(undefined8 *)(this + 0xc0) = 0;
+  *(undefined8 *)(this + 200) = 0;
+  *(undefined8 *)(this + 0xd0) = 0;
+  *(undefined4 *)(this + 0xc) = 0;
+  *(undefined4 *)(this + 0x10) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: DestroyBuffers
+// Entry: 00001084
+// Signature: undefined __thiscall DestroyBuffers(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::DestroyBuffers() */
+
+void __thiscall m3t::EdgeComputePipeline::DestroyBuffers(EdgeComputePipeline *this)
+
+{
+  long lVar1;
+  undefined8 uVar2;
+  
+  lVar1 = *(long *)(this + 0xd8);
+  if (lVar1 != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,lVar1,0);
+    if (*(long *)(this + 0xe0) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0xe0),0);
+    }
+  }
+  *(undefined8 *)(this + 0xd8) = 0;
+  *(undefined8 *)(this + 0xe0) = 0;
+  *(undefined8 *)(this + 0xe8) = 0;
+  lVar1 = *(long *)(this + 0xf0);
+  if (lVar1 != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,lVar1,0);
+    if (*(long *)(this + 0xf8) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0xf8),0);
+    }
+  }
+  *(undefined8 *)(this + 0xf0) = 0;
+  *(undefined8 *)(this + 0xf8) = 0;
+  *(undefined8 *)(this + 0x100) = 0;
+  if (*(long *)(this + 0x108) != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,*(long *)(this + 0x108),0);
+    if (*(long *)(this + 0x110) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x110),0);
+    }
+  }
+  *(undefined8 *)(this + 0x108) = 0;
+  *(undefined8 *)(this + 0x110) = 0;
+  *(undefined8 *)(this + 0x118) = 0;
+  if (*(long *)(this + 0x120) != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,*(long *)(this + 0x120),0);
+    if (*(long *)(this + 0x128) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x128),0);
+    }
+  }
+  *(undefined8 *)(this + 0x120) = 0;
+  *(undefined8 *)(this + 0x128) = 0;
+  *(undefined8 *)(this + 0x130) = 0;
+  if (*(long *)(this + 0x138) != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,*(long *)(this + 0x138),0);
+    if (*(long *)(this + 0x140) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x140),0);
+    }
+  }
+  *(undefined8 *)(this + 0x138) = 0;
+  *(undefined8 *)(this + 0x140) = 0;
+  *(undefined8 *)(this + 0x148) = 0;
+  if (*(long *)(this + 0x150) != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,*(long *)(this + 0x150),0);
+    if (*(long *)(this + 0x158) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x158),0);
+    }
+  }
+  *(undefined8 *)(this + 0x150) = 0;
+  *(undefined8 *)(this + 0x158) = 0;
+  *(undefined8 *)(this + 0x160) = 0;
+  if (*(long *)(this + 0x168) != 0) {
+    uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar2,*(long *)(this + 0x168),0);
+    if (*(long *)(this + 0x170) != 0) {
+      _vkFreeMemory(uVar2,*(long *)(this + 0x170),0);
+    }
+  }
+  *(undefined8 *)(this + 0x168) = 0;
+  *(undefined8 *)(this + 0x170) = 0;
+  *(undefined8 *)(this + 0x178) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: EnsureResources
+// Entry: 0000124c
+// Signature: undefined __thiscall EnsureResources(EdgeComputePipeline * this, int param_1, int param_2)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::EnsureResources(int, int) */
+
+undefined8 __thiscall
+m3t::EdgeComputePipeline::EnsureResources(EdgeComputePipeline *this,int param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  
+  if (((*(int *)(this + 0xc) != param_1) || (*(int *)(this + 0x10) != param_2)) ||
+     (*(long *)(this + 0x78) == 0)) {
+    DestroyImages(this);
+    DestroyBuffers(this);
+    *(int *)(this + 0xc) = param_1;
+    *(int *)(this + 0x10) = param_2;
+    uVar1 = CreateImage(this,param_1,param_2,100,6,1,this + 0x78);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    uVar1 = CreateImage(this,param_1,param_2,0x2c,6,1,this + 0x90);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    uVar1 = CreateImage(this,param_1,param_2,100,8,1,this + 0xa8);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    uVar1 = CreateImage(this,param_1,param_2,0xd,8,1,this + 0xc0);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    uVar1 = AllocateBuffers(this);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    uVar1 = AllocateDescriptorSets(this);
+    if ((int)uVar1 == 0) {
+      return uVar1;
+    }
+    UpdateDescriptorSets(this);
+  }
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: AllocateImages
+// Entry: 00001368
+// Signature: undefined __thiscall AllocateImages(EdgeComputePipeline * this, int param_1, int param_2)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::AllocateImages(int, int) */
+
+undefined8 __thiscall
+m3t::EdgeComputePipeline::AllocateImages(EdgeComputePipeline *this,int param_1,int param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = CreateImage(this,param_1,param_2,100,6,1,this + 0x78);
+  if (((iVar1 != 0) && (iVar1 = CreateImage(this,param_1,param_2,0x2c,6,1,this + 0x90), iVar1 != 0))
+     && (iVar1 = CreateImage(this,param_1,param_2,100,8,1,this + 0xa8), iVar1 != 0)) {
+    uVar2 = CreateImage(this,param_1,param_2,0xd,8,1,this + 0xc0);
+    return uVar2;
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: AllocateBuffers
+// Entry: 00001424
+// Signature: undefined __thiscall AllocateBuffers(EdgeComputePipeline * this)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::AllocateBuffers() */
+
+undefined8 __thiscall m3t::EdgeComputePipeline::AllocateBuffers(EdgeComputePipeline *this)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  
+  uVar1 = *(int *)(this + 0x10) * *(int *)(this + 0xc);
+  iVar3 = *(int *)(this + 0x14);
+  iVar2 = CreateBuffer(this,-(ulong)(uVar1 >> 0x1f) & 0xfffffffc00000000 | (ulong)uVar1 << 2,1,6,
+                       (BufferResource *)(this + 0xd8));
+  if ((iVar2 != 0) &&
+     (iVar2 = CreateBuffer(this,(long)(int)(uVar1 * 4),1,6,(BufferResource *)(this + 0xf0)),
+     iVar2 != 0)) {
+    iVar2 = CreateBuffer(this,(long)iVar3 * 0x30,0x21,1,(BufferResource *)(this + 0x108));
+    if ((iVar2 != 0) &&
+       (((iVar2 = CreateBuffer(this,4,0x23,1,(BufferResource *)(this + 0x120)), iVar2 != 0 &&
+         (iVar3 = CreateBuffer(this,(long)iVar3 * 0x30,2,6,(BufferResource *)(this + 0x138)),
+         iVar3 != 0)) &&
+        (iVar3 = CreateBuffer(this,4,2,6,(BufferResource *)(this + 0x150)), iVar3 != 0)))) {
+      uVar4 = CreateBuffer(this,0x100,0x10,6,(BufferResource *)(this + 0x168));
+      return uVar4;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: AllocateDescriptorSets
+// Entry: 0000152c
+// Signature: undefined __thiscall AllocateDescriptorSets(EdgeComputePipeline * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::AllocateDescriptorSets() */
+
+bool __thiscall m3t::EdgeComputePipeline::AllocateDescriptorSets(EdgeComputePipeline *this)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  bool bVar3;
+  int iVar4;
+  undefined8 uVar5;
+  EdgeComputePipeline *pEVar6;
+  char *local_118;
+  undefined8 local_110;
+  long lStack_108;
+  char *local_100;
+  undefined8 uStack_f8;
+  long lStack_f0;
+  undefined8 local_e8;
+  undefined8 *local_e0;
+  undefined8 local_d0;
+  undefined8 uStack_c8;
+  undefined4 uStack_c0;
+  undefined4 local_bc;
+  undefined4 uStack_b8;
+  undefined4 uStack_b4;
+  undefined8 *local_b0;
+  undefined8 local_a0;
+  undefined8 uStack_98;
+  undefined8 local_90;
+  undefined8 local_88;
+  undefined8 uStack_80;
+  undefined8 local_78;
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 uStack_60;
+  undefined8 uStack_58;
+  long local_48;
+  
+  local_48 = *____stack_chk_guard;
+  uVar5 = *(undefined8 *)(*(long *)this + 0x18);
+  pEVar6 = this + 0x58;
+  if (*(long *)pEVar6 != 0) {
+    _vkDestroyDescriptorPool(uVar5,*(long *)pEVar6,0);
+    *(undefined8 *)pEVar6 = 0;
+  }
+  uStack_68 = _UNK_000126a0;
+  local_70 = _l___const__ZN3m3t19EdgeComputePipeline22AllocateDescriptorSetsEv_pool_sizes;
+  uStack_58 = _UNK_000126b0;
+  uStack_60 = _DAT_000126a8;
+  uStack_c8 = 0;
+  uStack_b4 = 0;
+  uStack_c0 = 0;
+  local_d0 = 0x21;
+  local_bc = SUB84(l003,0);
+  uStack_b8 = (undefined4)((ulong)l003 >> 0x20);
+  local_b0 = &local_70;
+  iVar4 = _vkCreateDescriptorPool(uVar5,&local_d0,0,pEVar6);
+  if (iVar4 == 0) {
+    local_88 = *(undefined8 *)(this + 0x48);
+    uStack_80 = *(undefined8 *)(this + 0x50);
+    uStack_f8 = 0;
+    local_100 = (char *)0x22;
+    lStack_f0 = *(long *)(this + 0x58);
+    local_e8 = 3;
+    local_e0 = &local_88;
+    local_78 = uStack_80;
+    iVar4 = _vkAllocateDescriptorSets(uVar5,&local_100,&local_a0);
+    bVar3 = iVar4 == 0;
+    if (iVar4 == 0) {
+      *(undefined8 *)(this + 0x68) = uStack_98;
+      *(undefined8 *)(this + 0x60) = local_a0;
+      *(undefined8 *)(this + 0x70) = local_90;
+    }
+    else {
+      local_118 = operator_new(0x38);
+      uVar2 = LC54._24_8_;
+      uVar1 = LC54._16_8_;
+      uVar5 = LC54._0_8_;
+      lStack_108 = _UNK_00007f08;
+      local_110 = _DAT_00007f00;
+      *(undefined8 *)(local_118 + 8) = LC54._8_8_;
+      *(undefined8 *)local_118 = uVar5;
+      *(undefined8 *)(local_118 + 0x18) = uVar2;
+      *(undefined8 *)(local_118 + 0x10) = uVar1;
+      uVar5 = LC54._32_8_;
+      *(ulong *)(local_118 + 0x28) = CONCAT17(LC54[0x2f],LC54._40_7_);
+      *(undefined8 *)(local_118 + 0x20) = uVar5;
+      *(ulong *)(local_118 + 0x2f) = CONCAT71(LC54._48_7_,LC54[0x2f]);
+      local_118[0x37] = '\0';
+      m3t::M3TLogError((string *)&local_118);
+      if (lStack_108 < 0) {
+        operator_delete(local_118);
+      }
+    }
+  }
+  else {
+    local_100 = operator_new(0x38);
+    uVar2 = LC53._24_8_;
+    uVar1 = LC53._16_8_;
+    uVar5 = LC53._0_8_;
+    lStack_f0 = _UNK_00007e08;
+    uStack_f8 = _DAT_00007e00;
+    *(undefined8 *)(local_100 + 8) = LC53._8_8_;
+    *(undefined8 *)local_100 = uVar5;
+    *(undefined8 *)(local_100 + 0x18) = uVar2;
+    *(undefined8 *)(local_100 + 0x10) = uVar1;
+    uVar5 = LC53._32_8_;
+    *(ulong *)(local_100 + 0x28) = CONCAT35(LC53._45_3_,LC53._40_5_);
+    *(undefined8 *)(local_100 + 0x20) = uVar5;
+    *(ulong *)(local_100 + 0x2d) = CONCAT53(LC53._48_5_,LC53._45_3_);
+    local_100[0x35] = '\0';
+    m3t::M3TLogError((string *)&local_100);
+    if (lStack_f0 < 0) {
+      operator_delete(local_100);
+    }
+    bVar3 = false;
+  }
+  if (*____stack_chk_guard == local_48) {
+    return bVar3;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: UpdateDescriptorSets
+// Entry: 00001758
+// Signature: undefined __thiscall UpdateDescriptorSets(EdgeComputePipeline * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::UpdateDescriptorSets() */
+
+void __thiscall m3t::EdgeComputePipeline::UpdateDescriptorSets(EdgeComputePipeline *this)
+
+{
+  double dVar1;
+  undefined8 uVar2;
+  undefined8 local_2f8;
+  undefined8 uStack_2f0;
+  undefined8 local_2e8;
+  undefined8 uStack_2e0;
+  undefined8 local_2d8;
+  undefined8 uStack_2d0;
+  undefined8 local_2c8;
+  undefined8 local_2c0;
+  undefined8 uStack_2b8;
+  undefined8 local_2b0;
+  undefined8 uStack_2a8;
+  undefined8 local_2a0;
+  undefined8 local_298;
+  undefined8 local_290;
+  undefined8 local_288;
+  undefined8 local_280;
+  undefined8 uStack_278;
+  undefined8 local_270;
+  undefined8 uStack_268;
+  undefined8 local_260;
+  undefined8 local_258;
+  undefined8 local_250;
+  undefined8 uStack_248;
+  undefined8 local_240;
+  undefined8 uStack_238;
+  undefined8 local_230;
+  undefined8 *puStack_228;
+  undefined8 uStack_220;
+  undefined8 uStack_218;
+  undefined8 local_210;
+  undefined8 uStack_208;
+  undefined8 local_200;
+  undefined8 local_1f8;
+  double local_1f0;
+  undefined8 *puStack_1e8;
+  undefined8 uStack_1e0;
+  undefined8 uStack_1d8;
+  undefined8 local_1d0;
+  undefined8 uStack_1c8;
+  undefined8 local_1c0;
+  undefined8 local_1b8;
+  double local_1b0;
+  undefined8 *puStack_1a8;
+  undefined8 uStack_1a0;
+  undefined8 uStack_198;
+  undefined8 local_190;
+  undefined8 uStack_188;
+  undefined8 local_180;
+  undefined8 local_178;
+  double local_170;
+  undefined8 *puStack_168;
+  undefined8 uStack_160;
+  undefined8 uStack_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  undefined8 local_138;
+  double local_130;
+  undefined8 uStack_128;
+  undefined8 *local_120;
+  undefined8 uStack_118;
+  undefined8 local_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 local_f8;
+  double local_f0;
+  undefined8 uStack_e8;
+  undefined8 *local_e0;
+  undefined8 uStack_d8;
+  undefined8 local_d0;
+  undefined8 uStack_c8;
+  undefined8 local_c0;
+  undefined8 local_b8;
+  double local_b0;
+  undefined8 uStack_a8;
+  undefined8 *local_a0;
+  undefined8 uStack_98;
+  long local_88;
+  
+  dVar1 = l004;
+  local_88 = *____stack_chk_guard;
+  uVar2 = *(undefined8 *)(*(long *)this + 0x18);
+  uStack_268 = *(undefined8 *)(this + 0x180);
+  local_260 = *(undefined8 *)(this + 0x88);
+  local_258 = 5;
+  uStack_278 = *(undefined8 *)(this + 0xb8);
+  local_280 = 0;
+  local_270 = 1;
+  local_290 = *(undefined8 *)(this + 0xd0);
+  local_298 = 0;
+  local_288 = 1;
+  uStack_248 = 0;
+  uStack_238 = 0;
+  uStack_208 = 0;
+  uStack_1c8 = 0;
+  uStack_198 = 0;
+  uStack_1a0 = 0;
+  uStack_1d8 = 0;
+  uStack_1e0 = 0;
+  uStack_218 = 0;
+  uStack_220 = 0;
+  local_250 = 0x23;
+  local_240 = *(undefined8 *)(this + 0x60);
+  local_230 = 0x100000001;
+  local_210 = 0x23;
+  local_1f8 = 1;
+  local_1f0 = l004;
+  local_1d0 = 0x23;
+  local_1b8 = 2;
+  local_1b0 = l004;
+  puStack_228 = &uStack_268;
+  local_200 = local_240;
+  puStack_1e8 = &local_280;
+  local_1c0 = local_240;
+  puStack_1a8 = &local_298;
+  _vkUpdateDescriptorSets(uVar2,3,&local_250,0,0);
+  local_260 = *(undefined8 *)(this + 0x88);
+  local_2e8 = *(undefined8 *)(this + 0x178);
+  local_280 = *(undefined8 *)(this + 0x180);
+  local_258 = 5;
+  uStack_278 = *(undefined8 *)(this + 0xa0);
+  local_270 = 5;
+  local_290 = *(undefined8 *)(this + 0xb8);
+  local_298 = 0;
+  local_288 = 1;
+  uStack_2a8 = *(undefined8 *)(this + 0xd0);
+  local_2b0 = 0;
+  local_2a0 = 1;
+  uStack_2b8 = *(undefined8 *)(this + 0x118);
+  uStack_2e0 = *(undefined8 *)(this + 0x120);
+  local_2c0 = 0;
+  local_2c8 = *(undefined8 *)(this + 0x108);
+  uStack_2d0 = _UNK_00008008;
+  local_2d8 = _DAT_00008000;
+  local_2f8 = *(undefined8 *)(this + 0x168);
+  uStack_2f0 = 0;
+  uStack_a8 = 0;
+  uStack_98 = 0;
+  uStack_c8 = 0;
+  uStack_e8 = 0;
+  uStack_d8 = 0;
+  uStack_108 = 0;
+  uStack_128 = 0;
+  uStack_118 = 0;
+  uStack_148 = 0;
+  uStack_158 = 0;
+  uStack_160 = 0;
+  uStack_188 = 0;
+  uStack_198 = 0;
+  uStack_1a0 = 0;
+  uStack_1c8 = 0;
+  uStack_1d8 = 0;
+  uStack_1e0 = 0;
+  uStack_208 = 0;
+  uStack_218 = 0;
+  uStack_220 = 0;
+  uStack_248 = 0;
+  uStack_238 = 0;
+  local_250 = 0x23;
+  local_240 = *(undefined8 *)(this + 0x68);
+  local_230 = 0x100000001;
+  local_210 = 0x23;
+  local_1f8 = 1;
+  local_1f0 = 2.12199579145934e-314;
+  local_1d0 = 0x23;
+  local_1b8 = 2;
+  local_1b0 = dVar1;
+  local_190 = 0x23;
+  local_178 = 3;
+  local_170 = dVar1;
+  puStack_168 = &local_2b0;
+  local_150 = 0x23;
+  local_138 = 4;
+  local_130 = l005;
+  local_120 = &local_2c8;
+  local_110 = 0x23;
+  local_f8 = 5;
+  local_f0 = l005;
+  local_e0 = &uStack_2e0;
+  local_d0 = 0x23;
+  local_b8 = 6;
+  local_b0 = l006;
+  local_a0 = &local_2f8;
+  uStack_268 = local_280;
+  puStack_228 = &uStack_268;
+  local_200 = local_240;
+  puStack_1e8 = &local_280;
+  local_1c0 = local_240;
+  puStack_1a8 = &local_298;
+  local_180 = local_240;
+  local_140 = local_240;
+  local_100 = local_240;
+  local_c0 = local_240;
+  _vkUpdateDescriptorSets(uVar2,7,&local_250,0,0);
+  local_240 = *(undefined8 *)(this + 0x70);
+  local_200 = local_240;
+  local_1c0 = local_240;
+  local_180 = local_240;
+  local_140 = local_240;
+  local_100 = local_240;
+  local_c0 = local_240;
+  _vkUpdateDescriptorSets(uVar2,7,&local_250,0,0);
+  if (*____stack_chk_guard == local_88) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: DetectAndCreateSites
+// Entry: 00001a4c
+// Signature: undefined __cdecl DetectAndCreateSites(Mat * param_1, Mat * param_2, Matrix * param_3, float param_4, float param_5, float param_6, float param_7, float param_8, float param_9, float param_10, uchar param_11, float param_12, int param_13, int param_14, int param_15, int param_16, int param_17, int param_18, vector * param_19)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::DetectAndCreateSites(cv::Mat const&, cv::Mat const&,
+   Eigen::Matrix<float, 4, 4, 0, 4, 4> const&, float, float, float, float, float, float, float,
+   unsigned char, float, int, int, int, int, int, int,
+   std::vector<m3t::EdgeComputePipeline::GpuSite, std::allocator<m3t::EdgeComputePipeline::GpuSite>
+   >&) */
+
+void m3t::EdgeComputePipeline::DetectAndCreateSites
+               (Mat *param_1,Mat *param_2,Matrix *param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float param_9,float param_10,uchar param_11,
+               float param_12,int param_13,int param_14,int param_15,int param_16,int param_17,
+               int param_18,vector *param_19)
+
+{
+  Mat *pMVar1;
+  Mat *pMVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  ulong uVar10;
+  bool bVar11;
+  undefined8 uVar12;
+  undefined8 *puVar13;
+  long lVar14;
+  ulong uVar15;
+  Mat *pMVar16;
+  Mat *pMVar17;
+  undefined4 in_stack_00000004;
+  undefined8 uVar18;
+  undefined8 uVar19;
+  uint *local_270;
+  undefined8 local_268;
+  undefined8 uStack_260;
+  undefined8 local_258;
+  undefined8 local_250;
+  undefined8 uStack_248;
+  long local_240;
+  undefined8 *local_238;
+  undefined8 uStack_230;
+  undefined8 local_228;
+  undefined8 uStack_220;
+  undefined8 local_218;
+  undefined4 local_210;
+  int iStack_20c;
+  int local_208;
+  undefined4 uStack_204;
+  undefined8 local_200;
+  undefined8 uStack_1f8;
+  undefined4 local_1f0;
+  undefined4 uStack_1ec;
+  undefined8 uStack_1e8;
+  undefined8 local_1e0;
+  undefined8 uStack_1d8;
+  double local_1d0;
+  undefined4 uStack_1c8;
+  undefined4 uStack_1c4;
+  undefined4 uStack_1c0;
+  undefined4 uStack_1bc;
+  undefined8 uStack_1b8;
+  Mat *local_1b0;
+  undefined8 uStack_1a8;
+  undefined8 local_1a0;
+  undefined8 uStack_198;
+  undefined8 uStack_190;
+  undefined8 uStack_188;
+  long local_180;
+  undefined8 uStack_178;
+  undefined8 local_170;
+  undefined8 uStack_168;
+  undefined8 local_160;
+  undefined8 uStack_158;
+  undefined8 local_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  undefined4 uStack_138;
+  undefined4 uStack_134;
+  undefined4 uStack_130;
+  undefined4 uStack_12c;
+  undefined8 uStack_128;
+  undefined8 local_120;
+  undefined8 uStack_118;
+  undefined8 local_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 uStack_f8;
+  long lStack_f0;
+  undefined8 uStack_e8;
+  undefined8 local_e0;
+  undefined8 uStack_d8;
+  undefined8 uStack_d0;
+  undefined8 local_c8;
+  long local_b8;
+  
+  puVar13 = (undefined8 *)(ulong)param_11;
+  local_b8 = *____stack_chk_guard;
+  *(undefined8 *)(param_19 + 8) = *(undefined8 *)param_19;
+  if (param_1[8] == (Mat)0x0) {
+    uVar12 = 0;
+  }
+  else {
+    uVar12 = 0;
+    iVar4 = *(int *)(param_2 + 0xc);
+    if (((iVar4 != 0) && (iVar5 = *(int *)(param_2 + 8), iVar5 != 0)) &&
+       (uVar12 = EnsureResources((EdgeComputePipeline *)param_1,iVar4,iVar5), (int)uVar12 != 0)) {
+      uVar12 = *(undefined8 *)(*(long *)param_1 + 0x18);
+      uVar6 = *(uint *)(param_1 + 0x14);
+      _vkMapMemory(uVar12,*(undefined8 *)(param_1 + 0xe0),0,*(undefined8 *)(param_1 + 0xe8),0,
+                   &local_1e0);
+      uVar7 = iVar5 * iVar4;
+      _memcpy(local_1e0,*(void **)(param_2 + 0x10),
+              -(ulong)(uVar7 >> 0x1f) & 0xfffffffc00000000 | (ulong)uVar7 << 2);
+      _vkUnmapMemory(uVar12,*(undefined8 *)(param_1 + 0xe0));
+      _vkMapMemory(uVar12,*(undefined8 *)(param_1 + 0xf8),0,*(undefined8 *)(param_1 + 0x100),0,
+                   &local_1e0);
+      _memcpy(local_1e0,*(void **)(param_3 + 0x10),(long)(int)(uVar7 * 4));
+      _vkUnmapMemory(uVar12,*(undefined8 *)(param_1 + 0xf8));
+      if (param_14 < 3) {
+        param_14 = 2;
+      }
+      uStack_1d8 = puVar13[1];
+      local_1e0 = (code *)*puVar13;
+      local_1d0 = (double)puVar13[2];
+      uStack_1c8 = (undefined4)puVar13[3];
+      uStack_1c4 = (undefined4)((ulong)puVar13[3] >> 0x20);
+      uStack_1b8 = puVar13[5];
+      uStack_1a8 = puVar13[7];
+      local_1b0 = (Mat *)puVar13[6];
+      uStack_1c0 = (undefined4)puVar13[4];
+      uStack_1bc = (undefined4)((ulong)puVar13[4] >> 0x20);
+      if (param_15 <= (int)uVar6) {
+        uVar6 = param_15;
+      }
+      _vkMapMemory(uVar12,*(undefined8 *)(param_1 + 0x170),0,*(undefined8 *)(param_1 + 0x178),0,
+                   &local_238);
+      iVar8 = 0;
+      if (param_14 != 0) {
+        iVar8 = (param_14 + -1 + iVar4) / param_14;
+      }
+      local_238[1] = uStack_1d8;
+      *local_238 = local_1e0;
+      local_238[3] = CONCAT44(uStack_1c4,uStack_1c8);
+      local_238[2] = local_1d0;
+      local_238[5] = uStack_1b8;
+      local_238[4] = CONCAT44(uStack_1bc,uStack_1c0);
+      local_238[7] = uStack_1a8;
+      local_238[6] = local_1b0;
+      *(float *)(local_238 + 8) = param_4;
+      *(float *)((long)local_238 + 0x44) = param_5;
+      *(float *)(local_238 + 9) = param_6;
+      *(float *)((long)local_238 + 0x4c) = param_7;
+      *(float *)(local_238 + 10) = param_8;
+      *(float *)((long)local_238 + 0x54) = param_9;
+      *(float *)(local_238 + 0xb) = param_10;
+      *(int *)((long)local_238 + 0x5c) = param_13;
+      *(int *)(local_238 + 0xc) = param_14;
+      iVar9 = 0;
+      if (param_14 != 0) {
+        iVar9 = (param_14 + -1 + iVar5) / param_14;
+      }
+      *(int *)((long)local_238 + 100) = iVar8;
+      *(int *)(local_238 + 0xd) = iVar9;
+      *(uint *)((long)local_238 + 0x6c) = uVar6;
+      *(int *)(local_238 + 0xe) = iVar4;
+      *(int *)((long)local_238 + 0x74) = iVar5;
+      *(int *)(local_238 + 0xf) = param_17;
+      *(undefined4 *)((long)local_238 + 0x7c) = in_stack_00000004;
+      *(int *)(local_238 + 0x10) = param_18;
+      *(undefined4 *)((long)local_238 + 0x8c) = 0;
+      *(undefined8 *)((long)local_238 + 0x84) = 0;
+      _vkUnmapMemory(uVar12,*(undefined8 *)(param_1 + 0x170));
+      pMVar1 = param_1 + 400;
+      _vkWaitForFences(uVar12,1,pMVar1,1,0xffffffffffffffff);
+      _vkResetFences(uVar12,1,pMVar1);
+      _vkResetCommandBuffer(*(undefined8 *)(param_1 + 0x188),0);
+      pMVar2 = param_1 + 0x188;
+      uStack_1f8 = _UNK_000039b0;
+      local_200 = 
+      _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_begin_info
+      ;
+      uStack_1e8 = _UNK_000039c0;
+      _local_1f0 = CONCAT44((int)((ulong)_DAT_000039b8 >> 0x20),1);
+      _vkBeginCommandBuffer(*(undefined8 *)pMVar2,&local_200);
+      uStack_1d8 = 0;
+      uStack_1c8 = 0;
+      uStack_1c4 = SUB84(l007,0);
+      uStack_1c0 = (undefined4)((ulong)l007 >> 0x20);
+      uStack_1bc = 0xffffffff;
+      pMVar16 = param_1 + 0x78;
+      uStack_1b8 = *(undefined8 *)pMVar16;
+      local_1b0 = (Mat *)0x1;
+      uStack_1a8 = 1;
+      local_1a0 = 1;
+      local_1e0 = Destroy;
+      local_1d0 = 8.69169475979376e-311;
+      local_180 = (long)l007 << 0x20;
+      uStack_190 = 0;
+      uStack_198 = 0x2d;
+      uStack_178 = CONCAT44(0xffffffff,uStack_1c0);
+      local_160 = 1;
+      uStack_168 = 1;
+      uStack_188 = 0x100000000000;
+      pMVar17 = param_1 + 0x90;
+      local_170 = *(undefined8 *)pMVar17;
+      uStack_158 = 1;
+      _vkCmdPipelineBarrier(*(undefined8 *)pMVar2,1,0x1000,0,0,0,0,0,2,&local_1e0);
+      local_238 = (undefined8 *)0x0;
+      uStack_230 = 0;
+      uStack_220 = _UNK_00008108;
+      local_228 = _DAT_00008100;
+      local_218 = 0;
+      local_210 = 0;
+      uStack_204 = 1;
+      iStack_20c = iVar4;
+      local_208 = iVar5;
+      _vkCmdCopyBufferToImage
+                (*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0xd8),*(undefined8 *)pMVar16,7,1,
+                 &local_238);
+      _vkCmdCopyBufferToImage
+                (*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0xf0),*(undefined8 *)pMVar17,7,1,
+                 &local_238);
+      uStack_138 = 0;
+      uStack_148 = 0;
+      uStack_1d8 = 0;
+      local_1e0 = (code *)0x2d;
+      uStack_1c0 = 0xffffffff;
+      uStack_1bc = 0xffffffff;
+      uStack_1b8 = *(undefined8 *)pMVar16;
+      local_1b0 = (Mat *)0x1;
+      uStack_1a8 = 1;
+      local_1a0 = 1;
+      uStack_1c8 = (undefined4)s_GL_GOOGLE_cpp_style_line_directi_000081ec._28_8_;
+      uStack_1c4 = SUB84(s_GL_GOOGLE_cpp_style_line_directi_000081ec._28_8_,4);
+      local_1d0 = (double)s_GL_GOOGLE_cpp_style_line_directi_000081ec._20_8_;
+      uStack_178 = 0xffffffffffffffff;
+      local_180._0_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1c];
+      local_180._1_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1d];
+      local_180._2_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1e];
+      local_180._3_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1f];
+      local_180._4_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x20];
+      local_180._5_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x21];
+      local_180._6_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x22];
+      local_180._7_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x23];
+      uStack_188._0_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x14];
+      uStack_188._1_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x15];
+      uStack_188._2_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x16];
+      uStack_188._3_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x17];
+      uStack_188._4_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x18];
+      uStack_188._5_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x19];
+      uStack_188._6_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1a];
+      uStack_188._7_1_ = s_GL_GOOGLE_cpp_style_line_directi_000081ec[0x1b];
+      local_160 = 1;
+      uStack_168 = 1;
+      uStack_190 = 0;
+      uStack_198 = 0x2d;
+      local_170 = *(undefined8 *)pMVar17;
+      uStack_158 = 1;
+      uStack_134 = SUB84(l008,0);
+      uStack_130 = (undefined4)((ulong)l008 >> 0x20);
+      uStack_12c = 0xffffffff;
+      uStack_128 = *(undefined8 *)(param_1 + 0xa8);
+      local_120 = 1;
+      uStack_118 = 1;
+      local_110 = 1;
+      local_150 = 0x2d;
+      local_140 = 0x4000000000;
+      uStack_e8 = CONCAT44(0xffffffff,uStack_130);
+      uStack_d0 = 1;
+      uStack_d8 = 1;
+      lStack_f0 = (long)l008 << 0x20;
+      local_100 = 0;
+      uStack_108 = 0x2d;
+      uStack_f8 = 0x4000000000;
+      local_e0 = *(undefined8 *)(param_1 + 0xc0);
+      local_c8 = 1;
+      _vkCmdPipelineBarrier(*(undefined8 *)pMVar2,0x1000,0x800,0,0,0,0,0,4,&local_1e0);
+      _vkCmdFillBuffer(*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0x120),0,4,0);
+      uStack_1d8 = _UNK_000039d0;
+      local_1e0 = (code *)
+                  _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_mem_barrier_9
+      ;
+      local_1d0 = l009;
+      uVar18 = 
+      _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_mem_barrier_9
+      ;
+      uVar19 = _UNK_000039d0;
+      _vkCmdPipelineBarrier
+                (*(undefined8 *)pMVar2,0x1000,0x800,0,1,&local_1e0,0,0,0,0,
+                 _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_mem_barrier_9
+                 ,_UNK_000039d0);
+      local_1e0 = (code *)CONCAT44(iVar4,param_12);
+      local_1d0 = 0.0;
+      uStack_1d8 = CONCAT44(param_16,iVar5);
+      _vkCmdBindPipeline(*(undefined8 *)pMVar2,1,*(undefined8 *)(param_1 + 0x18));
+      _vkCmdBindDescriptorSets
+                (*(undefined8 *)pMVar2,1,*(undefined8 *)(param_1 + 0x30),0,1,param_1 + 0x60,0,0);
+      _vkCmdPushConstants(*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0x30),0x20,0,0x18,
+                          &local_1e0);
+      iVar3 = iVar4 + 0x1e;
+      if (-0x10 < iVar4) {
+        iVar3 = iVar4 + 0xf;
+      }
+      iVar4 = iVar5 + 0x1e;
+      if (-0x10 < iVar5) {
+        iVar4 = iVar5 + 0xf;
+      }
+      _vkCmdDispatch(*(undefined8 *)pMVar2,iVar3 >> 4,iVar4 >> 4,1);
+      uStack_1d8 = 0;
+      uStack_1c8 = (undefined4)_UNK_00008308;
+      uStack_1c4 = (undefined4)((ulong)_UNK_00008308 >> 0x20);
+      local_1d0 = (double)_DAT_00008300;
+      local_1e0 = (code *)0x2d;
+      uStack_1c0 = 0xffffffff;
+      uStack_1bc = 0xffffffff;
+      uStack_1b8 = *(undefined8 *)(param_1 + 0xa8);
+      local_1b0 = (Mat *)0x1;
+      uStack_1a8 = 1;
+      local_1a0 = 1;
+      local_180 = _UNK_00008308;
+      uStack_190 = 0;
+      uStack_198 = 0x2d;
+      uStack_178 = 0xffffffffffffffff;
+      local_160 = 1;
+      uStack_168 = 1;
+      uStack_188 = _DAT_00008300;
+      local_170 = *(undefined8 *)(param_1 + 0xc0);
+      uStack_158 = 1;
+      _vkCmdPipelineBarrier(*(undefined8 *)pMVar2,0x800,0x800,0,0,0,0,0,2,&local_1e0);
+      _vkCmdBindPipeline(*(undefined8 *)pMVar2,1,*(undefined8 *)(param_1 + 0x20));
+      _vkCmdBindDescriptorSets
+                (*(undefined8 *)pMVar2,1,*(undefined8 *)(param_1 + 0x38),0,1,param_1 + 0x68,0,0);
+      iVar9 = iVar9 * iVar8;
+      iVar4 = iVar9 + 0x7e;
+      if (-0x40 < iVar9) {
+        iVar4 = iVar9 + 0x3f;
+      }
+      _vkCmdDispatch(*(undefined8 *)pMVar2,iVar4 >> 6,1,1);
+      local_1d0 = l010;
+      local_1e0 = (code *)uVar18;
+      uStack_1d8 = uVar19;
+      _vkCmdPipelineBarrier(*(undefined8 *)pMVar2,0x800,0x1000,0,1,&local_1e0,0,0,0,0);
+      local_240 = (long)(int)uVar6 * 0x30;
+      local_250 = 0;
+      uStack_248 = 0;
+      _vkCmdCopyBuffer(*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0x108),
+                       *(undefined8 *)(param_1 + 0x138),1,&local_250);
+      local_268 = 0;
+      uStack_260 = 0;
+      local_258 = 4;
+      _vkCmdCopyBuffer(*(undefined8 *)pMVar2,*(undefined8 *)(param_1 + 0x120),
+                       *(undefined8 *)(param_1 + 0x150),1,&local_268);
+      _vkEndCommandBuffer(*(undefined8 *)pMVar2);
+      uStack_1c0 = 0;
+      uStack_1bc = 0;
+      uStack_1a8 = 0;
+      uStack_1d8 = 0;
+      uStack_1c8 = 0;
+      uStack_1c4 = 0;
+      local_1d0 = 0.0;
+      local_1e0 = (code *)0x4;
+      uStack_1b8 = 1;
+      local_1a0 = 0;
+      local_1b0 = pMVar2;
+      std::mutex::lock();
+      _vkQueueSubmit(*(undefined8 *)(*(long *)param_1 + 0x20),1,&local_1e0,*(undefined8 *)pMVar1);
+      std::mutex::unlock();
+      _vkWaitForFences(uVar12,1,pMVar1,1,0xffffffffffffffff);
+      _vkMapMemory(uVar12,*(undefined8 *)(param_1 + 0x158),0,4,0,&local_270);
+      uVar7 = *local_270;
+      _vkUnmapMemory(uVar12,*(undefined8 *)(param_1 + 0x158));
+      if (uVar7 <= uVar6) {
+        uVar6 = uVar7;
+      }
+      uVar15 = (ulong)uVar6;
+      if (uVar6 != 0) {
+        lVar14 = *(long *)(param_19 + 8) - *(long *)param_19 >> 4;
+        bVar11 = uVar15 < (ulong)(lVar14 * -0x5555555555555555);
+        uVar10 = uVar15 + lVar14 * 0x5555555555555555;
+        if (bVar11 || uVar10 == 0) {
+          if (bVar11) {
+            *(ulong *)(param_19 + 8) = *(long *)param_19 + (ulong)uVar6 * 0x30;
+          }
+        }
+        else {
+          std::
+          vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>
+          ::__append((vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>
+                      *)param_19,uVar10);
+        }
+        _vkMapMemory(uVar12,*(undefined8 *)(param_1 + 0x140),0,uVar15 * 0x30,0,&local_270);
+        _memcpy(*(void **)param_19,local_270,uVar15 * 0x30);
+        _vkUnmapMemory(uVar12,*(undefined8 *)(param_1 + 0x140));
+      }
+      uVar12 = 1;
+      if (*____stack_chk_guard == local_b8) {
+        return;
+      }
+      goto LAB_00002320;
+    }
+  }
+  if (*____stack_chk_guard == local_b8) {
+    return;
+  }
+LAB_00002320:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(uVar12);
+}
+
+
+
+
+// ========================================
+// Function: __append
+// Entry: 0000233c
+// Signature: undefined __thiscall __append(vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>> * this, ulong param_1)
+// ========================================
+
+
+/* std::vector<m3t::EdgeComputePipeline::GpuSite, std::allocator<m3t::EdgeComputePipeline::GpuSite>
+   >::__append(unsigned long) */
+
+void __thiscall
+std::vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>::
+__append(vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>
+         *this,ulong param_1)
+
+{
+  ulong uVar1;
+  undefined8 *puVar2;
+  void *pvVar3;
+  long lVar4;
+  void *pvVar5;
+  long lVar6;
+  ulong uVar7;
+  size_t sVar8;
+  void *pvVar9;
+  void *pvVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  
+  pvVar5 = *(void **)(this + 8);
+  if ((ulong)((*(long *)(this + 0x10) - (long)pvVar5 >> 4) * -0x5555555555555555) < param_1) {
+    pvVar10 = *(void **)this;
+    lVar6 = (long)pvVar5 - (long)pvVar10 >> 4;
+    uVar1 = lVar6 * -0x5555555555555555 + param_1;
+    if (0x555555555555555 < uVar1) {
+      __throw_length_error_abi_ne180100_();
+LAB_000024d4:
+                    /* WARNING: Subroutine does not return */
+      __throw_bad_array_new_length_abi_ne180100_();
+    }
+    lVar4 = *(long *)(this + 0x10) - (long)pvVar10 >> 4;
+    uVar7 = lVar4 * 0x5555555555555556;
+    if (uVar7 < uVar1 || uVar7 - uVar1 == 0) {
+      uVar7 = uVar1;
+    }
+    if (0x2aaaaaaaaaaaaa9 < (ulong)(lVar4 * -0x5555555555555555)) {
+      uVar7 = 0x555555555555555;
+    }
+    if (uVar7 == 0) {
+      pvVar3 = (void *)0x0;
+    }
+    else {
+      if (0x555555555555555 < uVar7) goto LAB_000024d4;
+      pvVar3 = operator_new(uVar7 * 0x30);
+    }
+    pvVar9 = (void *)((long)pvVar3 + lVar6 * 0x10);
+    sVar8 = ((param_1 * 0x30 - 0x30) / 0x30) * 0x30 + 0x30;
+    _bzero(pvVar9,sVar8);
+    lVar6 = (long)pvVar9 + sVar8;
+    if (pvVar5 != pvVar10) {
+      do {
+        uVar12 = *(undefined8 *)((long)pvVar5 + -0x28);
+        uVar11 = *(undefined8 *)((long)pvVar5 + -0x30);
+        puVar2 = (undefined8 *)((long)pvVar5 + -0x18);
+        uVar13 = *(undefined8 *)((long)pvVar5 + -0x20);
+        uVar15 = *(undefined8 *)((long)pvVar5 + -8);
+        uVar14 = *(undefined8 *)((long)pvVar5 + -0x10);
+        pvVar5 = (void *)((long)pvVar5 + -0x30);
+        *(undefined8 *)((long)pvVar9 + -0x18) = *puVar2;
+        *(undefined8 *)((long)pvVar9 + -0x20) = uVar13;
+        *(undefined8 *)((long)pvVar9 + -8) = uVar15;
+        *(undefined8 *)((long)pvVar9 + -0x10) = uVar14;
+        *(undefined8 *)((long)pvVar9 + -0x28) = uVar12;
+        *(undefined8 *)((long)pvVar9 + -0x30) = uVar11;
+        pvVar9 = (void *)((long)pvVar9 + -0x30);
+      } while (pvVar5 != pvVar10);
+      pvVar5 = *(void **)this;
+    }
+    *(void **)this = pvVar9;
+    *(long *)(this + 8) = lVar6;
+    *(void **)(this + 0x10) = (void *)((long)pvVar3 + uVar7 * 0x30);
+    if (pvVar5 != (void *)0x0) {
+      operator_delete(pvVar5);
+      return;
+    }
+  }
+  else {
+    if (param_1 != 0) {
+      sVar8 = ((param_1 * 0x30 - 0x30) / 0x30) * 0x30 + 0x30;
+      _bzero(pvVar5,sVar8);
+      pvVar5 = (void *)((long)pvVar5 + sVar8);
+    }
+    *(void **)(this + 8) = pvVar5;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000024d8
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<m3t::EdgeComputePipeline::GpuSite, std::allocator<m3t::EdgeComputePipeline::GpuSite>
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>::
+     __throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: DetectAndCreateSitesDirect
+// Entry: 000024ec
+// Signature: undefined __cdecl DetectAndCreateSitesDirect(VkImage_T * param_1, VkImageView_T * param_2, VkImage_T * param_3, VkImageView_T * param_4, int param_5, int param_6, Matrix * param_7, float param_8, float param_9, float param_10, float param_11, float param_12, float param_13, float param_14, uchar param_15, float param_16, int param_17, int param_18, int param_19, int param_20, int param_21, int param_22, float param_23, float param_24, float param_25, vector * param_26)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::DetectAndCreateSitesDirect(VkImage_T*, VkImageView_T*, VkImage_T*,
+   VkImageView_T*, int, int, Eigen::Matrix<float, 4, 4, 0, 4, 4> const&, float, float, float, float,
+   float, float, float, unsigned char, float, int, int, int, int, int, int, float, float, float,
+   std::vector<m3t::EdgeComputePipeline::GpuSite, std::allocator<m3t::EdgeComputePipeline::GpuSite>
+   >&) */
+
+void m3t::EdgeComputePipeline::DetectAndCreateSitesDirect
+               (VkImage_T *param_1,VkImageView_T *param_2,VkImage_T *param_3,VkImageView_T *param_4,
+               int param_5,int param_6,Matrix *param_7,float param_8,float param_9,float param_10,
+               float param_11,float param_12,float param_13,float param_14,uchar param_15,
+               float param_16,int param_17,int param_18,int param_19,int param_20,int param_21,
+               int param_22,float param_23,float param_24,float param_25,vector *param_26)
+
+{
+  VkImage_T *pVVar1;
+  VkImage_T *pVVar2;
+  VkImage_T *pVVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  ulong uVar10;
+  vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>> *this;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  bool bVar13;
+  undefined8 uVar14;
+  int iVar15;
+  undefined8 *puVar16;
+  long lVar17;
+  ulong uVar18;
+  int in_stack_00000004;
+  undefined4 in_stack_0000000c;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  float in_stack_00000024;
+  undefined4 in_stack_0000002c;
+  uint *local_260;
+  undefined8 local_258;
+  undefined8 uStack_250;
+  undefined8 local_248;
+  undefined8 *local_240;
+  VkImage_T *pVStack_238;
+  undefined8 local_230;
+  undefined8 uStack_228;
+  undefined8 *local_218;
+  ulong local_210;
+  long local_208;
+  undefined8 local_200;
+  undefined8 uStack_1f8;
+  undefined8 local_1f0;
+  undefined4 uStack_1e8;
+  undefined4 uStack_1e4;
+  undefined4 uStack_1e0;
+  undefined4 uStack_1dc;
+  VkImageView_T *pVStack_1d8;
+  VkImage_T *local_1d0;
+  undefined8 uStack_1c8;
+  undefined8 local_1c0;
+  undefined8 uStack_1b8;
+  undefined8 local_1b0;
+  undefined8 uStack_1a8;
+  long local_1a0;
+  undefined8 **ppuStack_198;
+  VkImageView_T *local_190;
+  undefined8 uStack_188;
+  undefined8 local_180;
+  undefined8 uStack_178;
+  undefined8 local_170;
+  undefined8 local_168;
+  undefined8 local_160;
+  undefined8 **ppuStack_158;
+  undefined8 uStack_150;
+  undefined8 uStack_148;
+  undefined8 local_140;
+  undefined8 uStack_138;
+  undefined8 local_130;
+  undefined8 uStack_128;
+  undefined8 local_120;
+  undefined8 **ppuStack_118;
+  undefined8 uStack_110;
+  undefined8 uStack_108;
+  undefined8 local_100;
+  undefined8 uStack_f8;
+  undefined8 local_f0;
+  undefined8 local_e8;
+  undefined8 local_e0;
+  undefined8 **ppuStack_d8;
+  undefined8 uStack_d0;
+  undefined8 uStack_c8;
+  long local_b8;
+  
+  puVar16 = (undefined8 *)(ulong)param_15;
+  this = (vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>
+          *)CONCAT44(in_stack_0000002c,param_22);
+  local_b8 = *____stack_chk_guard;
+  *(undefined8 *)(this + 8) = *(undefined8 *)this;
+  if (param_1[8] == (VkImage_T)0x0) {
+    uVar14 = 0;
+  }
+  else {
+    uVar14 = 0;
+    if (((param_6 != 0) && (iVar15 = (int)param_7, iVar15 != 0)) &&
+       (uVar14 = EnsureResources((EdgeComputePipeline *)param_1,param_6,iVar15), (int)uVar14 != 0))
+    {
+      uVar14 = *(undefined8 *)(*(long *)param_1 + 0x18);
+      uVar6 = *(uint *)(param_1 + 0x14);
+      local_240 = *(undefined8 **)(param_1 + 0x180);
+      local_230 = 5;
+      local_208 = 5;
+      uStack_c8 = 0;
+      uStack_d0 = 0;
+      uStack_f8 = 0;
+      uStack_108 = 0;
+      uStack_110 = 0;
+      uStack_138 = 0;
+      uStack_128 = 0;
+      uStack_148 = 0;
+      uStack_150 = 0;
+      uStack_178 = 0;
+      uStack_188 = 0;
+      local_190 = (VkImageView_T *)0x0;
+      uStack_1b8 = 0;
+      uStack_1a8 = 0;
+      uStack_1c8 = 0;
+      local_1d0 = (VkImage_T *)0x0;
+      uStack_1f8 = 0;
+      uStack_1e8 = 0;
+      uStack_1e4 = 0;
+      local_200 = 0x23;
+      local_130 = *(undefined8 *)(param_1 + 0x70);
+      local_1f0 = *(double *)(param_1 + 0x60);
+      uStack_1e0 = 1;
+      uStack_1dc = 1;
+      pVStack_1d8 = (VkImageView_T *)&local_240;
+      local_1c0 = 0x23;
+      local_1b0 = *(undefined8 *)(param_1 + 0x68);
+      local_1a0 = 0x100000001;
+      local_180 = 0x23;
+      local_168 = 1;
+      local_160 = 0x100000001;
+      ppuStack_158 = &local_218;
+      local_140 = 0x23;
+      local_120 = 0x100000001;
+      local_100 = 0x23;
+      local_e8 = 1;
+      local_e0 = 0x100000001;
+      pVStack_238 = param_3;
+      local_218 = local_240;
+      local_210 = (ulong)(uint)param_5;
+      ppuStack_198 = (undefined8 **)pVStack_1d8;
+      local_170 = local_1b0;
+      ppuStack_118 = (undefined8 **)pVStack_1d8;
+      local_f0 = local_130;
+      ppuStack_d8 = ppuStack_158;
+      _vkUpdateDescriptorSets(uVar14,5,&local_200,0,0);
+      if (in_stack_00000004 < 3) {
+        in_stack_00000004 = 2;
+      }
+      uStack_1f8 = puVar16[1];
+      local_200 = *puVar16;
+      local_1f0 = (double)puVar16[2];
+      uStack_1e8 = (undefined4)puVar16[3];
+      uStack_1e4 = (undefined4)((ulong)puVar16[3] >> 0x20);
+      pVStack_1d8 = (VkImageView_T *)puVar16[5];
+      uStack_1c8 = puVar16[7];
+      local_1d0 = (VkImage_T *)puVar16[6];
+      uStack_1e0 = (undefined4)puVar16[4];
+      uStack_1dc = (undefined4)((ulong)puVar16[4] >> 0x20);
+      if (param_18 <= (int)uVar6) {
+        uVar6 = param_18;
+      }
+      _vkMapMemory(uVar14,*(undefined8 *)(param_1 + 0x170),0,*(undefined8 *)(param_1 + 0x178),0,
+                   &local_240);
+      iVar8 = 0;
+      if (in_stack_00000004 != 0) {
+        iVar8 = (param_6 + in_stack_00000004 + -1) / in_stack_00000004;
+      }
+      local_240[1] = uStack_1f8;
+      *local_240 = local_200;
+      local_240[3] = CONCAT44(uStack_1e4,uStack_1e8);
+      local_240[2] = local_1f0;
+      local_240[5] = pVStack_1d8;
+      local_240[4] = CONCAT44(uStack_1dc,uStack_1e0);
+      local_240[7] = uStack_1c8;
+      local_240[6] = local_1d0;
+      *(float *)(local_240 + 8) = param_8;
+      *(float *)((long)local_240 + 0x44) = param_9;
+      *(float *)(local_240 + 9) = param_10;
+      *(float *)((long)local_240 + 0x4c) = param_11;
+      *(float *)(local_240 + 10) = param_12;
+      *(float *)((long)local_240 + 0x54) = param_13;
+      *(float *)(local_240 + 0xb) = param_14;
+      *(uint *)((long)local_240 + 0x5c) = param_17 & 0xff;
+      *(int *)(local_240 + 0xc) = in_stack_00000004;
+      iVar9 = 0;
+      if (in_stack_00000004 != 0) {
+        iVar9 = (iVar15 + in_stack_00000004 + -1) / in_stack_00000004;
+      }
+      *(int *)((long)local_240 + 100) = iVar8;
+      *(int *)(local_240 + 0xd) = iVar9;
+      *(uint *)((long)local_240 + 0x6c) = uVar6;
+      *(int *)(local_240 + 0xe) = param_6;
+      *(int *)((long)local_240 + 0x74) = iVar15;
+      *(int *)(local_240 + 0xf) = param_19;
+      *(undefined4 *)((long)local_240 + 0x7c) = in_stack_00000014;
+      *(int *)(local_240 + 0x10) = param_20;
+      *(undefined4 *)((long)local_240 + 0x84) = in_stack_0000001c;
+      *(int *)(local_240 + 0x11) = param_21;
+      *(undefined4 *)((long)local_240 + 0x8c) = 0;
+      _vkUnmapMemory(uVar14,*(undefined8 *)(param_1 + 0x170));
+      pVVar1 = param_1 + 400;
+      _vkWaitForFences(uVar14,1,pVVar1,1,0xffffffffffffffff);
+      _vkResetFences(uVar14,1,pVVar1);
+      _vkResetCommandBuffer(*(undefined8 *)(param_1 + 0x188),0);
+      pVVar2 = param_1 + 0x188;
+      pVStack_238 = (VkImage_T *)_UNK_000039b0;
+      local_240 = 
+      _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_begin_info
+      ;
+      uStack_228 = _UNK_000039c0;
+      local_230 = CONCAT44((int)((ulong)_DAT_000039b8 >> 0x20),1);
+      _vkBeginCommandBuffer(*(undefined8 *)pVVar2,&local_240);
+      uStack_1f8 = 0;
+      uStack_1e8 = (undefined4)ram0x00008408;
+      uStack_1e4 = (undefined4)((ulong)ram0x00008408 >> 0x20);
+      local_1f0 = (double)_DAT_00008400;
+      local_1b0 = 0;
+      local_200 = 0x2d;
+      uStack_1e0 = 0xffffffff;
+      uStack_1dc = 0xffffffff;
+      local_1d0 = (VkImage_T *)0x2;
+      uStack_1c8 = 1;
+      local_1c0 = 1;
+      uStack_1b8 = 0x2d;
+      ppuStack_198 = (undefined8 **)0xffffffffffffffff;
+      uStack_188 = 1;
+      local_180 = 1;
+      uStack_178 = 1;
+      local_1a0 = _UNK_00008508;
+      uStack_1a8 = _DAT_00008500;
+      pVStack_1d8 = param_2;
+      local_190 = param_4;
+      _vkCmdPipelineBarrier(*(undefined8 *)pVVar2,0x600,0x800,0,0,0,0,0,2,&local_200);
+      uStack_1f8 = 0;
+      uStack_1e8 = 0;
+      uStack_1e4 = SUB84(l008,0);
+      uStack_1e0 = (undefined4)((ulong)l008 >> 0x20);
+      pVStack_1d8 = *(VkImageView_T **)(param_1 + 0xa8);
+      uStack_1dc = 0xffffffff;
+      local_1d0 = (VkImage_T *)0x1;
+      uStack_1c8 = 1;
+      local_1c0 = 1;
+      local_200 = 0x2d;
+      local_1f0 = 1.35807730621777e-312;
+      local_1a0 = (long)l008 << 0x20;
+      local_1b0 = 0;
+      uStack_1b8 = 0x2d;
+      ppuStack_198 = (undefined8 **)CONCAT44(0xffffffff,uStack_1e0);
+      local_180 = 1;
+      uStack_188 = 1;
+      uStack_1a8 = 0x4000000000;
+      local_190 = *(VkImageView_T **)(param_1 + 0xc0);
+      uStack_178 = 1;
+      _vkCmdPipelineBarrier(*(undefined8 *)pVVar2,1,0x800,0,0,0,0,0,2,&local_200);
+      _vkCmdFillBuffer(*(undefined8 *)pVVar2,*(undefined8 *)(param_1 + 0x120),0,4,0);
+      uVar12 = _UNK_000039d0;
+      uVar11 = 
+      _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_mem_barrier_9
+      ;
+      uStack_1f8 = _UNK_000039d0;
+      local_200 = 
+      _l___const__ZN3m3t19EdgeComputePipeline26DetectAndCreateSitesDirectEP9VkImage_TP13VkImageView_TS2_S4_iiRKN5Eigen6MatrixIfLi4ELi4ELi0ELi4ELi4EEEfffffffhfiiiiiifffRNSt3__16vectorINS0_7GpuSiteENSA_9allocatorISC_EEEE_mem_barrier_9
+      ;
+      local_1f0 = l009;
+      _vkCmdPipelineBarrier(*(undefined8 *)pVVar2,0x1000,0x800,0,1,&local_200,0,0,0,0);
+      local_200 = CONCAT44(param_6,param_16);
+      uStack_1f8 = CONCAT44(in_stack_0000000c,iVar15);
+      local_1f0 = (double)CONCAT44(param_21,in_stack_0000001c);
+      _vkCmdBindPipeline(*(undefined8 *)pVVar2,1,*(undefined8 *)(param_1 + 0x18));
+      _vkCmdBindDescriptorSets
+                (*(undefined8 *)pVVar2,1,*(undefined8 *)(param_1 + 0x30),0,1,param_1 + 0x60,0,0);
+      _vkCmdPushConstants(*(undefined8 *)pVVar2,*(undefined8 *)(param_1 + 0x30),0x20,0,0x18,
+                          &local_200);
+      iVar4 = param_6 + 0x1e;
+      if (-0x10 < param_6) {
+        iVar4 = param_6 + 0xf;
+      }
+      iVar5 = iVar15 + 0x1e;
+      if (-0x10 < iVar15) {
+        iVar5 = iVar15 + 0xf;
+      }
+      _vkCmdDispatch(*(undefined8 *)pVVar2,iVar4 >> 4,iVar5 >> 4,1);
+      uStack_1f8 = 0;
+      uStack_1e8 = (undefined4)_UNK_00008308;
+      uStack_1e4 = (undefined4)((ulong)_UNK_00008308 >> 0x20);
+      local_1f0 = (double)_DAT_00008300;
+      local_200 = 0x2d;
+      uStack_1e0 = 0xffffffff;
+      uStack_1dc = 0xffffffff;
+      pVStack_1d8 = *(VkImageView_T **)(param_1 + 0xa8);
+      local_1d0 = (VkImage_T *)0x1;
+      uStack_1c8 = 1;
+      local_1c0 = 1;
+      local_1a0 = _UNK_00008308;
+      local_1b0 = 0;
+      uStack_1b8 = 0x2d;
+      ppuStack_198 = (undefined8 **)0xffffffffffffffff;
+      local_180 = 1;
+      uStack_188 = 1;
+      uStack_1a8 = _DAT_00008300;
+      local_190 = *(VkImageView_T **)(param_1 + 0xc0);
+      uStack_178 = 1;
+      _vkCmdPipelineBarrier(*(undefined8 *)pVVar2,0x800,0x800,0,0,0,0,0,2,&local_200);
+      _vkCmdBindPipeline(*(undefined8 *)pVVar2,1,*(undefined8 *)(param_1 + 0x20));
+      _vkCmdBindDescriptorSets
+                (*(undefined8 *)pVVar2,1,*(undefined8 *)(param_1 + 0x38),0,1,param_1 + 0x68,0,0);
+      iVar9 = iVar9 * iVar8;
+      iVar15 = iVar9 + 0x7e;
+      if (-0x40 < iVar9) {
+        iVar15 = iVar9 + 0x3f;
+      }
+      _vkCmdDispatch(*(undefined8 *)pVVar2,iVar15 >> 6,1,1);
+      if (in_stack_00000024 < 1.0) {
+        uStack_1f8 = uVar12;
+        local_200 = uVar11;
+        local_1f0 = l011;
+        _vkCmdPipelineBarrier(*(undefined8 *)(param_1 + 0x188),0x800,0x800,0,1,&local_200,0,0,0,0);
+        pVVar3 = param_1 + 0x188;
+        local_200 = CONCAT44(local_200._4_4_,in_stack_00000024);
+        _vkCmdBindPipeline(*(undefined8 *)pVVar3,1,*(undefined8 *)(param_1 + 0x28));
+        _vkCmdBindDescriptorSets
+                  (*(undefined8 *)pVVar3,1,*(undefined8 *)(param_1 + 0x40),0,1,param_1 + 0x70,0,0);
+        _vkCmdPushConstants(*(undefined8 *)pVVar3,*(undefined8 *)(param_1 + 0x40),0x20,0,4,
+                            &local_200);
+        _vkCmdDispatch(*(undefined8 *)pVVar3,iVar15 >> 6,1,1);
+      }
+      uStack_1f8 = uVar12;
+      local_200 = uVar11;
+      local_1f0 = l010;
+      _vkCmdPipelineBarrier(*(undefined8 *)(param_1 + 0x188),0x800,0x1000,0,1,&local_200,0,0,0,0);
+      pVVar3 = param_1 + 0x188;
+      local_218 = (undefined8 *)0x0;
+      local_210 = 0;
+      local_208 = (long)(int)uVar6 * 0x30;
+      _vkCmdCopyBuffer(*(undefined8 *)pVVar3,*(undefined8 *)(param_1 + 0x108),
+                       *(undefined8 *)(param_1 + 0x138),1,&local_218);
+      local_258 = 0;
+      uStack_250 = 0;
+      local_248 = 4;
+      _vkCmdCopyBuffer(*(undefined8 *)pVVar3,*(undefined8 *)(param_1 + 0x120),
+                       *(undefined8 *)(param_1 + 0x150),1,&local_258);
+      uStack_1f8 = 0;
+      uStack_1e8 = (undefined4)_UNK_00008608;
+      uStack_1e4 = (undefined4)((ulong)_UNK_00008608 >> 0x20);
+      local_1f0._0_1_ = s_cell_idx_000085fc[4];
+      local_1f0._1_1_ = s_cell_idx_000085fc[5];
+      local_1f0._2_1_ = s_cell_idx_000085fc[6];
+      local_1f0._3_1_ = s_cell_idx_000085fc[7];
+      local_1f0._4_1_ = s_cell_idx_000085fc[8];
+      local_1f0._5_1_ = s_cell_idx_000085fc[9];
+      local_1f0._6_1_ = s_cell_idx_000085fc[10];
+      local_1f0._7_1_ = s_cell_idx_000085fc[0xb];
+      local_1b0 = 0;
+      local_200 = 0x2d;
+      uStack_1e0 = 0xffffffff;
+      uStack_1dc = 0xffffffff;
+      local_1d0 = (VkImage_T *)0x2;
+      uStack_1c8 = 1;
+      local_1c0 = 1;
+      uStack_1b8 = 0x2d;
+      ppuStack_198 = (undefined8 **)0xffffffffffffffff;
+      uStack_188 = 1;
+      local_180 = 1;
+      uStack_178 = 1;
+      local_1a0 = _UNK_00008708;
+      uStack_1a8 = _DAT_00008700;
+      pVStack_1d8 = param_2;
+      local_190 = param_4;
+      _vkCmdPipelineBarrier(*(undefined8 *)pVVar3,0x800,0x500,0,0,0,0,0,2,&local_200);
+      _vkEndCommandBuffer(*(undefined8 *)pVVar3);
+      uStack_1e0 = 0;
+      uStack_1dc = 0;
+      uStack_1c8 = 0;
+      uStack_1f8 = 0;
+      uStack_1e8 = 0;
+      uStack_1e4 = 0;
+      local_1f0 = 0.0;
+      local_200 = 4;
+      pVStack_1d8 = (VkImageView_T *)0x1;
+      local_1c0 = 0;
+      local_1d0 = pVVar2;
+      std::mutex::lock();
+      _vkQueueSubmit(*(undefined8 *)(*(long *)param_1 + 0x20),1,&local_200,
+                     *(undefined8 *)(param_1 + 400));
+      std::mutex::unlock();
+      _vkWaitForFences(uVar14,1,pVVar1,1,0xffffffffffffffff);
+      _vkMapMemory(uVar14,*(undefined8 *)(param_1 + 0x158),0,4,0,&local_260);
+      uVar7 = *local_260;
+      _vkUnmapMemory(uVar14,*(undefined8 *)(param_1 + 0x158));
+      if (uVar7 <= uVar6) {
+        uVar6 = uVar7;
+      }
+      uVar18 = (ulong)uVar6;
+      if (uVar6 != 0) {
+        lVar17 = *(long *)(this + 8) - *(long *)this >> 4;
+        bVar13 = uVar18 < (ulong)(lVar17 * -0x5555555555555555);
+        uVar10 = uVar18 + lVar17 * 0x5555555555555555;
+        if (bVar13 || uVar10 == 0) {
+          if (bVar13) {
+            *(ulong *)(this + 8) = *(long *)this + (ulong)uVar6 * 0x30;
+          }
+        }
+        else {
+          std::
+          vector<m3t::EdgeComputePipeline::GpuSite,std::allocator<m3t::EdgeComputePipeline::GpuSite>>
+          ::__append(this,uVar10);
+        }
+        _vkMapMemory(uVar14,*(undefined8 *)(param_1 + 0x140),0,uVar18 * 0x30,0,&local_260);
+        _memcpy(*(void **)this,local_260,uVar18 * 0x30);
+        _vkUnmapMemory(uVar14,*(undefined8 *)(param_1 + 0x140));
+        UpdateDescriptorSets((EdgeComputePipeline *)param_1);
+      }
+      uVar14 = 1;
+      if (*____stack_chk_guard == local_b8) {
+        return;
+      }
+      goto LAB_00002ed8;
+    }
+  }
+  if (*____stack_chk_guard == local_b8) {
+    return;
+  }
+LAB_00002ed8:
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail(uVar14);
+}
+
+
+
+
+// ========================================
+// Function: CreateImage
+// Entry: 00002ef4
+// Signature: undefined __thiscall CreateImage(EdgeComputePipeline * this, int param_1, int param_2, VkFormat param_3, uint param_4, uint param_5, ImageResource * param_6)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::CreateImage(int, int, VkFormat, unsigned int, unsigned int,
+   m3t::EdgeComputePipeline::ImageResource&) */
+
+bool __thiscall
+m3t::EdgeComputePipeline::CreateImage
+          (EdgeComputePipeline *this,undefined4 param_1,undefined4 param_2,undefined4 param_4,
+          uint param_5,uint param_6,undefined8 *param_7)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  undefined8 local_140;
+  undefined8 uStack_138;
+  undefined8 uStack_130;
+  undefined8 local_128;
+  undefined4 local_120;
+  undefined4 uStack_11c;
+  undefined8 uStack_118;
+  undefined8 uStack_110;
+  ulong local_108;
+  undefined8 local_100;
+  undefined8 uStack_f8;
+  undefined8 local_f0;
+  undefined8 uStack_e8;
+  undefined8 local_e0;
+  undefined8 local_d8;
+  undefined8 local_c8 [2];
+  uint local_b8;
+  undefined8 local_b0;
+  undefined8 uStack_a8;
+  undefined8 uStack_a0;
+  undefined4 uStack_98;
+  undefined4 local_94;
+  undefined4 local_90;
+  undefined4 uStack_8c;
+  undefined4 uStack_88;
+  undefined4 uStack_84;
+  undefined4 uStack_80;
+  undefined4 uStack_7c;
+  ulong local_78;
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  
+  uVar3 = *(undefined8 *)(*(long *)this + 0x18);
+  uStack_a8 = 0;
+  uStack_7c = 0;
+  local_60 = 0;
+  uStack_68 = 0;
+  local_70 = 0;
+  local_b0 = 0xe;
+  uStack_a0 = 0x100000000;
+  _uStack_98 = CONCAT44(param_1,param_4);
+  uStack_84 = 1;
+  uStack_80 = 1;
+  uStack_8c = 1;
+  uStack_88 = 1;
+  local_78 = (ulong)param_5;
+  local_90 = param_2;
+  iVar1 = _vkCreateImage(uVar3,&local_b0,0,param_7);
+  if (iVar1 == 0) {
+    _vkGetImageMemoryRequirements(uVar3,*param_7,local_c8);
+    uStack_e8 = _UNK_00012680;
+    local_f0 = _l___const__ZN3m3t19EdgeComputePipeline12CreateBufferEyjjRNS0_14BufferResourceE_alloc
+    ;
+    local_d8 = _UNK_00012690;
+    local_e0 = local_c8[0];
+    uVar2 = m3t::VulkanContext::FindMemoryType((uint)*(undefined8 *)this,local_b8);
+    local_d8 = CONCAT44(local_d8._4_4_,uVar2);
+    iVar1 = _vkAllocateMemory(uVar3,&local_f0,0,param_7 + 1);
+    if (iVar1 == 0) {
+      _vkBindImageMemory(uVar3,*param_7,param_7[1],0);
+      uStack_138 = 0;
+      uStack_130 = 0;
+      uStack_118 = 0;
+      uStack_110 = 0;
+      local_140 = 0xf;
+      local_128 = *param_7;
+      _local_120 = CONCAT44(param_4,1);
+      local_108 = (ulong)param_6;
+      local_100 = 1;
+      uStack_f8 = 1;
+      iVar1 = _vkCreateImageView(uVar3,&local_140,0,param_7 + 2);
+      return iVar1 == 0;
+    }
+  }
+  return false;
+}
+
+
+
+
+// ========================================
+// Function: DestroyImage
+// Entry: 00003050
+// Signature: undefined __thiscall DestroyImage(EdgeComputePipeline * this, ImageResource * param_1)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::DestroyImage(m3t::EdgeComputePipeline::ImageResource&) */
+
+void __thiscall
+m3t::EdgeComputePipeline::DestroyImage(EdgeComputePipeline *this,ImageResource *param_1)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = *(undefined8 *)(*(long *)this + 0x18);
+  if (*(long *)(param_1 + 0x10) != 0) {
+    _vkDestroyImageView(uVar1,*(long *)(param_1 + 0x10),0);
+  }
+  if (*(long *)param_1 != 0) {
+    _vkDestroyImage(uVar1,*(long *)param_1,0);
+    if (*(long *)(param_1 + 8) != 0) {
+      _vkFreeMemory(uVar1,*(long *)(param_1 + 8),0);
+    }
+  }
+  *(undefined8 *)param_1 = 0;
+  *(undefined8 *)(param_1 + 8) = 0;
+  *(undefined8 *)(param_1 + 0x10) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: CreateBuffer
+// Entry: 000030b8
+// Signature: undefined __thiscall CreateBuffer(EdgeComputePipeline * this, ulonglong param_1, uint param_2, uint param_3, BufferResource * param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* m3t::EdgeComputePipeline::CreateBuffer(unsigned long long, unsigned int, unsigned int,
+   m3t::EdgeComputePipeline::BufferResource&) */
+
+bool __thiscall
+m3t::EdgeComputePipeline::CreateBuffer
+          (EdgeComputePipeline *this,ulonglong param_1,uint param_2,uint param_3,
+          BufferResource *param_4)
+
+{
+  bool bVar1;
+  int iVar2;
+  undefined4 uVar3;
+  undefined8 uVar4;
+  undefined8 local_c0;
+  undefined8 uStack_b8;
+  undefined8 local_b0;
+  undefined8 local_a8;
+  undefined8 local_98 [2];
+  uint local_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 uStack_70;
+  ulonglong local_68;
+  ulong local_60;
+  undefined8 uStack_58;
+  undefined8 local_50;
+  
+  uVar4 = *(undefined8 *)(*(long *)this + 0x18);
+  uStack_78 = 0;
+  uStack_70 = 0;
+  uStack_58 = 0;
+  local_50 = 0;
+  local_80 = 0xc;
+  local_60 = (ulong)param_2;
+  local_68 = param_1;
+  iVar2 = _vkCreateBuffer(uVar4,&local_80,0,param_4);
+  if (iVar2 == 0) {
+    _vkGetBufferMemoryRequirements(uVar4,*(undefined8 *)param_4,local_98);
+    uStack_b8 = _UNK_00012680;
+    local_c0 = _l___const__ZN3m3t19EdgeComputePipeline12CreateBufferEyjjRNS0_14BufferResourceE_alloc
+    ;
+    local_a8 = _UNK_00012690;
+    local_b0 = local_98[0];
+    uVar3 = m3t::VulkanContext::FindMemoryType((uint)*(undefined8 *)this,local_88);
+    local_a8 = CONCAT44(local_a8._4_4_,uVar3);
+    iVar2 = _vkAllocateMemory(uVar4,&local_c0,0,param_4 + 8);
+    bVar1 = iVar2 == 0;
+    if (iVar2 == 0) {
+      _vkBindBufferMemory(uVar4,*(undefined8 *)param_4,*(undefined8 *)(param_4 + 8),0);
+      *(ulonglong *)(param_4 + 0x10) = param_1;
+    }
+  }
+  else {
+    bVar1 = false;
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: DestroyBuffer
+// Entry: 000031b8
+// Signature: undefined __thiscall DestroyBuffer(EdgeComputePipeline * this, BufferResource * param_1)
+// ========================================
+
+
+/* m3t::EdgeComputePipeline::DestroyBuffer(m3t::EdgeComputePipeline::BufferResource&) */
+
+void __thiscall
+m3t::EdgeComputePipeline::DestroyBuffer(EdgeComputePipeline *this,BufferResource *param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (*(long *)param_1 != 0) {
+    uVar1 = *(undefined8 *)(*(long *)this + 0x18);
+    _vkDestroyBuffer(uVar1,*(long *)param_1,0);
+    if (*(long *)(param_1 + 8) != 0) {
+      _vkFreeMemory(uVar1,*(long *)(param_1 + 8),0);
+    }
+  }
+  *(undefined8 *)param_1 = 0;
+  *(undefined8 *)(param_1 + 8) = 0;
+  *(undefined8 *)(param_1 + 0x10) = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: M3TLogError
+// Entry: 00013100
+// Signature: undefined M3TLogError(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::M3TLogError(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: FindMemoryType
+// Entry: 00013200
+// Signature: undefined FindMemoryType(uint param_1, uint param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::VulkanContext::FindMemoryType(uint param_1,uint param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00013300
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00013400
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00013500
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00013600
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: lock
+// Entry: 00013700
+// Signature: undefined lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::mutex::lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: unlock
+// Entry: 00013800
+// Signature: undefined unlock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::mutex::unlock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00013900
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00013d00
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00013e00
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00013f00
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00014000
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00014200
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00014400
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _bzero
+// Entry: 00014600
+// Signature: void _bzero(void * param_1, size_t param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _bzero(void *param_1,size_t param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00014700
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00014800
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00014900
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkAllocateCommandBuffers
+// Entry: 00014a00
+// Signature: undefined _vkAllocateCommandBuffers(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkAllocateCommandBuffers(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkAllocateDescriptorSets
+// Entry: 00014b00
+// Signature: undefined _vkAllocateDescriptorSets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkAllocateDescriptorSets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkAllocateMemory
+// Entry: 00014c00
+// Signature: undefined _vkAllocateMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkAllocateMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkBeginCommandBuffer
+// Entry: 00014d00
+// Signature: undefined _vkBeginCommandBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkBeginCommandBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkBindBufferMemory
+// Entry: 00014e00
+// Signature: undefined _vkBindBufferMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkBindBufferMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkBindImageMemory
+// Entry: 00014f00
+// Signature: undefined _vkBindImageMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkBindImageMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdBindDescriptorSets
+// Entry: 00015000
+// Signature: undefined _vkCmdBindDescriptorSets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdBindDescriptorSets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdBindPipeline
+// Entry: 00015100
+// Signature: undefined _vkCmdBindPipeline(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdBindPipeline(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdCopyBuffer
+// Entry: 00015200
+// Signature: undefined _vkCmdCopyBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdCopyBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdCopyBufferToImage
+// Entry: 00015300
+// Signature: undefined _vkCmdCopyBufferToImage(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdCopyBufferToImage(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdDispatch
+// Entry: 00015400
+// Signature: undefined _vkCmdDispatch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdDispatch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdFillBuffer
+// Entry: 00015500
+// Signature: undefined _vkCmdFillBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdFillBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdPipelineBarrier
+// Entry: 00015600
+// Signature: undefined _vkCmdPipelineBarrier(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdPipelineBarrier(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCmdPushConstants
+// Entry: 00015700
+// Signature: undefined _vkCmdPushConstants(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCmdPushConstants(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateBuffer
+// Entry: 00015800
+// Signature: undefined _vkCreateBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateComputePipelines
+// Entry: 00015900
+// Signature: undefined _vkCreateComputePipelines(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateComputePipelines(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateDescriptorPool
+// Entry: 00015a00
+// Signature: undefined _vkCreateDescriptorPool(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateDescriptorPool(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateDescriptorSetLayout
+// Entry: 00015b00
+// Signature: undefined _vkCreateDescriptorSetLayout(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateDescriptorSetLayout(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateFence
+// Entry: 00015c00
+// Signature: undefined _vkCreateFence(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateFence(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateImage
+// Entry: 00015d00
+// Signature: undefined _vkCreateImage(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateImage(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateImageView
+// Entry: 00015e00
+// Signature: undefined _vkCreateImageView(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateImageView(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreatePipelineLayout
+// Entry: 00015f00
+// Signature: undefined _vkCreatePipelineLayout(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreatePipelineLayout(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateSampler
+// Entry: 00016000
+// Signature: undefined _vkCreateSampler(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateSampler(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkCreateShaderModule
+// Entry: 00016100
+// Signature: undefined _vkCreateShaderModule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkCreateShaderModule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyBuffer
+// Entry: 00016200
+// Signature: undefined _vkDestroyBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyDescriptorPool
+// Entry: 00016300
+// Signature: undefined _vkDestroyDescriptorPool(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyDescriptorPool(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyDescriptorSetLayout
+// Entry: 00016400
+// Signature: undefined _vkDestroyDescriptorSetLayout(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyDescriptorSetLayout(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyFence
+// Entry: 00016500
+// Signature: undefined _vkDestroyFence(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyFence(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyImage
+// Entry: 00016600
+// Signature: undefined _vkDestroyImage(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyImage(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyImageView
+// Entry: 00016700
+// Signature: undefined _vkDestroyImageView(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyImageView(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyPipeline
+// Entry: 00016800
+// Signature: undefined _vkDestroyPipeline(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyPipeline(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyPipelineLayout
+// Entry: 00016900
+// Signature: undefined _vkDestroyPipelineLayout(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyPipelineLayout(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroySampler
+// Entry: 00016a00
+// Signature: undefined _vkDestroySampler(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroySampler(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDestroyShaderModule
+// Entry: 00016b00
+// Signature: undefined _vkDestroyShaderModule(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDestroyShaderModule(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkDeviceWaitIdle
+// Entry: 00016c00
+// Signature: undefined _vkDeviceWaitIdle(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkDeviceWaitIdle(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkEndCommandBuffer
+// Entry: 00016d00
+// Signature: undefined _vkEndCommandBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkEndCommandBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkFreeCommandBuffers
+// Entry: 00016e00
+// Signature: undefined _vkFreeCommandBuffers(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkFreeCommandBuffers(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkFreeMemory
+// Entry: 00016f00
+// Signature: undefined _vkFreeMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkFreeMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkGetBufferMemoryRequirements
+// Entry: 00017000
+// Signature: undefined _vkGetBufferMemoryRequirements(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkGetBufferMemoryRequirements(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkGetImageMemoryRequirements
+// Entry: 00017100
+// Signature: undefined _vkGetImageMemoryRequirements(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkGetImageMemoryRequirements(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkMapMemory
+// Entry: 00017200
+// Signature: undefined _vkMapMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkMapMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkQueueSubmit
+// Entry: 00017300
+// Signature: undefined _vkQueueSubmit(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkQueueSubmit(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkResetCommandBuffer
+// Entry: 00017400
+// Signature: undefined _vkResetCommandBuffer(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkResetCommandBuffer(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkResetFences
+// Entry: 00017500
+// Signature: undefined _vkResetFences(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkResetFences(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkUnmapMemory
+// Entry: 00017600
+// Signature: undefined _vkUnmapMemory(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkUnmapMemory(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkUpdateDescriptorSets
+// Entry: 00017700
+// Signature: undefined _vkUpdateDescriptorSets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkUpdateDescriptorSets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _vkWaitForFences
+// Entry: 00017800
+// Signature: undefined _vkWaitForFences(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _vkWaitForFences(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 94
+// Failed: 0
+// Skipped external functions: 0

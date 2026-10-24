@@ -1,0 +1,4976 @@
+Program: validation_zone_manager.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: GetZoneUnlocked
+// Entry: 00000000
+// Signature: undefined __cdecl GetZoneUnlocked(string * param_1)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::GetZoneUnlocked(std::string const&) const */
+
+void m3t::ValidationZoneManager::GetZoneUnlocked(string *param_1)
+
+{
+  long *plVar1;
+  undefined8 *puVar2;
+  string *psVar3;
+  size_t sVar4;
+  long lVar5;
+  char cVar6;
+  bool bVar7;
+  ulong uVar8;
+  ulong uVar9;
+  int iVar10;
+  undefined8 *in_x1;
+  undefined8 *in_x8;
+  string *psVar11;
+  string *psVar12;
+  string *psVar13;
+  
+  psVar11 = param_1 + 0x48;
+  psVar13 = *(string **)psVar11;
+  if (psVar13 != (string *)0x0) {
+    psVar12 = psVar11;
+    uVar8 = in_x1[1];
+    puVar2 = (void *)*in_x1;
+    if (-1 < (char)*(byte *)((long)in_x1 + 0x17)) {
+      uVar8 = (ulong)*(byte *)((long)in_x1 + 0x17);
+      puVar2 = in_x1;
+    }
+    do {
+      psVar3 = *(string **)(psVar13 + 0x20);
+      uVar9 = *(ulong *)(psVar13 + 0x28);
+      if (-1 < (char)psVar13[0x37]) {
+        psVar3 = psVar13 + 0x20;
+        uVar9 = (ulong)(byte)psVar13[0x37];
+      }
+      sVar4 = uVar8;
+      if (uVar9 <= uVar8) {
+        sVar4 = uVar9;
+      }
+      iVar10 = _memcmp(psVar3,puVar2,sVar4);
+      bVar7 = uVar9 < uVar8;
+      if (iVar10 != 0) {
+        bVar7 = iVar10 < 0;
+      }
+      psVar3 = psVar13 + 8;
+      if (!bVar7) {
+        psVar12 = psVar13;
+        psVar3 = psVar13;
+      }
+      psVar13 = *(string **)psVar3;
+    } while (psVar13 != (string *)0x0);
+    if (psVar12 != psVar11) {
+      psVar11 = *(string **)(psVar12 + 0x20);
+      uVar9 = *(ulong *)(psVar12 + 0x28);
+      if (-1 < (char)psVar12[0x37]) {
+        psVar11 = psVar12 + 0x20;
+        uVar9 = (ulong)(byte)psVar12[0x37];
+      }
+      sVar4 = uVar9;
+      if (uVar8 <= uVar9) {
+        sVar4 = uVar8;
+      }
+      iVar10 = _memcmp(puVar2,psVar11,sVar4);
+      bVar7 = uVar9 <= uVar8;
+      if (iVar10 != 0) {
+        bVar7 = -1 < iVar10;
+      }
+      if (bVar7) {
+        lVar5 = *(long *)(psVar12 + 0x40);
+        *in_x8 = *(undefined8 *)(psVar12 + 0x38);
+        in_x8[1] = lVar5;
+        if (lVar5 != 0) {
+          plVar1 = (long *)(lVar5 + 8);
+          do {
+            cVar6 = '\x01';
+            bVar7 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar7) {
+              *plVar1 = *plVar1 + 1;
+              cVar6 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar6 != '\0');
+        }
+        return;
+      }
+    }
+  }
+  *in_x8 = 0;
+  in_x8[1] = 0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ProcessZoneValidation
+// Entry: 00000148
+// Signature: undefined __cdecl ProcessZoneValidation(shared_ptr * param_1, Mat * param_2, Transform * param_3, Intrinsics * param_4, float param_5)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::ProcessZoneValidation(std::shared_ptr<m3t::ValidationZone> const&,
+   cv::Mat const&, Eigen::Transform<float, 3, 2, 0> const&, m3t::Intrinsics const&, float) const */
+
+void m3t::ValidationZoneManager::ProcessZoneValidation
+               (shared_ptr *param_1,Mat *param_2,Transform *param_3,Intrinsics *param_4,
+               float param_5)
+
+{
+  string *psVar1;
+  long *plVar2;
+  undefined8 *puVar3;
+  ulong uVar4;
+  Mat *in_x4;
+  string *in_x8;
+  string *psVar5;
+  Mat aMStack_170 [96];
+  int local_110 [2];
+  undefined8 local_108;
+  undefined8 uStack_100;
+  undefined8 local_f8;
+  undefined4 local_f0;
+  undefined8 local_b0;
+  undefined8 uStack_a8;
+  undefined8 uStack_a0;
+  undefined8 uStack_98;
+  undefined8 local_90;
+  undefined8 uStack_88;
+  undefined8 uStack_80;
+  undefined8 uStack_78;
+  
+  *(undefined8 *)in_x8 = 0;
+  *(undefined8 *)(in_x8 + 8) = 0;
+  *(undefined8 *)(in_x8 + 0x10) = 0;
+  *(undefined4 *)(in_x8 + 0x18) = 4;
+  psVar5 = in_x8 + 0x20;
+  *(undefined8 *)psVar5 = 0;
+  *(undefined8 *)(in_x8 + 0x28) = 0;
+  *(undefined8 *)(in_x8 + 0x30) = 0;
+  *(undefined4 *)(in_x8 + 0x38) = 0;
+  *(undefined8 *)(in_x8 + 0x40) = 0;
+  *(undefined8 *)(in_x8 + 0x48) = 0;
+  *(undefined8 *)(in_x8 + 0x50) = 0;
+  cv::Mat::Mat((Mat *)(in_x8 + 0x58));
+  in_x8[0xb8] = (string)0x0;
+  psVar1 = (string *)m3t::ValidationZone::name();
+  std::string::operator=(in_x8,psVar1);
+  in_x8[0xb8] = (string)0x0;
+  plVar2 = (long *)m3t::ValidationZone::body_ptr();
+  if (*plVar2 == 0) {
+    *(undefined4 *)(in_x8 + 0x18) = 4;
+    std::string::assign((char *)psVar5);
+  }
+  else {
+    m3t::ValidationZone::body_ptr();
+    puVar3 = (undefined8 *)m3t::Body::body2world_pose();
+    uStack_a8 = puVar3[1];
+    local_b0 = *puVar3;
+    uStack_98 = puVar3[3];
+    uStack_a0 = puVar3[2];
+    uStack_88 = puVar3[5];
+    local_90 = puVar3[4];
+    uStack_78 = puVar3[7];
+    uStack_80 = puVar3[6];
+    m3t::ValidationZone::CheckReadiness
+              (*(Transform **)param_2,(Transform *)&local_b0,param_4,param_5);
+    *(int *)(in_x8 + 0x18) = local_110[0];
+    if ((char)in_x8[0x37] < '\0') {
+      operator_delete(*(void **)(in_x8 + 0x20));
+      local_110[0] = *(int *)(in_x8 + 0x18);
+    }
+    *(undefined8 *)(in_x8 + 0x28) = uStack_100;
+    *(undefined8 *)psVar5 = local_108;
+    *(undefined8 *)(in_x8 + 0x30) = local_f8;
+    *(undefined4 *)(in_x8 + 0x38) = local_f0;
+    if (local_110[0] == 0) {
+      cv::Mat::Mat((Mat *)local_110);
+      uVar4 = m3t::ValidationZone::SampleRegion
+                        (*(Mat **)param_2,param_3,(Transform *)&local_b0,param_4,in_x4);
+      if ((uVar4 & 1) == 0) {
+        *(undefined4 *)(in_x8 + 0x18) = 2;
+        std::string::assign((char *)psVar5);
+      }
+      else {
+        cv::Mat::clone();
+        cv::Mat::operator=((Mat *)(in_x8 + 0x58),aMStack_170);
+        cv::Mat::~Mat(aMStack_170);
+        in_x8[0xb8] = (string)0x1;
+        m3t::ValidationZone::Validate(*(Mat **)param_2,(vector *)local_110);
+      }
+      cv::Mat::~Mat((Mat *)local_110);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~ZoneValidationResult
+// Entry: 0000038c
+// Signature: undefined __thiscall ~ZoneValidationResult(ZoneValidationResult * this)
+// ========================================
+
+
+/* m3t::ZoneValidationResult::~ZoneValidationResult() */
+
+ZoneValidationResult * __thiscall
+m3t::ZoneValidationResult::~ZoneValidationResult(ZoneValidationResult *this)
+
+{
+  ZoneValidationResult ZVar1;
+  void *pvVar2;
+  
+  cv::Mat::~Mat((Mat *)(this + 0x58));
+  pvVar2 = *(void **)(this + 0x40);
+  if (pvVar2 != (void *)0x0) {
+    *(void **)(this + 0x48) = pvVar2;
+    operator_delete(pvVar2);
+  }
+  if ((char)this[0x37] < '\0') {
+    operator_delete(*(void **)(this + 0x20));
+    ZVar1 = this[0x17];
+  }
+  else {
+    ZVar1 = this[0x17];
+  }
+  if (-1 < (char)ZVar1) {
+    return this;
+  }
+  operator_delete(*(void **)this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: CreateZone
+// Entry: 000003fc
+// Signature: undefined __thiscall CreateZone(ValidationZoneManager * this, string * param_1, shared_ptr * param_2, ValidationZoneShape param_3, Transform * param_4, Matrix * param_5, float param_6)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::CreateZone(std::string const&, std::shared_ptr<m3t::Body> const&,
+   m3t::ValidationZoneShape, Eigen::Transform<float, 3, 2, 0> const&, Eigen::Matrix<float, 3, 1, 0,
+   3, 1> const&, float) */
+
+ulong __thiscall
+m3t::ValidationZoneManager::CreateZone
+          (float param_1_00,ValidationZoneManager *this,piecewise_construct_t *param_1,long *param_2
+          ,undefined8 param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long *plVar4;
+  long lVar5;
+  long *plVar6;
+  ulong uVar7;
+  long local_90;
+  long *local_88;
+  piecewise_construct_t *local_78;
+  
+  std::mutex::lock();
+  GetZoneUnlocked((string *)this);
+  if (local_88 == (long *)0x0) {
+LAB_00000470:
+    if (local_90 == 0 && *param_2 != 0) {
+LAB_000004b0:
+      plVar4 = operator_new(0xd0);
+      plVar6 = plVar4 + 1;
+      *plVar6 = 0;
+      plVar4[2] = 0;
+      *plVar4 = (long)&PTR____shared_ptr_emplace_000037c0;
+      m3t::ValidationZone::ValidationZone
+                ((ValidationZone *)(plVar4 + 4),param_1,param_2,param_5,param_6,param_7);
+      m3t::ValidationZone::set_tracking_quality_threshold(param_1_00);
+      uVar7 = m3t::ValidationZone::SetUp();
+      if ((uVar7 & 1) != 0) {
+        local_78 = param_1;
+        lVar5 = std::
+                __tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+                ::
+                __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+                          ((string *)(this + 0x40),param_1,(tuple *)&std::piecewise_construct,
+                           (tuple *)&local_78);
+        do {
+          cVar2 = '\x01';
+          bVar3 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar3) {
+            *plVar6 = *plVar6 + 1;
+            cVar2 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar2 != '\0');
+        plVar6 = *(long **)(lVar5 + 0x40);
+        *(ValidationZone **)(lVar5 + 0x38) = (ValidationZone *)(plVar4 + 4);
+        *(long **)(lVar5 + 0x40) = plVar4;
+        if (plVar6 != (long *)0x0) {
+          plVar1 = plVar6 + 1;
+          do {
+            lVar5 = *plVar1;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = lVar5 + -1;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar5 == 0) {
+            (**(code **)(*plVar6 + 0x10))(plVar6);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+      }
+      if (plVar4 != (long *)0x0) {
+        plVar6 = plVar4 + 1;
+        do {
+          lVar5 = *plVar6;
+          cVar2 = '\x01';
+          bVar3 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar3) {
+            *plVar6 = lVar5 + -1;
+            cVar2 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar2 != '\0');
+        if (lVar5 == 0) {
+          (**(code **)(*plVar4 + 0x10))(plVar4);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      goto LAB_000005b8;
+    }
+  }
+  else {
+    plVar4 = local_88 + 1;
+    do {
+      lVar5 = *plVar4;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar4,0x10);
+      if (bVar3) {
+        *plVar4 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 != 0) goto LAB_00000470;
+    (**(code **)(*local_88 + 0x10))(local_88);
+    std::__shared_weak_count::__release_weak();
+    if (local_90 == 0 && *param_2 != 0) goto LAB_000004b0;
+  }
+  uVar7 = 0;
+LAB_000005b8:
+  std::mutex::unlock();
+  return uVar7;
+}
+
+
+
+
+// ========================================
+// Function: ~shared_ptr[abi:ne180100]
+// Entry: 00000638
+// Signature: undefined __thiscall ~shared_ptr[abi:ne180100](shared_ptr<m3t::ValidationZone> * this)
+// ========================================
+
+
+/* std::shared_ptr<m3t::ValidationZone>::~shared_ptr[abi:ne180100]() */
+
+shared_ptr<m3t::ValidationZone> * __thiscall
+std::shared_ptr<m3t::ValidationZone>::~shared_ptr_abi_ne180100_
+          (shared_ptr<m3t::ValidationZone> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 000006a0
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 000006c8
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::ValidationZone, std::allocator<m3t::ValidationZone>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> *this)
+
+{
+  *(undefined ***)this = &PTR____shared_ptr_emplace_000037c0;
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 000006d8
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::ValidationZone, std::allocator<m3t::ValidationZone>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> *this)
+
+{
+  void *pvVar1;
+  
+  *(undefined ***)this = &PTR____shared_ptr_emplace_000037c0;
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 000006f8
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::ValidationZone, std::allocator<m3t::ValidationZone>
+   >::__on_zero_shared() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>>::__on_zero_shared
+          (__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> *this)
+
+{
+  allocator<m3t::ValidationZone> aStack_11;
+  
+  allocator<m3t::ValidationZone>::destroy_abi_ne180100_(&aStack_11,(ValidationZone *)(this + 0x20));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 0000071c
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::ValidationZone, std::allocator<m3t::ValidationZone>
+   >::__on_zero_shared_weak() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>>::
+__on_zero_shared_weak
+          (__shared_ptr_emplace<m3t::ValidationZone,std::allocator<m3t::ValidationZone>> *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: destroy[abi:ne180100]
+// Entry: 00000720
+// Signature: undefined __thiscall destroy[abi:ne180100](allocator<m3t::ValidationZone> * this, ValidationZone * param_1)
+// ========================================
+
+
+/* std::allocator<m3t::ValidationZone>::destroy[abi:ne180100](m3t::ValidationZone*) */
+
+void __thiscall
+std::allocator<m3t::ValidationZone>::destroy_abi_ne180100_
+          (allocator<m3t::ValidationZone> *this,ValidationZone *param_1)
+
+{
+  long *plVar1;
+  ValidationZone VVar2;
+  char cVar3;
+  bool bVar4;
+  void *pvVar5;
+  long lVar6;
+  long *plVar7;
+  void *pvVar8;
+  void *pvVar9;
+  
+  pvVar8 = *(void **)(param_1 + 0x88);
+  if (pvVar8 != (void *)0x0) {
+    pvVar9 = *(void **)(param_1 + 0x90);
+    pvVar5 = pvVar8;
+    if (pvVar9 != pvVar8) {
+      do {
+        plVar7 = *(long **)((long)pvVar9 + -8);
+        if (plVar7 != (long *)0x0) {
+          plVar1 = plVar7 + 1;
+          do {
+            lVar6 = *plVar1;
+            cVar3 = '\x01';
+            bVar4 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar4) {
+              *plVar1 = lVar6 + -1;
+              cVar3 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar3 != '\0');
+          if (lVar6 == 0) {
+            (**(code **)(*plVar7 + 0x10))(plVar7);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        pvVar9 = (void *)((long)pvVar9 + -0x10);
+      } while (pvVar9 != pvVar8);
+      pvVar5 = *(void **)(param_1 + 0x88);
+    }
+    *(void **)(param_1 + 0x90) = pvVar8;
+    operator_delete(pvVar5);
+  }
+  plVar7 = *(long **)(param_1 + 0x20);
+  if (plVar7 != (long *)0x0) {
+    plVar1 = plVar7 + 1;
+    do {
+      lVar6 = *plVar1;
+      cVar3 = '\x01';
+      bVar4 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar4) {
+        *plVar1 = lVar6 + -1;
+        cVar3 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar3 != '\0');
+    if (lVar6 == 0) {
+      (**(code **)(*plVar7 + 0x10))(plVar7);
+      std::__shared_weak_count::__release_weak();
+      VVar2 = param_1[0x17];
+      goto joined_r0x000007f8;
+    }
+  }
+  VVar2 = param_1[0x17];
+joined_r0x000007f8:
+  if ((char)VVar2 < '\0') {
+    operator_delete(*(void **)param_1);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~shared_ptr[abi:ne180100]
+// Entry: 00000810
+// Signature: undefined __thiscall ~shared_ptr[abi:ne180100](shared_ptr<m3t::Validator> * this)
+// ========================================
+
+
+/* std::shared_ptr<m3t::Validator>::~shared_ptr[abi:ne180100]() */
+
+shared_ptr<m3t::Validator> * __thiscall
+std::shared_ptr<m3t::Validator>::~shared_ptr_abi_ne180100_(shared_ptr<m3t::Validator> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+// Entry: 00000878
+// Signature: pair __cdecl __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>(string * param_1, piecewise_construct_t * param_2, tuple * param_3, tuple * param_4)
+// ========================================
+
+
+/* std::pair<std::__tree_iterator<std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::__tree_node<std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, void*>*, long>, bool>
+   std::__tree<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::__map_value_compare<std::string, std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::less<std::string >, true>,
+   std::allocator<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::__emplace_unique_key_args<std::string, std::piecewise_construct_t const&,
+   std::tuple<std::string const&>, std::tuple<> >(std::string const&, std::piecewise_construct_t
+   const&, std::tuple<std::string const&>&&, std::tuple<>&&) */
+
+undefined1  [16]
+std::
+__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+::
+__emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+          (string *param_1,piecewise_construct_t *param_2,tuple *param_3,tuple *param_4)
+
+{
+  piecewise_construct_t *ppVar1;
+  size_t sVar2;
+  bool bVar3;
+  ulong uVar4;
+  ulong uVar5;
+  int iVar6;
+  string *psVar7;
+  undefined8 uVar8;
+  string *psVar9;
+  undefined8 *puVar10;
+  string *psVar11;
+  string *psVar12;
+  undefined8 uVar13;
+  undefined1 auVar14 [16];
+  
+  psVar11 = param_1 + 8;
+  psVar9 = *(string **)psVar11;
+  psVar12 = psVar11;
+  if (psVar9 != (string *)0x0) {
+    uVar4 = *(ulong *)(param_2 + 8);
+    ppVar1 = *(piecewise_construct_t **)param_2;
+    if (-1 < (char)param_2[0x17]) {
+      uVar4 = (ulong)(byte)param_2[0x17];
+      ppVar1 = param_2;
+    }
+    do {
+      while( true ) {
+        psVar7 = psVar9;
+        psVar9 = *(string **)(psVar7 + 0x20);
+        uVar5 = *(ulong *)(psVar7 + 0x28);
+        if (-1 < (char)psVar7[0x37]) {
+          psVar9 = psVar7 + 0x20;
+          uVar5 = (ulong)(byte)psVar7[0x37];
+        }
+        sVar2 = uVar5;
+        if (uVar4 <= uVar5) {
+          sVar2 = uVar4;
+        }
+        iVar6 = _memcmp(ppVar1,psVar9,sVar2);
+        bVar3 = uVar4 < uVar5;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        psVar12 = psVar7;
+        if (bVar3) break;
+        iVar6 = _memcmp(psVar9,ppVar1,sVar2);
+        bVar3 = uVar5 < uVar4;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        if (!bVar3) {
+          uVar8 = 0;
+          goto LAB_000009e4;
+        }
+        psVar9 = *(string **)(psVar7 + 8);
+        if (*(string **)(psVar7 + 8) == (string *)0x0) {
+          psVar11 = psVar7 + 8;
+          goto LAB_00000960;
+        }
+      }
+      psVar9 = *(string **)psVar7;
+      psVar11 = psVar7;
+    } while (*(string **)psVar7 != (string *)0x0);
+  }
+LAB_00000960:
+  psVar7 = operator_new(0x48);
+  puVar10 = *(undefined8 **)param_4;
+  if (*(char *)((long)puVar10 + 0x17) < '\0') {
+    string::__init_copy_ctor_external(psVar7 + 0x20,(char *)*puVar10,puVar10[1]);
+  }
+  else {
+    uVar13 = puVar10[1];
+    uVar8 = *puVar10;
+    *(undefined8 *)(psVar7 + 0x30) = puVar10[2];
+    *(undefined8 *)(psVar7 + 0x28) = uVar13;
+    *(undefined8 *)(psVar7 + 0x20) = uVar8;
+  }
+  *(undefined8 *)(psVar7 + 0x38) = 0;
+  *(undefined8 *)(psVar7 + 0x40) = 0;
+  *(undefined8 *)psVar7 = 0;
+  *(undefined8 *)(psVar7 + 8) = 0;
+  *(string **)(psVar7 + 0x10) = psVar12;
+  *(string **)psVar11 = psVar7;
+  psVar9 = psVar7;
+  if (**(long **)param_1 != 0) {
+    *(long *)param_1 = **(long **)param_1;
+    psVar9 = *(string **)psVar11;
+  }
+  __tree_balance_after_insert_abi_ne180100_<std::__tree_node_base<void*>*>
+            (*(__tree_node_base **)(param_1 + 8),(__tree_node_base *)psVar9);
+  *(long *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + 1;
+  uVar8 = 1;
+LAB_000009e4:
+  auVar14._8_8_ = uVar8;
+  auVar14._0_8_ = psVar7;
+  return auVar14;
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 00000a14
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000aa0
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000ab4
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000b04
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __tree_balance_after_insert[abi:ne180100]<std::__tree_node_base<void*>*>
+// Entry: 00000b28
+// Signature: void __tree_balance_after_insert[abi:ne180100]<std::__tree_node_base<void*>*>(__tree_node_base * param_1, __tree_node_base * param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void 
+   std::__tree_balance_after_insert[abi:ne180100]<std::__tree_node_base<void*>*>(std::__tree_node_base<void*>*,
+   std::__tree_node_base<void*>*) */
+
+void std::__tree_balance_after_insert_abi_ne180100_<std::__tree_node_base<void*>*>
+               (__tree_node_base *param_1,__tree_node_base *param_2)
+
+{
+  __tree_node_base _Var1;
+  __tree_node_base *p_Var2;
+  __tree_node_base *p_Var3;
+  long *plVar4;
+  long lVar5;
+  __tree_node_base *p_Var6;
+  
+  _Var1 = (__tree_node_base)(param_2 == param_1);
+  param_2[0x18] = _Var1;
+  while( true ) {
+    if ((bool)_Var1) {
+      return;
+    }
+    p_Var3 = *(__tree_node_base **)(param_2 + 0x10);
+    if (p_Var3[0x18] != (__tree_node_base)0x0) break;
+    p_Var2 = *(__tree_node_base **)(p_Var3 + 0x10);
+    p_Var6 = *(__tree_node_base **)p_Var2;
+    if (p_Var6 == p_Var3) {
+      if ((*(long *)(p_Var2 + 8) == 0) ||
+         (p_Var6 = (__tree_node_base *)(*(long *)(p_Var2 + 8) + 0x18),
+         *p_Var6 != (__tree_node_base)0x0)) {
+        if (*(__tree_node_base **)p_Var3 == param_2) {
+          p_Var3[0x18] = (__tree_node_base)0x1;
+          p_Var2[0x18] = (__tree_node_base)0x0;
+          lVar5 = *(long *)(p_Var3 + 8);
+          *(long *)p_Var2 = lVar5;
+        }
+        else {
+          plVar4 = *(long **)(p_Var3 + 8);
+          lVar5 = *plVar4;
+          *(long *)(p_Var3 + 8) = lVar5;
+          if (lVar5 != 0) {
+            *(__tree_node_base **)(lVar5 + 0x10) = p_Var3;
+            p_Var2 = *(__tree_node_base **)(p_Var3 + 0x10);
+          }
+          plVar4[2] = (long)p_Var2;
+          (*(undefined8 **)(p_Var3 + 0x10))
+          [(__tree_node_base *)**(undefined8 **)(p_Var3 + 0x10) != p_Var3] = plVar4;
+          *plVar4 = (long)p_Var3;
+          *(long **)(p_Var3 + 0x10) = plVar4;
+          p_Var2 = (__tree_node_base *)plVar4[2];
+          p_Var3 = *(__tree_node_base **)p_Var2;
+          *(undefined1 *)(plVar4 + 3) = 1;
+          p_Var2[0x18] = (__tree_node_base)0x0;
+          lVar5 = *(long *)(p_Var3 + 8);
+          *(long *)p_Var2 = lVar5;
+        }
+        if (lVar5 != 0) {
+          *(__tree_node_base **)(lVar5 + 0x10) = p_Var2;
+        }
+        *(long *)(p_Var3 + 0x10) = *(long *)(p_Var2 + 0x10);
+        (*(undefined8 **)(p_Var2 + 0x10))
+        [(__tree_node_base *)**(undefined8 **)(p_Var2 + 0x10) != p_Var2] = p_Var3;
+        *(__tree_node_base **)(p_Var3 + 8) = p_Var2;
+        *(__tree_node_base **)(p_Var2 + 0x10) = p_Var3;
+        return;
+      }
+    }
+    else if ((p_Var6 == (__tree_node_base *)0x0) ||
+            (p_Var6 = p_Var6 + 0x18, *p_Var6 != (__tree_node_base)0x0)) {
+      if (*(__tree_node_base **)p_Var3 == param_2) {
+        lVar5 = *(long *)(param_2 + 8);
+        *(long *)p_Var3 = lVar5;
+        if (lVar5 != 0) {
+          *(__tree_node_base **)(lVar5 + 0x10) = p_Var3;
+          p_Var2 = *(__tree_node_base **)(p_Var3 + 0x10);
+        }
+        *(__tree_node_base **)(param_2 + 0x10) = p_Var2;
+        (*(undefined8 **)(p_Var3 + 0x10))
+        [(__tree_node_base *)**(undefined8 **)(p_Var3 + 0x10) != p_Var3] = param_2;
+        *(__tree_node_base **)(param_2 + 8) = p_Var3;
+        *(__tree_node_base **)(p_Var3 + 0x10) = param_2;
+        p_Var2 = *(__tree_node_base **)(param_2 + 0x10);
+        p_Var3 = param_2;
+      }
+      p_Var3[0x18] = (__tree_node_base)0x1;
+      p_Var2[0x18] = (__tree_node_base)0x0;
+      plVar4 = *(long **)(p_Var2 + 8);
+      lVar5 = *plVar4;
+      *(long *)(p_Var2 + 8) = lVar5;
+      if (lVar5 != 0) {
+        *(__tree_node_base **)(lVar5 + 0x10) = p_Var2;
+      }
+      plVar4[2] = *(long *)(p_Var2 + 0x10);
+      (*(undefined8 **)(p_Var2 + 0x10))
+      [(__tree_node_base *)**(undefined8 **)(p_Var2 + 0x10) != p_Var2] = plVar4;
+      *plVar4 = (long)p_Var2;
+      *(long **)(p_Var2 + 0x10) = plVar4;
+      return;
+    }
+    p_Var3[0x18] = (__tree_node_base)0x1;
+    _Var1 = (__tree_node_base)(p_Var2 == param_1);
+    p_Var2[0x18] = _Var1;
+    *p_Var6 = (__tree_node_base)0x1;
+    param_2 = p_Var2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: UpdateZone
+// Entry: 00000cdc
+// Signature: undefined __cdecl UpdateZone(string * param_1, Transform * param_2, Matrix * param_3, float param_4)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::UpdateZone(std::string const&, Eigen::Transform<float, 3, 2, 0>
+   const&, Eigen::Matrix<float, 3, 1, 0, 3, 1> const&, float) */
+
+bool m3t::ValidationZoneManager::UpdateZone
+               (string *param_1,Transform *param_2,Matrix *param_3,float param_4)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  Transform *local_50;
+  long *local_48;
+  
+  std::mutex::lock();
+  GetZoneUnlocked(param_1);
+  if (local_50 != (Transform *)0x0) {
+    m3t::ValidationZone::set_local_pose(local_50);
+    m3t::ValidationZone::set_dimensions((Matrix *)local_50);
+    m3t::ValidationZone::set_tracking_quality_threshold(param_4);
+  }
+  if (local_48 != (long *)0x0) {
+    plVar1 = local_48 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*local_48 + 0x10))(local_48);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  std::mutex::unlock();
+  return local_50 != (Transform *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: RemoveZone
+// Entry: 00000dc8
+// Signature: undefined __thiscall RemoveZone(ValidationZoneManager * this, string * param_1)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::RemoveZone(std::string const&) */
+
+undefined8 __thiscall
+m3t::ValidationZoneManager::RemoveZone(ValidationZoneManager *this,string *param_1)
+
+{
+  string *psVar1;
+  ValidationZoneManager *pVVar2;
+  size_t sVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
+  undefined8 uVar8;
+  ValidationZoneManager *pVVar9;
+  ValidationZoneManager *pVVar10;
+  ValidationZoneManager *pVVar11;
+  
+  std::mutex::lock();
+  pVVar10 = this + 0x48;
+  pVVar11 = *(ValidationZoneManager **)pVVar10;
+  if (pVVar11 != (ValidationZoneManager *)0x0) {
+    pVVar9 = pVVar10;
+    uVar5 = *(ulong *)(param_1 + 8);
+    psVar1 = *(string **)param_1;
+    if (-1 < (char)param_1[0x17]) {
+      uVar5 = (ulong)(byte)param_1[0x17];
+      psVar1 = param_1;
+    }
+    do {
+      pVVar2 = *(ValidationZoneManager **)(pVVar11 + 0x20);
+      uVar6 = *(ulong *)(pVVar11 + 0x28);
+      if (-1 < (char)pVVar11[0x37]) {
+        pVVar2 = pVVar11 + 0x20;
+        uVar6 = (ulong)(byte)pVVar11[0x37];
+      }
+      sVar3 = uVar5;
+      if (uVar6 <= uVar5) {
+        sVar3 = uVar6;
+      }
+      iVar7 = _memcmp(pVVar2,psVar1,sVar3);
+      bVar4 = uVar6 < uVar5;
+      if (iVar7 != 0) {
+        bVar4 = iVar7 < 0;
+      }
+      pVVar2 = pVVar11 + 8;
+      if (!bVar4) {
+        pVVar9 = pVVar11;
+        pVVar2 = pVVar11;
+      }
+      pVVar11 = *(ValidationZoneManager **)pVVar2;
+    } while (pVVar11 != (ValidationZoneManager *)0x0);
+    if (pVVar9 != pVVar10) {
+      pVVar10 = *(ValidationZoneManager **)(pVVar9 + 0x20);
+      uVar6 = *(ulong *)(pVVar9 + 0x28);
+      if (-1 < (char)pVVar9[0x37]) {
+        pVVar10 = pVVar9 + 0x20;
+        uVar6 = (ulong)(byte)pVVar9[0x37];
+      }
+      sVar3 = uVar6;
+      if (uVar5 <= uVar6) {
+        sVar3 = uVar5;
+      }
+      iVar7 = _memcmp(psVar1,pVVar10,sVar3);
+      bVar4 = uVar5 < uVar6;
+      if (iVar7 != 0) {
+        bVar4 = iVar7 < 0;
+      }
+      if (!bVar4) {
+        std::
+        __tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        ::erase((__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+                 *)(this + 0x40),pVVar9);
+        uVar8 = 1;
+        goto LAB_00000ec8;
+      }
+    }
+  }
+  uVar8 = 0;
+LAB_00000ec8:
+  std::mutex::unlock();
+  return uVar8;
+}
+
+
+
+
+// ========================================
+// Function: erase
+// Entry: 00000f14
+// Signature: undefined __thiscall erase(__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>> * this, __tree_const_iterator param_1)
+// ========================================
+
+
+/* std::__tree<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::__map_value_compare<std::string, std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::less<std::string >, true>,
+   std::allocator<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::erase(std::__tree_const_iterator<std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::__tree_node<std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, void*>*, long>) */
+
+__tree_node_base * __thiscall
+std::
+__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+::erase(__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        *this,__tree_node_base *param_2)
+
+{
+  long *plVar1;
+  __tree_node_base _Var2;
+  char cVar3;
+  __tree_node_base *p_Var4;
+  bool bVar5;
+  __tree_node_base *p_Var6;
+  long lVar7;
+  __tree_node_base *p_Var8;
+  long *plVar9;
+  
+  p_Var6 = param_2;
+  p_Var4 = *(__tree_node_base **)(param_2 + 8);
+  if (*(__tree_node_base **)(param_2 + 8) == (__tree_node_base *)0x0) {
+    do {
+      p_Var8 = *(__tree_node_base **)(p_Var6 + 0x10);
+      bVar5 = *(__tree_node_base **)p_Var8 != p_Var6;
+      p_Var6 = p_Var8;
+    } while (bVar5);
+  }
+  else {
+    do {
+      p_Var8 = p_Var4;
+      p_Var4 = *(__tree_node_base **)p_Var8;
+    } while (*(__tree_node_base **)p_Var8 != (__tree_node_base *)0x0);
+  }
+  if (*(__tree_node_base **)this == param_2) {
+    *(__tree_node_base **)this = p_Var8;
+  }
+  *(long *)(this + 0x10) = *(long *)(this + 0x10) + -1;
+  __tree_remove_abi_ne180100_<std::__tree_node_base<void*>*>
+            (*(__tree_node_base **)(this + 8),param_2);
+  plVar9 = *(long **)(param_2 + 0x40);
+  if (plVar9 != (long *)0x0) {
+    plVar1 = plVar9 + 1;
+    do {
+      lVar7 = *plVar1;
+      cVar3 = '\x01';
+      bVar5 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar5) {
+        *plVar1 = lVar7 + -1;
+        cVar3 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar3 != '\0');
+    if (lVar7 == 0) {
+      (**(code **)(*plVar9 + 0x10))(plVar9);
+      std::__shared_weak_count::__release_weak();
+      _Var2 = param_2[0x37];
+      goto joined_r0x00000fa4;
+    }
+  }
+  _Var2 = param_2[0x37];
+joined_r0x00000fa4:
+  if ((char)_Var2 < '\0') {
+    operator_delete(*(void **)(param_2 + 0x20));
+  }
+  operator_delete(param_2);
+  return p_Var8;
+}
+
+
+
+
+// ========================================
+// Function: __tree_remove[abi:ne180100]<std::__tree_node_base<void*>*>
+// Entry: 00000ff0
+// Signature: void __tree_remove[abi:ne180100]<std::__tree_node_base<void*>*>(__tree_node_base * param_1, __tree_node_base * param_2)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void 
+   std::__tree_remove[abi:ne180100]<std::__tree_node_base<void*>*>(std::__tree_node_base<void*>*,
+   std::__tree_node_base<void*>*) */
+
+void std::__tree_remove_abi_ne180100_<std::__tree_node_base<void*>*>
+               (__tree_node_base *param_1,__tree_node_base *param_2)
+
+{
+  __tree_node_base _Var1;
+  bool bVar2;
+  __tree_node_base *p_Var3;
+  __tree_node_base *p_Var4;
+  __tree_node_base *p_Var5;
+  long lVar6;
+  long *plVar7;
+  __tree_node_base *p_Var8;
+  __tree_node_base *p_Var9;
+  long lVar10;
+  undefined8 *puVar11;
+  
+  p_Var5 = *(__tree_node_base **)param_2;
+  p_Var8 = param_2;
+  if (p_Var5 == (__tree_node_base *)0x0) {
+LAB_00001010:
+    p_Var5 = *(__tree_node_base **)(p_Var8 + 8);
+    if (p_Var5 != (__tree_node_base *)0x0) goto LAB_00001050;
+    bVar2 = true;
+    puVar11 = *(undefined8 **)(p_Var8 + 0x10);
+    p_Var4 = (__tree_node_base *)*puVar11;
+    if (p_Var4 == p_Var8) goto LAB_0000102c;
+  }
+  else {
+    p_Var4 = *(__tree_node_base **)(param_2 + 8);
+    if (*(__tree_node_base **)(param_2 + 8) != (__tree_node_base *)0x0) {
+      do {
+        p_Var8 = p_Var4;
+        p_Var4 = *(__tree_node_base **)p_Var8;
+      } while (*(__tree_node_base **)p_Var8 != (__tree_node_base *)0x0);
+      goto LAB_00001010;
+    }
+LAB_00001050:
+    bVar2 = false;
+    *(long *)(p_Var5 + 0x10) = *(long *)(p_Var8 + 0x10);
+    puVar11 = *(undefined8 **)(p_Var8 + 0x10);
+    p_Var4 = (__tree_node_base *)*puVar11;
+    if (p_Var4 == p_Var8) {
+LAB_0000102c:
+      *puVar11 = p_Var5;
+      if (p_Var8 == param_1) {
+        p_Var4 = (__tree_node_base *)0x0;
+        _Var1 = p_Var8[0x18];
+        param_1 = p_Var5;
+      }
+      else {
+        p_Var4 = (__tree_node_base *)puVar11[1];
+        _Var1 = p_Var8[0x18];
+      }
+      goto joined_r0x00001078;
+    }
+  }
+  puVar11[1] = p_Var5;
+  _Var1 = p_Var8[0x18];
+joined_r0x00001078:
+  p_Var3 = param_1;
+  if (p_Var8 != param_2) {
+    lVar6 = *(long *)(param_2 + 0x10);
+    *(long *)(p_Var8 + 0x10) = lVar6;
+    *(__tree_node_base **)
+     (lVar6 + (ulong)((__tree_node_base *)**(undefined8 **)(param_2 + 0x10) != param_2) * 8) =
+         p_Var8;
+    lVar6 = *(long *)param_2;
+    lVar10 = *(long *)(param_2 + 8);
+    *(__tree_node_base **)(lVar6 + 0x10) = p_Var8;
+    *(long *)p_Var8 = lVar6;
+    *(long *)(p_Var8 + 8) = lVar10;
+    if (lVar10 != 0) {
+      *(__tree_node_base **)(lVar10 + 0x10) = p_Var8;
+    }
+    p_Var8[0x18] = param_2[0x18];
+    p_Var3 = p_Var8;
+    if (param_1 != param_2) {
+      p_Var3 = param_1;
+    }
+  }
+  if ((_Var1 != (__tree_node_base)0x0) && (p_Var3 != (__tree_node_base *)0x0)) {
+    if (bVar2) {
+      while( true ) {
+        p_Var5 = *(__tree_node_base **)(p_Var4 + 0x10);
+        if (*(__tree_node_base **)p_Var5 != p_Var4) break;
+        if (p_Var4[0x18] == (__tree_node_base)0x0) {
+          p_Var4[0x18] = (__tree_node_base)0x1;
+          p_Var5[0x18] = (__tree_node_base)0x0;
+          lVar6 = *(long *)(p_Var4 + 8);
+          *(long *)p_Var5 = lVar6;
+          if (lVar6 != 0) {
+            *(__tree_node_base **)(lVar6 + 0x10) = p_Var5;
+          }
+          *(long *)(p_Var4 + 0x10) = *(long *)(p_Var5 + 0x10);
+          (*(undefined8 **)(p_Var5 + 0x10))
+          [(__tree_node_base *)**(undefined8 **)(p_Var5 + 0x10) != p_Var5] = p_Var4;
+          *(__tree_node_base **)(p_Var4 + 8) = p_Var5;
+          *(__tree_node_base **)(p_Var5 + 0x10) = p_Var4;
+          p_Var8 = p_Var4;
+          if (p_Var3 != p_Var5) {
+            p_Var8 = p_Var3;
+          }
+          p_Var4 = *(__tree_node_base **)p_Var5;
+          p_Var5 = *(__tree_node_base **)p_Var4;
+          p_Var3 = p_Var8;
+        }
+        else {
+          p_Var5 = *(__tree_node_base **)p_Var4;
+        }
+        p_Var8 = p_Var4;
+        if ((p_Var5 != (__tree_node_base *)0x0) && (p_Var5[0x18] == (__tree_node_base)0x0)) {
+LAB_00001308:
+          plVar7 = *(long **)(p_Var8 + 0x10);
+          p_Var8[0x18] = *(__tree_node_base *)(plVar7 + 3);
+          *(undefined1 *)(plVar7 + 3) = 1;
+          p_Var5[0x18] = (__tree_node_base)0x1;
+          lVar6 = *plVar7;
+          lVar10 = *(long *)(lVar6 + 8);
+          *plVar7 = lVar10;
+          if (lVar10 != 0) {
+            *(long **)(lVar10 + 0x10) = plVar7;
+          }
+          *(long *)(lVar6 + 0x10) = plVar7[2];
+          ((undefined8 *)plVar7[2])[*(long **)plVar7[2] != plVar7] = lVar6;
+          *(long **)(lVar6 + 8) = plVar7;
+          plVar7[2] = lVar6;
+          return;
+        }
+        p_Var9 = *(__tree_node_base **)(p_Var4 + 8);
+        if ((p_Var9 != (__tree_node_base *)0x0) && (p_Var9[0x18] == (__tree_node_base)0x0)) {
+          if ((p_Var5 == (__tree_node_base *)0x0) || (p_Var5[0x18] != (__tree_node_base)0x0)) {
+            p_Var9[0x18] = (__tree_node_base)0x1;
+            p_Var4[0x18] = (__tree_node_base)0x0;
+            lVar6 = *(long *)p_Var9;
+            *(long *)(p_Var4 + 8) = lVar6;
+            if (lVar6 != 0) {
+              *(__tree_node_base **)(lVar6 + 0x10) = p_Var4;
+            }
+            *(long *)(p_Var9 + 0x10) = *(long *)(p_Var4 + 0x10);
+            (*(undefined8 **)(p_Var4 + 0x10))
+            [(__tree_node_base *)**(undefined8 **)(p_Var4 + 0x10) != p_Var4] = p_Var9;
+            *(__tree_node_base **)p_Var9 = p_Var4;
+            *(__tree_node_base **)(p_Var4 + 0x10) = p_Var9;
+            p_Var8 = p_Var9;
+            p_Var5 = p_Var4;
+          }
+          goto LAB_00001308;
+        }
+        p_Var4[0x18] = (__tree_node_base)0x0;
+        p_Var8 = *(__tree_node_base **)(p_Var4 + 0x10);
+        p_Var5 = p_Var8;
+        if (p_Var8[0x18] == (__tree_node_base)0x0 || p_Var8 == p_Var3) {
+LAB_000012a0:
+          p_Var5[0x18] = (__tree_node_base)0x1;
+          return;
+        }
+LAB_000010e8:
+        p_Var4 = (__tree_node_base *)
+                 (*(undefined8 **)(p_Var8 + 0x10))
+                 [(__tree_node_base *)**(undefined8 **)(p_Var8 + 0x10) == p_Var8];
+      }
+      if (p_Var4[0x18] == (__tree_node_base)0x0) {
+        p_Var4[0x18] = (__tree_node_base)0x1;
+        p_Var5[0x18] = (__tree_node_base)0x0;
+        plVar7 = *(long **)(p_Var5 + 8);
+        lVar6 = *plVar7;
+        *(long *)(p_Var5 + 8) = lVar6;
+        if (lVar6 != 0) {
+          *(__tree_node_base **)(lVar6 + 0x10) = p_Var5;
+        }
+        plVar7[2] = *(long *)(p_Var5 + 0x10);
+        (*(undefined8 **)(p_Var5 + 0x10))
+        [(__tree_node_base *)**(undefined8 **)(p_Var5 + 0x10) != p_Var5] = plVar7;
+        *plVar7 = (long)p_Var5;
+        *(long **)(p_Var5 + 0x10) = plVar7;
+        p_Var5 = p_Var4;
+        if (p_Var3 != *(__tree_node_base **)p_Var4) {
+          p_Var5 = p_Var3;
+        }
+        p_Var4 = *(__tree_node_base **)(*(__tree_node_base **)p_Var4 + 8);
+        p_Var8 = *(__tree_node_base **)p_Var4;
+        p_Var3 = p_Var5;
+        if (p_Var8 != (__tree_node_base *)0x0) goto LAB_00001188;
+LAB_00001190:
+        p_Var5 = *(__tree_node_base **)(p_Var4 + 8);
+        if ((p_Var5 == (__tree_node_base *)0x0) || (p_Var5[0x18] != (__tree_node_base)0x0)) {
+          p_Var4[0x18] = (__tree_node_base)0x0;
+          p_Var8 = *(__tree_node_base **)(p_Var4 + 0x10);
+          p_Var5 = p_Var3;
+          if ((p_Var8 != p_Var3) && (p_Var5 = p_Var8, p_Var8[0x18] != (__tree_node_base)0x0))
+          goto LAB_000010e8;
+          goto LAB_000012a0;
+        }
+LAB_000012b4:
+        p_Var3 = p_Var4;
+        if (p_Var5[0x18] == (__tree_node_base)0x0) goto LAB_00001360;
+      }
+      else {
+        p_Var8 = *(__tree_node_base **)p_Var4;
+        p_Var5 = p_Var3;
+        if (p_Var8 == (__tree_node_base *)0x0) goto LAB_00001190;
+LAB_00001188:
+        p_Var3 = p_Var5;
+        if (p_Var8[0x18] != (__tree_node_base)0x0) goto LAB_00001190;
+        p_Var5 = *(__tree_node_base **)(p_Var4 + 8);
+        if (p_Var5 != (__tree_node_base *)0x0) goto LAB_000012b4;
+      }
+      p_Var8[0x18] = (__tree_node_base)0x1;
+      p_Var4[0x18] = (__tree_node_base)0x0;
+      lVar6 = *(long *)(p_Var8 + 8);
+      *(long *)p_Var4 = lVar6;
+      if (lVar6 != 0) {
+        *(__tree_node_base **)(lVar6 + 0x10) = p_Var4;
+      }
+      *(long *)(p_Var8 + 0x10) = *(long *)(p_Var4 + 0x10);
+      (*(undefined8 **)(p_Var4 + 0x10))
+      [(__tree_node_base *)**(undefined8 **)(p_Var4 + 0x10) != p_Var4] = p_Var8;
+      *(__tree_node_base **)(p_Var8 + 8) = p_Var4;
+      *(__tree_node_base **)(p_Var4 + 0x10) = p_Var8;
+      p_Var3 = p_Var8;
+      p_Var5 = p_Var4;
+LAB_00001360:
+      lVar6 = *(long *)(p_Var3 + 0x10);
+      p_Var3[0x18] = *(__tree_node_base *)(lVar6 + 0x18);
+      *(undefined1 *)(lVar6 + 0x18) = 1;
+      p_Var5[0x18] = (__tree_node_base)0x1;
+      plVar7 = *(long **)(lVar6 + 8);
+      lVar10 = *plVar7;
+      *(long *)(lVar6 + 8) = lVar10;
+      if (lVar10 != 0) {
+        *(long *)(lVar10 + 0x10) = lVar6;
+      }
+      plVar7[2] = *(long *)(lVar6 + 0x10);
+      (*(long **)(lVar6 + 0x10))[**(long **)(lVar6 + 0x10) != lVar6] = (long)plVar7;
+      *plVar7 = lVar6;
+      *(long **)(lVar6 + 0x10) = plVar7;
+      return;
+    }
+    p_Var5[0x18] = (__tree_node_base)0x1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: GetZone
+// Entry: 000013b4
+// Signature: undefined __cdecl GetZone(string * param_1)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::GetZone(std::string const&) const */
+
+void m3t::ValidationZoneManager::GetZone(string *param_1)
+
+{
+  std::mutex::lock();
+  GetZoneUnlocked(param_1);
+  std::mutex::unlock();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: GetZoneIds
+// Entry: 000013f8
+// Signature: undefined __cdecl GetZoneIds(void)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::GetZoneIds() const */
+
+void m3t::ValidationZoneManager::GetZoneIds(void)
+
+{
+  long *plVar1;
+  bool bVar2;
+  long in_x0;
+  vector<std::string,std::allocator<std::string>> *in_x8;
+  long *plVar3;
+  string *this;
+  long *plVar4;
+  long lVar5;
+  long lVar6;
+  
+  std::mutex::lock();
+  *(undefined8 *)in_x8 = 0;
+  *(undefined8 *)(in_x8 + 8) = 0;
+  *(undefined8 *)(in_x8 + 0x10) = 0;
+  std::vector<std::string,std::allocator<std::string>>::reserve(in_x8,*(ulong *)(in_x0 + 0x50));
+  if (*(long **)(in_x0 + 0x40) != (long *)(in_x0 + 0x48)) {
+    this = *(string **)(in_x8 + 8);
+    plVar4 = *(long **)(in_x0 + 0x40);
+    do {
+      if (this < *(string **)(in_x8 + 0x10)) {
+        if (*(char *)((long)plVar4 + 0x37) < '\0') {
+          std::string::__init_copy_ctor_external(this,(char *)plVar4[4],plVar4[5]);
+        }
+        else {
+          lVar6 = plVar4[5];
+          lVar5 = plVar4[4];
+          *(long *)(this + 0x10) = plVar4[6];
+          *(long *)(this + 8) = lVar6;
+          *(long *)this = lVar5;
+        }
+        this = this + 0x18;
+        *(string **)(in_x8 + 8) = this;
+        *(string **)(in_x8 + 8) = this;
+        plVar1 = (long *)plVar4[1];
+        if ((long *)plVar4[1] == (long *)0x0) goto LAB_000014c8;
+LAB_000014b8:
+        do {
+          plVar3 = plVar1;
+          plVar1 = (long *)*plVar3;
+        } while ((long *)*plVar3 != (long *)0x0);
+      }
+      else {
+        this = std::vector<std::string,std::allocator<std::string>>::
+               __push_back_slow_path<std::string_const&>((string *)in_x8);
+        *(string **)(in_x8 + 8) = this;
+        plVar1 = (long *)plVar4[1];
+        if ((long *)plVar4[1] != (long *)0x0) goto LAB_000014b8;
+LAB_000014c8:
+        do {
+          plVar3 = (long *)plVar4[2];
+          bVar2 = (long *)*plVar3 != plVar4;
+          plVar4 = plVar3;
+        } while (bVar2);
+      }
+      plVar4 = plVar3;
+    } while (plVar3 != (long *)(in_x0 + 0x48));
+  }
+  std::mutex::unlock();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: reserve
+// Entry: 00001538
+// Signature: undefined __thiscall reserve(vector<std::string,std::allocator<std::string>> * this, ulong param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001620) */
+/* std::vector<std::string, std::allocator<std::string > >::reserve(unsigned long) */
+
+void __thiscall
+std::vector<std::string,std::allocator<std::string>>::reserve
+          (vector<std::string,std::allocator<std::string>> *this,ulong param_1)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  void *pvVar4;
+  void *pvVar5;
+  void *pvVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  
+  pvVar4 = *(void **)this;
+  if ((ulong)((*(long *)(this + 0x10) - (long)pvVar4 >> 3) * -0x5555555555555555) < param_1) {
+    if (0xaaaaaaaaaaaaaaa < param_1) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    pvVar6 = *(void **)(this + 8);
+    pvVar2 = operator_new(param_1 * 0x18);
+    pvVar1 = (void *)((long)pvVar2 + param_1 * 0x18);
+    pvVar2 = (void *)((long)pvVar2 + (((long)pvVar6 - (long)pvVar4) / 0x18) * 0x18);
+    pvVar3 = pvVar2;
+    if ((long)pvVar6 - (long)pvVar4 == 0) {
+      *(void **)this = pvVar2;
+      *(void **)(this + 8) = pvVar2;
+      *(void **)(this + 0x10) = pvVar1;
+    }
+    else {
+      do {
+        uVar8 = *(undefined8 *)((long)pvVar6 + -0x10);
+        uVar7 = *(undefined8 *)((long)pvVar6 + -0x18);
+        *(undefined8 *)((long)pvVar3 + -8) = *(undefined8 *)((long)pvVar6 + -8);
+        *(undefined8 *)((long)pvVar3 + -0x10) = uVar8;
+        *(undefined8 *)((long)pvVar3 + -0x18) = uVar7;
+        pvVar3 = (void *)((long)pvVar3 + -0x18);
+        *(undefined8 *)((long)pvVar6 + -0x10) = 0;
+        *(undefined8 *)((long)pvVar6 + -8) = 0;
+        *(undefined8 *)((long)pvVar6 + -0x18) = 0;
+        pvVar6 = (void *)((long)pvVar6 + -0x18);
+      } while (pvVar6 != pvVar4);
+      pvVar6 = *(void **)this;
+      pvVar5 = *(void **)(this + 8);
+      *(void **)this = pvVar3;
+      *(void **)(this + 8) = pvVar2;
+      *(void **)(this + 0x10) = pvVar1;
+      pvVar4 = pvVar5;
+      for (; pvVar5 != pvVar6; pvVar5 = (void *)((long)pvVar5 + -0x18)) {
+        pvVar4 = pvVar6;
+      }
+    }
+    if (pvVar4 != (void *)0x0) {
+      operator_delete(pvVar4);
+      return;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 0000166c
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<std::string,std::allocator<std::string>> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000016b0) */
+/* std::vector<std::string, std::allocator<std::string > >::~vector[abi:ne180100]() */
+
+vector<std::string,std::allocator<std::string>> * __thiscall
+std::vector<std::string,std::allocator<std::string>>::~vector_abi_ne180100_
+          (vector<std::string,std::allocator<std::string>> *this)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  void *pvVar3;
+  
+  pvVar2 = *(void **)this;
+  if (pvVar2 != (void *)0x0) {
+    pvVar3 = *(void **)(this + 8);
+    pvVar1 = pvVar2;
+    if (pvVar3 != pvVar2) {
+      do {
+        pvVar3 = (void *)((long)pvVar3 + -0x18);
+      } while (pvVar3 != pvVar2);
+      pvVar1 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar2;
+    operator_delete(pvVar1);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 000016dc
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::string, std::allocator<std::string > >::__throw_length_error[abi:ne180100]()
+   const */
+
+void std::vector<std::string,std::allocator<std::string>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: ~__split_buffer
+// Entry: 000016f0
+// Signature: undefined __thiscall ~__split_buffer(__split_buffer<std::string,std::allocator<std::string>&> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001744) */
+/* std::__split_buffer<std::string, std::allocator<std::string >&>::~__split_buffer() */
+
+__split_buffer<std::string,std::allocator<std::string>&> * __thiscall
+std::__split_buffer<std::string,std::allocator<std::string>&>::~__split_buffer
+          (__split_buffer<std::string,std::allocator<std::string>&> *this)
+
+{
+  long lVar1;
+  
+  lVar1 = *(long *)(this + 0x10);
+  while (lVar1 != *(long *)(this + 8)) {
+    lVar1 = lVar1 + -0x18;
+    *(long *)(this + 0x10) = lVar1;
+  }
+  if (*(void **)this != (void *)0x0) {
+    operator_delete(*(void **)this);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __push_back_slow_path<std::string_const&>
+// Entry: 00001754
+// Signature: string * __cdecl __push_back_slow_path<std::string_const&>(string * param_1)
+// ========================================
+
+
+/* std::string* std::vector<std::string, std::allocator<std::string >
+   >::__push_back_slow_path<std::string const&>(std::string const&) */
+
+string * std::vector<std::string,std::allocator<std::string>>::
+         __push_back_slow_path<std::string_const&>(string *param_1)
+
+{
+  string *psVar1;
+  ulong uVar2;
+  char cVar3;
+  bool bVar4;
+  _Unwind_Exception *exception_object;
+  string *extraout_x0;
+  long *plVar5;
+  undefined8 *in_x1;
+  string *in_x2;
+  uchar *in_x3;
+  int in_w4;
+  int in_w5;
+  undefined1 in_w6;
+  string *psVar6;
+  undefined8 uVar7;
+  long lVar8;
+  long lVar9;
+  ulong uVar10;
+  string *psVar11;
+  string *psVar12;
+  string *psVar13;
+  long *plVar14;
+  undefined8 uVar15;
+  long lStack_e0;
+  long *plStack_d8;
+  string *psStack_d0;
+  long *plStack_c8;
+  string *local_68;
+  string *local_60;
+  string *local_58;
+  void *local_50;
+  string *local_48;
+  
+  psVar11 = *(string **)param_1;
+  psVar6 = *(string **)(param_1 + 8);
+  lVar8 = (long)psVar6 - (long)psVar11 >> 3;
+  uVar2 = lVar8 * -0x5555555555555555 + 1;
+  if (0xaaaaaaaaaaaaaaa < uVar2) {
+                    /* WARNING: Subroutine does not return */
+    __throw_length_error_abi_ne180100_();
+  }
+  local_48 = param_1 + 0x10;
+  lVar9 = *(long *)local_48 - (long)psVar11 >> 3;
+  uVar10 = lVar9 * 0x5555555555555556;
+  if (uVar10 < uVar2 || uVar10 - uVar2 == 0) {
+    uVar10 = uVar2;
+  }
+  if (0x555555555555554 < (ulong)(lVar9 * -0x5555555555555555)) {
+    uVar10 = 0xaaaaaaaaaaaaaaa;
+  }
+  if (uVar10 == 0) {
+    local_68 = (void *)0x0;
+  }
+  else {
+    if (0xaaaaaaaaaaaaaaa < uVar10) {
+      exception_object = (_Unwind_Exception *)__throw_bad_array_new_length_abi_ne180100_();
+      __split_buffer<std::string,std::allocator<std::string>&>::~__split_buffer
+                ((__split_buffer<std::string,std::allocator<std::string>&> *)&local_68);
+      __Unwind_Resume(exception_object);
+      std::mutex::lock();
+      m3t::ValidationZoneManager::GetZoneUnlocked(extraout_x0);
+      if (psStack_d0 != (string *)0x0) {
+        m3t::ValidationZone::GetValidator(psStack_d0);
+        if (plStack_d8 != (long *)0x0) {
+          plVar5 = plStack_d8 + 1;
+          do {
+            lVar8 = *plVar5;
+            cVar3 = '\x01';
+            bVar4 = (bool)ExclusiveMonitorPass(plVar5,0x10);
+            if (bVar4) {
+              *plVar5 = lVar8 + -1;
+              cVar3 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar3 != '\0');
+          if (lVar8 == 0) {
+            (**(code **)(*plStack_d8 + 0x10))(plStack_d8);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        if (lStack_e0 == 0) {
+          plVar5 = operator_new(0x100);
+          plVar14 = plVar5 + 1;
+          *plVar14 = 0;
+          plVar5[2] = 0;
+          *plVar5 = (long)&PTR____shared_ptr_emplace_00003810;
+          m3t::TemplateValidator::TemplateValidator
+                    ((TemplateValidator *)(plVar5 + 3),in_x2,in_x3,in_w4,in_w5,(bool)in_w6);
+          do {
+            cVar3 = '\x01';
+            bVar4 = (bool)ExclusiveMonitorPass(plVar14,0x10);
+            if (bVar4) {
+              *plVar14 = *plVar14 + 1;
+              cVar3 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar3 != '\0');
+          psVar11 = (string *)m3t::ValidationZone::AddValidator((shared_ptr *)psStack_d0);
+          if (plVar5 != (long *)0x0) {
+            plVar14 = plVar5 + 1;
+            do {
+              lVar8 = *plVar14;
+              cVar3 = '\x01';
+              bVar4 = (bool)ExclusiveMonitorPass(plVar14,0x10);
+              if (bVar4) {
+                *plVar14 = lVar8 + -1;
+                cVar3 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar3 != '\0');
+            if (lVar8 == 0) {
+              (**(code **)(*plVar5 + 0x10))(plVar5);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          if (plVar5 != (long *)0x0) {
+            plVar14 = plVar5 + 1;
+            do {
+              lVar8 = *plVar14;
+              cVar3 = '\x01';
+              bVar4 = (bool)ExclusiveMonitorPass(plVar14,0x10);
+              if (bVar4) {
+                *plVar14 = lVar8 + -1;
+                cVar3 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar3 != '\0');
+            if (lVar8 == 0) {
+              (**(code **)(*plVar5 + 0x10))(plVar5);
+              std::__shared_weak_count::__release_weak();
+            }
+          }
+          goto LAB_000019b0;
+        }
+      }
+      psVar11 = (string *)0x0;
+LAB_000019b0:
+      if (plStack_c8 != (long *)0x0) {
+        plVar5 = plStack_c8 + 1;
+        do {
+          lVar8 = *plVar5;
+          cVar3 = '\x01';
+          bVar4 = (bool)ExclusiveMonitorPass(plVar5,0x10);
+          if (bVar4) {
+            *plVar5 = lVar8 + -1;
+            cVar3 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar3 != '\0');
+        if (lVar8 == 0) {
+          (**(code **)(*plStack_c8 + 0x10))(plStack_c8);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      std::mutex::unlock();
+      return psVar11;
+    }
+    local_68 = operator_new(uVar10 * 0x18);
+  }
+  local_60 = (string *)((long)local_68 + lVar8 * 8);
+  local_50 = (void *)((long)local_68 + uVar10 * 0x18);
+  local_58 = local_60;
+  if (*(char *)((long)in_x1 + 0x17) < '\0') {
+    string::__init_copy_ctor_external(local_60,(char *)*in_x1,in_x1[1]);
+    psVar11 = *(string **)param_1;
+    psVar6 = *(string **)(param_1 + 8);
+    psVar12 = local_58 + 0x18;
+    psVar13 = psVar11;
+    if (psVar6 == psVar11) goto LAB_0000188c;
+  }
+  else {
+    uVar7 = *in_x1;
+    *(undefined8 *)(local_60 + 8) = in_x1[1];
+    *(undefined8 *)local_60 = uVar7;
+    *(undefined8 *)(local_60 + 0x10) = in_x1[2];
+    psVar12 = local_60 + 0x18;
+    psVar13 = psVar11;
+    if (psVar6 == psVar11) goto LAB_0000188c;
+  }
+  do {
+    uVar15 = *(undefined8 *)(psVar6 + -0x10);
+    uVar7 = *(undefined8 *)(psVar6 + -0x18);
+    *(undefined8 *)(local_60 + -8) = *(undefined8 *)(psVar6 + -8);
+    *(undefined8 *)(local_60 + -0x10) = uVar15;
+    *(undefined8 *)(local_60 + -0x18) = uVar7;
+    local_60 = local_60 + -0x18;
+    *(undefined8 *)(psVar6 + -0x10) = 0;
+    *(undefined8 *)(psVar6 + -8) = 0;
+    *(undefined8 *)(psVar6 + -0x18) = 0;
+    psVar6 = psVar6 + -0x18;
+  } while (psVar6 != psVar11);
+  psVar11 = *(string **)(param_1 + 8);
+  psVar13 = *(string **)param_1;
+LAB_0000188c:
+  *(string **)param_1 = local_60;
+  *(string **)(param_1 + 8) = psVar12;
+  uVar7 = *(undefined8 *)(param_1 + 0x10);
+  *(void **)(param_1 + 0x10) = local_50;
+  local_50 = (void *)uVar7;
+  psVar6 = psVar11;
+  local_68 = psVar13;
+  local_60 = psVar13;
+  while (psVar11 != psVar13) {
+    local_58 = psVar11 + -0x18;
+    psVar1 = psVar11 + -1;
+    psVar11 = local_58;
+    psVar6 = psVar13;
+    if ((char)*psVar1 < '\0') {
+      operator_delete(*(void **)local_58);
+    }
+  }
+  if (psVar6 != (string *)0x0) {
+    operator_delete(psVar6);
+  }
+  return psVar12;
+}
+
+
+
+
+// ========================================
+// Function: AddTemplateValidator
+// Entry: 00001928
+// Signature: undefined __thiscall AddTemplateValidator(ValidationZoneManager * this, string * param_1, string * param_2, uchar * param_3, int param_4, int param_5, bool param_6)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::AddTemplateValidator(std::string const&, std::string const&, unsigned
+   char const*, int, int, bool) */
+
+undefined8 __thiscall
+m3t::ValidationZoneManager::AddTemplateValidator
+          (ValidationZoneManager *this,string *param_1,string *param_2,uchar *param_3,int param_4,
+          int param_5,bool param_6)
+
+{
+  char cVar1;
+  bool bVar2;
+  long *plVar3;
+  long lVar4;
+  undefined8 uVar5;
+  long *plVar6;
+  long local_70;
+  long *local_68;
+  string *local_60;
+  long *local_58;
+  
+  std::mutex::lock();
+  GetZoneUnlocked((string *)this);
+  if (local_60 != (string *)0x0) {
+    m3t::ValidationZone::GetValidator(local_60);
+    if (local_68 != (long *)0x0) {
+      plVar3 = local_68 + 1;
+      do {
+        lVar4 = *plVar3;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+        if (bVar2) {
+          *plVar3 = lVar4 + -1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      if (lVar4 == 0) {
+        (**(code **)(*local_68 + 0x10))(local_68);
+        std::__shared_weak_count::__release_weak();
+      }
+    }
+    if (local_70 == 0) {
+      plVar3 = operator_new(0x100);
+      plVar6 = plVar3 + 1;
+      *plVar6 = 0;
+      plVar3[2] = 0;
+      *plVar3 = (long)&PTR____shared_ptr_emplace_00003810;
+      m3t::TemplateValidator::TemplateValidator
+                ((TemplateValidator *)(plVar3 + 3),param_2,param_3,param_4,param_5,param_6);
+      do {
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+        if (bVar2) {
+          *plVar6 = *plVar6 + 1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      uVar5 = m3t::ValidationZone::AddValidator((shared_ptr *)local_60);
+      if (plVar3 != (long *)0x0) {
+        plVar6 = plVar3 + 1;
+        do {
+          lVar4 = *plVar6;
+          cVar1 = '\x01';
+          bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar2) {
+            *plVar6 = lVar4 + -1;
+            cVar1 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar1 != '\0');
+        if (lVar4 == 0) {
+          (**(code **)(*plVar3 + 0x10))(plVar3);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      if (plVar3 != (long *)0x0) {
+        plVar6 = plVar3 + 1;
+        do {
+          lVar4 = *plVar6;
+          cVar1 = '\x01';
+          bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar2) {
+            *plVar6 = lVar4 + -1;
+            cVar1 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar1 != '\0');
+        if (lVar4 == 0) {
+          (**(code **)(*plVar3 + 0x10))(plVar3);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      goto LAB_000019b0;
+    }
+  }
+  uVar5 = 0;
+LAB_000019b0:
+  if (local_58 != (long *)0x0) {
+    plVar3 = local_58 + 1;
+    do {
+      lVar4 = *plVar3;
+      cVar1 = '\x01';
+      bVar2 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar2) {
+        *plVar3 = lVar4 + -1;
+        cVar1 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar1 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*local_58 + 0x10))(local_58);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  std::mutex::unlock();
+  return uVar5;
+}
+
+
+
+
+// ========================================
+// Function: ~shared_ptr[abi:ne180100]
+// Entry: 00001b7c
+// Signature: undefined __thiscall ~shared_ptr[abi:ne180100](shared_ptr<m3t::TemplateValidator> * this)
+// ========================================
+
+
+/* std::shared_ptr<m3t::TemplateValidator>::~shared_ptr[abi:ne180100]() */
+
+shared_ptr<m3t::TemplateValidator> * __thiscall
+std::shared_ptr<m3t::TemplateValidator>::~shared_ptr_abi_ne180100_
+          (shared_ptr<m3t::TemplateValidator> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00001be4
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::TemplateValidator, std::allocator<m3t::TemplateValidator>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> *this
+          )
+
+{
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003810;
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00001bf4
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::TemplateValidator, std::allocator<m3t::TemplateValidator>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> *this
+          )
+
+{
+  void *pvVar1;
+  
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003810;
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 00001c14
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::TemplateValidator, std::allocator<m3t::TemplateValidator>
+   >::__on_zero_shared() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>>::
+__on_zero_shared(__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>>
+                 *this)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00001c1c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*(code *)**(undefined8 **)(this + 0x18))();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 00001c20
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::TemplateValidator, std::allocator<m3t::TemplateValidator>
+   >::__on_zero_shared_weak() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>>::
+__on_zero_shared_weak
+          (__shared_ptr_emplace<m3t::TemplateValidator,std::allocator<m3t::TemplateValidator>> *this
+          )
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: AddHistogramValidator
+// Entry: 00001c24
+// Signature: undefined __thiscall AddHistogramValidator(ValidationZoneManager * this, string * param_1, string * param_2, uchar * param_3, int param_4, int param_5, bool param_6, HistogramCompareMethod param_7, int param_8)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::AddHistogramValidator(std::string const&, std::string const&,
+   unsigned char const*, int, int, bool, m3t::HistogramCompareMethod, int) */
+
+undefined8 __thiscall
+m3t::ValidationZoneManager::AddHistogramValidator
+          (ValidationZoneManager *this,undefined8 param_2_00,undefined8 param_2,undefined8 param_3,
+          undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+          undefined4 param_9)
+
+{
+  char cVar1;
+  bool bVar2;
+  long *plVar3;
+  long lVar4;
+  undefined8 uVar5;
+  long *plVar6;
+  long local_80;
+  long *local_78;
+  string *local_70;
+  long *local_68;
+  
+  std::mutex::lock();
+  GetZoneUnlocked((string *)this);
+  if (local_70 != (string *)0x0) {
+    m3t::ValidationZone::GetValidator(local_70);
+    if (local_78 != (long *)0x0) {
+      plVar3 = local_78 + 1;
+      do {
+        lVar4 = *plVar3;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+        if (bVar2) {
+          *plVar3 = lVar4 + -1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      if (lVar4 == 0) {
+        (**(code **)(*local_78 + 0x10))(local_78);
+        std::__shared_weak_count::__release_weak();
+      }
+    }
+    if (local_80 == 0) {
+      plVar3 = operator_new(0xa8);
+      plVar6 = plVar3 + 1;
+      *plVar6 = 0;
+      plVar3[2] = 0;
+      *plVar3 = (long)&PTR____shared_ptr_emplace_00003860;
+      m3t::HistogramValidator::HistogramValidator
+                ((HistogramValidator *)(plVar3 + 3),param_2,param_3,param_5,param_6,param_7,param_8,
+                 param_9);
+      do {
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+        if (bVar2) {
+          *plVar6 = *plVar6 + 1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      uVar5 = m3t::ValidationZone::AddValidator((shared_ptr *)local_70);
+      if (plVar3 != (long *)0x0) {
+        plVar6 = plVar3 + 1;
+        do {
+          lVar4 = *plVar6;
+          cVar1 = '\x01';
+          bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar2) {
+            *plVar6 = lVar4 + -1;
+            cVar1 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar1 != '\0');
+        if (lVar4 == 0) {
+          (**(code **)(*plVar3 + 0x10))(plVar3);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      if (plVar3 != (long *)0x0) {
+        plVar6 = plVar3 + 1;
+        do {
+          lVar4 = *plVar6;
+          cVar1 = '\x01';
+          bVar2 = (bool)ExclusiveMonitorPass(plVar6,0x10);
+          if (bVar2) {
+            *plVar6 = lVar4 + -1;
+            cVar1 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar1 != '\0');
+        if (lVar4 == 0) {
+          (**(code **)(*plVar3 + 0x10))(plVar3);
+          std::__shared_weak_count::__release_weak();
+        }
+      }
+      goto LAB_00001cb4;
+    }
+  }
+  uVar5 = 0;
+LAB_00001cb4:
+  if (local_68 != (long *)0x0) {
+    plVar3 = local_68 + 1;
+    do {
+      lVar4 = *plVar3;
+      cVar1 = '\x01';
+      bVar2 = (bool)ExclusiveMonitorPass(plVar3,0x10);
+      if (bVar2) {
+        *plVar3 = lVar4 + -1;
+        cVar1 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar1 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*local_68 + 0x10))(local_68);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  std::mutex::unlock();
+  return uVar5;
+}
+
+
+
+
+// ========================================
+// Function: ~shared_ptr[abi:ne180100]
+// Entry: 00001e8c
+// Signature: undefined __thiscall ~shared_ptr[abi:ne180100](shared_ptr<m3t::HistogramValidator> * this)
+// ========================================
+
+
+/* std::shared_ptr<m3t::HistogramValidator>::~shared_ptr[abi:ne180100]() */
+
+shared_ptr<m3t::HistogramValidator> * __thiscall
+std::shared_ptr<m3t::HistogramValidator>::~shared_ptr_abi_ne180100_
+          (shared_ptr<m3t::HistogramValidator> *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  long lVar4;
+  long *plVar5;
+  
+  plVar5 = *(long **)(this + 8);
+  if (plVar5 != (long *)0x0) {
+    plVar1 = plVar5 + 1;
+    do {
+      lVar4 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar4 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar4 == 0) {
+      (**(code **)(*plVar5 + 0x10))(plVar5);
+      std::__shared_weak_count::__release_weak();
+      return this;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00001ef4
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::HistogramValidator, std::allocator<m3t::HistogramValidator>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>
+           *this)
+
+{
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003860;
+  std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_ptr_emplace
+// Entry: 00001f04
+// Signature: undefined __thiscall ~__shared_ptr_emplace(__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::HistogramValidator, std::allocator<m3t::HistogramValidator>
+   >::~__shared_ptr_emplace() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>::
+~__shared_ptr_emplace
+          (__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>
+           *this)
+
+{
+  void *pvVar1;
+  
+  *(undefined ***)this = &PTR____shared_ptr_emplace_00003860;
+  pvVar1 = (void *)std::__shared_weak_count::~__shared_weak_count((__shared_weak_count *)this);
+  operator_delete(pvVar1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared
+// Entry: 00001f24
+// Signature: undefined __thiscall __on_zero_shared(__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::HistogramValidator, std::allocator<m3t::HistogramValidator>
+   >::__on_zero_shared() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>::
+__on_zero_shared(__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>
+                 *this)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x00001f2c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*(code *)**(undefined8 **)(this + 0x18))();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __on_zero_shared_weak
+// Entry: 00001f30
+// Signature: undefined __thiscall __on_zero_shared_weak(__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>> * this)
+// ========================================
+
+
+/* std::__shared_ptr_emplace<m3t::HistogramValidator, std::allocator<m3t::HistogramValidator>
+   >::__on_zero_shared_weak() */
+
+void __thiscall
+std::__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>::
+__on_zero_shared_weak
+          (__shared_ptr_emplace<m3t::HistogramValidator,std::allocator<m3t::HistogramValidator>>
+           *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: RemoveValidator
+// Entry: 00001f34
+// Signature: undefined __cdecl RemoveValidator(string * param_1, string * param_2)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::RemoveValidator(std::string const&, std::string const&) */
+
+undefined8 m3t::ValidationZoneManager::RemoveValidator(string *param_1,string *param_2)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  long lVar5;
+  string *local_40;
+  long *local_38;
+  
+  std::mutex::lock();
+  GetZoneUnlocked(param_1);
+  if (local_40 == (string *)0x0) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = m3t::ValidationZone::RemoveValidator(local_40);
+  }
+  if (local_38 != (long *)0x0) {
+    plVar1 = local_38 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar2 = '\x01';
+      bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar3) {
+        *plVar1 = lVar5 + -1;
+        cVar2 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar2 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*local_38 + 0x10))(local_38);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  std::mutex::unlock();
+  return uVar4;
+}
+
+
+
+
+// ========================================
+// Function: ProcessValidation
+// Entry: 00002000
+// Signature: undefined __thiscall ProcessValidation(ValidationZoneManager * this, string * param_1, Mat * param_2, Transform * param_3, Intrinsics * param_4, float param_5, ZoneValidationResult * param_6)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000021d4) */
+/* WARNING: Removing unreachable block (ram,0x00002158) */
+/* WARNING: Removing unreachable block (ram,0x000021e4) */
+/* WARNING: Removing unreachable block (ram,0x000021f0) */
+/* m3t::ValidationZoneManager::ProcessValidation(std::string const&, cv::Mat const&,
+   Eigen::Transform<float, 3, 2, 0> const&, m3t::Intrinsics const&, float,
+   m3t::ZoneValidationResult*) */
+
+bool __thiscall
+m3t::ValidationZoneManager::ProcessValidation
+          (ValidationZoneManager *this,string *param_1,Mat *param_2,Transform *param_3,
+          Intrinsics *param_4,float param_5,ZoneValidationResult *param_6)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  bool bVar4;
+  shared_ptr *psVar5;
+  void *pvVar6;
+  long lVar7;
+  undefined1 local_140;
+  undefined7 uStack_13f;
+  long *plStack_138;
+  undefined7 local_130;
+  undefined1 uStack_129;
+  undefined4 local_128;
+  undefined1 local_120;
+  undefined7 uStack_11f;
+  undefined8 uStack_118;
+  undefined7 local_110;
+  undefined1 uStack_109;
+  undefined4 local_108;
+  undefined8 local_100;
+  undefined8 uStack_f8;
+  undefined8 local_f0;
+  Mat aMStack_e8 [96];
+  ZoneValidationResult local_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  
+  if (param_6 == (ZoneValidationResult *)0x0) {
+    bVar4 = false;
+  }
+  else {
+    local_80 = 0;
+    uStack_78 = 0;
+    std::mutex::lock();
+    GetZoneUnlocked((string *)this);
+    bVar4 = CONCAT71(uStack_13f,local_140) != 0;
+    psVar5 = (shared_ptr *)std::mutex::unlock();
+    if (CONCAT71(uStack_13f,local_140) != 0) {
+      ProcessZoneValidation
+                (psVar5,(Mat *)&local_80,(Transform *)param_2,(Intrinsics *)param_3,param_5);
+      if ((char)param_6[0x17] < '\0') {
+        operator_delete(*(void **)param_6);
+      }
+      *(long **)(param_6 + 8) = plStack_138;
+      *(ulong *)param_6 = CONCAT71(uStack_13f,local_140);
+      *(ulong *)(param_6 + 0x10) = CONCAT17(uStack_129,local_130);
+      *(undefined4 *)(param_6 + 0x18) = local_128;
+      if ((char)param_6[0x37] < '\0') {
+        operator_delete(*(void **)(param_6 + 0x20));
+      }
+      *(undefined8 *)(param_6 + 0x28) = uStack_118;
+      *(ulong *)(param_6 + 0x20) = CONCAT71(uStack_11f,local_120);
+      *(ulong *)(param_6 + 0x30) = CONCAT17(uStack_109,local_110);
+      pvVar6 = *(void **)(param_6 + 0x40);
+      *(undefined4 *)(param_6 + 0x38) = local_108;
+      if (pvVar6 != (void *)0x0) {
+        *(void **)(param_6 + 0x48) = pvVar6;
+        operator_delete(pvVar6);
+        *(undefined8 *)(param_6 + 0x40) = 0;
+        *(undefined8 *)(param_6 + 0x48) = 0;
+        *(undefined8 *)(param_6 + 0x50) = 0;
+      }
+      *(undefined8 *)(param_6 + 0x48) = uStack_f8;
+      *(undefined8 *)(param_6 + 0x40) = local_100;
+      *(undefined8 *)(param_6 + 0x50) = local_f0;
+      cv::Mat::operator=((Mat *)(param_6 + 0x58),aMStack_e8);
+      param_6[0xb8] = local_88;
+      cv::Mat::~Mat(aMStack_e8);
+    }
+    if (plStack_138 != (long *)0x0) {
+      plVar1 = plStack_138 + 1;
+      do {
+        lVar7 = *plVar1;
+        cVar2 = '\x01';
+        bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+        if (bVar3) {
+          *plVar1 = lVar7 + -1;
+          cVar2 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar2 != '\0');
+      if (lVar7 == 0) {
+        (**(code **)(*plStack_138 + 0x10))(plStack_138);
+        std::__shared_weak_count::__release_weak();
+      }
+    }
+  }
+  return bVar4;
+}
+
+
+
+
+// ========================================
+// Function: ProcessAllValidations
+// Entry: 00002238
+// Signature: undefined __thiscall ProcessAllValidations(ValidationZoneManager * this, Mat * param_1, Transform * param_2, Intrinsics * param_3, map * param_4, map * param_5)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000026bc) */
+/* WARNING: Removing unreachable block (ram,0x0000262c) */
+/* WARNING: Removing unreachable block (ram,0x00002640) */
+/* WARNING: Removing unreachable block (ram,0x00002614) */
+/* WARNING: Removing unreachable block (ram,0x00002630) */
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* m3t::ValidationZoneManager::ProcessAllValidations(cv::Mat const&, Eigen::Transform<float, 3, 2,
+   0> const&, m3t::Intrinsics const&, std::map<std::string, float, std::less<std::string >,
+   std::allocator<std::pair<std::string const, float> > > const&, std::map<std::string,
+   m3t::ZoneValidationResult, std::less<std::string >, std::allocator<std::pair<std::string const,
+   m3t::ZoneValidationResult> > >*) */
+
+bool __thiscall
+m3t::ValidationZoneManager::ProcessAllValidations
+          (ValidationZoneManager *this,Mat *param_1,Transform *param_2,Intrinsics *param_3,
+          map *param_4,map *param_5)
+
+{
+  long *plVar1;
+  shared_ptr *psVar2;
+  map *pmVar3;
+  size_t sVar4;
+  char cVar5;
+  ulong uVar6;
+  ulong uVar7;
+  bool bVar8;
+  uint uVar9;
+  string *psVar10;
+  shared_ptr *psVar11;
+  void *pvVar12;
+  long lVar13;
+  ValidationZoneManager *pVVar14;
+  map *pmVar15;
+  long *plVar16;
+  ValidationZoneManager *pVVar17;
+  string *psVar18;
+  map *pmVar19;
+  map *pmVar20;
+  undefined8 uVar21;
+  undefined8 uVar22;
+  float fVar23;
+  float fVar24;
+  undefined1 local_160;
+  undefined7 uStack_15f;
+  undefined8 uStack_158;
+  undefined7 local_150;
+  undefined1 uStack_149;
+  undefined4 local_148;
+  undefined1 local_140;
+  undefined7 uStack_13f;
+  undefined8 uStack_138;
+  undefined7 local_130;
+  undefined1 uStack_129;
+  undefined4 local_128;
+  undefined8 local_120;
+  undefined8 uStack_118;
+  undefined8 local_110;
+  Mat aMStack_108 [96];
+  undefined1 local_a8;
+  string *local_a0;
+  string *local_98;
+  string *local_90;
+  piecewise_construct_t *local_80 [2];
+  
+  if (param_5 != (map *)0x0) {
+    pmVar15 = param_5 + 8;
+    std::
+    __tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+    ::destroy((__tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+               *)param_5,*(__tree_node **)pmVar15);
+    *(map **)param_5 = pmVar15;
+    *(undefined8 *)(param_5 + 0x10) = 0;
+    *(undefined8 *)pmVar15 = 0;
+    local_a0 = (string *)0x0;
+    local_98 = (string *)0x0;
+    local_90 = (string *)0x0;
+    std::mutex::lock();
+    std::
+    vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+    ::reserve((vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+               *)&local_a0,*(ulong *)(this + 0x50));
+    pVVar17 = *(ValidationZoneManager **)(this + 0x40);
+    psVar10 = local_98;
+    while (pVVar17 != this + 0x48) {
+      if (psVar10 < local_90) {
+        if ((char)pVVar17[0x37] < '\0') {
+          std::string::__init_copy_ctor_external
+                    (psVar10,*(char **)(pVVar17 + 0x20),*(ulong *)(pVVar17 + 0x28));
+        }
+        else {
+          uVar22 = *(undefined8 *)(pVVar17 + 0x28);
+          uVar21 = *(undefined8 *)(pVVar17 + 0x20);
+          *(undefined8 *)(psVar10 + 0x10) = *(undefined8 *)(pVVar17 + 0x30);
+          *(undefined8 *)(psVar10 + 8) = uVar22;
+          *(undefined8 *)psVar10 = uVar21;
+        }
+        *(undefined8 *)(psVar10 + 0x18) = *(undefined8 *)(pVVar17 + 0x38);
+        lVar13 = *(long *)(pVVar17 + 0x40);
+        *(long *)(psVar10 + 0x20) = lVar13;
+        if (lVar13 != 0) {
+          plVar16 = (long *)(lVar13 + 8);
+          do {
+            cVar5 = '\x01';
+            bVar8 = (bool)ExclusiveMonitorPass(plVar16,0x10);
+            if (bVar8) {
+              *plVar16 = *plVar16 + 1;
+              cVar5 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar5 != '\0');
+        }
+        psVar10 = psVar10 + 0x28;
+        pVVar14 = *(ValidationZoneManager **)(pVVar17 + 8);
+        local_98 = psVar10;
+        if (*(ValidationZoneManager **)(pVVar17 + 8) == (ValidationZoneManager *)0x0)
+        goto LAB_00002378;
+LAB_00002368:
+        do {
+          pVVar17 = pVVar14;
+          pVVar14 = *(ValidationZoneManager **)pVVar17;
+        } while (pVVar14 != (ValidationZoneManager *)0x0);
+      }
+      else {
+        psVar10 = (string *)
+                  std::
+                  vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+                  ::
+                  __emplace_back_slow_path<std::string_const&,std::shared_ptr<m3t::ValidationZone>const&>
+                            ((string *)&local_a0,(shared_ptr *)(pVVar17 + 0x20));
+        pVVar14 = *(ValidationZoneManager **)(pVVar17 + 8);
+        local_98 = psVar10;
+        if (*(ValidationZoneManager **)(pVVar17 + 8) != (ValidationZoneManager *)0x0)
+        goto LAB_00002368;
+LAB_00002378:
+        do {
+          pVVar14 = *(ValidationZoneManager **)(pVVar17 + 0x10);
+          bVar8 = *(ValidationZoneManager **)pVVar14 != pVVar17;
+          pVVar17 = pVVar14;
+        } while (bVar8);
+      }
+    }
+    std::mutex::unlock();
+    psVar10 = local_98;
+    if (local_a0 != local_98) {
+      pmVar15 = param_4 + 8;
+      psVar18 = local_a0;
+      do {
+        psVar11 = (shared_ptr *)m3t::ValidationZone::body_ptr();
+        fVar23 = 0.0;
+        fVar24 = 0.0;
+        if (*(long *)psVar11 != 0) {
+          m3t::ValidationZone::body_ptr();
+          psVar11 = (shared_ptr *)m3t::Body::name();
+          pmVar20 = *(map **)pmVar15;
+          fVar24 = fVar23;
+          if (pmVar20 != (map *)0x0) {
+            pmVar19 = pmVar15;
+            uVar6 = *(ulong *)(psVar11 + 8);
+            psVar2 = *(shared_ptr **)psVar11;
+            if (-1 < (char)psVar11[0x17]) {
+              uVar6 = (ulong)(byte)psVar11[0x17];
+              psVar2 = psVar11;
+            }
+            do {
+              pmVar3 = *(map **)(pmVar20 + 0x20);
+              uVar7 = *(ulong *)(pmVar20 + 0x28);
+              if (-1 < (char)pmVar20[0x37]) {
+                pmVar3 = pmVar20 + 0x20;
+                uVar7 = (ulong)(byte)pmVar20[0x37];
+              }
+              sVar4 = uVar6;
+              if (uVar7 <= uVar6) {
+                sVar4 = uVar7;
+              }
+              uVar9 = _memcmp(pmVar3,psVar2,sVar4);
+              psVar11 = (shared_ptr *)(ulong)uVar9;
+              bVar8 = uVar7 < uVar6;
+              if (uVar9 != 0) {
+                bVar8 = (int)uVar9 < 0;
+              }
+              pmVar3 = pmVar20 + 8;
+              if (!bVar8) {
+                pmVar19 = pmVar20;
+                pmVar3 = pmVar20;
+              }
+              pmVar20 = *(map **)pmVar3;
+            } while (pmVar20 != (map *)0x0);
+            if (pmVar19 != pmVar15) {
+              pmVar20 = *(map **)(pmVar19 + 0x20);
+              uVar7 = *(ulong *)(pmVar19 + 0x28);
+              if (-1 < (char)pmVar19[0x37]) {
+                pmVar20 = pmVar19 + 0x20;
+                uVar7 = (ulong)(byte)pmVar19[0x37];
+              }
+              sVar4 = uVar7;
+              if (uVar6 <= uVar7) {
+                sVar4 = uVar6;
+              }
+              uVar9 = _memcmp(psVar2,pmVar20,sVar4);
+              psVar11 = (shared_ptr *)(ulong)uVar9;
+              bVar8 = uVar7 <= uVar6;
+              if (uVar9 != 0) {
+                bVar8 = -1 < (int)uVar9;
+              }
+              if (bVar8) {
+                fVar24 = *(float *)(pmVar19 + 0x38);
+              }
+            }
+          }
+        }
+        ProcessZoneValidation
+                  (psVar11,(Mat *)(psVar18 + 0x18),(Transform *)param_1,(Intrinsics *)param_2,fVar24
+                  );
+        local_80[0] = (piecewise_construct_t *)psVar18;
+        lVar13 = std::
+                 __tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+                 ::
+                 __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+                           ((string *)param_5,(piecewise_construct_t *)psVar18,
+                            (tuple *)&std::piecewise_construct,(tuple *)local_80);
+        if (*(char *)(lVar13 + 0x4f) < '\0') {
+          operator_delete(*(void **)(lVar13 + 0x38));
+        }
+        *(undefined8 *)(lVar13 + 0x40) = uStack_158;
+        *(ulong *)(lVar13 + 0x38) = CONCAT71(uStack_15f,local_160);
+        *(ulong *)(lVar13 + 0x48) = CONCAT17(uStack_149,local_150);
+        uStack_149 = 0;
+        local_160 = 0;
+        *(undefined4 *)(lVar13 + 0x50) = local_148;
+        if (*(char *)(lVar13 + 0x6f) < '\0') {
+          operator_delete(*(void **)(lVar13 + 0x58));
+        }
+        *(undefined8 *)(lVar13 + 0x60) = uStack_138;
+        *(ulong *)(lVar13 + 0x58) = CONCAT71(uStack_13f,local_140);
+        *(ulong *)(lVar13 + 0x68) = CONCAT17(uStack_129,local_130);
+        uStack_129 = 0;
+        local_140 = 0;
+        pvVar12 = *(void **)(lVar13 + 0x78);
+        *(undefined4 *)(lVar13 + 0x70) = local_128;
+        if (pvVar12 != (void *)0x0) {
+          *(void **)(lVar13 + 0x80) = pvVar12;
+          operator_delete(pvVar12);
+          *(undefined8 *)(lVar13 + 0x78) = 0;
+          *(undefined8 *)(lVar13 + 0x80) = 0;
+          *(undefined8 *)(lVar13 + 0x88) = 0;
+        }
+        *(undefined8 *)(lVar13 + 0x80) = uStack_118;
+        *(undefined8 *)(lVar13 + 0x78) = local_120;
+        *(undefined8 *)(lVar13 + 0x88) = local_110;
+        local_110 = 0;
+        local_120 = 0;
+        cv::Mat::operator=((Mat *)(lVar13 + 0x90),aMStack_108);
+        *(undefined1 *)(lVar13 + 0xf0) = local_a8;
+        cv::Mat::~Mat(aMStack_108);
+        uStack_118 = 0;
+        psVar18 = psVar18 + 0x28;
+      } while (psVar18 != psVar10);
+    }
+    psVar18 = local_a0;
+    psVar10 = local_98;
+    if (local_a0 != (string *)0x0) {
+      for (; psVar10 != psVar18; psVar10 = psVar10 + -0x28) {
+        plVar16 = *(long **)(psVar10 + -8);
+        if (plVar16 != (long *)0x0) {
+          plVar1 = plVar16 + 1;
+          do {
+            lVar13 = *plVar1;
+            cVar5 = '\x01';
+            bVar8 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar8) {
+              *plVar1 = lVar13 + -1;
+              cVar5 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar5 != '\0');
+          if (lVar13 == 0) {
+            (**(code **)(*plVar16 + 0x10))(plVar16);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+      }
+      local_98 = psVar18;
+      operator_delete(local_a0);
+    }
+  }
+  return param_5 != (map *)0x0;
+}
+
+
+
+
+// ========================================
+// Function: reserve
+// Entry: 000027a0
+// Signature: undefined __thiscall reserve(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>> * this, ulong param_1)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x000028b8) */
+/* WARNING: Removing unreachable block (ram,0x00002990) */
+/* std::vector<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::allocator<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::reserve(unsigned long) */
+
+vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+* __thiscall
+std::
+vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+::reserve(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+          *this,ulong param_1)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+  *pvVar4;
+  vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+  *extraout_x0;
+  vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+  *pvVar5;
+  long lVar6;
+  vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+  *pvVar7;
+  void *pvVar8;
+  void *pvVar9;
+  long *plVar10;
+  void *pvVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  
+  pvVar8 = *(void **)this;
+  if ((ulong)((*(long *)(this + 0x10) - (long)pvVar8 >> 3) * -0x3333333333333333) < param_1) {
+    if (0x666666666666666 < param_1) {
+      pvVar5 = (vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+                *)__throw_length_error_abi_ne180100_();
+      pvVar8 = *(void **)pvVar5;
+      if (pvVar8 != (void *)0x0) {
+        pvVar9 = *(void **)(pvVar5 + 8);
+        pvVar11 = pvVar8;
+        if (pvVar9 != pvVar8) {
+          do {
+            plVar10 = *(long **)((long)pvVar9 + -8);
+            if (plVar10 != (long *)0x0) {
+              plVar1 = plVar10 + 1;
+              do {
+                lVar6 = *plVar1;
+                cVar2 = '\x01';
+                bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+                if (bVar3) {
+                  *plVar1 = lVar6 + -1;
+                  cVar2 = ExclusiveMonitorsStatus();
+                }
+              } while (cVar2 != '\0');
+              if (lVar6 == 0) {
+                (**(code **)(*plVar10 + 0x10))(plVar10);
+                std::__shared_weak_count::__release_weak();
+              }
+            }
+            pvVar9 = (void *)((long)pvVar9 + -0x28);
+          } while (pvVar9 != pvVar8);
+          pvVar11 = *(void **)pvVar5;
+        }
+        *(void **)(pvVar5 + 8) = pvVar8;
+        operator_delete(pvVar11);
+      }
+      return pvVar5;
+    }
+    pvVar11 = *(void **)(this + 8);
+    pvVar4 = operator_new(param_1 * 0x28);
+    pvVar5 = pvVar4 + ((long)pvVar11 - (long)pvVar8);
+    pvVar7 = pvVar5;
+    if ((long)pvVar11 - (long)pvVar8 == 0) {
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)this = pvVar5;
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)(this + 8) = pvVar5;
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)(this + 0x10) = pvVar4 + param_1 * 0x28;
+      this = pvVar4;
+    }
+    else {
+      do {
+        uVar13 = *(undefined8 *)((long)pvVar11 + -0x20);
+        uVar12 = *(undefined8 *)((long)pvVar11 + -0x28);
+        *(undefined8 *)(pvVar7 + -0x18) = *(undefined8 *)((long)pvVar11 + -0x18);
+        *(undefined8 *)(pvVar7 + -0x20) = uVar13;
+        *(undefined8 *)(pvVar7 + -0x28) = uVar12;
+        *(undefined8 *)((long)pvVar11 + -0x20) = 0;
+        *(undefined8 *)((long)pvVar11 + -0x18) = 0;
+        *(undefined8 *)((long)pvVar11 + -0x28) = 0;
+        uVar12 = *(undefined8 *)((long)pvVar11 + -0x10);
+        *(undefined8 *)(pvVar7 + -8) = *(undefined8 *)((long)pvVar11 + -8);
+        *(undefined8 *)(pvVar7 + -0x10) = uVar12;
+        pvVar7 = pvVar7 + -0x28;
+        *(undefined8 *)((long)pvVar11 + -0x10) = 0;
+        *(undefined8 *)((long)pvVar11 + -8) = 0;
+        pvVar11 = (void *)((long)pvVar11 + -0x28);
+      } while (pvVar11 != pvVar8);
+      pvVar11 = *(void **)this;
+      pvVar9 = *(void **)(this + 8);
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)this = pvVar7;
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)(this + 8) = pvVar5;
+      *(vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+        **)(this + 0x10) = pvVar4 + param_1 * 0x28;
+      pvVar8 = pvVar9;
+      this = pvVar4;
+      for (; pvVar9 != pvVar11; pvVar9 = (void *)((long)pvVar9 + -0x28)) {
+        plVar10 = *(long **)((long)pvVar9 + -8);
+        if (plVar10 != (long *)0x0) {
+          plVar1 = plVar10 + 1;
+          do {
+            lVar6 = *plVar1;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = lVar6 + -1;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar6 == 0) {
+            (**(code **)(*plVar10 + 0x10))(plVar10);
+            this = (vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+                    *)std::__shared_weak_count::__release_weak();
+          }
+        }
+        pvVar8 = pvVar11;
+      }
+    }
+    if (pvVar8 != (void *)0x0) {
+      operator_delete(pvVar8);
+      return extraout_x0;
+    }
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ~vector[abi:ne180100]
+// Entry: 0000290c
+// Signature: undefined __thiscall ~vector[abi:ne180100](vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00002990) */
+/* std::vector<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::allocator<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::~vector[abi:ne180100]() */
+
+vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+* __thiscall
+std::
+vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+::~vector_abi_ne180100_
+          (vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+           *this)
+
+{
+  long *plVar1;
+  char cVar2;
+  bool bVar3;
+  void *pvVar4;
+  long lVar5;
+  long *plVar6;
+  void *pvVar7;
+  void *pvVar8;
+  
+  pvVar7 = *(void **)this;
+  if (pvVar7 != (void *)0x0) {
+    pvVar8 = *(void **)(this + 8);
+    pvVar4 = pvVar7;
+    if (pvVar8 != pvVar7) {
+      do {
+        plVar6 = *(long **)((long)pvVar8 + -8);
+        if (plVar6 != (long *)0x0) {
+          plVar1 = plVar6 + 1;
+          do {
+            lVar5 = *plVar1;
+            cVar2 = '\x01';
+            bVar3 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+            if (bVar3) {
+              *plVar1 = lVar5 + -1;
+              cVar2 = ExclusiveMonitorsStatus();
+            }
+          } while (cVar2 != '\0');
+          if (lVar5 == 0) {
+            (**(code **)(*plVar6 + 0x10))(plVar6);
+            std::__shared_weak_count::__release_weak();
+          }
+        }
+        pvVar8 = (void *)((long)pvVar8 + -0x28);
+      } while (pvVar8 != pvVar7);
+      pvVar4 = *(void **)this;
+    }
+    *(void **)(this + 8) = pvVar7;
+    operator_delete(pvVar4);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 000029c4
+// Signature: undefined __thiscall destroy(__tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>> * this, __tree_node * param_1)
+// ========================================
+
+
+/* std::__tree<std::__value_type<std::string, m3t::ZoneValidationResult>,
+   std::__map_value_compare<std::string, std::__value_type<std::string, m3t::ZoneValidationResult>,
+   std::less<std::string >, true>, std::allocator<std::__value_type<std::string,
+   m3t::ZoneValidationResult> > >::destroy(std::__tree_node<std::__value_type<std::string,
+   m3t::ZoneValidationResult>, void*>*) */
+
+void __thiscall
+std::
+__tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+::destroy(__tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+          *this,__tree_node *param_1)
+
+{
+  __tree_node _Var1;
+  void *pvVar2;
+  
+  if (param_1 == (__tree_node *)0x0) {
+    return;
+  }
+  destroy(this,*(__tree_node **)param_1);
+  destroy(this,*(__tree_node **)(param_1 + 8));
+  cv::Mat::~Mat((Mat *)(param_1 + 0x90));
+  pvVar2 = *(void **)(param_1 + 0x78);
+  if (pvVar2 != (void *)0x0) {
+    *(void **)(param_1 + 0x80) = pvVar2;
+    operator_delete(pvVar2);
+  }
+  if ((char)param_1[0x6f] < '\0') {
+    operator_delete(*(void **)(param_1 + 0x58));
+    _Var1 = param_1[0x4f];
+  }
+  else {
+    _Var1 = param_1[0x4f];
+  }
+  if ((char)_Var1 < '\0') {
+    operator_delete(*(void **)(param_1 + 0x38));
+    _Var1 = param_1[0x37];
+  }
+  else {
+    _Var1 = param_1[0x37];
+  }
+  if (-1 < (char)_Var1) {
+    operator_delete(param_1);
+    return;
+  }
+  operator_delete(*(void **)(param_1 + 0x20));
+  operator_delete(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00002a6c
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::allocator<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::__throw_length_error[abi:ne180100]() const */
+
+void std::
+     vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+     ::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: ~__split_buffer
+// Entry: 00002a80
+// Signature: undefined __thiscall ~__split_buffer(__split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00002af8) */
+/* std::__split_buffer<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::allocator<std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >
+   >&>::~__split_buffer() */
+
+__split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&>
+* __thiscall
+std::
+__split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&>
+::~__split_buffer(__split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&>
+                  *this)
+
+{
+  long *plVar1;
+  long lVar2;
+  char cVar3;
+  bool bVar4;
+  long lVar5;
+  long *plVar6;
+  
+  lVar2 = *(long *)(this + 8);
+  lVar5 = *(long *)(this + 0x10);
+  while (lVar5 != lVar2) {
+    *(long *)(this + 0x10) = lVar5 + -0x28;
+    plVar6 = *(long **)(lVar5 + -8);
+    if (plVar6 != (long *)0x0) {
+      plVar1 = plVar6 + 1;
+      do {
+        lVar5 = *plVar1;
+        cVar3 = '\x01';
+        bVar4 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+        if (bVar4) {
+          *plVar1 = lVar5 + -1;
+          cVar3 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar3 != '\0');
+      if (lVar5 == 0) {
+        (**(code **)(*plVar6 + 0x10))(plVar6);
+        std::__shared_weak_count::__release_weak();
+      }
+    }
+    lVar5 = *(long *)(this + 0x10);
+  }
+  if (*(void **)this != (void *)0x0) {
+    operator_delete(*(void **)this);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __emplace_back_slow_path<std::string_const&,std::shared_ptr<m3t::ValidationZone>const&>
+// Entry: 00002b28
+// Signature: pair * __cdecl __emplace_back_slow_path<std::string_const&,std::shared_ptr<m3t::ValidationZone>const&>(string * param_1, shared_ptr * param_2)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00002d28) */
+/* std::pair<std::string, std::shared_ptr<m3t::ValidationZone> >* std::vector<std::pair<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::allocator<std::pair<std::string,
+   std::shared_ptr<m3t::ValidationZone> > > >::__emplace_back_slow_path<std::string const&,
+   std::shared_ptr<m3t::ValidationZone> const&>(std::string const&,
+   std::shared_ptr<m3t::ValidationZone> const&) */
+
+pair * std::
+       vector<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+       ::__emplace_back_slow_path<std::string_const&,std::shared_ptr<m3t::ValidationZone>const&>
+                 (string *param_1,shared_ptr *param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  size_t sVar3;
+  string *psVar4;
+  undefined8 *puVar5;
+  char cVar6;
+  bool bVar7;
+  int iVar8;
+  void *pvVar9;
+  _Unwind_Exception *exception_object;
+  long *extraout_x0;
+  __tree_node_base *p_Var10;
+  undefined8 *extraout_x1;
+  undefined8 *in_x2;
+  undefined8 *in_x3;
+  undefined8 uVar11;
+  long lVar12;
+  long lVar13;
+  string *psVar14;
+  ulong uVar15;
+  long *plVar16;
+  long *plVar17;
+  string *psVar18;
+  __tree_node_base *p_Var19;
+  long *plVar20;
+  undefined8 uVar21;
+  string *local_68;
+  string *local_60;
+  string *local_58;
+  void *local_50;
+  string *local_48;
+  
+  lVar13 = *(long *)(param_1 + 8) - *(long *)param_1 >> 3;
+  uVar1 = lVar13 * -0x3333333333333333 + 1;
+  if (uVar1 < 0x666666666666667) {
+    local_48 = param_1 + 0x10;
+    lVar12 = *(long *)local_48 - *(long *)param_1 >> 3;
+    uVar15 = lVar12 * -0x6666666666666666;
+    if (uVar15 < uVar1 || uVar15 - uVar1 == 0) {
+      uVar15 = uVar1;
+    }
+    if (0x333333333333332 < (ulong)(lVar12 * -0x3333333333333333)) {
+      uVar15 = 0x666666666666666;
+    }
+    if (uVar15 == 0) {
+      pvVar9 = (void *)0x0;
+    }
+    else {
+      if (0x666666666666666 < uVar15) goto LAB_00002d50;
+      pvVar9 = operator_new(uVar15 * 0x28);
+    }
+    local_60 = (string *)((long)pvVar9 + lVar13 * 8);
+    local_50 = (void *)((long)pvVar9 + uVar15 * 0x28);
+    local_58 = local_60;
+    if ((char)param_2[0x17] < '\0') {
+      local_68 = pvVar9;
+      string::__init_copy_ctor_external(local_60,*(char **)param_2,*(ulong *)(param_2 + 8));
+    }
+    else {
+      uVar11 = *(undefined8 *)param_2;
+      *(undefined8 *)(local_60 + 8) = *(undefined8 *)(param_2 + 8);
+      *(undefined8 *)local_60 = uVar11;
+      *(undefined8 *)(local_60 + 0x10) = *(undefined8 *)(param_2 + 0x10);
+    }
+    lVar12 = in_x2[1];
+    *(undefined8 *)((long)pvVar9 + lVar13 * 8 + 0x18) = *in_x2;
+    *(long *)((long)pvVar9 + lVar13 * 8 + 0x20) = lVar12;
+    if (lVar12 != 0) {
+      plVar16 = (long *)(lVar12 + 8);
+      do {
+        cVar6 = '\x01';
+        bVar7 = (bool)ExclusiveMonitorPass(plVar16,0x10);
+        if (bVar7) {
+          *plVar16 = *plVar16 + 1;
+          cVar6 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar6 != '\0');
+    }
+    psVar2 = local_58 + 0x28;
+    psVar4 = *(string **)param_1;
+    psVar14 = *(string **)(param_1 + 8);
+    psVar18 = psVar14;
+    if (psVar14 != psVar4) {
+      do {
+        uVar21 = *(undefined8 *)(psVar14 + -0x20);
+        uVar11 = *(undefined8 *)(psVar14 + -0x28);
+        *(undefined8 *)(local_60 + -0x18) = *(undefined8 *)(psVar14 + -0x18);
+        *(undefined8 *)(local_60 + -0x20) = uVar21;
+        *(undefined8 *)(local_60 + -0x28) = uVar11;
+        *(undefined8 *)(psVar14 + -0x20) = 0;
+        *(undefined8 *)(psVar14 + -0x18) = 0;
+        *(undefined8 *)(psVar14 + -0x28) = 0;
+        uVar11 = *(undefined8 *)(psVar14 + -0x10);
+        *(undefined8 *)(local_60 + -8) = *(undefined8 *)(psVar14 + -8);
+        *(undefined8 *)(local_60 + -0x10) = uVar11;
+        local_60 = local_60 + -0x28;
+        *(undefined8 *)(psVar14 + -0x10) = 0;
+        *(undefined8 *)(psVar14 + -8) = 0;
+        psVar14 = psVar14 + -0x28;
+      } while (psVar14 != psVar4);
+      psVar14 = *(string **)(param_1 + 8);
+      psVar18 = *(string **)param_1;
+    }
+    *(string **)param_1 = local_60;
+    *(string **)(param_1 + 8) = psVar2;
+    uVar11 = *(undefined8 *)(param_1 + 0x10);
+    *(void **)(param_1 + 0x10) = local_50;
+    local_50 = (void *)uVar11;
+    psVar4 = psVar14;
+    local_68 = psVar18;
+    local_60 = psVar18;
+    while (psVar4 != psVar18) {
+      local_58 = psVar4 + -0x28;
+      plVar16 = *(long **)(psVar4 + -8);
+      psVar14 = local_68;
+      psVar4 = local_58;
+      if (plVar16 != (long *)0x0) {
+        plVar20 = plVar16 + 1;
+        do {
+          lVar13 = *plVar20;
+          cVar6 = '\x01';
+          bVar7 = (bool)ExclusiveMonitorPass(plVar20,0x10);
+          if (bVar7) {
+            *plVar20 = lVar13 + -1;
+            cVar6 = ExclusiveMonitorsStatus();
+          }
+        } while (cVar6 != '\0');
+        if (lVar13 == 0) {
+          (**(code **)(*plVar16 + 0x10))(plVar16);
+          std::__shared_weak_count::__release_weak();
+          psVar14 = local_68;
+          psVar4 = local_58;
+        }
+      }
+    }
+    if (psVar14 != (string *)0x0) {
+      operator_delete(psVar14);
+    }
+    return psVar2;
+  }
+  __throw_length_error_abi_ne180100_();
+LAB_00002d50:
+  exception_object = (_Unwind_Exception *)__throw_bad_array_new_length_abi_ne180100_();
+  __split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&>
+  ::~__split_buffer((__split_buffer<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>,std::allocator<std::pair<std::string,std::shared_ptr<m3t::ValidationZone>>>&>
+                     *)&local_68);
+  __Unwind_Resume(exception_object);
+  plVar17 = extraout_x0 + 1;
+  plVar16 = (long *)*plVar17;
+  plVar20 = plVar17;
+  if (plVar16 != (long *)0x0) {
+    puVar5 = (undefined8 *)*extraout_x1;
+    uVar1 = extraout_x1[1];
+    if (-1 < (char)*(byte *)((long)extraout_x1 + 0x17)) {
+      uVar1 = (ulong)*(byte *)((long)extraout_x1 + 0x17);
+      puVar5 = extraout_x1;
+    }
+    do {
+      while( true ) {
+        plVar17 = plVar16;
+        plVar16 = (long *)plVar17[4];
+        uVar15 = plVar17[5];
+        if (-1 < (char)*(byte *)((long)plVar17 + 0x37)) {
+          plVar16 = plVar17 + 4;
+          uVar15 = (ulong)*(byte *)((long)plVar17 + 0x37);
+        }
+        sVar3 = uVar15;
+        if (uVar1 <= uVar15) {
+          sVar3 = uVar1;
+        }
+        iVar8 = _memcmp(puVar5,plVar16,sVar3);
+        bVar7 = uVar1 < uVar15;
+        if (iVar8 != 0) {
+          bVar7 = iVar8 < 0;
+        }
+        if (bVar7) break;
+        iVar8 = _memcmp(plVar16,puVar5,sVar3);
+        bVar7 = uVar15 < uVar1;
+        if (iVar8 != 0) {
+          bVar7 = iVar8 < 0;
+        }
+        if (!bVar7) {
+          return (pair *)plVar17;
+        }
+        plVar16 = (long *)plVar17[1];
+        if ((long *)plVar17[1] == (long *)0x0) {
+          plVar20 = plVar17 + 1;
+          goto LAB_00002e58;
+        }
+      }
+      plVar16 = (long *)*plVar17;
+      plVar20 = plVar17;
+    } while ((long *)*plVar17 != (long *)0x0);
+  }
+LAB_00002e58:
+  p_Var10 = operator_new(0xf8);
+  in_x3 = (undefined8 *)*in_x3;
+  if (*(char *)((long)in_x3 + 0x17) < '\0') {
+    string::__init_copy_ctor_external((string *)(p_Var10 + 0x20),(char *)*in_x3,in_x3[1]);
+  }
+  else {
+    uVar21 = in_x3[1];
+    uVar11 = *in_x3;
+    *(undefined8 *)(p_Var10 + 0x30) = in_x3[2];
+    *(undefined8 *)(p_Var10 + 0x28) = uVar21;
+    *(undefined8 *)(p_Var10 + 0x20) = uVar11;
+  }
+  *(undefined8 *)(p_Var10 + 0x50) = 0;
+  *(undefined8 *)(p_Var10 + 0x48) = 0;
+  *(undefined8 *)(p_Var10 + 0x60) = 0;
+  *(undefined8 *)(p_Var10 + 0x58) = 0;
+  *(undefined8 *)(p_Var10 + 0x70) = 0;
+  *(undefined8 *)(p_Var10 + 0x68) = 0;
+  *(undefined8 *)(p_Var10 + 0x80) = 0;
+  *(undefined8 *)(p_Var10 + 0x78) = 0;
+  *(undefined8 *)(p_Var10 + 0x90) = 0;
+  *(undefined8 *)(p_Var10 + 0x88) = 0;
+  *(undefined8 *)(p_Var10 + 0xf0) = 0;
+  *(undefined8 *)(p_Var10 + 0xe8) = 0;
+  *(undefined8 *)(p_Var10 + 0xe0) = 0;
+  *(undefined8 *)(p_Var10 + 0xd8) = 0;
+  *(undefined8 *)(p_Var10 + 0xd0) = 0;
+  *(undefined8 *)(p_Var10 + 200) = 0;
+  *(undefined8 *)(p_Var10 + 0xc0) = 0;
+  *(undefined8 *)(p_Var10 + 0xb8) = 0;
+  *(undefined8 *)(p_Var10 + 0xb0) = 0;
+  *(undefined8 *)(p_Var10 + 0xa8) = 0;
+  *(undefined8 *)(p_Var10 + 0xa0) = 0;
+  *(undefined8 *)(p_Var10 + 0x98) = 0;
+  *(undefined8 *)(p_Var10 + 0x40) = 0;
+  *(undefined8 *)(p_Var10 + 0x38) = 0;
+  *(undefined4 *)(p_Var10 + 0x50) = 4;
+  *(undefined8 *)(p_Var10 + 0x58) = 0;
+  *(undefined8 *)(p_Var10 + 0x60) = 0;
+  *(undefined8 *)(p_Var10 + 0x68) = 0;
+  *(undefined4 *)(p_Var10 + 0x70) = 0;
+  *(undefined8 *)(p_Var10 + 0x78) = 0;
+  *(undefined8 *)(p_Var10 + 0x80) = 0;
+  *(undefined8 *)(p_Var10 + 0x88) = 0;
+  cv::Mat::Mat((Mat *)(p_Var10 + 0x90));
+  p_Var10[0xf0] = (__tree_node_base)0x0;
+  *(undefined8 *)p_Var10 = 0;
+  *(undefined8 *)(p_Var10 + 8) = 0;
+  *(long **)(p_Var10 + 0x10) = plVar17;
+  *plVar20 = (long)p_Var10;
+  p_Var19 = p_Var10;
+  if (*(long *)*extraout_x0 != 0) {
+    *extraout_x0 = *(long *)*extraout_x0;
+    p_Var19 = (__tree_node_base *)*plVar20;
+  }
+  __tree_balance_after_insert_abi_ne180100_<std::__tree_node_base<void*>*>
+            ((__tree_node_base *)extraout_x0[1],p_Var19);
+  extraout_x0[2] = extraout_x0[2] + 1;
+  return p_Var10;
+}
+
+
+
+
+// ========================================
+// Function: __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+// Entry: 00002d68
+// Signature: pair __cdecl __emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>(string * param_1, piecewise_construct_t * param_2, tuple * param_3, tuple * param_4)
+// ========================================
+
+
+/* std::pair<std::__tree_iterator<std::__value_type<std::string, m3t::ZoneValidationResult>,
+   std::__tree_node<std::__value_type<std::string, m3t::ZoneValidationResult>, void*>*, long>, bool>
+   std::__tree<std::__value_type<std::string, m3t::ZoneValidationResult>,
+   std::__map_value_compare<std::string, std::__value_type<std::string, m3t::ZoneValidationResult>,
+   std::less<std::string >, true>, std::allocator<std::__value_type<std::string,
+   m3t::ZoneValidationResult> > >::__emplace_unique_key_args<std::string, std::piecewise_construct_t
+   const&, std::tuple<std::string const&>, std::tuple<> >(std::string const&,
+   std::piecewise_construct_t const&, std::tuple<std::string const&>&&, std::tuple<>&&) */
+
+undefined1  [16]
+std::
+__tree<std::__value_type<std::string,m3t::ZoneValidationResult>,std::__map_value_compare<std::string,std::__value_type<std::string,m3t::ZoneValidationResult>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,m3t::ZoneValidationResult>>>
+::
+__emplace_unique_key_args<std::string,std::piecewise_construct_t_const&,std::tuple<std::string_const&>,std::tuple<>>
+          (string *param_1,piecewise_construct_t *param_2,tuple *param_3,tuple *param_4)
+
+{
+  piecewise_construct_t *ppVar1;
+  size_t sVar2;
+  bool bVar3;
+  ulong uVar4;
+  ulong uVar5;
+  int iVar6;
+  undefined8 uVar7;
+  string *psVar8;
+  undefined8 *puVar9;
+  string *psVar10;
+  string *psVar11;
+  undefined8 uVar12;
+  undefined1 auVar13 [16];
+  
+  psVar11 = param_1 + 8;
+  psVar8 = *(string **)psVar11;
+  psVar10 = psVar11;
+  if (psVar8 != (string *)0x0) {
+    uVar4 = *(ulong *)(param_2 + 8);
+    ppVar1 = *(piecewise_construct_t **)param_2;
+    if (-1 < (char)param_2[0x17]) {
+      uVar4 = (ulong)(byte)param_2[0x17];
+      ppVar1 = param_2;
+    }
+    do {
+      while( true ) {
+        psVar11 = psVar8;
+        psVar8 = *(string **)(psVar11 + 0x20);
+        uVar5 = *(ulong *)(psVar11 + 0x28);
+        if (-1 < (char)psVar11[0x37]) {
+          psVar8 = psVar11 + 0x20;
+          uVar5 = (ulong)(byte)psVar11[0x37];
+        }
+        sVar2 = uVar5;
+        if (uVar4 <= uVar5) {
+          sVar2 = uVar4;
+        }
+        iVar6 = _memcmp(ppVar1,psVar8,sVar2);
+        bVar3 = uVar4 < uVar5;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        if (bVar3) break;
+        iVar6 = _memcmp(psVar8,ppVar1,sVar2);
+        bVar3 = uVar5 < uVar4;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        if (!bVar3) {
+          uVar7 = 0;
+          goto LAB_00002f44;
+        }
+        psVar8 = *(string **)(psVar11 + 8);
+        if (*(string **)(psVar11 + 8) == (string *)0x0) {
+          psVar10 = psVar11 + 8;
+          goto LAB_00002e58;
+        }
+      }
+      psVar8 = *(string **)psVar11;
+      psVar10 = psVar11;
+    } while (*(string **)psVar11 != (string *)0x0);
+  }
+LAB_00002e58:
+  psVar8 = operator_new(0xf8);
+  puVar9 = *(undefined8 **)param_4;
+  if (*(char *)((long)puVar9 + 0x17) < '\0') {
+    string::__init_copy_ctor_external(psVar8 + 0x20,(char *)*puVar9,puVar9[1]);
+  }
+  else {
+    uVar12 = puVar9[1];
+    uVar7 = *puVar9;
+    *(undefined8 *)(psVar8 + 0x30) = puVar9[2];
+    *(undefined8 *)(psVar8 + 0x28) = uVar12;
+    *(undefined8 *)(psVar8 + 0x20) = uVar7;
+  }
+  *(undefined8 *)(psVar8 + 0x50) = 0;
+  *(undefined8 *)(psVar8 + 0x48) = 0;
+  *(undefined8 *)(psVar8 + 0x60) = 0;
+  *(undefined8 *)(psVar8 + 0x58) = 0;
+  *(undefined8 *)(psVar8 + 0x70) = 0;
+  *(undefined8 *)(psVar8 + 0x68) = 0;
+  *(undefined8 *)(psVar8 + 0x80) = 0;
+  *(undefined8 *)(psVar8 + 0x78) = 0;
+  *(undefined8 *)(psVar8 + 0x90) = 0;
+  *(undefined8 *)(psVar8 + 0x88) = 0;
+  *(undefined8 *)(psVar8 + 0xf0) = 0;
+  *(undefined8 *)(psVar8 + 0xe8) = 0;
+  *(undefined8 *)(psVar8 + 0xe0) = 0;
+  *(undefined8 *)(psVar8 + 0xd8) = 0;
+  *(undefined8 *)(psVar8 + 0xd0) = 0;
+  *(undefined8 *)(psVar8 + 200) = 0;
+  *(undefined8 *)(psVar8 + 0xc0) = 0;
+  *(undefined8 *)(psVar8 + 0xb8) = 0;
+  *(undefined8 *)(psVar8 + 0xb0) = 0;
+  *(undefined8 *)(psVar8 + 0xa8) = 0;
+  *(undefined8 *)(psVar8 + 0xa0) = 0;
+  *(undefined8 *)(psVar8 + 0x98) = 0;
+  *(undefined8 *)(psVar8 + 0x40) = 0;
+  *(undefined8 *)(psVar8 + 0x38) = 0;
+  *(undefined4 *)(psVar8 + 0x50) = 4;
+  *(undefined8 *)(psVar8 + 0x58) = 0;
+  *(undefined8 *)(psVar8 + 0x60) = 0;
+  *(undefined8 *)(psVar8 + 0x68) = 0;
+  *(undefined4 *)(psVar8 + 0x70) = 0;
+  *(undefined8 *)(psVar8 + 0x78) = 0;
+  *(undefined8 *)(psVar8 + 0x80) = 0;
+  *(undefined8 *)(psVar8 + 0x88) = 0;
+  cv::Mat::Mat((Mat *)(psVar8 + 0x90));
+  psVar8[0xf0] = (string)0x0;
+  *(undefined8 *)psVar8 = 0;
+  *(undefined8 *)(psVar8 + 8) = 0;
+  *(string **)(psVar8 + 0x10) = psVar11;
+  *(string **)psVar10 = psVar8;
+  psVar11 = psVar8;
+  if (**(long **)param_1 != 0) {
+    *(long *)param_1 = **(long **)param_1;
+    psVar11 = *(string **)psVar10;
+  }
+  __tree_balance_after_insert_abi_ne180100_<std::__tree_node_base<void*>*>
+            (*(__tree_node_base **)(param_1 + 8),(__tree_node_base *)psVar11);
+  *(long *)(param_1 + 0x10) = *(long *)(param_1 + 0x10) + 1;
+  uVar7 = 1;
+  psVar11 = psVar8;
+LAB_00002f44:
+  auVar13._8_8_ = uVar7;
+  auVar13._0_8_ = psVar11;
+  return auVar13;
+}
+
+
+
+
+// ========================================
+// Function: operator()[abi:ne180100]
+// Entry: 00002f84
+// Signature: undefined __thiscall operator()[abi:ne180100](__tree_node_destructor<std::allocator<std::__tree_node<std::__value_type<std::string,m3t::ZoneValidationResult>,void*>>> * this, __tree_node * param_1)
+// ========================================
+
+
+/* std::__tree_node_destructor<std::allocator<std::__tree_node<std::__value_type<std::string,
+   m3t::ZoneValidationResult>, void*> >
+   >::operator()[abi:ne180100](std::__tree_node<std::__value_type<std::string,
+   m3t::ZoneValidationResult>, void*>*) */
+
+void __thiscall
+std::
+__tree_node_destructor<std::allocator<std::__tree_node<std::__value_type<std::string,m3t::ZoneValidationResult>,void*>>>
+::operator()[abi_ne180100_
+          (__tree_node_destructor<std::allocator<std::__tree_node<std::__value_type<std::string,m3t::ZoneValidationResult>,void*>>>
+           *this,__tree_node *param_1)
+
+{
+  __tree_node _Var1;
+  void *pvVar2;
+  
+  if (this[8] ==
+      (__tree_node_destructor<std::allocator<std::__tree_node<std::__value_type<std::string,m3t::ZoneValidationResult>,void*>>>
+       )0x0) {
+    if (param_1 == (__tree_node *)0x0) {
+      return;
+    }
+  }
+  else {
+    cv::Mat::~Mat((Mat *)(param_1 + 0x90));
+    pvVar2 = *(void **)(param_1 + 0x78);
+    if (pvVar2 != (void *)0x0) {
+      *(void **)(param_1 + 0x80) = pvVar2;
+      operator_delete(pvVar2);
+    }
+    if ((char)param_1[0x6f] < '\0') {
+      operator_delete(*(void **)(param_1 + 0x58));
+      _Var1 = param_1[0x4f];
+    }
+    else {
+      _Var1 = param_1[0x4f];
+    }
+    if ((char)_Var1 < '\0') {
+      operator_delete(*(void **)(param_1 + 0x38));
+      _Var1 = param_1[0x37];
+    }
+    else {
+      _Var1 = param_1[0x37];
+    }
+    if ((char)_Var1 < '\0') {
+      operator_delete(*(void **)(param_1 + 0x20));
+      operator_delete(param_1);
+      return;
+    }
+  }
+  operator_delete(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: CheckZoneReadiness
+// Entry: 00003024
+// Signature: undefined __thiscall CheckZoneReadiness(ValidationZoneManager * this, string * param_1, Transform * param_2, Intrinsics * param_3, float param_4)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::CheckZoneReadiness(std::string const&, Eigen::Transform<float, 3, 2,
+   0> const&, m3t::Intrinsics const&, float) const */
+
+void __thiscall
+m3t::ValidationZoneManager::CheckZoneReadiness
+          (ValidationZoneManager *this,string *param_1,Transform *param_2,Intrinsics *param_3,
+          float param_4)
+
+{
+  char cVar1;
+  bool bVar2;
+  Transform *pTVar3;
+  long *plVar4;
+  long *plVar5;
+  undefined8 *puVar6;
+  undefined4 *in_x8;
+  long lVar7;
+  char *pcVar8;
+  Transform *local_b0;
+  long *plStack_a8;
+  undefined8 local_a0;
+  undefined8 uStack_98;
+  undefined8 local_90;
+  undefined8 uStack_88;
+  undefined8 uStack_80;
+  undefined8 uStack_78;
+  Transform *local_70;
+  long *plStack_68;
+  
+  local_70 = (Transform *)0x0;
+  plStack_68 = (long *)0x0;
+  std::mutex::lock();
+  GetZoneUnlocked((string *)this);
+  plVar4 = plStack_a8;
+  pTVar3 = local_b0;
+  local_70 = local_b0;
+  plStack_68 = plStack_a8;
+  if (local_b0 == (Transform *)0x0) {
+    *(undefined8 *)(in_x8 + 2) = 0;
+    in_x8[8] = 0;
+    *(undefined8 *)(in_x8 + 4) = 0;
+    *(undefined8 *)(in_x8 + 6) = 0;
+    *in_x8 = 4;
+    std::operator+("Zone not found: ",param_1);
+    *(long **)(in_x8 + 4) = plStack_a8;
+    *(Transform **)(in_x8 + 2) = local_b0;
+    *(undefined8 *)(in_x8 + 6) = local_a0;
+    std::mutex::unlock();
+  }
+  else {
+    std::mutex::unlock();
+    plVar5 = (long *)m3t::ValidationZone::body_ptr();
+    if (*plVar5 == 0) {
+      pcVar8 = (char *)(in_x8 + 2);
+      pcVar8[0] = '\0';
+      pcVar8[1] = '\0';
+      pcVar8[2] = '\0';
+      pcVar8[3] = '\0';
+      pcVar8[4] = '\0';
+      pcVar8[5] = '\0';
+      pcVar8[6] = '\0';
+      pcVar8[7] = '\0';
+      in_x8[8] = 0;
+      *(undefined8 *)(in_x8 + 4) = 0;
+      *(undefined8 *)(in_x8 + 6) = 0;
+      *in_x8 = 4;
+      std::string::assign(pcVar8);
+    }
+    else {
+      m3t::ValidationZone::body_ptr();
+      puVar6 = (undefined8 *)m3t::Body::body2world_pose();
+      plStack_a8 = (long *)puVar6[1];
+      local_b0 = (Transform *)*puVar6;
+      uStack_98 = puVar6[3];
+      local_a0 = puVar6[2];
+      uStack_88 = puVar6[5];
+      local_90 = puVar6[4];
+      uStack_78 = puVar6[7];
+      uStack_80 = puVar6[6];
+      m3t::ValidationZone::CheckReadiness
+                (pTVar3,(Transform *)&local_b0,(Intrinsics *)param_2,param_4);
+    }
+  }
+  if (plVar4 != (long *)0x0) {
+    plVar5 = plVar4 + 1;
+    do {
+      lVar7 = *plVar5;
+      cVar1 = '\x01';
+      bVar2 = (bool)ExclusiveMonitorPass(plVar5,0x10);
+      if (bVar2) {
+        *plVar5 = lVar7 + -1;
+        cVar1 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar1 != '\0');
+    if (lVar7 == 0) {
+      (**(code **)(*plVar4 + 0x10))(plVar4);
+      std::__shared_weak_count::__release_weak();
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: GetSampledImage
+// Entry: 000031f8
+// Signature: undefined __thiscall GetSampledImage(ValidationZoneManager * this, string * param_1, Mat * param_2, Transform * param_3, Intrinsics * param_4, Mat * param_5)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::GetSampledImage(std::string const&, cv::Mat const&,
+   Eigen::Transform<float, 3, 2, 0> const&, m3t::Intrinsics const&, cv::Mat*) const */
+
+undefined8 __thiscall
+m3t::ValidationZoneManager::GetSampledImage
+          (ValidationZoneManager *this,string *param_1,Mat *param_2,Transform *param_3,
+          Intrinsics *param_4,Mat *param_5)
+
+{
+  char cVar1;
+  bool bVar2;
+  Mat *pMVar3;
+  long *plVar4;
+  long *plVar5;
+  undefined8 *puVar6;
+  undefined8 uVar7;
+  long lVar8;
+  Mat *local_a0;
+  long *plStack_98;
+  undefined8 uStack_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 uStack_70;
+  undefined8 uStack_68;
+  Mat *local_60;
+  long *plStack_58;
+  
+  uVar7 = 0;
+  if (param_5 != (Mat *)0x0) {
+    local_60 = (Mat *)0x0;
+    plStack_58 = (long *)0x0;
+    std::mutex::lock();
+    GetZoneUnlocked((string *)this);
+    plVar4 = plStack_98;
+    pMVar3 = local_a0;
+    local_60 = local_a0;
+    plStack_58 = plStack_98;
+    std::mutex::unlock();
+    if ((pMVar3 == (Mat *)0x0) || (plVar5 = (long *)m3t::ValidationZone::body_ptr(), *plVar5 == 0))
+    {
+      uVar7 = 0;
+    }
+    else {
+      m3t::ValidationZone::body_ptr();
+      puVar6 = (undefined8 *)m3t::Body::body2world_pose();
+      plStack_98 = (long *)puVar6[1];
+      local_a0 = (Mat *)*puVar6;
+      uStack_88 = puVar6[3];
+      uStack_90 = puVar6[2];
+      uStack_78 = puVar6[5];
+      local_80 = puVar6[4];
+      uStack_68 = puVar6[7];
+      uStack_70 = puVar6[6];
+      uVar7 = m3t::ValidationZone::SampleRegion
+                        (pMVar3,(Transform *)param_2,(Transform *)&local_a0,(Intrinsics *)param_3,
+                         (Mat *)param_4);
+    }
+    if (plVar4 != (long *)0x0) {
+      plVar5 = plVar4 + 1;
+      do {
+        lVar8 = *plVar5;
+        cVar1 = '\x01';
+        bVar2 = (bool)ExclusiveMonitorPass(plVar5,0x10);
+        if (bVar2) {
+          *plVar5 = lVar8 + -1;
+          cVar1 = ExclusiveMonitorsStatus();
+        }
+      } while (cVar1 != '\0');
+      if (lVar8 == 0) {
+        (**(code **)(*plVar4 + 0x10))(plVar4);
+        std::__shared_weak_count::__release_weak();
+      }
+    }
+  }
+  return uVar7;
+}
+
+
+
+
+// ========================================
+// Function: Clear
+// Entry: 00003348
+// Signature: undefined __thiscall Clear(ValidationZoneManager * this)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::Clear() */
+
+void __thiscall m3t::ValidationZoneManager::Clear(ValidationZoneManager *this)
+
+{
+  ValidationZoneManager *pVVar1;
+  
+  std::mutex::lock();
+  pVVar1 = this + 0x48;
+  std::
+  __tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+  ::destroy((__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+             *)(this + 0x40),*(__tree_node **)pVVar1);
+  *(ValidationZoneManager **)(this + 0x40) = pVVar1;
+  *(undefined8 *)(this + 0x50) = 0;
+  *(undefined8 *)pVVar1 = 0;
+  std::mutex::unlock();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00003388
+// Signature: undefined __thiscall destroy(__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>> * this, __tree_node * param_1)
+// ========================================
+
+
+/* std::__tree<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> >,
+   std::__map_value_compare<std::string, std::__value_type<std::string,
+   std::shared_ptr<m3t::ValidationZone> >, std::less<std::string >, true>,
+   std::allocator<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone> > >
+   >::destroy(std::__tree_node<std::__value_type<std::string, std::shared_ptr<m3t::ValidationZone>
+   >, void*>*) */
+
+void __thiscall
+std::
+__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+::destroy(__tree<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::__map_value_compare<std::string,std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>,std::less<std::string>,true>,std::allocator<std::__value_type<std::string,std::shared_ptr<m3t::ValidationZone>>>>
+          *this,__tree_node *param_1)
+
+{
+  long *plVar1;
+  __tree_node _Var2;
+  char cVar3;
+  bool bVar4;
+  long lVar5;
+  long *plVar6;
+  
+  if (param_1 == (__tree_node *)0x0) {
+    return;
+  }
+  destroy(this,*(__tree_node **)param_1);
+  destroy(this,*(__tree_node **)(param_1 + 8));
+  plVar6 = *(long **)(param_1 + 0x40);
+  if (plVar6 != (long *)0x0) {
+    plVar1 = plVar6 + 1;
+    do {
+      lVar5 = *plVar1;
+      cVar3 = '\x01';
+      bVar4 = (bool)ExclusiveMonitorPass(plVar1,0x10);
+      if (bVar4) {
+        *plVar1 = lVar5 + -1;
+        cVar3 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar3 != '\0');
+    if (lVar5 == 0) {
+      (**(code **)(*plVar6 + 0x10))(plVar6);
+      std::__shared_weak_count::__release_weak();
+      _Var2 = param_1[0x37];
+      goto joined_r0x0000340c;
+    }
+  }
+  _Var2 = param_1[0x37];
+joined_r0x0000340c:
+  if (-1 < (char)_Var2) {
+    operator_delete(param_1);
+    return;
+  }
+  operator_delete(*(void **)(param_1 + 0x20));
+  operator_delete(param_1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: zone_count
+// Entry: 00003428
+// Signature: undefined __thiscall zone_count(ValidationZoneManager * this)
+// ========================================
+
+
+/* m3t::ValidationZoneManager::zone_count() const */
+
+undefined8 __thiscall m3t::ValidationZoneManager::zone_count(ValidationZoneManager *this)
+
+{
+  undefined8 uVar1;
+  
+  std::mutex::lock();
+  uVar1 = *(undefined8 *)(this + 0x50);
+  std::mutex::unlock();
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00004000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004100
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00004200
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004300
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: AddValidator
+// Entry: 00004400
+// Signature: undefined AddValidator(shared_ptr * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::AddValidator(shared_ptr *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: set_dimensions
+// Entry: 00004500
+// Signature: undefined set_dimensions(Matrix * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::set_dimensions(Matrix *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: set_local_pose
+// Entry: 00004600
+// Signature: undefined set_local_pose(Transform * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::set_local_pose(Transform *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: RemoveValidator
+// Entry: 00004700
+// Signature: undefined RemoveValidator(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::RemoveValidator(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: set_tracking_quality_threshold
+// Entry: 00004800
+// Signature: undefined set_tracking_quality_threshold(float param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::set_tracking_quality_threshold(float param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: SetUp
+// Entry: 00004900
+// Signature: undefined SetUp(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::SetUp(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ValidationZone
+// Entry: 00004a00
+// Signature: undefined __thiscall ValidationZone(ValidationZone * this, string * param_1, shared_ptr * param_2, ValidationZoneShape param_3, Transform * param_4, Matrix * param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall m3t::ValidationZone::ValidationZone(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: TemplateValidator
+// Entry: 00004b00
+// Signature: undefined __thiscall TemplateValidator(TemplateValidator * this, string * param_1, uchar * param_2, int param_3, int param_4, bool param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+m3t::TemplateValidator::TemplateValidator
+          (TemplateValidator *this,string *param_1,uchar *param_2,int param_3,int param_4,
+          bool param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: HistogramValidator
+// Entry: 00004c00
+// Signature: undefined __thiscall HistogramValidator(HistogramValidator * this, string * param_1, uchar * param_2, int param_3, int param_4, bool param_5, HistogramCompareMethod param_6, int param_7)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall m3t::HistogramValidator::HistogramValidator(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: clone
+// Entry: 00004d00
+// Signature: undefined clone(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::Mat::clone(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: GetValidator
+// Entry: 00004e00
+// Signature: undefined GetValidator(string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::GetValidator(string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: SampleRegion
+// Entry: 00004f00
+// Signature: undefined SampleRegion(Mat * param_1, Transform * param_2, Transform * param_3, Intrinsics * param_4, Mat * param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::SampleRegion
+               (Mat *param_1,Transform *param_2,Transform *param_3,Intrinsics *param_4,Mat *param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: CheckReadiness
+// Entry: 00005000
+// Signature: undefined CheckReadiness(Transform * param_1, Transform * param_2, Intrinsics * param_3, float param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::CheckReadiness
+               (Transform *param_1,Transform *param_2,Intrinsics *param_3,float param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: name
+// Entry: 00005100
+// Signature: undefined name(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::name(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Validate
+// Entry: 00005200
+// Signature: undefined Validate(Mat * param_1, vector * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::Validate(Mat *param_1,vector *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: body_ptr
+// Entry: 00005300
+// Signature: undefined body_ptr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::ValidationZone::body_ptr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: body2world_pose
+// Entry: 00005400
+// Signature: undefined body2world_pose(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::Body::body2world_pose(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: name
+// Entry: 00005500
+// Signature: undefined name(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void m3t::Body::name(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __get_deleter
+// Entry: 00005600
+// Signature: undefined __get_deleter(type_info * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__shared_weak_count::__get_deleter(std::type_info const&) const */
+
+void std::__shared_weak_count::__get_deleter(type_info *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00005700
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00005800
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00005900
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00005a00
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 00005b00
+// Signature: undefined assign(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::assign(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00005c00
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __release_weak
+// Entry: 00005d00
+// Signature: undefined __release_weak(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::__shared_weak_count::__release_weak(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~__shared_weak_count
+// Entry: 00005e00
+// Signature: undefined __thiscall ~__shared_weak_count(__shared_weak_count * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::__shared_weak_count::~__shared_weak_count(__shared_weak_count *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: lock
+// Entry: 00005f00
+// Signature: undefined lock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::mutex::lock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: unlock
+// Entry: 00006000
+// Signature: undefined unlock(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::mutex::unlock(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator+
+// Entry: 00006100
+// Signature: string operator+(char * param_1, string * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::operator+(char *param_1,string *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00006700
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00006800
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00006900
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00006b00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00006d00
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00006e00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 97
+// Failed: 0
+// Skipped external functions: 0

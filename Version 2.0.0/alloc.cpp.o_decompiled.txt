@@ -1,0 +1,483 @@
+Program: alloc.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ~AllocatorStatistics
+// Entry: 00000000
+// Signature: undefined __thiscall ~AllocatorStatistics(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::~AllocatorStatistics() */
+
+void __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::~AllocatorStatistics
+          (AllocatorStatistics *this)
+
+{
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getAllocatorStatistics
+// Entry: 00000004
+// Signature: undefined __cdecl getAllocatorStatistics(void)
+// ========================================
+
+
+/* cv::getAllocatorStatistics() */
+
+undefined8 cv::getAllocatorStatistics(void)
+
+{
+  return 0x588;
+}
+
+
+
+
+// ========================================
+// Function: fastMalloc
+// Entry: 00000010
+// Signature: undefined __cdecl fastMalloc(ulong param_1)
+// ========================================
+
+
+/* cv::fastMalloc(unsigned long) */
+
+void cv::fastMalloc(ulong param_1)
+
+{
+  code *pcVar1;
+  int iVar2;
+  void *pvVar3;
+  void *local_40;
+  string asStack_38 [24];
+  
+  if (((DAT_00000580 & 1) == 0) && (iVar2 = ___cxa_guard_acquire(0x580), iVar2 != 0)) {
+    DAT_00000579 = cv::utils::getConfigurationParameterBool("OPENCV_ENABLE_MEMALIGN",true);
+    ___cxa_guard_release(0x580);
+  }
+  if (DAT_00000579 == '\0') {
+    pvVar3 = _malloc(param_1 + 0x48);
+    if (pvVar3 != (void *)0x0) {
+      *(void **)(((long)pvVar3 + 0x47U & 0xffffffffffffffc0) - 8) = pvVar3;
+      return;
+    }
+    cv::format("Failed to allocate %llu bytes",asStack_38);
+    cv::error(-4,asStack_38,"OutOfMemoryError",
+              "M3T/third_party/opencv-src/modules/core/src/alloc.cpp",0x49);
+  }
+  else {
+    local_40 = (void *)0x0;
+    iVar2 = _posix_memalign(&local_40,0x40,param_1);
+    if (iVar2 == 0) {
+      if (local_40 != (void *)0x0) {
+        return;
+      }
+    }
+    else {
+      local_40 = (void *)0x0;
+    }
+    cv::format("Failed to allocate %llu bytes",asStack_38);
+    cv::error(-4,asStack_38,"OutOfMemoryError",
+              "M3T/third_party/opencv-src/modules/core/src/alloc.cpp",0x49);
+  }
+                    /* WARNING: Does not return */
+  pcVar1 = (code *)SoftwareBreakpoint(1,0x148);
+  (*pcVar1)();
+}
+
+
+
+
+// ========================================
+// Function: fastFree
+// Entry: 00000180
+// Signature: undefined __cdecl fastFree(void * param_1)
+// ========================================
+
+
+/* cv::fastFree(void*) */
+
+void cv::fastFree(void *param_1)
+
+{
+  int iVar1;
+  
+  if (((DAT_00000580 & 1) == 0) && (iVar1 = ___cxa_guard_acquire(0x580), iVar1 != 0)) {
+    DAT_00000579 = cv::utils::getConfigurationParameterBool("OPENCV_ENABLE_MEMALIGN",true);
+    ___cxa_guard_release(0x580);
+  }
+  if (DAT_00000579 != '\0') {
+    _free(param_1);
+    return;
+  }
+  if (param_1 != (void *)0x0) {
+    _free(*(void **)((long)param_1 + -8));
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _cvFree_
+// Entry: 00000234
+// Signature: undefined _cvFree_(void)
+// ========================================
+
+
+void _cvFree_(void *param_1)
+
+{
+  int iVar1;
+  
+  if (((DAT_00000580 & 1) == 0) && (iVar1 = ___cxa_guard_acquire(0x580), iVar1 != 0)) {
+    DAT_00000579 = cv::utils::getConfigurationParameterBool("OPENCV_ENABLE_MEMALIGN",true);
+    ___cxa_guard_release(0x580);
+  }
+  if (DAT_00000579 != '\0') {
+    _free(param_1);
+    return;
+  }
+  if (param_1 != (void *)0x0) {
+    _free(*(void **)((long)param_1 + -8));
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~AllocatorStatistics
+// Entry: 000002e4
+// Signature: undefined __thiscall ~AllocatorStatistics(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::~AllocatorStatistics() */
+
+void __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::~AllocatorStatistics
+          (AllocatorStatistics *this)
+
+{
+  operator_delete(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: getCurrentUsage
+// Entry: 000002e8
+// Signature: undefined __thiscall getCurrentUsage(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::getCurrentUsage() const */
+
+long __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::getCurrentUsage(AllocatorStatistics *this)
+
+{
+  return (long)*(int *)(this + 8);
+}
+
+
+
+
+// ========================================
+// Function: getTotalUsage
+// Entry: 000002f8
+// Signature: undefined __thiscall getTotalUsage(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::getTotalUsage() const */
+
+long __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::getTotalUsage(AllocatorStatistics *this)
+
+{
+  return (long)*(int *)(this + 0xc);
+}
+
+
+
+
+// ========================================
+// Function: getNumberOfAllocations
+// Entry: 00000308
+// Signature: undefined __thiscall getNumberOfAllocations(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::getNumberOfAllocations() const */
+
+long __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::getNumberOfAllocations
+          (AllocatorStatistics *this)
+
+{
+  return (long)*(int *)(this + 0x10);
+}
+
+
+
+
+// ========================================
+// Function: getPeakUsage
+// Entry: 00000318
+// Signature: undefined __thiscall getPeakUsage(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::getPeakUsage() const */
+
+long __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::getPeakUsage(AllocatorStatistics *this)
+
+{
+  return (long)*(int *)(this + 0x14);
+}
+
+
+
+
+// ========================================
+// Function: resetPeakUsage
+// Entry: 00000328
+// Signature: undefined __thiscall resetPeakUsage(AllocatorStatistics * this)
+// ========================================
+
+
+/* cv::utils::(anonymous namespace)::AllocatorStatistics::resetPeakUsage() */
+
+void __thiscall
+cv::utils::(anonymous_namespace)::AllocatorStatistics::resetPeakUsage(AllocatorStatistics *this)
+
+{
+  *(undefined4 *)(this + 0x14) = *(undefined4 *)(this + 8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __GLOBAL__sub_I_alloc.cpp
+// Entry: 0000033c
+// Signature: undefined __GLOBAL__sub_I_alloc.cpp(void)
+// ========================================
+
+
+void __GLOBAL__sub_I_alloc_cpp(void)
+
+{
+  int iVar1;
+  
+  DAT_00000588 = 0x518;
+  if (((DAT_00000580 & 1) == 0) && (iVar1 = ___cxa_guard_acquire(0x580), iVar1 != 0)) {
+    DAT_00000579 = cv::utils::getConfigurationParameterBool("OPENCV_ENABLE_MEMALIGN",true);
+    ___cxa_guard_release(0x580);
+  }
+  __MergedGlobals = DAT_00000579;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00001100
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getConfigurationParameterBool
+// Entry: 00001200
+// Signature: undefined getConfigurationParameterBool(char * param_1, bool param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::getConfigurationParameterBool(char *param_1,bool param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: format
+// Entry: 00001300
+// Signature: undefined format(char * param_1, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::format(char *param_1,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00001600
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_acquire
+// Entry: 00001800
+// Signature: undefined ___cxa_guard_acquire(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_acquire(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_guard_release
+// Entry: 00001900
+// Signature: undefined ___cxa_guard_release(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_guard_release(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _free
+// Entry: 00001b00
+// Signature: void _free(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _free(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _malloc
+// Entry: 00001c00
+// Signature: void * _malloc(size_t param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _malloc(size_t param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _posix_memalign
+// Entry: 00001d00
+// Signature: int _posix_memalign(void * * param_1, size_t param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _posix_memalign(void **param_1,size_t param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 21
+// Failed: 0
+// Skipped external functions: 0

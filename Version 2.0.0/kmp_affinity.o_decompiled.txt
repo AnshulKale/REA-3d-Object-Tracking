@@ -1,0 +1,3811 @@
+Program: kmp_affinity.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: hierarchy_info
+// Entry: 00000000
+// Signature: undefined __thiscall hierarchy_info(hierarchy_info * this)
+// ========================================
+
+
+/* hierarchy_info::hierarchy_info() */
+
+hierarchy_info * __thiscall hierarchy_info::hierarchy_info(hierarchy_info *this)
+
+{
+  hierarchy_info(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_cleanup_hierarchy
+// Entry: 0000002c
+// Signature: undefined ___kmp_cleanup_hierarchy(void)
+// ========================================
+
+
+void ___kmp_cleanup_hierarchy(void)
+
+{
+  hierarchy_info::fini((hierarchy_info *)&machine_hierarchy);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: fini
+// Entry: 00000048
+// Signature: undefined __thiscall fini(hierarchy_info * this)
+// ========================================
+
+
+/* hierarchy_info::fini() */
+
+void __thiscall hierarchy_info::fini(hierarchy_info *this)
+
+{
+  if ((this[0xc] == (hierarchy_info)0x0) && (*(long *)(this + 0x10) != 0)) {
+    ____kmp_free(*(undefined8 *)(this + 0x10));
+    *(undefined8 *)(this + 0x10) = 0;
+    this[0xc] = (hierarchy_info)0x1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_get_hierarchy
+// Entry: 000000b8
+// Signature: undefined ___kmp_get_hierarchy(void)
+// ========================================
+
+
+void ___kmp_get_hierarchy(uint param_1,long param_2)
+
+{
+  if (DAT_000069b4 != '\0') {
+    hierarchy_info::init((hierarchy_info *)&machine_hierarchy,param_1);
+  }
+  if (DAT_000069b0 < param_1) {
+    hierarchy_info::resize((hierarchy_info *)&machine_hierarchy,param_1);
+  }
+  *(undefined4 *)(param_2 + 0x5c) = DAT_000069ac;
+  __kmp_type_convert<unsigned_int,unsigned_char>(*DAT_000069b8 - 1,(uchar *)(param_2 + 0x7c));
+  *(undefined8 *)(param_2 + 0x48) = DAT_000069c0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: init
+// Entry: 0000017c
+// Signature: undefined __thiscall init(hierarchy_info * this, int param_1)
+// ========================================
+
+
+/* hierarchy_info::init(int) */
+
+void __thiscall hierarchy_info::init(hierarchy_info *this,int param_1)
+
+{
+  hierarchy_info *phVar1;
+  int *piVar2;
+  hierarchy_info hVar3;
+  char cVar4;
+  bool bVar5;
+  int iVar6;
+  undefined8 uVar7;
+  uint local_38;
+  uint local_34;
+  uint local_30;
+  uint local_2c;
+  int local_28;
+  uint local_24;
+  
+  phVar1 = this + 0xc;
+  do {
+    hVar3 = *phVar1;
+    if (hVar3 != (hierarchy_info)0x1) break;
+    cVar4 = '\x01';
+    bVar5 = (bool)ExclusiveMonitorPass(phVar1,0x10);
+    if (bVar5) {
+      *phVar1 = (hierarchy_info)0x2;
+      cVar4 = ExclusiveMonitorsStatus();
+    }
+  } while (cVar4 != '\0');
+  if (hVar3 == (hierarchy_info)0x1) {
+    *(undefined4 *)(this + 4) = 1;
+    this[0xd] = (hierarchy_info)0x0;
+    *(undefined4 *)this = 7;
+    uVar7 = ____kmp_allocate((ulong)(uint)(*(int *)this << 1) << 2);
+    *(undefined8 *)(this + 0x10) = uVar7;
+    *(ulong *)(this + 0x18) = *(long *)(this + 0x10) + (ulong)*(uint *)this * 4;
+    for (local_24 = 0; local_24 < *(uint *)this; local_24 = local_24 + 1) {
+      *(undefined4 *)(*(long *)(this + 0x10) + (ulong)local_24 * 4) = 1;
+      *(undefined4 *)(*(long *)(this + 0x18) + (ulong)local_24 * 4) = 1;
+    }
+    if ((___kmp_topology == (kmp_topology_t *)0x0) ||
+       (iVar6 = kmp_topology_t::get_depth(___kmp_topology), iVar6 < 1)) {
+      **(undefined4 **)(this + 0x10) = 4;
+      *(uint *)(*(long *)(this + 0x10) + 4) = (uint)param_1 / 4;
+      if ((uint)param_1 % 4 != 0) {
+        *(int *)(*(long *)(this + 0x10) + 4) = *(int *)(*(long *)(this + 0x10) + 4) + 1;
+      }
+    }
+    else {
+      deriveLevels(this);
+    }
+    *(int *)(this + 8) = param_1;
+    local_28 = *(int *)this;
+    while (local_28 = local_28 + -1, -1 < local_28) {
+      if ((*(int *)(*(long *)(this + 0x10) + (long)local_28 * 4) != 1) || (1 < *(uint *)(this + 4)))
+      {
+        *(int *)(this + 4) = *(int *)(this + 4) + 1;
+      }
+    }
+    local_2c = 4;
+    if (**(int **)(this + 0x10) == 1) {
+      local_2c = (uint)param_1 / 4;
+    }
+    if (local_2c < 4) {
+      local_2c = 4;
+    }
+    for (local_30 = 0; local_30 < *(int *)(this + 4) - 1U; local_30 = local_30 + 1) {
+      while( true ) {
+        bVar5 = true;
+        if ((*(uint *)(*(long *)(this + 0x10) + (ulong)local_30 * 4) <= local_2c) &&
+           (bVar5 = false, local_30 == 0)) {
+          bVar5 = 4 < **(uint **)(this + 0x10);
+        }
+        if (!bVar5) break;
+        if ((*(uint *)(*(long *)(this + 0x10) + (ulong)local_30 * 4) & 1) != 0) {
+          piVar2 = (int *)(*(long *)(this + 0x10) + (ulong)local_30 * 4);
+          *piVar2 = *piVar2 + 1;
+        }
+        *(uint *)(*(long *)(this + 0x10) + (ulong)local_30 * 4) =
+             *(uint *)(*(long *)(this + 0x10) + (ulong)local_30 * 4) >> 1;
+        if (*(int *)(*(long *)(this + 0x10) + (ulong)(local_30 + 1) * 4) == 1) {
+          *(int *)(this + 4) = *(int *)(this + 4) + 1;
+        }
+        *(int *)(*(long *)(this + 0x10) + (ulong)(local_30 + 1) * 4) =
+             *(int *)(*(long *)(this + 0x10) + (ulong)(local_30 + 1) * 4) << 1;
+      }
+      if ((**(int **)(this + 0x10) == 1) && (local_2c = local_2c >> 1, local_2c < 4)) {
+        local_2c = 4;
+      }
+    }
+    for (local_34 = 1; local_34 < *(uint *)(this + 4); local_34 = local_34 + 1) {
+      *(int *)(*(long *)(this + 0x18) + (ulong)local_34 * 4) =
+           *(int *)(*(long *)(this + 0x10) + (ulong)(local_34 - 1) * 4) *
+           *(int *)(*(long *)(this + 0x18) + (ulong)(local_34 - 1) * 4);
+    }
+    for (local_38 = *(uint *)(this + 4); local_38 < *(uint *)this; local_38 = local_38 + 1) {
+      *(int *)(*(long *)(this + 0x18) + (ulong)local_38 * 4) =
+           *(int *)(*(long *)(this + 0x18) + (ulong)(local_38 - 1) * 4) * 2;
+    }
+    this[0xc] = (hierarchy_info)0x0;
+  }
+  else {
+    do {
+    } while (this[0xc] != (hierarchy_info)0x0);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: resize
+// Entry: 000006e0
+// Signature: undefined __thiscall resize(hierarchy_info * this, uint param_1)
+// ========================================
+
+
+/* hierarchy_info::resize(unsigned int) */
+
+void __thiscall hierarchy_info::resize(hierarchy_info *this,uint param_1)
+
+{
+  int *piVar1;
+  hierarchy_info *phVar2;
+  hierarchy_info hVar3;
+  char cVar4;
+  bool bVar5;
+  undefined8 uVar6;
+  long lVar7;
+  long lVar8;
+  uint local_4c;
+  uint local_48;
+  uint local_44;
+  uint local_30;
+  int local_28;
+  uint local_24;
+  
+  phVar2 = this + 0xd;
+  do {
+    hVar3 = *phVar2;
+    if (hVar3 != (hierarchy_info)0x0) break;
+    cVar4 = '\x01';
+    bVar5 = (bool)ExclusiveMonitorPass(phVar2,0x10);
+    if (bVar5) {
+      *phVar2 = (hierarchy_info)0x1;
+      cVar4 = ExclusiveMonitorsStatus();
+    }
+  } while (cVar4 != '\0');
+  do {
+    if (hVar3 == (hierarchy_info)0x0) {
+      if (*(uint *)(this + 8) < param_1) {
+        local_24 = *(uint *)(*(long *)(this + 0x18) + (ulong)(*(int *)(this + 4) - 1) * 4);
+        local_28 = 0;
+        local_4c = *(uint *)this;
+        for (local_30 = *(uint *)(this + 4); local_30 < *(uint *)this && local_24 < param_1;
+            local_30 = local_30 + 1) {
+          *(int *)(*(long *)(this + 0x18) + (ulong)local_30 * 4) =
+               *(int *)(*(long *)(this + 0x18) + (ulong)(local_30 - 1) * 4) * 2;
+          piVar1 = (int *)(*(long *)(this + 0x10) + (ulong)(local_30 - 1) * 4);
+          *piVar1 = *piVar1 << 1;
+          local_24 = local_24 << 1;
+          *(int *)(this + 4) = *(int *)(this + 4) + 1;
+        }
+        if (local_24 < param_1) {
+          while (local_24 < param_1) {
+            local_24 = local_24 << 1;
+            local_28 = local_28 + 1;
+            *(int *)(this + 4) = *(int *)(this + 4) + 1;
+          }
+          *(int *)this = *(int *)this + local_28;
+          lVar7 = *(long *)(this + 0x10);
+          lVar8 = *(long *)(this + 0x18);
+          *(undefined8 *)(this + 0x18) = 0;
+          *(undefined8 *)(this + 0x10) = 0;
+          uVar6 = ____kmp_allocate((ulong)(uint)(*(int *)this << 1) << 2);
+          *(undefined8 *)(this + 0x10) = uVar6;
+          *(ulong *)(this + 0x18) = *(long *)(this + 0x10) + (ulong)*(uint *)this * 4;
+          for (local_44 = 0; local_48 = local_4c, local_44 < local_4c; local_44 = local_44 + 1) {
+            *(undefined4 *)(*(long *)(this + 0x10) + (ulong)local_44 * 4) =
+                 *(undefined4 *)(lVar7 + (ulong)local_44 * 4);
+            *(undefined4 *)(*(long *)(this + 0x18) + (ulong)local_44 * 4) =
+                 *(undefined4 *)(lVar8 + (ulong)local_44 * 4);
+          }
+          for (; local_48 < *(uint *)this; local_48 = local_48 + 1) {
+            *(undefined4 *)(*(long *)(this + 0x10) + (ulong)local_48 * 4) = 1;
+            *(undefined4 *)(*(long *)(this + 0x18) + (ulong)local_48 * 4) = 1;
+          }
+          ____kmp_free(lVar7);
+        }
+        for (; local_4c < *(uint *)this; local_4c = local_4c + 1) {
+          *(int *)(*(long *)(this + 0x18) + (ulong)local_4c * 4) =
+               *(int *)(*(long *)(this + 0x18) + (ulong)(local_4c - 1) * 4) * 2;
+        }
+        *(uint *)(this + 8) = param_1;
+        this[0xd] = (hierarchy_info)0x0;
+      }
+      return;
+    }
+    if (param_1 <= *(uint *)(this + 8)) {
+      return;
+    }
+    phVar2 = this + 0xd;
+    do {
+      hVar3 = *phVar2;
+      if (hVar3 != (hierarchy_info)0x0) break;
+      cVar4 = '\x01';
+      bVar5 = (bool)ExclusiveMonitorPass(phVar2,0x10);
+      if (bVar5) {
+        *phVar2 = (hierarchy_info)0x1;
+        cVar4 = ExclusiveMonitorsStatus();
+      }
+    } while (cVar4 != '\0');
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: __kmp_type_convert<unsigned_int,unsigned_char>
+// Entry: 00000ab4
+// Signature: void __cdecl __kmp_type_convert<unsigned_int,unsigned_char>(uint param_1, uchar * param_2)
+// ========================================
+
+
+/* void __kmp_type_convert<unsigned int, unsigned char>(unsigned int, unsigned char*) */
+
+void __kmp_type_convert<unsigned_int,unsigned_char>(uint param_1,uchar *param_2)
+
+{
+  uchar uVar1;
+  
+  uVar1 = kmp_convert<unsigned_int,unsigned_char,false,false,false,false>::to(param_1);
+  *param_2 = uVar1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_hw_get_catalog_string
+// Entry: 00000ae4
+// Signature: undefined ___kmp_hw_get_catalog_string(void)
+// ========================================
+
+
+undefined8 ___kmp_hw_get_catalog_string(undefined4 param_1,byte param_2)
+
+{
+  undefined8 local_88;
+  undefined8 local_80;
+  undefined8 local_78;
+  undefined8 local_70;
+  undefined8 local_68;
+  undefined8 local_60;
+  undefined8 local_58;
+  undefined8 local_50;
+  undefined8 local_48;
+  undefined8 local_40;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 local_18;
+  
+  param_2 = param_2 & 1;
+  switch(param_1) {
+  case 0:
+    if (param_2 == 0) {
+      local_30 = ___kmp_i18n_catgets(0x2003b);
+    }
+    else {
+      local_30 = ___kmp_i18n_catgets(0x2003c);
+    }
+    local_18 = local_30;
+    break;
+  case 1:
+    if (param_2 == 0) {
+      local_88 = ___kmp_i18n_catgets(0x20049);
+    }
+    else {
+      local_88 = ___kmp_i18n_catgets(0x2004a);
+    }
+    local_18 = local_88;
+    break;
+  case 2:
+    if (param_2 == 0) {
+      local_50 = ___kmp_i18n_catgets(0x20047);
+    }
+    else {
+      local_50 = ___kmp_i18n_catgets(0x20048);
+    }
+    local_18 = local_50;
+    break;
+  case 3:
+    if (param_2 == 0) {
+      local_38 = ___kmp_i18n_catgets(0x2003d);
+    }
+    else {
+      local_38 = ___kmp_i18n_catgets(0x2003e);
+    }
+    local_18 = local_38;
+    break;
+  case 4:
+    if (param_2 == 0) {
+      local_70 = ___kmp_i18n_catgets(0x2004e);
+    }
+    else {
+      local_70 = ___kmp_i18n_catgets(0x2004f);
+    }
+    local_18 = local_70;
+    break;
+  case 5:
+    if (param_2 == 0) {
+      local_58 = ___kmp_i18n_catgets(0x20045);
+    }
+    else {
+      local_58 = ___kmp_i18n_catgets(0x20046);
+    }
+    local_18 = local_58;
+    break;
+  case 6:
+    if (param_2 == 0) {
+      local_48 = ___kmp_i18n_catgets(0x20037);
+    }
+    else {
+      local_48 = ___kmp_i18n_catgets(0x20038);
+    }
+    local_18 = local_48;
+    break;
+  case 7:
+    if (param_2 == 0) {
+      local_40 = ___kmp_i18n_catgets(0x2003f);
+    }
+    else {
+      local_40 = ___kmp_i18n_catgets(0x20040);
+    }
+    local_18 = local_40;
+    break;
+  case 8:
+    if (param_2 == 0) {
+      local_60 = ___kmp_i18n_catgets(0x20043);
+    }
+    else {
+      local_60 = ___kmp_i18n_catgets(0x20044);
+    }
+    local_18 = local_60;
+    break;
+  case 9:
+    if (param_2 == 0) {
+      local_68 = ___kmp_i18n_catgets(0x20041);
+    }
+    else {
+      local_68 = ___kmp_i18n_catgets(0x20042);
+    }
+    local_18 = local_68;
+    break;
+  case 10:
+    if (param_2 == 0) {
+      local_78 = ___kmp_i18n_catgets(0x2001c);
+    }
+    else {
+      local_78 = ___kmp_i18n_catgets(0x2003a);
+    }
+    local_18 = local_78;
+    break;
+  case 0xb:
+    if (param_2 == 0) {
+      local_80 = ___kmp_i18n_catgets(0x2001d);
+    }
+    else {
+      local_80 = ___kmp_i18n_catgets(0x20039);
+    }
+    local_18 = local_80;
+    break;
+  default:
+    local_18 = ___kmp_i18n_catgets(0x2004b);
+  }
+  return local_18;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_hw_get_keyword
+// Entry: 00000e88
+// Signature: undefined ___kmp_hw_get_keyword(void)
+// ========================================
+
+
+char * ___kmp_hw_get_keyword(undefined4 param_1,byte param_2)
+
+{
+  char *local_8;
+  
+  param_2 = param_2 & 1;
+  switch(param_1) {
+  case 0:
+    local_8 = "sockets";
+    if (param_2 == 0) {
+      local_8 = "socket";
+    }
+    break;
+  case 1:
+    local_8 = "proc_groups";
+    if (param_2 == 0) {
+      local_8 = "proc_group";
+    }
+    break;
+  case 2:
+    local_8 = "numa_domains";
+    if (param_2 == 0) {
+      local_8 = "numa_domain";
+    }
+    break;
+  case 3:
+    local_8 = "dice";
+    if (param_2 == 0) {
+      local_8 = "die";
+    }
+    break;
+  case 4:
+    local_8 = "ll_caches";
+    if (param_2 == 0) {
+      local_8 = "ll_cache";
+    }
+    break;
+  case 5:
+    local_8 = "l3_caches";
+    if (param_2 == 0) {
+      local_8 = "l3_cache";
+    }
+    break;
+  case 6:
+    local_8 = "tiles";
+    if (param_2 == 0) {
+      local_8 = "tile";
+    }
+    break;
+  case 7:
+    local_8 = "modules";
+    if (param_2 == 0) {
+      local_8 = "module";
+    }
+    break;
+  case 8:
+    local_8 = "l2_caches";
+    if (param_2 == 0) {
+      local_8 = "l2_cache";
+    }
+    break;
+  case 9:
+    local_8 = "l1_caches";
+    if (param_2 == 0) {
+      local_8 = "l1_cache";
+    }
+    break;
+  case 10:
+    local_8 = "cores";
+    if (param_2 == 0) {
+      local_8 = "core";
+    }
+    break;
+  case 0xb:
+    local_8 = "threads";
+    if (param_2 == 0) {
+      local_8 = "thread";
+    }
+    break;
+  default:
+    local_8 = "unknowns";
+    if (param_2 == 0) {
+      local_8 = "unknown";
+    }
+  }
+  return local_8;
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_hw_get_core_type_string
+// Entry: 00001114
+// Signature: undefined ___kmp_hw_get_core_type_string(void)
+// ========================================
+
+
+char * ___kmp_hw_get_core_type_string(void)
+
+{
+  return "unknown";
+}
+
+
+
+
+// ========================================
+// Function: compare_ids
+// Entry: 0000115c
+// Signature: undefined __cdecl compare_ids(void * param_1, void * param_2)
+// ========================================
+
+
+/* kmp_hw_thread_t::compare_ids(void const*, void const*) */
+
+undefined4 kmp_hw_thread_t::compare_ids(void *param_1,void *param_2)
+
+{
+  int iVar1;
+  int local_40;
+  undefined4 local_14;
+  
+  iVar1 = kmp_topology_t::get_depth(___kmp_topology);
+  local_40 = 0;
+  while( true ) {
+    if (iVar1 <= local_40) {
+      if (*(int *)((long)param_1 + 100) < *(int *)((long)param_2 + 100)) {
+        local_14 = 0xffffffff;
+      }
+      else if (*(int *)((long)param_2 + 100) < *(int *)((long)param_1 + 100)) {
+        local_14 = 1;
+      }
+      else {
+        local_14 = 0;
+      }
+      return local_14;
+    }
+    if (*(int *)((long)param_1 + (long)local_40 * 4) < *(int *)((long)param_2 + (long)local_40 * 4))
+    break;
+    if (*(int *)((long)param_2 + (long)local_40 * 4) < *(int *)((long)param_1 + (long)local_40 * 4))
+    {
+      return 1;
+    }
+    local_40 = local_40 + 1;
+  }
+  return 0xffffffff;
+}
+
+
+
+
+// ========================================
+// Function: get_depth
+// Entry: 000012a4
+// Signature: undefined __thiscall get_depth(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::get_depth() const */
+
+undefined4 __thiscall kmp_topology_t::get_depth(kmp_topology_t *this)
+
+{
+  return *(undefined4 *)this;
+}
+
+
+
+
+// ========================================
+// Function: print
+// Entry: 000012bc
+// Signature: undefined __thiscall print(kmp_hw_thread_t * this)
+// ========================================
+
+
+/* kmp_hw_thread_t::print() const */
+
+int __thiscall kmp_hw_thread_t::print(kmp_hw_thread_t *this)
+
+{
+  bool bVar1;
+  int iVar2;
+  ulong uVar3;
+  int local_20;
+  
+  iVar2 = kmp_topology_t::get_depth(___kmp_topology);
+  _printf("%4d ");
+  for (local_20 = 0; local_20 < iVar2; local_20 = local_20 + 1) {
+    _printf("%4d ");
+  }
+  bVar1 = kmp_hw_attr_t::operator_cast_to_bool((kmp_hw_attr_t *)(this + 0x68));
+  if (bVar1) {
+    uVar3 = kmp_hw_attr_t::is_core_type_valid((kmp_hw_attr_t *)(this + 0x68));
+    if ((uVar3 & 1) != 0) {
+      kmp_hw_attr_t::get_core_type((kmp_hw_attr_t *)(this + 0x68));
+      ___kmp_hw_get_core_type_string();
+      _printf(" (%s)");
+    }
+    uVar3 = kmp_hw_attr_t::is_core_eff_valid((kmp_hw_attr_t *)(this + 0x68));
+    if ((uVar3 & 1) != 0) {
+      kmp_hw_attr_t::get_core_eff((kmp_hw_attr_t *)(this + 0x68));
+      _printf(" (eff=%d)");
+    }
+  }
+  iVar2 = _printf("\n");
+  return iVar2;
+}
+
+
+
+
+// ========================================
+// Function: operator.cast.to.bool
+// Entry: 00001404
+// Signature: bool __thiscall operator.cast.to.bool(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::operator bool() const */
+
+bool __thiscall kmp_hw_attr_t::operator_cast_to_bool(kmp_hw_attr_t *this)
+
+{
+  return (*(uint *)this >> 0x10 & 1) != 0;
+}
+
+
+
+
+// ========================================
+// Function: is_core_type_valid
+// Entry: 0000142c
+// Signature: undefined __thiscall is_core_type_valid(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::is_core_type_valid() const */
+
+bool __thiscall kmp_hw_attr_t::is_core_type_valid(kmp_hw_attr_t *this)
+
+{
+  return (char)*(undefined4 *)this != '\0';
+}
+
+
+
+
+// ========================================
+// Function: get_core_type
+// Entry: 00001458
+// Signature: undefined __thiscall get_core_type(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::get_core_type() const */
+
+int __thiscall kmp_hw_attr_t::get_core_type(kmp_hw_attr_t *this)
+
+{
+  return (int)(char)*(undefined4 *)this;
+}
+
+
+
+
+// ========================================
+// Function: is_core_eff_valid
+// Entry: 00001478
+// Signature: undefined __thiscall is_core_eff_valid(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::is_core_eff_valid() const */
+
+bool __thiscall kmp_hw_attr_t::is_core_eff_valid(kmp_hw_attr_t *this)
+
+{
+  return (*(int *)this << 0x10) >> 0x18 != -1;
+}
+
+
+
+
+// ========================================
+// Function: get_core_eff
+// Entry: 000014a4
+// Signature: undefined __thiscall get_core_eff(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::get_core_eff() const */
+
+int __thiscall kmp_hw_attr_t::get_core_eff(kmp_hw_attr_t *this)
+
+{
+  return (*(int *)this << 0x10) >> 0x18;
+}
+
+
+
+
+// ========================================
+// Function: _insert_layer
+// Entry: 000014c4
+// Signature: undefined __thiscall _insert_layer(kmp_topology_t * this, kmp_hw_t param_1, int * param_2)
+// ========================================
+
+
+/* kmp_topology_t::_insert_layer(kmp_hw_t, int const*) */
+
+void __thiscall kmp_topology_t::_insert_layer(kmp_topology_t *this,int param_2,long param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  bool bVar4;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_2c;
+  int local_24;
+  int local_20;
+  int local_1c;
+  
+  local_20 = -1;
+  local_24 = -1;
+  for (local_1c = 0; local_1c < *(int *)this; local_1c = local_1c + 1) {
+    bVar4 = true;
+    bVar3 = false;
+    for (local_2c = 0; local_2c < *(int *)(this + 0x2c); local_2c = local_2c + 1) {
+      iVar1 = *(int *)(*(long *)(this + 0x30) + (long)local_2c * 0x6c + (long)local_1c * 4);
+      iVar2 = *(int *)(param_3 + (long)local_2c * 4);
+      if ((iVar1 != local_20) && (iVar2 == local_24)) {
+        bVar3 = true;
+        bVar4 = false;
+        break;
+      }
+      if ((iVar1 == local_20) && (iVar2 != local_24)) {
+        bVar4 = false;
+        break;
+      }
+      local_24 = iVar2;
+      local_20 = iVar1;
+    }
+    if ((bVar3) || (bVar4)) break;
+  }
+  local_38 = *(int *)this;
+  local_3c = *(int *)this;
+  while (local_38 = local_38 + -1, local_1c <= local_38) {
+    *(undefined4 *)(*(long *)(this + 8) + (long)local_3c * 4) =
+         *(undefined4 *)(*(long *)(this + 8) + (long)local_38 * 4);
+    local_3c = local_3c + -1;
+  }
+  *(int *)(*(long *)(this + 8) + (long)local_1c * 4) = param_2;
+  for (local_40 = 0; local_40 < *(int *)(this + 0x2c); local_40 = local_40 + 1) {
+    local_44 = *(int *)this;
+    local_48 = *(int *)this;
+    while (local_44 = local_44 + -1, local_1c <= local_44) {
+      *(undefined4 *)(*(long *)(this + 0x30) + (long)local_40 * 0x6c + (long)local_48 * 4) =
+           *(undefined4 *)(*(long *)(this + 0x30) + (long)local_40 * 0x6c + (long)local_44 * 4);
+      local_48 = local_48 + -1;
+    }
+    *(undefined4 *)(*(long *)(this + 0x30) + (long)local_40 * 0x6c + (long)local_1c * 4) =
+         *(undefined4 *)(param_3 + (long)local_40 * 4);
+  }
+  *(int *)(this + (long)param_2 * 4 + 0x38) = param_2;
+  *(int *)this = *(int *)this + 1;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _remove_radix1_layers
+// Entry: 000017dc
+// Signature: undefined __thiscall _remove_radix1_layers(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::_remove_radix1_layers() */
+
+void __thiscall kmp_topology_t::_remove_radix1_layers(kmp_topology_t *this)
+
+{
+  bool bVar1;
+  long lVar2;
+  int iVar3;
+  bool bVar4;
+  int local_a0;
+  int local_9c;
+  int local_8c;
+  int local_88;
+  int local_84;
+  int local_80;
+  int local_7c;
+  int local_78;
+  int local_6c;
+  int local_68;
+  int local_58;
+  int local_54;
+  int local_48 [12];
+  long local_18;
+  
+  local_18 = *____stack_chk_guard;
+  local_48[0] = 0x6e;
+  local_48[1] = 100;
+  local_48[10] = 0x5f;
+  local_48[0xb] = 0x5a;
+  local_48[2] = 0x55;
+  local_48[3] = 0x50;
+  local_48[6] = 0x4b;
+  local_48[7] = 0x49;
+  local_48[5] = 0x46;
+  local_48[8] = 0x41;
+  local_48[9] = 0x3c;
+  local_48[4] = 5;
+  local_54 = 0;
+  local_58 = 1;
+  do {
+    while( true ) {
+      bVar1 = false;
+      if (local_54 < *(int *)this + -1) {
+        bVar1 = local_58 < *(int *)this;
+      }
+      if (!bVar1) {
+        if (*(int *)this < 1) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                              ,0x16f);
+        }
+        if (*____stack_chk_guard == local_18) {
+          return;
+        }
+                    /* WARNING: Subroutine does not return */
+        ___stack_chk_fail();
+      }
+      local_7c = *(int *)(*(long *)(this + 8) + (long)local_54 * 4);
+      iVar3 = *(int *)(*(long *)(this + 8) + (long)local_58 * 4);
+      if ((local_7c < 0) || (0xb < local_7c)) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                            ,0x133);
+      }
+      if ((iVar3 < 0) || (0xb < iVar3)) {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                            ,0x134);
+      }
+      if ((((local_7c != 0xb) && (local_7c != 10)) && (local_7c != 0)) ||
+         (((iVar3 != 0xb && (iVar3 != 10)) && (iVar3 != 0)))) break;
+      local_54 = local_58;
+      local_58 = local_58 + 1;
+    }
+    bVar1 = true;
+    bVar4 = true;
+    local_68 = *(int *)(*(long *)(this + 0x30) + (long)local_54 * 4);
+    local_6c = *(int *)(*(long *)(this + 0x30) + (long)local_58 * 4);
+    for (local_78 = 1; local_78 < *(int *)(this + 0x2c); local_78 = local_78 + 1) {
+      if ((*(int *)(*(long *)(this + 0x30) + (long)local_78 * 0x6c + (long)local_54 * 4) == local_68
+          ) && (*(int *)(*(long *)(this + 0x30) + (long)local_78 * 0x6c + (long)local_58 * 4) !=
+                local_6c)) {
+        bVar1 = false;
+        break;
+      }
+      if (*(int *)(*(long *)(this + 0x30) + (long)local_78 * 0x6c + (long)local_58 * 4) != local_6c)
+      {
+        bVar4 = false;
+      }
+      local_68 = *(int *)(*(long *)(this + 0x30) + (long)local_78 * 0x6c + (long)local_54 * 4);
+      local_6c = *(int *)(*(long *)(this + 0x30) + (long)local_78 * 0x6c + (long)local_58 * 4);
+    }
+    if (bVar1) {
+      if (local_48[iVar3] < local_48[local_7c]) {
+        local_84 = local_58;
+        local_80 = local_7c;
+        local_7c = iVar3;
+      }
+      else {
+        local_84 = local_54;
+        local_80 = iVar3;
+      }
+      local_88 = local_84;
+      if (bVar4) {
+        local_88 = local_58;
+      }
+      set_equivalent_type(this,local_7c,local_80);
+      for (local_8c = 0; local_8c < *(int *)(this + 0x2c); local_8c = local_8c + 1) {
+        lVar2 = *(long *)(this + 0x30) + (long)local_8c * 0x6c;
+        for (local_9c = local_88; local_9c < *(int *)this + -1; local_9c = local_9c + 1) {
+          *(undefined4 *)(lVar2 + (long)local_9c * 4) =
+               *(undefined4 *)(lVar2 + (long)(local_9c + 1) * 4);
+        }
+      }
+      for (local_a0 = local_84; local_a0 < *(int *)this + -1; local_a0 = local_a0 + 1) {
+        *(undefined4 *)(*(long *)(this + 8) + (long)local_a0 * 4) =
+             *(undefined4 *)(*(long *)(this + 8) + (long)(local_a0 + 1) * 4);
+      }
+      *(int *)this = *(int *)this + -1;
+    }
+    else {
+      local_54 = local_58;
+      local_58 = local_58 + 1;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: set_equivalent_type
+// Entry: 00001d9c
+// Signature: undefined __thiscall set_equivalent_type(kmp_topology_t * this, kmp_hw_t param_1, kmp_hw_t param_2)
+// ========================================
+
+
+/* kmp_topology_t::set_equivalent_type(kmp_hw_t, kmp_hw_t) */
+
+void __thiscall kmp_topology_t::set_equivalent_type(kmp_topology_t *this,int param_2,int param_3)
+
+{
+  int local_18;
+  int local_14;
+  
+  local_14 = *(int *)(this + (long)param_3 * 4 + 0x38);
+  if (local_14 == -1) {
+    local_14 = param_3;
+  }
+  *(int *)(this + (long)param_2 * 4 + 0x38) = local_14;
+  for (local_18 = 0; local_18 < 0xc; local_18 = local_18 + 1) {
+    if (*(int *)(this + (long)local_18 * 4 + 0x38) == param_2) {
+      *(int *)(this + (long)local_18 * 4 + 0x38) = local_14;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _set_last_level_cache
+// Entry: 00001e6c
+// Signature: undefined __thiscall _set_last_level_cache(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::_set_last_level_cache() */
+
+void __thiscall kmp_topology_t::_set_last_level_cache(kmp_topology_t *this)
+
+{
+  int iVar1;
+  
+  iVar1 = get_equivalent_type(this,5);
+  if (iVar1 == -1) {
+    iVar1 = get_equivalent_type(this,8);
+    if (iVar1 == -1) {
+      iVar1 = get_equivalent_type(this,9);
+      if (iVar1 != -1) {
+        set_equivalent_type(this,4,9);
+      }
+    }
+    else {
+      set_equivalent_type(this,4,8);
+    }
+  }
+  else {
+    set_equivalent_type(this,4,5);
+  }
+  iVar1 = get_equivalent_type(this,4);
+  if (iVar1 == -1) {
+    iVar1 = get_equivalent_type(this,0);
+    if (iVar1 == -1) {
+      iVar1 = get_equivalent_type(this,10);
+      if (iVar1 != -1) {
+        set_equivalent_type(this,4,10);
+      }
+    }
+    else {
+      set_equivalent_type(this,4,0);
+    }
+  }
+  iVar1 = get_equivalent_type(this,4);
+  if (iVar1 == -1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x18b);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_equivalent_type
+// Entry: 00001fe0
+// Signature: undefined __thiscall get_equivalent_type(kmp_topology_t * this, kmp_hw_t param_1)
+// ========================================
+
+
+/* kmp_topology_t::get_equivalent_type(kmp_hw_t) const */
+
+undefined4 __thiscall kmp_topology_t::get_equivalent_type(kmp_topology_t *this,int param_2)
+
+{
+  return *(undefined4 *)(this + (long)param_2 * 4 + 0x38);
+}
+
+
+
+
+// ========================================
+// Function: _gather_enumeration_information
+// Entry: 00002004
+// Signature: undefined __thiscall _gather_enumeration_information(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::_gather_enumeration_information() */
+
+void __thiscall kmp_topology_t::_gather_enumeration_information(kmp_topology_t *this)
+
+{
+  long lVar1;
+  int *piVar2;
+  bool bVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 uVar6;
+  ulong uVar7;
+  int local_b8;
+  int local_b4;
+  int local_b0;
+  int local_a8;
+  int local_a4;
+  int local_9c;
+  int local_8c;
+  int local_84;
+  int aiStack_78 [12];
+  int aiStack_48 [12];
+  long local_18;
+  
+  local_18 = *____stack_chk_guard;
+  for (local_84 = 0; local_84 < *(int *)this; local_84 = local_84 + 1) {
+    aiStack_48[local_84] = -1;
+    aiStack_78[local_84] = 0;
+    *(undefined4 *)(*(long *)(this + 0x18) + (long)local_84 * 4) = 0;
+    *(undefined4 *)(*(long *)(this + 0x10) + (long)local_84 * 4) = 0;
+  }
+  iVar4 = get_level(this,10);
+  local_8c = 0;
+  do {
+    if (*(int *)(this + 0x2c) <= local_8c) {
+      for (local_b8 = 0; local_b8 < *(int *)this; local_b8 = local_b8 + 1) {
+        if (*(int *)(*(long *)(this + 0x10) + (long)local_b8 * 4) < aiStack_78[local_b8]) {
+          *(int *)(*(long *)(this + 0x10) + (long)local_b8 * 4) = aiStack_78[local_b8];
+        }
+      }
+      if (*____stack_chk_guard == local_18) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    lVar1 = *(long *)(this + 0x30) + (long)local_8c * 0x6c;
+    local_9c = 0;
+    while( true ) {
+      if (*(int *)this <= local_9c) goto LAB_000023f4;
+      if (*(int *)(lVar1 + (long)local_9c * 4) != aiStack_48[local_9c]) break;
+      local_9c = local_9c + 1;
+    }
+    for (local_a4 = local_9c; local_a4 < *(int *)this; local_a4 = local_a4 + 1) {
+      piVar2 = (int *)(*(long *)(this + 0x18) + (long)local_a4 * 4);
+      *piVar2 = *piVar2 + 1;
+    }
+    aiStack_78[local_9c] = aiStack_78[local_9c] + 1;
+    local_a8 = local_9c;
+    while (local_a8 = local_a8 + 1, local_a8 < *(int *)this) {
+      if (*(int *)(*(long *)(this + 0x10) + (long)local_a8 * 4) < aiStack_78[local_a8]) {
+        *(int *)(*(long *)(this + 0x10) + (long)local_a8 * 4) = aiStack_78[local_a8];
+      }
+      aiStack_78[local_a8] = 1;
+    }
+    uVar7 = __kmp_is_hybrid_cpu();
+    if ((((uVar7 & 1) != 0) && (-1 < iVar4)) && (local_9c <= iVar4)) {
+      uVar7 = kmp_hw_attr_t::is_core_eff_valid((kmp_hw_attr_t *)(lVar1 + 0x68));
+      if (((uVar7 & 1) != 0) && (*(int *)(this + 0x20) <= (*(int *)(lVar1 + 0x68) << 0x10) >> 0x18))
+      {
+        *(int *)(this + 0x20) = ((*(int *)(lVar1 + 0x68) << 0x10) >> 0x18) + 1;
+      }
+      uVar7 = kmp_hw_attr_t::is_core_type_valid((kmp_hw_attr_t *)(lVar1 + 0x68));
+      if ((uVar7 & 1) != 0) {
+        bVar3 = false;
+        for (local_b0 = 0; local_b0 < *(int *)(this + 0x24); local_b0 = local_b0 + 1) {
+          iVar5 = kmp_hw_attr_t::get_core_type((kmp_hw_attr_t *)(lVar1 + 0x68));
+          if (iVar5 == *(int *)(this + (long)local_b0 * 4 + 0x28)) {
+            bVar3 = true;
+            break;
+          }
+        }
+        if (!bVar3) {
+          if (0 < *(int *)(this + 0x24)) {
+            ___kmp_debug_assert("assertion failure",
+                                "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                                ,0x1bb);
+          }
+          uVar6 = kmp_hw_attr_t::get_core_type((kmp_hw_attr_t *)(lVar1 + 0x68));
+          iVar5 = *(int *)(this + 0x24);
+          *(int *)(this + 0x24) = iVar5 + 1;
+          *(undefined4 *)(this + (long)iVar5 * 4 + 0x28) = uVar6;
+        }
+      }
+    }
+LAB_000023f4:
+    for (local_b4 = 0; local_b4 < *(int *)this; local_b4 = local_b4 + 1) {
+      aiStack_48[local_b4] = *(int *)(lVar1 + (long)local_b4 * 4);
+    }
+    local_8c = local_8c + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: get_level
+// Entry: 0000250c
+// Signature: undefined __thiscall get_level(kmp_topology_t * this, kmp_hw_t param_1)
+// ========================================
+
+
+/* kmp_topology_t::get_level(kmp_hw_t) const */
+
+int __thiscall kmp_topology_t::get_level(kmp_topology_t *this,int param_2)
+
+{
+  int local_1c;
+  
+  if (*(int *)(this + (long)param_2 * 4 + 0x38) != -1) {
+    for (local_1c = 0; local_1c < *(int *)this; local_1c = local_1c + 1) {
+      if (*(int *)(*(long *)(this + 8) + (long)local_1c * 4) ==
+          *(int *)(this + (long)param_2 * 4 + 0x38)) {
+        return local_1c;
+      }
+    }
+  }
+  return -1;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_is_hybrid_cpu
+// Entry: 000025d0
+// Signature: undefined __kmp_is_hybrid_cpu(void)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* __kmp_is_hybrid_cpu() */
+
+undefined8 __kmp_is_hybrid_cpu(void)
+
+{
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: _get_ncores_with_attr
+// Entry: 000025dc
+// Signature: undefined __thiscall _get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * param_1, int param_2, bool param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::_get_ncores_with_attr(kmp_hw_attr_t const&, int, bool) const */
+
+uint __thiscall
+kmp_topology_t::_get_ncores_with_attr
+          (kmp_topology_t *this,kmp_hw_attr_t *param_1,int param_2,bool param_3)
+
+{
+  long lVar1;
+  int iVar2;
+  ulong uVar3;
+  int local_88;
+  int local_84;
+  int local_74;
+  int local_6c;
+  uint local_68;
+  uint local_64;
+  int local_5c;
+  int aiStack_48 [12];
+  long local_18;
+  
+  local_18 = *____stack_chk_guard;
+  for (local_6c = 0; local_6c < *(int *)this; local_6c = local_6c + 1) {
+    aiStack_48[local_6c] = -1;
+  }
+  iVar2 = get_level(this,10);
+  local_5c = param_2;
+  if (param_3) {
+    local_5c = -1;
+  }
+  if (iVar2 <= local_5c) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x1d7);
+  }
+  local_68 = 0;
+  local_64 = 0;
+  local_74 = 0;
+  do {
+    if (*(int *)(this + 0x2c) <= local_74) {
+      if ((int)local_68 < (int)local_64) {
+        local_68 = local_64;
+      }
+      if (*____stack_chk_guard == local_18) {
+        return local_68;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    lVar1 = *(long *)(this + 0x30) + (long)local_74 * 0x6c;
+    local_84 = local_5c;
+    if ((param_3) || (*(int *)(lVar1 + (long)local_5c * 4) == aiStack_48[local_5c])) {
+      do {
+        local_84 = local_84 + 1;
+        if (iVar2 < local_84) goto LAB_0000280c;
+      } while (*(int *)(lVar1 + (long)local_84 * 4) == aiStack_48[local_84]);
+      uVar3 = kmp_hw_attr_t::contains((kmp_hw_attr_t *)(lVar1 + 0x68),param_1);
+      if ((uVar3 & 1) != 0) {
+        local_64 = local_64 + 1;
+      }
+    }
+    else {
+      if ((int)local_68 < (int)local_64) {
+        local_68 = local_64;
+      }
+      local_64 = kmp_hw_attr_t::contains((kmp_hw_attr_t *)(lVar1 + 0x68),param_1);
+      local_64 = local_64 & 1;
+    }
+LAB_0000280c:
+    for (local_88 = 0; local_88 < *(int *)this; local_88 = local_88 + 1) {
+      aiStack_48[local_88] = *(int *)(lVar1 + (long)local_88 * 4);
+    }
+    local_74 = local_74 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: contains
+// Entry: 000028d0
+// Signature: undefined __thiscall contains(kmp_hw_attr_t * this, kmp_hw_attr_t * param_1)
+// ========================================
+
+
+/* kmp_hw_attr_t::contains(kmp_hw_attr_t const&) const */
+
+undefined1 __thiscall kmp_hw_attr_t::contains(kmp_hw_attr_t *this,kmp_hw_attr_t *param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  ulong uVar3;
+  undefined1 local_11;
+  
+  if (((*(uint *)this >> 0x10 & 1) == 0) && ((*(uint *)param_1 >> 0x10 & 1) == 0)) {
+    return 1;
+  }
+  if (((*(uint *)this >> 0x10 & 1) == 0) || ((*(uint *)param_1 >> 0x10 & 1) == 0)) {
+    return 0;
+  }
+  uVar3 = is_core_type_valid(param_1);
+  if ((uVar3 & 1) != 0) {
+    uVar3 = is_core_type_valid(this);
+    if ((uVar3 & 1) == 0) {
+      return 0;
+    }
+    iVar1 = get_core_type(this);
+    iVar2 = get_core_type(param_1);
+    if (iVar1 != iVar2) {
+      return 0;
+    }
+  }
+  uVar3 = is_core_eff_valid(param_1);
+  if ((uVar3 & 1) == 0) {
+LAB_00002a34:
+    local_11 = 1;
+  }
+  else {
+    uVar3 = is_core_eff_valid(this);
+    if ((uVar3 & 1) != 0) {
+      iVar1 = get_core_eff(this);
+      iVar2 = get_core_eff(param_1);
+      if (iVar1 == iVar2) goto LAB_00002a34;
+    }
+    local_11 = 0;
+  }
+  return local_11;
+}
+
+
+
+
+// ========================================
+// Function: _discover_uniformity
+// Entry: 00002a70
+// Signature: undefined __thiscall _discover_uniformity(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::_discover_uniformity() */
+
+void __thiscall kmp_topology_t::_discover_uniformity(kmp_topology_t *this)
+
+{
+  int local_10;
+  int local_c;
+  
+  local_c = 1;
+  for (local_10 = 0; local_10 < *(int *)this; local_10 = local_10 + 1) {
+    local_c = local_c * *(int *)(*(long *)(this + 0x10) + (long)local_10 * 4);
+  }
+  *(uint *)(this + 0x68) =
+       *(uint *)(this + 0x68) & 0xfffffffe |
+       (uint)(local_c == *(int *)(*(long *)(this + 0x18) + (long)(*(int *)this + -1) * 4));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _set_sub_ids
+// Entry: 00002b1c
+// Signature: undefined __thiscall _set_sub_ids(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::_set_sub_ids() */
+
+void __thiscall kmp_topology_t::_set_sub_ids(kmp_topology_t *this)
+
+{
+  long lVar1;
+  int local_a0;
+  int local_9c;
+  int local_98;
+  int local_94;
+  int local_88;
+  int local_84;
+  int aiStack_78 [12];
+  int aiStack_48 [12];
+  long local_18;
+  
+  local_18 = *____stack_chk_guard;
+  for (local_84 = 0; local_84 < *(int *)this; local_84 = local_84 + 1) {
+    aiStack_48[local_84] = -1;
+    aiStack_78[local_84] = -1;
+  }
+  local_88 = 0;
+  do {
+    if (*(int *)(this + 0x2c) <= local_88) {
+      if (*____stack_chk_guard == local_18) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    lVar1 = *(long *)(this + 0x30) + (long)local_88 * 0x6c;
+    local_94 = 0;
+    while( true ) {
+      if (*(int *)this <= local_94) goto LAB_00002ca4;
+      if (*(int *)(lVar1 + (long)local_94 * 4) != aiStack_48[local_94]) break;
+      local_94 = local_94 + 1;
+    }
+    aiStack_78[local_94] = aiStack_78[local_94] + 1;
+    while (local_98 = local_94 + 1, local_98 < *(int *)this) {
+      aiStack_78[local_98] = 0;
+      local_94 = local_98;
+    }
+LAB_00002ca4:
+    for (local_9c = 0; local_9c < *(int *)this; local_9c = local_9c + 1) {
+      aiStack_48[local_9c] = *(int *)(lVar1 + (long)local_9c * 4);
+    }
+    for (local_a0 = 0; local_a0 < *(int *)this; local_a0 = local_a0 + 1) {
+      *(int *)(lVar1 + 0x30 + (long)local_a0 * 4) = aiStack_78[local_a0];
+    }
+    local_88 = local_88 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _set_globals
+// Entry: 00002d8c
+// Signature: undefined __thiscall _set_globals(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::_set_globals() */
+
+void __thiscall kmp_topology_t::_set_globals(kmp_topology_t *this)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = get_level(this,0);
+  iVar2 = get_level(this,10);
+  iVar3 = get_level(this,0xb);
+  if (iVar2 == -1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x224);
+  }
+  if (iVar3 == -1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x225);
+  }
+  __kmp_nThreadsPerCore = calculate_ratio(this,iVar3,iVar2);
+  if (iVar1 == -1) {
+    nCoresPerPkg = get_count(this,iVar2);
+    nPackages = 1;
+  }
+  else {
+    nCoresPerPkg = calculate_ratio(this,iVar2,iVar1);
+    nPackages = get_count(this,iVar1);
+  }
+  __kmp_ncores = get_count(this,iVar2);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: calculate_ratio
+// Entry: 00002edc
+// Signature: undefined __thiscall calculate_ratio(kmp_topology_t * this, int param_1, int param_2)
+// ========================================
+
+
+/* kmp_topology_t::calculate_ratio(int, int) const */
+
+int __thiscall kmp_topology_t::calculate_ratio(kmp_topology_t *this,int param_1,int param_2)
+
+{
+  int local_18;
+  int local_14;
+  
+  local_14 = 1;
+  for (local_18 = param_1; param_2 < local_18; local_18 = local_18 + -1) {
+    local_14 = local_14 * *(int *)(*(long *)(this + 0x10) + (long)local_18 * 4);
+  }
+  return local_14;
+}
+
+
+
+
+// ========================================
+// Function: get_count
+// Entry: 00002f5c
+// Signature: undefined __thiscall get_count(kmp_topology_t * this, int param_1)
+// ========================================
+
+
+/* kmp_topology_t::get_count(int) const */
+
+undefined4 __thiscall kmp_topology_t::get_count(kmp_topology_t *this,int param_1)
+
+{
+  return *(undefined4 *)(*(long *)(this + 0x18) + (long)param_1 * 4);
+}
+
+
+
+
+// ========================================
+// Function: allocate
+// Entry: 00002f80
+// Signature: undefined __cdecl allocate(int param_1, int param_2, kmp_hw_t * param_3)
+// ========================================
+
+
+/* kmp_topology_t::allocate(int, int, kmp_hw_t const*) */
+
+int * kmp_topology_t::allocate(int param_1,int param_2,kmp_hw_t *param_3)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int local_4c;
+  int local_48;
+  int local_44;
+  
+  piVar2 = (int *)____kmp_allocate((long)param_1 * 0x6c + 0x100);
+  if (param_1 < 1) {
+    piVar2[0xc] = 0;
+    piVar2[0xd] = 0;
+  }
+  else {
+    *(int **)(piVar2 + 0xc) = piVar2 + 0x1c;
+  }
+  piVar2[0xb] = param_1;
+  *piVar2 = param_2;
+  piVar1 = piVar2 + (long)param_1 * 0x1b + 0x1c;
+  *(int **)(piVar2 + 2) = piVar1;
+  *(int **)(piVar2 + 4) = piVar1 + 0xc;
+  *(int **)(piVar2 + 6) = piVar1 + 0x18;
+  piVar2[8] = 0;
+  piVar2[9] = 0;
+  piVar2[0x1b] = 0;
+  for (local_44 = 0; local_44 < 1; local_44 = local_44 + 1) {
+    piVar2[(long)local_44 + 10] = 0;
+  }
+  for (local_48 = 0; local_48 < 0xc; local_48 = local_48 + 1) {
+    piVar2[(long)local_48 + 0xe] = -1;
+  }
+  for (local_4c = 0; local_4c < param_2; local_4c = local_4c + 1) {
+    *(undefined4 *)(*(long *)(piVar2 + 2) + (long)local_4c * 4) =
+         *(undefined4 *)(param_3 + (long)local_4c * 4);
+    piVar2[(long)*(int *)(param_3 + (long)local_4c * 4) + 0xe] =
+         *(int *)(param_3 + (long)local_4c * 4);
+  }
+  return piVar2;
+}
+
+
+
+
+// ========================================
+// Function: deallocate
+// Entry: 0000317c
+// Signature: undefined __cdecl deallocate(kmp_topology_t * param_1)
+// ========================================
+
+
+/* kmp_topology_t::deallocate(kmp_topology_t*) */
+
+void kmp_topology_t::deallocate(kmp_topology_t *param_1)
+
+{
+  if (param_1 != (kmp_topology_t *)0x0) {
+    ____kmp_free(param_1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: check_ids
+// Entry: 000031b8
+// Signature: undefined __thiscall check_ids(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::check_ids() const */
+
+undefined1 __thiscall kmp_topology_t::check_ids(kmp_topology_t *this)
+
+{
+  bool bVar1;
+  int local_30;
+  int local_14;
+  
+  if (*(int *)(this + 0x2c) != 0) {
+    for (local_14 = 1; local_14 < *(int *)(this + 0x2c); local_14 = local_14 + 1) {
+      bVar1 = false;
+      for (local_30 = 0; local_30 < *(int *)this; local_30 = local_30 + 1) {
+        if (*(int *)(*(long *)(this + 0x30) + (long)(local_14 + -1) * 0x6c + (long)local_30 * 4) !=
+            *(int *)(*(long *)(this + 0x30) + (long)local_14 * 0x6c + (long)local_30 * 4)) {
+          bVar1 = true;
+          break;
+        }
+      }
+      if (!bVar1) {
+        return 0;
+      }
+    }
+  }
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: dump
+// Entry: 00003314
+// Signature: undefined __thiscall dump(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::dump() const */
+
+int __thiscall kmp_topology_t::dump(kmp_topology_t *this)
+
+{
+  int iVar1;
+  int local_44;
+  int local_2c;
+  int local_28;
+  int local_24;
+  int local_20;
+  int local_1c;
+  
+  _printf("***********************\n");
+  _printf("*** __kmp_topology: ***\n");
+  _printf("***********************\n");
+  _printf("* depth: %d\n");
+  _printf("* types: ");
+  for (local_1c = 0; local_1c < *(int *)this; local_1c = local_1c + 1) {
+    ___kmp_hw_get_keyword(*(undefined4 *)(*(long *)(this + 8) + (long)local_1c * 4),0);
+    _printf("%15s ");
+  }
+  _printf("\n");
+  _printf("* ratio: ");
+  for (local_20 = 0; local_20 < *(int *)this; local_20 = local_20 + 1) {
+    _printf("%15d ");
+  }
+  _printf("\n");
+  _printf("* count: ");
+  for (local_24 = 0; local_24 < *(int *)this; local_24 = local_24 + 1) {
+    _printf("%15d ");
+  }
+  _printf("\n");
+  _printf("* num_core_eff: %d\n");
+  _printf("* num_core_types: %d\n");
+  _printf("* core_types: ");
+  for (local_28 = 0; local_28 < *(int *)(this + 0x24); local_28 = local_28 + 1) {
+    _printf("%3d ");
+  }
+  _printf("\n");
+  _printf("* equivalent map:\n");
+  for (local_2c = 0; local_2c < 0xc; local_2c = local_2c + 1) {
+    ___kmp_hw_get_keyword(local_2c,0);
+    ___kmp_hw_get_keyword(*(undefined4 *)(this + (long)local_2c * 4 + 0x38),0);
+    _printf("%-15s -> %-15s\n");
+  }
+  is_uniform(this);
+  _printf("* uniform: %s\n");
+  _printf("* num_hw_threads: %d\n");
+  _printf("* hw_threads:\n");
+  for (local_44 = 0; local_44 < *(int *)(this + 0x2c); local_44 = local_44 + 1) {
+    kmp_hw_thread_t::print((kmp_hw_thread_t *)(*(long *)(this + 0x30) + (long)local_44 * 0x6c));
+  }
+  iVar1 = _printf("***********************\n");
+  return iVar1;
+}
+
+
+
+
+// ========================================
+// Function: is_uniform
+// Entry: 000036fc
+// Signature: undefined __thiscall is_uniform(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::is_uniform() const */
+
+bool __thiscall kmp_topology_t::is_uniform(kmp_topology_t *this)
+
+{
+  return *(int *)(this + 0x68) << 0x1f < 0;
+}
+
+
+
+
+// ========================================
+// Function: print
+// Entry: 00003728
+// Signature: undefined __thiscall print(kmp_topology_t * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::print(char const*) const */
+
+void __thiscall kmp_topology_t::print(kmp_topology_t *this,char *param_1)
+
+{
+  undefined8 *puVar1;
+  int iVar2;
+  ulong uVar3;
+  long lVar4;
+  undefined1 auStack_4c8 [28];
+  undefined4 local_4ac;
+  int local_4a8;
+  int local_4a4;
+  undefined8 local_4a0;
+  undefined8 uStack_498;
+  undefined8 local_490;
+  undefined1 auStack_488 [24];
+  undefined8 local_470;
+  undefined8 uStack_468;
+  undefined8 local_460;
+  undefined1 auStack_450 [24];
+  int local_438;
+  int local_434;
+  undefined8 local_430;
+  undefined8 uStack_428;
+  undefined8 local_420;
+  undefined1 auStack_418 [24];
+  int local_400;
+  kmp_hw_attr_t akStack_3fc [4];
+  undefined4 local_3f8;
+  int local_3f4;
+  undefined8 local_3f0;
+  undefined8 uStack_3e8;
+  undefined8 local_3e0;
+  undefined1 auStack_3d0 [31];
+  undefined1 local_3b1;
+  int local_3b0;
+  int local_3ac;
+  int local_3a8;
+  undefined4 local_3a4;
+  int local_3a0;
+  int local_39c;
+  int local_398;
+  int local_394;
+  undefined8 local_390;
+  undefined8 uStack_388;
+  undefined8 local_380;
+  undefined1 auStack_370 [24];
+  int local_358;
+  int local_354;
+  undefined8 local_350;
+  undefined8 uStack_348;
+  undefined8 local_340;
+  undefined1 auStack_338 [24];
+  undefined8 local_320;
+  undefined8 uStack_318;
+  undefined8 local_310;
+  undefined1 auStack_308 [24];
+  undefined8 local_2f0;
+  undefined8 uStack_2e8;
+  undefined8 local_2e0;
+  undefined1 auStack_2d8 [24];
+  undefined8 local_2c0;
+  undefined8 uStack_2b8;
+  undefined8 local_2b0;
+  undefined1 auStack_2a0 [28];
+  int local_284;
+  char *local_280;
+  undefined8 local_278;
+  int aiStack_270 [14];
+  undefined1 *local_238;
+  undefined4 local_230;
+  undefined4 local_22c;
+  undefined1 local_228 [512];
+  long local_28;
+  
+  puVar1 = ____kmp_msg_null;
+  local_28 = *____stack_chk_guard;
+  local_238 = local_228;
+  local_230 = 0x200;
+  local_22c = 0;
+  local_228[0] = 0;
+  local_280 = param_1;
+  local_278 = this;
+  if (*(int *)(this + 0x2c) == 0) {
+    ___kmp_msg_format(0x4009d);
+    uStack_2e8 = puVar1[1];
+    local_2f0 = *puVar1;
+    local_2e0 = puVar1[2];
+    ___kmp_msg(0,auStack_2d8);
+  }
+  else {
+    ___kmp_msg_format(0x4009d);
+    uStack_2b8 = puVar1[1];
+    local_2c0 = *puVar1;
+    local_2b0 = puVar1[2];
+    ___kmp_msg(0,auStack_2a0);
+  }
+  uVar3 = is_uniform(this);
+  if ((uVar3 & 1) == 0) {
+    ___kmp_msg_format(0x4009f);
+    uStack_348 = puVar1[1];
+    local_350 = *puVar1;
+    local_340 = puVar1[2];
+    ___kmp_msg(0,auStack_338);
+  }
+  else {
+    ___kmp_msg_format(0x4009e);
+    uStack_318 = puVar1[1];
+    local_320 = *puVar1;
+    local_310 = puVar1[2];
+    ___kmp_msg(0,auStack_308);
+  }
+  for (local_354 = 0; local_354 < 0xc; local_354 = local_354 + 1) {
+    local_358 = *(int *)(this + (long)local_354 * 4 + 0x38);
+    if ((local_358 != -1) && (local_358 != local_354)) {
+      ___kmp_hw_get_catalog_string(local_354,0);
+      ___kmp_hw_get_catalog_string(local_358,0);
+      ___kmp_msg_format(0x40121);
+      uStack_388 = puVar1[1];
+      local_390 = *puVar1;
+      local_380 = puVar1[2];
+      ___kmp_msg(0,auStack_370);
+    }
+  }
+  if ((*(int *)this < 1) || (0xc < *(int *)this)) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x2be);
+  }
+  local_284 = 0;
+  for (local_394 = 0; local_394 < *(int *)this; local_394 = local_394 + 1) {
+    lVar4 = (long)local_284;
+    local_284 = local_284 + 1;
+    aiStack_270[lVar4] = *(int *)(*(long *)(this + 8) + (long)local_394 * 4);
+  }
+  if (*(int *)(this + 0x60) != 10) {
+    if (aiStack_270[local_284 + -1] == 0xb) {
+      aiStack_270[local_284 + -1] = 10;
+      aiStack_270[local_284] = 0xb;
+    }
+    else {
+      aiStack_270[local_284] = 10;
+    }
+    local_284 = local_284 + 1;
+  }
+  if (*(int *)(this + 100) != 0xb) {
+    lVar4 = (long)local_284;
+    local_284 = local_284 + 1;
+    aiStack_270[lVar4] = 0xb;
+  }
+  ___kmp_str_buf_clear(&local_238);
+  local_39c = -1;
+  local_3a0 = get_level(this,10);
+  local_3a4 = get_count(this,local_3a0);
+  local_3ac = 0;
+  for (local_3a8 = 0; local_3a8 < local_284; local_3a8 = local_3a8 + 1) {
+    local_398 = aiStack_270[local_3a8];
+    if ((local_398 < 0) || (0xb < local_398)) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x2dd);
+    }
+    iVar2 = local_3ac;
+    if (*(int *)(this + (long)local_398 * 4 + 0x38) == local_398) {
+      local_3ac = local_3ac + 1;
+      local_3b0 = get_ratio(this,iVar2);
+    }
+    else {
+      local_3b0 = 1;
+    }
+    local_3b1 = 1 < local_3b0;
+    if (local_3a8 == 0) {
+      ___kmp_hw_get_catalog_string(local_398,local_3b1);
+      ___kmp_str_buf_print(&local_238,"%d %s");
+    }
+    else {
+      ___kmp_hw_get_catalog_string(local_398,local_3b1);
+      ___kmp_hw_get_catalog_string(local_39c,0);
+      ___kmp_str_buf_print(&local_238," x %d %s/%s");
+    }
+    local_39c = local_398;
+  }
+  ___kmp_msg_format(0x400bf);
+  uStack_3e8 = puVar1[1];
+  local_3f0 = *puVar1;
+  local_3e0 = puVar1[2];
+  ___kmp_msg(0,auStack_3d0);
+  uVar3 = __kmp_is_hybrid_cpu();
+  if ((uVar3 & 1) != 0) {
+    for (local_3f4 = 0; local_3f4 < *(int *)(this + 0x24); local_3f4 = local_3f4 + 1) {
+      local_3f8 = *(undefined4 *)(this + (long)local_3f4 * 4 + 0x28);
+      kmp_hw_attr_t::kmp_hw_attr_t(akStack_3fc);
+      kmp_hw_attr_t::clear(akStack_3fc);
+      kmp_hw_attr_t::set_core_type(akStack_3fc,local_3f8);
+      local_400 = get_ncores_with_attr(this,akStack_3fc);
+      if (0 < local_400) {
+        ___kmp_hw_get_core_type_string(local_3f8);
+        ___kmp_msg_format(0x400c1);
+        uStack_428 = puVar1[1];
+        local_430 = *puVar1;
+        local_420 = puVar1[2];
+        ___kmp_msg(0,auStack_418);
+        if (8 < *(int *)(this + 0x20)) {
+          ___kmp_debug_assert("assertion failure",
+                              "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp"
+                              ,0x2fa);
+        }
+        for (local_434 = 0; local_434 < *(int *)(this + 0x20); local_434 = local_434 + 1) {
+          kmp_hw_attr_t::set_core_eff(akStack_3fc,local_434);
+          local_438 = get_ncores_with_attr(this,akStack_3fc);
+          if (0 < local_438) {
+            ___kmp_msg_format(0x400c2);
+            uStack_468 = puVar1[1];
+            local_470 = *puVar1;
+            local_460 = puVar1[2];
+            ___kmp_msg(0,auStack_450);
+          }
+        }
+      }
+    }
+  }
+  if (*(int *)(this + 0x2c) < 1) {
+    ___kmp_str_buf_free(&local_238);
+  }
+  else {
+    ___kmp_msg_format(0x400da);
+    uStack_498 = puVar1[1];
+    local_4a0 = *puVar1;
+    local_490 = puVar1[2];
+    ___kmp_msg(0,auStack_488);
+    for (local_4a4 = 0; local_4a4 < *(int *)(this + 0x2c); local_4a4 = local_4a4 + 1) {
+      ___kmp_str_buf_clear(&local_238);
+      for (local_4a8 = 0; local_4a8 < *(int *)this; local_4a8 = local_4a8 + 1) {
+        local_4ac = *(undefined4 *)(*(long *)(this + 8) + (long)local_4a8 * 4);
+        ___kmp_hw_get_catalog_string(local_4ac,0);
+        ___kmp_str_buf_print(&local_238,"%s ");
+        ___kmp_str_buf_print(&local_238,"%d ");
+      }
+      uVar3 = __kmp_is_hybrid_cpu();
+      if ((uVar3 & 1) != 0) {
+        kmp_hw_attr_t::get_core_type
+                  ((kmp_hw_attr_t *)(*(long *)(this + 0x30) + (long)local_4a4 * 0x6c + 0x68));
+        ___kmp_hw_get_core_type_string();
+        ___kmp_str_buf_print(&local_238,"(%s)");
+      }
+      ___kmp_msg_format(0x400ac);
+      ___kmp_msg(0,auStack_4c8);
+    }
+    ___kmp_str_buf_free(&local_238);
+  }
+  if (*____stack_chk_guard == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+}
+
+
+
+
+// ========================================
+// Function: get_ratio
+// Entry: 0000423c
+// Signature: undefined __thiscall get_ratio(kmp_topology_t * this, int param_1)
+// ========================================
+
+
+/* kmp_topology_t::get_ratio(int) const */
+
+undefined4 __thiscall kmp_topology_t::get_ratio(kmp_topology_t *this,int param_1)
+
+{
+  return *(undefined4 *)(*(long *)(this + 0x10) + (long)param_1 * 4);
+}
+
+
+
+
+// ========================================
+// Function: kmp_hw_attr_t
+// Entry: 00004260
+// Signature: undefined __thiscall kmp_hw_attr_t(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::kmp_hw_attr_t() */
+
+kmp_hw_attr_t * __thiscall kmp_hw_attr_t::kmp_hw_attr_t(kmp_hw_attr_t *this)
+
+{
+  kmp_hw_attr_t(this);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: clear
+// Entry: 0000428c
+// Signature: undefined __thiscall clear(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::clear() */
+
+void __thiscall kmp_hw_attr_t::clear(kmp_hw_attr_t *this)
+
+{
+  *(uint *)this = *(uint *)this & 0xffffff00;
+  *(uint *)this = *(uint *)this & 0xffff00ff | 0xff00;
+  *(uint *)this = *(uint *)this & 0xfffeffff;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_core_type
+// Entry: 000042d4
+// Signature: undefined __thiscall set_core_type(kmp_hw_attr_t * this, kmp_hw_core_type_t param_1)
+// ========================================
+
+
+/* kmp_hw_attr_t::set_core_type(kmp_hw_core_type_t) */
+
+void __thiscall kmp_hw_attr_t::set_core_type(kmp_hw_attr_t *this,byte param_2)
+
+{
+  *(uint *)this = *(uint *)this & 0xfffeffff | 0x10000;
+  *(uint *)this = *(uint *)this & 0xffffff00 | (uint)param_2;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_ncores_with_attr
+// Entry: 00004310
+// Signature: undefined __thiscall get_ncores_with_attr(kmp_topology_t * this, kmp_hw_attr_t * param_1)
+// ========================================
+
+
+/* kmp_topology_t::get_ncores_with_attr(kmp_hw_attr_t const&) const */
+
+void __thiscall kmp_topology_t::get_ncores_with_attr(kmp_topology_t *this,kmp_hw_attr_t *param_1)
+
+{
+  _get_ncores_with_attr(this,param_1,-1,true);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: set_core_eff
+// Entry: 00004348
+// Signature: undefined __thiscall set_core_eff(kmp_hw_attr_t * this, int param_1)
+// ========================================
+
+
+/* kmp_hw_attr_t::set_core_eff(int) */
+
+void __thiscall kmp_hw_attr_t::set_core_eff(kmp_hw_attr_t *this,int param_1)
+
+{
+  *(uint *)this = *(uint *)this & 0xfffeffff | 0x10000;
+  *(uint *)this = *(uint *)this & 0xffff00ff | (param_1 & 0xffU) << 8;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: canonicalize
+// Entry: 00004384
+// Signature: undefined __thiscall canonicalize(kmp_topology_t * this)
+// ========================================
+
+
+/* kmp_topology_t::canonicalize() */
+
+void __thiscall kmp_topology_t::canonicalize(kmp_topology_t *this)
+
+{
+  int local_1c;
+  
+  _remove_radix1_layers(this);
+  _gather_enumeration_information(this);
+  _discover_uniformity(this);
+  _set_sub_ids(this);
+  _set_globals(this);
+  _set_last_level_cache(this);
+  if (*(int *)this < 1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x365);
+  }
+  for (local_1c = 0; local_1c < *(int *)this; local_1c = local_1c + 1) {
+    if ((*(int *)(*(long *)(this + 0x18) + (long)local_1c * 4) < 1) ||
+       (*(int *)(*(long *)(this + 0x10) + (long)local_1c * 4) < 1)) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x368);
+    }
+    if ((*(int *)(*(long *)(this + 8) + (long)local_1c * 4) < 0) ||
+       (0xb < *(int *)(*(long *)(this + 8) + (long)local_1c * 4))) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x369);
+    }
+    if (*(int *)(this + (long)*(int *)(*(long *)(this + 8) + (long)local_1c * 4) * 4 + 0x38) !=
+        *(int *)(*(long *)(this + 8) + (long)local_1c * 4)) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x36b);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: canonicalize
+// Entry: 00004548
+// Signature: undefined __thiscall canonicalize(kmp_topology_t * this, int param_1, int param_2, int param_3, int param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::canonicalize(int, int, int, int) */
+
+void __thiscall
+kmp_topology_t::canonicalize(kmp_topology_t *this,int param_1,int param_2,int param_3,int param_4)
+
+{
+  int local_34;
+  int local_30;
+  
+  *(undefined4 *)this = 3;
+  for (local_30 = 0; local_30 < 0xc; local_30 = local_30 + 1) {
+    *(undefined4 *)(this + (long)local_30 * 4 + 0x38) = 0xffffffff;
+  }
+  for (local_34 = 0; local_34 < *(int *)this; local_34 = local_34 + 1) {
+    *(undefined4 *)(*(long *)(this + 0x18) + (long)local_34 * 4) = 0;
+    *(undefined4 *)(*(long *)(this + 0x10) + (long)local_34 * 4) = 0;
+  }
+  **(int **)(this + 0x18) = param_1;
+  *(int *)(*(long *)(this + 0x18) + 4) = param_4;
+  *(undefined4 *)(*(long *)(this + 0x18) + 8) = *____kmp_xproc;
+  **(int **)(this + 0x10) = param_1;
+  *(int *)(*(long *)(this + 0x10) + 4) = param_2;
+  *(int *)(*(long *)(this + 0x10) + 8) = param_3;
+  *(undefined4 *)(this + 0x38) = 0;
+  *(undefined4 *)(this + 0x60) = 10;
+  *(undefined4 *)(this + 100) = 0xb;
+  **(undefined4 **)(this + 8) = 0;
+  *(undefined4 *)(*(long *)(this + 8) + 4) = 10;
+  *(undefined4 *)(*(long *)(this + 8) + 8) = 0xb;
+  _discover_uniformity(this);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: filter_hw_subset
+// Entry: 000046ac
+// Signature: undefined __thiscall filter_hw_subset(kmp_topology_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_topology_t::filter_hw_subset() */
+
+uint __thiscall kmp_topology_t::filter_hw_subset(kmp_topology_t *this)
+
+{
+  long lVar1;
+  undefined1 *puVar2;
+  undefined4 uVar3;
+  undefined1 **ppuVar4;
+  bool bVar5;
+  int iVar6;
+  int *piVar7;
+  undefined8 uVar8;
+  ulong uVar9;
+  long alStack_d90 [2];
+  undefined1 auStack_d80 [4];
+  uint local_d7c;
+  undefined1 *local_d78;
+  undefined1 *local_d70;
+  kmp_str_buf *local_d68;
+  undefined1 *local_d60;
+  kmp_str_buf *local_d58;
+  undefined4 local_d4c;
+  undefined1 *local_d48;
+  kmp_str_buf *local_d40;
+  undefined1 *local_d38;
+  undefined4 local_d2c;
+  undefined1 *local_d28;
+  undefined1 **local_d20;
+  undefined1 *local_d18;
+  undefined1 *local_d10;
+  undefined1 *local_d08;
+  undefined1 *local_d00;
+  undefined4 local_cf4;
+  undefined1 *local_cf0;
+  undefined8 local_ce8;
+  undefined1 *local_ce0;
+  uint local_cd4;
+  undefined1 *local_cd0;
+  undefined4 local_cc8;
+  int local_cc4;
+  long local_cc0;
+  ulong local_cb8;
+  undefined8 *local_cb0;
+  undefined8 *local_ca8;
+  kmp_topology_t *local_ca0;
+  int local_c98;
+  int local_c94;
+  undefined8 local_c90;
+  undefined8 uStack_c88;
+  undefined8 local_c80;
+  undefined1 auStack_c70 [28];
+  int local_c54;
+  int local_c50;
+  int local_c4c;
+  int local_c48;
+  int local_c44;
+  int local_c40;
+  int local_c3c;
+  int local_c38;
+  int local_c34;
+  long local_c30;
+  int local_c28;
+  byte local_c21;
+  kmp_hw_thread_t *local_c20;
+  int local_c14;
+  long local_c10;
+  int local_c08;
+  kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> akStack_c04 [88];
+  kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> akStack_bac [60];
+  undefined8 local_b70 [2];
+  undefined8 local_b60;
+  undefined1 auStack_b50 [28];
+  int local_b34;
+  undefined1 local_b30 [16];
+  undefined8 local_b20;
+  undefined1 auStack_b18 [28];
+  int local_afc;
+  int local_af8;
+  int local_af4;
+  undefined1 local_af0 [16];
+  undefined8 local_ae0;
+  undefined1 auStack_ad8 [24];
+  int local_ac0;
+  int local_abc;
+  int local_ab8;
+  int local_ab4;
+  undefined1 local_ab0 [16];
+  undefined8 local_aa0;
+  undefined1 auStack_a98 [24];
+  undefined1 auStack_a80 [24];
+  int local_a68;
+  int local_a64;
+  undefined1 local_a60 [16];
+  undefined8 local_a50;
+  undefined1 auStack_a48 [24];
+  undefined1 local_a30 [16];
+  undefined8 local_a20;
+  undefined1 auStack_a18 [24];
+  undefined1 local_a00 [16];
+  undefined8 local_9f0;
+  undefined1 auStack_9e8 [24];
+  undefined1 local_9d0 [16];
+  undefined8 local_9c0;
+  undefined1 auStack_9b0 [28];
+  int local_994;
+  undefined1 local_990 [16];
+  undefined8 local_980;
+  undefined1 auStack_970 [31];
+  undefined1 local_951;
+  undefined1 local_950 [16];
+  undefined8 local_940;
+  undefined1 auStack_938 [24];
+  undefined1 local_920 [16];
+  undefined8 local_910;
+  undefined1 auStack_900 [28];
+  int local_8e4;
+  int local_8e0;
+  int local_8dc;
+  int local_8d8;
+  int local_8d4;
+  int *local_8d0;
+  int local_8c8;
+  int local_8c4;
+  int local_8c0;
+  int local_8bc;
+  undefined1 *local_8b8;
+  int local_8b0;
+  byte local_8aa;
+  byte local_8a9;
+  kmp_topology_t *local_8a8;
+  byte local_899;
+  undefined8 local_898 [66];
+  undefined8 local_688 [66];
+  undefined8 local_478 [66];
+  undefined1 *local_268;
+  undefined4 local_260;
+  undefined4 local_25c;
+  undefined1 local_258 [512];
+  int aiStack_58 [12];
+  long local_28;
+  
+  local_cb0 = local_b70;
+  local_ca8 = ____kmp_msg_null;
+  local_28 = *____stack_chk_guard;
+  local_ca0 = this;
+  local_8a8 = this;
+  if (___kmp_hw_subset == (kmp_hw_subset_t *)0x0) {
+    local_899 = 0;
+  }
+  else {
+    local_cc0 = 0x6000;
+    kmp_hw_subset_t::sort(___kmp_hw_subset);
+    local_8a9 = 0;
+    local_8aa = 0;
+    local_8b0 = kmp_hw_subset_t::get_depth(*(kmp_hw_subset_t **)(local_cc0 + 0x9a0));
+    local_cb8 = (long)local_8b0 * 4 + 0xfU & 0xfffffffffffffff0;
+    (*____chkstk_darwin)();
+    lVar1 = -local_cb8;
+    local_8b8 = auStack_d80 + lVar1;
+    if (local_8b0 < 1) {
+      ___kmp_debug_assert("assertion failure",
+                          "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                          0x3cc);
+    }
+    for (local_8bc = 0; local_8bc < 0xc; local_8bc = local_8bc + 1) {
+      aiStack_58[local_8bc] = -1;
+    }
+    local_8c0 = get_level(local_ca0,10);
+    for (local_8c4 = 0; local_8c4 < local_8b0; local_8c4 = local_8c4 + 1) {
+      local_8d0 = (int *)kmp_hw_subset_t::at(___kmp_hw_subset,local_8c4);
+      local_8d4 = local_8d0[2];
+      local_8d8 = local_8d0[10];
+      local_8dc = *local_8d0;
+      local_8e0 = *(int *)(local_ca0 + (long)local_8dc * 4 + 0x38);
+      iVar6 = get_level(local_ca0,local_8dc);
+      *(int *)(local_8b8 + (long)local_8c4 * 4) = iVar6;
+      local_8e4 = iVar6;
+      if (local_8e0 == -1) {
+        local_cc8 = 0;
+        uVar8 = ___kmp_hw_get_catalog_string(local_8dc,0);
+        *(undefined8 *)((long)alStack_d90 + lVar1) = uVar8;
+        local_cd0 = auStack_900;
+        ___kmp_msg_format(0x4011e);
+        puVar2 = local_cd0;
+        uVar8 = *local_ca8;
+        local_cb0[0x4b] = local_ca8[1];
+        local_cb0[0x4a] = uVar8;
+        local_910 = local_ca8[2];
+        *(undefined1 **)((long)alStack_d90 + lVar1) = local_920;
+        ___kmp_msg(1,puVar2);
+        local_899 = (byte)local_cc8 & 1;
+        goto LAB_00005a00;
+      }
+      local_cc4 = local_8e0;
+      piVar7 = (int *)kmp_hw_subset_t::at(___kmp_hw_subset,local_8c4);
+      *piVar7 = local_cc4;
+      if (aiStack_58[local_8e0] != -1) {
+        local_cd4 = 0;
+        local_ce8 = ___kmp_hw_get_catalog_string(local_8dc,0);
+        uVar8 = ___kmp_hw_get_catalog_string(aiStack_58[local_8e0],local_cd4 & 1);
+        *(undefined8 *)((long)alStack_d90 + lVar1) = local_ce8;
+        *(undefined8 *)((long)alStack_d90 + lVar1 + 8) = uVar8;
+        local_ce0 = auStack_938;
+        ___kmp_msg_format(0x4011f);
+        puVar2 = local_ce0;
+        uVar8 = *local_ca8;
+        local_cb0[0x45] = local_ca8[1];
+        local_cb0[0x44] = uVar8;
+        local_940 = local_ca8[2];
+        *(undefined1 **)((long)alStack_d90 + lVar1) = local_950;
+        ___kmp_msg(1,puVar2);
+        local_899 = (byte)local_cd4 & 1;
+        goto LAB_00005a00;
+      }
+      aiStack_58[local_8e0] = local_8dc;
+      local_8c8 = get_ratio(local_ca0,local_8e4);
+      if ((local_8c8 < 0) || ((local_8d4 != 0x7fffffff && (local_8c8 < local_8d4 + local_8d8)))) {
+        local_cf4 = 1;
+        local_951 = 1 < local_8d4;
+        uVar8 = ___kmp_hw_get_catalog_string(local_8dc,local_951);
+        *(undefined8 *)((long)alStack_d90 + lVar1) = uVar8;
+        local_cf0 = auStack_970;
+        ___kmp_msg_format(0x4011d);
+        puVar2 = local_cf0;
+        uVar3 = local_cf4;
+        uVar8 = *local_ca8;
+        local_cb0[0x3d] = local_ca8[1];
+        local_cb0[0x3c] = uVar8;
+        local_980 = local_ca8[2];
+        *(undefined1 **)((long)alStack_d90 + lVar1) = local_990;
+        ___kmp_msg(uVar3,puVar2);
+        local_899 = 0;
+        goto LAB_00005a00;
+      }
+      if (local_8c0 == local_8e4) {
+        for (local_994 = 0; local_994 < local_8d0[1]; local_994 = local_994 + 1) {
+          uVar9 = kmp_hw_attr_t::is_core_type_valid
+                            ((kmp_hw_attr_t *)(local_8d0 + (long)local_994 + 0x12));
+          if ((uVar9 & 1) != 0) {
+            local_8a9 = 1;
+          }
+          uVar9 = kmp_hw_attr_t::is_core_eff_valid
+                            ((kmp_hw_attr_t *)(local_8d0 + (long)local_994 + 0x12));
+          if ((uVar9 & 1) != 0) {
+            local_8aa = 1;
+          }
+        }
+        if ((((local_8aa & 1) != 0) || ((local_8a9 & 1) != 0)) &&
+           (uVar9 = __kmp_is_hybrid_cpu(), (uVar9 & 1) == 0)) {
+          if (local_8d0[1] != 1) {
+            local_d10 = auStack_a18;
+            ___kmp_msg_format(0x40129);
+            puVar2 = local_d10;
+            uVar8 = *local_ca8;
+            local_cb0[0x29] = local_ca8[1];
+            local_cb0[0x28] = uVar8;
+            local_a20 = local_ca8[2];
+            *(undefined1 **)((long)alStack_d90 + lVar1) = local_a30;
+            ___kmp_msg(1,puVar2);
+            local_899 = 0;
+            goto LAB_00005a00;
+          }
+          if ((local_8aa & 1) == 0) {
+            *(char **)((long)alStack_d90 + lVar1) = "core_type";
+            local_d08 = auStack_9e8;
+            ___kmp_msg_format(0x4012a);
+            puVar2 = local_d08;
+            uVar8 = *local_ca8;
+            local_cb0[0x2f] = local_ca8[1];
+            local_cb0[0x2e] = uVar8;
+            local_9f0 = local_ca8[2];
+            *(undefined1 **)((long)alStack_d90 + lVar1) = local_a00;
+            ___kmp_msg(1,puVar2);
+          }
+          else {
+            *(char **)((long)alStack_d90 + lVar1) = "efficiency";
+            local_d00 = auStack_9b0;
+            ___kmp_msg_format(0x4012a);
+            puVar2 = local_d00;
+            uVar8 = *local_ca8;
+            local_cb0[0x35] = local_ca8[1];
+            local_cb0[0x34] = uVar8;
+            local_9c0 = local_ca8[2];
+            *(undefined1 **)((long)alStack_d90 + lVar1) = local_9d0;
+            ___kmp_msg(1,puVar2);
+          }
+          local_8aa = 0;
+          local_8a9 = 0;
+        }
+        if (((local_8a9 & 1) != 0) && ((local_8aa & 1) != 0)) {
+          *(char **)((long)alStack_d90 + lVar1) = "core_type";
+          *(char **)((long)alStack_d90 + lVar1 + 8) = "efficiency";
+          local_d18 = auStack_a48;
+          ___kmp_msg_format(0x40125);
+          puVar2 = local_d18;
+          uVar8 = *local_ca8;
+          local_cb0[0x23] = local_ca8[1];
+          local_cb0[0x22] = uVar8;
+          local_a50 = local_ca8[2];
+          *(undefined1 **)((long)alStack_d90 + lVar1) = local_a60;
+          ___kmp_msg(1,puVar2);
+          local_899 = 0;
+          goto LAB_00005a00;
+        }
+        if ((local_8aa & 1) != 0) {
+          for (local_a64 = 0; local_a64 < local_8d0[1]; local_a64 = local_a64 + 1) {
+            uVar9 = kmp_hw_attr_t::is_core_eff_valid
+                              ((kmp_hw_attr_t *)(local_8d0 + (long)local_a64 + 0x12));
+            if (((uVar9 & 1) != 0) &&
+               ((local_a68 = kmp_hw_attr_t::get_core_eff
+                                       ((kmp_hw_attr_t *)(local_8d0 + (long)local_a64 + 0x12)),
+                local_a68 < 0 || (*(int *)(local_ca0 + 0x20) <= local_a68)))) {
+              local_d20 = &local_268;
+              local_268 = local_258;
+              local_260 = 0x200;
+              local_25c = 0;
+              local_258[0] = 0;
+              uVar8 = kmp_hw_attr_t::get_core_eff
+                                ((kmp_hw_attr_t *)(local_8d0 + (long)local_a64 + 0x12));
+              ppuVar4 = local_d20;
+              *(undefined8 *)((long)alStack_d90 + lVar1) = uVar8;
+              ___kmp_str_buf_print(ppuVar4,"%d");
+              puVar2 = local_268;
+              *(char **)((long)alStack_d90 + lVar1) = "efficiency";
+              *(undefined1 **)((long)alStack_d90 + lVar1 + 8) = puVar2;
+              local_d28 = auStack_a80;
+              ___kmp_msg_format(0x40127);
+              iVar6 = *(int *)(local_ca0 + 0x20);
+              local_d2c = 1;
+              *(undefined8 *)((long)alStack_d90 + lVar1) = 0;
+              *(ulong *)((long)alStack_d90 + lVar1 + 8) = (ulong)(iVar6 - 1);
+              local_d38 = auStack_a98;
+              ___kmp_msg_format(0x5001d);
+              puVar2 = local_d28;
+              uVar3 = local_d2c;
+              uVar8 = *local_ca8;
+              local_cb0[0x19] = local_ca8[1];
+              local_cb0[0x18] = uVar8;
+              local_aa0 = local_ca8[2];
+              *(undefined1 **)((long)alStack_d90 + lVar1) = local_d38;
+              *(undefined1 **)((long)alStack_d90 + lVar1 + 8) = local_ab0;
+              ___kmp_msg(uVar3,puVar2);
+              ___kmp_str_buf_free(local_d20);
+              local_899 = 0;
+              goto LAB_00005a00;
+            }
+          }
+        }
+        if (((local_8a9 & 1) != 0) || ((local_8aa & 1) != 0)) {
+          for (local_ab4 = 0; local_ab4 < local_8d0[1]; local_ab4 = local_ab4 + 1) {
+            local_ab8 = local_8d0[(long)local_ab4 + 2];
+            local_abc = local_8d0[(long)local_ab4 + 10];
+            local_ac0 = local_8c0 + -1;
+            if ((-1 < local_ac0) &&
+               ((local_8c8 = get_ncores_with_attr_per
+                                       (local_ca0,
+                                        (kmp_hw_attr_t *)(local_8d0 + (long)local_ab4 + 0x12),
+                                        local_ac0), local_8c8 < 1 ||
+                ((local_ab8 != 0x7fffffff && (local_8c8 < local_ab8 + local_abc)))))) {
+              local_d40 = (kmp_str_buf *)local_478;
+              __kmp_hw_get_catalog_core_string
+                        ((kmp_hw_attr_t *)(local_8d0 + (long)local_ab4 + 0x12),local_d40,
+                         0 < local_ab8);
+              *(undefined8 *)((long)alStack_d90 + lVar1) = local_478[0];
+              local_d48 = auStack_ad8;
+              ___kmp_msg_format(0x4011d);
+              puVar2 = local_d48;
+              uVar8 = *local_ca8;
+              local_cb0[0x11] = local_ca8[1];
+              local_cb0[0x10] = uVar8;
+              local_ae0 = local_ca8[2];
+              *(undefined1 **)((long)alStack_d90 + lVar1) = local_af0;
+              ___kmp_msg(1,puVar2);
+              ___kmp_str_buf_free(local_d40);
+              local_899 = 0;
+              goto LAB_00005a00;
+            }
+          }
+        }
+        if ((((local_8a9 & 1) != 0) || ((local_8aa & 1) != 0)) && (1 < local_8d0[1])) {
+          for (local_af4 = 0; local_af4 < local_8d0[1]; local_af4 = local_af4 + 1) {
+            bVar5 = kmp_hw_attr_t::operator_cast_to_bool
+                              ((kmp_hw_attr_t *)(local_8d0 + (long)local_af4 + 0x12));
+            if (!bVar5) {
+              kmp_hw_attr_t::kmp_hw_attr_t((kmp_hw_attr_t *)&local_af8);
+              local_afc = 0;
+              goto LAB_000051ec;
+            }
+            for (local_b34 = 0; local_b34 < local_af4; local_b34 = local_b34 + 1) {
+              bVar5 = kmp_hw_attr_t::operator_cast_to_bool
+                                ((kmp_hw_attr_t *)(local_8d0 + (long)local_af4 + 0x12));
+              if (((bVar5) &&
+                  (bVar5 = kmp_hw_attr_t::operator_cast_to_bool
+                                     ((kmp_hw_attr_t *)(local_8d0 + (long)local_b34 + 0x12)), bVar5)
+                  ) && (uVar9 = kmp_hw_attr_t::operator==
+                                          ((kmp_hw_attr_t *)(local_8d0 + (long)local_b34 + 0x12),
+                                           (kmp_hw_attr_t *)(local_8d0 + (long)local_af4 + 0x12)),
+                       (uVar9 & 1) != 0)) {
+                local_d68 = (kmp_str_buf *)local_898;
+                __kmp_hw_get_catalog_core_string
+                          ((kmp_hw_attr_t *)(local_8d0 + (long)local_af4 + 0x12),local_d68,
+                           0 < local_8d0[(long)local_af4 + 2]);
+                *(undefined8 *)((long)alStack_d90 + lVar1) = local_898[0];
+                local_d70 = auStack_b50;
+                ___kmp_msg_format(0x40126);
+                puVar2 = local_d70;
+                uVar8 = *local_ca8;
+                local_cb0[1] = local_ca8[1];
+                *local_cb0 = uVar8;
+                local_b60 = local_ca8[2];
+                *(undefined8 **)((long)alStack_d90 + lVar1) = local_b70;
+                ___kmp_msg(1,puVar2);
+                ___kmp_str_buf_free(local_d68);
+                local_899 = 0;
+                goto LAB_00005a00;
+              }
+            }
+          }
+        }
+      }
+    }
+    kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::kmp_sub_ids_t
+              (akStack_bac,local_8c0);
+    kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::kmp_sub_ids_t
+              (akStack_c04,local_8c0);
+    local_c08 = 0;
+    local_c10 = ____kmp_allocate((long)*(int *)(local_ca0 + 0x2c));
+    for (local_c14 = 0; local_c14 < *(int *)(local_ca0 + 0x2c); local_c14 = local_c14 + 1) {
+      local_c20 = (kmp_hw_thread_t *)(*(long *)(local_ca0 + 0x30) + (long)local_c14 * 0x6c);
+      if ((local_8a9 & 1) != 0) {
+        kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::update
+                  (akStack_bac,local_c20);
+      }
+      if ((local_8aa & 1) != 0) {
+        kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::update
+                  (akStack_c04,local_c20);
+      }
+      local_c21 = 0;
+      for (local_c28 = 0; local_c28 < local_8b0; local_c28 = local_c28 + 1) {
+        local_c30 = kmp_hw_subset_t::at(___kmp_hw_subset,local_c28);
+        local_c34 = *(int *)(local_8b8 + (long)local_c28 * 4);
+        if (local_c34 != -1) {
+          if ((((local_8aa & 1) == 0) && ((local_8a9 & 1) == 0)) || (local_c34 != local_8c0)) {
+            local_c50 = *(int *)(local_c30 + 8);
+            local_c54 = *(int *)(local_c30 + 0x28);
+            if ((*(int *)(local_c20 + (long)local_c34 * 4 + 0x30) < local_c54) ||
+               ((local_c50 != 0x7fffffff &&
+                (local_c54 + local_c50 <= *(int *)(local_c20 + (long)local_c34 * 4 + 0x30))))) {
+              local_c21 = 1;
+              break;
+            }
+          }
+          else {
+            local_c3c = kmp_hw_attr_t::get_core_type((kmp_hw_attr_t *)(local_c20 + 0x68));
+            local_c40 = kmp_hw_attr_t::get_core_eff((kmp_hw_attr_t *)(local_c20 + 0x68));
+            local_c38 = 0;
+            while (((local_c38 < *(int *)(local_c30 + 4) &&
+                    (((local_8a9 & 1) == 0 ||
+                     (iVar6 = kmp_hw_attr_t::get_core_type
+                                        ((kmp_hw_attr_t *)(local_c30 + 0x48 + (long)local_c38 * 4)),
+                     iVar6 != local_c3c)))) &&
+                   (((local_8aa & 1) == 0 ||
+                    (iVar6 = kmp_hw_attr_t::get_core_eff
+                                       ((kmp_hw_attr_t *)(local_c30 + 0x48 + (long)local_c38 * 4)),
+                    iVar6 != local_c40))))) {
+              local_c38 = local_c38 + 1;
+            }
+            if (local_c38 == *(int *)(local_c30 + 4)) {
+              local_c21 = 1;
+              break;
+            }
+            local_c48 = *(int *)(local_c30 + 8 + (long)local_c38 * 4);
+            local_c4c = *(int *)(local_c30 + 0x28 + (long)local_c38 * 4);
+            if ((local_8a9 & 1) == 0) {
+              local_c44 = kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::
+                          get_sub_id(akStack_c04,local_c20);
+            }
+            else {
+              local_c44 = kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::
+                          get_sub_id(akStack_bac,local_c20);
+            }
+            if ((local_c44 < local_c4c) ||
+               ((local_c48 != 0x7fffffff && (local_c4c + local_c48 <= local_c44)))) {
+              local_c21 = 1;
+              break;
+            }
+          }
+        }
+      }
+      *(byte *)(local_c10 + local_c14) = local_c21 & 1;
+      if ((local_c21 & 1) != 0) {
+        local_c08 = local_c08 + 1;
+      }
+    }
+    if (local_c08 == *(int *)(local_ca0 + 0x2c)) {
+      local_d78 = auStack_c70;
+      ___kmp_msg_format(0x40128);
+      puVar2 = local_d78;
+      uStack_c88 = local_ca8[1];
+      local_c90 = *local_ca8;
+      local_c80 = local_ca8[2];
+      *(undefined8 **)((long)alStack_d90 + lVar1) = &local_c90;
+      ___kmp_msg(1,puVar2);
+      ____kmp_free(local_c10);
+      local_899 = 0;
+    }
+    else {
+      local_c94 = 0;
+      for (local_c98 = 0; local_c98 < *(int *)(local_ca0 + 0x2c); local_c98 = local_c98 + 1) {
+        if ((*(byte *)(local_c10 + local_c98) & 1) == 0) {
+          if (local_c98 != local_c94) {
+            _memcpy((void *)(*(long *)(local_ca0 + 0x30) + (long)local_c94 * 0x6c),
+                    (void *)(*(long *)(local_ca0 + 0x30) + (long)local_c98 * 0x6c),0x6c);
+          }
+          local_c94 = local_c94 + 1;
+        }
+        else {
+          *____kmp_avail_proc = *____kmp_avail_proc + -1;
+        }
+      }
+      *(int *)(local_ca0 + 0x2c) = local_c94;
+      _gather_enumeration_information(local_ca0);
+      _discover_uniformity(local_ca0);
+      _set_globals(local_ca0);
+      _set_last_level_cache(local_ca0);
+      ____kmp_free(local_c10);
+      local_899 = 1;
+    }
+  }
+LAB_00005a00:
+  local_d7c = (uint)local_899;
+  if (*____stack_chk_guard == local_28) {
+    return local_d7c;
+  }
+                    /* WARNING: Subroutine does not return */
+  ___stack_chk_fail();
+LAB_000051ec:
+  if (local_8d0[1] <= local_afc) goto LAB_00005260;
+  uVar9 = kmp_hw_attr_t::operator!=
+                    ((kmp_hw_attr_t *)(local_8d0 + (long)local_afc + 0x12),
+                     (kmp_hw_attr_t *)(local_8d0 + (long)local_af4 + 0x12));
+  if ((uVar9 & 1) != 0) {
+    local_af8 = local_8d0[(long)local_afc + 0x12];
+    goto LAB_00005260;
+  }
+  local_afc = local_afc + 1;
+  goto LAB_000051ec;
+LAB_00005260:
+  local_d58 = (kmp_str_buf *)local_688;
+  __kmp_hw_get_catalog_core_string
+            ((kmp_hw_attr_t *)&local_af8,local_d58,0 < local_8d0[(long)local_af4 + 2]);
+  local_d4c = 0;
+  uVar8 = ___kmp_hw_get_catalog_string(10,0);
+  *(undefined8 *)((long)alStack_d90 + lVar1) = uVar8;
+  *(undefined8 *)((long)alStack_d90 + lVar1 + 8) = local_688[0];
+  local_d60 = auStack_b18;
+  ___kmp_msg_format(0x40125);
+  puVar2 = local_d60;
+  uVar8 = *local_ca8;
+  local_cb0[9] = local_ca8[1];
+  local_cb0[8] = uVar8;
+  local_b20 = local_ca8[2];
+  *(undefined1 **)((long)alStack_d90 + lVar1) = local_b30;
+  ___kmp_msg(1,puVar2);
+  ___kmp_str_buf_free(local_d58);
+  local_899 = (byte)local_d4c & 1;
+  goto LAB_00005a00;
+}
+
+
+
+
+// ========================================
+// Function: sort
+// Entry: 00005a44
+// Signature: undefined __thiscall sort(kmp_hw_subset_t * this)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* kmp_hw_subset_t::sort() */
+
+void __thiscall kmp_hw_subset_t::sort(kmp_hw_subset_t *this)
+
+{
+  _qsort(*(void **)(this + 8),(long)*(int *)this,0x68,_hw_subset_compare);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: get_depth
+// Entry: 00005a7c
+// Signature: undefined __thiscall get_depth(kmp_hw_subset_t * this)
+// ========================================
+
+
+/* kmp_hw_subset_t::get_depth() const */
+
+undefined4 __thiscall kmp_hw_subset_t::get_depth(kmp_hw_subset_t *this)
+
+{
+  return *(undefined4 *)this;
+}
+
+
+
+
+// ========================================
+// Function: at
+// Entry: 00005a94
+// Signature: undefined __thiscall at(kmp_hw_subset_t * this, int param_1)
+// ========================================
+
+
+/* kmp_hw_subset_t::at(int) */
+
+long __thiscall kmp_hw_subset_t::at(kmp_hw_subset_t *this,int param_1)
+
+{
+  return *(long *)(this + 8) + (long)param_1 * 0x68;
+}
+
+
+
+
+// ========================================
+// Function: get_ncores_with_attr_per
+// Entry: 00005ac0
+// Signature: undefined __thiscall get_ncores_with_attr_per(kmp_topology_t * this, kmp_hw_attr_t * param_1, int param_2)
+// ========================================
+
+
+/* kmp_topology_t::get_ncores_with_attr_per(kmp_hw_attr_t const&, int) const */
+
+void __thiscall
+kmp_topology_t::get_ncores_with_attr_per(kmp_topology_t *this,kmp_hw_attr_t *param_1,int param_2)
+
+{
+  _get_ncores_with_attr(this,param_1,param_2,false);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_hw_get_catalog_core_string
+// Entry: 00005afc
+// Signature: undefined __cdecl __kmp_hw_get_catalog_core_string(kmp_hw_attr_t * param_1, kmp_str_buf * param_2, bool param_3)
+// ========================================
+
+
+/* __kmp_hw_get_catalog_core_string(kmp_hw_attr_t const&, kmp_str_buf*, bool) */
+
+kmp_str_buf *
+__kmp_hw_get_catalog_core_string(kmp_hw_attr_t *param_1,kmp_str_buf *param_2,bool param_3)
+
+{
+  ulong uVar1;
+  
+  *(kmp_str_buf **)param_2 = param_2 + 0x10;
+  *(undefined4 *)(param_2 + 8) = 0x200;
+  *(undefined4 *)(param_2 + 0xc) = 0;
+  param_2[0x10] = (kmp_str_buf)0x0;
+  uVar1 = kmp_hw_attr_t::is_core_type_valid(param_1);
+  if ((uVar1 & 1) == 0) {
+    ___kmp_hw_get_catalog_string(10,param_3);
+    kmp_hw_attr_t::get_core_eff(param_1);
+    ___kmp_str_buf_print(param_2,"%s eff=%d");
+  }
+  else {
+    kmp_hw_attr_t::get_core_type(param_1);
+    ___kmp_hw_get_core_type_string();
+    ___kmp_hw_get_catalog_string(10,param_3);
+    ___kmp_str_buf_print(param_2,"%s %s");
+  }
+  return param_2;
+}
+
+
+
+
+// ========================================
+// Function: operator!=
+// Entry: 00005c08
+// Signature: undefined __thiscall operator!=(kmp_hw_attr_t * this, kmp_hw_attr_t * param_1)
+// ========================================
+
+
+/* kmp_hw_attr_t::TEMPNAMEPLACEHOLDERVALUE(kmp_hw_attr_t const&) const */
+
+uint __thiscall kmp_hw_attr_t::operator!=(kmp_hw_attr_t *this,kmp_hw_attr_t *param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = operator==(this,param_1);
+  return (uVar1 ^ 1) & 1;
+}
+
+
+
+
+// ========================================
+// Function: operator==
+// Entry: 00005c3c
+// Signature: undefined __thiscall operator==(kmp_hw_attr_t * this, kmp_hw_attr_t * param_1)
+// ========================================
+
+
+/* kmp_hw_attr_t::TEMPNAMEPLACEHOLDERVALUE(kmp_hw_attr_t const&) const */
+
+bool __thiscall kmp_hw_attr_t::operator==(kmp_hw_attr_t *this,kmp_hw_attr_t *param_1)
+
+{
+  bool bVar1;
+  
+  bVar1 = false;
+  if (((*(uint *)param_1 >> 0x10 & 1) == (*(uint *)this >> 0x10 & 1)) &&
+     (bVar1 = false, (*(int *)param_1 << 0x10) >> 0x18 == (*(int *)this << 0x10) >> 0x18)) {
+    bVar1 = (char)*(undefined4 *)param_1 == (char)*(undefined4 *)this;
+  }
+  return bVar1;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00005cf4
+// Signature: undefined __thiscall kmp_sub_ids_t(kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * this, int param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<1ul, kmp_topology_t::filter_hw_subset()::core_type_indexer>::kmp_sub_ids_t(int) */
+
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * __thiscall
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> *this,
+          int param_1)
+
+{
+  kmp_sub_ids_t(this,param_1);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00005d28
+// Signature: undefined __thiscall kmp_sub_ids_t(kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * this, int param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<8ul, kmp_topology_t::filter_hw_subset()::core_eff_indexer>::kmp_sub_ids_t(int) */
+
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * __thiscall
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> *this,int param_1
+          )
+
+{
+  kmp_sub_ids_t(this,param_1);
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: update
+// Entry: 00005d5c
+// Signature: undefined __thiscall update(kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<1ul, kmp_topology_t::filter_hw_subset()::core_type_indexer>::update(kmp_hw_thread_t
+   const&) */
+
+void __thiscall
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::update
+          (kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> *this,
+          kmp_hw_thread_t *param_1)
+
+{
+  int iVar1;
+  int local_2c;
+  int local_28;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset()::core_type_indexer::operator()
+                    ((core_type_indexer *)(this + 0x38),param_1);
+  if (0 < iVar1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x39b);
+  }
+  local_28 = 0;
+  do {
+    if (*(int *)this < local_28) {
+LAB_00005e74:
+      for (local_2c = 0; local_2c <= *(int *)this; local_2c = local_2c + 1) {
+        *(undefined4 *)(this + (long)local_2c * 4 + 8) =
+             *(undefined4 *)(param_1 + (long)local_2c * 4 + 0x30);
+      }
+      return;
+    }
+    if (*(int *)(param_1 + (long)local_28 * 4 + 0x30) != *(int *)(this + (long)local_28 * 4 + 8)) {
+      if (local_28 < *(int *)this) {
+        *(undefined4 *)(this + (long)iVar1 * 4 + 4) = 0xffffffff;
+      }
+      *(int *)(this + (long)iVar1 * 4 + 4) = *(int *)(this + (long)iVar1 * 4 + 4) + 1;
+      goto LAB_00005e74;
+    }
+    local_28 = local_28 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: update
+// Entry: 00005ed8
+// Signature: undefined __thiscall update(kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<8ul, kmp_topology_t::filter_hw_subset()::core_eff_indexer>::update(kmp_hw_thread_t
+   const&) */
+
+void __thiscall
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::update
+          (kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> *this,
+          kmp_hw_thread_t *param_1)
+
+{
+  int iVar1;
+  int local_2c;
+  int local_28;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset()::core_eff_indexer::operator()
+                    ((core_eff_indexer *)(this + 0x54),param_1);
+  if (7 < iVar1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x39b);
+  }
+  local_28 = 0;
+  do {
+    if (*(int *)this < local_28) {
+LAB_00005ff0:
+      for (local_2c = 0; local_2c <= *(int *)this; local_2c = local_2c + 1) {
+        *(undefined4 *)(this + (long)local_2c * 4 + 0x24) =
+             *(undefined4 *)(param_1 + (long)local_2c * 4 + 0x30);
+      }
+      return;
+    }
+    if (*(int *)(param_1 + (long)local_28 * 4 + 0x30) != *(int *)(this + (long)local_28 * 4 + 0x24))
+    {
+      if (local_28 < *(int *)this) {
+        *(undefined4 *)(this + (long)iVar1 * 4 + 4) = 0xffffffff;
+      }
+      *(int *)(this + (long)iVar1 * 4 + 4) = *(int *)(this + (long)iVar1 * 4 + 4) + 1;
+      goto LAB_00005ff0;
+    }
+    local_28 = local_28 + 1;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: get_sub_id
+// Entry: 00006054
+// Signature: undefined __thiscall get_sub_id(kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<1ul,
+   kmp_topology_t::filter_hw_subset()::core_type_indexer>::get_sub_id(kmp_hw_thread_t const&) const
+    */
+
+undefined4 __thiscall
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::get_sub_id
+          (kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> *this,
+          kmp_hw_thread_t *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset()::core_type_indexer::operator()
+                    ((core_type_indexer *)(this + 0x38),param_1);
+  return *(undefined4 *)(this + (long)iVar1 * 4 + 4);
+}
+
+
+
+
+// ========================================
+// Function: get_sub_id
+// Entry: 00006098
+// Signature: undefined __thiscall get_sub_id(kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<8ul,
+   kmp_topology_t::filter_hw_subset()::core_eff_indexer>::get_sub_id(kmp_hw_thread_t const&) const
+    */
+
+undefined4 __thiscall
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::get_sub_id
+          (kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> *this,
+          kmp_hw_thread_t *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_topology_t::filter_hw_subset()::core_eff_indexer::operator()
+                    ((core_eff_indexer *)(this + 0x54),param_1);
+  return *(undefined4 *)(this + (long)iVar1 * 4 + 4);
+}
+
+
+
+
+// ========================================
+// Function: is_close
+// Entry: 000060dc
+// Signature: undefined __thiscall is_close(kmp_topology_t * this, int param_1, int param_2, int param_3)
+// ========================================
+
+
+/* kmp_topology_t::is_close(int, int, int) const */
+
+undefined1 __thiscall
+kmp_topology_t::is_close(kmp_topology_t *this,int param_1,int param_2,int param_3)
+
+{
+  int local_34;
+  
+  if (param_3 < *(int *)this) {
+    for (local_34 = 0; local_34 < *(int *)this - param_3; local_34 = local_34 + 1) {
+      if (*(int *)(*(long *)(this + 0x30) + (long)param_1 * 0x6c + (long)local_34 * 4) !=
+          *(int *)(*(long *)(this + 0x30) + (long)param_2 * 0x6c + (long)local_34 * 4)) {
+        return 0;
+      }
+    }
+  }
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: hierarchy_info
+// Entry: 000061fc
+// Signature: undefined __thiscall hierarchy_info(hierarchy_info * this)
+// ========================================
+
+
+/* hierarchy_info::hierarchy_info() */
+
+void __thiscall hierarchy_info::hierarchy_info(hierarchy_info *this)
+
+{
+  *(undefined4 *)this = 7;
+  *(undefined4 *)(this + 4) = 1;
+  this[0xc] = (hierarchy_info)0x1;
+  this[0xd] = (hierarchy_info)0x0;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: deriveLevels
+// Entry: 0000622c
+// Signature: undefined __thiscall deriveLevels(hierarchy_info * this)
+// ========================================
+
+
+/* hierarchy_info::deriveLevels() */
+
+void __thiscall hierarchy_info::deriveLevels(hierarchy_info *this)
+
+{
+  undefined4 uVar1;
+  int local_24;
+  int local_20;
+  
+  local_20 = kmp_topology_t::get_depth(___kmp_topology);
+  local_24 = 0;
+  while (local_20 = local_20 + -1, -1 < local_20) {
+    uVar1 = kmp_topology_t::get_ratio(___kmp_topology,local_20);
+    *(undefined4 *)(*(long *)(this + 0x10) + (long)local_24 * 4) = uVar1;
+    local_24 = local_24 + 1;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: kmp_hw_attr_t
+// Entry: 000062c8
+// Signature: undefined __thiscall kmp_hw_attr_t(kmp_hw_attr_t * this)
+// ========================================
+
+
+/* kmp_hw_attr_t::kmp_hw_attr_t() */
+
+void __thiscall kmp_hw_attr_t::kmp_hw_attr_t(kmp_hw_attr_t *this)
+
+{
+  *(uint *)this = *(uint *)this & 0xffffff00;
+  *(uint *)this = *(uint *)this & 0xffff00ff | 0xff00;
+  *(uint *)this = *(uint *)this & 0xfffeffff;
+  *(uint *)this = *(uint *)this & 0x1ffff;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: hw_subset_compare
+// Entry: 00006320
+// Signature: undefined __cdecl hw_subset_compare(void * param_1, void * param_2)
+// ========================================
+
+
+/* kmp_hw_subset_t::hw_subset_compare(void const*, void const*) */
+
+int kmp_hw_subset_t::hw_subset_compare(void *param_1,void *param_2)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = *(undefined4 *)param_2;
+  iVar2 = kmp_topology_t::get_level(___kmp_topology,*(undefined4 *)param_1);
+  iVar3 = kmp_topology_t::get_level(___kmp_topology,uVar1);
+  return iVar2 - iVar3;
+}
+
+
+
+
+// ========================================
+// Function: to
+// Entry: 00006390
+// Signature: undefined __cdecl to(uint param_1)
+// ========================================
+
+
+/* kmp_convert<unsigned int, unsigned char, false, false, false, false>::to(unsigned int) */
+
+uint kmp_convert<unsigned_int,unsigned_char,false,false,false,false>::to(uint param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = std::numeric_limits<unsigned_char>::max_abi_v15006_();
+  if ((uVar1 & 0xff) < param_1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp.h",0x11ea);
+  }
+  return param_1 & 0xff;
+}
+
+
+
+
+// ========================================
+// Function: max[abi:v15006]
+// Entry: 000063f0
+// Signature: undefined __cdecl max[abi:v15006](void)
+// ========================================
+
+
+/* std::numeric_limits<unsigned char>::max[abi:v15006]() */
+
+undefined1 std::numeric_limits<unsigned_char>::max_abi_v15006_(void)
+
+{
+  undefined1 uVar1;
+  
+  uVar1 = __libcpp_numeric_limits<unsigned_char,true>::max_abi_v15006_();
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: max[abi:v15006]
+// Entry: 00006408
+// Signature: undefined __cdecl max[abi:v15006](void)
+// ========================================
+
+
+/* std::__libcpp_numeric_limits<unsigned char, true>::max[abi:v15006]() */
+
+undefined8 std::__libcpp_numeric_limits<unsigned_char,true>::max_abi_v15006_(void)
+
+{
+  return 0xff;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00006410
+// Signature: undefined __thiscall kmp_sub_ids_t(kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * this, int param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<1ul, kmp_topology_t::filter_hw_subset()::core_type_indexer>::kmp_sub_ids_t(int) */
+
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> * __thiscall
+kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<1ul,kmp_topology_t::filter_hw_subset()::core_type_indexer> *this,
+          int param_1)
+
+{
+  bool bVar1;
+  ulong local_38;
+  
+  *(int *)this = param_1;
+  if (0xb < param_1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x393);
+  }
+  bVar1 = false;
+  while (!bVar1) {
+    *(undefined4 *)(this + 4) = 0xffffffff;
+    bVar1 = true;
+  }
+  for (local_38 = 0; local_38 < 0xc; local_38 = local_38 + 1) {
+    *(undefined4 *)(this + local_38 * 4 + 8) = 0xffffffff;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: kmp_sub_ids_t
+// Entry: 00006504
+// Signature: undefined __thiscall kmp_sub_ids_t(kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * this, int param_1)
+// ========================================
+
+
+/* kmp_sub_ids_t<8ul, kmp_topology_t::filter_hw_subset()::core_eff_indexer>::kmp_sub_ids_t(int) */
+
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> * __thiscall
+kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer>::kmp_sub_ids_t
+          (kmp_sub_ids_t<8ul,kmp_topology_t::filter_hw_subset()::core_eff_indexer> *this,int param_1
+          )
+
+{
+  ulong local_38;
+  ulong local_30;
+  
+  *(int *)this = param_1;
+  if (0xb < param_1) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x393);
+  }
+  for (local_30 = 0; local_30 < 8; local_30 = local_30 + 1) {
+    *(undefined4 *)(this + local_30 * 4 + 4) = 0xffffffff;
+  }
+  for (local_38 = 0; local_38 < 0xc; local_38 = local_38 + 1) {
+    *(undefined4 *)(this + local_38 * 4 + 0x24) = 0xffffffff;
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 000065f8
+// Signature: undefined __thiscall operator()(core_type_indexer * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_topology_t::filter_hw_subset()::core_type_indexer::TEMPNAMEPLACEHOLDERVALUE(kmp_hw_thread_t
+   const&) const */
+
+undefined4 __thiscall
+kmp_topology_t::filter_hw_subset()::core_type_indexer::operator()
+          (core_type_indexer *this,kmp_hw_thread_t *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = kmp_hw_attr_t::get_core_type((kmp_hw_attr_t *)(param_1 + 0x68));
+  if (iVar1 != 0) {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_affinity.cpp",
+                        0x476);
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: operator()
+// Entry: 00006660
+// Signature: undefined __thiscall operator()(core_eff_indexer * this, kmp_hw_thread_t * param_1)
+// ========================================
+
+
+/* kmp_topology_t::filter_hw_subset()::core_eff_indexer::TEMPNAMEPLACEHOLDERVALUE(kmp_hw_thread_t
+   const&) const */
+
+void __thiscall
+kmp_topology_t::filter_hw_subset()::core_eff_indexer::operator()
+          (core_eff_indexer *this,kmp_hw_thread_t *param_1)
+
+{
+  kmp_hw_attr_t::get_core_eff((kmp_hw_attr_t *)(param_1 + 0x68));
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___cxx_global_var_init
+// Entry: 0000668c
+// Signature: undefined ___cxx_global_var_init(void)
+// ========================================
+
+
+void ___cxx_global_var_init(void)
+
+{
+  hierarchy_info::hierarchy_info((hierarchy_info *)&machine_hierarchy);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __GLOBAL__sub_I_kmp_affinity.cpp
+// Entry: 000066a8
+// Signature: undefined __GLOBAL__sub_I_kmp_affinity.cpp(void)
+// ========================================
+
+
+void __GLOBAL__sub_I_kmp_affinity_cpp(void)
+
+{
+  ___cxx_global_var_init();
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_allocate
+// Entry: 00007000
+// Signature: undefined ____kmp_allocate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_allocate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ____kmp_free
+// Entry: 00007100
+// Signature: undefined ____kmp_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ____kmp_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 00007400
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_i18n_catgets
+// Entry: 00007500
+// Signature: undefined ___kmp_i18n_catgets(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_i18n_catgets(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 00007600
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 00007700
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_clear
+// Entry: 00007900
+// Signature: undefined ___kmp_str_buf_clear(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_clear(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_free
+// Entry: 00007a00
+// Signature: undefined ___kmp_str_buf_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_str_buf_print
+// Entry: 00007b00
+// Signature: undefined ___kmp_str_buf_print(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_str_buf_print(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00007d00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00007f00
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _printf
+// Entry: 00008000
+// Signature: int _printf(char * param_1, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _printf(char *param_1,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _qsort
+// Entry: 00008100
+// Signature: void _qsort(void * param_1, size_t param_2, size_t param_3, int * param_4)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _qsort(void *param_1,size_t param_2,size_t param_3,int *param_4)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 88
+// Failed: 0
+// Skipped external functions: 0

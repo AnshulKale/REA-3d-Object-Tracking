@@ -1,0 +1,1583 @@
+Program: filter_neon_intrinsics.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _png_read_filter_row_up_neon
+// Entry: 00000000
+// Signature: undefined _png_read_filter_row_up_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_up_neon(long param_1,undefined8 *param_2,undefined8 *param_3)
+
+{
+  undefined8 *puVar1;
+  undefined8 *puVar2;
+  long lVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  
+  lVar3 = *(long *)(param_1 + 8);
+  if (0 < lVar3) {
+    puVar1 = param_2;
+    do {
+      uVar5 = puVar1[1];
+      uVar4 = *puVar1;
+      uVar7 = param_3[1];
+      uVar6 = *param_3;
+      puVar2 = puVar1 + 2;
+      puVar1[1] = CONCAT17((char)((ulong)uVar7 >> 0x38) + (char)((ulong)uVar5 >> 0x38),
+                           CONCAT16((char)((ulong)uVar7 >> 0x30) + (char)((ulong)uVar5 >> 0x30),
+                                    CONCAT15((char)((ulong)uVar7 >> 0x28) +
+                                             (char)((ulong)uVar5 >> 0x28),
+                                             CONCAT14((char)((ulong)uVar7 >> 0x20) +
+                                                      (char)((ulong)uVar5 >> 0x20),
+                                                      CONCAT13((char)((ulong)uVar7 >> 0x18) +
+                                                               (char)((ulong)uVar5 >> 0x18),
+                                                               CONCAT12((char)((ulong)uVar7 >> 0x10)
+                                                                        + (char)((ulong)uVar5 >>
+                                                                                0x10),
+                                                                        CONCAT11((char)((ulong)uVar7
+                                                                                       >> 8) +
+                                                                                 (char)((ulong)uVar5
+                                                                                       >> 8),
+                                                                                 (char)uVar7 +
+                                                                                 (char)uVar5)))))));
+      *puVar1 = CONCAT17((char)((ulong)uVar6 >> 0x38) + (char)((ulong)uVar4 >> 0x38),
+                         CONCAT16((char)((ulong)uVar6 >> 0x30) + (char)((ulong)uVar4 >> 0x30),
+                                  CONCAT15((char)((ulong)uVar6 >> 0x28) +
+                                           (char)((ulong)uVar4 >> 0x28),
+                                           CONCAT14((char)((ulong)uVar6 >> 0x20) +
+                                                    (char)((ulong)uVar4 >> 0x20),
+                                                    CONCAT13((char)((ulong)uVar6 >> 0x18) +
+                                                             (char)((ulong)uVar4 >> 0x18),
+                                                             CONCAT12((char)((ulong)uVar6 >> 0x10) +
+                                                                      (char)((ulong)uVar4 >> 0x10),
+                                                                      CONCAT11((char)((ulong)uVar6
+                                                                                     >> 8) +
+                                                                               (char)((ulong)uVar4
+                                                                                     >> 8),
+                                                                               (char)uVar6 +
+                                                                               (char)uVar4)))))));
+      puVar1 = puVar2;
+      param_3 = param_3 + 2;
+    } while (puVar2 < (undefined8 *)((long)param_2 + lVar3));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_sub3_neon
+// Entry: 0000002c
+// Signature: undefined _png_read_filter_row_sub3_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_sub3_neon(long param_1,undefined1 (*param_2) [16])
+
+{
+  undefined8 uVar1;
+  undefined1 auVar2 [16];
+  long lVar3;
+  undefined1 (*pauVar4) [16];
+  undefined1 (*pauVar5) [16];
+  char cVar6;
+  char cVar7;
+  char cVar8;
+  char cVar9;
+  undefined1 uVar10;
+  undefined1 uVar11;
+  undefined1 uVar12;
+  undefined1 uVar13;
+  uint uVar14;
+  ulong uVar15;
+  undefined8 uVar16;
+  undefined1 auVar17 [16];
+  char cVar18;
+  char cVar20;
+  char cVar21;
+  char cVar22;
+  undefined8 uVar19;
+  char cVar23;
+  char cVar24;
+  char cVar25;
+  char cVar26;
+  char cVar27;
+  char cVar28;
+  char cVar29;
+  char cVar30;
+  
+  lVar3 = *(long *)(param_1 + 8);
+  if (0 < lVar3) {
+    uVar1 = *(undefined8 *)*param_2;
+    cVar6 = (char)uVar1;
+    cVar7 = (char)((ulong)uVar1 >> 8);
+    cVar8 = (char)((ulong)uVar1 >> 0x10);
+    cVar9 = (char)((ulong)uVar1 >> 0x18);
+    uVar10 = (undefined1)((ulong)uVar1 >> 0x20);
+    uVar11 = (undefined1)((ulong)uVar1 >> 0x28);
+    uVar12 = (undefined1)((ulong)uVar1 >> 0x30);
+    uVar13 = (undefined1)((ulong)uVar1 >> 0x38);
+    auVar17 = NEON_ext(*param_2,*param_2,8,1);
+    uVar15 = 0;
+    pauVar4 = param_2;
+    do {
+      uVar16 = auVar17._0_8_;
+      uVar19 = NEON_ext(CONCAT17(uVar13,CONCAT16(uVar12,CONCAT15(uVar11,CONCAT14(uVar10,CONCAT13(
+                                                  cVar9,CONCAT12(cVar8,CONCAT11(cVar7,cVar6))))))),
+                        uVar16,3,1);
+      cVar23 = cVar6 + (char)uVar15;
+      cVar24 = cVar7 + (char)(uVar15 >> 8);
+      cVar25 = cVar8 + (char)(uVar15 >> 0x10);
+      cVar26 = cVar9 + (char)(uVar15 >> 0x18);
+      uVar1 = NEON_ext(CONCAT17(uVar13,CONCAT16(uVar12,CONCAT15(uVar11,CONCAT14(uVar10,CONCAT13(
+                                                  cVar9,CONCAT12(cVar8,CONCAT11(cVar7,cVar6))))))),
+                       uVar16,6,1);
+      cVar18 = (char)uVar19 + cVar23;
+      cVar20 = (char)((ulong)uVar19 >> 8) + cVar24;
+      cVar21 = (char)((ulong)uVar19 >> 0x10) + cVar25;
+      cVar22 = (char)((ulong)uVar19 >> 0x18) + cVar26;
+      uVar16 = NEON_ext(uVar16,uVar16,1,1);
+      cVar27 = cVar18 + (char)uVar1;
+      cVar28 = cVar20 + (char)((ulong)uVar1 >> 8);
+      cVar29 = cVar21 + (char)((ulong)uVar1 >> 0x10);
+      cVar30 = cVar22 + (char)((ulong)uVar1 >> 0x18);
+      pauVar5 = (undefined1 (*) [16])(*pauVar4 + 0xc);
+      uVar1 = *(undefined8 *)*pauVar5;
+      auVar2 = *pauVar5;
+      auVar17 = *pauVar5;
+      cVar6 = (char)uVar1;
+      cVar7 = (char)((ulong)uVar1 >> 8);
+      cVar8 = (char)((ulong)uVar1 >> 0x10);
+      cVar9 = (char)((ulong)uVar1 >> 0x18);
+      uVar10 = (undefined1)((ulong)uVar1 >> 0x20);
+      uVar11 = (undefined1)((ulong)uVar1 >> 0x28);
+      uVar12 = (undefined1)((ulong)uVar1 >> 0x30);
+      uVar13 = (undefined1)((ulong)uVar1 >> 0x38);
+      uVar14 = CONCAT13(cVar30 + (char)((ulong)uVar16 >> 0x18),
+                        CONCAT12(cVar29 + (char)((ulong)uVar16 >> 0x10),
+                                 CONCAT11(cVar28 + (char)((ulong)uVar16 >> 8),cVar27 + (char)uVar16)
+                                ));
+      uVar15 = (ulong)uVar14;
+      *(uint *)*pauVar4 = CONCAT13(cVar26,CONCAT12(cVar25,CONCAT11(cVar24,cVar23)));
+      *(uint *)(*pauVar4 + 3) = CONCAT13(cVar22,CONCAT12(cVar21,CONCAT11(cVar20,cVar18)));
+      auVar17 = NEON_ext(auVar17,auVar2,8,1);
+      *(uint *)(*pauVar4 + 6) = CONCAT13(cVar30,CONCAT12(cVar29,CONCAT11(cVar28,cVar27)));
+      *(uint *)(*pauVar4 + 9) = uVar14;
+      pauVar4 = pauVar5;
+    } while (pauVar5 < (undefined1 (*) [16])(*param_2 + lVar3));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_sub4_neon
+// Entry: 00000090
+// Signature: undefined _png_read_filter_row_sub4_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_sub4_neon(long param_1,undefined4 *param_2)
+
+{
+  undefined4 *puVar1;
+  char cVar2;
+  char cVar3;
+  char cVar4;
+  char cVar5;
+  char cVar6;
+  char cVar7;
+  char cVar8;
+  char cVar9;
+  char cVar10;
+  char cVar11;
+  char cVar12;
+  char cVar13;
+  undefined4 uVar14;
+  undefined4 uVar15;
+  undefined4 uVar16;
+  undefined4 uVar17;
+  undefined4 uVar18;
+  
+  if (0 < *(long *)(param_1 + 8)) {
+    puVar1 = (undefined4 *)((long)param_2 + *(long *)(param_1 + 8));
+    uVar14 = 0;
+    do {
+      uVar15 = *param_2;
+      uVar16 = param_2[1];
+      uVar17 = param_2[2];
+      uVar18 = param_2[3];
+      cVar2 = (char)uVar14 + (char)uVar15;
+      cVar3 = (char)((uint)uVar14 >> 8) + (char)((uint)uVar15 >> 8);
+      cVar4 = (char)((uint)uVar14 >> 0x10) + (char)((uint)uVar15 >> 0x10);
+      cVar5 = (char)((uint)uVar14 >> 0x18) + (char)((uint)uVar15 >> 0x18);
+      cVar6 = cVar2 + (char)uVar16;
+      cVar7 = cVar3 + (char)((uint)uVar16 >> 8);
+      cVar8 = cVar4 + (char)((uint)uVar16 >> 0x10);
+      cVar9 = cVar5 + (char)((uint)uVar16 >> 0x18);
+      cVar10 = cVar6 + (char)uVar17;
+      cVar11 = cVar7 + (char)((uint)uVar17 >> 8);
+      cVar12 = cVar8 + (char)((uint)uVar17 >> 0x10);
+      cVar13 = cVar9 + (char)((uint)uVar17 >> 0x18);
+      uVar14 = CONCAT13(cVar13 + (char)((uint)uVar18 >> 0x18),
+                        CONCAT12(cVar12 + (char)((uint)uVar18 >> 0x10),
+                                 CONCAT11(cVar11 + (char)((uint)uVar18 >> 8),cVar10 + (char)uVar18))
+                       );
+      *param_2 = CONCAT13(cVar5,CONCAT12(cVar4,CONCAT11(cVar3,cVar2)));
+      param_2[1] = CONCAT13(cVar9,CONCAT12(cVar8,CONCAT11(cVar7,cVar6)));
+      param_2[2] = CONCAT13(cVar13,CONCAT12(cVar12,CONCAT11(cVar11,cVar10)));
+      param_2[3] = uVar14;
+      param_2 = param_2 + 4;
+    } while (param_2 < puVar1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_avg3_neon
+// Entry: 000000c8
+// Signature: undefined _png_read_filter_row_avg3_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_avg3_neon
+               (long param_1,undefined1 (*param_2) [16],undefined1 (*param_3) [16])
+
+{
+  long lVar1;
+  undefined1 (*pauVar2) [16];
+  undefined1 (*pauVar3) [16];
+  undefined8 uVar4;
+  undefined1 auVar5 [16];
+  char cVar6;
+  char cVar7;
+  char cVar8;
+  char cVar9;
+  char cVar10;
+  char cVar11;
+  char cVar12;
+  char cVar13;
+  undefined4 uVar14;
+  undefined8 uVar15;
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined4 uVar18;
+  undefined8 uVar19;
+  undefined4 uVar20;
+  undefined1 auVar21 [16];
+  undefined8 uVar22;
+  undefined8 uVar23;
+  
+  lVar1 = *(long *)(param_1 + 8);
+  if (0 < lVar1) {
+    uVar15 = *(undefined8 *)*param_2;
+    cVar6 = (char)uVar15;
+    cVar7 = (char)((ulong)uVar15 >> 8);
+    cVar8 = (char)((ulong)uVar15 >> 0x10);
+    cVar9 = (char)((ulong)uVar15 >> 0x18);
+    cVar10 = (char)((ulong)uVar15 >> 0x20);
+    cVar11 = (char)((ulong)uVar15 >> 0x28);
+    cVar12 = (char)((ulong)uVar15 >> 0x30);
+    cVar13 = (char)((ulong)uVar15 >> 0x38);
+    auVar5 = NEON_ext(*param_2,*param_2,8,1);
+    uVar15 = 0;
+    pauVar2 = param_2;
+    do {
+      auVar16 = *param_3;
+      auVar17 = NEON_ext(auVar16,auVar16,8,1);
+      uVar4 = auVar5._0_8_;
+      uVar19 = NEON_ext(CONCAT17(cVar13,CONCAT16(cVar12,CONCAT15(cVar11,CONCAT14(cVar10,CONCAT13(
+                                                  cVar9,CONCAT12(cVar8,CONCAT11(cVar7,cVar6))))))),
+                        uVar4,3,1);
+      uVar15 = NEON_uhadd(uVar15,auVar16._0_8_,1);
+      uVar14 = CONCAT13((char)((ulong)uVar15 >> 0x18) + cVar9,
+                        CONCAT12((char)((ulong)uVar15 >> 0x10) + cVar8,
+                                 CONCAT11((char)((ulong)uVar15 >> 8) + cVar7,(char)uVar15 + cVar6)))
+      ;
+      auVar5 = NEON_ext(auVar16,auVar16,3,1);
+      uVar22 = NEON_ext(CONCAT17(cVar13,CONCAT16(cVar12,CONCAT15(cVar11,CONCAT14(cVar10,CONCAT13(
+                                                  cVar9,CONCAT12(cVar8,CONCAT11(cVar7,cVar6))))))),
+                        uVar4,6,1);
+      uVar15 = NEON_uhadd(CONCAT17((char)((ulong)uVar15 >> 0x38) + cVar13,
+                                   CONCAT16((char)((ulong)uVar15 >> 0x30) + cVar12,
+                                            CONCAT15((char)((ulong)uVar15 >> 0x28) + cVar11,
+                                                     CONCAT14((char)((ulong)uVar15 >> 0x20) + cVar10
+                                                              ,uVar14)))),auVar5._0_8_,1);
+      uVar18 = CONCAT13((char)((ulong)uVar15 >> 0x18) + (char)((ulong)uVar19 >> 0x18),
+                        CONCAT12((char)((ulong)uVar15 >> 0x10) + (char)((ulong)uVar19 >> 0x10),
+                                 CONCAT11((char)((ulong)uVar15 >> 8) + (char)((ulong)uVar19 >> 8),
+                                          (char)uVar15 + (char)uVar19)));
+      auVar21 = NEON_ext(auVar16,auVar16,6,1);
+      uVar23 = NEON_ext(uVar4,uVar4,1,1);
+      pauVar3 = (undefined1 (*) [16])(*pauVar2 + 0xc);
+      uVar4 = *(undefined8 *)*pauVar3;
+      cVar6 = (char)uVar4;
+      cVar7 = (char)((ulong)uVar4 >> 8);
+      cVar8 = (char)((ulong)uVar4 >> 0x10);
+      cVar9 = (char)((ulong)uVar4 >> 0x18);
+      cVar10 = (char)((ulong)uVar4 >> 0x20);
+      cVar11 = (char)((ulong)uVar4 >> 0x28);
+      cVar12 = (char)((ulong)uVar4 >> 0x30);
+      cVar13 = (char)((ulong)uVar4 >> 0x38);
+      auVar5 = NEON_ext(*pauVar3,*pauVar3,8,1);
+      uVar15 = NEON_uhadd(CONCAT17((char)((ulong)uVar15 >> 0x38) + (char)((ulong)uVar19 >> 0x38),
+                                   CONCAT16((char)((ulong)uVar15 >> 0x30) +
+                                            (char)((ulong)uVar19 >> 0x30),
+                                            CONCAT15((char)((ulong)uVar15 >> 0x28) +
+                                                     (char)((ulong)uVar19 >> 0x28),
+                                                     CONCAT14((char)((ulong)uVar15 >> 0x20) +
+                                                              (char)((ulong)uVar19 >> 0x20),uVar18))
+                                           )),auVar21._0_8_,1);
+      uVar20 = CONCAT13((char)((ulong)uVar15 >> 0x18) + (char)((ulong)uVar22 >> 0x18),
+                        CONCAT12((char)((ulong)uVar15 >> 0x10) + (char)((ulong)uVar22 >> 0x10),
+                                 CONCAT11((char)((ulong)uVar15 >> 8) + (char)((ulong)uVar22 >> 8),
+                                          (char)uVar15 + (char)uVar22)));
+      auVar16 = NEON_ext(auVar16,auVar17,9,1);
+      uVar15 = NEON_uhadd(CONCAT17((char)((ulong)uVar15 >> 0x38) + (char)((ulong)uVar22 >> 0x38),
+                                   CONCAT16((char)((ulong)uVar15 >> 0x30) +
+                                            (char)((ulong)uVar22 >> 0x30),
+                                            CONCAT15((char)((ulong)uVar15 >> 0x28) +
+                                                     (char)((ulong)uVar22 >> 0x28),
+                                                     CONCAT14((char)((ulong)uVar15 >> 0x20) +
+                                                              (char)((ulong)uVar22 >> 0x20),uVar20))
+                                           )),auVar16._0_8_,1);
+      *(undefined4 *)*pauVar2 = uVar14;
+      *(undefined4 *)(*pauVar2 + 3) = uVar18;
+      uVar14 = CONCAT13((char)((ulong)uVar15 >> 0x18) + (char)((ulong)uVar23 >> 0x18),
+                        CONCAT12((char)((ulong)uVar15 >> 0x10) + (char)((ulong)uVar23 >> 0x10),
+                                 CONCAT11((char)((ulong)uVar15 >> 8) + (char)((ulong)uVar23 >> 8),
+                                          (char)uVar15 + (char)uVar23)));
+      uVar15 = CONCAT17((char)((ulong)uVar15 >> 0x38) + (char)((ulong)uVar23 >> 0x38),
+                        CONCAT16((char)((ulong)uVar15 >> 0x30) + (char)((ulong)uVar23 >> 0x30),
+                                 CONCAT15((char)((ulong)uVar15 >> 0x28) +
+                                          (char)((ulong)uVar23 >> 0x28),
+                                          CONCAT14((char)((ulong)uVar15 >> 0x20) +
+                                                   (char)((ulong)uVar23 >> 0x20),uVar14))));
+      *(undefined4 *)(*pauVar2 + 6) = uVar20;
+      *(undefined4 *)(*pauVar2 + 9) = uVar14;
+      param_3 = (undefined1 (*) [16])(*param_3 + 0xc);
+      pauVar2 = pauVar3;
+    } while (pauVar3 < (undefined1 (*) [16])(*param_2 + lVar1));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_avg4_neon
+// Entry: 00000150
+// Signature: undefined _png_read_filter_row_avg4_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_avg4_neon(long param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  char cVar3;
+  char cVar4;
+  char cVar5;
+  char cVar6;
+  char cVar7;
+  char cVar8;
+  char cVar9;
+  char cVar10;
+  char cVar11;
+  char cVar12;
+  char cVar13;
+  char cVar14;
+  char cVar15;
+  char cVar16;
+  char cVar17;
+  char cVar18;
+  undefined4 uVar19;
+  undefined4 uVar20;
+  undefined4 uVar21;
+  undefined4 uVar22;
+  undefined4 uVar23;
+  undefined4 uVar24;
+  undefined4 uVar25;
+  undefined4 uVar26;
+  
+  if (0 < *(long *)(param_1 + 8)) {
+    puVar1 = (undefined4 *)((long)param_2 + *(long *)(param_1 + 8));
+    cVar11 = '\0';
+    cVar12 = '\0';
+    cVar13 = '\0';
+    cVar14 = '\0';
+    cVar15 = '\0';
+    cVar16 = '\0';
+    cVar17 = '\0';
+    cVar18 = '\0';
+    do {
+      uVar19 = *param_2;
+      uVar21 = param_2[1];
+      uVar23 = param_2[2];
+      uVar25 = param_2[3];
+      uVar20 = param_2[4];
+      uVar22 = param_2[5];
+      uVar24 = param_2[6];
+      uVar26 = param_2[7];
+      uVar2 = NEON_uhadd(CONCAT17(cVar18,CONCAT16(cVar17,CONCAT15(cVar16,CONCAT14(cVar15,CONCAT13(
+                                                  cVar14,CONCAT12(cVar13,CONCAT11(cVar12,cVar11)))))
+                                                 )),CONCAT44(param_3[4],*param_3),1);
+      uVar19 = CONCAT13((char)((ulong)uVar2 >> 0x18) + (char)((uint)uVar19 >> 0x18),
+                        CONCAT12((char)((ulong)uVar2 >> 0x10) + (char)((uint)uVar19 >> 0x10),
+                                 CONCAT11((char)((ulong)uVar2 >> 8) + (char)((uint)uVar19 >> 8),
+                                          (char)uVar2 + (char)uVar19)));
+      uVar2 = NEON_uhadd(CONCAT17((char)((ulong)uVar2 >> 0x38) + (char)((uint)uVar20 >> 0x18),
+                                  CONCAT16((char)((ulong)uVar2 >> 0x30) +
+                                           (char)((uint)uVar20 >> 0x10),
+                                           CONCAT15((char)((ulong)uVar2 >> 0x28) +
+                                                    (char)((uint)uVar20 >> 8),
+                                                    CONCAT14((char)((ulong)uVar2 >> 0x20) +
+                                                             (char)uVar20,uVar19)))),
+                         CONCAT44(param_3[5],param_3[1]),1);
+      cVar3 = (char)uVar2 + (char)uVar21;
+      cVar4 = (char)((ulong)uVar2 >> 8) + (char)((uint)uVar21 >> 8);
+      cVar5 = (char)((ulong)uVar2 >> 0x10) + (char)((uint)uVar21 >> 0x10);
+      cVar6 = (char)((ulong)uVar2 >> 0x18) + (char)((uint)uVar21 >> 0x18);
+      uVar2 = NEON_uhadd(CONCAT17((char)((ulong)uVar2 >> 0x38) + (char)((uint)uVar22 >> 0x18),
+                                  CONCAT16((char)((ulong)uVar2 >> 0x30) +
+                                           (char)((uint)uVar22 >> 0x10),
+                                           CONCAT15((char)((ulong)uVar2 >> 0x28) +
+                                                    (char)((uint)uVar22 >> 8),
+                                                    CONCAT14((char)((ulong)uVar2 >> 0x20) +
+                                                             (char)uVar22,
+                                                             CONCAT13(cVar6,CONCAT12(cVar5,CONCAT11(
+                                                  cVar4,cVar3))))))),CONCAT44(param_3[6],param_3[2])
+                         ,1);
+      cVar7 = (char)uVar2 + (char)uVar23;
+      cVar8 = (char)((ulong)uVar2 >> 8) + (char)((uint)uVar23 >> 8);
+      cVar9 = (char)((ulong)uVar2 >> 0x10) + (char)((uint)uVar23 >> 0x10);
+      cVar10 = (char)((ulong)uVar2 >> 0x18) + (char)((uint)uVar23 >> 0x18);
+      uVar2 = NEON_uhadd(CONCAT17((char)((ulong)uVar2 >> 0x38) + (char)((uint)uVar24 >> 0x18),
+                                  CONCAT16((char)((ulong)uVar2 >> 0x30) +
+                                           (char)((uint)uVar24 >> 0x10),
+                                           CONCAT15((char)((ulong)uVar2 >> 0x28) +
+                                                    (char)((uint)uVar24 >> 8),
+                                                    CONCAT14((char)((ulong)uVar2 >> 0x20) +
+                                                             (char)uVar24,
+                                                             CONCAT13(cVar10,CONCAT12(cVar9,CONCAT11
+                                                  (cVar8,cVar7))))))),
+                         CONCAT44(param_3[7],param_3[3]),1);
+      cVar11 = (char)uVar2 + (char)uVar25;
+      cVar12 = (char)((ulong)uVar2 >> 8) + (char)((uint)uVar25 >> 8);
+      cVar13 = (char)((ulong)uVar2 >> 0x10) + (char)((uint)uVar25 >> 0x10);
+      cVar14 = (char)((ulong)uVar2 >> 0x18) + (char)((uint)uVar25 >> 0x18);
+      cVar15 = (char)((ulong)uVar2 >> 0x20) + (char)uVar26;
+      cVar16 = (char)((ulong)uVar2 >> 0x28) + (char)((uint)uVar26 >> 8);
+      cVar17 = (char)((ulong)uVar2 >> 0x30) + (char)((uint)uVar26 >> 0x10);
+      cVar18 = (char)((ulong)uVar2 >> 0x38) + (char)((uint)uVar26 >> 0x18);
+      *param_2 = uVar19;
+      param_2[1] = CONCAT13(cVar6,CONCAT12(cVar5,CONCAT11(cVar4,cVar3)));
+      param_2[2] = CONCAT13(cVar10,CONCAT12(cVar9,CONCAT11(cVar8,cVar7)));
+      param_2[3] = CONCAT13(cVar14,CONCAT12(cVar13,CONCAT11(cVar12,cVar11)));
+      param_2 = param_2 + 4;
+      param_3 = param_3 + 4;
+    } while (param_2 < puVar1);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_paeth3_neon
+// Entry: 000001a0
+// Signature: undefined _png_read_filter_row_paeth3_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_paeth3_neon
+               (long param_1,undefined1 (*param_2) [16],undefined1 (*param_3) [16])
+
+{
+  long lVar1;
+  undefined1 (*pauVar2) [16];
+  undefined1 (*pauVar3) [16];
+  undefined1 auVar4 [16];
+  char cVar5;
+  char cVar6;
+  char cVar7;
+  char cVar8;
+  char cVar9;
+  char cVar10;
+  char cVar11;
+  char cVar12;
+  byte bVar15;
+  byte bVar16;
+  byte bVar17;
+  byte bVar18;
+  ulong uVar13;
+  undefined8 uVar14;
+  byte bVar19;
+  byte bVar20;
+  byte bVar21;
+  byte bVar22;
+  byte bVar23;
+  byte bVar24;
+  byte bVar25;
+  byte bVar26;
+  byte bVar28;
+  byte bVar29;
+  byte bVar30;
+  byte bVar31;
+  undefined1 auVar27 [16];
+  undefined1 auVar32 [16];
+  undefined4 uVar33;
+  byte bVar36;
+  byte bVar37;
+  byte bVar38;
+  byte bVar39;
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined4 uVar40;
+  ulong uVar41;
+  byte bVar44;
+  byte bVar45;
+  byte bVar46;
+  byte bVar47;
+  undefined1 auVar42 [16];
+  undefined1 auVar43 [16];
+  byte bVar51;
+  byte bVar52;
+  byte bVar53;
+  undefined8 uVar48;
+  byte bVar54;
+  ulong uVar49;
+  undefined1 auVar50 [16];
+  ushort uVar55;
+  ushort uVar57;
+  ushort uVar58;
+  undefined8 uVar56;
+  ushort uVar59;
+  ushort uVar60;
+  ushort uVar61;
+  ushort uVar62;
+  ushort uVar63;
+  ushort uVar64;
+  ushort uVar66;
+  ushort uVar67;
+  ushort uVar68;
+  undefined8 uVar65;
+  ushort uVar69;
+  ushort uVar70;
+  ushort uVar71;
+  ushort uVar72;
+  
+  lVar1 = *(long *)(param_1 + 8);
+  if (0 < lVar1) {
+    uVar48 = *(undefined8 *)*param_2;
+    cVar5 = (char)uVar48;
+    cVar6 = (char)((ulong)uVar48 >> 8);
+    cVar7 = (char)((ulong)uVar48 >> 0x10);
+    cVar8 = (char)((ulong)uVar48 >> 0x18);
+    cVar9 = (char)((ulong)uVar48 >> 0x20);
+    cVar10 = (char)((ulong)uVar48 >> 0x28);
+    cVar11 = (char)((ulong)uVar48 >> 0x30);
+    cVar12 = (char)((ulong)uVar48 >> 0x38);
+    auVar4 = NEON_ext(*param_2,*param_2,8,1);
+    auVar35 = ZEXT216(0);
+    bVar19 = 0;
+    bVar20 = 0;
+    bVar21 = 0;
+    bVar22 = 0;
+    bVar23 = 0;
+    bVar24 = 0;
+    bVar25 = 0;
+    bVar26 = 0;
+    pauVar2 = param_2;
+    do {
+      auVar27 = *param_3;
+      auVar32 = NEON_ext(auVar27,auVar27,8,1);
+      bVar44 = auVar27[0];
+      bVar45 = auVar27[1];
+      bVar46 = auVar27[2];
+      bVar47 = auVar27[3];
+      bVar28 = auVar27[4];
+      bVar29 = auVar27[5];
+      bVar30 = auVar27[6];
+      bVar31 = auVar27[7];
+      auVar34._0_2_ = (ushort)bVar44 + (ushort)bVar19;
+      auVar34._2_2_ = (ushort)bVar45 + (ushort)bVar20;
+      auVar34._4_2_ = (ushort)bVar46 + (ushort)bVar21;
+      auVar34._6_2_ = (ushort)bVar47 + (ushort)bVar22;
+      auVar34._8_2_ = (ushort)bVar28 + (ushort)bVar23;
+      auVar34._10_2_ = (ushort)bVar29 + (ushort)bVar24;
+      auVar34._12_2_ = (ushort)bVar30 + (ushort)bVar25;
+      auVar34._14_2_ = (ushort)bVar31 + (ushort)bVar26;
+      bVar36 = auVar35[0];
+      bVar37 = auVar35[1];
+      bVar38 = auVar35[2];
+      bVar39 = auVar35[3];
+      bVar15 = auVar35[4];
+      bVar16 = auVar35[5];
+      bVar17 = auVar35[6];
+      bVar18 = auVar35[7];
+      auVar42._0_2_ = (ushort)bVar36 << 1;
+      auVar42._2_2_ = (ushort)bVar37 << 1;
+      auVar42._4_2_ = (ushort)bVar38 << 1;
+      auVar42._6_2_ = (ushort)bVar39 << 1;
+      auVar42._8_2_ = (ushort)bVar15 << 1;
+      auVar42._10_2_ = (ushort)bVar16 << 1;
+      auVar42._12_2_ = (ushort)bVar17 << 1;
+      auVar42._14_2_ = (ushort)bVar18 << 1;
+      uVar13 = auVar35._0_8_;
+      uVar41 = auVar27._0_8_;
+      uVar48 = NEON_uabd(uVar41,uVar13,1);
+      uVar55 = MP_INT_ABS((ushort)bVar44 - (ushort)bVar36);
+      uVar57 = MP_INT_ABS((ushort)bVar45 - (ushort)bVar37);
+      uVar58 = MP_INT_ABS((ushort)bVar46 - (ushort)bVar38);
+      uVar59 = MP_INT_ABS((ushort)bVar47 - (ushort)bVar39);
+      uVar60 = MP_INT_ABS((ushort)bVar28 - (ushort)bVar15);
+      uVar61 = MP_INT_ABS((ushort)bVar29 - (ushort)bVar16);
+      uVar62 = MP_INT_ABS((ushort)bVar30 - (ushort)bVar17);
+      uVar63 = MP_INT_ABS((ushort)bVar31 - (ushort)bVar18);
+      uVar56 = NEON_uabd(CONCAT17(bVar26,CONCAT16(bVar25,CONCAT15(bVar24,CONCAT14(bVar23,CONCAT13(
+                                                  bVar22,CONCAT12(bVar21,CONCAT11(bVar20,bVar19)))))
+                                                 )),uVar13,1);
+      uVar64 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar36);
+      uVar66 = MP_INT_ABS((ushort)bVar20 - (ushort)bVar37);
+      uVar67 = MP_INT_ABS((ushort)bVar21 - (ushort)bVar38);
+      uVar68 = MP_INT_ABS((ushort)bVar22 - (ushort)bVar39);
+      uVar69 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar15);
+      uVar70 = MP_INT_ABS((ushort)bVar24 - (ushort)bVar16);
+      uVar71 = MP_INT_ABS((ushort)bVar25 - (ushort)bVar17);
+      uVar72 = MP_INT_ABS((ushort)bVar26 - (ushort)bVar18);
+      auVar35 = NEON_uabd(auVar34,auVar42,2);
+      uVar13 = uVar13 ^ (uVar13 ^ uVar41) &
+                        ~CONCAT17(-(auVar35._14_2_ < uVar72),
+                                  CONCAT16(-(auVar35._12_2_ < uVar71),
+                                           CONCAT15(-(auVar35._10_2_ < uVar70),
+                                                    CONCAT14(-(auVar35._8_2_ < uVar69),
+                                                             CONCAT13(-(auVar35._6_2_ < uVar68),
+                                                                      CONCAT12(-(auVar35._4_2_ <
+                                                                                uVar67),CONCAT11(-(
+                                                  auVar35._2_2_ < uVar66),-(auVar35._0_2_ < uVar64))
+                                                  ))))));
+      uVar13 = uVar13 ^ (uVar13 ^ CONCAT17(bVar26,CONCAT16(bVar25,CONCAT15(bVar24,CONCAT14(bVar23,
+                                                  CONCAT13(bVar22,CONCAT12(bVar21,CONCAT11(bVar20,
+                                                  bVar19)))))))) &
+                        CONCAT17(-(uVar63 <= auVar35._14_2_),
+                                 CONCAT16(-(uVar62 <= auVar35._12_2_),
+                                          CONCAT15(-(uVar61 <= auVar35._10_2_),
+                                                   CONCAT14(-(uVar60 <= auVar35._8_2_),
+                                                            CONCAT13(-(uVar59 <= auVar35._6_2_),
+                                                                     CONCAT12(-(uVar58 <=
+                                                                               auVar35._4_2_),
+                                                                              CONCAT11(-(uVar57 <=
+                                                                                        auVar35.
+                                                  _2_2_),-(uVar55 <= auVar35._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar48 >> 0x38) <= (byte)((ulong)uVar56 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar48 >> 0x30) <=
+                                           (byte)((ulong)uVar56 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar48 >> 0x28) <=
+                                                    (byte)((ulong)uVar56 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar48 >> 0x20) <=
+                                                             (byte)((ulong)uVar56 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar48 >> 0x18)
+                                                                      <= (byte)((ulong)uVar56 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar48
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar56
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar48 >> 8) <= (byte)((ulong)uVar56 >> 8)),
+                                                  -((byte)uVar48 <= (byte)uVar56))))))));
+      bVar19 = (char)uVar13 + cVar5;
+      bVar20 = (char)(uVar13 >> 8) + cVar6;
+      bVar21 = (char)(uVar13 >> 0x10) + cVar7;
+      bVar22 = (char)(uVar13 >> 0x18) + cVar8;
+      bVar23 = (char)(uVar13 >> 0x20) + cVar9;
+      bVar24 = (char)(uVar13 >> 0x28) + cVar10;
+      bVar25 = (char)(uVar13 >> 0x30) + cVar11;
+      bVar26 = (char)(uVar13 >> 0x38) + cVar12;
+      uVar56 = auVar4._0_8_;
+      uVar14 = NEON_ext(CONCAT17(cVar12,CONCAT16(cVar11,CONCAT15(cVar10,CONCAT14(cVar9,CONCAT13(
+                                                  cVar8,CONCAT12(cVar7,CONCAT11(cVar6,cVar5))))))),
+                        uVar56,3,1);
+      auVar4 = NEON_ext(auVar27,auVar27,3,1);
+      bVar36 = auVar4[0];
+      bVar37 = auVar4[1];
+      bVar38 = auVar4[2];
+      bVar39 = auVar4[3];
+      bVar15 = auVar4[4];
+      bVar16 = auVar4[5];
+      bVar17 = auVar4[6];
+      bVar18 = auVar4[7];
+      auVar43._0_2_ = (ushort)bVar19 + (ushort)bVar36;
+      auVar43._2_2_ = (ushort)bVar20 + (ushort)bVar37;
+      auVar43._4_2_ = (ushort)bVar21 + (ushort)bVar38;
+      auVar43._6_2_ = (ushort)bVar22 + (ushort)bVar39;
+      auVar43._8_2_ = (ushort)bVar23 + (ushort)bVar15;
+      auVar43._10_2_ = (ushort)bVar24 + (ushort)bVar16;
+      auVar43._12_2_ = (ushort)bVar25 + (ushort)bVar17;
+      auVar43._14_2_ = (ushort)bVar26 + (ushort)bVar18;
+      auVar50._0_2_ = (ushort)bVar44 << 1;
+      auVar50._2_2_ = (ushort)bVar45 << 1;
+      auVar50._4_2_ = (ushort)bVar46 << 1;
+      auVar50._6_2_ = (ushort)bVar47 << 1;
+      auVar50._8_2_ = (ushort)bVar28 << 1;
+      auVar50._10_2_ = (ushort)bVar29 << 1;
+      auVar50._12_2_ = (ushort)bVar30 << 1;
+      auVar50._14_2_ = (ushort)bVar31 << 1;
+      uVar13 = auVar4._0_8_;
+      uVar48 = NEON_uabd(uVar13,uVar41,1);
+      uVar55 = MP_INT_ABS((ushort)bVar36 - (ushort)bVar44);
+      uVar57 = MP_INT_ABS((ushort)bVar37 - (ushort)bVar45);
+      uVar58 = MP_INT_ABS((ushort)bVar38 - (ushort)bVar46);
+      uVar59 = MP_INT_ABS((ushort)bVar39 - (ushort)bVar47);
+      uVar60 = MP_INT_ABS((ushort)bVar15 - (ushort)bVar28);
+      uVar61 = MP_INT_ABS((ushort)bVar16 - (ushort)bVar29);
+      uVar62 = MP_INT_ABS((ushort)bVar17 - (ushort)bVar30);
+      uVar63 = MP_INT_ABS((ushort)bVar18 - (ushort)bVar31);
+      uVar65 = NEON_uabd(CONCAT17(bVar26,CONCAT16(bVar25,CONCAT15(bVar24,CONCAT14(bVar23,CONCAT13(
+                                                  bVar22,CONCAT12(bVar21,CONCAT11(bVar20,bVar19)))))
+                                                 )),uVar41,1);
+      uVar64 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar44);
+      uVar66 = MP_INT_ABS((ushort)bVar20 - (ushort)bVar45);
+      uVar67 = MP_INT_ABS((ushort)bVar21 - (ushort)bVar46);
+      uVar68 = MP_INT_ABS((ushort)bVar22 - (ushort)bVar47);
+      uVar69 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar28);
+      uVar70 = MP_INT_ABS((ushort)bVar24 - (ushort)bVar29);
+      uVar71 = MP_INT_ABS((ushort)bVar25 - (ushort)bVar30);
+      uVar72 = MP_INT_ABS((ushort)bVar26 - (ushort)bVar31);
+      auVar4 = NEON_uabd(auVar43,auVar50,2);
+      uVar41 = uVar13 ^ (uVar13 ^ uVar41) &
+                        CONCAT17(-(auVar4._14_2_ < uVar72),
+                                 CONCAT16(-(auVar4._12_2_ < uVar71),
+                                          CONCAT15(-(auVar4._10_2_ < uVar70),
+                                                   CONCAT14(-(auVar4._8_2_ < uVar69),
+                                                            CONCAT13(-(auVar4._6_2_ < uVar68),
+                                                                     CONCAT12(-(auVar4._4_2_ <
+                                                                               uVar67),CONCAT11(-(
+                                                  auVar4._2_2_ < uVar66),-(auVar4._0_2_ < uVar64))))
+                                                  ))));
+      uVar41 = uVar41 ^ (uVar41 ^ CONCAT17(bVar26,CONCAT16(bVar25,CONCAT15(bVar24,CONCAT14(bVar23,
+                                                  CONCAT13(bVar22,CONCAT12(bVar21,CONCAT11(bVar20,
+                                                  bVar19)))))))) &
+                        CONCAT17(-(uVar63 <= auVar4._14_2_),
+                                 CONCAT16(-(uVar62 <= auVar4._12_2_),
+                                          CONCAT15(-(uVar61 <= auVar4._10_2_),
+                                                   CONCAT14(-(uVar60 <= auVar4._8_2_),
+                                                            CONCAT13(-(uVar59 <= auVar4._6_2_),
+                                                                     CONCAT12(-(uVar58 <=
+                                                                               auVar4._4_2_),
+                                                                              CONCAT11(-(uVar57 <=
+                                                                                        auVar4._2_2_
+                                                                                        ),-(uVar55 
+                                                  <= auVar4._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar48 >> 0x38) <= (byte)((ulong)uVar65 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar48 >> 0x30) <=
+                                           (byte)((ulong)uVar65 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar48 >> 0x28) <=
+                                                    (byte)((ulong)uVar65 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar48 >> 0x20) <=
+                                                             (byte)((ulong)uVar65 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar48 >> 0x18)
+                                                                      <= (byte)((ulong)uVar65 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar48
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar65
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar48 >> 8) <= (byte)((ulong)uVar65 >> 8)),
+                                                  -((byte)uVar48 <= (byte)uVar65))))))));
+      bVar23 = (char)uVar41 + (char)uVar14;
+      bVar24 = (char)(uVar41 >> 8) + (char)((ulong)uVar14 >> 8);
+      bVar25 = (char)(uVar41 >> 0x10) + (char)((ulong)uVar14 >> 0x10);
+      bVar26 = (char)(uVar41 >> 0x18) + (char)((ulong)uVar14 >> 0x18);
+      uVar40 = CONCAT13(bVar26,CONCAT12(bVar25,CONCAT11(bVar24,bVar23)));
+      bVar44 = (char)(uVar41 >> 0x20) + (char)((ulong)uVar14 >> 0x20);
+      bVar45 = (char)(uVar41 >> 0x28) + (char)((ulong)uVar14 >> 0x28);
+      bVar46 = (char)(uVar41 >> 0x30) + (char)((ulong)uVar14 >> 0x30);
+      bVar47 = (char)(uVar41 >> 0x38) + (char)((ulong)uVar14 >> 0x38);
+      uVar41 = CONCAT17(bVar47,CONCAT16(bVar46,CONCAT15(bVar45,CONCAT14(bVar44,uVar40))));
+      uVar48 = NEON_ext(CONCAT17(cVar12,CONCAT16(cVar11,CONCAT15(cVar10,CONCAT14(cVar9,CONCAT13(
+                                                  cVar8,CONCAT12(cVar7,CONCAT11(cVar6,cVar5))))))),
+                        uVar56,6,1);
+      auVar4 = NEON_ext(auVar27,auVar27,6,1);
+      bVar28 = auVar4[0];
+      bVar29 = auVar4[1];
+      bVar30 = auVar4[2];
+      bVar31 = auVar4[3];
+      bVar51 = auVar4[4];
+      bVar52 = auVar4[5];
+      bVar53 = auVar4[6];
+      bVar54 = auVar4[7];
+      auVar35._0_2_ = (ushort)bVar23 + (ushort)bVar28;
+      auVar35._2_2_ = (ushort)bVar24 + (ushort)bVar29;
+      auVar35._4_2_ = (ushort)bVar25 + (ushort)bVar30;
+      auVar35._6_2_ = (ushort)bVar26 + (ushort)bVar31;
+      auVar35._8_2_ = (ushort)bVar44 + (ushort)bVar51;
+      auVar35._10_2_ = (ushort)bVar45 + (ushort)bVar52;
+      auVar35._12_2_ = (ushort)bVar46 + (ushort)bVar53;
+      auVar35._14_2_ = (ushort)bVar47 + (ushort)bVar54;
+      uVar49 = auVar4._0_8_;
+      uVar14 = NEON_uabd(uVar49,uVar13,1);
+      uVar55 = MP_INT_ABS((ushort)bVar28 - (ushort)bVar36);
+      uVar57 = MP_INT_ABS((ushort)bVar29 - (ushort)bVar37);
+      uVar58 = MP_INT_ABS((ushort)bVar30 - (ushort)bVar38);
+      uVar59 = MP_INT_ABS((ushort)bVar31 - (ushort)bVar39);
+      uVar60 = MP_INT_ABS((ushort)bVar51 - (ushort)bVar15);
+      uVar61 = MP_INT_ABS((ushort)bVar52 - (ushort)bVar16);
+      uVar62 = MP_INT_ABS((ushort)bVar53 - (ushort)bVar17);
+      uVar63 = MP_INT_ABS((ushort)bVar54 - (ushort)bVar18);
+      uVar65 = NEON_uabd(uVar41,uVar13,1);
+      uVar64 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar36);
+      uVar66 = MP_INT_ABS((ushort)bVar24 - (ushort)bVar37);
+      uVar67 = MP_INT_ABS((ushort)bVar25 - (ushort)bVar38);
+      uVar68 = MP_INT_ABS((ushort)bVar26 - (ushort)bVar39);
+      uVar69 = MP_INT_ABS((ushort)bVar44 - (ushort)bVar15);
+      uVar70 = MP_INT_ABS((ushort)bVar45 - (ushort)bVar16);
+      uVar71 = MP_INT_ABS((ushort)bVar46 - (ushort)bVar17);
+      uVar72 = MP_INT_ABS((ushort)bVar47 - (ushort)bVar18);
+      auVar4[2] = (char)((ushort)bVar37 << 1);
+      auVar4._0_2_ = (ushort)bVar36 << 1;
+      auVar4[3] = (char)((ushort)((ushort)bVar37 << 1) >> 8);
+      auVar4[4] = (char)((ushort)bVar38 << 1);
+      auVar4[5] = (char)((ushort)((ushort)bVar38 << 1) >> 8);
+      auVar4[6] = (char)((ushort)bVar39 << 1);
+      auVar4[7] = (char)((ushort)((ushort)bVar39 << 1) >> 8);
+      auVar4[8] = (char)((ushort)bVar15 << 1);
+      auVar4[9] = (char)((ushort)((ushort)bVar15 << 1) >> 8);
+      auVar4[10] = (char)((ushort)bVar16 << 1);
+      auVar4[0xb] = (char)((ushort)((ushort)bVar16 << 1) >> 8);
+      auVar4[0xc] = (char)((ushort)bVar17 << 1);
+      auVar4[0xd] = (char)((ushort)((ushort)bVar17 << 1) >> 8);
+      auVar4[0xe] = (char)((ushort)bVar18 << 1);
+      auVar4[0xf] = (char)((ushort)((ushort)bVar18 << 1) >> 8);
+      auVar4 = NEON_uabd(auVar35,auVar4,2);
+      uVar13 = uVar49 ^ (uVar49 ^ uVar13) &
+                        CONCAT17(-(auVar4._14_2_ < uVar72),
+                                 CONCAT16(-(auVar4._12_2_ < uVar71),
+                                          CONCAT15(-(auVar4._10_2_ < uVar70),
+                                                   CONCAT14(-(auVar4._8_2_ < uVar69),
+                                                            CONCAT13(-(auVar4._6_2_ < uVar68),
+                                                                     CONCAT12(-(auVar4._4_2_ <
+                                                                               uVar67),CONCAT11(-(
+                                                  auVar4._2_2_ < uVar66),-(auVar4._0_2_ < uVar64))))
+                                                  ))));
+      uVar13 = uVar13 ^ (uVar13 ^ uVar41) &
+                        CONCAT17(-(uVar63 <= auVar4._14_2_),
+                                 CONCAT16(-(uVar62 <= auVar4._12_2_),
+                                          CONCAT15(-(uVar61 <= auVar4._10_2_),
+                                                   CONCAT14(-(uVar60 <= auVar4._8_2_),
+                                                            CONCAT13(-(uVar59 <= auVar4._6_2_),
+                                                                     CONCAT12(-(uVar58 <=
+                                                                               auVar4._4_2_),
+                                                                              CONCAT11(-(uVar57 <=
+                                                                                        auVar4._2_2_
+                                                                                        ),-(uVar55 
+                                                  <= auVar4._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar14 >> 0x38) <= (byte)((ulong)uVar65 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar14 >> 0x30) <=
+                                           (byte)((ulong)uVar65 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar14 >> 0x28) <=
+                                                    (byte)((ulong)uVar65 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar14 >> 0x20) <=
+                                                             (byte)((ulong)uVar65 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar14 >> 0x18)
+                                                                      <= (byte)((ulong)uVar65 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar14
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar65
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar14 >> 8) <= (byte)((ulong)uVar65 >> 8)),
+                                                  -((byte)uVar14 <= (byte)uVar65))))))));
+      bVar23 = (char)uVar13 + (char)uVar48;
+      bVar24 = (char)(uVar13 >> 8) + (char)((ulong)uVar48 >> 8);
+      bVar25 = (char)(uVar13 >> 0x10) + (char)((ulong)uVar48 >> 0x10);
+      bVar26 = (char)(uVar13 >> 0x18) + (char)((ulong)uVar48 >> 0x18);
+      uVar33 = CONCAT13(bVar26,CONCAT12(bVar25,CONCAT11(bVar24,bVar23)));
+      bVar36 = (char)(uVar13 >> 0x20) + (char)((ulong)uVar48 >> 0x20);
+      bVar37 = (char)(uVar13 >> 0x28) + (char)((ulong)uVar48 >> 0x28);
+      bVar38 = (char)(uVar13 >> 0x30) + (char)((ulong)uVar48 >> 0x30);
+      bVar39 = (char)(uVar13 >> 0x38) + (char)((ulong)uVar48 >> 0x38);
+      uVar41 = CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar33))));
+      uVar56 = NEON_ext(uVar56,uVar56,1,1);
+      pauVar3 = (undefined1 (*) [16])(*pauVar2 + 0xc);
+      uVar48 = *(undefined8 *)*pauVar3;
+      cVar5 = (char)uVar48;
+      cVar6 = (char)((ulong)uVar48 >> 8);
+      cVar7 = (char)((ulong)uVar48 >> 0x10);
+      cVar8 = (char)((ulong)uVar48 >> 0x18);
+      cVar9 = (char)((ulong)uVar48 >> 0x20);
+      cVar10 = (char)((ulong)uVar48 >> 0x28);
+      cVar11 = (char)((ulong)uVar48 >> 0x30);
+      cVar12 = (char)((ulong)uVar48 >> 0x38);
+      auVar35 = NEON_ext(auVar27,auVar32,9,1);
+      auVar4 = NEON_ext(*pauVar3,*pauVar3,8,1);
+      auVar27._0_2_ = (ushort)bVar23 + (ushort)auVar35[0];
+      auVar27._2_2_ = (ushort)bVar24 + (ushort)auVar35[1];
+      auVar27._4_2_ = (ushort)bVar25 + (ushort)auVar35[2];
+      auVar27._6_2_ = (ushort)bVar26 + (ushort)auVar35[3];
+      auVar27._8_2_ = (ushort)bVar36 + (ushort)auVar35[4];
+      auVar27._10_2_ = (ushort)bVar37 + (ushort)auVar35[5];
+      auVar27._12_2_ = (ushort)bVar38 + (ushort)auVar35[6];
+      auVar27._14_2_ = (ushort)bVar39 + (ushort)auVar35[7];
+      auVar32._0_2_ = (ushort)bVar28 << 1;
+      auVar32._2_2_ = (ushort)bVar29 << 1;
+      auVar32._4_2_ = (ushort)bVar30 << 1;
+      auVar32._6_2_ = (ushort)bVar31 << 1;
+      auVar32._8_2_ = (ushort)bVar51 << 1;
+      auVar32._10_2_ = (ushort)bVar52 << 1;
+      auVar32._12_2_ = (ushort)bVar53 << 1;
+      auVar32._14_2_ = (ushort)bVar54 << 1;
+      uVar13 = auVar35._0_8_;
+      uVar48 = NEON_uabd(uVar13,uVar49,1);
+      uVar55 = MP_INT_ABS((ushort)auVar35[0] - (ushort)bVar28);
+      uVar57 = MP_INT_ABS((ushort)auVar35[1] - (ushort)bVar29);
+      uVar58 = MP_INT_ABS((ushort)auVar35[2] - (ushort)bVar30);
+      uVar59 = MP_INT_ABS((ushort)auVar35[3] - (ushort)bVar31);
+      uVar60 = MP_INT_ABS((ushort)auVar35[4] - (ushort)bVar51);
+      uVar61 = MP_INT_ABS((ushort)auVar35[5] - (ushort)bVar52);
+      uVar62 = MP_INT_ABS((ushort)auVar35[6] - (ushort)bVar53);
+      uVar63 = MP_INT_ABS((ushort)auVar35[7] - (ushort)bVar54);
+      uVar14 = NEON_uabd(uVar41,uVar49,1);
+      uVar64 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar28);
+      uVar66 = MP_INT_ABS((ushort)bVar24 - (ushort)bVar29);
+      uVar67 = MP_INT_ABS((ushort)bVar25 - (ushort)bVar30);
+      uVar68 = MP_INT_ABS((ushort)bVar26 - (ushort)bVar31);
+      uVar69 = MP_INT_ABS((ushort)bVar36 - (ushort)bVar51);
+      uVar70 = MP_INT_ABS((ushort)bVar37 - (ushort)bVar52);
+      uVar71 = MP_INT_ABS((ushort)bVar38 - (ushort)bVar53);
+      uVar72 = MP_INT_ABS((ushort)bVar39 - (ushort)bVar54);
+      auVar27 = NEON_uabd(auVar27,auVar32,2);
+      uVar13 = uVar13 ^ (uVar13 ^ uVar49) &
+                        CONCAT17(-(auVar27._14_2_ < uVar72),
+                                 CONCAT16(-(auVar27._12_2_ < uVar71),
+                                          CONCAT15(-(auVar27._10_2_ < uVar70),
+                                                   CONCAT14(-(auVar27._8_2_ < uVar69),
+                                                            CONCAT13(-(auVar27._6_2_ < uVar68),
+                                                                     CONCAT12(-(auVar27._4_2_ <
+                                                                               uVar67),CONCAT11(-(
+                                                  auVar27._2_2_ < uVar66),-(auVar27._0_2_ < uVar64))
+                                                  ))))));
+      uVar13 = uVar13 ^ (uVar13 ^ uVar41) &
+                        CONCAT17(-(uVar63 <= auVar27._14_2_),
+                                 CONCAT16(-(uVar62 <= auVar27._12_2_),
+                                          CONCAT15(-(uVar61 <= auVar27._10_2_),
+                                                   CONCAT14(-(uVar60 <= auVar27._8_2_),
+                                                            CONCAT13(-(uVar59 <= auVar27._6_2_),
+                                                                     CONCAT12(-(uVar58 <=
+                                                                               auVar27._4_2_),
+                                                                              CONCAT11(-(uVar57 <=
+                                                                                        auVar27.
+                                                  _2_2_),-(uVar55 <= auVar27._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar48 >> 0x38) <= (byte)((ulong)uVar14 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar48 >> 0x30) <=
+                                           (byte)((ulong)uVar14 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar48 >> 0x28) <=
+                                                    (byte)((ulong)uVar14 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar48 >> 0x20) <=
+                                                             (byte)((ulong)uVar14 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar48 >> 0x18)
+                                                                      <= (byte)((ulong)uVar14 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar48
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar14
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar48 >> 8) <= (byte)((ulong)uVar14 >> 8)),
+                                                  -((byte)uVar48 <= (byte)uVar14))))))));
+      *(uint *)*pauVar2 = CONCAT13(bVar22,CONCAT12(bVar21,CONCAT11(bVar20,bVar19)));
+      *(undefined4 *)(*pauVar2 + 3) = uVar40;
+      bVar19 = (char)uVar13 + (char)uVar56;
+      bVar20 = (char)(uVar13 >> 8) + (char)((ulong)uVar56 >> 8);
+      bVar21 = (char)(uVar13 >> 0x10) + (char)((ulong)uVar56 >> 0x10);
+      bVar22 = (char)(uVar13 >> 0x18) + (char)((ulong)uVar56 >> 0x18);
+      bVar23 = (char)(uVar13 >> 0x20) + (char)((ulong)uVar56 >> 0x20);
+      bVar24 = (char)(uVar13 >> 0x28) + (char)((ulong)uVar56 >> 0x28);
+      bVar25 = (char)(uVar13 >> 0x30) + (char)((ulong)uVar56 >> 0x30);
+      bVar26 = (char)(uVar13 >> 0x38) + (char)((ulong)uVar56 >> 0x38);
+      *(undefined4 *)(*pauVar2 + 6) = uVar33;
+      *(uint *)(*pauVar2 + 9) = CONCAT13(bVar22,CONCAT12(bVar21,CONCAT11(bVar20,bVar19)));
+      param_3 = (undefined1 (*) [16])(*param_3 + 0xc);
+      pauVar2 = pauVar3;
+    } while (pauVar3 < (undefined1 (*) [16])(*param_2 + lVar1));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row_paeth4_neon
+// Entry: 0000030c
+// Signature: undefined _png_read_filter_row_paeth4_neon(void)
+// ========================================
+
+
+void _png_read_filter_row_paeth4_neon(long param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined1 auVar6 [16];
+  undefined4 uVar7;
+  byte bVar8;
+  byte bVar9;
+  byte bVar10;
+  byte bVar11;
+  byte bVar12;
+  byte bVar13;
+  byte bVar14;
+  byte bVar15;
+  byte bVar16;
+  byte bVar17;
+  byte bVar18;
+  byte bVar19;
+  byte bVar20;
+  byte bVar21;
+  byte bVar22;
+  byte bVar23;
+  byte bVar24;
+  byte bVar25;
+  byte bVar26;
+  byte bVar27;
+  byte bVar28;
+  byte bVar29;
+  byte bVar30;
+  byte bVar31;
+  byte bVar32;
+  byte bVar33;
+  byte bVar34;
+  byte bVar35;
+  byte bVar36;
+  byte bVar37;
+  byte bVar38;
+  byte bVar39;
+  byte bVar40;
+  byte bVar41;
+  byte bVar42;
+  byte bVar43;
+  byte bVar44;
+  byte bVar45;
+  byte bVar46;
+  undefined4 uVar47;
+  undefined4 uVar48;
+  undefined4 uVar49;
+  undefined4 uVar50;
+  undefined4 uVar51;
+  undefined4 uVar52;
+  undefined4 uVar53;
+  undefined4 uVar54;
+  byte bVar55;
+  byte bVar61;
+  byte bVar62;
+  byte bVar63;
+  byte bVar64;
+  byte bVar65;
+  byte bVar66;
+  byte bVar67;
+  ulong uVar56;
+  undefined1 auVar58 [16];
+  ulong uVar57;
+  undefined1 auVar59 [16];
+  undefined1 auVar60 [16];
+  undefined1 auVar68 [16];
+  undefined1 auVar69 [16];
+  undefined1 auVar70 [16];
+  undefined1 auVar71 [16];
+  undefined1 auVar72 [16];
+  undefined8 uVar73;
+  ushort uVar74;
+  ushort uVar75;
+  ushort uVar76;
+  ushort uVar77;
+  ushort uVar78;
+  ushort uVar79;
+  ushort uVar80;
+  ushort uVar81;
+  undefined8 uVar82;
+  ushort uVar83;
+  ushort uVar84;
+  ushort uVar85;
+  ushort uVar86;
+  ushort uVar87;
+  ushort uVar88;
+  ushort uVar89;
+  ushort uVar90;
+  
+  if (0 < *(long *)(param_1 + 8)) {
+    puVar1 = (undefined4 *)((long)param_2 + *(long *)(param_1 + 8));
+    auVar69 = ZEXT216(0);
+    bVar16 = 0;
+    bVar17 = 0;
+    bVar18 = 0;
+    bVar19 = 0;
+    bVar20 = 0;
+    bVar21 = 0;
+    bVar22 = 0;
+    bVar23 = 0;
+    do {
+      uVar47 = *param_2;
+      uVar49 = param_2[1];
+      uVar51 = param_2[2];
+      uVar53 = param_2[3];
+      uVar48 = param_2[4];
+      uVar50 = param_2[5];
+      uVar52 = param_2[6];
+      uVar54 = param_2[7];
+      uVar2 = *param_3;
+      bVar8 = (byte)uVar2;
+      bVar9 = (byte)((uint)uVar2 >> 8);
+      bVar10 = (byte)((uint)uVar2 >> 0x10);
+      bVar11 = (byte)((uint)uVar2 >> 0x18);
+      uVar3 = param_3[1];
+      bVar24 = (byte)uVar3;
+      bVar25 = (byte)((uint)uVar3 >> 8);
+      bVar26 = (byte)((uint)uVar3 >> 0x10);
+      bVar27 = (byte)((uint)uVar3 >> 0x18);
+      uVar4 = param_3[2];
+      bVar32 = (byte)uVar4;
+      bVar33 = (byte)((uint)uVar4 >> 8);
+      bVar34 = (byte)((uint)uVar4 >> 0x10);
+      bVar35 = (byte)((uint)uVar4 >> 0x18);
+      uVar5 = param_3[3];
+      bVar40 = (byte)((uint)uVar5 >> 8);
+      bVar41 = (byte)((uint)uVar5 >> 0x10);
+      bVar42 = (byte)((uint)uVar5 >> 0x18);
+      uVar7 = param_3[4];
+      bVar12 = (byte)uVar7;
+      bVar13 = (byte)((uint)uVar7 >> 8);
+      bVar14 = (byte)((uint)uVar7 >> 0x10);
+      bVar15 = (byte)((uint)uVar7 >> 0x18);
+      uVar7 = param_3[5];
+      bVar28 = (byte)uVar7;
+      bVar29 = (byte)((uint)uVar7 >> 8);
+      bVar30 = (byte)((uint)uVar7 >> 0x10);
+      bVar31 = (byte)((uint)uVar7 >> 0x18);
+      uVar7 = param_3[6];
+      bVar36 = (byte)uVar7;
+      bVar37 = (byte)((uint)uVar7 >> 8);
+      bVar38 = (byte)((uint)uVar7 >> 0x10);
+      bVar39 = (byte)((uint)uVar7 >> 0x18);
+      uVar7 = param_3[7];
+      bVar43 = (byte)uVar7;
+      bVar44 = (byte)((uint)uVar7 >> 8);
+      bVar45 = (byte)((uint)uVar7 >> 0x10);
+      bVar46 = (byte)((uint)uVar7 >> 0x18);
+      auVar68._0_2_ = (ushort)bVar8 + (ushort)bVar16;
+      auVar68._2_2_ = (ushort)bVar9 + (ushort)bVar17;
+      auVar68._4_2_ = (ushort)bVar10 + (ushort)bVar18;
+      auVar68._6_2_ = (ushort)bVar11 + (ushort)bVar19;
+      auVar68._8_2_ = (ushort)bVar12 + (ushort)bVar20;
+      auVar68._10_2_ = (ushort)bVar13 + (ushort)bVar21;
+      auVar68._12_2_ = (ushort)bVar14 + (ushort)bVar22;
+      auVar68._14_2_ = (ushort)bVar15 + (ushort)bVar23;
+      bVar55 = auVar69[0];
+      bVar61 = auVar69[1];
+      bVar62 = auVar69[2];
+      bVar63 = auVar69[3];
+      bVar64 = auVar69[4];
+      bVar65 = auVar69[5];
+      bVar66 = auVar69[6];
+      bVar67 = auVar69[7];
+      uVar56 = auVar69._0_8_;
+      uVar73 = NEON_uabd(CONCAT17(bVar15,CONCAT16(bVar14,CONCAT15(bVar13,CONCAT14(bVar12,uVar2)))),
+                         uVar56,1);
+      uVar74 = MP_INT_ABS((ushort)bVar8 - (ushort)bVar55);
+      uVar75 = MP_INT_ABS((ushort)bVar9 - (ushort)bVar61);
+      uVar76 = MP_INT_ABS((ushort)bVar10 - (ushort)bVar62);
+      uVar77 = MP_INT_ABS((ushort)bVar11 - (ushort)bVar63);
+      uVar78 = MP_INT_ABS((ushort)bVar12 - (ushort)bVar64);
+      uVar79 = MP_INT_ABS((ushort)bVar13 - (ushort)bVar65);
+      uVar80 = MP_INT_ABS((ushort)bVar14 - (ushort)bVar66);
+      uVar81 = MP_INT_ABS((ushort)bVar15 - (ushort)bVar67);
+      uVar82 = NEON_uabd(CONCAT17(bVar23,CONCAT16(bVar22,CONCAT15(bVar21,CONCAT14(bVar20,CONCAT13(
+                                                  bVar19,CONCAT12(bVar18,CONCAT11(bVar17,bVar16)))))
+                                                 )),uVar56,1);
+      uVar83 = MP_INT_ABS((ushort)bVar16 - (ushort)bVar55);
+      uVar84 = MP_INT_ABS((ushort)bVar17 - (ushort)bVar61);
+      uVar85 = MP_INT_ABS((ushort)bVar18 - (ushort)bVar62);
+      uVar86 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar63);
+      uVar87 = MP_INT_ABS((ushort)bVar20 - (ushort)bVar64);
+      uVar88 = MP_INT_ABS((ushort)bVar21 - (ushort)bVar65);
+      uVar89 = MP_INT_ABS((ushort)bVar22 - (ushort)bVar66);
+      uVar90 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar67);
+      auVar6[2] = (char)((ushort)bVar61 << 1);
+      auVar6._0_2_ = (ushort)bVar55 << 1;
+      auVar6[3] = (char)((ushort)((ushort)bVar61 << 1) >> 8);
+      auVar6[4] = (char)((ushort)bVar62 << 1);
+      auVar6[5] = (char)((ushort)((ushort)bVar62 << 1) >> 8);
+      auVar6[6] = (char)((ushort)bVar63 << 1);
+      auVar6[7] = (char)((ushort)((ushort)bVar63 << 1) >> 8);
+      auVar6[8] = (char)((ushort)bVar64 << 1);
+      auVar6[9] = (char)((ushort)((ushort)bVar64 << 1) >> 8);
+      auVar6[10] = (char)((ushort)bVar65 << 1);
+      auVar6[0xb] = (char)((ushort)((ushort)bVar65 << 1) >> 8);
+      auVar6[0xc] = (char)((ushort)bVar66 << 1);
+      auVar6[0xd] = (char)((ushort)((ushort)bVar66 << 1) >> 8);
+      auVar6[0xe] = (char)((ushort)bVar67 << 1);
+      auVar6[0xf] = (char)((ushort)((ushort)bVar67 << 1) >> 8);
+      auVar69 = NEON_uabd(auVar68,auVar6,2);
+      uVar56 = uVar56 ^ (uVar56 ^ CONCAT17(bVar15,CONCAT16(bVar14,CONCAT15(bVar13,CONCAT14(bVar12,
+                                                  uVar2))))) &
+                        ~CONCAT17(-(auVar69._14_2_ < uVar90),
+                                  CONCAT16(-(auVar69._12_2_ < uVar89),
+                                           CONCAT15(-(auVar69._10_2_ < uVar88),
+                                                    CONCAT14(-(auVar69._8_2_ < uVar87),
+                                                             CONCAT13(-(auVar69._6_2_ < uVar86),
+                                                                      CONCAT12(-(auVar69._4_2_ <
+                                                                                uVar85),CONCAT11(-(
+                                                  auVar69._2_2_ < uVar84),-(auVar69._0_2_ < uVar83))
+                                                  ))))));
+      uVar56 = uVar56 ^ (uVar56 ^ CONCAT17(bVar23,CONCAT16(bVar22,CONCAT15(bVar21,CONCAT14(bVar20,
+                                                  CONCAT13(bVar19,CONCAT12(bVar18,CONCAT11(bVar17,
+                                                  bVar16)))))))) &
+                        CONCAT17(-(uVar81 <= auVar69._14_2_),
+                                 CONCAT16(-(uVar80 <= auVar69._12_2_),
+                                          CONCAT15(-(uVar79 <= auVar69._10_2_),
+                                                   CONCAT14(-(uVar78 <= auVar69._8_2_),
+                                                            CONCAT13(-(uVar77 <= auVar69._6_2_),
+                                                                     CONCAT12(-(uVar76 <=
+                                                                               auVar69._4_2_),
+                                                                              CONCAT11(-(uVar75 <=
+                                                                                        auVar69.
+                                                  _2_2_),-(uVar74 <= auVar69._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar73 >> 0x38) <= (byte)((ulong)uVar82 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar73 >> 0x30) <=
+                                           (byte)((ulong)uVar82 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar73 >> 0x28) <=
+                                                    (byte)((ulong)uVar82 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar73 >> 0x20) <=
+                                                             (byte)((ulong)uVar82 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar73 >> 0x18)
+                                                                      <= (byte)((ulong)uVar82 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar73
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar82
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar73 >> 8) <= (byte)((ulong)uVar82 >> 8)),
+                                                  -((byte)uVar73 <= (byte)uVar82))))))));
+      bVar16 = (char)uVar56 + (char)uVar47;
+      bVar17 = (char)(uVar56 >> 8) + (char)((uint)uVar47 >> 8);
+      bVar18 = (char)(uVar56 >> 0x10) + (char)((uint)uVar47 >> 0x10);
+      bVar19 = (char)(uVar56 >> 0x18) + (char)((uint)uVar47 >> 0x18);
+      uVar7 = CONCAT13(bVar19,CONCAT12(bVar18,CONCAT11(bVar17,bVar16)));
+      bVar20 = (char)(uVar56 >> 0x20) + (char)uVar48;
+      bVar21 = (char)(uVar56 >> 0x28) + (char)((uint)uVar48 >> 8);
+      bVar22 = (char)(uVar56 >> 0x30) + (char)((uint)uVar48 >> 0x10);
+      bVar23 = (char)(uVar56 >> 0x38) + (char)((uint)uVar48 >> 0x18);
+      uVar56 = CONCAT17(bVar23,CONCAT16(bVar22,CONCAT15(bVar21,CONCAT14(bVar20,uVar7))));
+      auVar58._0_2_ = (ushort)bVar16 + (ushort)bVar24;
+      auVar58._2_2_ = (ushort)bVar17 + (ushort)bVar25;
+      auVar58._4_2_ = (ushort)bVar18 + (ushort)bVar26;
+      auVar58._6_2_ = (ushort)bVar19 + (ushort)bVar27;
+      auVar58._8_2_ = (ushort)bVar20 + (ushort)bVar28;
+      auVar58._10_2_ = (ushort)bVar21 + (ushort)bVar29;
+      auVar58._12_2_ = (ushort)bVar22 + (ushort)bVar30;
+      auVar58._14_2_ = (ushort)bVar23 + (ushort)bVar31;
+      auVar70._0_2_ = (ushort)bVar8 << 1;
+      auVar70._2_2_ = (ushort)bVar9 << 1;
+      auVar70._4_2_ = (ushort)bVar10 << 1;
+      auVar70._6_2_ = (ushort)bVar11 << 1;
+      auVar70._8_2_ = (ushort)bVar12 << 1;
+      auVar70._10_2_ = (ushort)bVar13 << 1;
+      auVar70._12_2_ = (ushort)bVar14 << 1;
+      auVar70._14_2_ = (ushort)bVar15 << 1;
+      uVar73 = NEON_uabd(CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3)))),
+                         CONCAT17(bVar15,CONCAT16(bVar14,CONCAT15(bVar13,CONCAT14(bVar12,uVar2)))),1
+                        );
+      uVar74 = MP_INT_ABS((ushort)bVar24 - (ushort)bVar8);
+      uVar75 = MP_INT_ABS((ushort)bVar25 - (ushort)bVar9);
+      uVar76 = MP_INT_ABS((ushort)bVar26 - (ushort)bVar10);
+      uVar77 = MP_INT_ABS((ushort)bVar27 - (ushort)bVar11);
+      uVar78 = MP_INT_ABS((ushort)bVar28 - (ushort)bVar12);
+      uVar79 = MP_INT_ABS((ushort)bVar29 - (ushort)bVar13);
+      uVar80 = MP_INT_ABS((ushort)bVar30 - (ushort)bVar14);
+      uVar81 = MP_INT_ABS((ushort)bVar31 - (ushort)bVar15);
+      uVar82 = NEON_uabd(uVar56,CONCAT17(bVar15,CONCAT16(bVar14,CONCAT15(bVar13,CONCAT14(bVar12,
+                                                  uVar2)))),1);
+      uVar83 = MP_INT_ABS((ushort)bVar16 - (ushort)bVar8);
+      uVar84 = MP_INT_ABS((ushort)bVar17 - (ushort)bVar9);
+      uVar85 = MP_INT_ABS((ushort)bVar18 - (ushort)bVar10);
+      uVar86 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar11);
+      uVar87 = MP_INT_ABS((ushort)bVar20 - (ushort)bVar12);
+      uVar88 = MP_INT_ABS((ushort)bVar21 - (ushort)bVar13);
+      uVar89 = MP_INT_ABS((ushort)bVar22 - (ushort)bVar14);
+      uVar90 = MP_INT_ABS((ushort)bVar23 - (ushort)bVar15);
+      auVar69 = NEON_uabd(auVar58,auVar70,2);
+      uVar57 = CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3)))) ^
+               (CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3)))) ^
+               CONCAT17(bVar15,CONCAT16(bVar14,CONCAT15(bVar13,CONCAT14(bVar12,uVar2))))) &
+               CONCAT17(-(auVar69._14_2_ < uVar90),
+                        CONCAT16(-(auVar69._12_2_ < uVar89),
+                                 CONCAT15(-(auVar69._10_2_ < uVar88),
+                                          CONCAT14(-(auVar69._8_2_ < uVar87),
+                                                   CONCAT13(-(auVar69._6_2_ < uVar86),
+                                                            CONCAT12(-(auVar69._4_2_ < uVar85),
+                                                                     CONCAT11(-(auVar69._2_2_ <
+                                                                               uVar84),-(auVar69.
+                                                  _0_2_ < uVar83))))))));
+      uVar57 = uVar57 ^ (uVar57 ^ uVar56) &
+                        CONCAT17(-(uVar81 <= auVar69._14_2_),
+                                 CONCAT16(-(uVar80 <= auVar69._12_2_),
+                                          CONCAT15(-(uVar79 <= auVar69._10_2_),
+                                                   CONCAT14(-(uVar78 <= auVar69._8_2_),
+                                                            CONCAT13(-(uVar77 <= auVar69._6_2_),
+                                                                     CONCAT12(-(uVar76 <=
+                                                                               auVar69._4_2_),
+                                                                              CONCAT11(-(uVar75 <=
+                                                                                        auVar69.
+                                                  _2_2_),-(uVar74 <= auVar69._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar73 >> 0x38) <= (byte)((ulong)uVar82 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar73 >> 0x30) <=
+                                           (byte)((ulong)uVar82 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar73 >> 0x28) <=
+                                                    (byte)((ulong)uVar82 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar73 >> 0x20) <=
+                                                             (byte)((ulong)uVar82 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar73 >> 0x18)
+                                                                      <= (byte)((ulong)uVar82 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar73
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar82
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar73 >> 8) <= (byte)((ulong)uVar82 >> 8)),
+                                                  -((byte)uVar73 <= (byte)uVar82))))))));
+      bVar8 = (char)uVar57 + (char)uVar49;
+      bVar9 = (char)(uVar57 >> 8) + (char)((uint)uVar49 >> 8);
+      bVar10 = (char)(uVar57 >> 0x10) + (char)((uint)uVar49 >> 0x10);
+      bVar11 = (char)(uVar57 >> 0x18) + (char)((uint)uVar49 >> 0x18);
+      bVar16 = (char)(uVar57 >> 0x20) + (char)uVar50;
+      bVar17 = (char)(uVar57 >> 0x28) + (char)((uint)uVar50 >> 8);
+      bVar18 = (char)(uVar57 >> 0x30) + (char)((uint)uVar50 >> 0x10);
+      bVar19 = (char)(uVar57 >> 0x38) + (char)((uint)uVar50 >> 0x18);
+      auVar59._0_2_ = (ushort)bVar8 + (ushort)bVar32;
+      auVar59._2_2_ = (ushort)bVar9 + (ushort)bVar33;
+      auVar59._4_2_ = (ushort)bVar10 + (ushort)bVar34;
+      auVar59._6_2_ = (ushort)bVar11 + (ushort)bVar35;
+      auVar59._8_2_ = (ushort)bVar16 + (ushort)bVar36;
+      auVar59._10_2_ = (ushort)bVar17 + (ushort)bVar37;
+      auVar59._12_2_ = (ushort)bVar18 + (ushort)bVar38;
+      auVar59._14_2_ = (ushort)bVar19 + (ushort)bVar39;
+      auVar71._0_2_ = (ushort)bVar24 << 1;
+      auVar71._2_2_ = (ushort)bVar25 << 1;
+      auVar71._4_2_ = (ushort)bVar26 << 1;
+      auVar71._6_2_ = (ushort)bVar27 << 1;
+      auVar71._8_2_ = (ushort)bVar28 << 1;
+      auVar71._10_2_ = (ushort)bVar29 << 1;
+      auVar71._12_2_ = (ushort)bVar30 << 1;
+      auVar71._14_2_ = (ushort)bVar31 << 1;
+      uVar73 = NEON_uabd(CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4)))),
+                         CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3)))),1
+                        );
+      uVar74 = MP_INT_ABS((ushort)bVar32 - (ushort)bVar24);
+      uVar75 = MP_INT_ABS((ushort)bVar33 - (ushort)bVar25);
+      uVar76 = MP_INT_ABS((ushort)bVar34 - (ushort)bVar26);
+      uVar77 = MP_INT_ABS((ushort)bVar35 - (ushort)bVar27);
+      uVar78 = MP_INT_ABS((ushort)bVar36 - (ushort)bVar28);
+      uVar79 = MP_INT_ABS((ushort)bVar37 - (ushort)bVar29);
+      uVar80 = MP_INT_ABS((ushort)bVar38 - (ushort)bVar30);
+      uVar81 = MP_INT_ABS((ushort)bVar39 - (ushort)bVar31);
+      uVar82 = NEON_uabd(CONCAT17(bVar19,CONCAT16(bVar18,CONCAT15(bVar17,CONCAT14(bVar16,CONCAT13(
+                                                  bVar11,CONCAT12(bVar10,CONCAT11(bVar9,bVar8)))))))
+                         ,CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3)))),
+                         1);
+      uVar83 = MP_INT_ABS((ushort)bVar8 - (ushort)bVar24);
+      uVar84 = MP_INT_ABS((ushort)bVar9 - (ushort)bVar25);
+      uVar85 = MP_INT_ABS((ushort)bVar10 - (ushort)bVar26);
+      uVar86 = MP_INT_ABS((ushort)bVar11 - (ushort)bVar27);
+      uVar87 = MP_INT_ABS((ushort)bVar16 - (ushort)bVar28);
+      uVar88 = MP_INT_ABS((ushort)bVar17 - (ushort)bVar29);
+      uVar89 = MP_INT_ABS((ushort)bVar18 - (ushort)bVar30);
+      uVar90 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar31);
+      auVar69 = NEON_uabd(auVar59,auVar71,2);
+      uVar56 = CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4)))) ^
+               (CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4)))) ^
+               CONCAT17(bVar31,CONCAT16(bVar30,CONCAT15(bVar29,CONCAT14(bVar28,uVar3))))) &
+               CONCAT17(-(auVar69._14_2_ < uVar90),
+                        CONCAT16(-(auVar69._12_2_ < uVar89),
+                                 CONCAT15(-(auVar69._10_2_ < uVar88),
+                                          CONCAT14(-(auVar69._8_2_ < uVar87),
+                                                   CONCAT13(-(auVar69._6_2_ < uVar86),
+                                                            CONCAT12(-(auVar69._4_2_ < uVar85),
+                                                                     CONCAT11(-(auVar69._2_2_ <
+                                                                               uVar84),-(auVar69.
+                                                  _0_2_ < uVar83))))))));
+      uVar56 = uVar56 ^ (uVar56 ^ CONCAT17(bVar19,CONCAT16(bVar18,CONCAT15(bVar17,CONCAT14(bVar16,
+                                                  CONCAT13(bVar11,CONCAT12(bVar10,CONCAT11(bVar9,
+                                                  bVar8)))))))) &
+                        CONCAT17(-(uVar81 <= auVar69._14_2_),
+                                 CONCAT16(-(uVar80 <= auVar69._12_2_),
+                                          CONCAT15(-(uVar79 <= auVar69._10_2_),
+                                                   CONCAT14(-(uVar78 <= auVar69._8_2_),
+                                                            CONCAT13(-(uVar77 <= auVar69._6_2_),
+                                                                     CONCAT12(-(uVar76 <=
+                                                                               auVar69._4_2_),
+                                                                              CONCAT11(-(uVar75 <=
+                                                                                        auVar69.
+                                                  _2_2_),-(uVar74 <= auVar69._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar73 >> 0x38) <= (byte)((ulong)uVar82 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar73 >> 0x30) <=
+                                           (byte)((ulong)uVar82 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar73 >> 0x28) <=
+                                                    (byte)((ulong)uVar82 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar73 >> 0x20) <=
+                                                             (byte)((ulong)uVar82 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar73 >> 0x18)
+                                                                      <= (byte)((ulong)uVar82 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar73
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar82
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar73 >> 8) <= (byte)((ulong)uVar82 >> 8)),
+                                                  -((byte)uVar73 <= (byte)uVar82))))))));
+      bVar12 = (char)uVar56 + (char)uVar51;
+      bVar13 = (char)(uVar56 >> 8) + (char)((uint)uVar51 >> 8);
+      bVar14 = (char)(uVar56 >> 0x10) + (char)((uint)uVar51 >> 0x10);
+      bVar15 = (char)(uVar56 >> 0x18) + (char)((uint)uVar51 >> 0x18);
+      bVar16 = (char)(uVar56 >> 0x20) + (char)uVar52;
+      bVar17 = (char)(uVar56 >> 0x28) + (char)((uint)uVar52 >> 8);
+      bVar18 = (char)(uVar56 >> 0x30) + (char)((uint)uVar52 >> 0x10);
+      bVar19 = (char)(uVar56 >> 0x38) + (char)((uint)uVar52 >> 0x18);
+      auVar60._0_2_ = (ushort)bVar12 + (ushort)(byte)uVar5;
+      auVar60._2_2_ = (ushort)bVar13 + (ushort)bVar40;
+      auVar60._4_2_ = (ushort)bVar14 + (ushort)bVar41;
+      auVar60._6_2_ = (ushort)bVar15 + (ushort)bVar42;
+      auVar60._8_2_ = (ushort)bVar16 + (ushort)bVar43;
+      auVar60._10_2_ = (ushort)bVar17 + (ushort)bVar44;
+      auVar60._12_2_ = (ushort)bVar18 + (ushort)bVar45;
+      auVar60._14_2_ = (ushort)bVar19 + (ushort)bVar46;
+      auVar72._0_2_ = (ushort)bVar32 << 1;
+      auVar72._2_2_ = (ushort)bVar33 << 1;
+      auVar72._4_2_ = (ushort)bVar34 << 1;
+      auVar72._6_2_ = (ushort)bVar35 << 1;
+      auVar72._8_2_ = (ushort)bVar36 << 1;
+      auVar72._10_2_ = (ushort)bVar37 << 1;
+      auVar72._12_2_ = (ushort)bVar38 << 1;
+      auVar72._14_2_ = (ushort)bVar39 << 1;
+      uVar73 = NEON_uabd(CONCAT17(bVar46,CONCAT16(bVar45,CONCAT15(bVar44,CONCAT14(bVar43,uVar5)))),
+                         CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4)))),1
+                        );
+      uVar74 = MP_INT_ABS((ushort)(byte)uVar5 - (ushort)bVar32);
+      uVar75 = MP_INT_ABS((ushort)bVar40 - (ushort)bVar33);
+      uVar76 = MP_INT_ABS((ushort)bVar41 - (ushort)bVar34);
+      uVar77 = MP_INT_ABS((ushort)bVar42 - (ushort)bVar35);
+      uVar78 = MP_INT_ABS((ushort)bVar43 - (ushort)bVar36);
+      uVar79 = MP_INT_ABS((ushort)bVar44 - (ushort)bVar37);
+      uVar80 = MP_INT_ABS((ushort)bVar45 - (ushort)bVar38);
+      uVar81 = MP_INT_ABS((ushort)bVar46 - (ushort)bVar39);
+      uVar82 = NEON_uabd(CONCAT17(bVar19,CONCAT16(bVar18,CONCAT15(bVar17,CONCAT14(bVar16,CONCAT13(
+                                                  bVar15,CONCAT12(bVar14,CONCAT11(bVar13,bVar12)))))
+                                                 )),
+                         CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4)))),1
+                        );
+      uVar83 = MP_INT_ABS((ushort)bVar12 - (ushort)bVar32);
+      uVar84 = MP_INT_ABS((ushort)bVar13 - (ushort)bVar33);
+      uVar85 = MP_INT_ABS((ushort)bVar14 - (ushort)bVar34);
+      uVar86 = MP_INT_ABS((ushort)bVar15 - (ushort)bVar35);
+      uVar87 = MP_INT_ABS((ushort)bVar16 - (ushort)bVar36);
+      uVar88 = MP_INT_ABS((ushort)bVar17 - (ushort)bVar37);
+      uVar89 = MP_INT_ABS((ushort)bVar18 - (ushort)bVar38);
+      uVar90 = MP_INT_ABS((ushort)bVar19 - (ushort)bVar39);
+      auVar69 = NEON_uabd(auVar60,auVar72,2);
+      uVar56 = CONCAT17(bVar46,CONCAT16(bVar45,CONCAT15(bVar44,CONCAT14(bVar43,uVar5)))) ^
+               (CONCAT17(bVar46,CONCAT16(bVar45,CONCAT15(bVar44,CONCAT14(bVar43,uVar5)))) ^
+               CONCAT17(bVar39,CONCAT16(bVar38,CONCAT15(bVar37,CONCAT14(bVar36,uVar4))))) &
+               CONCAT17(-(auVar69._14_2_ < uVar90),
+                        CONCAT16(-(auVar69._12_2_ < uVar89),
+                                 CONCAT15(-(auVar69._10_2_ < uVar88),
+                                          CONCAT14(-(auVar69._8_2_ < uVar87),
+                                                   CONCAT13(-(auVar69._6_2_ < uVar86),
+                                                            CONCAT12(-(auVar69._4_2_ < uVar85),
+                                                                     CONCAT11(-(auVar69._2_2_ <
+                                                                               uVar84),-(auVar69.
+                                                  _0_2_ < uVar83))))))));
+      uVar56 = uVar56 ^ (uVar56 ^ CONCAT17(bVar19,CONCAT16(bVar18,CONCAT15(bVar17,CONCAT14(bVar16,
+                                                  CONCAT13(bVar15,CONCAT12(bVar14,CONCAT11(bVar13,
+                                                  bVar12)))))))) &
+                        CONCAT17(-(uVar81 <= auVar69._14_2_),
+                                 CONCAT16(-(uVar80 <= auVar69._12_2_),
+                                          CONCAT15(-(uVar79 <= auVar69._10_2_),
+                                                   CONCAT14(-(uVar78 <= auVar69._8_2_),
+                                                            CONCAT13(-(uVar77 <= auVar69._6_2_),
+                                                                     CONCAT12(-(uVar76 <=
+                                                                               auVar69._4_2_),
+                                                                              CONCAT11(-(uVar75 <=
+                                                                                        auVar69.
+                                                  _2_2_),-(uVar74 <= auVar69._0_2_)))))))) &
+                        CONCAT17(-((byte)((ulong)uVar73 >> 0x38) <= (byte)((ulong)uVar82 >> 0x38)),
+                                 CONCAT16(-((byte)((ulong)uVar73 >> 0x30) <=
+                                           (byte)((ulong)uVar82 >> 0x30)),
+                                          CONCAT15(-((byte)((ulong)uVar73 >> 0x28) <=
+                                                    (byte)((ulong)uVar82 >> 0x28)),
+                                                   CONCAT14(-((byte)((ulong)uVar73 >> 0x20) <=
+                                                             (byte)((ulong)uVar82 >> 0x20)),
+                                                            CONCAT13(-((byte)((ulong)uVar73 >> 0x18)
+                                                                      <= (byte)((ulong)uVar82 >>
+                                                                               0x18)),
+                                                                     CONCAT12(-((byte)((ulong)uVar73
+                                                                                      >> 0x10) <=
+                                                                               (byte)((ulong)uVar82
+                                                                                     >> 0x10)),
+                                                                              CONCAT11(-((byte)((
+                                                  ulong)uVar73 >> 8) <= (byte)((ulong)uVar82 >> 8)),
+                                                  -((byte)uVar73 <= (byte)uVar82))))))));
+      bVar16 = (char)uVar56 + (char)uVar53;
+      bVar17 = (char)(uVar56 >> 8) + (char)((uint)uVar53 >> 8);
+      bVar18 = (char)(uVar56 >> 0x10) + (char)((uint)uVar53 >> 0x10);
+      bVar19 = (char)(uVar56 >> 0x18) + (char)((uint)uVar53 >> 0x18);
+      bVar20 = (char)(uVar56 >> 0x20) + (char)uVar54;
+      bVar21 = (char)(uVar56 >> 0x28) + (char)((uint)uVar54 >> 8);
+      bVar22 = (char)(uVar56 >> 0x30) + (char)((uint)uVar54 >> 0x10);
+      bVar23 = (char)(uVar56 >> 0x38) + (char)((uint)uVar54 >> 0x18);
+      *param_2 = uVar7;
+      param_2[1] = CONCAT13(bVar11,CONCAT12(bVar10,CONCAT11(bVar9,bVar8)));
+      param_2[2] = CONCAT13(bVar15,CONCAT12(bVar14,CONCAT11(bVar13,bVar12)));
+      param_2[3] = CONCAT13(bVar19,CONCAT12(bVar18,CONCAT11(bVar17,bVar16)));
+      param_2 = param_2 + 4;
+      param_3 = param_3 + 4;
+      auVar69[4] = bVar43;
+      auVar69._0_4_ = uVar5;
+      auVar69[5] = bVar44;
+      auVar69[6] = bVar45;
+      auVar69[7] = bVar46;
+      auVar69._8_8_ = 0;
+    } while (param_2 < puVar1);
+  }
+  return;
+}
+
+
+
+// SUMMARY
+// Decompiled: 7
+// Failed: 0
+// Skipped external functions: 0

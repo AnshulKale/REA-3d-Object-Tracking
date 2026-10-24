@@ -1,0 +1,2149 @@
+Program: accum.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: accumulate
+// Entry: 00000000
+// Signature: undefined __cdecl accumulate(_InputArray * param_1, _InputOutputArray * param_2, _InputArray * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::accumulate(cv::_InputArray const&, cv::_InputOutputArray const&, cv::_InputArray const&) */
+
+void cv::accumulate(_InputArray *param_1,_InputOutputArray *param_2,_InputArray *param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  ulong uVar7;
+  long lVar8;
+  code *pcVar9;
+  NAryMatIterator aNStack_200 [32];
+  ulong local_1e0;
+  undefined4 local_1d8;
+  Mat aMStack_1c0 [96];
+  Mat aMStack_160 [96];
+  Mat aMStack_100 [96];
+  Region aRStack_a0 [8];
+  int local_98;
+  uchar *local_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  Mat *local_78;
+  Mat *pMStack_70;
+  Mat *local_68;
+  undefined8 uStack_60;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_a0,
+             (LocationStaticStorage *)
+             &accumulate(cv::_InputArray_const&,cv::_InputOutputArray_const&,cv::_InputArray_const&)
+              ::__cv_trace_location_fn310);
+  uVar3 = cv::_InputArray::type((int)param_1);
+  uVar4 = cv::_InputArray::type((int)param_2);
+  uVar5 = cv::_InputArray::sameSize(param_1);
+  uVar2 = uVar3 >> 3 & 0x1ff;
+  uVar1 = 0;
+  if ((uVar4 >> 3 & 0x1ff) == uVar2) {
+    uVar1 = uVar5;
+  }
+  if ((uVar1 & 1) == 0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_100,"_src.sameSize(_dst) && dcn == scn");
+    cv::error(-0xd7,(string *)aMStack_100,"accumulate",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x13b);
+  }
+  else {
+    uVar7 = cv::_InputArray::empty();
+    if (((uVar7 & 1) != 0) ||
+       ((iVar6 = cv::_InputArray::sameSize(param_1), iVar6 != 0 &&
+        (iVar6 = cv::_InputArray::type((int)param_3), iVar6 == 0)))) {
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_100,*(Mat **)(param_1 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_1);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_160,*(Mat **)(param_2 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_2);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_1c0,*(Mat **)(param_3 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_3);
+      }
+      uVar4 = uVar4 & 7;
+      uVar3 = uVar3 & 7;
+      if ((uVar3 == 0) && (uVar4 == 5)) {
+        lVar8 = 0;
+      }
+      else if ((uVar3 == 0) && (uVar4 == 6)) {
+        lVar8 = 1;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 5)) {
+        lVar8 = 2;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 6)) {
+        lVar8 = 3;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 5)) {
+        lVar8 = 4;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 6)) {
+        lVar8 = 5;
+      }
+      else {
+        if ((uVar3 != 6) || (uVar4 != 6)) {
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (aNStack_200,"func != 0");
+          cv::error(-0xd7,(string *)aNStack_200,"accumulate",
+                    "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x14c);
+          goto LAB_00000358;
+        }
+        lVar8 = 6;
+      }
+      pcVar9 = (code *)(&accTab)[lVar8];
+      local_78 = aMStack_100;
+      pMStack_70 = aMStack_160;
+      local_68 = aMStack_1c0;
+      uStack_60 = 0;
+      local_90 = (uchar *)0x0;
+      uStack_88 = 0;
+      local_80 = 0;
+      cv::NAryMatIterator::NAryMatIterator(aNStack_200,&local_78,&local_90,-1);
+      uVar7 = 0xffffffffffffffff;
+      while( true ) {
+        uVar7 = uVar7 + 1;
+        if (local_1e0 <= uVar7) break;
+        (*pcVar9)(local_90,uStack_88,local_80,local_1d8,uVar2 + 1);
+        cv::NAryMatIterator::operator++(aNStack_200);
+      }
+      cv::Mat::~Mat(aMStack_1c0);
+      cv::Mat::~Mat(aMStack_160);
+      cv::Mat::~Mat(aMStack_100);
+      if (local_98 != 0) {
+        cv::utils::trace::details::Region::destroy();
+      }
+      if (*____stack_chk_guard == local_58) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_100,"_mask.empty() || (_src.sameSize(_mask) && _mask.type() == CV_8U)");
+    cv::error(-0xd7,(string *)aMStack_100,"accumulate",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x13c);
+  }
+LAB_00000358:
+                    /* WARNING: Does not return */
+  pcVar9 = (code *)SoftwareBreakpoint(1,0x35c);
+  (*pcVar9)();
+}
+
+
+
+
+// ========================================
+// Function: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+// Entry: 00000474
+// Signature: undefined __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc(void)
+// ========================================
+
+
+undefined8 *
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+          (undefined8 *param_1,char *param_2)
+
+{
+  ulong uVar1;
+  size_t sVar2;
+  undefined8 *puVar3;
+  
+  sVar2 = _strlen(param_2);
+  if (0x7ffffffffffffff7 < sVar2) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar2 < 0x17) {
+    *(char *)((long)param_1 + 0x17) = (char)sVar2;
+    puVar3 = param_1;
+    if (sVar2 == 0) goto LAB_00000500;
+  }
+  else {
+    uVar1 = (sVar2 & 0xfffffffffffffff8) + 8;
+    if ((sVar2 | 7) != 0x17) {
+      uVar1 = sVar2 | 7;
+    }
+    puVar3 = operator_new(uVar1 + 1);
+    param_1[1] = sVar2;
+    param_1[2] = uVar1 + 1 | 0x8000000000000000;
+    *param_1 = puVar3;
+  }
+  _memmove(puVar3,param_2,sVar2);
+LAB_00000500:
+  *(undefined1 *)((long)puVar3 + sVar2) = 0;
+  return param_1;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00000524
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: accumulateSquare
+// Entry: 00000558
+// Signature: undefined __cdecl accumulateSquare(_InputArray * param_1, _InputOutputArray * param_2, _InputArray * param_3)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::accumulateSquare(cv::_InputArray const&, cv::_InputOutputArray const&, cv::_InputArray
+   const&) */
+
+void cv::accumulateSquare(_InputArray *param_1,_InputOutputArray *param_2,_InputArray *param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  ulong uVar7;
+  long lVar8;
+  code *pcVar9;
+  NAryMatIterator aNStack_200 [32];
+  ulong local_1e0;
+  undefined4 local_1d8;
+  Mat aMStack_1c0 [96];
+  Mat aMStack_160 [96];
+  Mat aMStack_100 [96];
+  Region aRStack_a0 [8];
+  int local_98;
+  uchar *local_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  Mat *local_78;
+  Mat *pMStack_70;
+  Mat *local_68;
+  undefined8 uStack_60;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_a0,
+             (LocationStaticStorage *)
+             &accumulateSquare(cv::_InputArray_const&,cv::_InputOutputArray_const&,cv::_InputArray_const&)
+              ::__cv_trace_location_fn409);
+  uVar3 = cv::_InputArray::type((int)param_1);
+  uVar4 = cv::_InputArray::type((int)param_2);
+  uVar5 = cv::_InputArray::sameSize(param_1);
+  uVar2 = uVar3 >> 3 & 0x1ff;
+  uVar1 = 0;
+  if ((uVar4 >> 3 & 0x1ff) == uVar2) {
+    uVar1 = uVar5;
+  }
+  if ((uVar1 & 1) == 0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_100,"_src.sameSize(_dst) && dcn == scn");
+    cv::error(-0xd7,(string *)aMStack_100,"accumulateSquare",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x19e);
+  }
+  else {
+    uVar7 = cv::_InputArray::empty();
+    if (((uVar7 & 1) != 0) ||
+       ((iVar6 = cv::_InputArray::sameSize(param_1), iVar6 != 0 &&
+        (iVar6 = cv::_InputArray::type((int)param_3), iVar6 == 0)))) {
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_100,*(Mat **)(param_1 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_1);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_160,*(Mat **)(param_2 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_2);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_1c0,*(Mat **)(param_3 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_3);
+      }
+      uVar4 = uVar4 & 7;
+      uVar3 = uVar3 & 7;
+      if ((uVar3 == 0) && (uVar4 == 5)) {
+        lVar8 = 0;
+      }
+      else if ((uVar3 == 0) && (uVar4 == 6)) {
+        lVar8 = 1;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 5)) {
+        lVar8 = 2;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 6)) {
+        lVar8 = 3;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 5)) {
+        lVar8 = 4;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 6)) {
+        lVar8 = 5;
+      }
+      else {
+        if ((uVar3 != 6) || (uVar4 != 6)) {
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (aNStack_200,"func != 0");
+          cv::error(-0xd7,(string *)aNStack_200,"accumulateSquare",
+                    "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x1ae);
+          goto LAB_000008b0;
+        }
+        lVar8 = 6;
+      }
+      pcVar9 = *(code **)(lVar8 * 8 + 0x1f80);
+      local_78 = aMStack_100;
+      pMStack_70 = aMStack_160;
+      local_68 = aMStack_1c0;
+      uStack_60 = 0;
+      local_90 = (uchar *)0x0;
+      uStack_88 = 0;
+      local_80 = 0;
+      cv::NAryMatIterator::NAryMatIterator(aNStack_200,&local_78,&local_90,-1);
+      uVar7 = 0xffffffffffffffff;
+      while( true ) {
+        uVar7 = uVar7 + 1;
+        if (local_1e0 <= uVar7) break;
+        (*pcVar9)(local_90,uStack_88,local_80,local_1d8,uVar2 + 1);
+        cv::NAryMatIterator::operator++(aNStack_200);
+      }
+      cv::Mat::~Mat(aMStack_1c0);
+      cv::Mat::~Mat(aMStack_160);
+      cv::Mat::~Mat(aMStack_100);
+      if (local_98 != 0) {
+        cv::utils::trace::details::Region::destroy();
+      }
+      if (*____stack_chk_guard == local_58) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_100,"_mask.empty() || (_src.sameSize(_mask) && _mask.type() == CV_8U)");
+    cv::error(-0xd7,(string *)aMStack_100,"accumulateSquare",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x19f);
+  }
+LAB_000008b0:
+                    /* WARNING: Does not return */
+  pcVar9 = (code *)SoftwareBreakpoint(1,0x8b4);
+  (*pcVar9)();
+}
+
+
+
+
+// ========================================
+// Function: accumulateProduct
+// Entry: 000009cc
+// Signature: undefined __cdecl accumulateProduct(_InputArray * param_1, _InputArray * param_2, _InputOutputArray * param_3, _InputArray * param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::accumulateProduct(cv::_InputArray const&, cv::_InputArray const&, cv::_InputOutputArray
+   const&, cv::_InputArray const&) */
+
+void cv::accumulateProduct
+               (_InputArray *param_1,_InputArray *param_2,_InputOutputArray *param_3,
+               _InputArray *param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  ulong uVar7;
+  long lVar8;
+  code *pcVar9;
+  NAryMatIterator aNStack_270 [32];
+  ulong local_250;
+  undefined4 local_248;
+  Mat aMStack_230 [96];
+  Mat aMStack_1d0 [96];
+  Mat aMStack_170 [96];
+  Mat aMStack_110 [96];
+  Region aRStack_b0 [8];
+  int local_a8;
+  uchar *local_a0;
+  undefined8 uStack_98;
+  undefined8 local_90;
+  undefined8 uStack_88;
+  Mat *local_80;
+  Mat *pMStack_78;
+  Mat *local_70;
+  Mat *pMStack_68;
+  undefined8 local_60;
+  long local_58;
+  
+  local_58 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_b0,
+             (LocationStaticStorage *)
+             &accumulateProduct(cv::_InputArray_const&,cv::_InputArray_const&,cv::_InputOutputArray_const&,cv::_InputArray_const&)
+              ::__cv_trace_location_fn514);
+  uVar2 = cv::_InputArray::type((int)param_1);
+  uVar3 = cv::_InputArray::type((int)param_3);
+  iVar4 = cv::_InputArray::sameSize(param_1);
+  if (iVar4 != 0) {
+    uVar5 = cv::_InputArray::type((int)param_2);
+    if (uVar2 == uVar5) {
+      uVar6 = cv::_InputArray::sameSize(param_1);
+      uVar1 = uVar2 >> 3 & 0x1ff;
+      uVar5 = 0;
+      if ((uVar3 >> 3 & 0x1ff) == uVar1) {
+        uVar5 = uVar6;
+      }
+      if ((uVar5 & 1) == 0) {
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (aMStack_110,"_src1.sameSize(_dst) && dcn == scn");
+        cv::error(-0xd7,(string *)aMStack_110,"accumulateProduct",
+                  "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x208);
+      }
+      else {
+        uVar7 = cv::_InputArray::empty();
+        if (((uVar7 & 1) != 0) ||
+           ((iVar4 = cv::_InputArray::sameSize(param_1), iVar4 != 0 &&
+            (iVar4 = cv::_InputArray::type((int)param_4), iVar4 == 0)))) {
+          iVar4 = cv::_InputArray::kind();
+          if (iVar4 == 0x10000) {
+            cv::Mat::Mat(aMStack_110,*(Mat **)(param_1 + 8));
+          }
+          else {
+            cv::_InputArray::getMat_((int)param_1);
+          }
+          iVar4 = cv::_InputArray::kind();
+          if (iVar4 == 0x10000) {
+            cv::Mat::Mat(aMStack_170,*(Mat **)(param_2 + 8));
+          }
+          else {
+            cv::_InputArray::getMat_((int)param_2);
+          }
+          iVar4 = cv::_InputArray::kind();
+          if (iVar4 == 0x10000) {
+            cv::Mat::Mat(aMStack_1d0,*(Mat **)(param_3 + 8));
+          }
+          else {
+            cv::_InputArray::getMat_((int)param_3);
+          }
+          iVar4 = cv::_InputArray::kind();
+          if (iVar4 == 0x10000) {
+            cv::Mat::Mat(aMStack_230,*(Mat **)(param_4 + 8));
+          }
+          else {
+            cv::_InputArray::getMat_((int)param_4);
+          }
+          uVar3 = uVar3 & 7;
+          uVar2 = uVar2 & 7;
+          if ((uVar2 == 0) && (uVar3 == 5)) {
+            lVar8 = 0;
+          }
+          else if ((uVar2 == 0) && (uVar3 == 6)) {
+            lVar8 = 1;
+          }
+          else if ((uVar2 == 2) && (uVar3 == 5)) {
+            lVar8 = 2;
+          }
+          else if ((uVar2 == 2) && (uVar3 == 6)) {
+            lVar8 = 3;
+          }
+          else if ((uVar2 == 5) && (uVar3 == 5)) {
+            lVar8 = 4;
+          }
+          else if ((uVar2 == 5) && (uVar3 == 6)) {
+            lVar8 = 5;
+          }
+          else {
+            if ((uVar2 != 6) || (uVar3 != 6)) {
+              __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                        (aNStack_270,"func != 0");
+              cv::error(-0xd7,(string *)aNStack_270,"accumulateProduct",
+                        "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x215);
+              goto LAB_00000dc0;
+            }
+            lVar8 = 6;
+          }
+          pcVar9 = (code *)(&accProdTab)[lVar8];
+          local_80 = aMStack_110;
+          pMStack_78 = aMStack_170;
+          local_70 = aMStack_1d0;
+          pMStack_68 = aMStack_230;
+          local_60 = 0;
+          uStack_98 = 0;
+          local_a0 = (uchar *)0x0;
+          uStack_88 = 0;
+          local_90 = 0;
+          cv::NAryMatIterator::NAryMatIterator(aNStack_270,&local_80,&local_a0,-1);
+          uVar7 = 0xffffffffffffffff;
+          while( true ) {
+            uVar7 = uVar7 + 1;
+            if (local_250 <= uVar7) break;
+            (*pcVar9)(local_a0,uStack_98,local_90,uStack_88,local_248,uVar1 + 1);
+            cv::NAryMatIterator::operator++(aNStack_270);
+          }
+          cv::Mat::~Mat(aMStack_230);
+          cv::Mat::~Mat(aMStack_1d0);
+          cv::Mat::~Mat(aMStack_170);
+          cv::Mat::~Mat(aMStack_110);
+          if (local_a8 != 0) {
+            cv::utils::trace::details::Region::destroy();
+          }
+          if (*____stack_chk_guard == local_58) {
+            return;
+          }
+                    /* WARNING: Subroutine does not return */
+          ___stack_chk_fail();
+        }
+        __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                  (aMStack_110,"_mask.empty() || (_src1.sameSize(_mask) && _mask.type() == CV_8U)");
+        cv::error(-0xd7,(string *)aMStack_110,"accumulateProduct",
+                  "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x209);
+      }
+      goto LAB_00000dc0;
+    }
+  }
+  __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+            (aMStack_110,"_src1.sameSize(_src2) && stype == _src2.type()");
+  cv::error(-0xd7,(string *)aMStack_110,"accumulateProduct",
+            "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x207);
+LAB_00000dc0:
+                    /* WARNING: Does not return */
+  pcVar9 = (code *)SoftwareBreakpoint(1,0xdc4);
+  (*pcVar9)();
+}
+
+
+
+
+// ========================================
+// Function: accumulateWeighted
+// Entry: 00000f04
+// Signature: undefined __cdecl accumulateWeighted(_InputArray * param_1, _InputOutputArray * param_2, double param_3, _InputArray * param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* cv::accumulateWeighted(cv::_InputArray const&, cv::_InputOutputArray const&, double,
+   cv::_InputArray const&) */
+
+void cv::accumulateWeighted
+               (_InputArray *param_1,_InputOutputArray *param_2,double param_3,_InputArray *param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  ulong uVar7;
+  long lVar8;
+  code *pcVar9;
+  NAryMatIterator aNStack_210 [32];
+  ulong local_1f0;
+  undefined4 local_1e8;
+  Mat aMStack_1d0 [96];
+  Mat aMStack_170 [96];
+  Mat aMStack_110 [96];
+  Region aRStack_b0 [8];
+  int local_a8;
+  uchar *local_a0;
+  undefined8 uStack_98;
+  undefined8 local_90;
+  Mat *local_88;
+  Mat *pMStack_80;
+  Mat *local_78;
+  undefined8 uStack_70;
+  long local_68;
+  
+  local_68 = *____stack_chk_guard;
+  cv::utils::trace::details::Region::Region
+            (aRStack_b0,
+             (LocationStaticStorage *)
+             &accumulateWeighted(cv::_InputArray_const&,cv::_InputOutputArray_const&,double,cv::_InputArray_const&)
+              ::__cv_trace_location_fn614);
+  uVar3 = cv::_InputArray::type((int)param_1);
+  uVar4 = cv::_InputArray::type((int)param_2);
+  uVar5 = cv::_InputArray::sameSize(param_1);
+  uVar2 = uVar3 >> 3 & 0x1ff;
+  uVar1 = 0;
+  if ((uVar4 >> 3 & 0x1ff) == uVar2) {
+    uVar1 = uVar5;
+  }
+  if ((uVar1 & 1) == 0) {
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_110,"_src.sameSize(_dst) && dcn == scn");
+    cv::error(-0xd7,(string *)aMStack_110,"accumulateWeighted",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x26b);
+  }
+  else {
+    uVar7 = cv::_InputArray::empty();
+    if (((uVar7 & 1) != 0) ||
+       ((iVar6 = cv::_InputArray::sameSize(param_1), iVar6 != 0 &&
+        (iVar6 = cv::_InputArray::type((int)param_4), iVar6 == 0)))) {
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_110,*(Mat **)(param_1 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_1);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_170,*(Mat **)(param_2 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_2);
+      }
+      iVar6 = cv::_InputArray::kind();
+      if (iVar6 == 0x10000) {
+        cv::Mat::Mat(aMStack_1d0,*(Mat **)(param_4 + 8));
+      }
+      else {
+        cv::_InputArray::getMat_((int)param_4);
+      }
+      uVar4 = uVar4 & 7;
+      uVar3 = uVar3 & 7;
+      if ((uVar3 == 0) && (uVar4 == 5)) {
+        lVar8 = 0;
+      }
+      else if ((uVar3 == 0) && (uVar4 == 6)) {
+        lVar8 = 1;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 5)) {
+        lVar8 = 2;
+      }
+      else if ((uVar3 == 2) && (uVar4 == 6)) {
+        lVar8 = 3;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 5)) {
+        lVar8 = 4;
+      }
+      else if ((uVar3 == 5) && (uVar4 == 6)) {
+        lVar8 = 5;
+      }
+      else {
+        if ((uVar3 != 6) || (uVar4 != 6)) {
+          __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+                    (aNStack_210,"func != 0");
+          cv::error(-0xd7,(string *)aNStack_210,"accumulateWeighted",
+                    "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x27b);
+          goto LAB_0000126c;
+        }
+        lVar8 = 6;
+      }
+      pcVar9 = (code *)(&accWTab)[lVar8];
+      local_88 = aMStack_110;
+      pMStack_80 = aMStack_170;
+      local_78 = aMStack_1d0;
+      uStack_70 = 0;
+      local_a0 = (uchar *)0x0;
+      uStack_98 = 0;
+      local_90 = 0;
+      cv::NAryMatIterator::NAryMatIterator(aNStack_210,&local_88,&local_a0,-1);
+      uVar7 = 0xffffffffffffffff;
+      while( true ) {
+        uVar7 = uVar7 + 1;
+        if (local_1f0 <= uVar7) break;
+        (*pcVar9)(param_3,local_a0,uStack_98,local_90,local_1e8,uVar2 + 1);
+        cv::NAryMatIterator::operator++(aNStack_210);
+      }
+      cv::Mat::~Mat(aMStack_1d0);
+      cv::Mat::~Mat(aMStack_170);
+      cv::Mat::~Mat(aMStack_110);
+      if (local_a8 != 0) {
+        cv::utils::trace::details::Region::destroy();
+      }
+      if (*____stack_chk_guard == local_68) {
+        return;
+      }
+                    /* WARNING: Subroutine does not return */
+      ___stack_chk_fail();
+    }
+    __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100ILi0EEEPKc
+              (aMStack_110,"_mask.empty() || (_src.sameSize(_mask) && _mask.type() == CV_8U)");
+    cv::error(-0xd7,(string *)aMStack_110,"accumulateWeighted",
+              "M3T/third_party/opencv-src/modules/imgproc/src/accum.cpp",0x26c);
+  }
+LAB_0000126c:
+                    /* WARNING: Does not return */
+  pcVar9 = (code *)SoftwareBreakpoint(1,0x1270);
+  (*pcVar9)();
+}
+
+
+
+
+// ========================================
+// Function: _cvAcc
+// Entry: 00001388
+// Signature: undefined _cvAcc(void)
+// ========================================
+
+
+void _cvAcc(cv *param_1,cv *param_2,cv *param_3,undefined8 param_4,undefined8 param_5,
+           AutoBuffer *param_6)
+
+{
+  undefined4 local_1e0 [2];
+  Mat *local_1d8;
+  undefined8 local_1d0;
+  undefined4 local_1c8 [2];
+  Mat *local_1c0;
+  undefined8 uStack_1b8;
+  undefined4 local_1b0 [2];
+  Mat *local_1a8;
+  undefined8 local_1a0;
+  Mat aMStack_150 [96];
+  Mat aMStack_f0 [96];
+  Mat aMStack_90 [96];
+  
+  cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+  cv::Mat::Mat(aMStack_150);
+  if (param_3 != (cv *)0x0) {
+    cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(aMStack_150,(Mat *)local_1b0);
+    cv::Mat::~Mat((Mat *)local_1b0);
+  }
+  local_1a0 = 0;
+  local_1b0[0] = 0x1010000;
+  local_1a8 = aMStack_90;
+  local_1c8[0] = 0x3010000;
+  local_1c0 = aMStack_f0;
+  uStack_1b8 = 0;
+  local_1d0 = 0;
+  local_1e0[0] = 0x1010000;
+  local_1d8 = aMStack_150;
+  cv::accumulate((_InputArray *)local_1b0,(_InputOutputArray *)local_1c8,(_InputArray *)local_1e0);
+  cv::Mat::~Mat(aMStack_150);
+  cv::Mat::~Mat(aMStack_f0);
+  cv::Mat::~Mat(aMStack_90);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _cvSquareAcc
+// Entry: 000014d4
+// Signature: undefined _cvSquareAcc(void)
+// ========================================
+
+
+void _cvSquareAcc(cv *param_1,cv *param_2,cv *param_3,undefined8 param_4,undefined8 param_5,
+                 AutoBuffer *param_6)
+
+{
+  undefined4 local_1e0 [2];
+  Mat *local_1d8;
+  undefined8 local_1d0;
+  undefined4 local_1c8 [2];
+  Mat *local_1c0;
+  undefined8 uStack_1b8;
+  undefined4 local_1b0 [2];
+  Mat *local_1a8;
+  undefined8 local_1a0;
+  Mat aMStack_150 [96];
+  Mat aMStack_f0 [96];
+  Mat aMStack_90 [96];
+  
+  cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+  cv::Mat::Mat(aMStack_150);
+  if (param_3 != (cv *)0x0) {
+    cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(aMStack_150,(Mat *)local_1b0);
+    cv::Mat::~Mat((Mat *)local_1b0);
+  }
+  local_1a0 = 0;
+  local_1b0[0] = 0x1010000;
+  local_1a8 = aMStack_90;
+  local_1c8[0] = 0x3010000;
+  local_1c0 = aMStack_f0;
+  uStack_1b8 = 0;
+  local_1d0 = 0;
+  local_1e0[0] = 0x1010000;
+  local_1d8 = aMStack_150;
+  cv::accumulateSquare
+            ((_InputArray *)local_1b0,(_InputOutputArray *)local_1c8,(_InputArray *)local_1e0);
+  cv::Mat::~Mat(aMStack_150);
+  cv::Mat::~Mat(aMStack_f0);
+  cv::Mat::~Mat(aMStack_90);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _cvMultiplyAcc
+// Entry: 00001620
+// Signature: undefined _cvMultiplyAcc(void)
+// ========================================
+
+
+void _cvMultiplyAcc(cv *param_1,cv *param_2,cv *param_3,cv *param_4,undefined8 param_5,
+                   AutoBuffer *param_6)
+
+{
+  undefined4 local_258 [2];
+  Mat *local_250;
+  undefined8 local_248;
+  undefined4 local_240 [2];
+  Mat *local_238;
+  undefined8 uStack_230;
+  undefined4 local_228 [2];
+  Mat *local_220;
+  undefined8 local_218;
+  undefined4 local_210 [2];
+  Mat *local_208;
+  undefined8 local_200;
+  Mat aMStack_1b0 [96];
+  Mat aMStack_150 [96];
+  Mat aMStack_f0 [96];
+  Mat aMStack_90 [96];
+  
+  cv::cvarrToMat(param_1,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_6);
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_6);
+  cv::Mat::Mat(aMStack_1b0);
+  if (param_4 != (cv *)0x0) {
+    cv::cvarrToMat(param_4,(void *)0x0,true,false,0,param_6);
+    cv::Mat::operator=(aMStack_1b0,(Mat *)local_210);
+    cv::Mat::~Mat((Mat *)local_210);
+  }
+  local_200 = 0;
+  local_210[0] = 0x1010000;
+  local_208 = aMStack_90;
+  local_218 = 0;
+  local_228[0] = 0x1010000;
+  local_220 = aMStack_f0;
+  local_240[0] = 0x3010000;
+  local_238 = aMStack_150;
+  uStack_230 = 0;
+  local_248 = 0;
+  local_258[0] = 0x1010000;
+  local_250 = aMStack_1b0;
+  cv::accumulateProduct
+            ((_InputArray *)local_210,(_InputArray *)local_228,(_InputOutputArray *)local_240,
+             (_InputArray *)local_258);
+  cv::Mat::~Mat(aMStack_1b0);
+  cv::Mat::~Mat(aMStack_150);
+  cv::Mat::~Mat(aMStack_f0);
+  cv::Mat::~Mat(aMStack_90);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _cvRunningAvg
+// Entry: 000017b8
+// Signature: undefined _cvRunningAvg(void)
+// ========================================
+
+
+void _cvRunningAvg(double param_1,cv *param_2,cv *param_3,cv *param_4,undefined8 param_5,
+                  undefined8 param_6,AutoBuffer *param_7)
+
+{
+  undefined4 local_1f0 [2];
+  Mat *local_1e8;
+  undefined8 local_1e0;
+  undefined4 local_1d8 [2];
+  Mat *local_1d0;
+  undefined8 uStack_1c8;
+  undefined4 local_1c0 [2];
+  Mat *local_1b8;
+  undefined8 local_1b0;
+  Mat aMStack_160 [96];
+  Mat aMStack_100 [96];
+  Mat aMStack_a0 [96];
+  
+  cv::cvarrToMat(param_2,(void *)0x0,true,false,0,param_7);
+  cv::cvarrToMat(param_3,(void *)0x0,true,false,0,param_7);
+  cv::Mat::Mat(aMStack_160);
+  if (param_4 != (cv *)0x0) {
+    cv::cvarrToMat(param_4,(void *)0x0,true,false,0,param_7);
+    cv::Mat::operator=(aMStack_160,(Mat *)local_1c0);
+    cv::Mat::~Mat((Mat *)local_1c0);
+  }
+  local_1b0 = 0;
+  local_1c0[0] = 0x1010000;
+  local_1b8 = aMStack_a0;
+  local_1d8[0] = 0x3010000;
+  local_1d0 = aMStack_100;
+  uStack_1c8 = 0;
+  local_1e0 = 0;
+  local_1f0[0] = 0x1010000;
+  local_1e8 = aMStack_160;
+  cv::accumulateWeighted
+            ((_InputArray *)local_1c0,(_InputOutputArray *)local_1d8,param_1,
+             (_InputArray *)local_1f0);
+  cv::Mat::~Mat(aMStack_160);
+  cv::Mat::~Mat(aMStack_100);
+  cv::Mat::~Mat(aMStack_a0);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00001914
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00001924
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00001938
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00001988
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: accSqr_32f
+// Entry: 00003100
+// Signature: undefined accSqr_32f(float * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_32f(float const*, float*, unsigned char const*, int, int) */
+
+void cv::accSqr_32f(float *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_64f
+// Entry: 00003200
+// Signature: undefined accSqr_64f(double * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_64f(double const*, double*, unsigned char const*, int, int) */
+
+void cv::accSqr_64f(double *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_8u32f
+// Entry: 00003300
+// Signature: undefined accW_8u32f(uchar * param_1, float * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::accW_8u32f(uchar *param_1,float *param_2,uchar *param_3,int param_4,int param_5,
+                   double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_8u64f
+// Entry: 00003400
+// Signature: undefined accW_8u64f(uchar * param_1, double * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_8u64f(unsigned char const*, double*, unsigned char const*, int, int, double) */
+
+void cv::accW_8u64f(uchar *param_1,double *param_2,uchar *param_3,int param_4,int param_5,
+                   double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_16u32f
+// Entry: 00003500
+// Signature: undefined acc_16u32f(ushort * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_16u32f(unsigned short const*, float*, unsigned char const*, int, int) */
+
+void cv::acc_16u32f(ushort *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_16u64f
+// Entry: 00003600
+// Signature: undefined acc_16u64f(ushort * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_16u64f(unsigned short const*, double*, unsigned char const*, int, int) */
+
+void cv::acc_16u64f(ushort *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_32f64f
+// Entry: 00003700
+// Signature: undefined acc_32f64f(float * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_32f64f(float const*, double*, unsigned char const*, int, int) */
+
+void cv::acc_32f64f(float *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: cvarrToMat
+// Entry: 00003800
+// Signature: undefined __thiscall cvarrToMat(cv * this, void * param_1, bool param_2, bool param_3, int param_4, AutoBuffer * param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::cvarrToMat(cv *this,void *param_1,bool param_2,bool param_3,int param_4,AutoBuffer *param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_32f
+// Entry: 00003900
+// Signature: undefined accProd_32f(float * param_1, float * param_2, float * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_32f(float const*, float const*, float*, unsigned char const*, int, int) */
+
+void cv::accProd_32f(float *param_1,float *param_2,float *param_3,uchar *param_4,int param_5,
+                    int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_64f
+// Entry: 00003a00
+// Signature: undefined accProd_64f(double * param_1, double * param_2, double * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_64f(double const*, double const*, double*, unsigned char const*, int, int) */
+
+void cv::accProd_64f(double *param_1,double *param_2,double *param_3,uchar *param_4,int param_5,
+                    int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_16u32f
+// Entry: 00003b00
+// Signature: undefined accW_16u32f(ushort * param_1, float * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_16u32f(unsigned short const*, float*, unsigned char const*, int, int, double) */
+
+void cv::accW_16u32f(ushort *param_1,float *param_2,uchar *param_3,int param_4,int param_5,
+                    double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_16u64f
+// Entry: 00003c00
+// Signature: undefined accW_16u64f(ushort * param_1, double * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_16u64f(unsigned short const*, double*, unsigned char const*, int, int, double) */
+
+void cv::accW_16u64f(ushort *param_1,double *param_2,uchar *param_3,int param_4,int param_5,
+                    double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_32f64f
+// Entry: 00003d00
+// Signature: undefined accW_32f64f(float * param_1, double * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_32f64f(float const*, double*, unsigned char const*, int, int, double) */
+
+void cv::accW_32f64f(float *param_1,double *param_2,uchar *param_3,int param_4,int param_5,
+                    double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_8u32f
+// Entry: 00003e00
+// Signature: undefined accSqr_8u32f(uchar * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::accSqr_8u32f(uchar *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_8u64f
+// Entry: 00003f00
+// Signature: undefined accSqr_8u64f(uchar * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_8u64f(unsigned char const*, double*, unsigned char const*, int, int) */
+
+void cv::accSqr_8u64f(uchar *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_8u32f
+// Entry: 00004000
+// Signature: undefined accProd_8u32f(uchar * param_1, uchar * param_2, float * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::accProd_8u32f(uchar *param_1,uchar *param_2,float *param_3,uchar *param_4,int param_5,
+                      int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_8u64f
+// Entry: 00004100
+// Signature: undefined accProd_8u64f(uchar * param_1, uchar * param_2, double * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_8u64f(unsigned char const*, unsigned char const*, double*, unsigned char const*, int,
+   int) */
+
+void cv::accProd_8u64f(uchar *param_1,uchar *param_2,double *param_3,uchar *param_4,int param_5,
+                      int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_16u32f
+// Entry: 00004200
+// Signature: undefined accSqr_16u32f(ushort * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_16u32f(unsigned short const*, float*, unsigned char const*, int, int) */
+
+void cv::accSqr_16u32f(ushort *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_16u64f
+// Entry: 00004300
+// Signature: undefined accSqr_16u64f(ushort * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_16u64f(unsigned short const*, double*, unsigned char const*, int, int) */
+
+void cv::accSqr_16u64f(ushort *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accSqr_32f64f
+// Entry: 00004400
+// Signature: undefined accSqr_32f64f(float * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accSqr_32f64f(float const*, double*, unsigned char const*, int, int) */
+
+void cv::accSqr_32f64f(float *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_16u32f
+// Entry: 00004500
+// Signature: undefined accProd_16u32f(ushort * param_1, ushort * param_2, float * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_16u32f(unsigned short const*, unsigned short const*, float*, unsigned char const*,
+   int, int) */
+
+void cv::accProd_16u32f(ushort *param_1,ushort *param_2,float *param_3,uchar *param_4,int param_5,
+                       int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_16u64f
+// Entry: 00004600
+// Signature: undefined accProd_16u64f(ushort * param_1, ushort * param_2, double * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_16u64f(unsigned short const*, unsigned short const*, double*, unsigned char const*,
+   int, int) */
+
+void cv::accProd_16u64f(ushort *param_1,ushort *param_2,double *param_3,uchar *param_4,int param_5,
+                       int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accProd_32f64f
+// Entry: 00004700
+// Signature: undefined accProd_32f64f(float * param_1, float * param_2, double * param_3, uchar * param_4, int param_5, int param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accProd_32f64f(float const*, float const*, double*, unsigned char const*, int, int) */
+
+void cv::accProd_32f64f(float *param_1,float *param_2,double *param_3,uchar *param_4,int param_5,
+                       int param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: NAryMatIterator
+// Entry: 00004800
+// Signature: undefined __thiscall NAryMatIterator(NAryMatIterator * this, Mat * * param_1, uchar * * param_2, int param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::NAryMatIterator::NAryMatIterator
+          (NAryMatIterator *this,Mat **param_1,uchar **param_2,int param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator++
+// Entry: 00004900
+// Signature: undefined __thiscall operator++(NAryMatIterator * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::NAryMatIterator::operator++(NAryMatIterator *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004a00
+// Signature: undefined __thiscall Mat(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Mat
+// Entry: 00004b00
+// Signature: undefined __thiscall Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~Mat
+// Entry: 00004c00
+// Signature: undefined __thiscall ~Mat(Mat * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::~Mat(Mat *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004d00
+// Signature: undefined __thiscall operator=(Mat * this, Mat * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall cv::Mat::operator=(Mat *this,Mat *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00004e00
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00004f00
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00005000
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_32f
+// Entry: 00005100
+// Signature: undefined acc_32f(float * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_32f(float const*, float*, unsigned char const*, int, int) */
+
+void cv::acc_32f(float *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_64f
+// Entry: 00005200
+// Signature: undefined acc_64f(double * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_64f(double const*, double*, unsigned char const*, int, int) */
+
+void cv::acc_64f(double *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_32f
+// Entry: 00005300
+// Signature: undefined accW_32f(float * param_1, float * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_32f(float const*, float*, unsigned char const*, int, int, double) */
+
+void cv::accW_32f(float *param_1,float *param_2,uchar *param_3,int param_4,int param_5,
+                 double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: accW_64f
+// Entry: 00005400
+// Signature: undefined accW_64f(double * param_1, double * param_2, uchar * param_3, int param_4, int param_5, double param_6)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::accW_64f(double const*, double*, unsigned char const*, int, int, double) */
+
+void cv::accW_64f(double *param_1,double *param_2,uchar *param_3,int param_4,int param_5,
+                 double param_6)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_8u32f
+// Entry: 00005500
+// Signature: undefined acc_8u32f(uchar * param_1, float * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::acc_8u32f(uchar *param_1,float *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: acc_8u64f
+// Entry: 00005600
+// Signature: undefined acc_8u64f(uchar * param_1, double * param_2, uchar * param_3, int param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* cv::acc_8u64f(unsigned char const*, double*, unsigned char const*, int, int) */
+
+void cv::acc_8u64f(uchar *param_1,double *param_2,uchar *param_3,int param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: kind
+// Entry: 00005700
+// Signature: undefined kind(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::kind(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: type
+// Entry: 00005800
+// Signature: undefined type(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::type(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: empty
+// Entry: 00005900
+// Signature: undefined empty(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::empty(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: getMat_
+// Entry: 00005a00
+// Signature: undefined getMat_(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::getMat_(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: sameSize
+// Entry: 00005b00
+// Signature: undefined sameSize(_InputArray * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::_InputArray::sameSize(_InputArray *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00005c00
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00005d00
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00005e00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00006100
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* operator delete(void*) */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00006200
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00006300
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00006400
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00006600
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00006800
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00006a00
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00006b00
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 68
+// Failed: 0
+// Skipped external functions: 0

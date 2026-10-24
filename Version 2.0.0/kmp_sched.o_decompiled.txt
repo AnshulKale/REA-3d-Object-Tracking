@@ -1,0 +1,4067 @@
+Program: kmp_sched.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: ___kmpc_for_static_init_4
+// Entry: 00000000
+// Signature: undefined ___kmpc_for_static_init_4(void)
+// ========================================
+
+
+void ___kmpc_for_static_init_4
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined4 param_8)
+
+{
+  __kmp_for_static_init<int>(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_for_static_init<int>
+// Entry: 00000074
+// Signature: void __cdecl __kmp_for_static_init<int>(ident * param_1, int param_2, int param_3, int * param_4, int * param_5, int * param_6, signed_t * param_7, signed_t.conflict param_8, signed_t.conflict param_9, void * param_10)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_for_static_init<int>(ident*, int, int, int*, int*, int*, traits_t<int>::signed_t*,
+   traits_t<int>::signed_t, traits_t<int>::signed_t, void*) */
+
+void __kmp_for_static_init<int>
+               (long param_1,int param_2,uint param_3,uint *param_4,int *param_5,int *param_6,
+               uint *param_7,uint param_8,uint param_9,long *param_10)
+
+{
+  int iVar1;
+  char cVar2;
+  bool bVar3;
+  uint uVar4;
+  uint uVar5;
+  char cVar6;
+  long lVar7;
+  ulong *puVar8;
+  int iVar9;
+  uint local_160;
+  uint local_15c;
+  uint local_158;
+  uint local_150;
+  uint local_140;
+  uint local_13c;
+  long local_110;
+  long local_108;
+  long *local_100;
+  undefined4 local_f4;
+  int local_f0;
+  int local_ec;
+  uint local_e8;
+  int local_e4;
+  int local_e0;
+  int local_dc;
+  uint local_d8;
+  uint local_d4;
+  undefined8 local_d0;
+  undefined8 uStack_c8;
+  undefined8 local_c0;
+  undefined1 auStack_b0 [27];
+  undefined1 local_95;
+  int local_94;
+  long local_90;
+  undefined8 local_88;
+  long local_80;
+  long local_78;
+  uint local_70;
+  uint local_6c;
+  uint local_68;
+  int local_64;
+  long *local_60;
+  uint local_58;
+  uint local_54;
+  uint *local_50;
+  int *local_48;
+  int *local_40;
+  uint *local_38;
+  uint local_30;
+  int local_2c;
+  long local_28;
+  
+  puVar8 = __ompt_enabled;
+  lVar7 = __ompt_callbacks;
+  local_58 = param_9;
+  local_60 = param_10;
+  local_30 = param_3 & 0x9fffffff;
+  local_64 = param_2;
+  local_54 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  local_80 = *(long *)(*____kmp_threads + (long)local_64 * 8);
+  local_88 = 0;
+  local_90 = 0;
+  local_94 = 1;
+  if (((*puVar8 >> 0xd & 1) != 0) || ((*puVar8 & 0x1000000) != 0)) {
+    local_88 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_90 = __ompt_get_task_info_object(0);
+    if (local_28 != 0) {
+      if ((*(uint *)(local_28 + 4) & 0x200) == 0) {
+        if ((*(uint *)(local_28 + 4) & 0x400) == 0) {
+          if ((*(uint *)(local_28 + 4) & 0x800) == 0) {
+            do {
+              cVar6 = __kmp_for_static_init<int>(ident*,int,int,int*,int*,int*,traits_t<int>::signed_t*,traits_t<int>::signed_t,traits_t<int>::signed_t,void*)
+                      ::warn;
+              if (__kmp_for_static_init<int>(ident*,int,int,int*,int*,int*,traits_t<int>::signed_t*,traits_t<int>::signed_t,traits_t<int>::signed_t,void*)
+                  ::warn != '\0') break;
+              cVar2 = '\x01';
+              bVar3 = (bool)ExclusiveMonitorPass(0x9853,0x10);
+              if (bVar3) {
+                __kmp_for_static_init<int>(ident*,int,int,int*,int*,int*,traits_t<int>::signed_t*,traits_t<int>::signed_t,traits_t<int>::signed_t,void*)
+                ::warn = '\x01';
+                cVar2 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar2 != '\0');
+            local_95 = cVar6 == '\0';
+            if ((bool)local_95) {
+              ___kmp_msg_format(0x400bd);
+              uStack_c8 = ____kmp_msg_null[1];
+              local_d0 = *____kmp_msg_null;
+              local_c0 = ____kmp_msg_null[2];
+              ___kmp_msg(1,auStack_b0);
+            }
+          }
+          else {
+            local_94 = 6;
+          }
+        }
+        else {
+          local_94 = 2;
+        }
+      }
+      else {
+        local_94 = 1;
+      }
+    }
+  }
+  if ((*____kmp_env_consistency_check != 0) &&
+     (___kmp_push_workshare(local_2c,2,local_28), local_54 == 0)) {
+    ___kmp_error_construct(0x400c6,2,local_28);
+  }
+  if ((int)local_54 < 1) {
+    if (*local_40 < *local_48) goto LAB_00000348;
+  }
+  else if (*local_48 < *local_40) {
+LAB_00000348:
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 0;
+    }
+    *local_50 = local_54;
+    if ((*puVar8 >> 0xd & 1) == 0) {
+      return;
+    }
+    (**(code **)(lVar7 + 0x60))(local_94,1,local_88,local_90 + 0x18,0,local_60);
+    return;
+  }
+  if ((int)local_30 < 0x49) {
+    local_68 = __kmp_tid_from_gtid(local_2c);
+    local_78 = *(long *)(local_80 + 0x40);
+  }
+  else {
+    local_30 = local_30 - 0x3a;
+    if (*(int *)(*(long *)(local_80 + 0x40) + 0x2c8) < 2) {
+      local_68 = *(uint *)(*(long *)(local_80 + 0x40) + 0x180);
+      local_78 = *(long *)(*(long *)(local_80 + 0x40) + 400);
+    }
+    else {
+      local_68 = 0;
+      local_78 = *(long *)(local_80 + 0x40);
+    }
+  }
+  if (*(int *)(local_78 + 0x2c8) == 0) {
+    local_6c = *(uint *)(local_78 + 0x1cc);
+    if (local_6c == 1) {
+      if (local_38 != (uint *)0x0) {
+        *local_38 = 1;
+      }
+      if ((int)local_54 < 1) {
+        local_140 = -((*local_40 - *local_48) + 1);
+      }
+      else {
+        local_140 = (*local_48 - *local_40) + 1;
+      }
+      *local_50 = local_140;
+      if ((*puVar8 >> 0xd & 1) != 0) {
+        (**(code **)(lVar7 + 0x60))
+                  (local_94,1,local_88,local_90 + 0x18,(long)(int)*local_50,local_60);
+      }
+    }
+    else {
+      if (local_54 == 1) {
+        local_70 = *local_48 - *local_40;
+      }
+      else if (local_54 == 0xffffffff) {
+        local_70 = *local_40 - *local_48;
+      }
+      else if ((int)local_54 < 1) {
+        local_70 = 0;
+        if (-local_54 != 0) {
+          local_70 = (uint)(*local_40 - *local_48) / -local_54;
+        }
+      }
+      else {
+        local_70 = 0;
+        if (local_54 != 0) {
+          local_70 = (uint)(*local_48 - *local_40) / local_54;
+        }
+      }
+      local_70 = local_70 + 1;
+      if (((*____kmp_env_consistency_check != 0) && (local_70 == 0)) && (*local_48 != *local_40)) {
+        ___kmp_error_construct(0x400c5,2,local_28);
+      }
+      if (local_30 == 0x21) {
+        if ((int)local_58 < 1) {
+          local_58 = 1;
+        }
+        else if (local_70 < local_58) {
+          local_58 = local_70;
+        }
+        local_e8 = 0;
+        if (local_58 != 0) {
+          local_e8 = local_70 / local_58;
+        }
+        uVar5 = 0;
+        if (local_58 != 0) {
+          uVar5 = local_70 / local_58;
+        }
+        local_e8 = local_e8 + (local_70 != uVar5 * local_58);
+        local_e4 = local_58 * local_54;
+        if (local_e8 < local_6c) {
+          *local_50 = local_e4 * local_e8;
+          if (local_68 < local_e8) {
+            *local_40 = *local_40 + local_e4 * local_68;
+            *local_48 = (*local_40 + local_e4) - local_54;
+          }
+          else {
+            iVar9 = -1;
+            if (0 < (int)local_54) {
+              iVar9 = 1;
+            }
+            *local_40 = *local_48 + iVar9;
+          }
+        }
+        else {
+          *local_50 = local_e4 * local_6c;
+          *local_40 = *local_40 + local_e4 * local_68;
+          *local_48 = (*local_40 + local_e4) - local_54;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar5 = 0;
+          if (local_6c != 0) {
+            uVar5 = (local_e8 - 1) / local_6c;
+          }
+          *local_38 = (uint)(local_68 == (local_e8 - 1) - uVar5 * local_6c);
+        }
+      }
+      else if (local_30 == 0x22) {
+        if (local_70 < local_6c) {
+          if (local_68 < local_70) {
+            iVar9 = *local_40 + local_68 * local_54;
+            *local_40 = iVar9;
+            *local_48 = iVar9;
+          }
+          else {
+            iVar9 = -1;
+            if (0 < (int)local_54) {
+              iVar9 = 1;
+            }
+            *local_40 = *local_48 + iVar9;
+          }
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_68 == local_70 - 1);
+          }
+        }
+        else if (*____kmp_static == 0x29) {
+          local_d4 = 0;
+          if (local_6c != 0) {
+            local_d4 = local_70 / local_6c;
+          }
+          uVar5 = 0;
+          if (local_6c != 0) {
+            uVar5 = local_70 / local_6c;
+          }
+          local_d8 = local_70 - uVar5 * local_6c;
+          local_150 = local_d8;
+          if (local_68 < local_d8) {
+            local_150 = local_68;
+          }
+          *local_40 = *local_40 + local_54 * (local_68 * local_d4 + local_150);
+          if (local_68 < local_d8) {
+            local_158 = 0;
+          }
+          else {
+            local_158 = local_54;
+          }
+          *local_48 = (*local_40 + local_d4 * local_54) - local_158;
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_68 == local_6c - 1);
+          }
+        }
+        else {
+          uVar5 = 0;
+          if (local_6c != 0) {
+            uVar5 = local_70 / local_6c;
+          }
+          uVar4 = 0;
+          if (local_6c != 0) {
+            uVar4 = local_70 / local_6c;
+          }
+          local_dc = (uVar5 + (local_70 != uVar4 * local_6c)) * local_54;
+          local_e0 = *local_48;
+          *local_40 = *local_40 + local_68 * local_dc;
+          *local_48 = (*local_40 + local_dc) - local_54;
+          if ((int)local_54 < 1) {
+            if (*local_40 < *local_48) {
+              *local_48 = -0x80000000;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_160 = 0;
+              if (local_e0 <= *local_40) {
+                local_160 = (uint)(*local_48 < (int)(local_e0 - local_54));
+              }
+              *local_38 = local_160;
+            }
+            if (*local_48 < local_e0) {
+              *local_48 = local_e0;
+            }
+          }
+          else {
+            if (*local_48 < *local_40) {
+              *local_48 = 0x7fffffff;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_15c = 0;
+              if (*local_40 <= local_e0) {
+                local_15c = (uint)((int)(local_e0 - local_54) < *local_48);
+              }
+              *local_38 = local_15c;
+            }
+            if (local_e0 < *local_48) {
+              *local_48 = local_e0;
+            }
+          }
+        }
+        *local_50 = local_70;
+      }
+      else if (local_30 == 0x2d) {
+        local_ec = *local_48;
+        uVar5 = 0;
+        if (local_6c != 0) {
+          uVar5 = ((local_70 + local_6c) - 1) / local_6c;
+        }
+        local_58 = (uVar5 + local_58) - 1 & (local_58 - 1 ^ 0xffffffff);
+        local_f0 = local_58 * local_54;
+        *local_40 = *local_40 + local_f0 * local_68;
+        *local_48 = (*local_40 + local_f0) - local_54;
+        if ((int)local_54 < 1) {
+          if (*local_48 < local_ec) {
+            *local_48 = local_ec;
+          }
+        }
+        else if (local_ec < *local_48) {
+          *local_48 = local_ec;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar5 = 0;
+          if (local_58 != 0) {
+            uVar5 = (local_70 - 1) / local_58;
+          }
+          *local_38 = (uint)(local_68 == uVar5);
+        }
+      }
+      else {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",
+                            0x194);
+      }
+      if ((*puVar8 >> 0xd & 1) != 0) {
+        (**(code **)(lVar7 + 0x60))(local_94,1,local_88,local_90 + 0x18,local_70,local_60);
+      }
+      if ((*puVar8 & 0x1000000) != 0) {
+        if (local_94 == 2) {
+          local_f4 = 2;
+          local_100 = local_60;
+        }
+        else {
+          if ((int)local_54 < 1) {
+            iVar9 = *local_48;
+            iVar1 = 0;
+            if (-local_54 != 0) {
+              iVar1 = (*local_40 - *local_48) / (int)-local_54;
+            }
+          }
+          else {
+            iVar9 = *local_40;
+            iVar1 = 0;
+            if (local_54 != 0) {
+              iVar1 = (*local_48 - *local_40) / (int)local_54;
+            }
+          }
+          local_108 = (long)(iVar1 + 1);
+          local_110 = (long)iVar9;
+          local_f4 = 5;
+          if (local_94 != 6) {
+            local_f4 = 3;
+          }
+          local_100 = &local_110;
+        }
+        (**(code **)(lVar7 + 0xb8))(local_88,local_90 + 0x18,local_f4,local_100);
+      }
+    }
+  }
+  else {
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 1;
+    }
+    if ((int)local_54 < 1) {
+      local_13c = -((*local_40 - *local_48) + 1);
+    }
+    else {
+      local_13c = (*local_48 - *local_40) + 1;
+    }
+    *local_50 = local_13c;
+    if ((*puVar8 >> 0xd & 1) != 0) {
+      (**(code **)(lVar7 + 0x60))(local_94,1,local_88,local_90 + 0x18,(long)(int)*local_50,local_60)
+      ;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_for_static_init_4u
+// Entry: 0000115c
+// Signature: undefined ___kmpc_for_static_init_4u(void)
+// ========================================
+
+
+void ___kmpc_for_static_init_4u
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined4 param_8)
+
+{
+  __kmp_for_static_init<unsigned_int>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_for_static_init<unsigned_int>
+// Entry: 000011d0
+// Signature: void __cdecl __kmp_for_static_init<unsigned_int>(ident * param_1, int param_2, int param_3, int * param_4, uint * param_5, uint * param_6, signed_t * param_7, signed_t.conflict param_8, signed_t.conflict param_9, void * param_10)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_for_static_init<unsigned int>(ident*, int, int, int*, unsigned int*, unsigned int*,
+   traits_t<unsigned int>::signed_t*, traits_t<unsigned int>::signed_t, traits_t<unsigned
+   int>::signed_t, void*) */
+
+void __kmp_for_static_init<unsigned_int>
+               (long param_1,int param_2,uint param_3,uint *param_4,uint *param_5,uint *param_6,
+               uint *param_7,uint param_8,uint param_9,ulong *param_10)
+
+{
+  uint uVar1;
+  char cVar2;
+  bool bVar3;
+  uint uVar4;
+  char cVar5;
+  long lVar6;
+  ulong *puVar7;
+  int iVar8;
+  uint local_160;
+  uint local_15c;
+  uint local_158;
+  uint local_150;
+  uint local_140;
+  uint local_13c;
+  ulong local_110;
+  ulong local_108;
+  ulong *local_100;
+  undefined4 local_f4;
+  int local_f0;
+  uint local_ec;
+  uint local_e8;
+  int local_e4;
+  uint local_e0;
+  int local_dc;
+  uint local_d8;
+  uint local_d4;
+  undefined8 local_d0;
+  undefined8 uStack_c8;
+  undefined8 local_c0;
+  undefined1 auStack_b0 [27];
+  undefined1 local_95;
+  int local_94;
+  long local_90;
+  undefined8 local_88;
+  long local_80;
+  long local_78;
+  uint local_70;
+  uint local_6c;
+  uint local_68;
+  int local_64;
+  ulong *local_60;
+  uint local_58;
+  uint local_54;
+  uint *local_50;
+  uint *local_48;
+  uint *local_40;
+  uint *local_38;
+  uint local_30;
+  int local_2c;
+  long local_28;
+  
+  puVar7 = __ompt_enabled;
+  lVar6 = __ompt_callbacks;
+  local_58 = param_9;
+  local_60 = param_10;
+  local_30 = param_3 & 0x9fffffff;
+  local_64 = param_2;
+  local_54 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  local_80 = *(long *)(*____kmp_threads + (long)local_64 * 8);
+  local_88 = 0;
+  local_90 = 0;
+  local_94 = 1;
+  if (((*puVar7 >> 0xd & 1) != 0) || ((*puVar7 & 0x1000000) != 0)) {
+    local_88 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_90 = __ompt_get_task_info_object(0);
+    if (local_28 != 0) {
+      if ((*(uint *)(local_28 + 4) & 0x200) == 0) {
+        if ((*(uint *)(local_28 + 4) & 0x400) == 0) {
+          if ((*(uint *)(local_28 + 4) & 0x800) == 0) {
+            do {
+              cVar5 = __kmp_for_static_init<unsigned_int>(ident*,int,int,int*,unsigned_int*,unsigned_int*,traits_t<unsigned_int>::signed_t*,traits_t<unsigned_int>::signed_t,traits_t<unsigned_int>::signed_t,void*)
+                      ::warn;
+              if (__kmp_for_static_init<unsigned_int>(ident*,int,int,int*,unsigned_int*,unsigned_int*,traits_t<unsigned_int>::signed_t*,traits_t<unsigned_int>::signed_t,traits_t<unsigned_int>::signed_t,void*)
+                  ::warn != '\0') break;
+              cVar2 = '\x01';
+              bVar3 = (bool)ExclusiveMonitorPass(0x9854,0x10);
+              if (bVar3) {
+                __kmp_for_static_init<unsigned_int>(ident*,int,int,int*,unsigned_int*,unsigned_int*,traits_t<unsigned_int>::signed_t*,traits_t<unsigned_int>::signed_t,traits_t<unsigned_int>::signed_t,void*)
+                ::warn = '\x01';
+                cVar2 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar2 != '\0');
+            local_95 = cVar5 == '\0';
+            if ((bool)local_95) {
+              ___kmp_msg_format(0x400bd);
+              uStack_c8 = ____kmp_msg_null[1];
+              local_d0 = *____kmp_msg_null;
+              local_c0 = ____kmp_msg_null[2];
+              ___kmp_msg(1,auStack_b0);
+            }
+          }
+          else {
+            local_94 = 6;
+          }
+        }
+        else {
+          local_94 = 2;
+        }
+      }
+      else {
+        local_94 = 1;
+      }
+    }
+  }
+  if ((*____kmp_env_consistency_check != 0) &&
+     (___kmp_push_workshare(local_2c,2,local_28), local_54 == 0)) {
+    ___kmp_error_construct(0x400c6,2,local_28);
+  }
+  if ((int)local_54 < 1) {
+    if (*local_40 < *local_48) goto LAB_000014a4;
+  }
+  else if (*local_48 < *local_40) {
+LAB_000014a4:
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 0;
+    }
+    *local_50 = local_54;
+    if ((*puVar7 >> 0xd & 1) == 0) {
+      return;
+    }
+    (**(code **)(lVar6 + 0x60))(local_94,1,local_88,local_90 + 0x18,0,local_60);
+    return;
+  }
+  if ((int)local_30 < 0x49) {
+    local_68 = __kmp_tid_from_gtid(local_2c);
+    local_78 = *(long *)(local_80 + 0x40);
+  }
+  else {
+    local_30 = local_30 - 0x3a;
+    if (*(int *)(*(long *)(local_80 + 0x40) + 0x2c8) < 2) {
+      local_68 = *(uint *)(*(long *)(local_80 + 0x40) + 0x180);
+      local_78 = *(long *)(*(long *)(local_80 + 0x40) + 400);
+    }
+    else {
+      local_68 = 0;
+      local_78 = *(long *)(local_80 + 0x40);
+    }
+  }
+  if (*(int *)(local_78 + 0x2c8) == 0) {
+    local_6c = *(uint *)(local_78 + 0x1cc);
+    if (local_6c == 1) {
+      if (local_38 != (uint *)0x0) {
+        *local_38 = 1;
+      }
+      if ((int)local_54 < 1) {
+        local_140 = -((*local_40 - *local_48) + 1);
+      }
+      else {
+        local_140 = (*local_48 - *local_40) + 1;
+      }
+      *local_50 = local_140;
+      if ((*puVar7 >> 0xd & 1) != 0) {
+        (**(code **)(lVar6 + 0x60))
+                  (local_94,1,local_88,local_90 + 0x18,(long)(int)*local_50,local_60);
+      }
+    }
+    else {
+      if (local_54 == 1) {
+        local_70 = *local_48 - *local_40;
+      }
+      else if (local_54 == 0xffffffff) {
+        local_70 = *local_40 - *local_48;
+      }
+      else if ((int)local_54 < 1) {
+        local_70 = 0;
+        if (-local_54 != 0) {
+          local_70 = (*local_40 - *local_48) / -local_54;
+        }
+      }
+      else {
+        local_70 = 0;
+        if (local_54 != 0) {
+          local_70 = (*local_48 - *local_40) / local_54;
+        }
+      }
+      local_70 = local_70 + 1;
+      if (((*____kmp_env_consistency_check != 0) && (local_70 == 0)) && (*local_48 != *local_40)) {
+        ___kmp_error_construct(0x400c5,2,local_28);
+      }
+      if (local_30 == 0x21) {
+        if ((int)local_58 < 1) {
+          local_58 = 1;
+        }
+        else if (local_70 < local_58) {
+          local_58 = local_70;
+        }
+        local_e8 = 0;
+        if (local_58 != 0) {
+          local_e8 = local_70 / local_58;
+        }
+        uVar1 = 0;
+        if (local_58 != 0) {
+          uVar1 = local_70 / local_58;
+        }
+        local_e8 = local_e8 + (local_70 != uVar1 * local_58);
+        local_e4 = local_58 * local_54;
+        if (local_e8 < local_6c) {
+          *local_50 = local_e4 * local_e8;
+          if (local_68 < local_e8) {
+            *local_40 = *local_40 + local_e4 * local_68;
+            *local_48 = (*local_40 + local_e4) - local_54;
+          }
+          else {
+            iVar8 = -1;
+            if (0 < (int)local_54) {
+              iVar8 = 1;
+            }
+            *local_40 = *local_48 + iVar8;
+          }
+        }
+        else {
+          *local_50 = local_e4 * local_6c;
+          *local_40 = *local_40 + local_e4 * local_68;
+          *local_48 = (*local_40 + local_e4) - local_54;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar1 = 0;
+          if (local_6c != 0) {
+            uVar1 = (local_e8 - 1) / local_6c;
+          }
+          *local_38 = (uint)(local_68 == (local_e8 - 1) - uVar1 * local_6c);
+        }
+      }
+      else if (local_30 == 0x22) {
+        if (local_70 < local_6c) {
+          if (local_68 < local_70) {
+            uVar1 = *local_40 + local_68 * local_54;
+            *local_40 = uVar1;
+            *local_48 = uVar1;
+          }
+          else {
+            iVar8 = -1;
+            if (0 < (int)local_54) {
+              iVar8 = 1;
+            }
+            *local_40 = *local_48 + iVar8;
+          }
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_68 == local_70 - 1);
+          }
+        }
+        else if (*____kmp_static == 0x29) {
+          local_d4 = 0;
+          if (local_6c != 0) {
+            local_d4 = local_70 / local_6c;
+          }
+          uVar1 = 0;
+          if (local_6c != 0) {
+            uVar1 = local_70 / local_6c;
+          }
+          local_d8 = local_70 - uVar1 * local_6c;
+          local_150 = local_d8;
+          if (local_68 < local_d8) {
+            local_150 = local_68;
+          }
+          *local_40 = *local_40 + local_54 * (local_68 * local_d4 + local_150);
+          if (local_68 < local_d8) {
+            local_158 = 0;
+          }
+          else {
+            local_158 = local_54;
+          }
+          *local_48 = (*local_40 + local_d4 * local_54) - local_158;
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_68 == local_6c - 1);
+          }
+        }
+        else {
+          uVar1 = 0;
+          if (local_6c != 0) {
+            uVar1 = local_70 / local_6c;
+          }
+          uVar4 = 0;
+          if (local_6c != 0) {
+            uVar4 = local_70 / local_6c;
+          }
+          local_dc = (uVar1 + (local_70 != uVar4 * local_6c)) * local_54;
+          local_e0 = *local_48;
+          *local_40 = *local_40 + local_68 * local_dc;
+          *local_48 = (*local_40 + local_dc) - local_54;
+          if ((int)local_54 < 1) {
+            if (*local_40 < *local_48) {
+              *local_48 = 0;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_160 = 0;
+              if (local_e0 <= *local_40) {
+                local_160 = (uint)(*local_48 < local_e0 - local_54);
+              }
+              *local_38 = local_160;
+            }
+            if (*local_48 < local_e0) {
+              *local_48 = local_e0;
+            }
+          }
+          else {
+            if (*local_48 < *local_40) {
+              *local_48 = 0xffffffff;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_15c = 0;
+              if (*local_40 <= local_e0) {
+                local_15c = (uint)(local_e0 - local_54 < *local_48);
+              }
+              *local_38 = local_15c;
+            }
+            if (local_e0 < *local_48) {
+              *local_48 = local_e0;
+            }
+          }
+        }
+        *local_50 = local_70;
+      }
+      else if (local_30 == 0x2d) {
+        local_ec = *local_48;
+        uVar1 = 0;
+        if (local_6c != 0) {
+          uVar1 = ((local_70 + local_6c) - 1) / local_6c;
+        }
+        local_58 = (uVar1 + local_58) - 1 & (local_58 - 1 ^ 0xffffffff);
+        local_f0 = local_58 * local_54;
+        *local_40 = *local_40 + local_f0 * local_68;
+        *local_48 = (*local_40 + local_f0) - local_54;
+        if ((int)local_54 < 1) {
+          if (*local_48 < local_ec) {
+            *local_48 = local_ec;
+          }
+        }
+        else if (local_ec < *local_48) {
+          *local_48 = local_ec;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar1 = 0;
+          if (local_58 != 0) {
+            uVar1 = (local_70 - 1) / local_58;
+          }
+          *local_38 = (uint)(local_68 == uVar1);
+        }
+      }
+      else {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",
+                            0x194);
+      }
+      if ((*puVar7 >> 0xd & 1) != 0) {
+        (**(code **)(lVar6 + 0x60))(local_94,1,local_88,local_90 + 0x18,local_70,local_60);
+      }
+      if ((*puVar7 & 0x1000000) != 0) {
+        if (local_94 == 2) {
+          local_f4 = 2;
+          local_100 = local_60;
+        }
+        else {
+          if ((int)local_54 < 1) {
+            uVar1 = *local_48;
+            uVar4 = 0;
+            if (-local_54 != 0) {
+              uVar4 = (*local_40 - *local_48) / -local_54;
+            }
+          }
+          else {
+            uVar1 = *local_40;
+            uVar4 = 0;
+            if (local_54 != 0) {
+              uVar4 = (*local_48 - *local_40) / local_54;
+            }
+          }
+          local_108 = (ulong)(uVar4 + 1);
+          local_110 = (ulong)uVar1;
+          local_f4 = 5;
+          if (local_94 != 6) {
+            local_f4 = 3;
+          }
+          local_100 = &local_110;
+        }
+        (**(code **)(lVar6 + 0xb8))(local_88,local_90 + 0x18,local_f4,local_100);
+      }
+    }
+  }
+  else {
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 1;
+    }
+    if ((int)local_54 < 1) {
+      local_13c = -((*local_40 - *local_48) + 1);
+    }
+    else {
+      local_13c = (*local_48 - *local_40) + 1;
+    }
+    *local_50 = local_13c;
+    if ((*puVar7 >> 0xd & 1) != 0) {
+      (**(code **)(lVar6 + 0x60))(local_94,1,local_88,local_90 + 0x18,(long)(int)*local_50,local_60)
+      ;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_for_static_init_8
+// Entry: 000022a4
+// Signature: undefined ___kmpc_for_static_init_8(void)
+// ========================================
+
+
+void ___kmpc_for_static_init_8
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_for_static_init<long_long>(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_for_static_init<long_long>
+// Entry: 00002318
+// Signature: void __cdecl __kmp_for_static_init<long_long>(ident * param_1, int param_2, int param_3, int * param_4, longlong * param_5, longlong * param_6, signed_t * param_7, signed_t.conflict param_8, signed_t.conflict param_9, void * param_10)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_for_static_init<long long>(ident*, int, int, int*, long long*, long long*,
+   traits_t<long long>::signed_t*, traits_t<long long>::signed_t, traits_t<long long>::signed_t,
+   void*) */
+
+void __kmp_for_static_init<long_long>
+               (long param_1,int param_2,uint param_3,uint *param_4,long *param_5,long *param_6,
+               ulong *param_7,ulong param_8,ulong param_9,long *param_10)
+
+{
+  long lVar1;
+  char cVar2;
+  bool bVar3;
+  ulong uVar4;
+  char cVar5;
+  long lVar6;
+  ulong *puVar7;
+  int iVar8;
+  ulong uVar9;
+  ulong uVar10;
+  uint local_1b0;
+  uint local_1ac;
+  ulong local_1a8;
+  ulong local_198;
+  ulong local_178;
+  ulong local_170;
+  long local_140;
+  long local_138;
+  long *local_130;
+  undefined4 local_124;
+  long local_120;
+  long local_118;
+  ulong local_110;
+  long local_108;
+  long local_100;
+  long local_f8;
+  ulong local_f0;
+  ulong local_e8;
+  undefined8 local_e0;
+  undefined8 uStack_d8;
+  undefined8 local_d0;
+  undefined1 auStack_c0 [27];
+  undefined1 local_a5;
+  int local_a4;
+  long local_a0;
+  undefined8 local_98;
+  long local_90;
+  long local_88;
+  ulong local_80;
+  uint local_74;
+  uint local_70;
+  int local_6c;
+  long *local_68;
+  ulong local_60;
+  ulong local_58;
+  ulong *local_50;
+  long *local_48;
+  long *local_40;
+  uint *local_38;
+  uint local_30;
+  int local_2c;
+  long local_28;
+  
+  puVar7 = __ompt_enabled;
+  lVar6 = __ompt_callbacks;
+  local_60 = param_9;
+  local_68 = param_10;
+  local_30 = param_3 & 0x9fffffff;
+  local_6c = param_2;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  local_90 = *(long *)(*____kmp_threads + (long)local_6c * 8);
+  local_98 = 0;
+  local_a0 = 0;
+  local_a4 = 1;
+  if (((*puVar7 >> 0xd & 1) != 0) || ((*puVar7 & 0x1000000) != 0)) {
+    local_98 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_a0 = __ompt_get_task_info_object(0);
+    if (local_28 != 0) {
+      if ((*(uint *)(local_28 + 4) & 0x200) == 0) {
+        if ((*(uint *)(local_28 + 4) & 0x400) == 0) {
+          if ((*(uint *)(local_28 + 4) & 0x800) == 0) {
+            do {
+              cVar5 = __kmp_for_static_init<long_long>(ident*,int,int,int*,long_long*,long_long*,traits_t<long_long>::signed_t*,traits_t<long_long>::signed_t,traits_t<long_long>::signed_t,void*)
+                      ::warn;
+              if (__kmp_for_static_init<long_long>(ident*,int,int,int*,long_long*,long_long*,traits_t<long_long>::signed_t*,traits_t<long_long>::signed_t,traits_t<long_long>::signed_t,void*)
+                  ::warn != '\0') break;
+              cVar2 = '\x01';
+              bVar3 = (bool)ExclusiveMonitorPass(0x9855,0x10);
+              if (bVar3) {
+                __kmp_for_static_init<long_long>(ident*,int,int,int*,long_long*,long_long*,traits_t<long_long>::signed_t*,traits_t<long_long>::signed_t,traits_t<long_long>::signed_t,void*)
+                ::warn = '\x01';
+                cVar2 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar2 != '\0');
+            local_a5 = cVar5 == '\0';
+            if ((bool)local_a5) {
+              ___kmp_msg_format(0x400bd);
+              uStack_d8 = ____kmp_msg_null[1];
+              local_e0 = *____kmp_msg_null;
+              local_d0 = ____kmp_msg_null[2];
+              ___kmp_msg(1,auStack_c0);
+            }
+          }
+          else {
+            local_a4 = 6;
+          }
+        }
+        else {
+          local_a4 = 2;
+        }
+      }
+      else {
+        local_a4 = 1;
+      }
+    }
+  }
+  if ((*____kmp_env_consistency_check != 0) &&
+     (___kmp_push_workshare(local_2c,2,local_28), local_58 == 0)) {
+    ___kmp_error_construct(0x400c6,2,local_28);
+  }
+  if ((long)local_58 < 1) {
+    if (*local_40 < *local_48) goto LAB_000025ec;
+  }
+  else if (*local_48 < *local_40) {
+LAB_000025ec:
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 0;
+    }
+    *local_50 = local_58;
+    if ((*puVar7 >> 0xd & 1) == 0) {
+      return;
+    }
+    (**(code **)(lVar6 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,0,local_68);
+    return;
+  }
+  if ((int)local_30 < 0x49) {
+    local_70 = __kmp_tid_from_gtid(local_2c);
+    local_88 = *(long *)(local_90 + 0x40);
+  }
+  else {
+    local_30 = local_30 - 0x3a;
+    if (*(int *)(*(long *)(local_90 + 0x40) + 0x2c8) < 2) {
+      local_70 = *(uint *)(*(long *)(local_90 + 0x40) + 0x180);
+      local_88 = *(long *)(*(long *)(local_90 + 0x40) + 400);
+    }
+    else {
+      local_70 = 0;
+      local_88 = *(long *)(local_90 + 0x40);
+    }
+  }
+  if (*(int *)(local_88 + 0x2c8) == 0) {
+    local_74 = *(uint *)(local_88 + 0x1cc);
+    if (local_74 == 1) {
+      if (local_38 != (uint *)0x0) {
+        *local_38 = 1;
+      }
+      if ((long)local_58 < 1) {
+        local_178 = -((*local_40 - *local_48) + 1);
+      }
+      else {
+        local_178 = (*local_48 - *local_40) + 1;
+      }
+      *local_50 = local_178;
+      if ((*puVar7 >> 0xd & 1) != 0) {
+        (**(code **)(lVar6 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,*local_50,local_68);
+      }
+    }
+    else {
+      if (local_58 == 1) {
+        local_80 = *local_48 - *local_40;
+      }
+      else if (local_58 == 0xffffffffffffffff) {
+        local_80 = *local_40 - *local_48;
+      }
+      else if ((long)local_58 < 1) {
+        local_80 = 0;
+        if (-local_58 != 0) {
+          local_80 = (ulong)(*local_40 - *local_48) / -local_58;
+        }
+      }
+      else {
+        local_80 = 0;
+        if (local_58 != 0) {
+          local_80 = (ulong)(*local_48 - *local_40) / local_58;
+        }
+      }
+      local_80 = local_80 + 1;
+      if (((*____kmp_env_consistency_check != 0) && (local_80 == 0)) && (*local_48 != *local_40)) {
+        ___kmp_error_construct(0x400c5,2,local_28);
+      }
+      if (local_30 == 0x21) {
+        if ((long)local_60 < 1) {
+          local_60 = 1;
+        }
+        else if (local_80 < local_60) {
+          local_60 = local_80;
+        }
+        local_110 = 0;
+        if (local_60 != 0) {
+          local_110 = local_80 / local_60;
+        }
+        uVar4 = 0;
+        if (local_60 != 0) {
+          uVar4 = local_80 / local_60;
+        }
+        local_110 = local_110 + (long)(int)(uint)(local_80 != uVar4 * local_60);
+        local_108 = local_60 * local_58;
+        if (local_110 < local_74) {
+          *local_50 = local_108 * local_110;
+          if (local_70 < local_110) {
+            *local_40 = *local_40 + local_108 * (ulong)local_70;
+            *local_48 = (*local_40 + local_108) - local_58;
+          }
+          else {
+            iVar8 = -1;
+            if (0 < (long)local_58) {
+              iVar8 = 1;
+            }
+            *local_40 = *local_48 + (long)iVar8;
+          }
+        }
+        else {
+          *local_50 = local_108 * (ulong)local_74;
+          *local_40 = *local_40 + local_108 * (ulong)local_70;
+          *local_48 = (*local_40 + local_108) - local_58;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar9 = (ulong)local_74;
+          uVar4 = 0;
+          if (uVar9 != 0) {
+            uVar4 = (local_110 - 1) / uVar9;
+          }
+          *local_38 = (uint)((ulong)local_70 == (local_110 - 1) - uVar4 * uVar9);
+        }
+      }
+      else if (local_30 == 0x22) {
+        if (local_80 < local_74) {
+          if (local_70 < local_80) {
+            lVar1 = *local_40 + local_70 * local_58;
+            *local_40 = lVar1;
+            *local_48 = lVar1;
+          }
+          else {
+            iVar8 = -1;
+            if (0 < (long)local_58) {
+              iVar8 = 1;
+            }
+            *local_40 = *local_48 + (long)iVar8;
+          }
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)((ulong)local_70 == local_80 - 1);
+          }
+        }
+        else if (*____kmp_static == 0x29) {
+          local_e8 = 0;
+          if ((ulong)local_74 != 0) {
+            local_e8 = local_80 / local_74;
+          }
+          uVar9 = (ulong)local_74;
+          uVar4 = 0;
+          if (uVar9 != 0) {
+            uVar4 = local_80 / uVar9;
+          }
+          local_f0 = local_80 - uVar4 * uVar9;
+          local_198 = local_f0;
+          if (local_70 < local_f0) {
+            local_198 = (ulong)local_70;
+          }
+          *local_40 = *local_40 + local_58 * (local_70 * local_e8 + local_198);
+          if (local_70 < local_f0) {
+            local_1a8 = 0;
+          }
+          else {
+            local_1a8 = local_58;
+          }
+          *local_48 = (*local_40 + local_e8 * local_58) - local_1a8;
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_70 == local_74 - 1);
+          }
+        }
+        else {
+          uVar4 = 0;
+          if ((ulong)local_74 != 0) {
+            uVar4 = local_80 / local_74;
+          }
+          uVar10 = (ulong)local_74;
+          uVar9 = 0;
+          if (uVar10 != 0) {
+            uVar9 = local_80 / uVar10;
+          }
+          local_f8 = (uVar4 + (long)(int)(uint)(local_80 != uVar9 * uVar10)) * local_58;
+          local_100 = *local_48;
+          *local_40 = *local_40 + (ulong)local_70 * local_f8;
+          *local_48 = (*local_40 + local_f8) - local_58;
+          if ((long)local_58 < 1) {
+            if (*local_40 < *local_48) {
+              *local_48 = -0x8000000000000000;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_1b0 = 0;
+              if (local_100 <= *local_40) {
+                local_1b0 = (uint)(*local_48 < (long)(local_100 - local_58));
+              }
+              *local_38 = local_1b0;
+            }
+            if (*local_48 < local_100) {
+              *local_48 = local_100;
+            }
+          }
+          else {
+            if (*local_48 < *local_40) {
+              *local_48 = 0x7fffffffffffffff;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_1ac = 0;
+              if (*local_40 <= local_100) {
+                local_1ac = (uint)((long)(local_100 - local_58) < *local_48);
+              }
+              *local_38 = local_1ac;
+            }
+            if (local_100 < *local_48) {
+              *local_48 = local_100;
+            }
+          }
+        }
+        *local_50 = local_80;
+      }
+      else if (local_30 == 0x2d) {
+        local_118 = *local_48;
+        uVar4 = 0;
+        if ((ulong)local_74 != 0) {
+          uVar4 = ((local_80 + local_74) - 1) / (ulong)local_74;
+        }
+        local_60 = (uVar4 + local_60) - 1 & (local_60 - 1 ^ 0xffffffffffffffff);
+        local_120 = local_60 * local_58;
+        *local_40 = *local_40 + local_120 * (ulong)local_70;
+        *local_48 = (*local_40 + local_120) - local_58;
+        if ((long)local_58 < 1) {
+          if (*local_48 < local_118) {
+            *local_48 = local_118;
+          }
+        }
+        else if (local_118 < *local_48) {
+          *local_48 = local_118;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar4 = 0;
+          if (local_60 != 0) {
+            uVar4 = (local_80 - 1) / local_60;
+          }
+          *local_38 = (uint)(local_70 == uVar4);
+        }
+      }
+      else {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",
+                            0x194);
+      }
+      if ((*puVar7 >> 0xd & 1) != 0) {
+        (**(code **)(lVar6 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,local_80,local_68);
+      }
+      if ((*puVar7 & 0x1000000) != 0) {
+        if (local_a4 == 2) {
+          local_124 = 2;
+          local_130 = local_68;
+        }
+        else {
+          if ((long)local_58 < 1) {
+            local_140 = *local_48;
+            local_138 = 0;
+            if (-local_58 != 0) {
+              local_138 = (*local_40 - *local_48) / (long)-local_58;
+            }
+          }
+          else {
+            local_140 = *local_40;
+            local_138 = 0;
+            if (local_58 != 0) {
+              local_138 = (*local_48 - *local_40) / (long)local_58;
+            }
+          }
+          local_138 = local_138 + 1;
+          local_124 = 5;
+          if (local_a4 != 6) {
+            local_124 = 3;
+          }
+          local_130 = &local_140;
+        }
+        (**(code **)(lVar6 + 0xb8))(local_98,local_a0 + 0x18,local_124,local_130);
+      }
+    }
+  }
+  else {
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 1;
+    }
+    if ((long)local_58 < 1) {
+      local_170 = -((*local_40 - *local_48) + 1);
+    }
+    else {
+      local_170 = (*local_48 - *local_40) + 1;
+    }
+    *local_50 = local_170;
+    if ((*puVar7 >> 0xd & 1) != 0) {
+      (**(code **)(lVar6 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,*local_50,local_68);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_for_static_init_8u
+// Entry: 000033f8
+// Signature: undefined ___kmpc_for_static_init_8u(void)
+// ========================================
+
+
+void ___kmpc_for_static_init_8u
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_for_static_init<unsigned_long_long>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_for_static_init<unsigned_long_long>
+// Entry: 0000346c
+// Signature: void __cdecl __kmp_for_static_init<unsigned_long_long>(ident * param_1, int param_2, int param_3, int * param_4, ulonglong * param_5, ulonglong * param_6, signed_t * param_7, signed_t.conflict param_8, signed_t.conflict param_9, void * param_10)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_for_static_init<unsigned long long>(ident*, int, int, int*, unsigned long long*,
+   unsigned long long*, traits_t<unsigned long long>::signed_t*, traits_t<unsigned long
+   long>::signed_t, traits_t<unsigned long long>::signed_t, void*) */
+
+void __kmp_for_static_init<unsigned_long_long>
+               (long param_1,int param_2,uint param_3,uint *param_4,ulong *param_5,ulong *param_6,
+               ulong *param_7,ulong param_8,ulong param_9,ulong *param_10)
+
+{
+  char cVar1;
+  bool bVar2;
+  ulong uVar3;
+  char cVar4;
+  long lVar5;
+  ulong *puVar6;
+  int iVar7;
+  ulong uVar8;
+  ulong uVar9;
+  uint local_1b0;
+  uint local_1ac;
+  ulong local_1a8;
+  ulong local_198;
+  ulong local_178;
+  ulong local_170;
+  ulong local_140;
+  long local_138;
+  ulong *local_130;
+  undefined4 local_124;
+  long local_120;
+  ulong local_118;
+  ulong local_110;
+  long local_108;
+  ulong local_100;
+  long local_f8;
+  ulong local_f0;
+  ulong local_e8;
+  undefined8 local_e0;
+  undefined8 uStack_d8;
+  undefined8 local_d0;
+  undefined1 auStack_c0 [27];
+  undefined1 local_a5;
+  int local_a4;
+  long local_a0;
+  undefined8 local_98;
+  long local_90;
+  long local_88;
+  ulong local_80;
+  uint local_74;
+  uint local_70;
+  int local_6c;
+  ulong *local_68;
+  ulong local_60;
+  ulong local_58;
+  ulong *local_50;
+  ulong *local_48;
+  ulong *local_40;
+  uint *local_38;
+  uint local_30;
+  int local_2c;
+  long local_28;
+  
+  puVar6 = __ompt_enabled;
+  lVar5 = __ompt_callbacks;
+  local_60 = param_9;
+  local_68 = param_10;
+  local_30 = param_3 & 0x9fffffff;
+  local_6c = param_2;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  local_90 = *(long *)(*____kmp_threads + (long)local_6c * 8);
+  local_98 = 0;
+  local_a0 = 0;
+  local_a4 = 1;
+  if (((*puVar6 >> 0xd & 1) != 0) || ((*puVar6 & 0x1000000) != 0)) {
+    local_98 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_a0 = __ompt_get_task_info_object(0);
+    if (local_28 != 0) {
+      if ((*(uint *)(local_28 + 4) & 0x200) == 0) {
+        if ((*(uint *)(local_28 + 4) & 0x400) == 0) {
+          if ((*(uint *)(local_28 + 4) & 0x800) == 0) {
+            do {
+              cVar4 = __kmp_for_static_init<unsigned_long_long>(ident*,int,int,int*,unsigned_long_long*,unsigned_long_long*,traits_t<unsigned_long_long>::signed_t*,traits_t<unsigned_long_long>::signed_t,traits_t<unsigned_long_long>::signed_t,void*)
+                      ::warn;
+              if (__kmp_for_static_init<unsigned_long_long>(ident*,int,int,int*,unsigned_long_long*,unsigned_long_long*,traits_t<unsigned_long_long>::signed_t*,traits_t<unsigned_long_long>::signed_t,traits_t<unsigned_long_long>::signed_t,void*)
+                  ::warn != '\0') break;
+              cVar1 = '\x01';
+              bVar2 = (bool)ExclusiveMonitorPass(0x9856,0x10);
+              if (bVar2) {
+                __kmp_for_static_init<unsigned_long_long>(ident*,int,int,int*,unsigned_long_long*,unsigned_long_long*,traits_t<unsigned_long_long>::signed_t*,traits_t<unsigned_long_long>::signed_t,traits_t<unsigned_long_long>::signed_t,void*)
+                ::warn = '\x01';
+                cVar1 = ExclusiveMonitorsStatus();
+              }
+            } while (cVar1 != '\0');
+            local_a5 = cVar4 == '\0';
+            if ((bool)local_a5) {
+              ___kmp_msg_format(0x400bd);
+              uStack_d8 = ____kmp_msg_null[1];
+              local_e0 = *____kmp_msg_null;
+              local_d0 = ____kmp_msg_null[2];
+              ___kmp_msg(1,auStack_c0);
+            }
+          }
+          else {
+            local_a4 = 6;
+          }
+        }
+        else {
+          local_a4 = 2;
+        }
+      }
+      else {
+        local_a4 = 1;
+      }
+    }
+  }
+  if ((*____kmp_env_consistency_check != 0) &&
+     (___kmp_push_workshare(local_2c,2,local_28), local_58 == 0)) {
+    ___kmp_error_construct(0x400c6,2,local_28);
+  }
+  if ((long)local_58 < 1) {
+    if (*local_40 < *local_48) goto LAB_00003740;
+  }
+  else if (*local_48 < *local_40) {
+LAB_00003740:
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 0;
+    }
+    *local_50 = local_58;
+    if ((*puVar6 >> 0xd & 1) == 0) {
+      return;
+    }
+    (**(code **)(lVar5 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,0,local_68);
+    return;
+  }
+  if ((int)local_30 < 0x49) {
+    local_70 = __kmp_tid_from_gtid(local_2c);
+    local_88 = *(long *)(local_90 + 0x40);
+  }
+  else {
+    local_30 = local_30 - 0x3a;
+    if (*(int *)(*(long *)(local_90 + 0x40) + 0x2c8) < 2) {
+      local_70 = *(uint *)(*(long *)(local_90 + 0x40) + 0x180);
+      local_88 = *(long *)(*(long *)(local_90 + 0x40) + 400);
+    }
+    else {
+      local_70 = 0;
+      local_88 = *(long *)(local_90 + 0x40);
+    }
+  }
+  if (*(int *)(local_88 + 0x2c8) == 0) {
+    local_74 = *(uint *)(local_88 + 0x1cc);
+    if (local_74 == 1) {
+      if (local_38 != (uint *)0x0) {
+        *local_38 = 1;
+      }
+      if ((long)local_58 < 1) {
+        local_178 = -((*local_40 - *local_48) + 1);
+      }
+      else {
+        local_178 = (*local_48 - *local_40) + 1;
+      }
+      *local_50 = local_178;
+      if ((*puVar6 >> 0xd & 1) != 0) {
+        (**(code **)(lVar5 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,*local_50,local_68);
+      }
+    }
+    else {
+      if (local_58 == 1) {
+        local_80 = *local_48 - *local_40;
+      }
+      else if (local_58 == 0xffffffffffffffff) {
+        local_80 = *local_40 - *local_48;
+      }
+      else if ((long)local_58 < 1) {
+        local_80 = 0;
+        if (-local_58 != 0) {
+          local_80 = (*local_40 - *local_48) / -local_58;
+        }
+      }
+      else {
+        local_80 = 0;
+        if (local_58 != 0) {
+          local_80 = (*local_48 - *local_40) / local_58;
+        }
+      }
+      local_80 = local_80 + 1;
+      if (((*____kmp_env_consistency_check != 0) && (local_80 == 0)) && (*local_48 != *local_40)) {
+        ___kmp_error_construct(0x400c5,2,local_28);
+      }
+      if (local_30 == 0x21) {
+        if ((long)local_60 < 1) {
+          local_60 = 1;
+        }
+        else if (local_80 < local_60) {
+          local_60 = local_80;
+        }
+        local_110 = 0;
+        if (local_60 != 0) {
+          local_110 = local_80 / local_60;
+        }
+        uVar3 = 0;
+        if (local_60 != 0) {
+          uVar3 = local_80 / local_60;
+        }
+        local_110 = local_110 + (long)(int)(uint)(local_80 != uVar3 * local_60);
+        local_108 = local_60 * local_58;
+        if (local_110 < local_74) {
+          *local_50 = local_108 * local_110;
+          if (local_70 < local_110) {
+            *local_40 = *local_40 + local_108 * (ulong)local_70;
+            *local_48 = (*local_40 + local_108) - local_58;
+          }
+          else {
+            iVar7 = -1;
+            if (0 < (long)local_58) {
+              iVar7 = 1;
+            }
+            *local_40 = *local_48 + (long)iVar7;
+          }
+        }
+        else {
+          *local_50 = local_108 * (ulong)local_74;
+          *local_40 = *local_40 + local_108 * (ulong)local_70;
+          *local_48 = (*local_40 + local_108) - local_58;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar8 = (ulong)local_74;
+          uVar3 = 0;
+          if (uVar8 != 0) {
+            uVar3 = (local_110 - 1) / uVar8;
+          }
+          *local_38 = (uint)((ulong)local_70 == (local_110 - 1) - uVar3 * uVar8);
+        }
+      }
+      else if (local_30 == 0x22) {
+        if (local_80 < local_74) {
+          if (local_70 < local_80) {
+            uVar3 = *local_40 + local_70 * local_58;
+            *local_40 = uVar3;
+            *local_48 = uVar3;
+          }
+          else {
+            iVar7 = -1;
+            if (0 < (long)local_58) {
+              iVar7 = 1;
+            }
+            *local_40 = *local_48 + (long)iVar7;
+          }
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)((ulong)local_70 == local_80 - 1);
+          }
+        }
+        else if (*____kmp_static == 0x29) {
+          local_e8 = 0;
+          if ((ulong)local_74 != 0) {
+            local_e8 = local_80 / local_74;
+          }
+          uVar8 = (ulong)local_74;
+          uVar3 = 0;
+          if (uVar8 != 0) {
+            uVar3 = local_80 / uVar8;
+          }
+          local_f0 = local_80 - uVar3 * uVar8;
+          local_198 = local_f0;
+          if (local_70 < local_f0) {
+            local_198 = (ulong)local_70;
+          }
+          *local_40 = *local_40 + local_58 * (local_70 * local_e8 + local_198);
+          if (local_70 < local_f0) {
+            local_1a8 = 0;
+          }
+          else {
+            local_1a8 = local_58;
+          }
+          *local_48 = (*local_40 + local_e8 * local_58) - local_1a8;
+          if (local_38 != (uint *)0x0) {
+            *local_38 = (uint)(local_70 == local_74 - 1);
+          }
+        }
+        else {
+          uVar3 = 0;
+          if ((ulong)local_74 != 0) {
+            uVar3 = local_80 / local_74;
+          }
+          uVar9 = (ulong)local_74;
+          uVar8 = 0;
+          if (uVar9 != 0) {
+            uVar8 = local_80 / uVar9;
+          }
+          local_f8 = (uVar3 + (long)(int)(uint)(local_80 != uVar8 * uVar9)) * local_58;
+          local_100 = *local_48;
+          *local_40 = *local_40 + (ulong)local_70 * local_f8;
+          *local_48 = (*local_40 + local_f8) - local_58;
+          if ((long)local_58 < 1) {
+            if (*local_40 < *local_48) {
+              *local_48 = 0;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_1b0 = 0;
+              if (local_100 <= *local_40) {
+                local_1b0 = (uint)(*local_48 < local_100 - local_58);
+              }
+              *local_38 = local_1b0;
+            }
+            if (*local_48 < local_100) {
+              *local_48 = local_100;
+            }
+          }
+          else {
+            if (*local_48 < *local_40) {
+              *local_48 = 0xffffffffffffffff;
+            }
+            if (local_38 != (uint *)0x0) {
+              local_1ac = 0;
+              if (*local_40 <= local_100) {
+                local_1ac = (uint)(local_100 - local_58 < *local_48);
+              }
+              *local_38 = local_1ac;
+            }
+            if (local_100 < *local_48) {
+              *local_48 = local_100;
+            }
+          }
+        }
+        *local_50 = local_80;
+      }
+      else if (local_30 == 0x2d) {
+        local_118 = *local_48;
+        uVar3 = 0;
+        if ((ulong)local_74 != 0) {
+          uVar3 = ((local_80 + local_74) - 1) / (ulong)local_74;
+        }
+        local_60 = (uVar3 + local_60) - 1 & (local_60 - 1 ^ 0xffffffffffffffff);
+        local_120 = local_60 * local_58;
+        *local_40 = *local_40 + local_120 * (ulong)local_70;
+        *local_48 = (*local_40 + local_120) - local_58;
+        if ((long)local_58 < 1) {
+          if (*local_48 < local_118) {
+            *local_48 = local_118;
+          }
+        }
+        else if (local_118 < *local_48) {
+          *local_48 = local_118;
+        }
+        if (local_38 != (uint *)0x0) {
+          uVar3 = 0;
+          if (local_60 != 0) {
+            uVar3 = (local_80 - 1) / local_60;
+          }
+          *local_38 = (uint)(local_70 == uVar3);
+        }
+      }
+      else {
+        ___kmp_debug_assert("assertion failure",
+                            "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",
+                            0x194);
+      }
+      if ((*puVar6 >> 0xd & 1) != 0) {
+        (**(code **)(lVar5 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,local_80,local_68);
+      }
+      if ((*puVar6 & 0x1000000) != 0) {
+        if (local_a4 == 2) {
+          local_124 = 2;
+          local_130 = local_68;
+        }
+        else {
+          if ((long)local_58 < 1) {
+            local_140 = *local_48;
+            uVar3 = 0;
+            if (-local_58 != 0) {
+              uVar3 = (*local_40 - *local_48) / -local_58;
+            }
+          }
+          else {
+            local_140 = *local_40;
+            uVar3 = 0;
+            if (local_58 != 0) {
+              uVar3 = (*local_48 - *local_40) / local_58;
+            }
+          }
+          local_138 = uVar3 + 1;
+          local_124 = 5;
+          if (local_a4 != 6) {
+            local_124 = 3;
+          }
+          local_130 = &local_140;
+        }
+        (**(code **)(lVar5 + 0xb8))(local_98,local_a0 + 0x18,local_124,local_130);
+      }
+    }
+  }
+  else {
+    if (local_38 != (uint *)0x0) {
+      *local_38 = 1;
+    }
+    if ((long)local_58 < 1) {
+      local_170 = -((*local_40 - *local_48) + 1);
+    }
+    else {
+      local_170 = (*local_48 - *local_40) + 1;
+    }
+    *local_50 = local_170;
+    if ((*puVar6 >> 0xd & 1) != 0) {
+      (**(code **)(lVar5 + 0x60))(local_a4,1,local_98,local_a0 + 0x18,*local_50,local_68);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_dist_for_static_init_4
+// Entry: 00004548
+// Signature: undefined ___kmpc_dist_for_static_init_4(void)
+// ========================================
+
+
+void ___kmpc_dist_for_static_init_4
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_dist_for_static_init<int>(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_dist_for_static_init<int>
+// Entry: 000045cc
+// Signature: void __cdecl __kmp_dist_for_static_init<int>(ident * param_1, int param_2, int param_3, int * param_4, int * param_5, int * param_6, int * param_7, signed_t * param_8, signed_t param_9, signed_t param_10, void * param_11)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_dist_for_static_init<int>(ident*, int, int, int*, int*, int*, int*,
+   traits_t<int>::signed_t*, traits_t<int>::signed_t, traits_t<int>::signed_t, void*) */
+
+void __kmp_dist_for_static_init<int>
+               (undefined8 param_1,int param_2,int param_3,uint *param_4,int *param_5,int *param_6,
+               int *param_7,int *param_8,undefined8 param_9,undefined8 param_10)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  long lVar5;
+  ulong *puVar6;
+  uint local_130;
+  uint local_128;
+  uint local_118;
+  uint local_114;
+  uint local_110;
+  uint local_108;
+  uint local_fc;
+  long local_e0;
+  long local_d8;
+  long *local_d0;
+  long local_c8;
+  undefined8 local_c0;
+  int local_b4;
+  int local_b0;
+  int local_ac;
+  uint local_a8;
+  uint local_a4;
+  int local_a0;
+  int local_9c;
+  uint local_98;
+  uint local_94;
+  long local_90;
+  long local_88;
+  uint local_7c;
+  uint local_78;
+  uint local_74;
+  uint local_70;
+  uint local_6c;
+  undefined8 local_68;
+  uint local_60;
+  uint local_5c;
+  int *local_58;
+  int *local_50;
+  int *local_48;
+  int *local_40;
+  uint *local_38;
+  int local_30;
+  int local_2c;
+  undefined8 local_28;
+  
+  puVar6 = __ompt_enabled;
+  lVar5 = __ompt_callbacks;
+  local_5c = (uint)param_9;
+  local_60 = param_9._4_4_;
+  local_68 = param_10;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_30 = param_3;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_push_workshare(local_2c,2,local_28);
+    if (local_5c == 0) {
+      ___kmp_error_construct(0x400c6,2,local_28);
+    }
+    if ((int)local_5c < 1) {
+      if (*local_40 < *local_48) goto LAB_000046e0;
+    }
+    else if (*local_48 < *local_40) {
+LAB_000046e0:
+      ___kmp_error_construct(0x400ff,2,local_28);
+    }
+  }
+  local_6c = __kmp_tid_from_gtid(local_2c);
+  local_90 = *(long *)(*____kmp_threads + (long)local_2c * 8);
+  local_70 = *(uint *)(local_90 + 100);
+  local_88 = *(long *)(local_90 + 0x40);
+  local_78 = *(uint *)(local_90 + 0xd4);
+  local_74 = *(uint *)(local_88 + 0x180);
+  if (local_5c == 1) {
+    uVar3 = *local_48 - *local_40;
+  }
+  else if (local_5c == 0xffffffff) {
+    uVar3 = *local_40 - *local_48;
+  }
+  else if ((int)local_5c < 1) {
+    uVar3 = 0;
+    if (-local_5c != 0) {
+      uVar3 = (uint)(*local_40 - *local_48) / -local_5c;
+    }
+  }
+  else {
+    uVar3 = 0;
+    if (local_5c != 0) {
+      uVar3 = (uint)(*local_48 - *local_40) / local_5c;
+    }
+  }
+  local_7c = uVar3 + 1;
+  *local_58 = *local_48 - *local_40;
+  if (local_7c <= local_78) {
+    if ((local_74 < local_7c) && (local_6c == 0)) {
+      iVar1 = *local_40 + local_74 * local_5c;
+      *local_40 = iVar1;
+      *local_50 = iVar1;
+      *local_48 = iVar1;
+    }
+    else {
+      *local_50 = *local_48;
+      *local_40 = *local_48 + local_5c;
+    }
+    if (local_38 != (uint *)0x0) {
+      local_fc = 0;
+      if (local_6c == 0) {
+        local_fc = (uint)(local_74 == uVar3);
+      }
+      *local_38 = local_fc;
+    }
+    goto LAB_00005418;
+  }
+  if (*____kmp_static == 0x29) {
+    local_94 = 0;
+    if (local_78 != 0) {
+      local_94 = local_7c / local_78;
+    }
+    uVar3 = 0;
+    if (local_78 != 0) {
+      uVar3 = local_7c / local_78;
+    }
+    local_98 = local_7c - uVar3 * local_78;
+    local_108 = local_98;
+    if (local_74 < local_98) {
+      local_108 = local_74;
+    }
+    *local_40 = *local_40 + local_5c * (local_74 * local_94 + local_108);
+    if (local_74 < local_98) {
+      local_110 = 0;
+    }
+    else {
+      local_110 = local_5c;
+    }
+    *local_50 = (*local_40 + local_94 * local_5c) - local_110;
+    if (local_38 != (uint *)0x0) {
+      *local_38 = (uint)(local_74 == local_78 - 1);
+    }
+  }
+  else {
+    uVar3 = 0;
+    if (local_78 != 0) {
+      uVar3 = local_7c / local_78;
+    }
+    uVar4 = 0;
+    if (local_78 != 0) {
+      uVar4 = local_7c / local_78;
+    }
+    local_9c = (uVar3 + (local_7c != uVar4 * local_78)) * local_5c;
+    local_a0 = *local_48;
+    *local_40 = *local_40 + local_74 * local_9c;
+    *local_50 = (*local_40 + local_9c) - local_5c;
+    if ((int)local_5c < 1) {
+      if (*local_40 < *local_50) {
+        *local_50 = -0x80000000;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_118 = 0;
+        if (local_a0 <= *local_40) {
+          local_118 = (uint)(*local_50 < (int)(local_a0 - local_5c));
+        }
+        *local_38 = local_118;
+      }
+      if (*local_50 < local_a0) {
+        *local_50 = local_a0;
+      }
+      if (*local_40 < *local_50) {
+        *local_48 = *local_50;
+        goto LAB_00005418;
+      }
+    }
+    else {
+      if (*local_50 < *local_40) {
+        *local_50 = 0x7fffffff;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_114 = 0;
+        if (*local_40 <= local_a0) {
+          local_114 = (uint)((int)(local_a0 - local_5c) < *local_50);
+        }
+        *local_38 = local_114;
+      }
+      if (local_a0 < *local_50) {
+        *local_50 = local_a0;
+      }
+      if (*local_50 < *local_40) {
+        *local_48 = *local_50;
+        goto LAB_00005418;
+      }
+    }
+  }
+  if (local_5c == 1) {
+    uVar3 = *local_50 - *local_40;
+  }
+  else if (local_5c == 0xffffffff) {
+    uVar3 = *local_40 - *local_50;
+  }
+  else if ((int)local_5c < 2) {
+    uVar3 = 0;
+    if (-local_5c != 0) {
+      uVar3 = (uint)(*local_40 - *local_50) / -local_5c;
+    }
+  }
+  else {
+    uVar3 = 0;
+    if (local_5c != 0) {
+      uVar3 = (uint)(*local_50 - *local_40) / local_5c;
+    }
+  }
+  local_7c = uVar3 + 1;
+  if (local_30 == 0x21) {
+    if ((int)local_60 < 1) {
+      local_60 = 1;
+    }
+    local_b4 = local_60 * local_5c;
+    *local_58 = local_b4 * local_70;
+    *local_40 = *local_40 + local_b4 * local_6c;
+    *local_48 = (*local_40 + local_b4) - local_5c;
+    if ((local_38 != (uint *)0x0) && (*local_38 != 0)) {
+      uVar4 = 0;
+      if (local_60 != 0) {
+        uVar4 = uVar3 / local_60;
+      }
+      uVar3 = 0;
+      if (local_70 != 0) {
+        uVar3 = uVar4 / local_70;
+      }
+      if (local_6c != uVar4 - uVar3 * local_70) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else if (local_30 == 0x22) {
+    if (local_70 < local_7c) {
+      if (*____kmp_static == 0x29) {
+        local_a4 = 0;
+        if (local_70 != 0) {
+          local_a4 = local_7c / local_70;
+        }
+        uVar3 = 0;
+        if (local_70 != 0) {
+          uVar3 = local_7c / local_70;
+        }
+        local_a8 = local_7c - uVar3 * local_70;
+        local_128 = local_a8;
+        if (local_6c < local_a8) {
+          local_128 = local_6c;
+        }
+        *local_40 = *local_40 + local_5c * (local_6c * local_a4 + local_128);
+        if (local_6c < local_a8) {
+          local_130 = 0;
+        }
+        else {
+          local_130 = local_5c;
+        }
+        *local_48 = (*local_40 + local_a4 * local_5c) - local_130;
+        if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_6c != local_70 - 1)) {
+          *local_38 = 0;
+        }
+      }
+      else {
+        uVar3 = 0;
+        if (local_70 != 0) {
+          uVar3 = local_7c / local_70;
+        }
+        uVar4 = 0;
+        if (local_70 != 0) {
+          uVar4 = local_7c / local_70;
+        }
+        local_ac = (uVar3 + (local_7c != uVar4 * local_70)) * local_5c;
+        local_b0 = *local_50;
+        *local_40 = *local_40 + local_6c * local_ac;
+        *local_48 = (*local_40 + local_ac) - local_5c;
+        if ((int)local_5c < 1) {
+          if (*local_40 < *local_48) {
+            *local_48 = -0x80000000;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((*local_40 < local_b0 || ((int)(local_b0 - local_5c) <= *local_48)))) {
+            *local_38 = 0;
+          }
+          if (*local_48 < local_b0) {
+            *local_48 = local_b0;
+          }
+        }
+        else {
+          if (*local_48 < *local_40) {
+            *local_48 = 0x7fffffff;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((local_b0 < *local_40 || (*local_48 <= (int)(local_b0 - local_5c))))) {
+            *local_38 = 0;
+          }
+          if (local_b0 < *local_48) {
+            *local_48 = local_b0;
+          }
+        }
+      }
+    }
+    else {
+      if (local_6c < local_7c) {
+        iVar1 = *local_40 + local_6c * local_5c;
+        *local_40 = iVar1;
+        *local_48 = iVar1;
+      }
+      else {
+        *local_40 = *local_48 + local_5c;
+      }
+      if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_6c != uVar3)) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",0x2b4
+                       );
+  }
+LAB_00005418:
+  if (((*puVar6 >> 0xd & 1) != 0) || ((*puVar6 & 0x1000000) != 0)) {
+    local_c0 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_c8 = __ompt_get_task_info_object(0);
+    if ((*puVar6 >> 0xd & 1) != 0) {
+      (**(code **)(lVar5 + 0x60))(6,1,local_c0,local_c8 + 0x18,0,local_68);
+    }
+    if ((*puVar6 & 0x1000000) != 0) {
+      if ((int)local_5c < 1) {
+        iVar1 = *local_50;
+        iVar2 = 0;
+        if (-local_5c != 0) {
+          iVar2 = (*local_40 - *local_50) / (int)-local_5c;
+        }
+      }
+      else {
+        iVar1 = *local_40;
+        iVar2 = 0;
+        if (local_5c != 0) {
+          iVar2 = (*local_50 - *local_40) / (int)local_5c;
+        }
+      }
+      local_d8 = (long)(iVar2 + 1);
+      local_e0 = (long)iVar1;
+      local_d0 = &local_e0;
+      (**(code **)(lVar5 + 0xb8))(local_c0,local_c8 + 0x18,5,local_d0);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_dist_for_static_init_4u
+// Entry: 000055d0
+// Signature: undefined ___kmpc_dist_for_static_init_4u(void)
+// ========================================
+
+
+void ___kmpc_dist_for_static_init_4u
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_dist_for_static_init<unsigned_int>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_dist_for_static_init<unsigned_int>
+// Entry: 00005654
+// Signature: void __cdecl __kmp_dist_for_static_init<unsigned_int>(ident * param_1, int param_2, int param_3, int * param_4, uint * param_5, uint * param_6, uint * param_7, signed_t * param_8, signed_t param_9, signed_t param_10, void * param_11)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_dist_for_static_init<unsigned int>(ident*, int, int, int*, unsigned int*, unsigned
+   int*, unsigned int*, traits_t<unsigned int>::signed_t*, traits_t<unsigned int>::signed_t,
+   traits_t<unsigned int>::signed_t, void*) */
+
+void __kmp_dist_for_static_init<unsigned_int>
+               (undefined8 param_1,int param_2,int param_3,uint *param_4,uint *param_5,uint *param_6
+               ,uint *param_7,int *param_8,undefined8 param_9,undefined8 param_10)
+
+{
+  uint uVar1;
+  uint uVar2;
+  long lVar3;
+  ulong *puVar4;
+  uint local_130;
+  uint local_128;
+  uint local_118;
+  uint local_114;
+  uint local_110;
+  uint local_108;
+  uint local_fc;
+  ulong local_e0;
+  ulong local_d8;
+  ulong *local_d0;
+  long local_c8;
+  undefined8 local_c0;
+  int local_b4;
+  uint local_b0;
+  int local_ac;
+  uint local_a8;
+  uint local_a4;
+  uint local_a0;
+  int local_9c;
+  uint local_98;
+  uint local_94;
+  long local_90;
+  long local_88;
+  uint local_7c;
+  uint local_78;
+  uint local_74;
+  uint local_70;
+  uint local_6c;
+  undefined8 local_68;
+  uint local_60;
+  uint local_5c;
+  int *local_58;
+  uint *local_50;
+  uint *local_48;
+  uint *local_40;
+  uint *local_38;
+  int local_30;
+  int local_2c;
+  undefined8 local_28;
+  
+  puVar4 = __ompt_enabled;
+  lVar3 = __ompt_callbacks;
+  local_5c = (uint)param_9;
+  local_60 = param_9._4_4_;
+  local_68 = param_10;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_30 = param_3;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_push_workshare(local_2c,2,local_28);
+    if (local_5c == 0) {
+      ___kmp_error_construct(0x400c6,2,local_28);
+    }
+    if ((int)local_5c < 1) {
+      if (*local_40 < *local_48) goto LAB_00005768;
+    }
+    else if (*local_48 < *local_40) {
+LAB_00005768:
+      ___kmp_error_construct(0x400ff,2,local_28);
+    }
+  }
+  local_6c = __kmp_tid_from_gtid(local_2c);
+  local_90 = *(long *)(*____kmp_threads + (long)local_2c * 8);
+  local_70 = *(uint *)(local_90 + 100);
+  local_88 = *(long *)(local_90 + 0x40);
+  local_78 = *(uint *)(local_90 + 0xd4);
+  local_74 = *(uint *)(local_88 + 0x180);
+  if (local_5c == 1) {
+    uVar2 = *local_48 - *local_40;
+  }
+  else if (local_5c == 0xffffffff) {
+    uVar2 = *local_40 - *local_48;
+  }
+  else if ((int)local_5c < 1) {
+    uVar2 = 0;
+    if (-local_5c != 0) {
+      uVar2 = (*local_40 - *local_48) / -local_5c;
+    }
+  }
+  else {
+    uVar2 = 0;
+    if (local_5c != 0) {
+      uVar2 = (*local_48 - *local_40) / local_5c;
+    }
+  }
+  local_7c = uVar2 + 1;
+  *local_58 = *local_48 - *local_40;
+  if (local_7c <= local_78) {
+    if ((local_74 < local_7c) && (local_6c == 0)) {
+      uVar1 = *local_40 + local_74 * local_5c;
+      *local_40 = uVar1;
+      *local_50 = uVar1;
+      *local_48 = uVar1;
+    }
+    else {
+      *local_50 = *local_48;
+      *local_40 = *local_48 + local_5c;
+    }
+    if (local_38 != (uint *)0x0) {
+      local_fc = 0;
+      if (local_6c == 0) {
+        local_fc = (uint)(local_74 == uVar2);
+      }
+      *local_38 = local_fc;
+    }
+    goto LAB_00006498;
+  }
+  if (*____kmp_static == 0x29) {
+    local_94 = 0;
+    if (local_78 != 0) {
+      local_94 = local_7c / local_78;
+    }
+    uVar2 = 0;
+    if (local_78 != 0) {
+      uVar2 = local_7c / local_78;
+    }
+    local_98 = local_7c - uVar2 * local_78;
+    local_108 = local_98;
+    if (local_74 < local_98) {
+      local_108 = local_74;
+    }
+    *local_40 = *local_40 + local_5c * (local_74 * local_94 + local_108);
+    if (local_74 < local_98) {
+      local_110 = 0;
+    }
+    else {
+      local_110 = local_5c;
+    }
+    *local_50 = (*local_40 + local_94 * local_5c) - local_110;
+    if (local_38 != (uint *)0x0) {
+      *local_38 = (uint)(local_74 == local_78 - 1);
+    }
+  }
+  else {
+    uVar2 = 0;
+    if (local_78 != 0) {
+      uVar2 = local_7c / local_78;
+    }
+    uVar1 = 0;
+    if (local_78 != 0) {
+      uVar1 = local_7c / local_78;
+    }
+    local_9c = (uVar2 + (local_7c != uVar1 * local_78)) * local_5c;
+    local_a0 = *local_48;
+    *local_40 = *local_40 + local_74 * local_9c;
+    *local_50 = (*local_40 + local_9c) - local_5c;
+    if ((int)local_5c < 1) {
+      if (*local_40 < *local_50) {
+        *local_50 = 0;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_118 = 0;
+        if (local_a0 <= *local_40) {
+          local_118 = (uint)(*local_50 < local_a0 - local_5c);
+        }
+        *local_38 = local_118;
+      }
+      if (*local_50 < local_a0) {
+        *local_50 = local_a0;
+      }
+      if (*local_40 < *local_50) {
+        *local_48 = *local_50;
+        goto LAB_00006498;
+      }
+    }
+    else {
+      if (*local_50 < *local_40) {
+        *local_50 = 0xffffffff;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_114 = 0;
+        if (*local_40 <= local_a0) {
+          local_114 = (uint)(local_a0 - local_5c < *local_50);
+        }
+        *local_38 = local_114;
+      }
+      if (local_a0 < *local_50) {
+        *local_50 = local_a0;
+      }
+      if (*local_50 < *local_40) {
+        *local_48 = *local_50;
+        goto LAB_00006498;
+      }
+    }
+  }
+  if (local_5c == 1) {
+    uVar2 = *local_50 - *local_40;
+  }
+  else if (local_5c == 0xffffffff) {
+    uVar2 = *local_40 - *local_50;
+  }
+  else if ((int)local_5c < 2) {
+    uVar2 = 0;
+    if (-local_5c != 0) {
+      uVar2 = (*local_40 - *local_50) / -local_5c;
+    }
+  }
+  else {
+    uVar2 = 0;
+    if (local_5c != 0) {
+      uVar2 = (*local_50 - *local_40) / local_5c;
+    }
+  }
+  local_7c = uVar2 + 1;
+  if (local_30 == 0x21) {
+    if ((int)local_60 < 1) {
+      local_60 = 1;
+    }
+    local_b4 = local_60 * local_5c;
+    *local_58 = local_b4 * local_70;
+    *local_40 = *local_40 + local_b4 * local_6c;
+    *local_48 = (*local_40 + local_b4) - local_5c;
+    if ((local_38 != (uint *)0x0) && (*local_38 != 0)) {
+      uVar1 = 0;
+      if (local_60 != 0) {
+        uVar1 = uVar2 / local_60;
+      }
+      uVar2 = 0;
+      if (local_70 != 0) {
+        uVar2 = uVar1 / local_70;
+      }
+      if (local_6c != uVar1 - uVar2 * local_70) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else if (local_30 == 0x22) {
+    if (local_70 < local_7c) {
+      if (*____kmp_static == 0x29) {
+        local_a4 = 0;
+        if (local_70 != 0) {
+          local_a4 = local_7c / local_70;
+        }
+        uVar2 = 0;
+        if (local_70 != 0) {
+          uVar2 = local_7c / local_70;
+        }
+        local_a8 = local_7c - uVar2 * local_70;
+        local_128 = local_a8;
+        if (local_6c < local_a8) {
+          local_128 = local_6c;
+        }
+        *local_40 = *local_40 + local_5c * (local_6c * local_a4 + local_128);
+        if (local_6c < local_a8) {
+          local_130 = 0;
+        }
+        else {
+          local_130 = local_5c;
+        }
+        *local_48 = (*local_40 + local_a4 * local_5c) - local_130;
+        if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_6c != local_70 - 1)) {
+          *local_38 = 0;
+        }
+      }
+      else {
+        uVar2 = 0;
+        if (local_70 != 0) {
+          uVar2 = local_7c / local_70;
+        }
+        uVar1 = 0;
+        if (local_70 != 0) {
+          uVar1 = local_7c / local_70;
+        }
+        local_ac = (uVar2 + (local_7c != uVar1 * local_70)) * local_5c;
+        local_b0 = *local_50;
+        *local_40 = *local_40 + local_6c * local_ac;
+        *local_48 = (*local_40 + local_ac) - local_5c;
+        if ((int)local_5c < 1) {
+          if (*local_40 < *local_48) {
+            *local_48 = 0;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((*local_40 < local_b0 || (local_b0 - local_5c <= *local_48)))) {
+            *local_38 = 0;
+          }
+          if (*local_48 < local_b0) {
+            *local_48 = local_b0;
+          }
+        }
+        else {
+          if (*local_48 < *local_40) {
+            *local_48 = 0xffffffff;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((local_b0 < *local_40 || (*local_48 <= local_b0 - local_5c)))) {
+            *local_38 = 0;
+          }
+          if (local_b0 < *local_48) {
+            *local_48 = local_b0;
+          }
+        }
+      }
+    }
+    else {
+      if (local_6c < local_7c) {
+        uVar1 = *local_40 + local_6c * local_5c;
+        *local_40 = uVar1;
+        *local_48 = uVar1;
+      }
+      else {
+        *local_40 = *local_48 + local_5c;
+      }
+      if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_6c != uVar2)) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",0x2b4
+                       );
+  }
+LAB_00006498:
+  if (((*puVar4 >> 0xd & 1) != 0) || ((*puVar4 & 0x1000000) != 0)) {
+    local_c0 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_c8 = __ompt_get_task_info_object(0);
+    if ((*puVar4 >> 0xd & 1) != 0) {
+      (**(code **)(lVar3 + 0x60))(6,1,local_c0,local_c8 + 0x18,0,local_68);
+    }
+    if ((*puVar4 & 0x1000000) != 0) {
+      if ((int)local_5c < 1) {
+        uVar2 = *local_50;
+        uVar1 = 0;
+        if (-local_5c != 0) {
+          uVar1 = (*local_40 - *local_50) / -local_5c;
+        }
+      }
+      else {
+        uVar2 = *local_40;
+        uVar1 = 0;
+        if (local_5c != 0) {
+          uVar1 = (*local_50 - *local_40) / local_5c;
+        }
+      }
+      local_d8 = (ulong)(uVar1 + 1);
+      local_e0 = (ulong)uVar2;
+      local_d0 = &local_e0;
+      (**(code **)(lVar3 + 0xb8))(local_c0,local_c8 + 0x18,5,local_d0);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_dist_for_static_init_8
+// Entry: 00006640
+// Signature: undefined ___kmpc_dist_for_static_init_8(void)
+// ========================================
+
+
+void ___kmpc_dist_for_static_init_8
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_dist_for_static_init<long_long>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_dist_for_static_init<long_long>
+// Entry: 000066c4
+// Signature: void __cdecl __kmp_dist_for_static_init<long_long>(ident * param_1, int param_2, int param_3, int * param_4, longlong * param_5, longlong * param_6, longlong * param_7, signed_t * param_8, signed_t param_9, signed_t param_10, void * param_11)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_dist_for_static_init<long long>(ident*, int, int, int*, long long*, long long*, long
+   long*, traits_t<long long>::signed_t*, traits_t<long long>::signed_t, traits_t<long
+   long>::signed_t, void*) */
+
+void __kmp_dist_for_static_init<long_long>
+               (undefined8 param_1,int param_2,int param_3,uint *param_4,long *param_5,long *param_6
+               ,long *param_7,long *param_8,ulong param_9,ulong param_10,undefined8 param_11)
+
+{
+  long lVar1;
+  ulong uVar2;
+  long lVar3;
+  ulong *puVar4;
+  ulong uVar5;
+  ulong uVar6;
+  ulong local_188;
+  ulong local_178;
+  uint local_158;
+  uint local_154;
+  ulong local_150;
+  ulong local_140;
+  uint local_124;
+  long local_108;
+  long local_100;
+  long *local_f8;
+  long local_f0;
+  undefined8 local_e8;
+  long local_e0;
+  long local_d8;
+  long local_d0;
+  ulong local_c8;
+  ulong local_c0;
+  long local_b8;
+  long local_b0;
+  ulong local_a8;
+  ulong local_a0;
+  long local_98;
+  long local_90;
+  ulong local_88;
+  uint local_80;
+  uint local_7c;
+  uint local_78;
+  uint local_74;
+  undefined8 local_70;
+  ulong local_68;
+  ulong local_60;
+  long *local_58;
+  long *local_50;
+  long *local_48;
+  long *local_40;
+  uint *local_38;
+  int local_30;
+  int local_2c;
+  undefined8 local_28;
+  
+  puVar4 = __ompt_enabled;
+  lVar3 = __ompt_callbacks;
+  local_60 = param_9;
+  local_68 = param_10;
+  local_70 = param_11;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_30 = param_3;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_push_workshare(local_2c,2,local_28);
+    if (local_60 == 0) {
+      ___kmp_error_construct(0x400c6,2,local_28);
+    }
+    if ((long)local_60 < 1) {
+      if (*local_40 < *local_48) goto LAB_000067d8;
+    }
+    else if (*local_48 < *local_40) {
+LAB_000067d8:
+      ___kmp_error_construct(0x400ff,2,local_28);
+    }
+  }
+  local_74 = __kmp_tid_from_gtid(local_2c);
+  local_98 = *(long *)(*____kmp_threads + (long)local_2c * 8);
+  local_78 = *(uint *)(local_98 + 100);
+  local_90 = *(long *)(local_98 + 0x40);
+  local_80 = *(uint *)(local_98 + 0xd4);
+  local_7c = *(uint *)(local_90 + 0x180);
+  if (local_60 == 1) {
+    uVar2 = *local_48 - *local_40;
+  }
+  else if (local_60 == 0xffffffffffffffff) {
+    uVar2 = *local_40 - *local_48;
+  }
+  else if ((long)local_60 < 1) {
+    uVar2 = 0;
+    if (-local_60 != 0) {
+      uVar2 = (ulong)(*local_40 - *local_48) / -local_60;
+    }
+  }
+  else {
+    uVar2 = 0;
+    if (local_60 != 0) {
+      uVar2 = (ulong)(*local_48 - *local_40) / local_60;
+    }
+  }
+  local_88 = uVar2 + 1;
+  *local_58 = *local_48 - *local_40;
+  if (local_88 <= local_80) {
+    if ((local_7c < local_88) && (local_74 == 0)) {
+      lVar1 = *local_40 + local_7c * local_60;
+      *local_40 = lVar1;
+      *local_50 = lVar1;
+      *local_48 = lVar1;
+    }
+    else {
+      *local_50 = *local_48;
+      *local_40 = *local_48 + local_60;
+    }
+    if (local_38 != (uint *)0x0) {
+      local_124 = 0;
+      if (local_74 == 0) {
+        local_124 = (uint)(local_7c == uVar2);
+      }
+      *local_38 = local_124;
+    }
+    goto LAB_00007524;
+  }
+  if (*____kmp_static == 0x29) {
+    local_a0 = 0;
+    if ((ulong)local_80 != 0) {
+      local_a0 = local_88 / local_80;
+    }
+    uVar5 = (ulong)local_80;
+    uVar2 = 0;
+    if (uVar5 != 0) {
+      uVar2 = local_88 / uVar5;
+    }
+    local_a8 = local_88 - uVar2 * uVar5;
+    local_140 = local_a8;
+    if (local_7c < local_a8) {
+      local_140 = (ulong)local_7c;
+    }
+    *local_40 = *local_40 + local_60 * (local_7c * local_a0 + local_140);
+    if (local_7c < local_a8) {
+      local_150 = 0;
+    }
+    else {
+      local_150 = local_60;
+    }
+    *local_50 = (*local_40 + local_a0 * local_60) - local_150;
+    if (local_38 != (uint *)0x0) {
+      *local_38 = (uint)(local_7c == local_80 - 1);
+    }
+  }
+  else {
+    uVar2 = 0;
+    if ((ulong)local_80 != 0) {
+      uVar2 = local_88 / local_80;
+    }
+    uVar6 = (ulong)local_80;
+    uVar5 = 0;
+    if (uVar6 != 0) {
+      uVar5 = local_88 / uVar6;
+    }
+    local_b0 = (uVar2 + (long)(int)(uint)(local_88 != uVar5 * uVar6)) * local_60;
+    local_b8 = *local_48;
+    *local_40 = *local_40 + (ulong)local_7c * local_b0;
+    *local_50 = (*local_40 + local_b0) - local_60;
+    if ((long)local_60 < 1) {
+      if (*local_40 < *local_50) {
+        *local_50 = -0x8000000000000000;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_158 = 0;
+        if (local_b8 <= *local_40) {
+          local_158 = (uint)(*local_50 < (long)(local_b8 - local_60));
+        }
+        *local_38 = local_158;
+      }
+      if (*local_50 < local_b8) {
+        *local_50 = local_b8;
+      }
+      if (*local_40 < *local_50) {
+        *local_48 = *local_50;
+        goto LAB_00007524;
+      }
+    }
+    else {
+      if (*local_50 < *local_40) {
+        *local_50 = 0x7fffffffffffffff;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_154 = 0;
+        if (*local_40 <= local_b8) {
+          local_154 = (uint)((long)(local_b8 - local_60) < *local_50);
+        }
+        *local_38 = local_154;
+      }
+      if (local_b8 < *local_50) {
+        *local_50 = local_b8;
+      }
+      if (*local_50 < *local_40) {
+        *local_48 = *local_50;
+        goto LAB_00007524;
+      }
+    }
+  }
+  if (local_60 == 1) {
+    uVar2 = *local_50 - *local_40;
+  }
+  else if (local_60 == 0xffffffffffffffff) {
+    uVar2 = *local_40 - *local_50;
+  }
+  else if ((long)local_60 < 2) {
+    uVar2 = 0;
+    if (-local_60 != 0) {
+      uVar2 = (ulong)(*local_40 - *local_50) / -local_60;
+    }
+  }
+  else {
+    uVar2 = 0;
+    if (local_60 != 0) {
+      uVar2 = (ulong)(*local_50 - *local_40) / local_60;
+    }
+  }
+  local_88 = uVar2 + 1;
+  if (local_30 == 0x21) {
+    if ((long)local_68 < 1) {
+      local_68 = 1;
+    }
+    local_e0 = local_68 * local_60;
+    *local_58 = local_e0 * (ulong)local_78;
+    *local_40 = *local_40 + local_e0 * (ulong)local_74;
+    *local_48 = (*local_40 + local_e0) - local_60;
+    if ((local_38 != (uint *)0x0) && (*local_38 != 0)) {
+      uVar5 = 0;
+      if (local_68 != 0) {
+        uVar5 = uVar2 / local_68;
+      }
+      uVar6 = (ulong)local_78;
+      uVar2 = 0;
+      if (uVar6 != 0) {
+        uVar2 = uVar5 / uVar6;
+      }
+      if ((ulong)local_74 != uVar5 - uVar2 * uVar6) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else if (local_30 == 0x22) {
+    if (local_78 < local_88) {
+      if (*____kmp_static == 0x29) {
+        local_c0 = 0;
+        if ((ulong)local_78 != 0) {
+          local_c0 = local_88 / local_78;
+        }
+        uVar5 = (ulong)local_78;
+        uVar2 = 0;
+        if (uVar5 != 0) {
+          uVar2 = local_88 / uVar5;
+        }
+        local_c8 = local_88 - uVar2 * uVar5;
+        local_178 = local_c8;
+        if (local_74 < local_c8) {
+          local_178 = (ulong)local_74;
+        }
+        *local_40 = *local_40 + local_60 * (local_74 * local_c0 + local_178);
+        if (local_74 < local_c8) {
+          local_188 = 0;
+        }
+        else {
+          local_188 = local_60;
+        }
+        *local_48 = (*local_40 + local_c0 * local_60) - local_188;
+        if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_74 != local_78 - 1)) {
+          *local_38 = 0;
+        }
+      }
+      else {
+        uVar2 = 0;
+        if ((ulong)local_78 != 0) {
+          uVar2 = local_88 / local_78;
+        }
+        uVar6 = (ulong)local_78;
+        uVar5 = 0;
+        if (uVar6 != 0) {
+          uVar5 = local_88 / uVar6;
+        }
+        local_d0 = (uVar2 + (long)(int)(uint)(local_88 != uVar5 * uVar6)) * local_60;
+        local_d8 = *local_50;
+        *local_40 = *local_40 + (ulong)local_74 * local_d0;
+        *local_48 = (*local_40 + local_d0) - local_60;
+        if ((long)local_60 < 1) {
+          if (*local_40 < *local_48) {
+            *local_48 = -0x8000000000000000;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((*local_40 < local_d8 || ((long)(local_d8 - local_60) <= *local_48)))) {
+            *local_38 = 0;
+          }
+          if (*local_48 < local_d8) {
+            *local_48 = local_d8;
+          }
+        }
+        else {
+          if (*local_48 < *local_40) {
+            *local_48 = 0x7fffffffffffffff;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((local_d8 < *local_40 || (*local_48 <= (long)(local_d8 - local_60))))) {
+            *local_38 = 0;
+          }
+          if (local_d8 < *local_48) {
+            *local_48 = local_d8;
+          }
+        }
+      }
+    }
+    else {
+      if (local_74 < local_88) {
+        lVar1 = *local_40 + local_74 * local_60;
+        *local_40 = lVar1;
+        *local_48 = lVar1;
+      }
+      else {
+        *local_40 = *local_48 + local_60;
+      }
+      if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_74 != uVar2)) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",0x2b4
+                       );
+  }
+LAB_00007524:
+  if (((*puVar4 >> 0xd & 1) != 0) || ((*puVar4 & 0x1000000) != 0)) {
+    local_e8 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_f0 = __ompt_get_task_info_object(0);
+    if ((*puVar4 >> 0xd & 1) != 0) {
+      (**(code **)(lVar3 + 0x60))(6,1,local_e8,local_f0 + 0x18,0,local_70);
+    }
+    if ((*puVar4 & 0x1000000) != 0) {
+      if ((long)local_60 < 1) {
+        local_108 = *local_50;
+        local_100 = 0;
+        if (-local_60 != 0) {
+          local_100 = (*local_40 - *local_50) / (long)-local_60;
+        }
+      }
+      else {
+        local_108 = *local_40;
+        local_100 = 0;
+        if (local_60 != 0) {
+          local_100 = (*local_50 - *local_40) / (long)local_60;
+        }
+      }
+      local_100 = local_100 + 1;
+      local_f8 = &local_108;
+      (**(code **)(lVar3 + 0xb8))(local_e8,local_f0 + 0x18,5,local_f8);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_dist_for_static_init_8u
+// Entry: 000076cc
+// Signature: undefined ___kmpc_dist_for_static_init_8u(void)
+// ========================================
+
+
+void ___kmpc_dist_for_static_init_8u
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_dist_for_static_init<unsigned_long_long>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_dist_for_static_init<unsigned_long_long>
+// Entry: 00007750
+// Signature: void __cdecl __kmp_dist_for_static_init<unsigned_long_long>(ident * param_1, int param_2, int param_3, int * param_4, ulonglong * param_5, ulonglong * param_6, ulonglong * param_7, signed_t * param_8, signed_t param_9, signed_t param_10, void * param_11)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_dist_for_static_init<unsigned long long>(ident*, int, int, int*, unsigned long long*,
+   unsigned long long*, unsigned long long*, traits_t<unsigned long long>::signed_t*,
+   traits_t<unsigned long long>::signed_t, traits_t<unsigned long long>::signed_t, void*) */
+
+void __kmp_dist_for_static_init<unsigned_long_long>
+               (undefined8 param_1,int param_2,int param_3,uint *param_4,ulong *param_5,
+               ulong *param_6,ulong *param_7,long *param_8,ulong param_9,ulong param_10,
+               undefined8 param_11)
+
+{
+  ulong uVar1;
+  long lVar2;
+  ulong *puVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulong local_188;
+  ulong local_178;
+  uint local_158;
+  uint local_154;
+  ulong local_150;
+  ulong local_140;
+  uint local_124;
+  ulong local_108;
+  long local_100;
+  ulong *local_f8;
+  long local_f0;
+  undefined8 local_e8;
+  long local_e0;
+  ulong local_d8;
+  long local_d0;
+  ulong local_c8;
+  ulong local_c0;
+  ulong local_b8;
+  long local_b0;
+  ulong local_a8;
+  ulong local_a0;
+  long local_98;
+  long local_90;
+  ulong local_88;
+  uint local_80;
+  uint local_7c;
+  uint local_78;
+  uint local_74;
+  undefined8 local_70;
+  ulong local_68;
+  ulong local_60;
+  long *local_58;
+  ulong *local_50;
+  ulong *local_48;
+  ulong *local_40;
+  uint *local_38;
+  int local_30;
+  int local_2c;
+  undefined8 local_28;
+  
+  puVar3 = __ompt_enabled;
+  lVar2 = __ompt_callbacks;
+  local_60 = param_9;
+  local_68 = param_10;
+  local_70 = param_11;
+  local_58 = param_8;
+  local_50 = param_7;
+  local_48 = param_6;
+  local_40 = param_5;
+  local_38 = param_4;
+  local_30 = param_3;
+  local_2c = param_2;
+  local_28 = param_1;
+  __kmp_assert_valid_gtid(param_2);
+  if (*____kmp_env_consistency_check != 0) {
+    ___kmp_push_workshare(local_2c,2,local_28);
+    if (local_60 == 0) {
+      ___kmp_error_construct(0x400c6,2,local_28);
+    }
+    if ((long)local_60 < 1) {
+      if (*local_40 < *local_48) goto LAB_00007864;
+    }
+    else if (*local_48 < *local_40) {
+LAB_00007864:
+      ___kmp_error_construct(0x400ff,2,local_28);
+    }
+  }
+  local_74 = __kmp_tid_from_gtid(local_2c);
+  local_98 = *(long *)(*____kmp_threads + (long)local_2c * 8);
+  local_78 = *(uint *)(local_98 + 100);
+  local_90 = *(long *)(local_98 + 0x40);
+  local_80 = *(uint *)(local_98 + 0xd4);
+  local_7c = *(uint *)(local_90 + 0x180);
+  if (local_60 == 1) {
+    uVar1 = *local_48 - *local_40;
+  }
+  else if (local_60 == 0xffffffffffffffff) {
+    uVar1 = *local_40 - *local_48;
+  }
+  else if ((long)local_60 < 1) {
+    uVar1 = 0;
+    if (-local_60 != 0) {
+      uVar1 = (*local_40 - *local_48) / -local_60;
+    }
+  }
+  else {
+    uVar1 = 0;
+    if (local_60 != 0) {
+      uVar1 = (*local_48 - *local_40) / local_60;
+    }
+  }
+  local_88 = uVar1 + 1;
+  *local_58 = *local_48 - *local_40;
+  if (local_88 <= local_80) {
+    if ((local_7c < local_88) && (local_74 == 0)) {
+      uVar4 = *local_40 + local_7c * local_60;
+      *local_40 = uVar4;
+      *local_50 = uVar4;
+      *local_48 = uVar4;
+    }
+    else {
+      *local_50 = *local_48;
+      *local_40 = *local_48 + local_60;
+    }
+    if (local_38 != (uint *)0x0) {
+      local_124 = 0;
+      if (local_74 == 0) {
+        local_124 = (uint)(local_7c == uVar1);
+      }
+      *local_38 = local_124;
+    }
+    goto LAB_000085a8;
+  }
+  if (*____kmp_static == 0x29) {
+    local_a0 = 0;
+    if ((ulong)local_80 != 0) {
+      local_a0 = local_88 / local_80;
+    }
+    uVar4 = (ulong)local_80;
+    uVar1 = 0;
+    if (uVar4 != 0) {
+      uVar1 = local_88 / uVar4;
+    }
+    local_a8 = local_88 - uVar1 * uVar4;
+    local_140 = local_a8;
+    if (local_7c < local_a8) {
+      local_140 = (ulong)local_7c;
+    }
+    *local_40 = *local_40 + local_60 * (local_7c * local_a0 + local_140);
+    if (local_7c < local_a8) {
+      local_150 = 0;
+    }
+    else {
+      local_150 = local_60;
+    }
+    *local_50 = (*local_40 + local_a0 * local_60) - local_150;
+    if (local_38 != (uint *)0x0) {
+      *local_38 = (uint)(local_7c == local_80 - 1);
+    }
+  }
+  else {
+    uVar1 = 0;
+    if ((ulong)local_80 != 0) {
+      uVar1 = local_88 / local_80;
+    }
+    uVar5 = (ulong)local_80;
+    uVar4 = 0;
+    if (uVar5 != 0) {
+      uVar4 = local_88 / uVar5;
+    }
+    local_b0 = (uVar1 + (long)(int)(uint)(local_88 != uVar4 * uVar5)) * local_60;
+    local_b8 = *local_48;
+    *local_40 = *local_40 + (ulong)local_7c * local_b0;
+    *local_50 = (*local_40 + local_b0) - local_60;
+    if ((long)local_60 < 1) {
+      if (*local_40 < *local_50) {
+        *local_50 = 0;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_158 = 0;
+        if (local_b8 <= *local_40) {
+          local_158 = (uint)(*local_50 < local_b8 - local_60);
+        }
+        *local_38 = local_158;
+      }
+      if (*local_50 < local_b8) {
+        *local_50 = local_b8;
+      }
+      if (*local_40 < *local_50) {
+        *local_48 = *local_50;
+        goto LAB_000085a8;
+      }
+    }
+    else {
+      if (*local_50 < *local_40) {
+        *local_50 = 0xffffffffffffffff;
+      }
+      if (local_38 != (uint *)0x0) {
+        local_154 = 0;
+        if (*local_40 <= local_b8) {
+          local_154 = (uint)(local_b8 - local_60 < *local_50);
+        }
+        *local_38 = local_154;
+      }
+      if (local_b8 < *local_50) {
+        *local_50 = local_b8;
+      }
+      if (*local_50 < *local_40) {
+        *local_48 = *local_50;
+        goto LAB_000085a8;
+      }
+    }
+  }
+  if (local_60 == 1) {
+    uVar1 = *local_50 - *local_40;
+  }
+  else if (local_60 == 0xffffffffffffffff) {
+    uVar1 = *local_40 - *local_50;
+  }
+  else if ((long)local_60 < 2) {
+    uVar1 = 0;
+    if (-local_60 != 0) {
+      uVar1 = (*local_40 - *local_50) / -local_60;
+    }
+  }
+  else {
+    uVar1 = 0;
+    if (local_60 != 0) {
+      uVar1 = (*local_50 - *local_40) / local_60;
+    }
+  }
+  local_88 = uVar1 + 1;
+  if (local_30 == 0x21) {
+    if ((long)local_68 < 1) {
+      local_68 = 1;
+    }
+    local_e0 = local_68 * local_60;
+    *local_58 = local_e0 * (ulong)local_78;
+    *local_40 = *local_40 + local_e0 * (ulong)local_74;
+    *local_48 = (*local_40 + local_e0) - local_60;
+    if ((local_38 != (uint *)0x0) && (*local_38 != 0)) {
+      uVar4 = 0;
+      if (local_68 != 0) {
+        uVar4 = uVar1 / local_68;
+      }
+      uVar5 = (ulong)local_78;
+      uVar1 = 0;
+      if (uVar5 != 0) {
+        uVar1 = uVar4 / uVar5;
+      }
+      if ((ulong)local_74 != uVar4 - uVar1 * uVar5) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else if (local_30 == 0x22) {
+    if (local_78 < local_88) {
+      if (*____kmp_static == 0x29) {
+        local_c0 = 0;
+        if ((ulong)local_78 != 0) {
+          local_c0 = local_88 / local_78;
+        }
+        uVar4 = (ulong)local_78;
+        uVar1 = 0;
+        if (uVar4 != 0) {
+          uVar1 = local_88 / uVar4;
+        }
+        local_c8 = local_88 - uVar1 * uVar4;
+        local_178 = local_c8;
+        if (local_74 < local_c8) {
+          local_178 = (ulong)local_74;
+        }
+        *local_40 = *local_40 + local_60 * (local_74 * local_c0 + local_178);
+        if (local_74 < local_c8) {
+          local_188 = 0;
+        }
+        else {
+          local_188 = local_60;
+        }
+        *local_48 = (*local_40 + local_c0 * local_60) - local_188;
+        if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_74 != local_78 - 1)) {
+          *local_38 = 0;
+        }
+      }
+      else {
+        uVar1 = 0;
+        if ((ulong)local_78 != 0) {
+          uVar1 = local_88 / local_78;
+        }
+        uVar5 = (ulong)local_78;
+        uVar4 = 0;
+        if (uVar5 != 0) {
+          uVar4 = local_88 / uVar5;
+        }
+        local_d0 = (uVar1 + (long)(int)(uint)(local_88 != uVar4 * uVar5)) * local_60;
+        local_d8 = *local_50;
+        *local_40 = *local_40 + (ulong)local_74 * local_d0;
+        *local_48 = (*local_40 + local_d0) - local_60;
+        if ((long)local_60 < 1) {
+          if (*local_40 < *local_48) {
+            *local_48 = 0;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((*local_40 < local_d8 || (local_d8 - local_60 <= *local_48)))) {
+            *local_38 = 0;
+          }
+          if (*local_48 < local_d8) {
+            *local_48 = local_d8;
+          }
+        }
+        else {
+          if (*local_48 < *local_40) {
+            *local_48 = 0xffffffffffffffff;
+          }
+          if (((local_38 != (uint *)0x0) && (*local_38 != 0)) &&
+             ((local_d8 < *local_40 || (*local_48 <= local_d8 - local_60)))) {
+            *local_38 = 0;
+          }
+          if (local_d8 < *local_48) {
+            *local_48 = local_d8;
+          }
+        }
+      }
+    }
+    else {
+      if (local_74 < local_88) {
+        uVar4 = *local_40 + local_74 * local_60;
+        *local_40 = uVar4;
+        *local_48 = uVar4;
+      }
+      else {
+        *local_40 = *local_48 + local_60;
+      }
+      if (((local_38 != (uint *)0x0) && (*local_38 != 0)) && (local_74 != uVar1)) {
+        *local_38 = 0;
+      }
+    }
+  }
+  else {
+    ___kmp_debug_assert("assertion failure",
+                        "/Users/eugene/Desktop/openmp-mobile/openmp/runtime/src/kmp_sched.cpp",0x2b4
+                       );
+  }
+LAB_000085a8:
+  if (((*puVar3 >> 0xd & 1) != 0) || ((*puVar3 & 0x1000000) != 0)) {
+    local_e8 = __ompt_get_teaminfo(0,(int *)0x0);
+    local_f0 = __ompt_get_task_info_object(0);
+    if ((*puVar3 >> 0xd & 1) != 0) {
+      (**(code **)(lVar2 + 0x60))(6,1,local_e8,local_f0 + 0x18,0,local_70);
+    }
+    if ((*puVar3 & 0x1000000) != 0) {
+      if ((long)local_60 < 1) {
+        local_108 = *local_50;
+        uVar1 = 0;
+        if (-local_60 != 0) {
+          uVar1 = (*local_40 - *local_50) / -local_60;
+        }
+      }
+      else {
+        local_108 = *local_40;
+        uVar1 = 0;
+        if (local_60 != 0) {
+          uVar1 = (*local_50 - *local_40) / local_60;
+        }
+      }
+      local_100 = uVar1 + 1;
+      local_f8 = &local_108;
+      (**(code **)(lVar2 + 0xb8))(local_e8,local_f0 + 0x18,5,local_f8);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_team_static_init_4
+// Entry: 00008750
+// Signature: undefined ___kmpc_team_static_init_4(void)
+// ========================================
+
+
+void ___kmpc_team_static_init_4
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined4 param_7,undefined4 param_8)
+
+{
+  __kmp_team_static_init<int>(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_team_static_init<int>
+// Entry: 000087ac
+// Signature: void __cdecl __kmp_team_static_init<int>(ident * param_1, int param_2, int * param_3, int * param_4, int * param_5, signed_t * param_6, signed_t param_7, signed_t param_8)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_team_static_init<int>(ident*, int, int*, int*, int*, traits_t<int>::signed_t*,
+   traits_t<int>::signed_t, traits_t<int>::signed_t) */
+
+void __kmp_team_static_init<int>
+               (undefined8 param_1,int param_2,uint *param_3,int *param_4,int *param_5,int *param_6,
+               uint param_7,uint param_8)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  long lVar8;
+  uint local_48;
+  
+  __kmp_assert_valid_gtid(param_2);
+  iVar1 = *param_4;
+  iVar2 = *param_5;
+  if (*____kmp_env_consistency_check != 0) {
+    if (param_7 == 0) {
+      ___kmp_error_construct(0x400c6,2,param_1);
+    }
+    if ((int)param_7 < 1) {
+      if (iVar2 <= iVar1) goto LAB_000088a0;
+    }
+    else if (iVar1 <= iVar2) goto LAB_000088a0;
+    ___kmp_error_construct(0x400ff,2,param_1);
+  }
+LAB_000088a0:
+  lVar8 = *(long *)(*____kmp_threads + (long)param_2 * 8);
+  uVar3 = *(uint *)(lVar8 + 0xd4);
+  iVar4 = *(int *)(*(long *)(lVar8 + 0x40) + 0x180);
+  if (param_7 == 1) {
+    uVar6 = iVar2 - iVar1;
+  }
+  else if (param_7 == 0xffffffff) {
+    uVar6 = iVar1 - iVar2;
+  }
+  else if ((int)param_7 < 1) {
+    uVar6 = 0;
+    if (-param_7 != 0) {
+      uVar6 = (uint)(iVar1 - iVar2) / -param_7;
+    }
+  }
+  else {
+    uVar6 = 0;
+    if (param_7 != 0) {
+      uVar6 = (uint)(iVar2 - iVar1) / param_7;
+    }
+  }
+  local_48 = param_8;
+  if ((int)param_8 < 1) {
+    local_48 = 1;
+  }
+  iVar5 = local_48 * param_7;
+  *param_6 = iVar5 * uVar3;
+  *param_4 = iVar1 + iVar5 * iVar4;
+  *param_5 = (*param_4 + iVar5) - param_7;
+  if (param_3 != (uint *)0x0) {
+    uVar7 = 0;
+    if (local_48 != 0) {
+      uVar7 = uVar6 / local_48;
+    }
+    uVar6 = 0;
+    if (uVar3 != 0) {
+      uVar6 = uVar7 / uVar3;
+    }
+    *param_3 = (uint)(iVar4 == uVar7 - uVar6 * uVar3);
+  }
+  if ((int)param_7 < 1) {
+    if (*param_4 < *param_5) {
+      *param_5 = -0x80000000;
+    }
+    if (*param_5 < iVar2) {
+      *param_5 = iVar2;
+    }
+  }
+  else {
+    if (*param_5 < *param_4) {
+      *param_5 = 0x7fffffff;
+    }
+    if (iVar2 < *param_5) {
+      *param_5 = iVar2;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_team_static_init_4u
+// Entry: 00008b48
+// Signature: undefined ___kmpc_team_static_init_4u(void)
+// ========================================
+
+
+void ___kmpc_team_static_init_4u
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined4 param_7,undefined4 param_8)
+
+{
+  __kmp_team_static_init<unsigned_int>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_team_static_init<unsigned_int>
+// Entry: 00008ba4
+// Signature: void __cdecl __kmp_team_static_init<unsigned_int>(ident * param_1, int param_2, int * param_3, uint * param_4, uint * param_5, signed_t * param_6, signed_t param_7, signed_t param_8)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_team_static_init<unsigned int>(ident*, int, int*, unsigned int*, unsigned int*,
+   traits_t<unsigned int>::signed_t*, traits_t<unsigned int>::signed_t, traits_t<unsigned
+   int>::signed_t) */
+
+void __kmp_team_static_init<unsigned_int>
+               (undefined8 param_1,int param_2,uint *param_3,uint *param_4,uint *param_5,
+               int *param_6,uint param_7,uint param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  long lVar7;
+  uint local_48;
+  
+  __kmp_assert_valid_gtid(param_2);
+  uVar1 = *param_4;
+  uVar2 = *param_5;
+  if (*____kmp_env_consistency_check != 0) {
+    if (param_7 == 0) {
+      ___kmp_error_construct(0x400c6,2,param_1);
+    }
+    if ((int)param_7 < 1) {
+      if (uVar2 <= uVar1) goto LAB_00008c98;
+    }
+    else if (uVar1 <= uVar2) goto LAB_00008c98;
+    ___kmp_error_construct(0x400ff,2,param_1);
+  }
+LAB_00008c98:
+  lVar7 = *(long *)(*____kmp_threads + (long)param_2 * 8);
+  uVar3 = *(uint *)(lVar7 + 0xd4);
+  iVar4 = *(int *)(*(long *)(lVar7 + 0x40) + 0x180);
+  if (param_7 == 1) {
+    uVar6 = uVar2 - uVar1;
+  }
+  else if (param_7 == 0xffffffff) {
+    uVar6 = uVar1 - uVar2;
+  }
+  else if ((int)param_7 < 1) {
+    uVar6 = 0;
+    if (-param_7 != 0) {
+      uVar6 = (uVar1 - uVar2) / -param_7;
+    }
+  }
+  else {
+    uVar6 = 0;
+    if (param_7 != 0) {
+      uVar6 = (uVar2 - uVar1) / param_7;
+    }
+  }
+  local_48 = param_8;
+  if ((int)param_8 < 1) {
+    local_48 = 1;
+  }
+  iVar5 = local_48 * param_7;
+  *param_6 = iVar5 * uVar3;
+  *param_4 = uVar1 + iVar5 * iVar4;
+  *param_5 = (*param_4 + iVar5) - param_7;
+  if (param_3 != (uint *)0x0) {
+    uVar1 = 0;
+    if (local_48 != 0) {
+      uVar1 = uVar6 / local_48;
+    }
+    uVar6 = 0;
+    if (uVar3 != 0) {
+      uVar6 = uVar1 / uVar3;
+    }
+    *param_3 = (uint)(iVar4 == uVar1 - uVar6 * uVar3);
+  }
+  if ((int)param_7 < 1) {
+    if (*param_4 < *param_5) {
+      *param_5 = 0;
+    }
+    if (*param_5 < uVar2) {
+      *param_5 = uVar2;
+    }
+  }
+  else {
+    if (*param_5 < *param_4) {
+      *param_5 = 0xffffffff;
+    }
+    if (uVar2 < *param_5) {
+      *param_5 = uVar2;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_team_static_init_8
+// Entry: 00008f3c
+// Signature: undefined ___kmpc_team_static_init_8(void)
+// ========================================
+
+
+void ___kmpc_team_static_init_8
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_team_static_init<long_long>(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8)
+  ;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_team_static_init<long_long>
+// Entry: 00008f98
+// Signature: void __cdecl __kmp_team_static_init<long_long>(ident * param_1, int param_2, int * param_3, longlong * param_4, longlong * param_5, signed_t * param_6, signed_t param_7, signed_t param_8)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_team_static_init<long long>(ident*, int, int*, long long*, long long*, traits_t<long
+   long>::signed_t*, traits_t<long long>::signed_t, traits_t<long long>::signed_t) */
+
+void __kmp_team_static_init<long_long>
+               (undefined8 param_1,int param_2,uint *param_3,long *param_4,long *param_5,
+               long *param_6,ulong param_7,ulong param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  long lVar5;
+  long lVar6;
+  long lVar7;
+  ulong uVar8;
+  ulong local_50;
+  
+  __kmp_assert_valid_gtid(param_2);
+  lVar5 = *param_4;
+  lVar6 = *param_5;
+  if (*____kmp_env_consistency_check != 0) {
+    if (param_7 == 0) {
+      ___kmp_error_construct(0x400c6,2,param_1);
+    }
+    if ((long)param_7 < 1) {
+      if (lVar6 <= lVar5) goto LAB_0000908c;
+    }
+    else if (lVar5 <= lVar6) goto LAB_0000908c;
+    ___kmp_error_construct(0x400ff,2,param_1);
+  }
+LAB_0000908c:
+  lVar7 = *(long *)(*____kmp_threads + (long)param_2 * 8);
+  uVar1 = *(uint *)(lVar7 + 0xd4);
+  uVar2 = *(uint *)(*(long *)(lVar7 + 0x40) + 0x180);
+  if (param_7 == 1) {
+    uVar3 = lVar6 - lVar5;
+  }
+  else if (param_7 == 0xffffffffffffffff) {
+    uVar3 = lVar5 - lVar6;
+  }
+  else if ((long)param_7 < 1) {
+    uVar3 = 0;
+    if (-param_7 != 0) {
+      uVar3 = (ulong)(lVar5 - lVar6) / -param_7;
+    }
+  }
+  else {
+    uVar3 = 0;
+    if (param_7 != 0) {
+      uVar3 = (ulong)(lVar6 - lVar5) / param_7;
+    }
+  }
+  local_50 = param_8;
+  if ((long)param_8 < 1) {
+    local_50 = 1;
+  }
+  lVar7 = local_50 * param_7;
+  *param_6 = lVar7 * (ulong)uVar1;
+  *param_4 = lVar5 + lVar7 * (ulong)uVar2;
+  *param_5 = (*param_4 + lVar7) - param_7;
+  if (param_3 != (uint *)0x0) {
+    uVar4 = 0;
+    if (local_50 != 0) {
+      uVar4 = uVar3 / local_50;
+    }
+    uVar8 = (ulong)uVar1;
+    uVar3 = 0;
+    if (uVar8 != 0) {
+      uVar3 = uVar4 / uVar8;
+    }
+    *param_3 = (uint)((ulong)uVar2 == uVar4 - uVar3 * uVar8);
+  }
+  if ((long)param_7 < 1) {
+    if (*param_4 < *param_5) {
+      *param_5 = -0x8000000000000000;
+    }
+    if (*param_5 < lVar6) {
+      *param_5 = lVar6;
+    }
+  }
+  else {
+    if (*param_5 < *param_4) {
+      *param_5 = 0x7fffffffffffffff;
+    }
+    if (lVar6 < *param_5) {
+      *param_5 = lVar6;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___kmpc_team_static_init_8u
+// Entry: 00009338
+// Signature: undefined ___kmpc_team_static_init_8u(void)
+// ========================================
+
+
+void ___kmpc_team_static_init_8u
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  __kmp_team_static_init<unsigned_long_long>
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_team_static_init<unsigned_long_long>
+// Entry: 00009394
+// Signature: void __cdecl __kmp_team_static_init<unsigned_long_long>(ident * param_1, int param_2, int * param_3, ulonglong * param_4, ulonglong * param_5, signed_t * param_6, signed_t param_7, signed_t param_8)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* void __kmp_team_static_init<unsigned long long>(ident*, int, int*, unsigned long long*, unsigned
+   long long*, traits_t<unsigned long long>::signed_t*, traits_t<unsigned long long>::signed_t,
+   traits_t<unsigned long long>::signed_t) */
+
+void __kmp_team_static_init<unsigned_long_long>
+               (undefined8 param_1,int param_2,uint *param_3,ulong *param_4,ulong *param_5,
+               long *param_6,ulong param_7,ulong param_8)
+
+{
+  uint uVar1;
+  uint uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  ulong uVar5;
+  long lVar6;
+  ulong uVar7;
+  ulong local_50;
+  
+  __kmp_assert_valid_gtid(param_2);
+  uVar4 = *param_4;
+  uVar5 = *param_5;
+  if (*____kmp_env_consistency_check != 0) {
+    if (param_7 == 0) {
+      ___kmp_error_construct(0x400c6,2,param_1);
+    }
+    if ((long)param_7 < 1) {
+      if (uVar5 <= uVar4) goto LAB_00009488;
+    }
+    else if (uVar4 <= uVar5) goto LAB_00009488;
+    ___kmp_error_construct(0x400ff,2,param_1);
+  }
+LAB_00009488:
+  lVar6 = *(long *)(*____kmp_threads + (long)param_2 * 8);
+  uVar1 = *(uint *)(lVar6 + 0xd4);
+  uVar2 = *(uint *)(*(long *)(lVar6 + 0x40) + 0x180);
+  if (param_7 == 1) {
+    uVar3 = uVar5 - uVar4;
+  }
+  else if (param_7 == 0xffffffffffffffff) {
+    uVar3 = uVar4 - uVar5;
+  }
+  else if ((long)param_7 < 1) {
+    uVar3 = 0;
+    if (-param_7 != 0) {
+      uVar3 = (uVar4 - uVar5) / -param_7;
+    }
+  }
+  else {
+    uVar3 = 0;
+    if (param_7 != 0) {
+      uVar3 = (uVar5 - uVar4) / param_7;
+    }
+  }
+  local_50 = param_8;
+  if ((long)param_8 < 1) {
+    local_50 = 1;
+  }
+  lVar6 = local_50 * param_7;
+  *param_6 = lVar6 * (ulong)uVar1;
+  *param_4 = uVar4 + lVar6 * (ulong)uVar2;
+  *param_5 = (*param_4 + lVar6) - param_7;
+  if (param_3 != (uint *)0x0) {
+    uVar4 = 0;
+    if (local_50 != 0) {
+      uVar4 = uVar3 / local_50;
+    }
+    uVar7 = (ulong)uVar1;
+    uVar3 = 0;
+    if (uVar7 != 0) {
+      uVar3 = uVar4 / uVar7;
+    }
+    *param_3 = (uint)((ulong)uVar2 == uVar4 - uVar3 * uVar7);
+  }
+  if ((long)param_7 < 1) {
+    if (*param_4 < *param_5) {
+      *param_5 = 0;
+    }
+    if (*param_5 < uVar5) {
+      *param_5 = uVar5;
+    }
+  }
+  else {
+    if (*param_5 < *param_4) {
+      *param_5 = 0xffffffffffffffff;
+    }
+    if (uVar5 < *param_5) {
+      *param_5 = uVar5;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_assert_valid_gtid
+// Entry: 00009730
+// Signature: undefined __cdecl __kmp_assert_valid_gtid(int param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __kmp_assert_valid_gtid(int) */
+
+void __kmp_assert_valid_gtid(int param_1)
+
+{
+  bool bVar1;
+  undefined1 auStack_30 [28];
+  int local_14;
+  
+  bVar1 = true;
+  if (-1 < param_1) {
+    bVar1 = *____kmp_threads_capacity <= param_1;
+  }
+  if (bVar1) {
+    local_14 = param_1;
+    ___kmp_msg_format(0x40084);
+    ___kmp_fatal(auStack_30);
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __kmp_tid_from_gtid
+// Entry: 000097d4
+// Signature: undefined __cdecl __kmp_tid_from_gtid(int param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* __kmp_tid_from_gtid(int) */
+
+undefined4 __kmp_tid_from_gtid(int param_1)
+
+{
+  return *(undefined4 *)(*(long *)(*____kmp_threads + (long)param_1 * 8) + 0x20);
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_teaminfo
+// Entry: 0000a000
+// Signature: undefined __ompt_get_teaminfo(int param_1, int * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_teaminfo(int param_1,int *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: __ompt_get_task_info_object
+// Entry: 0000a100
+// Signature: undefined __ompt_get_task_info_object(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __ompt_get_task_info_object(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_debug_assert
+// Entry: 0000a200
+// Signature: undefined ___kmp_debug_assert(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_debug_assert(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_error_construct
+// Entry: 0000a400
+// Signature: undefined ___kmp_error_construct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_error_construct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_fatal
+// Entry: 0000a500
+// Signature: undefined ___kmp_fatal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_fatal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg
+// Entry: 0000a600
+// Signature: undefined ___kmp_msg(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_msg_format
+// Entry: 0000a700
+// Signature: undefined ___kmp_msg_format(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_msg_format(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___kmp_push_workshare
+// Entry: 0000a900
+// Signature: undefined ___kmp_push_workshare(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___kmp_push_workshare(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 34
+// Failed: 0
+// Skipped external functions: 0

@@ -1,0 +1,41 @@
+Program: arm_init.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _png_init_filter_functions_neon
+// Entry: 00000000
+// Signature: undefined _png_init_filter_functions_neon(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _png_init_filter_functions_neon(long param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  *(undefined8 *)(param_1 + 0x480) = __png_read_filter_row_up_neon;
+  uVar1 = __png_read_filter_row_paeth3_neon;
+  uVar2 = __png_read_filter_row_avg3_neon;
+  uVar3 = __png_read_filter_row_sub3_neon;
+  if ((param_2 == 3) ||
+     (uVar1 = __png_read_filter_row_paeth4_neon, uVar2 = __png_read_filter_row_avg4_neon,
+     uVar3 = __png_read_filter_row_sub4_neon, param_2 == 4)) {
+    *(undefined8 *)(param_1 + 0x478) = uVar3;
+    *(undefined8 *)(param_1 + 0x488) = uVar2;
+    *(undefined8 *)(param_1 + 0x490) = uVar1;
+  }
+  return;
+}
+
+
+
+// SUMMARY
+// Decompiled: 1
+// Failed: 0
+// Skipped external functions: 0

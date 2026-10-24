@@ -1,0 +1,4370 @@
+Program: pngread.c.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: _png_create_read_struct
+// Entry: 00000000
+// Signature: undefined _png_create_read_struct(void)
+// ========================================
+
+
+long _png_create_read_struct(void)
+
+{
+  long lVar1;
+  
+  lVar1 = _png_create_png_struct();
+  if (lVar1 != 0) {
+    *(undefined4 *)(lVar1 + 0x124) = 0x8000;
+    *(undefined4 *)(lVar1 + 0x468) = 0x2000;
+    *(uint *)(lVar1 + 0x128) = *(uint *)(lVar1 + 0x128) | 0x300000;
+    _png_set_read_fn(lVar1,0,0);
+  }
+  return lVar1;
+}
+
+
+
+
+// ========================================
+// Function: _png_create_read_struct_2
+// Entry: 00000060
+// Signature: undefined _png_create_read_struct_2(void)
+// ========================================
+
+
+long _png_create_read_struct_2(void)
+
+{
+  long lVar1;
+  
+  lVar1 = _png_create_png_struct();
+  if (lVar1 != 0) {
+    *(undefined4 *)(lVar1 + 0x124) = 0x8000;
+    *(undefined4 *)(lVar1 + 0x468) = 0x2000;
+    *(uint *)(lVar1 + 0x128) = *(uint *)(lVar1 + 0x128) | 0x300000;
+    _png_set_read_fn(lVar1,0,0);
+  }
+  return lVar1;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_info
+// Entry: 000000b4
+// Signature: undefined _png_read_info(void)
+// ========================================
+
+
+void _png_read_info(long param_1,long param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  long lVar4;
+  uint uVar5;
+  undefined1 auVar6 [16];
+  
+  if ((param_1 == 0) || (param_2 == 0)) {
+    return;
+  }
+  _png_read_sig(param_1,param_2);
+  uVar2 = _png_read_chunk_header(param_1);
+  iVar1 = *(int *)(param_1 + 0x210);
+  do {
+    if (iVar1 == 0x49444154) {
+      uVar5 = *(uint *)(param_1 + 0x124);
+      if ((uVar5 & 1) == 0) {
+        _png_chunk_error(param_1,"Missing IHDR before IDAT");
+      }
+      else if (((uVar5 >> 1 & 1) != 0) || (*(char *)(param_1 + 0x25f) != '\x03')) {
+        if ((uVar5 >> 3 & 1) != 0) {
+          _png_chunk_benign_error(param_1,"Too many IDATs found");
+          uVar5 = *(uint *)(param_1 + 0x124);
+        }
+        *(uint *)(param_1 + 0x124) = uVar5 | 4;
+        uVar3 = _png_chunk_unknown_handling(param_1,0x49444154);
+        if ((int)uVar3 != 0) {
+          _png_handle_unknown(param_1,param_2,uVar2,uVar3);
+          uVar2 = 0;
+        }
+        *(int *)(param_1 + 0x240) = (int)uVar2;
+        return;
+      }
+      auVar6 = _png_chunk_error(param_1,"Missing PLTE before IDAT");
+      lVar4 = auVar6._0_8_;
+      if (lVar4 == 0) {
+        return;
+      }
+      if ((*(byte *)(lVar4 + 0x128) >> 6 & 1) != 0) {
+        _png_app_error(lVar4,"png_read_update_info/png_start_read_image: duplicate call");
+        return;
+      }
+      _png_read_start_row(lVar4);
+      _png_read_transform_info(lVar4,auVar6._8_8_);
+      return;
+    }
+    if ((*(uint *)(param_1 + 0x124) >> 2 & 1) != 0) {
+      *(uint *)(param_1 + 0x124) = *(uint *)(param_1 + 0x124) | 0x2008;
+    }
+    if (iVar1 == 0x49454e44) {
+      _png_handle_IEND(param_1,param_2,uVar2);
+    }
+    else if (iVar1 == 0x49484452) {
+      _png_handle_IHDR(param_1,param_2,uVar2);
+    }
+    else {
+      uVar3 = _png_chunk_unknown_handling(param_1,iVar1);
+      if ((int)uVar3 == 0) {
+        if (iVar1 < 0x7043414c) {
+          if (iVar1 < 0x67414d41) {
+            if (iVar1 < 0x6348524d) {
+              if (iVar1 == 0x504c5445) {
+                _png_handle_PLTE(param_1,param_2,uVar2);
+              }
+              else if (iVar1 == 0x624b4744) {
+                _png_handle_bKGD(param_1,param_2,uVar2);
+              }
+              else {
+LAB_00000550:
+                _png_handle_unknown(param_1,param_2,uVar2,0);
+              }
+            }
+            else if (iVar1 == 0x6348524d) {
+              _png_handle_cHRM(param_1,param_2,uVar2);
+            }
+            else {
+              if (iVar1 != 0x65584966) goto LAB_00000550;
+              _png_handle_eXIf(param_1,param_2,uVar2);
+            }
+          }
+          else if (iVar1 < 0x69434350) {
+            if (iVar1 == 0x67414d41) {
+              _png_handle_gAMA(param_1,param_2,uVar2);
+            }
+            else {
+              if (iVar1 != 0x68495354) goto LAB_00000550;
+              _png_handle_hIST(param_1,param_2,uVar2);
+            }
+          }
+          else if (iVar1 == 0x69434350) {
+            _png_handle_iCCP(param_1,param_2,uVar2);
+          }
+          else if (iVar1 == 0x69545874) {
+            _png_handle_iTXt(param_1,param_2,uVar2);
+          }
+          else {
+            if (iVar1 != 0x6f464673) goto LAB_00000550;
+            _png_handle_oFFs(param_1,param_2,uVar2);
+          }
+        }
+        else if (iVar1 < 0x73524742) {
+          if (iVar1 < 0x73424954) {
+            if (iVar1 == 0x7043414c) {
+              _png_handle_pCAL(param_1,param_2,uVar2);
+            }
+            else {
+              if (iVar1 != 0x70485973) goto LAB_00000550;
+              _png_handle_pHYs(param_1,param_2,uVar2);
+            }
+          }
+          else if (iVar1 == 0x73424954) {
+            _png_handle_sBIT(param_1,param_2,uVar2);
+          }
+          else if (iVar1 == 0x7343414c) {
+            _png_handle_sCAL(param_1,param_2,uVar2);
+          }
+          else {
+            if (iVar1 != 0x73504c54) goto LAB_00000550;
+            _png_handle_sPLT(param_1,param_2,uVar2);
+          }
+        }
+        else if (iVar1 < 0x74494d45) {
+          if (iVar1 == 0x73524742) {
+            _png_handle_sRGB(param_1,param_2,uVar2);
+          }
+          else {
+            if (iVar1 != 0x74455874) goto LAB_00000550;
+            _png_handle_tEXt(param_1,param_2,uVar2);
+          }
+        }
+        else if (iVar1 == 0x74494d45) {
+          _png_handle_tIME(param_1,param_2,uVar2);
+        }
+        else if (iVar1 == 0x74524e53) {
+          _png_handle_tRNS(param_1,param_2,uVar2);
+        }
+        else {
+          if (iVar1 != 0x7a545874) goto LAB_00000550;
+          _png_handle_zTXt(param_1,param_2,uVar2);
+        }
+      }
+      else {
+        _png_handle_unknown(param_1,param_2,uVar2,uVar3);
+        if (iVar1 == 0x504c5445) {
+          *(uint *)(param_1 + 0x124) = *(uint *)(param_1 + 0x124) | 2;
+        }
+      }
+    }
+    uVar2 = _png_read_chunk_header(param_1);
+    iVar1 = *(int *)(param_1 + 0x210);
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: _png_read_row
+// Entry: 00000608
+// Signature: undefined _png_read_row(void)
+// ========================================
+
+
+void _png_read_row(long param_1,long param_2,long param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  byte *pbVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  char *pcVar7;
+  ushort *puVar8;
+  long lVar9;
+  size_t sVar10;
+  uint local_48 [2];
+  ulong local_40;
+  undefined2 local_38;
+  undefined1 local_36;
+  byte local_35;
+  
+  if (param_1 == 0) {
+    return;
+  }
+  if ((*(byte *)(param_1 + 0x128) >> 6 & 1) == 0) {
+    _png_read_start_row(param_1);
+  }
+  local_48[0] = *(uint *)(param_1 + 0x208);
+  local_38 = *(undefined2 *)(param_1 + 0x25f);
+  local_36 = *(undefined1 *)(param_1 + 0x263);
+  local_35 = *(byte *)(param_1 + 0x262);
+  local_40 = (ulong)local_35 * (ulong)local_48[0] + 7 >> 3;
+  if (7 < local_35) {
+    local_40 = (ulong)(local_35 >> 3) * (ulong)local_48[0];
+  }
+  if ((*(char *)(param_1 + 0x25c) != '\0') && ((*(byte *)(param_1 + 300) >> 1 & 1) != 0)) {
+    uVar6 = *(uint *)(param_1 + 0x20c);
+    switch(*(undefined1 *)(param_1 + 0x25d)) {
+    case 0:
+      if ((uVar6 & 7) != 0) {
+LAB_000007fc:
+        if (param_3 == 0) goto LAB_00000810;
+LAB_00000800:
+        _png_combine_row(param_1,param_3,1);
+LAB_00000810:
+        _png_read_finish_row(param_1);
+        return;
+      }
+      break;
+    case 1:
+      if (((uVar6 & 7) != 0) || (*(uint *)(param_1 + 0x1f0) < 5)) goto LAB_000007fc;
+      break;
+    case 2:
+      if ((uVar6 & 7) != 4) {
+        if (param_3 == 0) goto LAB_00000810;
+        uVar6 = uVar6 >> 2;
+joined_r0x000007e4:
+        if ((uVar6 & 1) == 0) goto LAB_00000810;
+        goto LAB_00000800;
+      }
+      break;
+    case 3:
+      if (((uVar6 & 3) != 0) || (*(uint *)(param_1 + 0x1f0) < 3)) goto LAB_000007fc;
+      break;
+    case 4:
+      if ((uVar6 & 3) != 2) {
+        if (param_3 == 0) goto LAB_00000810;
+        uVar6 = uVar6 >> 1;
+        goto joined_r0x000007e4;
+      }
+      break;
+    case 5:
+      if (((uVar6 & 1) != 0) || (*(uint *)(param_1 + 0x1f0) < 2)) goto LAB_000007fc;
+      break;
+    default:
+      if ((uVar6 & 1) == 0) goto LAB_00000810;
+    }
+  }
+  if ((*(byte *)(param_1 + 0x124) >> 2 & 1) == 0) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(param_1,"Invalid attempt to read row data");
+  }
+  **(undefined1 **)(param_1 + 0x220) = 0xff;
+  sVar10 = local_40 + 1;
+  _png_read_IDAT_data(param_1,*(undefined8 *)(param_1 + 0x220),sVar10);
+  pbVar4 = *(byte **)(param_1 + 0x220);
+  if (*pbVar4 != 0) {
+    if (4 < *pbVar4) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"bad adaptive filter value");
+    }
+    _png_read_filter_row(param_1,local_48,pbVar4 + 1,*(long *)(param_1 + 0x218) + 1);
+    pbVar4 = *(byte **)(param_1 + 0x220);
+    sVar10 = local_40 + 1;
+  }
+  _memcpy(*(void **)(param_1 + 0x218),pbVar4,sVar10);
+  if ((((*(byte *)(param_1 + 0x3d8) >> 2 & 1) != 0) && (*(char *)(param_1 + 0x3dc) == '@')) &&
+     (((byte)local_38 >> 1 & 1) != 0)) {
+    if (local_38._1_1_ == '\x10') {
+      if ((byte)local_38 == 2) {
+        lVar9 = 6;
+      }
+      else {
+        if ((byte)local_38 != 6) goto LAB_000008c8;
+        lVar9 = 8;
+      }
+      if (local_48[0] != 0) {
+        puVar8 = (ushort *)(*(long *)(param_1 + 0x220) + 3);
+        uVar6 = local_48[0];
+        do {
+          uVar3 = (uint)(*puVar8 >> 8) | (*puVar8 & 0xff00ff) << 8;
+          iVar1 = uVar3 + ((uint)(puVar8[-1] >> 8) | (puVar8[-1] & 0xff00ff) << 8);
+          iVar2 = uVar3 + ((uint)(puVar8[1] >> 8) | (puVar8[1] & 0xff00ff) << 8);
+          *(char *)(puVar8 + -1) = (char)((uint)iVar1 >> 8);
+          *(char *)((long)puVar8 + -1) = (char)iVar1;
+          *(char *)(puVar8 + 1) = (char)((uint)iVar2 >> 8);
+          *(char *)((long)puVar8 + 3) = (char)iVar2;
+          puVar8 = (ushort *)((long)puVar8 + lVar9);
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+      }
+    }
+    else if (local_38._1_1_ == '\b') {
+      if ((byte)local_38 == 2) {
+        lVar9 = 3;
+      }
+      else {
+        if ((byte)local_38 != 6) goto LAB_000008c8;
+        lVar9 = 4;
+      }
+      if (local_48[0] != 0) {
+        pcVar7 = (char *)(*(long *)(param_1 + 0x220) + 3);
+        uVar6 = local_48[0];
+        do {
+          pcVar7[-2] = pcVar7[-1] + pcVar7[-2];
+          *pcVar7 = *pcVar7 + pcVar7[-1];
+          pcVar7 = pcVar7 + lVar9;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+      }
+    }
+  }
+LAB_000008c8:
+  if (*(int *)(param_1 + 300) != 0) {
+    _png_do_read_transformations(param_1,local_48);
+  }
+  if (*(byte *)(param_1 + 0x267) == 0) {
+    *(byte *)(param_1 + 0x267) = local_35;
+    if (*(byte *)(param_1 + 0x266) < local_35) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"sequential row overflow");
+    }
+  }
+  else if (*(byte *)(param_1 + 0x267) != local_35) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(param_1,"internal sequential row size calculation error");
+  }
+  if ((*(char *)(param_1 + 0x25c) == '\0') || ((*(uint *)(param_1 + 300) >> 1 & 1) == 0)) {
+    if (param_2 != 0) {
+      _png_combine_row(param_1,param_2,0xffffffff);
+    }
+    if (param_3 == 0) goto LAB_0000098c;
+    uVar5 = 0xffffffff;
+    param_2 = param_3;
+  }
+  else {
+    if (*(byte *)(param_1 + 0x25d) < 6) {
+      _png_do_read_interlace(local_48,*(long *)(param_1 + 0x220) + 1);
+    }
+    if (param_3 != 0) {
+      _png_combine_row(param_1,param_3,1);
+    }
+    if (param_2 == 0) goto LAB_0000098c;
+    uVar5 = 0;
+  }
+  _png_combine_row(param_1,param_2,uVar5);
+LAB_0000098c:
+  _png_read_finish_row(param_1);
+  if (*(code **)(param_1 + 0x2f8) != _png_create_read_struct) {
+    (**(code **)(param_1 + 0x2f8))
+              (param_1,*(undefined4 *)(param_1 + 0x20c),*(undefined1 *)(param_1 + 0x25d));
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_rows
+// Entry: 000009f0
+// Signature: undefined _png_read_rows(void)
+// ========================================
+
+
+void _png_read_rows(long param_1,undefined8 *param_2,undefined8 *param_3,int param_4)
+
+{
+  if (param_1 != 0) {
+    if ((param_2 == (undefined8 *)0x0) || (param_3 == (undefined8 *)0x0)) {
+      if (param_2 == (undefined8 *)0x0) {
+        if (param_3 != (undefined8 *)0x0) {
+          for (; param_4 != 0; param_4 = param_4 + -1) {
+            _png_read_row(param_1,0,*param_3);
+            param_3 = param_3 + 1;
+          }
+        }
+      }
+      else {
+        for (; param_4 != 0; param_4 = param_4 + -1) {
+          _png_read_row(param_1,*param_2,0);
+          param_2 = param_2 + 1;
+        }
+      }
+    }
+    else {
+      for (; param_4 != 0; param_4 = param_4 + -1) {
+        _png_read_row(param_1,*param_2,*param_3);
+        param_3 = param_3 + 1;
+        param_2 = param_2 + 1;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_image
+// Entry: 00000a90
+// Signature: undefined _png_read_image(void)
+// ========================================
+
+
+void _png_read_image(long param_1,undefined8 *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 *puVar5;
+  
+  if (param_1 != 0) {
+    if ((*(byte *)(param_1 + 0x128) >> 6 & 1) == 0) {
+      iVar2 = _png_set_interlace_handling(param_1);
+      if ((*(byte *)(param_1 + 0x128) >> 6 & 1) == 0) {
+        _png_read_start_row(param_1);
+      }
+      else {
+        _png_app_error(param_1,"png_start_read_image/png_read_update_info: duplicate call");
+      }
+    }
+    else {
+      if ((*(char *)(param_1 + 0x25c) != '\0') && ((*(byte *)(param_1 + 300) >> 1 & 1) == 0)) {
+        _png_warning(param_1,"Interlace handling should be turned on when using png_read_image");
+        *(undefined4 *)(param_1 + 0x1f8) = *(undefined4 *)(param_1 + 500);
+      }
+      iVar2 = _png_set_interlace_handling(param_1);
+    }
+    if ((0 < iVar2) && (iVar1 = *(int *)(param_1 + 500), iVar1 != 0)) {
+      iVar3 = 0;
+      puVar5 = param_2;
+      iVar4 = iVar1;
+      do {
+        do {
+          _png_read_row(param_1,*puVar5,0);
+          iVar4 = iVar4 + -1;
+          puVar5 = puVar5 + 1;
+        } while (iVar4 != 0);
+        iVar3 = iVar3 + 1;
+        puVar5 = param_2;
+        iVar4 = iVar1;
+      } while (iVar3 != iVar2);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_end
+// Entry: 00000b8c
+// Signature: undefined _png_read_end(void)
+// ========================================
+
+
+void _png_read_end(long param_1,long param_2)
+
+{
+  char cVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  
+  if (param_1 != 0) {
+    iVar2 = _png_chunk_unknown_handling(param_1,0x49444154);
+    if (iVar2 == 0) {
+      _png_read_finish_IDAT(param_1);
+      cVar1 = *(char *)(param_1 + 0x25f);
+    }
+    else {
+      cVar1 = *(char *)(param_1 + 0x25f);
+    }
+    if ((cVar1 == '\x03') && ((int)(uint)*(ushort *)(param_1 + 0x250) < *(int *)(param_1 + 0x254)))
+    {
+      _png_benign_error(param_1,"Read palette index exceeding num_palette");
+    }
+    if (param_2 == 0) {
+      do {
+        uVar3 = _png_read_chunk_header(param_1);
+        iVar2 = *(int *)(param_1 + 0x210);
+        if (iVar2 == 0x49444154) {
+LAB_000010a0:
+          _png_crc_finish(param_1,uVar3);
+        }
+        else {
+          *(uint *)(param_1 + 0x124) = *(uint *)(param_1 + 0x124) | 0x2000;
+          if (iVar2 == 0x49454e44) {
+            _png_handle_IEND(param_1,0);
+          }
+          else {
+            if (iVar2 != 0x49484452) goto LAB_000010a0;
+            _png_handle_IHDR(param_1,0);
+          }
+        }
+      } while ((*(byte *)(param_1 + 0x124) >> 4 & 1) == 0);
+    }
+    else {
+      do {
+        uVar3 = _png_read_chunk_header(param_1);
+        iVar2 = *(int *)(param_1 + 0x210);
+        if (iVar2 == 0x49444154) {
+          uVar4 = _png_chunk_unknown_handling(param_1,0x49444154);
+          if ((int)uVar4 == 0) {
+LAB_00000d20:
+            if (iVar2 < 0x7043414c) {
+              if (iVar2 < 0x67414d41) {
+                if (iVar2 < 0x624b4744) {
+                  if (iVar2 == 0x49444154) {
+                    if ((((int)uVar3 != 0) && ((*(byte *)(param_1 + 0x128) >> 3 & 1) == 0)) ||
+                       ((*(byte *)(param_1 + 0x125) >> 5 & 1) != 0)) {
+                      _png_benign_error(param_1,"..Too many IDATs found");
+                    }
+                    _png_crc_finish(param_1,uVar3);
+                  }
+                  else {
+                    if (iVar2 != 0x504c5445) {
+LAB_00001078:
+                      uVar4 = 0;
+                      goto LAB_00000ca8;
+                    }
+                    _png_handle_PLTE(param_1,param_2,uVar3);
+                  }
+                }
+                else if (iVar2 == 0x624b4744) {
+                  _png_handle_bKGD(param_1,param_2,uVar3);
+                }
+                else if (iVar2 == 0x6348524d) {
+                  _png_handle_cHRM(param_1,param_2,uVar3);
+                }
+                else {
+                  if (iVar2 != 0x65584966) goto LAB_00001078;
+                  _png_handle_eXIf(param_1,param_2,uVar3);
+                }
+              }
+              else if (iVar2 < 0x69434350) {
+                if (iVar2 == 0x67414d41) {
+                  _png_handle_gAMA(param_1,param_2,uVar3);
+                }
+                else {
+                  if (iVar2 != 0x68495354) goto LAB_00001078;
+                  _png_handle_hIST(param_1,param_2,uVar3);
+                }
+              }
+              else if (iVar2 == 0x69434350) {
+                _png_handle_iCCP(param_1,param_2,uVar3);
+              }
+              else if (iVar2 == 0x69545874) {
+                _png_handle_iTXt(param_1,param_2,uVar3);
+              }
+              else {
+                if (iVar2 != 0x6f464673) goto LAB_00001078;
+                _png_handle_oFFs(param_1,param_2,uVar3);
+              }
+            }
+            else if (iVar2 < 0x73524742) {
+              if (iVar2 < 0x73424954) {
+                if (iVar2 == 0x7043414c) {
+                  _png_handle_pCAL(param_1,param_2,uVar3);
+                }
+                else {
+                  if (iVar2 != 0x70485973) goto LAB_00001078;
+                  _png_handle_pHYs(param_1,param_2,uVar3);
+                }
+              }
+              else if (iVar2 == 0x73424954) {
+                _png_handle_sBIT(param_1,param_2,uVar3);
+              }
+              else if (iVar2 == 0x7343414c) {
+                _png_handle_sCAL(param_1,param_2,uVar3);
+              }
+              else {
+                if (iVar2 != 0x73504c54) goto LAB_00001078;
+                _png_handle_sPLT(param_1,param_2,uVar3);
+              }
+            }
+            else if (iVar2 < 0x74494d45) {
+              if (iVar2 == 0x73524742) {
+                _png_handle_sRGB(param_1,param_2,uVar3);
+              }
+              else {
+                if (iVar2 != 0x74455874) goto LAB_00001078;
+                _png_handle_tEXt(param_1,param_2,uVar3);
+              }
+            }
+            else if (iVar2 == 0x74494d45) {
+              _png_handle_tIME(param_1,param_2,uVar3);
+            }
+            else if (iVar2 == 0x74524e53) {
+              _png_handle_tRNS(param_1,param_2,uVar3);
+            }
+            else {
+              if (iVar2 != 0x7a545874) goto LAB_00001078;
+              _png_handle_zTXt(param_1,param_2,uVar3);
+            }
+          }
+          else {
+            if ((((int)uVar3 != 0) && ((*(byte *)(param_1 + 0x128) >> 3 & 1) == 0)) ||
+               ((*(byte *)(param_1 + 0x125) >> 5 & 1) != 0)) {
+              _png_benign_error(param_1,".Too many IDATs found");
+            }
+LAB_00000ca8:
+            _png_handle_unknown(param_1,param_2,uVar3,uVar4);
+          }
+        }
+        else {
+          *(uint *)(param_1 + 0x124) = *(uint *)(param_1 + 0x124) | 0x2000;
+          if (iVar2 == 0x49484452) {
+            _png_handle_IHDR(param_1,param_2,uVar3);
+          }
+          else if (iVar2 == 0x49454e44) {
+            _png_handle_IEND(param_1,param_2,uVar3);
+          }
+          else {
+            uVar4 = _png_chunk_unknown_handling(param_1,iVar2);
+            if ((int)uVar4 == 0) goto LAB_00000d20;
+            _png_handle_unknown(param_1,param_2,uVar3,uVar4);
+            if (iVar2 == 0x504c5445) {
+              *(uint *)(param_1 + 0x124) = *(uint *)(param_1 + 0x124) | 2;
+            }
+          }
+        }
+      } while ((*(byte *)(param_1 + 0x124) >> 4 & 1) == 0);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_destroy_read_struct
+// Entry: 00001124
+// Signature: undefined _png_destroy_read_struct(void)
+// ========================================
+
+
+void _png_destroy_read_struct(long *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  long lVar3;
+  
+  if ((param_1 != (long *)0x0) && (lVar3 = *param_1, lVar3 != 0)) {
+    _png_destroy_info_struct(lVar3,param_3);
+    _png_destroy_info_struct(lVar3,param_2);
+    *param_1 = 0;
+    _png_destroy_gamma_table(lVar3);
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x3f8));
+    *(undefined8 *)(lVar3 + 0x3f8) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x470));
+    *(undefined8 *)(lVar3 + 0x470) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x458));
+    *(undefined8 *)(lVar3 + 0x458) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x370));
+    *(undefined8 *)(lVar3 + 0x370) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x378));
+    *(undefined8 *)(lVar3 + 0x378) = 0;
+    uVar1 = *(uint *)(lVar3 + 0x3a4);
+    if ((uVar1 >> 0xc & 1) != 0) {
+      _png_zfree(lVar3,*(undefined8 *)(lVar3 + 0x248));
+      *(undefined8 *)(lVar3 + 0x248) = 0;
+      uVar1 = *(uint *)(lVar3 + 0x3a4);
+    }
+    uVar2 = uVar1 & 0xffffefff;
+    *(uint *)(lVar3 + 0x3a4) = uVar2;
+    if ((uVar1 >> 0xd & 1) != 0) {
+      _png_free(lVar3,*(undefined8 *)(lVar3 + 0x2e0));
+      *(undefined8 *)(lVar3 + 0x2e0) = 0;
+      uVar2 = *(uint *)(lVar3 + 0x3a4);
+    }
+    *(uint *)(lVar3 + 0x3a4) = uVar2 & 0xffffdfff;
+    _inflateEnd((z_streamp)(lVar3 + 0x138));
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x328));
+    *(undefined8 *)(lVar3 + 0x328) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x438));
+    *(undefined8 *)(lVar3 + 0x438) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x3c0));
+    *(undefined8 *)(lVar3 + 0x3c0) = 0;
+    _png_free(lVar3,*(undefined8 *)(lVar3 + 0x3d0));
+    *(undefined8 *)(lVar3 + 0x3d0) = 0;
+    _png_destroy_png_struct(lVar3);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_set_read_status_fn
+// Entry: 0000126c
+// Signature: undefined _png_set_read_status_fn(void)
+// ========================================
+
+
+void _png_set_read_status_fn(long param_1,undefined8 param_2)
+
+{
+  if (param_1 != 0) {
+    *(undefined8 *)(param_1 + 0x2f8) = param_2;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_read_png
+// Entry: 00001278
+// Signature: undefined _png_read_png(void)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+
+void _png_read_png(long param_1,long param_2,uint param_3)
+
+{
+  uint uVar1;
+  byte bVar2;
+  undefined8 uVar3;
+  long lVar4;
+  ulong uVar5;
+  
+  if ((param_1 != 0) && (param_2 != 0)) {
+    _png_read_info(param_1,param_2);
+    if (*(uint *)(param_2 + 4) >> 0x1d != 0) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"Image is too high to process with png_read_png()");
+    }
+    if ((param_3 >> 0xf & 1) != 0) {
+      _png_set_scale_16(param_1);
+    }
+    if ((param_3 & 1) != 0) {
+      _png_set_strip_16(param_1);
+    }
+    if ((param_3 >> 1 & 1) != 0) {
+      _png_set_strip_alpha(param_1);
+    }
+    if ((param_3 >> 2 & 1) != 0) {
+      _png_set_packing(param_1);
+    }
+    if ((param_3 >> 3 & 1) != 0) {
+      _png_set_packswap(param_1);
+    }
+    if ((param_3 >> 4 & 1) != 0) {
+      _png_set_expand(param_1);
+    }
+    if ((param_3 >> 5 & 1) != 0) {
+      _png_set_invert_mono(param_1);
+    }
+    if (((param_3 >> 6 & 1) != 0) && ((*(byte *)(param_2 + 8) >> 1 & 1) != 0)) {
+      _png_set_shift(param_1,param_2 + 0xb0);
+    }
+    if ((param_3 >> 7 & 1) != 0) {
+      _png_set_bgr(param_1);
+    }
+    if ((param_3 >> 8 & 1) != 0) {
+      _png_set_swap_alpha(param_1);
+    }
+    if ((param_3 >> 9 & 1) != 0) {
+      _png_set_swap(param_1);
+    }
+    if ((param_3 >> 10 & 1) != 0) {
+      _png_set_invert_alpha(param_1);
+    }
+    if ((param_3 >> 0xd & 1) != 0) {
+      _png_set_gray_to_rgb(param_1);
+    }
+    if ((param_3 >> 0xe & 1) == 0) {
+      _png_set_interlace_handling(param_1);
+      bVar2 = *(byte *)(param_1 + 0x128);
+    }
+    else {
+      _png_set_expand_16(param_1);
+      _png_set_interlace_handling(param_1);
+      bVar2 = *(byte *)(param_1 + 0x128);
+    }
+    if ((bVar2 >> 6 & 1) == 0) {
+      _png_read_start_row(param_1);
+      _png_read_transform_info(param_1,param_2);
+    }
+    else {
+      _png_app_error(param_1,"png_read_update_info/png_start_read_image: duplicate call");
+    }
+    _png_free_data(param_1,param_2,0x40,0);
+    if (*(long *)(param_2 + 0x160) == 0) {
+      uVar3 = _png_malloc(param_1,(ulong)*(uint *)(param_2 + 4) << 3);
+      *(undefined8 *)(param_2 + 0x160) = uVar3;
+      uVar1 = *(uint *)(param_2 + 4);
+      if (uVar1 == 0) {
+        *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x40;
+      }
+      else {
+        lVar4 = 0;
+        do {
+          *(undefined8 *)(*(long *)(param_2 + 0x160) + lVar4) = 0;
+          lVar4 = lVar4 + 8;
+        } while ((ulong)uVar1 * 8 - lVar4 != 0);
+        uVar5 = 0;
+        *(uint *)(param_2 + 300) = *(uint *)(param_2 + 300) | 0x40;
+        do {
+          uVar3 = _png_malloc(param_1,*(undefined8 *)(param_2 + 0x10));
+          *(undefined8 *)(*(long *)(param_2 + 0x160) + uVar5 * 8) = uVar3;
+          uVar5 = uVar5 + 1;
+        } while (uVar5 < *(uint *)(param_2 + 4));
+      }
+    }
+    _png_read_image(param_1,*(undefined8 *)(param_2 + 0x160));
+    *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 0x8000;
+    _png_read_end(param_1,param_2);
+    return;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_begin_read_from_stdio
+// Entry: 000014c8
+// Signature: undefined _png_image_begin_read_from_stdio(void)
+// ========================================
+
+
+undefined8 _png_image_begin_read_from_stdio(undefined8 *param_1,long param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  if (param_1 != (undefined8 *)0x0) {
+    if (*(int *)(param_1 + 1) != 1) {
+      uVar2 = _png_image_error(param_1,
+                               "png_image_begin_read_from_stdio: incorrect PNG_IMAGE_VERSION");
+      return uVar2;
+    }
+    if (param_2 == 0) {
+      uVar2 = _png_image_error(param_1,"png_image_begin_read_from_stdio: invalid argument");
+      return uVar2;
+    }
+    iVar1 = _png_image_read_init(param_1);
+    if (iVar1 != 0) {
+      *(long *)(*(long *)*param_1 + 0x100) = param_2;
+      uVar2 = _png_safe_execute(param_1,_png_image_read_header,param_1);
+      return uVar2;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_read_init
+// Entry: 00001564
+// Signature: undefined _png_image_read_init(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _png_image_read_init(long *param_1)
+
+{
+  undefined8 uVar1;
+  long lVar2;
+  long lVar3;
+  long *plVar4;
+  long local_40;
+  long local_38;
+  
+  if (*param_1 != 0) {
+    uVar1 = _png_image_error(param_1,"png_image_read: opaque pointer not NULL");
+    return uVar1;
+  }
+  lVar2 = _png_create_png_struct("1.6.37",param_1,__png_safe_error,__png_safe_warning,0,0,0);
+  if (lVar2 == 0) {
+    local_38 = 0;
+    param_1[1] = 0;
+    *param_1 = 0;
+    param_1[3] = 0;
+    param_1[2] = 0;
+    param_1[5] = 0;
+    param_1[4] = 0;
+    param_1[7] = 0;
+    param_1[6] = 0;
+    param_1[9] = 0;
+    param_1[8] = 0;
+    param_1[0xb] = 0;
+    param_1[10] = 0;
+    param_1[0xc] = 0;
+    *(undefined4 *)(param_1 + 1) = 1;
+  }
+  else {
+    *(undefined4 *)(lVar2 + 0x124) = 0x8000;
+    *(undefined4 *)(lVar2 + 0x468) = 0x2000;
+    *(uint *)(lVar2 + 0x128) = *(uint *)(lVar2 + 0x128) | 0x300000;
+    _png_set_read_fn(lVar2,0,0);
+    param_1[1] = 0;
+    *param_1 = 0;
+    param_1[3] = 0;
+    param_1[2] = 0;
+    param_1[5] = 0;
+    param_1[4] = 0;
+    param_1[7] = 0;
+    param_1[6] = 0;
+    param_1[9] = 0;
+    param_1[8] = 0;
+    param_1[0xb] = 0;
+    param_1[10] = 0;
+    param_1[0xc] = 0;
+    *(undefined4 *)(param_1 + 1) = 1;
+    local_38 = lVar2;
+    lVar3 = _png_create_info_struct(lVar2);
+    local_40 = lVar3;
+    if (lVar3 != 0) {
+      plVar4 = (long *)_png_malloc_warn(lVar2,0x30);
+      if (plVar4 != (long *)0x0) {
+        plVar4[3] = 0;
+        plVar4[2] = 0;
+        plVar4[5] = 0;
+        plVar4[4] = 0;
+        plVar4[1] = 0;
+        *plVar4 = 0;
+        *plVar4 = lVar2;
+        plVar4[1] = lVar3;
+        *(byte *)(plVar4 + 5) = *(byte *)(plVar4 + 5) & 0xfe;
+        *param_1 = (long)plVar4;
+        return 1;
+      }
+      _png_destroy_info_struct(lVar2,&local_40);
+    }
+    _png_destroy_read_struct(&local_38,0,0);
+  }
+  uVar1 = _png_image_error(param_1,"png_image_read: out of memory");
+  return uVar1;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_read_header
+// Entry: 000016e0
+// Signature: undefined _png_image_read_header(void)
+// ========================================
+
+
+undefined8 _png_image_read_header(undefined8 *param_1)
+
+{
+  uint uVar1;
+  long lVar2;
+  long lVar3;
+  byte bVar4;
+  byte bVar5;
+  uint uVar6;
+  
+  lVar2 = *(long *)*param_1;
+  lVar3 = ((long *)*param_1)[1];
+  _png_set_benign_errors(lVar2,1);
+  _png_read_info(lVar2,lVar3);
+  *(undefined8 *)((long)param_1 + 0xc) = *(undefined8 *)(lVar2 + 0x1f0);
+  bVar4 = *(byte *)(lVar2 + 0x25f);
+  if ((bVar4 >> 2 & 1) == 0) {
+    uVar6 = (uint)(*(short *)(lVar2 + 600) != 0) | bVar4 & 2;
+  }
+  else {
+    uVar6 = bVar4 & 2 | 1;
+  }
+  bVar5 = *(byte *)(lVar2 + 0x260);
+  uVar1 = uVar6 | 4;
+  if (bVar5 != 0x10) {
+    uVar1 = uVar6;
+  }
+  uVar6 = (uint)bVar4;
+  *(uint *)((long)param_1 + 0x14) = uVar1 | (uVar6 & 1) << 3;
+  if (((uVar1 >> 1 & 1) != 0) && ((*(ushort *)(lVar2 + 0x4e2) & 0x8042) == 2)) {
+    *(uint *)(param_1 + 3) = *(uint *)(param_1 + 3) | 1;
+  }
+  if (uVar6 == 3) {
+    uVar6 = (uint)*(ushort *)(lVar2 + 0x250);
+  }
+  else if (uVar6 == 0) {
+    uVar6 = 1 << (ulong)(bVar5 & 0x1f);
+  }
+  else {
+    uVar6 = 0x100;
+  }
+  if (0xff < uVar6) {
+    uVar6 = 0x100;
+  }
+  *(uint *)((long)param_1 + 0x1c) = uVar6;
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_begin_read_from_file
+// Entry: 000017c8
+// Signature: undefined _png_image_begin_read_from_file(void)
+// ========================================
+
+
+undefined8 _png_image_begin_read_from_file(long *param_1,char *param_2)
+
+{
+  int iVar1;
+  FILE *pFVar2;
+  undefined8 uVar3;
+  int *piVar4;
+  char *pcVar5;
+  long *plVar6;
+  
+  if (param_1 != (long *)0x0) {
+    if ((int)param_1[1] != 1) {
+      uVar3 = _png_image_error(param_1,"png_image_begin_read_from_file: incorrect PNG_IMAGE_VERSION"
+                              );
+      return uVar3;
+    }
+    if (param_2 == (char *)0x0) {
+      uVar3 = _png_image_error(param_1,"png_image_begin_read_from_file: invalid argument");
+      return uVar3;
+    }
+    pFVar2 = _fopen(param_2,"rb");
+    if (pFVar2 == (FILE *)0x0) {
+      piVar4 = ___error();
+      pcVar5 = _strerror(*piVar4);
+      uVar3 = _png_image_error(param_1,pcVar5);
+      return uVar3;
+    }
+    iVar1 = _png_image_read_init(param_1);
+    if (iVar1 != 0) {
+      plVar6 = (long *)*param_1;
+      *(FILE **)(*plVar6 + 0x100) = pFVar2;
+      *(byte *)(plVar6 + 5) = *(byte *)(plVar6 + 5) | 2;
+      uVar3 = _png_safe_execute(param_1,_png_image_read_header,param_1);
+      return uVar3;
+    }
+    _fclose(pFVar2);
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_begin_read_from_memory
+// Entry: 000018b0
+// Signature: undefined _png_image_begin_read_from_memory(void)
+// ========================================
+
+
+undefined8 _png_image_begin_read_from_memory(long *param_1,long param_2,long param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  long *plVar3;
+  long lVar4;
+  
+  if (param_1 != (long *)0x0) {
+    if ((int)param_1[1] != 1) {
+      uVar2 = _png_image_error(param_1,
+                               "png_image_begin_read_from_memory: incorrect PNG_IMAGE_VERSION");
+      return uVar2;
+    }
+    if ((param_2 == 0) || (param_3 == 0)) {
+      uVar2 = _png_image_error(param_1,"png_image_begin_read_from_memory: invalid argument");
+      return uVar2;
+    }
+    iVar1 = _png_image_read_init(param_1);
+    if (iVar1 != 0) {
+      plVar3 = (long *)*param_1;
+      plVar3[3] = param_2;
+      plVar3[4] = param_3;
+      lVar4 = *plVar3;
+      *(code **)(lVar4 + 0xf8) = _png_image_memory_read;
+      *(long **)(lVar4 + 0x100) = param_1;
+      uVar2 = _png_safe_execute(param_1,_png_image_read_header,param_1);
+      return uVar2;
+    }
+  }
+  return 0;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_memory_read
+// Entry: 00001974
+// Signature: undefined _png_image_memory_read(void)
+// ========================================
+
+
+void _png_image_memory_read(long param_1,void *param_2,ulong param_3)
+
+{
+  void *pvVar1;
+  ulong uVar2;
+  long lVar3;
+  
+  if (param_1 != 0) {
+    if ((*(long **)(param_1 + 0x100) == (long *)0x0) ||
+       (lVar3 = **(long **)(param_1 + 0x100), lVar3 == 0)) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"invalid memory read");
+    }
+    pvVar1 = *(void **)(lVar3 + 0x18);
+    uVar2 = *(ulong *)(lVar3 + 0x20);
+    if (pvVar1 == (void *)0x0 || uVar2 < param_3) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(param_1,"read beyond end of data");
+    }
+    _memcpy(param_2,pvVar1,param_3);
+    *(ulong *)(lVar3 + 0x18) = (long)pvVar1 + param_3;
+    *(ulong *)(lVar3 + 0x20) = uVar2 - param_3;
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_read_colormap
+// Entry: 00001bd0
+// Signature: undefined _png_image_read_colormap(void)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 _png_image_read_colormap(undefined8 *param_1)
+
+{
+  uint uVar1;
+  byte bVar2;
+  char cVar3;
+  short sVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  int iVar13;
+  long lVar14;
+  bool bVar15;
+  int iVar16;
+  int iVar17;
+  uint uVar18;
+  int iVar19;
+  uint uVar20;
+  uint uVar21;
+  uint uVar22;
+  undefined1 uVar23;
+  ushort uVar24;
+  undefined8 uVar25;
+  undefined4 uVar26;
+  undefined4 uVar27;
+  byte *pbVar28;
+  ulong uVar29;
+  ulong uVar30;
+  ulong uVar31;
+  uint uVar32;
+  uint uVar33;
+  undefined1 *puVar34;
+  undefined2 uVar35;
+  ulong uVar36;
+  long lVar37;
+  ulong uVar38;
+  ushort *puVar39;
+  int iVar40;
+  ulong uVar41;
+  long lVar42;
+  undefined8 uVar43;
+  uint uVar44;
+  long lVar45;
+  undefined8 *puVar46;
+  undefined1 local_6a [2];
+  undefined8 local_68;
+  
+  puVar46 = (undefined8 *)*param_1;
+  lVar45 = *(long *)*puVar46;
+  uVar1 = *(uint *)((long)puVar46 + 0x14);
+  uVar44 = uVar1 & 4;
+  uVar26 = 1;
+  if (uVar44 != 0) {
+    uVar26 = 2;
+  }
+  bVar2 = *(byte *)(lVar45 + 0x25f);
+  if ((bVar2 >> 2 & 1) == 0) {
+    if (*(short *)(lVar45 + 600) != 0 && (uVar1 & 1) == 0) goto LAB_00001c30;
+LAB_00001c60:
+    uVar18 = 0xff;
+    if (uVar44 != 0) {
+      uVar18 = 0xffff;
+    }
+    uVar41 = (ulong)uVar18;
+    uVar24 = *(ushort *)(lVar45 + 0x4e2);
+    uVar38 = uVar41;
+    uVar36 = uVar41;
+  }
+  else {
+    if ((uVar1 & 1) != 0) goto LAB_00001c60;
+LAB_00001c30:
+    if (uVar44 == 0) {
+      pbVar28 = (byte *)param_1[4];
+      if (pbVar28 == (byte *)0x0) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"background color must be supplied to remove alpha/transparency");
+      }
+      uVar41 = (ulong)pbVar28[1];
+      if ((uVar1 >> 1 & 1) == 0) {
+        uVar24 = *(ushort *)(lVar45 + 0x4e2);
+        uVar38 = uVar41;
+        uVar36 = uVar41;
+      }
+      else {
+        uVar38 = (ulong)*pbVar28;
+        uVar36 = (ulong)pbVar28[2];
+        uVar24 = *(ushort *)(lVar45 + 0x4e2);
+      }
+    }
+    else {
+      uVar41 = 0;
+      uVar24 = *(ushort *)(lVar45 + 0x4e2);
+      uVar38 = 0;
+      uVar36 = 0;
+    }
+  }
+  if ((uVar24 & 1) == 0) {
+    if ((*(char *)(lVar45 + 0x260) == '\x10') && ((*(byte *)(puVar46 + 3) >> 2 & 1) == 0)) {
+      uVar27 = 100000;
+    }
+    else {
+      uVar27 = 0xb18f;
+    }
+    *(undefined4 *)(lVar45 + 0x498) = uVar27;
+    *(ushort *)(lVar45 + 0x4e2) = uVar24 | 1;
+  }
+  iVar17 = (int)uVar36;
+  iVar40 = (int)uVar38;
+  iVar19 = (int)uVar41;
+  switch(bVar2) {
+  case 0:
+    if (8 < *(byte *)(lVar45 + 0x260)) {
+      if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"gray[16] color-map: too few entries");
+      }
+      iVar16 = 0;
+      do {
+        _png_create_colormap_entry(param_1,iVar16,iVar16,iVar16,iVar16,0xff,1);
+        iVar16 = iVar16 + 1;
+      } while (iVar16 != 0x100);
+      if (*(short *)(lVar45 + 600) == 0) {
+LAB_00002ea8:
+        uVar26 = 0;
+        iVar19 = 0x100;
+        uVar18 = 0x100;
+        goto LAB_000031c0;
+      }
+      if ((uVar1 & 1) == 0) {
+        if ((iVar40 == iVar19) && (iVar19 == iVar17)) {
+          uVar41 = uVar36;
+          if (uVar44 != 0) {
+            uVar41 = (ulong)((uint)(iVar17 * 0xff) >> 0xf);
+            uVar41 = (ulong)((uint)*(ushort *)(__png_sRGB_base + uVar41 * 2) +
+                             ((iVar17 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar41)
+                             >> 0xc) >> 8 & 0xff);
+            _png_create_colormap_entry(param_1,uVar41,uVar36,uVar36,uVar36,0xffff,2);
+          }
+          uVar35 = (undefined2)uVar41;
+          goto LAB_00002e8c;
+        }
+        uVar27 = 0xff;
+        if (uVar44 != 0) {
+          uVar27 = 0xffff;
+        }
+      }
+      else {
+        uVar27 = 0;
+      }
+      iVar19 = 0xfe;
+      _png_create_colormap_entry(param_1,0xfe,uVar38,uVar41,uVar36,uVar27,uVar26);
+      uVar18 = 0x100;
+      uVar26 = 2;
+      iVar17 = 1;
+      sVar4 = *(short *)(lVar45 + 600);
+joined_r0x00002b08:
+      if ((sVar4 != 0) && ((*(byte *)(lVar45 + 0x25f) >> 2 & 1) == 0)) {
+        _png_set_tRNS_to_alpha(lVar45);
+      }
+      goto LAB_000031ac;
+    }
+    uVar18 = 1 << (ulong)(*(byte *)(lVar45 + 0x260) & 0x1f);
+    if (*(uint *)((long)puVar46 + 0x1c) < uVar18) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(lVar45,"gray[8] color-map: too few entries");
+    }
+    uVar33 = uVar18 - 1 & 0xff;
+    uVar27 = 0xff;
+    if (*(short *)(lVar45 + 600) == 0) {
+      uVar27 = 0;
+      uVar32 = 0x100;
+    }
+    else {
+      uVar32 = (uint)*(ushort *)(lVar45 + 0x2f0);
+      if (uVar44 != 0) {
+        uVar27 = 0xffff;
+      }
+      if ((uVar1 & 1) != 0) {
+        uVar27 = 0;
+      }
+    }
+    uVar44 = 0;
+    iVar19 = 0;
+    uVar1 = 0;
+    if (uVar33 != 0) {
+      uVar1 = 0xff / uVar33;
+    }
+    do {
+      while (uVar32 == uVar44) {
+        _png_create_colormap_entry(param_1,uVar32,uVar38,uVar41,uVar36,uVar27,uVar26);
+        uVar44 = uVar44 + 1;
+        iVar19 = iVar19 + uVar1;
+        if (uVar18 == uVar44) goto LAB_000030c8;
+      }
+      _png_create_colormap_entry(param_1,uVar44,iVar19,iVar19,iVar19,0xff,3);
+      uVar44 = uVar44 + 1;
+      iVar19 = iVar19 + uVar1;
+    } while (uVar18 != uVar44);
+LAB_000030c8:
+    if (*(byte *)(lVar45 + 0x260) < 8) {
+      _png_set_packing(lVar45);
+    }
+    uVar26 = 0;
+    iVar19 = 0x100;
+    bVar2 = *(byte *)(lVar45 + 0x260);
+    break;
+  default:
+                    /* WARNING: Subroutine does not return */
+    _png_error(lVar45,"invalid PNG color type");
+  case 2:
+  case 6:
+    if ((uVar1 >> 1 & 1) != 0) {
+      if ((bVar2 != 6) && (*(short *)(lVar45 + 600) == 0)) {
+        if (*(uint *)((long)puVar46 + 0x1c) < 0xd8) {
+                    /* WARNING: Subroutine does not return */
+          _png_error(lVar45,"rgb color-map: too few entries");
+        }
+        uVar18 = _make_rgb_colormap(param_1);
+        uVar26 = 3;
+        iVar19 = 0x100;
+        goto LAB_000031c0;
+      }
+      if ((uVar1 & 1) == 0) {
+        if (*(uint *)((long)puVar46 + 0x1c) < 0xf4) {
+                    /* WARNING: Subroutine does not return */
+          _png_error(lVar45,"rgb-alpha color-map: too few entries");
+        }
+        iVar16 = (uVar1 & 3) + 1;
+        uVar1 = iVar16 + iVar16 * (uVar44 >> 2);
+        uVar43 = _make_rgb_colormap(param_1);
+        _png_create_colormap_entry(param_1,uVar43,uVar38,uVar41,uVar36,0,uVar26);
+        uVar29 = uVar38;
+        uVar30 = uVar41;
+        uVar31 = uVar41;
+        if (uVar44 != 0) {
+          uVar29 = (ulong)((uint)(iVar40 * 0xff) >> 0xf);
+          uVar30 = (ulong)((uint)(iVar19 * 0xff) >> 0xf);
+          uVar29 = (ulong)((uint)*(ushort *)(__png_sRGB_base + uVar29 * 2) +
+                           ((iVar40 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar29)
+                           >> 0xc) >> 8 & 0xff);
+          uVar30 = (ulong)((uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                           ((iVar19 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30)
+                           >> 0xc) >> 8 & 0xff);
+          uVar31 = (ulong)((uint)(iVar17 * 0xff) >> 0xf);
+          uVar31 = (ulong)((uint)*(ushort *)(__png_sRGB_base + uVar31 * 2) +
+                           ((iVar17 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar31)
+                           >> 0xc) >> 8 & 0xff);
+        }
+        uVar18 = (uint)uVar43;
+        iVar16 = _memcmp((void *)(param_1[3] + (ulong)(uVar18 * uVar1)),
+                         (void *)(param_1[3] +
+                                 (ulong)(((((int)uVar29 * 5 + 0x82U >> 8) * 6 +
+                                          ((int)uVar30 * 5 + 0x82U >> 8)) * 6 +
+                                          ((int)uVar31 * 5 + 0x82U >> 8) & 0xff) * uVar1)),
+                         (ulong)uVar1);
+        if (iVar16 == 0) {
+          local_6a[0] = 0;
+          local_68 = CONCAT26((short)uVar41,
+                              CONCAT24((short)uVar36,CONCAT22((short)uVar41,(short)uVar38)));
+          _png_set_background_fixed(lVar45,local_6a,1,0,0);
+          uVar26 = 3;
+          iVar19 = 0x100;
+          goto LAB_000031c0;
+        }
+        iVar16 = 0;
+        uVar29 = 0;
+        iVar19 = iVar19 * 0x7f;
+        iVar17 = iVar17 * 0x7f;
+        iVar5 = (uint)*__png_sRGB_table * 0x80;
+        uVar1 = (iVar5 + iVar19) * 0x101;
+        uVar1 = uVar1 + (uVar1 >> 0x10) + 0x8000 >> 0x10;
+        uVar33 = (iVar5 + iVar17) * 0x101;
+        uVar33 = uVar33 + (uVar33 >> 0x10) + 0x8000 >> 0x10;
+        iVar6 = (uint)__png_sRGB_table[0x7f] * 0x80;
+        uVar32 = (iVar6 + iVar17) * 0x101;
+        uVar32 = uVar32 + (uVar32 >> 0x10) + 0x8000 >> 0x10;
+        iVar7 = (uint)__png_sRGB_table[0xff] * 0x80;
+        uVar8 = (iVar7 + iVar17) * 0x101;
+        uVar8 = uVar8 + (uVar8 >> 0x10) + 0x8000 >> 0x10;
+        uVar9 = (iVar6 + iVar19) * 0x101;
+        uVar9 = uVar9 + (uVar9 >> 0x10) + 0x8000 >> 0x10;
+        uVar10 = (iVar7 + iVar19) * 0x101;
+        uVar10 = uVar10 + (uVar10 >> 0x10) + 0x8000 >> 0x10;
+        do {
+          iVar19 = uVar18 + iVar16;
+          if (uVar44 == 0) {
+            uVar20 = (uint)__png_sRGB_table[uVar29] * 0x80 + (uint)__png_sRGB_table[uVar38] * 0x7f;
+            uVar30 = (ulong)(uVar20 >> 0xf);
+            uVar20 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((uVar20 & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc) >> 8 &
+                     0xff;
+            iVar17 = (uint)__png_sRGB_table[uVar41] * 0x7f;
+            uVar30 = (ulong)((uint)(iVar17 + iVar5) >> 0xf);
+            iVar13 = (uint)__png_sRGB_table[uVar36] * 0x7f;
+            uVar21 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar17 + iVar5 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            uVar30 = (ulong)((uint)(iVar13 + iVar5) >> 0xf);
+            uVar11 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar13 + iVar5 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            _png_create_colormap_entry(param_1,iVar19 + 1,uVar20,uVar21,uVar11,0,1);
+            uVar30 = (ulong)((uint)(iVar13 + iVar6) >> 0xf);
+            uVar12 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar13 + iVar6 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            _png_create_colormap_entry(param_1,iVar19 + 2,uVar20,uVar21,uVar12,0,1);
+            uVar30 = (ulong)((uint)(iVar13 + iVar7) >> 0xf);
+            uVar22 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar13 + iVar7 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            _png_create_colormap_entry(param_1,iVar19 + 3,uVar20,uVar21,uVar22,0,1);
+            uVar30 = (ulong)((uint)(iVar17 + iVar6) >> 0xf);
+            uVar21 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar17 + iVar6 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            _png_create_colormap_entry(param_1,iVar19 + 4,uVar20,uVar21,uVar11,0,1);
+            _png_create_colormap_entry(param_1,iVar19 + 5,uVar20,uVar21,uVar12,0,1);
+            _png_create_colormap_entry(param_1,iVar19 + 6,uVar20,uVar21,uVar22,0,1);
+            uVar30 = (ulong)((uint)(iVar17 + iVar7) >> 0xf);
+            uVar21 = (uint)*(ushort *)(__png_sRGB_base + uVar30 * 2) +
+                     ((iVar17 + iVar7 & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar30) >> 0xc
+                     ) >> 8 & 0xff;
+            _png_create_colormap_entry(param_1,iVar19 + 7,uVar20,uVar21,uVar11,0,1);
+            _png_create_colormap_entry(param_1,iVar19 + 8,uVar20,uVar21,uVar12,0,1);
+            uVar25 = 1;
+          }
+          else {
+            uVar20 = ((uint)__png_sRGB_table[uVar29] * 0x80 + iVar40 * 0x7f) * 0x101;
+            uVar20 = uVar20 + (uVar20 >> 0x10) + 0x8000 >> 0x10;
+            _png_create_colormap_entry(param_1,iVar19 + 1,uVar20,uVar1,uVar33,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 2,uVar20,uVar1,uVar32,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 3,uVar20,uVar1,uVar8,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 4,uVar20,uVar9,uVar33,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 5,uVar20,uVar9,uVar32,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 6,uVar20,uVar9,uVar8,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 7,uVar20,uVar10,uVar33,0,2);
+            _png_create_colormap_entry(param_1,iVar19 + 8,uVar20,uVar10,uVar32,0,2);
+            uVar25 = 2;
+            uVar22 = uVar8;
+            uVar21 = uVar10;
+          }
+          _png_create_colormap_entry(param_1,iVar19 + 9,uVar20,uVar21,uVar22,0,uVar25);
+          uVar29 = uVar29 << 1 | 0x7f;
+          iVar16 = iVar16 + 9;
+        } while (uVar29 < 0x100);
+        uVar18 = uVar18 + iVar16 + 1;
+        uVar26 = 4;
+        iVar17 = 1;
+        sVar4 = *(short *)(lVar45 + 600);
+      }
+      else {
+        if (*(uint *)((long)puVar46 + 0x1c) < 0xf4) {
+                    /* WARNING: Subroutine does not return */
+          _png_error(lVar45,"rgb+alpha color-map: too few entries");
+        }
+        uVar43 = _make_rgb_colormap(param_1);
+        iVar17 = 1;
+        _png_create_colormap_entry(param_1,uVar43,0xff,0xff,0xff,0,1);
+        iVar19 = (int)uVar43;
+        _png_create_colormap_entry(param_1,iVar19 + 1,0,0,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 2,0,0,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 3,0,0,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 4,0,0x7f,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 5,0,0x7f,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 6,0,0x7f,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 7,0,0xff,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 8,0,0xff,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 9,0,0xff,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 10,0x7f,0,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0xb,0x7f,0,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0xc,0x7f,0,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0xd,0x7f,0x7f,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0xe,0x7f,0x7f,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0xf,0x7f,0x7f,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x10,0x7f,0xff,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x11,0x7f,0xff,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x12,0x7f,0xff,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x13,0xff,0,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x14,0xff,0,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x15,0xff,0,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x16,0xff,0x7f,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x17,0xff,0x7f,0x7f,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x18,0xff,0x7f,0xff,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x19,0xff,0xff,0,0x80,1);
+        _png_create_colormap_entry(param_1,iVar19 + 0x1a,0xff,0xff,0x7f,0x80,1);
+        uVar18 = iVar19 + 0x1c;
+        _png_create_colormap_entry(param_1,iVar19 + 0x1b,0xff,0xff,0xff,0x80,1);
+        uVar26 = 4;
+        sVar4 = *(short *)(lVar45 + 600);
+      }
+joined_r0x00002b08:
+      iVar19 = (int)uVar43;
+      goto joined_r0x00002b08;
+    }
+    _png_set_rgb_to_gray_fixed(lVar45,1,0xffffffff,0xffffffff);
+    if (*(char *)(lVar45 + 0x25f) == '\x06') {
+      if ((uVar1 & 1) != 0) goto LAB_000026c4;
+      if (*(uint *)((long)puVar46 + 0x1c) < 0x100) goto LAB_00003600;
+LAB_0000254c:
+      iVar17 = *(int *)(lVar45 + 0x498);
+      if ((iVar17 < 100000) &&
+         ((iVar17 == 0 || (iVar17 = _png_gamma_significant((iVar17 * 0xb + 2) / 5), iVar17 == 0))))
+      goto LAB_00002ee4;
+      iVar40 = 0;
+      iVar17 = 3;
+      do {
+        _png_create_colormap_entry(param_1,iVar40,iVar40,iVar40,iVar40,0xff,3);
+        iVar40 = iVar40 + 1;
+      } while (iVar40 != 0x100);
+      bVar15 = true;
+      cVar3 = *(char *)(lVar45 + 0x25f);
+    }
+    else {
+      if (*(short *)(lVar45 + 600) != 0 && (uVar1 & 1) != 0) {
+LAB_000026c4:
+        if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+                    /* WARNING: Subroutine does not return */
+          _png_error(lVar45,"rgb[ga] color-map: too few entries");
+        }
+        uVar18 = _make_ga_colormap(param_1);
+        iVar17 = 1;
+        uVar43 = 0xe7;
+        uVar26 = 1;
+        sVar4 = *(short *)(lVar45 + 600);
+        goto joined_r0x00002b08;
+      }
+      if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+LAB_00003600:
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"rgb[gray] color-map: too few entries");
+      }
+      if (*(short *)(lVar45 + 600) != 0) goto LAB_0000254c;
+LAB_00002ee4:
+      iVar40 = 0;
+      iVar17 = 1;
+      do {
+        _png_create_colormap_entry(param_1,iVar40,iVar40,iVar40,iVar40,0xff,1);
+        iVar40 = iVar40 + 1;
+      } while (iVar40 != 0x100);
+      bVar15 = false;
+      cVar3 = *(char *)(lVar45 + 0x25f);
+    }
+    if ((cVar3 == '\x06') || (*(short *)(lVar45 + 600) != 0)) {
+      if (bVar15) {
+        uVar38 = uVar41;
+        if (uVar44 == 0) {
+          uVar38 = (ulong)__png_sRGB_table[uVar41];
+        }
+        iVar19 = _png_gamma_16bit_correct(uVar38,*(undefined4 *)(lVar45 + 0x498));
+        uVar44 = iVar19 * 0xff + 0x807fU >> 0x10;
+LAB_00002fe4:
+        _png_create_colormap_entry(param_1,(ulong)uVar44,uVar41,uVar41,uVar41,0,uVar26);
+        uVar41 = (ulong)uVar44;
+      }
+      else if (uVar44 != 0) {
+        uVar38 = (ulong)((uint)(iVar19 * 0xff) >> 0xf);
+        uVar44 = (uint)*(ushort *)(__png_sRGB_base + uVar38 * 2) +
+                 ((iVar19 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar38) >> 0xc) >>
+                 8 & 0xff;
+        uVar26 = 2;
+        goto LAB_00002fe4;
+      }
+      local_6a[0] = 0;
+      uVar35 = (undefined2)uVar41;
+      local_68 = CONCAT26(uVar35,CONCAT24(uVar35,CONCAT22(uVar35,uVar35)));
+      _png_set_background_fixed(lVar45,local_6a,1,0,0);
+      uVar26 = 0;
+      uVar43 = 0x100;
+      uVar18 = 0x100;
+      sVar4 = *(short *)(lVar45 + 600);
+      goto joined_r0x00002b08;
+    }
+    uVar26 = 0;
+    uVar18 = 0x100;
+    iVar19 = 0x100;
+LAB_000031ac:
+    if (iVar17 != 3) {
+      if (iVar17 != 1) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"bad data option (internal error)");
+      }
+      goto LAB_000031c0;
+    }
+    bVar2 = *(byte *)(lVar45 + 0x260);
+    break;
+  case 3:
+    uVar38 = (ulong)*(ushort *)(lVar45 + 600);
+    if (uVar38 == 0) {
+      lVar37 = 0;
+    }
+    else {
+      lVar37 = *(long *)(lVar45 + 0x2e0);
+    }
+    uVar18 = (uint)*(ushort *)(lVar45 + 0x250);
+    if (0xff < uVar18) {
+      uVar18 = 0x100;
+    }
+    if (*(uint *)((long)puVar46 + 0x1c) < uVar18) {
+                    /* WARNING: Subroutine does not return */
+      _png_error(lVar45,"palette color-map: too few entries");
+    }
+    if (uVar18 != 0) {
+      uVar29 = 0;
+      puVar34 = (undefined1 *)(*(long *)(lVar45 + 0x248) + 2);
+      do {
+        while ((uVar29 < uVar38 && ((uVar1 & 1) == 0 && lVar37 != 0) &&
+               (bVar2 = *(byte *)(lVar37 + uVar29), bVar2 != 0xff))) {
+          if (bVar2 == 0) {
+            _png_create_colormap_entry(param_1,uVar29,iVar40,uVar41,uVar36,0,uVar26);
+          }
+          else {
+            iVar19 = _decode_gamma(param_1,puVar34[-2],3);
+            iVar17 = _decode_gamma(param_1,iVar40,uVar26);
+            uVar33 = iVar19 * (uint)bVar2 + iVar17 * (bVar2 ^ 0xff);
+            if (uVar44 == 0) {
+              uVar33 = (uint)*(ushort *)(__png_sRGB_base + (ulong)(uVar33 >> 0xf) * 2) +
+                       ((uVar33 & 0x7fff) *
+                        (uint)*(byte *)(__png_sRGB_delta + (ulong)(uVar33 >> 0xf)) >> 0xc) >> 8 &
+                       0xff;
+            }
+            else {
+              uVar33 = uVar33 * 0x101 + (uVar33 * 0x101 >> 0x10) + 0x8000 >> 0x10;
+            }
+            bVar2 = *(byte *)(lVar37 + uVar29);
+            iVar19 = _decode_gamma(param_1,puVar34[-1],3);
+            iVar17 = _decode_gamma(param_1,uVar41,uVar26);
+            uVar32 = iVar19 * (uint)bVar2 + iVar17 * (bVar2 ^ 0xff);
+            if (uVar44 == 0) {
+              uVar32 = (uint)*(ushort *)(__png_sRGB_base + (ulong)(uVar32 >> 0xf) * 2) +
+                       ((uVar32 & 0x7fff) *
+                        (uint)*(byte *)(__png_sRGB_delta + (ulong)(uVar32 >> 0xf)) >> 0xc) >> 8 &
+                       0xff;
+            }
+            else {
+              uVar32 = uVar32 * 0x101 + (uVar32 * 0x101 >> 0x10) + 0x8000 >> 0x10;
+            }
+            bVar2 = *(byte *)(lVar37 + uVar29);
+            iVar19 = _decode_gamma(param_1,*puVar34,3);
+            iVar17 = _decode_gamma(param_1,uVar36,uVar26);
+            uVar8 = iVar19 * (uint)bVar2 + iVar17 * (bVar2 ^ 0xff);
+            if (uVar44 == 0) {
+              uVar8 = (uint)*(ushort *)(__png_sRGB_base + (ulong)(uVar8 >> 0xf) * 2) +
+                      ((uVar8 & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + (ulong)(uVar8 >> 0xf))
+                      >> 0xc) >> 8 & 0xff;
+              uVar24 = (ushort)*(byte *)(lVar37 + uVar29);
+            }
+            else {
+              uVar8 = uVar8 * 0x101 + (uVar8 * 0x101 >> 0x10) + 0x8000 >> 0x10;
+              uVar24 = CONCAT11(*(undefined1 *)(lVar37 + uVar29),*(undefined1 *)(lVar37 + uVar29));
+            }
+            _png_create_colormap_entry(param_1,uVar29,uVar33,uVar32,uVar8,uVar24,uVar26);
+          }
+          uVar29 = uVar29 + 1;
+          puVar34 = puVar34 + 3;
+          if (uVar18 == uVar29) goto LAB_00002db8;
+        }
+        if (uVar29 < uVar38 && lVar37 != 0) {
+          uVar23 = *(undefined1 *)(lVar37 + uVar29);
+        }
+        else {
+          uVar23 = 0xff;
+        }
+        _png_create_colormap_entry(param_1,uVar29,puVar34[-2],puVar34[-1],*puVar34,uVar23,3);
+        uVar29 = uVar29 + 1;
+        puVar34 = puVar34 + 3;
+      } while (uVar18 != uVar29);
+    }
+LAB_00002db8:
+    if (*(byte *)(lVar45 + 0x260) < 8) {
+      _png_set_packing(lVar45);
+    }
+    uVar26 = 0;
+    iVar19 = 0x100;
+    bVar2 = *(byte *)(lVar45 + 0x260);
+    break;
+  case 4:
+    if ((uVar1 & 1) == 0) {
+      if (((uVar1 >> 1 & 1) == 0) || (iVar40 == iVar19 && iVar19 == iVar17)) {
+        if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+                    /* WARNING: Subroutine does not return */
+          _png_error(lVar45,"gray-alpha color-map: too few entries");
+        }
+        iVar17 = 0;
+        do {
+          _png_create_colormap_entry(param_1,iVar17,iVar17,iVar17,iVar17,0xff,1);
+          iVar17 = iVar17 + 1;
+        } while (iVar17 != 0x100);
+        uVar38 = uVar41;
+        if (uVar44 != 0) {
+          uVar38 = (ulong)((uint)(iVar19 * 0xff) >> 0xf);
+          uVar38 = (ulong)((uint)*(ushort *)(__png_sRGB_base + uVar38 * 2) +
+                           ((iVar19 * 0xff & 0x7fffU) * (uint)*(byte *)(__png_sRGB_delta + uVar38)
+                           >> 0xc) >> 8 & 0xff);
+          _png_create_colormap_entry(param_1,uVar38,uVar41,uVar41,uVar41,0xffff,2);
+        }
+        uVar35 = (undefined2)uVar38;
+LAB_00002e8c:
+        local_6a[0] = 0;
+        local_68 = CONCAT26(uVar35,CONCAT24(uVar35,CONCAT22(uVar35,uVar35)));
+        _png_set_background_fixed(lVar45,local_6a,1,0,0);
+        goto LAB_00002ea8;
+      }
+      if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"ga-alpha color-map: too few entries");
+      }
+      iVar19 = 0;
+      do {
+        uVar1 = (iVar19 << 8 & 0xffffU | 0x73) * 0x1bb5 >> 0x10;
+        uVar1 = uVar1 + (((iVar19 << 8 | 0x73U) - uVar1 & 0xfffe) >> 1) >> 7;
+        iVar17 = iVar19 + 1;
+        _png_create_colormap_entry(param_1,iVar19,uVar1,uVar1,uVar1,0xff,1);
+        iVar19 = iVar17;
+      } while (iVar17 != 0xe7);
+      uVar27 = 0xff;
+      if (uVar44 != 0) {
+        uVar27 = 0xffff;
+      }
+      _png_create_colormap_entry(param_1,0xe7,uVar38,uVar41,uVar36,uVar27,uVar26);
+      lVar14 = __png_sRGB_delta;
+      lVar37 = __png_sRGB_base;
+      if (uVar44 == 0) {
+        uVar38 = (ulong)__png_sRGB_table[uVar38];
+        uVar41 = (ulong)__png_sRGB_table[uVar41];
+        uVar36 = (ulong)__png_sRGB_table[uVar36];
+      }
+      iVar40 = (int)uVar41;
+      iVar17 = (int)uVar38;
+      lVar42 = -6;
+      iVar19 = (int)uVar36;
+      puVar39 = __png_sRGB_table;
+      do {
+        iVar16 = (uint)*puVar39 * 0x33;
+        uVar44 = iVar16 + iVar17 * 0xcc;
+        uVar38 = (ulong)(uVar44 >> 0xf);
+        uVar1 = iVar16 + iVar40 * 0xcc;
+        uVar36 = (ulong)(uVar1 >> 0xf);
+        uVar18 = iVar16 + iVar19 * 0xcc;
+        uVar41 = (ulong)(uVar18 >> 0xf);
+        _png_create_colormap_entry
+                  (param_1,(int)lVar42 + 0xee,
+                   (uint)*(ushort *)(lVar37 + uVar38 * 2) +
+                   ((uVar44 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar38) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar36 * 2) +
+                   ((uVar1 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar36) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar41 * 2) +
+                   ((uVar18 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar41) >> 0xc) >> 8 & 0xff,0xff,1)
+        ;
+        bVar15 = lVar42 != -1;
+        lVar42 = lVar42 + 1;
+        puVar39 = puVar39 + 0x33;
+      } while (bVar15);
+      lVar42 = -6;
+      puVar39 = __png_sRGB_table;
+      do {
+        iVar16 = (uint)*puVar39 * 0x66;
+        uVar44 = iVar16 + iVar17 * 0x99;
+        uVar38 = (ulong)(uVar44 >> 0xf);
+        uVar1 = iVar16 + iVar40 * 0x99;
+        uVar36 = (ulong)(uVar1 >> 0xf);
+        uVar18 = iVar16 + iVar19 * 0x99;
+        uVar41 = (ulong)(uVar18 >> 0xf);
+        _png_create_colormap_entry
+                  (param_1,(int)lVar42 + 0xf4,
+                   (uint)*(ushort *)(lVar37 + uVar38 * 2) +
+                   ((uVar44 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar38) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar36 * 2) +
+                   ((uVar1 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar36) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar41 * 2) +
+                   ((uVar18 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar41) >> 0xc) >> 8 & 0xff,0xff,1)
+        ;
+        bVar15 = lVar42 != -1;
+        lVar42 = lVar42 + 1;
+        puVar39 = puVar39 + 0x33;
+      } while (bVar15);
+      lVar42 = -6;
+      puVar39 = __png_sRGB_table;
+      do {
+        iVar16 = (uint)*puVar39 * 0x99;
+        uVar44 = iVar16 + iVar17 * 0x66;
+        uVar38 = (ulong)(uVar44 >> 0xf);
+        uVar1 = iVar16 + iVar40 * 0x66;
+        uVar36 = (ulong)(uVar1 >> 0xf);
+        uVar18 = iVar16 + iVar19 * 0x66;
+        uVar41 = (ulong)(uVar18 >> 0xf);
+        _png_create_colormap_entry
+                  (param_1,(int)lVar42 + 0xfa,
+                   (uint)*(ushort *)(lVar37 + uVar38 * 2) +
+                   ((uVar44 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar38) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar36 * 2) +
+                   ((uVar1 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar36) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar41 * 2) +
+                   ((uVar18 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar41) >> 0xc) >> 8 & 0xff,0xff,1)
+        ;
+        bVar15 = lVar42 != -1;
+        lVar42 = lVar42 + 1;
+        puVar39 = puVar39 + 0x33;
+      } while (bVar15);
+      lVar42 = -6;
+      uVar26 = 1;
+      puVar39 = __png_sRGB_table;
+      do {
+        iVar16 = (uint)*puVar39 * 0xcc;
+        uVar44 = iVar16 + iVar17 * 0x33;
+        uVar38 = (ulong)(uVar44 >> 0xf);
+        uVar1 = iVar16 + iVar40 * 0x33;
+        uVar36 = (ulong)(uVar1 >> 0xf);
+        uVar18 = iVar16 + iVar19 * 0x33;
+        uVar41 = (ulong)(uVar18 >> 0xf);
+        _png_create_colormap_entry
+                  (param_1,(int)lVar42 + 0x100,
+                   (uint)*(ushort *)(lVar37 + uVar38 * 2) +
+                   ((uVar44 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar38) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar36 * 2) +
+                   ((uVar1 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar36) >> 0xc) >> 8 & 0xff,
+                   (uint)*(ushort *)(lVar37 + uVar41 * 2) +
+                   ((uVar18 & 0x7fff) * (uint)*(byte *)(lVar14 + uVar41) >> 0xc) >> 8 & 0xff,0xff,1)
+        ;
+        bVar15 = lVar42 != -1;
+        lVar42 = lVar42 + 1;
+        puVar39 = puVar39 + 0x33;
+      } while (bVar15);
+      uVar18 = 0x100;
+      iVar19 = 0xe7;
+    }
+    else {
+      if (*(uint *)((long)puVar46 + 0x1c) < 0x100) {
+                    /* WARNING: Subroutine does not return */
+        _png_error(lVar45,"gray+alpha color-map: too few entries");
+      }
+      uVar18 = _make_ga_colormap(param_1);
+      uVar26 = 1;
+      iVar19 = 0xe7;
+    }
+LAB_000031c0:
+    _png_set_alpha_mode_fixed(lVar45,0,220000);
+    bVar2 = *(byte *)(lVar45 + 0x260);
+  }
+  if (8 < bVar2) {
+    _png_set_scale_16(lVar45);
+  }
+  if ((0x100 < uVar18) || (*(uint *)((long)puVar46 + 0x1c) < uVar18)) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(lVar45,"color map overflow (BAD internal error)");
+  }
+  *(uint *)((long)puVar46 + 0x1c) = uVar18;
+  switch(uVar26) {
+  case 0:
+  case 3:
+    if (iVar19 == 0x100) {
+LAB_0000324c:
+      *(undefined4 *)(param_1 + 9) = uVar26;
+      return 1;
+    }
+    break;
+  case 1:
+    if (iVar19 == 0xe7) goto LAB_0000324c;
+    break;
+  case 2:
+    if ((iVar19 == 0xfe) && (0xfe < uVar18)) goto LAB_0000324c;
+    break;
+  case 4:
+    if (iVar19 == 0xd8) goto LAB_0000324c;
+    break;
+  default:
+                    /* WARNING: Subroutine does not return */
+    _png_error(lVar45,"bad processing option (internal error)");
+  }
+                    /* WARNING: Subroutine does not return */
+  _png_error(lVar45,"bad background index (internal error)");
+}
+
+
+
+
+// ========================================
+// Function: _png_image_read_colormapped
+// Entry: 00003690
+// Signature: undefined _png_image_read_colormapped(void)
+// ========================================
+
+
+undefined8 _png_image_read_colormapped(undefined8 *param_1)
+
+{
+  long lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 *puVar5;
+  long lVar6;
+  long lVar7;
+  int iVar8;
+  
+  puVar5 = (undefined8 *)*param_1;
+  lVar1 = *(long *)*puVar5;
+  lVar6 = ((long *)*puVar5)[1];
+  _png_set_keep_unknown_chunks(lVar1,1,0,0xffffffff);
+  _png_set_keep_unknown_chunks(lVar1,0,&_png_image_skip_unused_chunks_chunks_to_process,6);
+  iVar2 = 0;
+  if (*(int *)(param_1 + 9) == 0) {
+    iVar2 = _png_set_interlace_handling(lVar1);
+  }
+  if (lVar1 != 0) {
+    if ((*(byte *)(lVar1 + 0x128) >> 6 & 1) == 0) {
+      _png_read_start_row(lVar1);
+      _png_read_transform_info(lVar1,lVar6);
+    }
+    else {
+      _png_app_error(lVar1,"png_read_update_info/png_start_read_image: duplicate call");
+    }
+  }
+  switch(*(undefined4 *)(param_1 + 9)) {
+  case 0:
+    if ((*(char *)(lVar6 + 0x25) == '\x03' || *(char *)(lVar6 + 0x25) == '\0') &&
+       (*(char *)(lVar6 + 0x24) == '\b')) {
+LAB_00003818:
+      lVar7 = (long)*(int *)(param_1 + 2);
+      if (*(int *)(param_1 + 2) < 0) {
+        param_1[6] = param_1[1] - lVar7 * (ulong)(*(int *)(puVar5 + 2) - 1);
+        param_1[7] = lVar7;
+      }
+      else {
+        param_1[6] = param_1[1];
+        param_1[7] = lVar7;
+      }
+      if (iVar2 != 0) {
+        if ((0 < iVar2) && (iVar8 = *(int *)(puVar5 + 2), iVar8 != 0)) {
+          while( true ) {
+            if (iVar8 != 0) {
+              lVar6 = param_1[6];
+              do {
+                _png_read_row(lVar1,lVar6,0);
+                lVar6 = lVar6 + lVar7;
+                iVar8 = iVar8 + -1;
+              } while (iVar8 != 0);
+            }
+            if (iVar2 < 2) break;
+            iVar2 = iVar2 + -1;
+            iVar8 = *(int *)(puVar5 + 2);
+          }
+        }
+        return 1;
+      }
+      uVar3 = _png_get_rowbytes(lVar1,lVar6);
+      uVar3 = _png_malloc(lVar1,uVar3);
+      param_1[5] = uVar3;
+      uVar4 = _png_safe_execute(puVar5,_png_image_read_and_map,param_1);
+      param_1[5] = 0;
+      _png_free(lVar1,uVar3);
+      return uVar4;
+    }
+    break;
+  case 1:
+  case 2:
+    if (((*(char *)(lVar6 + 0x25) == '\x04') && (*(char *)(lVar6 + 0x24) == '\b')) &&
+       ((*(int *)(lVar1 + 0x29c) == 220000 && (*(int *)((long)puVar5 + 0x1c) == 0x100))))
+    goto LAB_00003818;
+    break;
+  case 3:
+    if (((*(char *)(lVar6 + 0x25) == '\x02') && (*(char *)(lVar6 + 0x24) == '\b')) &&
+       ((*(int *)(lVar1 + 0x29c) == 220000 && (*(int *)((long)puVar5 + 0x1c) == 0xd8))))
+    goto LAB_00003818;
+    break;
+  case 4:
+    if ((((*(char *)(lVar6 + 0x25) == '\x06') && (*(char *)(lVar6 + 0x24) == '\b')) &&
+        (*(int *)(lVar1 + 0x29c) == 220000)) && (*(int *)((long)puVar5 + 0x1c) == 0xf4))
+    goto LAB_00003818;
+  }
+                    /* WARNING: Subroutine does not return */
+  _png_error(lVar1,"bad color-map processing (internal error)");
+}
+
+
+
+
+// ========================================
+// Function: _png_create_colormap_entry
+// Entry: 00003ea0
+// Signature: undefined _png_create_colormap_entry(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void _png_create_colormap_entry
+               (undefined8 *param_1,uint param_2,uint param_3,uint param_4,uint param_5,uint param_6
+               ,int param_7)
+
+{
+  long lVar1;
+  undefined1 *puVar2;
+  long lVar3;
+  int iVar4;
+  bool bVar5;
+  bool bVar6;
+  int iVar7;
+  undefined4 uVar8;
+  int iVar9;
+  ulong uVar10;
+  uint uVar11;
+  ulong uVar12;
+  uint uVar13;
+  ulong uVar14;
+  uint uVar15;
+  uint uVar16;
+  uint uVar17;
+  uint uVar18;
+  undefined8 *puVar19;
+  
+  puVar19 = (undefined8 *)*param_1;
+  uVar11 = *(uint *)((long)puVar19 + 0x14);
+  iVar9 = 1;
+  if ((uVar11 & 4) != 0) {
+    iVar9 = 2;
+  }
+  bVar6 = param_4 != param_5;
+  bVar5 = (uVar11 & 2) == 0;
+  if (0xff < param_2) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(*(undefined8 *)*puVar19,"color-map index out of range");
+  }
+  uVar16 = param_6;
+  if ((param_7 == 3) && (param_7 = *(int *)(param_1 + 8), param_7 == 0)) {
+    iVar4 = *(int *)(*(long *)*puVar19 + 0x498);
+    iVar7 = _png_gamma_significant(iVar4);
+    if (iVar7 == 0) {
+      *(undefined4 *)(param_1 + 8) = 4;
+      uVar18 = param_3 * 0x101;
+      uVar17 = param_4 * 0x101;
+      param_5 = param_5 * 0x101;
+LAB_00004170:
+      uVar16 = param_6 * 0x101;
+      if (bVar5 && (param_3 != param_4 || bVar6)) {
+        iVar4 = uVar18 * 0x1b38 + uVar17 * 0x5b8a + param_5 * 0x93e;
+        if ((uVar11 >> 2 & 1) == 0) {
+          uVar16 = (iVar4 + 0x80U >> 8) * 0xff + 0x40;
+          uVar10 = (ulong)(uVar16 >> 0x16);
+          param_5 = (uint)*(ushort *)(__png_sRGB_base + uVar10 * 2) +
+                    ((uVar16 >> 7 & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + uVar10) >> 0xc) >>
+                    8 & 0xff;
+          uVar16 = param_6 * 0xffff + 0x807f >> 0x10;
+          param_7 = 1;
+          param_3 = param_5;
+          param_4 = param_5;
+        }
+        else {
+          param_5 = iVar4 + 0x4000U >> 0xf;
+          param_7 = 2;
+          param_3 = param_5;
+          param_4 = param_5;
+        }
+        goto LAB_00004218;
+      }
+      if ((uVar11 >> 2 & 1) != 0) {
+        param_7 = 2;
+        param_3 = uVar18;
+        param_4 = uVar17;
+        goto LAB_00004218;
+      }
+      uVar10 = (ulong)(uVar18 * 0xff >> 0xf);
+      uVar12 = (ulong)(uVar17 * 0xff >> 0xf);
+      param_3 = (uint)*(ushort *)(__png_sRGB_base + uVar10 * 2) +
+                ((uVar18 * 0xff & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + uVar10) >> 0xc) >> 8
+                & 0xff;
+      param_4 = (uint)*(ushort *)(__png_sRGB_base + uVar12 * 2) +
+                ((uVar17 * 0xff & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + uVar12) >> 0xc) >> 8
+                & 0xff;
+      uVar10 = (ulong)(param_5 * 0xff >> 0xf);
+      param_5 = (uint)*(ushort *)(__png_sRGB_base + uVar10 * 2) +
+                ((param_5 * 0xff & 0x7fff) * (uint)*(byte *)(__png_sRGB_delta + uVar10) >> 0xc) >> 8
+                & 0xff;
+      uVar16 = param_6 * 0xffff + 0x807f >> 0x10;
+    }
+    else {
+      if ((99999 < iVar4) ||
+         ((iVar4 != 0 && (iVar7 = _png_gamma_significant((iVar4 * 0xb + 2) / 5), iVar7 != 0)))) {
+        *(undefined4 *)(param_1 + 8) = 3;
+        uVar8 = _png_reciprocal(iVar4);
+        *(undefined4 *)((long)param_1 + 0x44) = uVar8;
+        param_7 = *(int *)(param_1 + 8);
+        goto joined_r0x00003f20;
+      }
+      *(undefined4 *)(param_1 + 8) = 1;
+      if ((uVar11 & 4) != 0 || bVar5 && (param_3 != param_4 || bVar6)) {
+        uVar18 = (uint)*(ushort *)(__png_sRGB_table + (ulong)param_3 * 2);
+        uVar17 = (uint)*(ushort *)(__png_sRGB_table + (ulong)param_4 * 2);
+        param_5 = (uint)*(ushort *)(__png_sRGB_table + (ulong)param_5 * 2);
+        goto LAB_00004170;
+      }
+    }
+    param_7 = 1;
+  }
+  else {
+joined_r0x00003f20:
+    if (param_7 - 1U < 4) {
+                    /* WARNING: Could not recover jumptable at 0x00003f38. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+      (*(code *)(&UNK_00003f3c + (ulong)(byte)(&lJTI22_0)[param_7 - 1U] * 4))();
+      return;
+    }
+  }
+LAB_00004218:
+  if (param_7 != iVar9) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(*(undefined8 *)*puVar19,"bad encoding (internal error)");
+  }
+  uVar18 = *(uint *)((long)puVar19 + 0x14);
+  uVar17 = uVar18 & 0x21;
+  uVar10 = (ulong)(uVar17 == 0x21);
+  uVar12 = (ulong)(uVar18 >> 3) & 2;
+  uVar18 = uVar18 & 3;
+  uVar14 = (ulong)(param_2 + param_2 * uVar18);
+  if ((uVar11 >> 2 & 1) == 0) {
+    puVar2 = (undefined1 *)(param_1[3] + uVar14);
+    switch(uVar18) {
+    case 1:
+      puVar2[uVar10 ^ 1] = (char)uVar16;
+    case 0:
+      if (uVar17 == 0x21) {
+        puVar2 = puVar2 + 1;
+      }
+      *puVar2 = (char)param_4;
+      break;
+    case 3:
+      lVar1 = 0;
+      if (uVar17 != 0x21) {
+        lVar1 = 3;
+      }
+      puVar2[lVar1] = (char)uVar16;
+    case 2:
+      uVar12 = uVar12 | uVar10;
+      puVar2[uVar12 ^ 2] = (char)param_5;
+      lVar1 = 1;
+      if (uVar17 == 0x21) {
+        lVar1 = 2;
+      }
+      puVar2[lVar1] = (char)param_4;
+      puVar2[uVar12] = (char)param_3;
+    }
+  }
+  else {
+    lVar1 = param_1[3] + uVar14 * 2;
+    uVar11 = (uint)(uVar17 == 0x21);
+    switch(uVar18) {
+    case 1:
+      *(short *)(lVar1 + (ulong)(uVar11 ^ 1) * 2) = (short)uVar16;
+    case 0:
+      uVar11 = 0;
+      if (uVar16 != 0) {
+        uVar11 = (param_4 * uVar16 + 0x7fff) / 0xffff;
+      }
+      if (uVar16 < 0xffff) {
+        param_4 = uVar11;
+      }
+      *(short *)(lVar1 + (ulong)(uVar17 == 0x21) * 2) = (short)param_4;
+      break;
+    case 3:
+      lVar3 = 0;
+      if (uVar17 != 0x21) {
+        lVar3 = 6;
+      }
+      *(short *)(lVar1 + lVar3) = (short)uVar16;
+    case 2:
+      bVar6 = uVar16 != 0;
+      uVar18 = 0;
+      if (bVar6) {
+        uVar18 = (param_5 * uVar16 + 0x7fff) / 0xffff;
+      }
+      uVar15 = 0;
+      if (bVar6) {
+        uVar15 = (param_4 * uVar16 + 0x7fff) / 0xffff;
+      }
+      uVar13 = 0;
+      if (bVar6) {
+        uVar13 = (param_3 * uVar16 + 0x7fff) / 0xffff;
+      }
+      if (uVar16 < 0xffff) {
+        param_3 = uVar13;
+        param_4 = uVar15;
+        param_5 = uVar18;
+      }
+      uVar11 = (uint)uVar12 | uVar11;
+      *(short *)(lVar1 + (ulong)(uVar11 ^ 2) * 2) = (short)param_5;
+      lVar3 = 4;
+      if (uVar17 != 0x21) {
+        lVar3 = 2;
+      }
+      *(short *)(lVar1 + lVar3) = (short)param_4;
+      *(short *)(lVar1 + (ulong)uVar11 * 2) = (short)param_3;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: _make_ga_colormap
+// Entry: 00004404
+// Signature: undefined _make_ga_colormap(void)
+// ========================================
+
+
+undefined8 _make_ga_colormap(undefined8 param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  
+  iVar3 = 0;
+  do {
+    uVar2 = (iVar3 << 8 & 0xffffU | 0x73) * 0x1bb5 >> 0x10;
+    uVar2 = uVar2 + (((iVar3 << 8 | 0x73U) - uVar2 & 0xfffe) >> 1) >> 7;
+    iVar1 = iVar3 + 1;
+    _png_create_colormap_entry(param_1,iVar3,uVar2,uVar2,uVar2,0xff,1);
+    iVar3 = iVar1;
+  } while (iVar1 != 0xe7);
+  _png_create_colormap_entry(param_1,0xe7,0xff,0xff,0xff,0,1);
+  _png_create_colormap_entry(param_1,0xe8,0,0,0,0x33,1);
+  _png_create_colormap_entry(param_1,0xe9,0x33,0x33,0x33,0x33,1);
+  _png_create_colormap_entry(param_1,0xea,0x66,0x66,0x66,0x33,1);
+  _png_create_colormap_entry(param_1,0xeb,0x99,0x99,0x99,0x33,1);
+  _png_create_colormap_entry(param_1,0xec,0xcc,0xcc,0xcc,0x33,1);
+  _png_create_colormap_entry(param_1,0xed,0xff,0xff,0xff,0x33,1);
+  _png_create_colormap_entry(param_1,0xee,0,0,0,0x66,1);
+  _png_create_colormap_entry(param_1,0xef,0x33,0x33,0x33,0x66,1);
+  _png_create_colormap_entry(param_1,0xf0,0x66,0x66,0x66,0x66,1);
+  _png_create_colormap_entry(param_1,0xf1,0x99,0x99,0x99,0x66,1);
+  _png_create_colormap_entry(param_1,0xf2,0xcc,0xcc,0xcc,0x66,1);
+  _png_create_colormap_entry(param_1,0xf3,0xff,0xff,0xff,0x66,1);
+  _png_create_colormap_entry(param_1,0xf4,0,0,0,0x99,1);
+  _png_create_colormap_entry(param_1,0xf5,0x33,0x33,0x33,0x99,1);
+  _png_create_colormap_entry(param_1,0xf6,0x66,0x66,0x66,0x99,1);
+  _png_create_colormap_entry(param_1,0xf7,0x99,0x99,0x99,0x99,1);
+  _png_create_colormap_entry(param_1,0xf8,0xcc,0xcc,0xcc,0x99,1);
+  _png_create_colormap_entry(param_1,0xf9,0xff,0xff,0xff,0x99,1);
+  _png_create_colormap_entry(param_1,0xfa,0,0,0,0xcc,1);
+  _png_create_colormap_entry(param_1,0xfb,0x33,0x33,0x33,0xcc,1);
+  _png_create_colormap_entry(param_1,0xfc,0x66,0x66,0x66,0xcc,1);
+  _png_create_colormap_entry(param_1,0xfd,0x99,0x99,0x99,0xcc,1);
+  _png_create_colormap_entry(param_1,0xfe,0xcc,0xcc,0xcc,0xcc,1);
+  _png_create_colormap_entry(param_1,0xff,0xff,0xff,0xff,0xcc,1);
+  return 0x100;
+}
+
+
+
+
+// ========================================
+// Function: _make_rgb_colormap
+// Entry: 0000479c
+// Signature: undefined _make_rgb_colormap(void)
+// ========================================
+
+
+int _make_rgb_colormap(undefined8 param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar5 = 0;
+  iVar4 = 0;
+  do {
+    iVar2 = 0;
+    iVar1 = iVar5 * 0x33;
+    iVar3 = iVar4;
+    do {
+      _png_create_colormap_entry(param_1,iVar3,iVar1,iVar2,0,0xff,1);
+      _png_create_colormap_entry(param_1,iVar3 + 1,iVar1,iVar2,0x33,0xff,1);
+      _png_create_colormap_entry(param_1,iVar3 + 2,iVar1,iVar2,0x66,0xff,1);
+      _png_create_colormap_entry(param_1,iVar3 + 3,iVar1,iVar2,0x99,0xff,1);
+      _png_create_colormap_entry(param_1,iVar3 + 4,iVar1,iVar2,0xcc,0xff,1);
+      iVar4 = iVar3 + 6;
+      _png_create_colormap_entry(param_1,iVar3 + 5,iVar1,iVar2,0xff,0xff,1);
+      iVar2 = iVar2 + 0x33;
+      iVar3 = iVar4;
+    } while (iVar2 != 0x132);
+    iVar5 = iVar5 + 1;
+  } while (iVar5 != 6);
+  return iVar4;
+}
+
+
+
+
+// ========================================
+// Function: _decode_gamma
+// Entry: 000048d0
+// Signature: undefined _decode_gamma(void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+ulong _decode_gamma(undefined8 *param_1,uint param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  ulong uVar4;
+  
+  if (param_3 == 3) {
+    param_3 = *(int *)(param_1 + 8);
+  }
+  if (param_3 == 0) {
+    iVar1 = *(int *)(**(long **)*param_1 + 0x498);
+    iVar2 = _png_gamma_significant(iVar1);
+    if (iVar2 == 0) {
+      *(undefined4 *)(param_1 + 8) = 4;
+      return (ulong)(param_2 * 0x101);
+    }
+    if ((iVar1 < 100000) &&
+       ((iVar1 == 0 || (iVar2 = _png_gamma_significant((iVar1 * 0xb + 2) / 5), iVar2 == 0)))) {
+      *(undefined4 *)(param_1 + 8) = 1;
+      return (ulong)*(ushort *)(__png_sRGB_table + (ulong)param_2 * 2);
+    }
+    *(undefined4 *)(param_1 + 8) = 3;
+    uVar3 = _png_reciprocal(iVar1);
+    *(undefined4 *)((long)param_1 + 0x44) = uVar3;
+    param_3 = *(int *)(param_1 + 8);
+  }
+  if (3 < param_3 - 1U) {
+                    /* WARNING: Subroutine does not return */
+    _png_error(**(undefined8 **)*param_1,"unexpected encoding (internal error)");
+  }
+                    /* WARNING: Could not recover jumptable at 0x00004918. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar4 = (*(code *)(&UNK_0000491c + (ulong)(byte)(&lJTI25_0)[param_3 - 1U] * 4))();
+  return uVar4;
+}
+
+
+
+
+// ========================================
+// Function: _png_image_read_and_map
+// Entry: 00004a20
+// Signature: undefined _png_image_read_and_map(void)
+// ========================================
+
+
+undefined8 _png_image_read_and_map(long *param_1)
+
+{
+  uint uVar1;
+  ulong uVar2;
+  uint uVar3;
+  long lVar4;
+  long lVar5;
+  byte bVar6;
+  long lVar7;
+  uint uVar8;
+  undefined8 *puVar9;
+  ulong uVar10;
+  long lVar11;
+  char *pcVar12;
+  char cVar13;
+  uint uVar14;
+  char cVar15;
+  long lVar16;
+  byte *pbVar17;
+  long lVar18;
+  char *pcVar19;
+  uint uVar20;
+  uint uVar21;
+  uint uVar22;
+  uint local_88;
+  
+  puVar9 = (undefined8 *)*param_1;
+  lVar16 = *(long *)*puVar9;
+  local_88 = 1;
+  if (*(char *)(lVar16 + 0x25c) != '\0') {
+    if (*(char *)(lVar16 + 0x25c) != '\x01') {
+                    /* WARNING: Subroutine does not return */
+      _png_error(lVar16,"unknown interlace type");
+    }
+    local_88 = 7;
+  }
+  uVar14 = 0;
+  uVar1 = *(uint *)((long)puVar9 + 0xc);
+  uVar2 = (ulong)uVar1;
+  uVar3 = *(uint *)(puVar9 + 2);
+  lVar7 = param_1[9];
+  lVar4 = param_1[6];
+  lVar5 = param_1[7];
+  do {
+    if (*(char *)(lVar16 + 0x25c) == '\x01') {
+      uVar21 = 7 - uVar14 >> 1;
+      uVar20 = uVar21;
+      if (uVar14 == 0 || uVar14 - 1 == 0) {
+        uVar20 = 3;
+      }
+      uVar22 = (uVar14 & 1) << (ulong)(3 - (uVar14 + 1 >> 1) & 0x1f) & 7;
+      if ((uVar1 + ~(-1 << (ulong)(uVar20 & 0x1f))) - uVar22 >> (ulong)(uVar20 & 0x1f) != 0) {
+        uVar8 = 1 << (ulong)(uVar21 & 0x1f);
+        uVar20 = (uVar14 & 1 ^ 1) << (ulong)(3 - (uVar14 >> 1) & 0x1f) & 7;
+        uVar21 = 8 >> (ulong)((int)(uVar14 - 1) >> 1 & 0x1f);
+        if (uVar14 < 3) {
+          uVar21 = 8;
+        }
+        if (uVar20 < uVar3) goto LAB_00004b5c;
+      }
+    }
+    else {
+      uVar20 = 0;
+      uVar22 = 0;
+      uVar21 = 1;
+      uVar8 = 1;
+      if (uVar3 != 0) {
+LAB_00004b5c:
+        if ((int)lVar7 - 1U < 4) {
+          uVar10 = (ulong)uVar22;
+          switch((int)lVar7) {
+          case 1:
+            do {
+              pbVar17 = (byte *)param_1[5];
+              _png_read_row(lVar16,pbVar17,0);
+              if (uVar22 < uVar1) {
+                lVar18 = lVar4 + lVar5 * (ulong)uVar20;
+                pcVar19 = (char *)(lVar18 + uVar10);
+                do {
+                  bVar6 = pbVar17[1];
+                  if (bVar6 < 0xe6) {
+                    if (bVar6 < 0x1a) {
+                      cVar13 = -0x19;
+                    }
+                    else {
+                      cVar13 = (char)((uint)bVar6 * 5 + 0x82 >> 8) * '\x06' +
+                               (char)((uint)*pbVar17 * 5 + 0x82 >> 8) + -0x1e;
+                    }
+                  }
+                  else {
+                    cVar13 = (char)((uint)*pbVar17 * 0xe7 + 0x80 >> 8);
+                  }
+                  *pcVar19 = cVar13;
+                  pcVar19 = pcVar19 + uVar8;
+                  pbVar17 = pbVar17 + 2;
+                } while (pcVar19 < (char *)(lVar18 + uVar2));
+              }
+              uVar20 = uVar20 + uVar21;
+            } while (uVar20 < uVar3);
+            break;
+          case 2:
+            do {
+              pcVar19 = (char *)param_1[5];
+              _png_read_row(lVar16,pcVar19,0);
+              if (uVar22 < uVar1) {
+                lVar18 = lVar4 + lVar5 * (ulong)uVar20;
+                pcVar12 = (char *)(lVar18 + uVar10);
+                do {
+                  cVar13 = *pcVar19;
+                  if (cVar13 == -2) {
+                    cVar13 = -1;
+                  }
+                  cVar15 = -2;
+                  if (pcVar19[1] != '\0') {
+                    cVar15 = cVar13;
+                  }
+                  *pcVar12 = cVar15;
+                  pcVar12 = pcVar12 + uVar8;
+                  pcVar19 = pcVar19 + 2;
+                } while (pcVar12 < (char *)(lVar18 + uVar2));
+              }
+              uVar20 = uVar20 + uVar21;
+            } while (uVar20 < uVar3);
+            break;
+          case 3:
+            do {
+              pbVar17 = (byte *)param_1[5];
+              _png_read_row(lVar16,pbVar17,0);
+              if (uVar22 < uVar1) {
+                lVar18 = lVar4 + lVar5 * (ulong)uVar20;
+                pcVar19 = (char *)(lVar18 + uVar10);
+                do {
+                  *pcVar19 = ((char)((uint)*pbVar17 * 5 + 0x82 >> 8) * '\x06' +
+                             (char)((uint)pbVar17[1] * 5 + 0x82 >> 8)) * '\x06' +
+                             (char)((uint)pbVar17[2] * 5 + 0x82 >> 8);
+                  pbVar17 = pbVar17 + 3;
+                  pcVar19 = pcVar19 + uVar8;
+                } while (pcVar19 < (char *)(lVar18 + uVar2));
+              }
+              uVar20 = uVar20 + uVar21;
+            } while (uVar20 < uVar3);
+            break;
+          case 4:
+            do {
+              lVar18 = param_1[5];
+              _png_read_row(lVar16,lVar18,0);
+              if (uVar22 < uVar1) {
+                lVar11 = lVar4 + lVar5 * (ulong)uVar20;
+                pcVar19 = (char *)(lVar11 + uVar10);
+                pbVar17 = (byte *)(lVar18 + 1);
+                do {
+                  if (pbVar17[2] < 0xc4) {
+                    if (pbVar17[2] < 0x40) {
+                      cVar13 = -0x28;
+                    }
+                    else {
+                      bVar6 = pbVar17[-1];
+                      cVar15 = -0x1e;
+                      if (-1 < (char)bVar6) {
+                        cVar15 = -0x27;
+                      }
+                      if ((bVar6 & 0x40) != 0) {
+                        cVar15 = cVar15 + '\t';
+                      }
+                      cVar13 = cVar15 + '\x03';
+                      if (-1 < (char)bVar6) {
+                        cVar13 = cVar15;
+                      }
+                      if ((bVar6 & 0x40) != 0) {
+                        cVar13 = cVar13 + '\x03';
+                      }
+                      cVar13 = ((char)((bVar6 & 0x40) >> 6) - ((char)bVar6 >> 7)) + cVar13;
+                    }
+                  }
+                  else {
+                    cVar13 = ((char)((uint)pbVar17[-1] * 5 + 0x82 >> 8) * '\x06' +
+                             (char)((uint)*pbVar17 * 5 + 0x82 >> 8)) * '\x06' +
+                             (char)((uint)pbVar17[1] * 5 + 0x82 >> 8);
+                  }
+                  *pcVar19 = cVar13;
+                  pcVar19 = pcVar19 + uVar8;
+                  pbVar17 = pbVar17 + 4;
+                } while (pcVar19 < (char *)(lVar11 + uVar2));
+              }
+              uVar20 = uVar20 + uVar21;
+            } while (uVar20 < uVar3);
+          }
+        }
+        else {
+          do {
+            _png_read_row(lVar16,param_1[5],0);
+            uVar20 = uVar20 + uVar21;
+          } while (uVar20 < uVar3);
+        }
+      }
+    }
+    uVar14 = uVar14 + 1;
+    if (uVar14 == local_88) {
+      return 1;
+    }
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: ___error
+// Entry: 00007000
+// Signature: int * ___error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int * ___error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fclose
+// Entry: 00007100
+// Signature: int _fclose(FILE * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _fclose(FILE *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _fopen
+// Entry: 00007200
+// Signature: FILE * _fopen(char * param_1, char * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+FILE * _fopen(char *param_1,char *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _inflateEnd
+// Entry: 00007300
+// Signature: int _inflateEnd(z_streamp strm)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _inflateEnd(z_streamp strm)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00007400
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcpy
+// Entry: 00007500
+// Signature: void * _memcpy(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memcpy(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_app_error
+// Entry: 00007600
+// Signature: undefined _png_app_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_app_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_benign_error
+// Entry: 00007700
+// Signature: undefined _png_benign_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_benign_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_chunk_benign_error
+// Entry: 00007800
+// Signature: undefined _png_chunk_benign_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_chunk_benign_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_chunk_error
+// Entry: 00007900
+// Signature: undefined _png_chunk_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_chunk_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_chunk_unknown_handling
+// Entry: 00007a00
+// Signature: undefined _png_chunk_unknown_handling(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_chunk_unknown_handling(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_combine_row
+// Entry: 00007b00
+// Signature: undefined _png_combine_row(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_combine_row(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_crc_finish
+// Entry: 00007c00
+// Signature: undefined _png_crc_finish(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_crc_finish(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_create_info_struct
+// Entry: 00007d00
+// Signature: undefined _png_create_info_struct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_create_info_struct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_create_png_struct
+// Entry: 00007e00
+// Signature: undefined _png_create_png_struct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_create_png_struct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_destroy_gamma_table
+// Entry: 00007f00
+// Signature: undefined _png_destroy_gamma_table(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_destroy_gamma_table(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_destroy_info_struct
+// Entry: 00008000
+// Signature: undefined _png_destroy_info_struct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_destroy_info_struct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_destroy_png_struct
+// Entry: 00008100
+// Signature: undefined _png_destroy_png_struct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_destroy_png_struct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_do_read_interlace
+// Entry: 00008200
+// Signature: undefined _png_do_read_interlace(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_do_read_interlace(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_do_read_transformations
+// Entry: 00008300
+// Signature: undefined _png_do_read_transformations(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_do_read_transformations(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_error
+// Entry: 00008400
+// Signature: noreturn undefined _png_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free
+// Entry: 00008500
+// Signature: undefined _png_free(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_free_data
+// Entry: 00008600
+// Signature: undefined _png_free_data(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_free_data(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_gamma_16bit_correct
+// Entry: 00008700
+// Signature: undefined _png_gamma_16bit_correct(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_gamma_16bit_correct(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_gamma_significant
+// Entry: 00008800
+// Signature: undefined _png_gamma_significant(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_gamma_significant(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_get_channels
+// Entry: 00008900
+// Signature: undefined _png_get_channels(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_get_channels(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_get_rowbytes
+// Entry: 00008a00
+// Signature: undefined _png_get_rowbytes(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_get_rowbytes(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_IEND
+// Entry: 00008b00
+// Signature: undefined _png_handle_IEND(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_IEND(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_IHDR
+// Entry: 00008c00
+// Signature: undefined _png_handle_IHDR(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_IHDR(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_PLTE
+// Entry: 00008d00
+// Signature: undefined _png_handle_PLTE(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_PLTE(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_bKGD
+// Entry: 00008e00
+// Signature: undefined _png_handle_bKGD(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_bKGD(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_cHRM
+// Entry: 00008f00
+// Signature: undefined _png_handle_cHRM(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_cHRM(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_eXIf
+// Entry: 00009000
+// Signature: undefined _png_handle_eXIf(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_eXIf(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_gAMA
+// Entry: 00009100
+// Signature: undefined _png_handle_gAMA(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_gAMA(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_hIST
+// Entry: 00009200
+// Signature: undefined _png_handle_hIST(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_hIST(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_iCCP
+// Entry: 00009300
+// Signature: undefined _png_handle_iCCP(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_iCCP(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_iTXt
+// Entry: 00009400
+// Signature: undefined _png_handle_iTXt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_iTXt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_oFFs
+// Entry: 00009500
+// Signature: undefined _png_handle_oFFs(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_oFFs(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_pCAL
+// Entry: 00009600
+// Signature: undefined _png_handle_pCAL(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_pCAL(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_pHYs
+// Entry: 00009700
+// Signature: undefined _png_handle_pHYs(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_pHYs(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_sBIT
+// Entry: 00009800
+// Signature: undefined _png_handle_sBIT(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_sBIT(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_sCAL
+// Entry: 00009900
+// Signature: undefined _png_handle_sCAL(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_sCAL(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_sPLT
+// Entry: 00009a00
+// Signature: undefined _png_handle_sPLT(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_sPLT(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_sRGB
+// Entry: 00009b00
+// Signature: undefined _png_handle_sRGB(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_sRGB(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_tEXt
+// Entry: 00009c00
+// Signature: undefined _png_handle_tEXt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_tEXt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_tIME
+// Entry: 00009d00
+// Signature: undefined _png_handle_tIME(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_tIME(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_tRNS
+// Entry: 00009e00
+// Signature: undefined _png_handle_tRNS(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_tRNS(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_unknown
+// Entry: 00009f00
+// Signature: undefined _png_handle_unknown(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_unknown(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_handle_zTXt
+// Entry: 0000a000
+// Signature: undefined _png_handle_zTXt(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_handle_zTXt(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_image_error
+// Entry: 0000a100
+// Signature: undefined _png_image_error(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_image_error(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc
+// Entry: 0000a300
+// Signature: undefined _png_malloc(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_malloc_warn
+// Entry: 0000a400
+// Signature: undefined _png_malloc_warn(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_malloc_warn(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_muldiv
+// Entry: 0000a500
+// Signature: undefined _png_muldiv(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_muldiv(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_IDAT_data
+// Entry: 0000a600
+// Signature: undefined _png_read_IDAT_data(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_IDAT_data(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_chunk_header
+// Entry: 0000a700
+// Signature: undefined _png_read_chunk_header(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_chunk_header(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_filter_row
+// Entry: 0000a800
+// Signature: undefined _png_read_filter_row(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_filter_row(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_finish_IDAT
+// Entry: 0000a900
+// Signature: undefined _png_read_finish_IDAT(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_finish_IDAT(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_finish_row
+// Entry: 0000aa00
+// Signature: undefined _png_read_finish_row(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_finish_row(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_sig
+// Entry: 0000ab00
+// Signature: undefined _png_read_sig(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_sig(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_start_row
+// Entry: 0000ac00
+// Signature: undefined _png_read_start_row(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_start_row(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_read_transform_info
+// Entry: 0000ad00
+// Signature: undefined _png_read_transform_info(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_read_transform_info(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_reciprocal
+// Entry: 0000ae00
+// Signature: undefined _png_reciprocal(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_reciprocal(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_safe_execute
+// Entry: 0000b300
+// Signature: undefined _png_safe_execute(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_safe_execute(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_add_alpha
+// Entry: 0000b500
+// Signature: undefined _png_set_add_alpha(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_add_alpha(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_alpha_mode_fixed
+// Entry: 0000b600
+// Signature: undefined _png_set_alpha_mode_fixed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_alpha_mode_fixed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_background_fixed
+// Entry: 0000b700
+// Signature: undefined _png_set_background_fixed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_background_fixed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_benign_errors
+// Entry: 0000b800
+// Signature: undefined _png_set_benign_errors(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_benign_errors(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_bgr
+// Entry: 0000b900
+// Signature: undefined _png_set_bgr(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_bgr(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_expand
+// Entry: 0000ba00
+// Signature: undefined _png_set_expand(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_expand(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_expand_16
+// Entry: 0000bb00
+// Signature: undefined _png_set_expand_16(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_expand_16(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_gray_to_rgb
+// Entry: 0000bc00
+// Signature: undefined _png_set_gray_to_rgb(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_gray_to_rgb(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_interlace_handling
+// Entry: 0000bd00
+// Signature: undefined _png_set_interlace_handling(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_interlace_handling(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_invert_alpha
+// Entry: 0000be00
+// Signature: undefined _png_set_invert_alpha(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_invert_alpha(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_invert_mono
+// Entry: 0000bf00
+// Signature: undefined _png_set_invert_mono(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_invert_mono(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_keep_unknown_chunks
+// Entry: 0000c000
+// Signature: undefined _png_set_keep_unknown_chunks(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_keep_unknown_chunks(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_packing
+// Entry: 0000c100
+// Signature: undefined _png_set_packing(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_packing(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_packswap
+// Entry: 0000c200
+// Signature: undefined _png_set_packswap(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_packswap(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_read_fn
+// Entry: 0000c300
+// Signature: undefined _png_set_read_fn(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_read_fn(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_rgb_to_gray_fixed
+// Entry: 0000c400
+// Signature: undefined _png_set_rgb_to_gray_fixed(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_rgb_to_gray_fixed(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_scale_16
+// Entry: 0000c500
+// Signature: undefined _png_set_scale_16(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_scale_16(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_shift
+// Entry: 0000c600
+// Signature: undefined _png_set_shift(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_shift(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_strip_16
+// Entry: 0000c700
+// Signature: undefined _png_set_strip_16(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_strip_16(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_strip_alpha
+// Entry: 0000c800
+// Signature: undefined _png_set_strip_alpha(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_strip_alpha(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_swap
+// Entry: 0000c900
+// Signature: undefined _png_set_swap(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_swap(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_swap_alpha
+// Entry: 0000ca00
+// Signature: undefined _png_set_swap_alpha(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_swap_alpha(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_set_tRNS_to_alpha
+// Entry: 0000cb00
+// Signature: undefined _png_set_tRNS_to_alpha(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_set_tRNS_to_alpha(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_warning
+// Entry: 0000cc00
+// Signature: undefined _png_warning(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_warning(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _png_zfree
+// Entry: 0000cd00
+// Signature: undefined _png_zfree(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _png_zfree(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strerror
+// Entry: 0000ce00
+// Signature: char * _strerror(int param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * _strerror(int param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 112
+// Failed: 0
+// Skipped external functions: 0

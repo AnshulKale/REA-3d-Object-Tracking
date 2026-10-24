@@ -1,0 +1,3549 @@
+Program: glob.cpp.o
+Language: AARCH64:LE:64:AppleSilicon
+All discovered functions; pseudocode follows.
+
+
+// ========================================
+// Function: isDirectory
+// Entry: 00000000
+// Signature: undefined __cdecl isDirectory(string * param_1)
+// ========================================
+
+
+/* cv::utils::fs::isDirectory(std::string const&) */
+
+bool cv::utils::fs::isDirectory(string *param_1)
+
+{
+  string *psVar1;
+  int iVar2;
+  Region aRStack_c0 [8];
+  int local_b8;
+  stat sStack_b0;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_c0,
+             (LocationStaticStorage *)&isDirectory(std::string_const&)::__cv_trace_location_fn181);
+  psVar1 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar1 = param_1;
+  }
+  iVar2 = _stat((char *)psVar1,&sStack_b0);
+  if (local_b8 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return iVar2 == 0 && (sStack_b0.st_mode & 0xf000) == 0x4000;
+}
+
+
+
+
+// ========================================
+// Function: ~Region
+// Entry: 00000090
+// Signature: undefined __thiscall ~Region(Region * this)
+// ========================================
+
+
+/* cv::utils::trace::details::Region::~Region() */
+
+Region * __thiscall cv::utils::trace::details::Region::~Region(Region *this)
+
+{
+  if (*(int *)(this + 8) != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: glob
+// Entry: 000000c4
+// Signature: undefined __cdecl glob(string param_1, vector * param_2, bool param_3)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x0000011c) */
+/* WARNING: Type propagation algorithm not settling */
+/* cv::glob(std::string, std::vector<std::string, std::allocator<std::string > >&, bool) */
+
+void cv::glob(string *param_1,vector *param_2,bool param_3)
+
+{
+  ulong uVar1;
+  long lVar2;
+  long lVar3;
+  string sVar4;
+  code *pcVar5;
+  int iVar6;
+  stat *psVar7;
+  ulong uVar8;
+  string *psVar9;
+  long lVar10;
+  ulong uVar11;
+  ulong uVar12;
+  ulong uVar13;
+  stat *local_140;
+  ulong uStack_138;
+  ulong local_130;
+  stat *local_120;
+  ulong uStack_118;
+  ulong local_110;
+  Region aRStack_108 [8];
+  int local_100;
+  stat local_f8;
+  
+  cv::utils::trace::details::Region::Region
+            (aRStack_108,
+             (LocationStaticStorage *)
+             &glob(std::string,std::vector<std::string,std::allocator<std::string>>&,bool)::
+              __cv_trace_location_fn287);
+  for (lVar10 = *(long *)(param_2 + 8); lVar10 != *(long *)param_2; lVar10 = lVar10 + -0x18) {
+  }
+  *(long *)(param_2 + 8) = *(long *)param_2;
+  local_120 = (stat *)0x0;
+  uStack_118 = 0;
+  local_110 = 0;
+  local_140 = (stat *)0x0;
+  uStack_138 = 0;
+  local_130 = 0;
+  psVar9 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar9 = param_1;
+  }
+  iVar6 = _stat((char *)psVar9,&local_f8);
+  sVar4 = param_1[0x17];
+  uVar8 = (ulong)(byte)sVar4;
+  if ((iVar6 != 0) || ((local_f8.st_mode & 0xf000) != 0x4000)) {
+    psVar9 = param_1;
+    uVar13 = uVar8;
+    if ((char)sVar4 < '\0') {
+      psVar9 = *(string **)param_1;
+      uVar13 = *(ulong *)(param_1 + 8);
+    }
+    uVar11 = ~uVar13;
+    do {
+      uVar12 = uVar13;
+      if (uVar12 == 0) goto LAB_00000204;
+      uVar13 = uVar12 - 1;
+      uVar11 = uVar11 + 1;
+    } while (psVar9[uVar12 - 1] != (string)0x2f);
+    if (uVar13 == 0xffffffffffffffff) {
+LAB_00000204:
+      std::string::operator=((string *)&local_140,param_1);
+      std::string::assign((char *)&local_120);
+      goto LAB_000003c0;
+    }
+    if ((char)sVar4 < '\0') {
+      psVar9 = *(string **)param_1;
+      uVar8 = *(ulong *)(param_1 + 8);
+      if (uVar13 <= *(ulong *)(param_1 + 8)) {
+        uVar8 = uVar13;
+      }
+    }
+    else {
+      psVar9 = param_1;
+      if (uVar13 <= uVar8) {
+        uVar8 = uVar13;
+      }
+    }
+    if (0x7ffffffffffffff7 < uVar8) {
+                    /* WARNING: Subroutine does not return */
+      std::string::__throw_length_error_abi_ne180100_();
+    }
+    if (uVar8 < 0x17) {
+      local_f8.st_gid._3_1_ = (char)uVar8;
+      psVar7 = &local_f8;
+      if (uVar8 != 0) goto LAB_00000334;
+    }
+    else {
+      uVar1 = (uVar8 & 0xfffffffffffffff8) + 8;
+      if ((uVar8 | 7) != 0x17) {
+        uVar1 = uVar8 | 7;
+      }
+      psVar7 = operator_new(uVar1 + 1);
+      local_f8._16_8_ = uVar1 + 1 | 0x8000000000000000;
+      local_f8._0_8_ = psVar7;
+      local_f8.st_ino = uVar8;
+LAB_00000334:
+      _memmove(psVar7,psVar9,uVar8);
+    }
+    *(undefined1 *)((long)psVar7->st_qspare + (uVar8 - 0x80)) = 0;
+    if ((long)local_110 < 0) {
+      operator_delete(local_120);
+      sVar4 = param_1[0x17];
+      if ((char)sVar4 < '\0') goto LAB_00000520;
+LAB_00000368:
+      uVar8 = (ulong)(byte)sVar4;
+      if (uVar8 <= uVar13) {
+LAB_00000558:
+        local_120 = (stat *)local_f8._0_8_;
+        uStack_118 = local_f8.st_ino;
+        local_110 = local_f8._16_8_;
+        std::string::__throw_out_of_range_abi_ne180100_();
+                    /* WARNING: Does not return */
+        pcVar5 = (code *)SoftwareBreakpoint(1,0x564);
+        (*pcVar5)();
+      }
+      uVar1 = ~uVar13 + uVar8;
+      local_120 = (stat *)local_f8._0_8_;
+      uStack_118 = local_f8.st_ino;
+      local_110 = local_f8._16_8_;
+    }
+    else {
+      sVar4 = param_1[0x17];
+      if (-1 < (char)sVar4) goto LAB_00000368;
+LAB_00000520:
+      uVar8 = *(ulong *)(param_1 + 8);
+      if (uVar8 <= uVar13) goto LAB_00000558;
+      param_1 = *(string **)param_1;
+      uVar1 = ~uVar13 + uVar8;
+      local_120 = (stat *)local_f8._0_8_;
+      uStack_118 = local_f8.st_ino;
+      local_110 = local_f8._16_8_;
+    }
+    local_f8._0_8_ = local_120;
+    local_f8.st_ino = uStack_118;
+    local_f8._16_8_ = local_110;
+    if (0x7ffffffffffffff7 < uVar1) {
+                    /* WARNING: Subroutine does not return */
+      std::string::__throw_length_error_abi_ne180100_();
+    }
+    if (uVar1 < 0x17) {
+      local_f8._16_7_ = SUB87(local_110,0);
+      local_f8.st_gid._3_1_ = (char)uVar1;
+      psVar7 = &local_f8;
+      if (uVar8 - 1 != uVar13) goto LAB_000004a8;
+      *(undefined1 *)((long)psVar7->st_qspare + uVar11 + uVar8 + -0x80) = 0;
+    }
+    else {
+      uVar13 = (uVar1 & 0xfffffffffffffff8) + 8;
+      if ((uVar1 | 7) != 0x17) {
+        uVar13 = uVar1 | 7;
+      }
+      psVar7 = operator_new(uVar13 + 1);
+      local_f8._16_8_ = uVar13 + 1 | 0x8000000000000000;
+      local_f8._0_8_ = psVar7;
+      local_f8.st_ino = uVar1;
+LAB_000004a8:
+      _memmove(psVar7,param_1 + uVar12,uVar1);
+      *(undefined1 *)((long)psVar7->st_qspare + uVar11 + uVar8 + -0x80) = 0;
+    }
+    if ((long)local_130 < 0) {
+      operator_delete(local_140);
+    }
+    uStack_138 = local_f8.st_ino;
+    local_140 = (stat *)local_f8._0_8_;
+    local_130._0_4_ = local_f8.st_uid;
+    local_130._4_4_ = local_f8.st_gid;
+    goto LAB_000003c0;
+  }
+  if ((char)sVar4 < '\0') {
+    lVar10 = *(long *)(param_1 + 8) + -1;
+    if ((char)sVar4 < '\0') goto LAB_00000230;
+LAB_0000017c:
+    psVar9 = param_1;
+    if (param_1[lVar10] == (string)0x2f || param_1[lVar10] == (string)0x0) {
+LAB_0000024c:
+      if (uVar8 - 1 <= uVar8) {
+        uVar8 = uVar8 - 1;
+      }
+      if (0x7ffffffffffffff7 < uVar8) {
+                    /* WARNING: Subroutine does not return */
+        std::string::__throw_length_error_abi_ne180100_();
+      }
+      if (uVar8 < 0x17) {
+        local_f8.st_gid._3_1_ = (char)uVar8;
+        psVar7 = &local_f8;
+        if (uVar8 != 0) goto LAB_000002dc;
+                    /* WARNING: Ignoring partial resolution of indirect */
+        local_f8.st_dev._0_1_ = 0;
+      }
+      else {
+        uVar13 = (uVar8 & 0xfffffffffffffff8) + 8;
+        if ((uVar8 | 7) != 0x17) {
+          uVar13 = uVar8 | 7;
+        }
+        psVar7 = operator_new(uVar13 + 1);
+        local_f8._16_8_ = uVar13 + 1 | 0x8000000000000000;
+        local_f8._0_8_ = psVar7;
+        local_f8.st_ino = uVar8;
+LAB_000002dc:
+        _memmove(psVar7,psVar9,uVar8);
+        *(undefined1 *)((long)psVar7->st_qspare + (uVar8 - 0x80)) = 0;
+      }
+      if ((long)local_110 < 0) {
+        operator_delete(local_120);
+      }
+      uStack_118 = local_f8.st_ino;
+      local_120 = (stat *)local_f8._0_8_;
+      local_110._0_4_ = local_f8.st_uid;
+      local_110._4_4_ = local_f8.st_gid;
+      goto LAB_000003c0;
+    }
+  }
+  else {
+    lVar10 = uVar8 - 1;
+    if (-1 < (char)sVar4) goto LAB_0000017c;
+LAB_00000230:
+    psVar9 = *(string **)param_1;
+    if ((psVar9[lVar10] == (string)0x0) || (psVar9[lVar10] == (string)0x2f)) {
+      uVar8 = *(ulong *)(param_1 + 8);
+      goto LAB_0000024c;
+    }
+  }
+  std::string::operator=((string *)&local_120,param_1);
+LAB_000003c0:
+  glob_rec((string *)&local_120,(string *)&local_140,param_2,param_3,false,(string *)&local_120);
+  lVar2 = *(long *)param_2;
+  lVar3 = *(long *)(param_2 + 8);
+  lVar10 = 0;
+  if (lVar3 != lVar2) {
+    lVar10 = LZCOUNT((lVar3 - lVar2 >> 3) * -0x5555555555555555) * -2 + 0x7e;
+  }
+  std::__introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+            (lVar2,lVar3,&local_f8,lVar10,1);
+  if ((long)local_130 < 0) {
+    operator_delete(local_140);
+  }
+  if ((long)local_110 < 0) {
+    operator_delete(local_120);
+  }
+  if (local_100 != 0) {
+    cv::utils::trace::details::Region::destroy();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: glob_rec
+// Entry: 000005c4
+// Signature: undefined __cdecl glob_rec(string * param_1, string * param_2, vector * param_3, bool param_4, bool param_5, string * param_6)
+// ========================================
+
+
+/* WARNING: Type propagation algorithm not settling */
+/* glob_rec(std::string const&, std::string const&, std::vector<std::string,
+   std::allocator<std::string > >&, bool, bool, std::string const&) */
+
+void glob_rec(string *param_1,string *param_2,vector *param_3,bool param_4,bool param_5,
+             string *param_6)
+
+{
+  ulong uVar1;
+  char *******pppppppcVar2;
+  string sVar3;
+  string *psVar4;
+  code *pcVar5;
+  int iVar6;
+  long lVar7;
+  long lVar8;
+  size_t sVar9;
+  undefined8 *puVar10;
+  string *psVar11;
+  string *psVar12;
+  string sVar13;
+  string *psVar14;
+  char *local_128;
+  ulong uStack_120;
+  undefined7 local_118;
+  char cStack_111;
+  char *******local_110 [2];
+  char local_f9;
+  stat local_f8;
+  
+  psVar14 = *(string **)param_1;
+  if (-1 < (char)param_1[0x17]) {
+    psVar14 = param_1;
+  }
+  lVar7 = _opendir(psVar14);
+  if (lVar7 == 0) {
+    cv::format("could not open directory: %s",&local_f8);
+    cv::error(-0xcc,(string *)&local_f8,"glob_rec",
+              "M3T/third_party/opencv-src/modules/core/src/glob.cpp",0x117);
+                    /* WARNING: Does not return */
+    pcVar5 = (code *)SoftwareBreakpoint(1,0xa68);
+    (*pcVar5)();
+  }
+LAB_0000061c:
+  do {
+    lVar8 = _readdir(lVar7);
+    if (lVar8 == 0) {
+      _closedir(lVar7);
+      return;
+    }
+    psVar14 = (string *)(lVar8 + 0x15);
+  } while ((*psVar14 == (string)0x0) ||
+          ((*psVar14 == (string)0x2e &&
+           ((*(char *)(lVar8 + 0x16) == '\0' ||
+            ((*(char *)(lVar8 + 0x16) == '.' && (*(char *)(lVar8 + 0x17) == '\0'))))))));
+  sVar9 = _strlen((char *)psVar14);
+  if (0x7ffffffffffffff7 < sVar9) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar9 < 0x17) {
+    local_f8.st_gid._3_1_ = (char)sVar9;
+    puVar10 = (undefined8 *)&local_f8;
+    if (sVar9 != 0) goto LAB_000006b0;
+  }
+  else {
+    uVar1 = (sVar9 & 0xfffffffffffffff8) + 8;
+    if ((sVar9 | 7) != 0x17) {
+      uVar1 = sVar9 | 7;
+    }
+    puVar10 = operator_new(uVar1 + 1);
+    local_f8._16_8_ = uVar1 + 1 | 0x8000000000000000;
+    local_f8._0_8_ = puVar10;
+    local_f8.st_ino = sVar9;
+LAB_000006b0:
+    _memmove(puVar10,psVar14,sVar9);
+  }
+  *(undefined1 *)((long)puVar10 + sVar9) = 0;
+  cv::utils::fs::join(param_1,(string *)&local_f8);
+  if ((long)local_f8._16_8_ < 0) {
+    operator_delete((void *)local_f8._0_8_);
+  }
+  sVar9 = _strlen((char *)psVar14);
+  if (0x7ffffffffffffff7 < sVar9) {
+                    /* WARNING: Subroutine does not return */
+    std::string::__throw_length_error_abi_ne180100_();
+  }
+  if (sVar9 < 0x17) {
+    local_f8.st_gid._3_1_ = (char)sVar9;
+    puVar10 = (undefined8 *)&local_f8;
+    if (sVar9 != 0) goto LAB_00000740;
+  }
+  else {
+    uVar1 = (sVar9 & 0xfffffffffffffff8) + 8;
+    if ((sVar9 | 7) != 0x17) {
+      uVar1 = sVar9 | 7;
+    }
+    puVar10 = operator_new(uVar1 + 1);
+    local_f8._16_8_ = uVar1 + 1 | 0x8000000000000000;
+    local_f8._0_8_ = puVar10;
+    local_f8.st_ino = sVar9;
+LAB_00000740:
+    _memmove(puVar10,psVar14,sVar9);
+  }
+  *(undefined1 *)((long)puVar10 + sVar9) = 0;
+  cv::utils::fs::join(param_6,(string *)&local_f8);
+  if ((long)local_f8._16_8_ < 0) {
+    operator_delete((void *)local_f8._0_8_);
+  }
+  pppppppcVar2 = local_110[0];
+  if (-1 < local_f9) {
+    pppppppcVar2 = (char *******)local_110;
+  }
+  iVar6 = _stat((char *)pppppppcVar2,&local_f8);
+  if ((iVar6 != 0) || ((local_f8.st_mode & 0xf000) != 0x4000)) {
+LAB_000007d0:
+    if ((char)param_2[0x17] < '\0') {
+      if (*(long *)(param_2 + 8) != 0) {
+        psVar11 = *(string **)param_2;
+        sVar13 = *psVar14;
+        goto joined_r0x000007e4;
+      }
+    }
+    else if (param_2[0x17] != (string)0x0) {
+      sVar13 = *psVar14;
+      psVar11 = param_2;
+joined_r0x000007e4:
+      while (sVar13 != (string)0x0) {
+        sVar3 = *psVar11;
+        if (sVar3 == (string)0x2a) goto LAB_00000888;
+        if ((sVar3 != sVar13) && (sVar3 != (string)0x3f)) goto LAB_00000900;
+        psVar11 = psVar11 + 1;
+        psVar14 = psVar14 + 1;
+        sVar13 = *psVar14;
+      }
+LAB_00000800:
+      do {
+        sVar13 = *psVar11;
+        psVar11 = psVar11 + 1;
+      } while (sVar13 == (string)0x2a);
+      if (sVar13 != (string)0x0) goto LAB_00000900;
+    }
+    goto LAB_00000810;
+  }
+  if (param_4) {
+    glob_rec((string *)local_110,param_2,param_3,true,param_5,(string *)&local_128);
+  }
+  if (param_5) goto LAB_000007d0;
+  goto LAB_00000900;
+LAB_00000888:
+  psVar12 = psVar11 + 1;
+  if (*psVar12 != (string)0x0) {
+    sVar13 = *psVar14;
+    while (psVar4 = psVar14 + 1, psVar11 = psVar12, sVar13 != (string)0x0) {
+      while( true ) {
+        sVar3 = *psVar11;
+        if (sVar3 == (string)0x2a) goto LAB_00000888;
+        if ((sVar3 != (string)0x3f) && (sVar3 != sVar13)) break;
+        psVar11 = psVar11 + 1;
+        psVar14 = psVar14 + 1;
+        sVar13 = *psVar14;
+        if (sVar13 == (string)0x0) goto LAB_00000800;
+      }
+      psVar14 = psVar4;
+      sVar13 = *psVar4;
+    }
+    goto LAB_00000800;
+  }
+LAB_00000810:
+  psVar14 = *(string **)(param_3 + 8);
+  if (psVar14 < *(string **)(param_3 + 0x10)) {
+    if (cStack_111 < '\0') {
+      std::string::__init_copy_ctor_external(psVar14,local_128,uStack_120);
+    }
+    else {
+      *(ulong *)(psVar14 + 0x10) = CONCAT17(cStack_111,local_118);
+      *(ulong *)(psVar14 + 8) = uStack_120;
+      *(char **)psVar14 = local_128;
+    }
+    psVar14 = psVar14 + 0x18;
+    *(string **)(param_3 + 8) = psVar14;
+  }
+  else {
+    psVar14 = std::vector<std::string,std::allocator<std::string>>::
+              __push_back_slow_path<std::string_const&>((string *)param_3);
+  }
+  *(string **)(param_3 + 8) = psVar14;
+LAB_00000900:
+  if (cStack_111 < '\0') {
+    operator_delete(local_128);
+  }
+  if (local_f9 < '\0') {
+    operator_delete(local_110[0]);
+  }
+  goto LAB_0000061c;
+}
+
+
+
+
+// ========================================
+// Function: glob
+// Entry: 00000a7c
+// Signature: undefined __cdecl glob(string * param_1, string * param_2, vector * param_3, bool param_4, bool param_5)
+// ========================================
+
+
+/* cv::utils::fs::glob(std::string const&, std::string const&, std::vector<std::string,
+   std::allocator<std::string > >&, bool, bool) */
+
+void cv::utils::fs::glob(string *param_1,string *param_2,vector *param_3,bool param_4,bool param_5)
+
+{
+  long lVar1;
+  long lVar2;
+  long lVar3;
+  undefined1 uStack_21;
+  
+  glob_rec(param_1,param_2,param_3,param_4,param_5,param_1);
+  lVar2 = *(long *)param_3;
+  lVar3 = *(long *)(param_3 + 8);
+  lVar1 = 0;
+  if (lVar3 != lVar2) {
+    lVar1 = LZCOUNT((lVar3 - lVar2 >> 3) * -0x5555555555555555) * -2 + 0x7e;
+  }
+  std::__introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+            (lVar2,lVar3,&uStack_21,lVar1,1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: glob_relative
+// Entry: 00000ae0
+// Signature: undefined __cdecl glob_relative(string * param_1, string * param_2, vector * param_3, bool param_4, bool param_5)
+// ========================================
+
+
+/* cv::utils::fs::glob_relative(std::string const&, std::string const&, std::vector<std::string,
+   std::allocator<std::string > >&, bool, bool) */
+
+void cv::utils::fs::glob_relative
+               (string *param_1,string *param_2,vector *param_3,bool param_4,bool param_5)
+
+{
+  long lVar1;
+  long lVar2;
+  long lVar3;
+  void *local_38;
+  undefined8 uStack_30;
+  long local_28;
+  
+  local_38 = (void *)0x0;
+  uStack_30 = 0;
+  local_28 = 0;
+  glob_rec(param_1,param_2,param_3,param_4,param_5,(string *)&local_38);
+  if (local_28 < 0) {
+    operator_delete(local_38);
+  }
+  lVar2 = *(long *)param_3;
+  lVar3 = *(long *)(param_3 + 8);
+  lVar1 = 0;
+  if (lVar3 != lVar2) {
+    lVar1 = LZCOUNT((lVar3 - lVar2 >> 3) * -0x5555555555555555) * -2 + 0x7e;
+  }
+  std::__introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+            (lVar2,lVar3,&local_38,lVar1,1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ___clang_call_terminate
+// Entry: 00000b78
+// Signature: noreturn undefined ___clang_call_terminate(void)
+// ========================================
+
+
+void ___clang_call_terminate(void)
+
+{
+  ___cxa_begin_catch();
+  std::terminate();
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000b88
+// Signature: noreturn undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_length_error[abi:ne180100]() const */
+
+void std::string::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000b9c
+// Signature: noreturn undefined __throw_length_error[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_length_error[abi:ne180100](char const*) */
+
+void std::__throw_length_error_abi_ne180100_(char *param_1)
+
+{
+  length_error *this;
+  
+  this = (length_error *)___cxa_allocate_exception(0x10);
+  length_error::length_error_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__length_error);
+}
+
+
+
+
+// ========================================
+// Function: length_error[abi:ne180100]
+// Entry: 00000bec
+// Signature: undefined __thiscall length_error[abi:ne180100](length_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::length_error::length_error[abi:ne180100](char const*) */
+
+void __thiscall std::length_error::length_error_abi_ne180100_(length_error *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __throw_bad_array_new_length[abi:ne180100]
+// Entry: 00000c10
+// Signature: undefined __throw_bad_array_new_length[abi:ne180100](void)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_bad_array_new_length[abi:ne180100]() */
+
+void std::__throw_bad_array_new_length_abi_ne180100_(void)
+
+{
+  bad_array_new_length *this;
+  undefined8 uVar1;
+  
+  this = (bad_array_new_length *)___cxa_allocate_exception(8);
+  uVar1 = std::bad_array_new_length::bad_array_new_length(this);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(uVar1,_typeinfo,__bad_array_new_length);
+}
+
+
+
+
+// ========================================
+// Function: __push_back_slow_path<std::string_const&>
+// Entry: 00000c38
+// Signature: string * __cdecl __push_back_slow_path<std::string_const&>(string * param_1)
+// ========================================
+
+
+/* std::string* std::vector<std::string, std::allocator<std::string >
+   >::__push_back_slow_path<std::string const&>(std::string const&) */
+
+string * std::vector<std::string,std::allocator<std::string>>::
+         __push_back_slow_path<std::string_const&>(string *param_1)
+
+{
+  string *psVar1;
+  ulong uVar2;
+  _Unwind_Exception *exception_object;
+  undefined8 *extraout_x0;
+  undefined8 *puVar3;
+  string *psVar4;
+  undefined8 *in_x1;
+  void *extraout_x1;
+  ulong in_x2;
+  string *psVar5;
+  undefined8 uVar6;
+  long lVar7;
+  long lVar8;
+  ulong uVar9;
+  string *psVar10;
+  string *psVar11;
+  undefined8 uVar12;
+  string *local_68;
+  string *local_60;
+  string *local_58;
+  void *local_50;
+  string *local_48;
+  
+  psVar4 = *(string **)param_1;
+  psVar5 = *(string **)(param_1 + 8);
+  lVar7 = (long)psVar5 - (long)psVar4 >> 3;
+  uVar2 = lVar7 * -0x5555555555555555 + 1;
+  if (0xaaaaaaaaaaaaaaa < uVar2) {
+    __throw_length_error_abi_ne180100_();
+LAB_00000df4:
+    exception_object = (_Unwind_Exception *)__throw_bad_array_new_length_abi_ne180100_();
+    __split_buffer<std::string,std::allocator<std::string>&>::~__split_buffer
+              ((__split_buffer<std::string,std::allocator<std::string>&> *)&local_68);
+    __Unwind_Resume(exception_object);
+    if (in_x2 < 0x17) {
+      *(char *)((long)extraout_x0 + 0x17) = (char)in_x2;
+      puVar3 = extraout_x0;
+    }
+    else {
+      if (0x7ffffffffffffff7 < in_x2) {
+                    /* WARNING: Subroutine does not return */
+        string::__throw_length_error_abi_ne180100_();
+      }
+      uVar2 = (in_x2 & 0xfffffffffffffff8) + 8;
+      if ((in_x2 | 7) != 0x17) {
+        uVar2 = in_x2 | 7;
+      }
+      puVar3 = operator_new(uVar2 + 1);
+      extraout_x0[1] = in_x2;
+      extraout_x0[2] = uVar2 + 1 | 0x8000000000000000;
+      *extraout_x0 = puVar3;
+    }
+    psVar4 = _memmove(puVar3,extraout_x1,in_x2 + 1);
+    return psVar4;
+  }
+  local_48 = param_1 + 0x10;
+  lVar8 = *(long *)local_48 - (long)psVar4 >> 3;
+  uVar9 = lVar8 * 0x5555555555555556;
+  if (uVar9 < uVar2 || uVar9 - uVar2 == 0) {
+    uVar9 = uVar2;
+  }
+  if (0x555555555555554 < (ulong)(lVar8 * -0x5555555555555555)) {
+    uVar9 = 0xaaaaaaaaaaaaaaa;
+  }
+  if (uVar9 == 0) {
+    local_68 = (void *)0x0;
+  }
+  else {
+    if (0xaaaaaaaaaaaaaaa < uVar9) goto LAB_00000df4;
+    local_68 = operator_new(uVar9 * 0x18);
+  }
+  local_60 = (string *)((long)local_68 + lVar7 * 8);
+  local_50 = (void *)((long)local_68 + uVar9 * 0x18);
+  local_58 = local_60;
+  if (*(char *)((long)in_x1 + 0x17) < '\0') {
+    string::__init_copy_ctor_external(local_60,(char *)*in_x1,in_x1[1]);
+    psVar4 = *(string **)param_1;
+    psVar5 = *(string **)(param_1 + 8);
+    psVar10 = local_58 + 0x18;
+    psVar11 = psVar4;
+    if (psVar5 == psVar4) goto LAB_00000d70;
+  }
+  else {
+    uVar6 = *in_x1;
+    *(undefined8 *)(local_60 + 8) = in_x1[1];
+    *(undefined8 *)local_60 = uVar6;
+    *(undefined8 *)(local_60 + 0x10) = in_x1[2];
+    psVar10 = local_60 + 0x18;
+    psVar11 = psVar4;
+    if (psVar5 == psVar4) goto LAB_00000d70;
+  }
+  do {
+    uVar12 = *(undefined8 *)(psVar5 + -0x10);
+    uVar6 = *(undefined8 *)(psVar5 + -0x18);
+    *(undefined8 *)(local_60 + -8) = *(undefined8 *)(psVar5 + -8);
+    *(undefined8 *)(local_60 + -0x10) = uVar12;
+    *(undefined8 *)(local_60 + -0x18) = uVar6;
+    local_60 = local_60 + -0x18;
+    *(undefined8 *)(psVar5 + -0x10) = 0;
+    *(undefined8 *)(psVar5 + -8) = 0;
+    *(undefined8 *)(psVar5 + -0x18) = 0;
+    psVar5 = psVar5 + -0x18;
+  } while (psVar5 != psVar4);
+  psVar4 = *(string **)(param_1 + 8);
+  psVar11 = *(string **)param_1;
+LAB_00000d70:
+  *(string **)param_1 = local_60;
+  *(string **)(param_1 + 8) = psVar10;
+  uVar6 = *(undefined8 *)(param_1 + 0x10);
+  *(void **)(param_1 + 0x10) = local_50;
+  local_50 = (void *)uVar6;
+  psVar5 = psVar4;
+  local_68 = psVar11;
+  local_60 = psVar11;
+  while (psVar4 != psVar11) {
+    local_58 = psVar4 + -0x18;
+    psVar1 = psVar4 + -1;
+    psVar4 = local_58;
+    psVar5 = psVar11;
+    if ((char)*psVar1 < '\0') {
+      operator_delete(*(void **)local_58);
+    }
+  }
+  if (psVar5 != (string *)0x0) {
+    operator_delete(psVar5);
+  }
+  return psVar10;
+}
+
+
+
+
+// ========================================
+// Function: __init_copy_ctor_external
+// Entry: 00000e0c
+// Signature: undefined __thiscall __init_copy_ctor_external(string * this, char * param_1, ulong param_2)
+// ========================================
+
+
+/* std::string::__init_copy_ctor_external(char const*, unsigned long) */
+
+void __thiscall std::string::__init_copy_ctor_external(string *this,char *param_1,ulong param_2)
+
+{
+  ulong uVar1;
+  string *psVar2;
+  
+  if (param_2 < 0x17) {
+    this[0x17] = SUB81(param_2,0);
+    psVar2 = this;
+  }
+  else {
+    if (0x7ffffffffffffff7 < param_2) {
+                    /* WARNING: Subroutine does not return */
+      __throw_length_error_abi_ne180100_();
+    }
+    uVar1 = (param_2 & 0xfffffffffffffff8) + 8;
+    if ((param_2 | 7) != 0x17) {
+      uVar1 = param_2 | 7;
+    }
+    psVar2 = operator_new(uVar1 + 1);
+    *(ulong *)(this + 8) = param_2;
+    *(ulong *)(this + 0x10) = uVar1 + 1 | 0x8000000000000000;
+    *(string **)this = psVar2;
+  }
+  _memmove(psVar2,param_1,param_2 + 1);
+  return;
+}
+
+
+
+
+// ========================================
+// Function: ~__split_buffer
+// Entry: 00000e98
+// Signature: undefined __thiscall ~__split_buffer(__split_buffer<std::string,std::allocator<std::string>&> * this)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00000eec) */
+/* std::__split_buffer<std::string, std::allocator<std::string >&>::~__split_buffer() */
+
+__split_buffer<std::string,std::allocator<std::string>&> * __thiscall
+std::__split_buffer<std::string,std::allocator<std::string>&>::~__split_buffer
+          (__split_buffer<std::string,std::allocator<std::string>&> *this)
+
+{
+  long lVar1;
+  
+  lVar1 = *(long *)(this + 0x10);
+  while (lVar1 != *(long *)(this + 8)) {
+    lVar1 = lVar1 + -0x18;
+    *(long *)(this + 0x10) = lVar1;
+  }
+  if (*(void **)this != (void *)0x0) {
+    operator_delete(*(void **)this);
+  }
+  return this;
+}
+
+
+
+
+// ========================================
+// Function: __throw_length_error[abi:ne180100]
+// Entry: 00000efc
+// Signature: undefined __cdecl __throw_length_error[abi:ne180100](void)
+// ========================================
+
+
+/* std::vector<std::string, std::allocator<std::string > >::__throw_length_error[abi:ne180100]()
+   const */
+
+void std::vector<std::string,std::allocator<std::string>>::__throw_length_error_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_length_error_abi_ne180100_("vector");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 00000f10
+// Signature: undefined __cdecl __throw_out_of_range[abi:ne180100](void)
+// ========================================
+
+
+/* std::string::__throw_out_of_range[abi:ne180100]() const */
+
+void std::string::__throw_out_of_range_abi_ne180100_(void)
+
+{
+                    /* WARNING: Subroutine does not return */
+  std::__throw_out_of_range_abi_ne180100_("basic_string");
+}
+
+
+
+
+// ========================================
+// Function: __throw_out_of_range[abi:ne180100]
+// Entry: 00000f24
+// Signature: noreturn undefined __throw_out_of_range[abi:ne180100](char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::__throw_out_of_range[abi:ne180100](char const*) */
+
+void std::__throw_out_of_range_abi_ne180100_(char *param_1)
+
+{
+  out_of_range *this;
+  
+  this = (out_of_range *)___cxa_allocate_exception(0x10);
+  out_of_range::out_of_range_abi_ne180100_(this,param_1);
+                    /* WARNING: Subroutine does not return */
+  ___cxa_throw(this,_typeinfo,__out_of_range);
+}
+
+
+
+
+// ========================================
+// Function: out_of_range[abi:ne180100]
+// Entry: 00000f74
+// Signature: undefined __thiscall out_of_range[abi:ne180100](out_of_range * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* std::out_of_range::out_of_range[abi:ne180100](char const*) */
+
+void __thiscall std::out_of_range::out_of_range_abi_ne180100_(out_of_range *this,char *param_1)
+
+{
+  long *plVar1;
+  
+  plVar1 = (long *)std::logic_error::logic_error((logic_error *)this,param_1);
+  *plVar1 = _vtable + 0x10;
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+// Entry: 00000f98
+// Signature: void __introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>(string * param_1, string * param_2, __less * param_3, difference_type param_4, bool param_5)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__introsort<std::_ClassicAlgPolicy, std::__less<void, void>&, std::string*,
+   false>(std::string*, std::string*, std::__less<void, void>&,
+   std::iterator_traits<std::string*>::difference_type, bool) */
+
+void std::__introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+               (string *param_1,string *param_2,__less *param_3,long param_4,uint param_5)
+
+{
+  size_t sVar1;
+  bool bVar2;
+  bool bVar3;
+  int iVar4;
+  string *psVar5;
+  undefined8 uVar6;
+  ulong uVar7;
+  string *psVar8;
+  long lVar9;
+  ulong uVar10;
+  string *psVar11;
+  ulong uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  undefined1 auVar17 [16];
+  
+LAB_00000fc8:
+  psVar8 = param_2 + -0x18;
+  do {
+    param_4 = -param_4;
+    psVar11 = param_1;
+    do {
+      param_1 = psVar11;
+      param_4 = param_4 + 1;
+      uVar12 = (long)param_2 - (long)param_1;
+      uVar10 = ((long)uVar12 >> 3) * -0x5555555555555555;
+      switch(uVar10) {
+      case 0:
+      case 1:
+        return;
+      case 2:
+        psVar11 = param_2 + -0x18;
+        psVar8 = *(string **)psVar11;
+        uVar10 = *(ulong *)(param_2 + -0x10);
+        if (-1 < (char)param_2[-1]) {
+          psVar8 = psVar11;
+          uVar10 = (ulong)(byte)param_2[-1];
+        }
+        psVar5 = *(string **)param_1;
+        uVar12 = *(ulong *)(param_1 + 8);
+        if (-1 < (char)param_1[0x17]) {
+          psVar5 = param_1;
+          uVar12 = (ulong)(byte)param_1[0x17];
+        }
+        sVar1 = uVar12;
+        if (uVar10 <= uVar12) {
+          sVar1 = uVar10;
+        }
+        iVar4 = _memcmp(psVar8,psVar5,sVar1);
+        bVar2 = uVar10 < uVar12;
+        if (iVar4 != 0) {
+          bVar2 = iVar4 < 0;
+        }
+        if (!bVar2) {
+          return;
+        }
+        uVar15 = *(undefined8 *)(param_1 + 8);
+        uVar13 = *(undefined8 *)param_1;
+        uVar6 = *(undefined8 *)(param_1 + 0x10);
+        uVar16 = *(undefined8 *)(param_2 + -0x10);
+        uVar14 = *(undefined8 *)psVar11;
+        *(undefined8 *)(param_1 + 0x10) = *(undefined8 *)(param_2 + -8);
+        *(undefined8 *)(param_1 + 8) = uVar16;
+        *(undefined8 *)param_1 = uVar14;
+        *(undefined8 *)(param_2 + -0x10) = uVar15;
+        *(undefined8 *)psVar11 = uVar13;
+        *(undefined8 *)(param_2 + -8) = uVar6;
+        return;
+      case 3:
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1,param_1 + 0x18,psVar8,param_3);
+        return;
+      case 4:
+        __sort4_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1,param_1 + 0x18,param_1 + 0x30,psVar8,param_3);
+        return;
+      case 5:
+        __sort5_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1,param_1 + 0x18,param_1 + 0x30,param_1 + 0x48,psVar8,param_3);
+        return;
+      }
+      if ((long)uVar12 < 0x240) {
+        if ((param_5 & 1) != 0) {
+          __insertion_sort_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                    (param_1,param_2,param_3);
+          return;
+        }
+        __insertion_sort_unguarded_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1,param_2,param_3);
+        return;
+      }
+      if (param_4 == 1) {
+        if (param_1 == param_2) {
+          return;
+        }
+        uVar7 = uVar10 - 2 >> 1;
+        lVar9 = uVar7 + 1;
+        psVar8 = param_1 + uVar7 * 0x18;
+        do {
+          __sift_down_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                    (param_1,param_3,uVar10,psVar8);
+          psVar8 = psVar8 + -0x18;
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
+        uVar10 = uVar12 / 0x18;
+        do {
+          __pop_heap_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>,std::string*>
+                    (param_1,param_2,param_3,uVar10);
+          param_2 = param_2 + -0x18;
+          bVar2 = 2 < uVar10;
+          uVar10 = uVar10 - 1;
+        } while (bVar2);
+        return;
+      }
+      psVar11 = param_1 + (uVar10 >> 1) * 0x18;
+      if (uVar12 < 0xc01) {
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (psVar11,param_1,psVar8,param_3);
+      }
+      else {
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1,psVar11,psVar8,param_3);
+        psVar5 = param_1 + 0x18;
+        lVar9 = (uVar10 >> 1) * 0x18;
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (psVar5,param_1 + lVar9 + -0x18,param_2 + -0x30,param_3);
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1 + 0x30,psVar5 + lVar9,param_2 + -0x48,param_3);
+        __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                  (param_1 + lVar9 + -0x18,psVar11,psVar5 + lVar9,param_3);
+        uVar15 = *(undefined8 *)(param_1 + 8);
+        uVar13 = *(undefined8 *)param_1;
+        uVar6 = *(undefined8 *)(param_1 + 0x10);
+        uVar16 = *(undefined8 *)(psVar11 + 8);
+        uVar14 = *(undefined8 *)psVar11;
+        *(undefined8 *)(param_1 + 0x10) = *(undefined8 *)(psVar11 + 0x10);
+        *(undefined8 *)(param_1 + 8) = uVar16;
+        *(undefined8 *)param_1 = uVar14;
+        *(undefined8 *)(psVar11 + 0x10) = uVar6;
+        *(undefined8 *)(psVar11 + 8) = uVar15;
+        *(undefined8 *)psVar11 = uVar13;
+      }
+      if ((param_5 & 1) == 0) {
+        psVar11 = *(string **)(param_1 + -0x18);
+        uVar10 = *(ulong *)(param_1 + -0x10);
+        if (-1 < (char)param_1[-1]) {
+          psVar11 = param_1 + -0x18;
+          uVar10 = (ulong)(byte)param_1[-1];
+        }
+        psVar5 = *(string **)param_1;
+        uVar12 = *(ulong *)(param_1 + 8);
+        if (-1 < (char)param_1[0x17]) {
+          psVar5 = param_1;
+          uVar12 = (ulong)(byte)param_1[0x17];
+        }
+        sVar1 = uVar12;
+        if (uVar10 <= uVar12) {
+          sVar1 = uVar10;
+        }
+        iVar4 = _memcmp(psVar11,psVar5,sVar1);
+        bVar2 = uVar10 < uVar12;
+        if (iVar4 != 0) {
+          bVar2 = iVar4 < 0;
+        }
+        if (!bVar2) {
+          param_1 = __partition_with_equals_on_left_abi_ne180100_<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+                              (param_1,param_2,param_3);
+          goto LAB_000011c0;
+        }
+      }
+      auVar17 = __partition_with_equals_on_right_abi_ne180100_<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+                          (param_1,param_2,param_3);
+      psVar5 = auVar17._0_8_;
+      if ((auVar17._8_8_ & 1) == 0) break;
+      bVar2 = __insertion_sort_incomplete_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                        (param_1,psVar5,param_3);
+      bVar3 = __insertion_sort_incomplete_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+                        (psVar5 + 0x18,param_2,param_3);
+      if (bVar3) {
+        param_4 = -param_4;
+        param_2 = psVar5;
+        if (bVar2) {
+          return;
+        }
+        goto LAB_00000fc8;
+      }
+      psVar11 = psVar5 + 0x18;
+    } while (bVar2);
+    __introsort<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*,false>
+              (param_1,psVar5,param_3,-param_4,param_5 & 1);
+    param_1 = psVar5 + 0x18;
+LAB_000011c0:
+    param_5 = 0;
+    param_4 = -param_4;
+  } while( true );
+}
+
+
+
+
+// ========================================
+// Function: __insertion_sort[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00001404
+// Signature: void __insertion_sort[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, __less * param_3)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__insertion_sort[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::string*, std::__less<void, void>&) */
+
+void std::
+     __insertion_sort_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,__less *param_3)
+
+{
+  string *psVar1;
+  string *psVar2;
+  void **ppvVar3;
+  size_t sVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  long lVar8;
+  int iVar9;
+  string *psVar10;
+  string *psVar11;
+  long lVar12;
+  long lVar13;
+  void *local_80;
+  ulong uStack_78;
+  ulong local_70;
+  
+  if (param_1 != param_2) {
+    if (param_1 + 0x18 != param_2) {
+      lVar12 = 0;
+      psVar1 = param_1 + 0x18;
+      psVar10 = param_1;
+      do {
+        psVar11 = psVar1;
+        psVar1 = *(string **)(psVar10 + 0x18);
+        uVar6 = *(ulong *)(psVar10 + 0x20);
+        if (-1 < (char)psVar10[0x2f]) {
+          psVar1 = psVar11;
+          uVar6 = (ulong)(byte)psVar10[0x2f];
+        }
+        psVar2 = *(string **)psVar10;
+        uVar7 = *(ulong *)(psVar10 + 8);
+        if (-1 < (char)psVar10[0x17]) {
+          psVar2 = psVar10;
+          uVar7 = (ulong)(byte)psVar10[0x17];
+        }
+        sVar4 = uVar7;
+        if (uVar6 <= uVar7) {
+          sVar4 = uVar6;
+        }
+        iVar9 = _memcmp(psVar1,psVar2,sVar4);
+        bVar5 = uVar6 < uVar7;
+        if (iVar9 != 0) {
+          bVar5 = iVar9 < 0;
+        }
+        if (bVar5) {
+          local_70 = *(ulong *)(psVar11 + 0x10);
+          uStack_78 = *(ulong *)(psVar11 + 8);
+          local_80 = *(void **)psVar11;
+          *(undefined8 *)(psVar11 + 8) = 0;
+          *(undefined8 *)(psVar11 + 0x10) = 0;
+          *(undefined8 *)psVar11 = 0;
+          lVar8 = lVar12;
+          uVar6 = uStack_78;
+          ppvVar3 = local_80;
+          if (-1 < (long)local_70) {
+            uVar6 = local_70 >> 0x38;
+            ppvVar3 = &local_80;
+          }
+          do {
+            lVar13 = lVar8;
+            psVar1 = param_1 + lVar13;
+            *(undefined8 *)(psVar1 + 0x20) = *(undefined8 *)(psVar1 + 8);
+            *(undefined8 *)(psVar1 + 0x18) = *(undefined8 *)psVar1;
+            *(undefined8 *)(psVar1 + 0x28) = *(undefined8 *)(psVar1 + 0x10);
+            psVar1[0x17] = (string)0x0;
+            *psVar1 = (string)0x0;
+            psVar10 = param_1;
+            if (lVar13 == 0) goto LAB_00001454;
+            psVar10 = *(string **)(psVar1 + -0x18);
+            uVar7 = *(ulong *)(psVar1 + -0x10);
+            if (-1 < (char)psVar1[-1]) {
+              psVar10 = psVar1 + -0x18;
+              uVar7 = (ulong)(byte)psVar1[-1];
+            }
+            sVar4 = uVar7;
+            if (uVar6 <= uVar7) {
+              sVar4 = uVar6;
+            }
+            iVar9 = _memcmp(ppvVar3,psVar10,sVar4);
+            bVar5 = uVar6 < uVar7;
+            if (iVar9 != 0) {
+              bVar5 = iVar9 < 0;
+            }
+            lVar8 = lVar13 + -0x18;
+          } while (bVar5);
+          psVar10 = param_1 + lVar13;
+LAB_00001454:
+          *(ulong *)(psVar10 + 8) = uStack_78;
+          *(void **)psVar10 = local_80;
+          *(ulong *)(psVar10 + 0x10) = local_70;
+        }
+        lVar12 = lVar12 + 0x18;
+        psVar1 = psVar11 + 0x18;
+        psVar10 = psVar11;
+      } while (psVar11 + 0x18 != param_2);
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __insertion_sort_unguarded[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 0000159c
+// Signature: void __insertion_sort_unguarded[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, __less * param_3)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__insertion_sort_unguarded[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void,
+   void>&, std::string*>(std::string*, std::string*, std::__less<void, void>&) */
+
+void std::
+     __insertion_sort_unguarded_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,__less *param_3)
+
+{
+  string *psVar1;
+  void **ppvVar2;
+  size_t sVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  string *psVar7;
+  int iVar8;
+  string *psVar9;
+  void *local_70;
+  ulong uStack_68;
+  ulong local_60;
+  
+  if (param_1 != param_2) {
+    while (psVar7 = param_1 + 0x18, psVar7 != param_2) {
+      psVar9 = *(string **)(param_1 + 0x18);
+      uVar5 = *(ulong *)(param_1 + 0x20);
+      if (-1 < (char)param_1[0x2f]) {
+        psVar9 = psVar7;
+        uVar5 = (ulong)(byte)param_1[0x2f];
+      }
+      psVar1 = *(string **)param_1;
+      uVar6 = *(ulong *)(param_1 + 8);
+      if (-1 < (char)param_1[0x17]) {
+        psVar1 = param_1;
+        uVar6 = (ulong)(byte)param_1[0x17];
+      }
+      sVar3 = uVar6;
+      if (uVar5 <= uVar6) {
+        sVar3 = uVar5;
+      }
+      iVar8 = _memcmp(psVar9,psVar1,sVar3);
+      bVar4 = uVar5 < uVar6;
+      if (iVar8 != 0) {
+        bVar4 = iVar8 < 0;
+      }
+      param_1 = psVar7;
+      if (bVar4) {
+        local_60 = *(ulong *)(psVar7 + 0x10);
+        uStack_68 = *(ulong *)(psVar7 + 8);
+        local_70 = *(void **)psVar7;
+        *(undefined8 *)(psVar7 + 8) = 0;
+        *(undefined8 *)(psVar7 + 0x10) = 0;
+        *(undefined8 *)psVar7 = 0;
+        uVar5 = uStack_68;
+        ppvVar2 = local_70;
+        if (-1 < (long)local_60) {
+          uVar5 = local_60 >> 0x38;
+          ppvVar2 = &local_70;
+        }
+        do {
+          psVar9 = psVar7;
+          *(undefined8 *)(psVar9 + 8) = *(undefined8 *)(psVar9 + -0x10);
+          *(undefined8 *)psVar9 = *(undefined8 *)(psVar9 + -0x18);
+          *(undefined8 *)(psVar9 + 0x10) = *(undefined8 *)(psVar9 + -8);
+          psVar9[-1] = (string)0x0;
+          psVar9[-0x18] = (string)0x0;
+          psVar7 = *(string **)(psVar9 + -0x30);
+          uVar6 = *(ulong *)(psVar9 + -0x28);
+          if (-1 < (char)psVar9[-0x19]) {
+            psVar7 = psVar9 + -0x30;
+            uVar6 = (ulong)(byte)psVar9[-0x19];
+          }
+          sVar3 = uVar6;
+          if (uVar5 <= uVar6) {
+            sVar3 = uVar5;
+          }
+          iVar8 = _memcmp(ppvVar2,psVar7,sVar3);
+          bVar4 = uVar5 < uVar6;
+          if (iVar8 != 0) {
+            bVar4 = iVar8 < 0;
+          }
+          psVar7 = psVar9 + -0x18;
+        } while (bVar4);
+        *(ulong *)(psVar9 + -0x10) = uStack_68;
+        *(void **)(psVar9 + -0x18) = local_70;
+        *(ulong *)(psVar9 + -8) = local_60;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __sort3[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00001714
+// Signature: uint __sort3[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, string * param_3, __less * param_4)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* unsigned int std::__sort3[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::string*, std::string*, std::__less<void, void>&) */
+
+uint std::__sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,string *param_3,__less *param_4)
+
+{
+  string *psVar1;
+  string *psVar2;
+  size_t sVar3;
+  bool bVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  int iVar8;
+  undefined8 uVar9;
+  ulong uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  
+  psVar1 = *(string **)param_2;
+  uVar6 = *(ulong *)(param_2 + 8);
+  if (-1 < (char)param_2[0x17]) {
+    psVar1 = param_2;
+    uVar6 = (ulong)(byte)param_2[0x17];
+  }
+  psVar2 = *(string **)param_1;
+  uVar10 = *(ulong *)(param_1 + 8);
+  if (-1 < (char)param_1[0x17]) {
+    psVar2 = param_1;
+    uVar10 = (ulong)(byte)param_1[0x17];
+  }
+  sVar3 = uVar10;
+  if (uVar6 <= uVar10) {
+    sVar3 = uVar6;
+  }
+  iVar8 = _memcmp(psVar1,psVar2,sVar3);
+  bVar4 = uVar6 < uVar10;
+  if (iVar8 != 0) {
+    bVar4 = iVar8 < 0;
+  }
+  psVar2 = *(string **)param_3;
+  uVar10 = *(ulong *)(param_3 + 8);
+  if (-1 < (char)param_3[0x17]) {
+    psVar2 = param_3;
+    uVar10 = (ulong)(byte)param_3[0x17];
+  }
+  sVar3 = uVar6;
+  if (uVar10 <= uVar6) {
+    sVar3 = uVar10;
+  }
+  iVar8 = _memcmp(psVar2,psVar1,sVar3);
+  bVar5 = uVar10 < uVar6;
+  if (iVar8 != 0) {
+    bVar5 = iVar8 < 0;
+  }
+  if (bVar4) {
+    if (bVar5) {
+      uVar9 = *(undefined8 *)(param_1 + 0x10);
+      uVar13 = *(undefined8 *)(param_1 + 8);
+      uVar12 = *(undefined8 *)param_1;
+      uVar11 = *(undefined8 *)(param_3 + 0x10);
+      uVar14 = *(undefined8 *)param_3;
+      *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_3 + 8);
+      *(undefined8 *)param_1 = uVar14;
+      *(undefined8 *)(param_1 + 0x10) = uVar11;
+      *(undefined8 *)(param_3 + 8) = uVar13;
+      *(undefined8 *)param_3 = uVar12;
+      *(undefined8 *)(param_3 + 0x10) = uVar9;
+    }
+    else {
+      uVar10 = *(ulong *)(param_1 + 0x10);
+      uVar12 = *(undefined8 *)(param_1 + 8);
+      uVar11 = *(undefined8 *)param_1;
+      uVar9 = *(undefined8 *)(param_2 + 0x10);
+      uVar13 = *(undefined8 *)param_2;
+      *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + 8);
+      *(undefined8 *)param_1 = uVar13;
+      *(undefined8 *)(param_1 + 0x10) = uVar9;
+      *(undefined8 *)(param_2 + 8) = uVar12;
+      *(undefined8 *)param_2 = uVar11;
+      *(ulong *)(param_2 + 0x10) = uVar10;
+      psVar1 = *(string **)param_3;
+      uVar6 = *(ulong *)(param_3 + 8);
+      if (-1 < (char)param_3[0x17]) {
+        psVar1 = param_3;
+        uVar6 = (ulong)(byte)param_3[0x17];
+      }
+      psVar2 = *(string **)param_2;
+      uVar7 = *(ulong *)(param_2 + 8);
+      if (-1 < (long)uVar10) {
+        psVar2 = param_2;
+        uVar7 = uVar10 >> 0x38;
+      }
+      sVar3 = uVar7;
+      if (uVar6 <= uVar7) {
+        sVar3 = uVar6;
+      }
+      iVar8 = _memcmp(psVar1,psVar2,sVar3);
+      bVar4 = uVar6 < uVar7;
+      if (iVar8 != 0) {
+        bVar4 = iVar8 < 0;
+      }
+      if (bVar4) {
+        uVar9 = *(undefined8 *)(param_2 + 0x10);
+        uVar13 = *(undefined8 *)(param_2 + 8);
+        uVar12 = *(undefined8 *)param_2;
+        uVar11 = *(undefined8 *)(param_3 + 0x10);
+        uVar14 = *(undefined8 *)param_3;
+        *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_3 + 8);
+        *(undefined8 *)param_2 = uVar14;
+        *(undefined8 *)(param_2 + 0x10) = uVar11;
+        *(undefined8 *)(param_3 + 8) = uVar13;
+        *(undefined8 *)param_3 = uVar12;
+        *(undefined8 *)(param_3 + 0x10) = uVar9;
+        return 2;
+      }
+    }
+  }
+  else {
+    if (!bVar5) {
+      return 0;
+    }
+    uVar9 = *(undefined8 *)(param_2 + 0x10);
+    uVar13 = *(undefined8 *)(param_2 + 8);
+    uVar12 = *(undefined8 *)param_2;
+    uVar11 = *(undefined8 *)(param_3 + 0x10);
+    uVar14 = *(undefined8 *)param_3;
+    *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_3 + 8);
+    *(undefined8 *)param_2 = uVar14;
+    *(undefined8 *)(param_2 + 0x10) = uVar11;
+    *(undefined8 *)(param_3 + 8) = uVar13;
+    *(undefined8 *)param_3 = uVar12;
+    *(undefined8 *)(param_3 + 0x10) = uVar9;
+    psVar1 = *(string **)param_2;
+    uVar6 = *(ulong *)(param_2 + 8);
+    if (-1 < (char)param_2[0x17]) {
+      psVar1 = param_2;
+      uVar6 = (ulong)(byte)param_2[0x17];
+    }
+    psVar2 = *(string **)param_1;
+    uVar10 = *(ulong *)(param_1 + 8);
+    if (-1 < (char)param_1[0x17]) {
+      psVar2 = param_1;
+      uVar10 = (ulong)(byte)param_1[0x17];
+    }
+    sVar3 = uVar10;
+    if (uVar6 <= uVar10) {
+      sVar3 = uVar6;
+    }
+    iVar8 = _memcmp(psVar1,psVar2,sVar3);
+    bVar4 = uVar6 < uVar10;
+    if (iVar8 != 0) {
+      bVar4 = iVar8 < 0;
+    }
+    if (bVar4) {
+      uVar9 = *(undefined8 *)(param_1 + 0x10);
+      uVar13 = *(undefined8 *)(param_1 + 8);
+      uVar12 = *(undefined8 *)param_1;
+      uVar11 = *(undefined8 *)(param_2 + 0x10);
+      uVar14 = *(undefined8 *)param_2;
+      *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + 8);
+      *(undefined8 *)param_1 = uVar14;
+      *(undefined8 *)(param_1 + 0x10) = uVar11;
+      *(undefined8 *)(param_2 + 8) = uVar13;
+      *(undefined8 *)param_2 = uVar12;
+      *(undefined8 *)(param_2 + 0x10) = uVar9;
+      return 2;
+    }
+  }
+  return 1;
+}
+
+
+
+
+// ========================================
+// Function: __partition_with_equals_on_left[abi:ne180100]<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+// Entry: 00001960
+// Signature: string * __partition_with_equals_on_left[abi:ne180100]<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>(string * param_1, string * param_2, __less * param_3)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001c2c) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::string* std::__partition_with_equals_on_left[abi:ne180100]<std::_ClassicAlgPolicy,
+   std::string*, std::__less<void, void>&>(std::string*, std::string*, std::__less<void, void>&) */
+
+string * std::
+         __partition_with_equals_on_left_abi_ne180100_<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+                   (string *param_1,string *param_2,__less *param_3)
+
+{
+  void **ppvVar1;
+  size_t sVar2;
+  bool bVar3;
+  ulong uVar4;
+  ulong uVar5;
+  int iVar6;
+  string *psVar7;
+  string *psVar8;
+  string *psVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  void *local_90;
+  ulong uStack_88;
+  ulong local_80;
+  undefined8 local_70;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  
+  local_80 = *(ulong *)(param_1 + 0x10);
+  uStack_88 = *(ulong *)(param_1 + 8);
+  local_90 = *(void **)param_1;
+  *(undefined8 *)(param_1 + 8) = 0;
+  *(undefined8 *)(param_1 + 0x10) = 0;
+  *(undefined8 *)param_1 = 0;
+  ppvVar1 = local_90;
+  uVar4 = uStack_88;
+  if (-1 < (long)local_80) {
+    ppvVar1 = &local_90;
+    uVar4 = local_80 >> 0x38;
+  }
+  psVar8 = *(string **)(param_2 + -0x18);
+  uVar5 = *(ulong *)(param_2 + -0x10);
+  if (-1 < (char)param_2[-1]) {
+    psVar8 = param_2 + -0x18;
+    uVar5 = (ulong)(byte)param_2[-1];
+  }
+  sVar2 = uVar5;
+  if (uVar4 <= uVar5) {
+    sVar2 = uVar4;
+  }
+  iVar6 = _memcmp(ppvVar1,psVar8,sVar2);
+  bVar3 = uVar4 < uVar5;
+  if (iVar6 != 0) {
+    bVar3 = iVar6 < 0;
+  }
+  psVar8 = param_1;
+  if (bVar3) {
+    do {
+      psVar9 = psVar8 + 0x18;
+      psVar7 = *(string **)psVar9;
+      uVar5 = *(ulong *)(psVar8 + 0x20);
+      if (-1 < (char)psVar8[0x2f]) {
+        psVar7 = psVar9;
+        uVar5 = (ulong)(byte)psVar8[0x2f];
+      }
+      sVar2 = uVar5;
+      if (uVar4 <= uVar5) {
+        sVar2 = uVar4;
+      }
+      iVar6 = _memcmp(ppvVar1,psVar7,sVar2);
+      bVar3 = uVar4 < uVar5;
+      if (iVar6 != 0) {
+        bVar3 = iVar6 < 0;
+      }
+      psVar8 = psVar9;
+    } while (!bVar3);
+  }
+  else {
+    do {
+      psVar9 = psVar8 + 0x18;
+      if (param_2 <= psVar9) break;
+      psVar7 = *(string **)psVar9;
+      uVar5 = *(ulong *)(psVar8 + 0x20);
+      if (-1 < (char)psVar8[0x2f]) {
+        psVar7 = psVar9;
+        uVar5 = (ulong)(byte)psVar8[0x2f];
+      }
+      sVar2 = uVar5;
+      if (uVar4 <= uVar5) {
+        sVar2 = uVar4;
+      }
+      iVar6 = _memcmp(ppvVar1,psVar7,sVar2);
+      bVar3 = uVar4 < uVar5;
+      if (iVar6 != 0) {
+        bVar3 = iVar6 < 0;
+      }
+      psVar8 = psVar9;
+    } while (!bVar3);
+  }
+  psVar8 = param_2;
+  if (psVar9 < param_2) {
+    do {
+      param_2 = psVar8 + -0x18;
+      psVar7 = *(string **)param_2;
+      uVar5 = *(ulong *)(psVar8 + -0x10);
+      if (-1 < (char)psVar8[-1]) {
+        psVar7 = param_2;
+        uVar5 = (ulong)(byte)psVar8[-1];
+      }
+      sVar2 = uVar5;
+      if (uVar4 <= uVar5) {
+        sVar2 = uVar4;
+      }
+      iVar6 = _memcmp(ppvVar1,psVar7,sVar2);
+      bVar3 = uVar4 < uVar5;
+      if (iVar6 != 0) {
+        bVar3 = iVar6 < 0;
+      }
+      psVar8 = param_2;
+    } while (bVar3);
+  }
+  if (psVar9 < param_2) {
+    do {
+      uStack_68 = *(undefined8 *)(psVar9 + 8);
+      local_70 = *(undefined8 *)psVar9;
+      local_60 = *(undefined8 *)(psVar9 + 0x10);
+      uVar11 = *(undefined8 *)(param_2 + 8);
+      uVar10 = *(undefined8 *)param_2;
+      *(undefined8 *)(psVar9 + 0x10) = *(undefined8 *)(param_2 + 0x10);
+      *(undefined8 *)(psVar9 + 8) = uVar11;
+      *(undefined8 *)psVar9 = uVar10;
+      *(undefined8 *)(param_2 + 0x10) = local_60;
+      *(undefined8 *)(param_2 + 8) = uStack_68;
+      *(undefined8 *)param_2 = local_70;
+      psVar8 = psVar9;
+      uVar4 = uStack_88;
+      ppvVar1 = local_90;
+      if (-1 < (long)local_80) {
+        uVar4 = local_80 >> 0x38;
+        ppvVar1 = &local_90;
+      }
+      do {
+        psVar9 = psVar8 + 0x18;
+        psVar7 = *(string **)psVar9;
+        uVar5 = *(ulong *)(psVar8 + 0x20);
+        if (-1 < (char)psVar8[0x2f]) {
+          psVar7 = psVar9;
+          uVar5 = (ulong)(byte)psVar8[0x2f];
+        }
+        sVar2 = uVar5;
+        if (uVar4 <= uVar5) {
+          sVar2 = uVar4;
+        }
+        iVar6 = _memcmp(ppvVar1,psVar7,sVar2);
+        bVar3 = uVar4 < uVar5;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        psVar7 = param_2;
+        psVar8 = psVar9;
+      } while (!bVar3);
+      do {
+        param_2 = psVar7 + -0x18;
+        psVar8 = *(string **)param_2;
+        uVar5 = *(ulong *)(psVar7 + -0x10);
+        if (-1 < (char)psVar7[-1]) {
+          psVar8 = param_2;
+          uVar5 = (ulong)(byte)psVar7[-1];
+        }
+        sVar2 = uVar5;
+        if (uVar4 <= uVar5) {
+          sVar2 = uVar4;
+        }
+        iVar6 = _memcmp(ppvVar1,psVar8,sVar2);
+        bVar3 = uVar4 < uVar5;
+        if (iVar6 != 0) {
+          bVar3 = iVar6 < 0;
+        }
+        psVar7 = param_2;
+      } while (bVar3);
+    } while (psVar9 < param_2);
+  }
+  psVar8 = psVar9 + -0x18;
+  if (psVar8 != param_1) {
+    if ((char)param_1[0x17] < '\0') {
+      operator_delete(*(void **)param_1);
+    }
+    uVar11 = *(undefined8 *)(psVar9 + -0x10);
+    uVar10 = *(undefined8 *)psVar8;
+    *(undefined8 *)(param_1 + 0x10) = *(undefined8 *)(psVar9 + -8);
+    *(undefined8 *)(param_1 + 8) = uVar11;
+    *(undefined8 *)param_1 = uVar10;
+    psVar9[-1] = (string)0x0;
+    psVar9[-0x18] = (string)0x0;
+  }
+  *(ulong *)(psVar9 + -8) = local_80;
+  *(ulong *)(psVar9 + -0x10) = uStack_88;
+  *(void **)psVar8 = local_90;
+  return psVar9;
+}
+
+
+
+
+// ========================================
+// Function: __partition_with_equals_on_right[abi:ne180100]<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+// Entry: 00001c64
+// Signature: pair __partition_with_equals_on_right[abi:ne180100]<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>(string * param_1, string * param_2, __less * param_3)
+// ========================================
+
+
+/* WARNING: Removing unreachable block (ram,0x00001f10) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* std::pair<std::string*, bool>
+   std::__partition_with_equals_on_right[abi:ne180100]<std::_ClassicAlgPolicy, std::string*,
+   std::__less<void, void>&>(std::string*, std::string*, std::__less<void, void>&) */
+
+undefined1  [16]
+std::
+__partition_with_equals_on_right_abi_ne180100_<std::_ClassicAlgPolicy,std::string*,std::__less<void,void>&>
+          (string *param_1,string *param_2,__less *param_3)
+
+{
+  string *psVar1;
+  void **ppvVar2;
+  string *psVar3;
+  size_t sVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  int iVar8;
+  string *psVar9;
+  string *psVar10;
+  long lVar11;
+  string *psVar12;
+  string *psVar13;
+  string *psVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  undefined1 auVar17 [16];
+  void *local_a0;
+  ulong uStack_98;
+  ulong local_90;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined8 local_70;
+  
+  lVar11 = 0;
+  local_90 = *(ulong *)(param_1 + 0x10);
+  uStack_98 = *(ulong *)(param_1 + 8);
+  local_a0 = *(void **)param_1;
+  *(undefined8 *)(param_1 + 8) = 0;
+  *(undefined8 *)(param_1 + 0x10) = 0;
+  *(undefined8 *)param_1 = 0;
+  uVar6 = uStack_98;
+  ppvVar2 = local_a0;
+  if (-1 < (long)local_90) {
+    uVar6 = local_90 >> 0x38;
+    ppvVar2 = &local_a0;
+  }
+  do {
+    psVar1 = *(string **)(param_1 + lVar11 + 0x18);
+    uVar7 = *(ulong *)(param_1 + lVar11 + 0x20);
+    if (-1 < (char)param_1[lVar11 + 0x2f]) {
+      psVar1 = param_1 + lVar11 + 0x18;
+      uVar7 = (ulong)(byte)param_1[lVar11 + 0x2f];
+    }
+    sVar4 = uVar6;
+    if (uVar7 <= uVar6) {
+      sVar4 = uVar7;
+    }
+    iVar8 = _memcmp(psVar1,ppvVar2,sVar4);
+    bVar5 = uVar7 < uVar6;
+    if (iVar8 != 0) {
+      bVar5 = iVar8 < 0;
+    }
+    lVar11 = lVar11 + 0x18;
+  } while (bVar5);
+  psVar1 = param_1 + lVar11;
+  if (lVar11 == 0x18) {
+    do {
+      psVar12 = param_2 + -0x18;
+      psVar10 = param_2;
+      if (param_2 <= psVar1) break;
+      psVar10 = *(string **)psVar12;
+      uVar7 = *(ulong *)(param_2 + -0x10);
+      if (-1 < (char)param_2[-1]) {
+        psVar10 = psVar12;
+        uVar7 = (ulong)(byte)param_2[-1];
+      }
+      sVar4 = uVar6;
+      if (uVar7 <= uVar6) {
+        sVar4 = uVar7;
+      }
+      iVar8 = _memcmp(psVar10,ppvVar2,sVar4);
+      bVar5 = uVar7 < uVar6;
+      if (iVar8 != 0) {
+        bVar5 = iVar8 < 0;
+      }
+      psVar10 = psVar12;
+      param_2 = psVar12;
+    } while (!bVar5);
+  }
+  else {
+    do {
+      psVar10 = param_2 + -0x18;
+      psVar12 = *(string **)psVar10;
+      uVar7 = *(ulong *)(param_2 + -0x10);
+      if (-1 < (char)param_2[-1]) {
+        psVar12 = psVar10;
+        uVar7 = (ulong)(byte)param_2[-1];
+      }
+      sVar4 = uVar6;
+      if (uVar7 <= uVar6) {
+        sVar4 = uVar7;
+      }
+      iVar8 = _memcmp(psVar12,ppvVar2,sVar4);
+      bVar5 = uVar7 < uVar6;
+      if (iVar8 != 0) {
+        bVar5 = iVar8 < 0;
+      }
+      param_2 = psVar10;
+    } while (!bVar5);
+  }
+  psVar12 = psVar1;
+  psVar13 = psVar10;
+  if (psVar1 < psVar10) {
+    do {
+      uStack_78 = *(undefined8 *)(psVar12 + 8);
+      local_80 = *(undefined8 *)psVar12;
+      local_70 = *(undefined8 *)(psVar12 + 0x10);
+      uVar16 = *(undefined8 *)(psVar13 + 8);
+      uVar15 = *(undefined8 *)psVar13;
+      *(undefined8 *)(psVar12 + 0x10) = *(undefined8 *)(psVar13 + 0x10);
+      *(undefined8 *)(psVar12 + 8) = uVar16;
+      *(undefined8 *)psVar12 = uVar15;
+      *(undefined8 *)(psVar13 + 0x10) = local_70;
+      *(undefined8 *)(psVar13 + 8) = uStack_78;
+      *(undefined8 *)psVar13 = local_80;
+      uVar6 = uStack_98;
+      ppvVar2 = local_a0;
+      if (-1 < (long)local_90) {
+        uVar6 = local_90 >> 0x38;
+        ppvVar2 = &local_a0;
+      }
+      do {
+        psVar9 = psVar12;
+        psVar12 = psVar9 + 0x18;
+        psVar3 = *(string **)psVar12;
+        uVar7 = *(ulong *)(psVar9 + 0x20);
+        if (-1 < (char)psVar9[0x2f]) {
+          psVar3 = psVar12;
+          uVar7 = (ulong)(byte)psVar9[0x2f];
+        }
+        sVar4 = uVar6;
+        if (uVar7 <= uVar6) {
+          sVar4 = uVar7;
+        }
+        iVar8 = _memcmp(psVar3,ppvVar2,sVar4);
+        bVar5 = uVar7 < uVar6;
+        if (iVar8 != 0) {
+          bVar5 = iVar8 < 0;
+        }
+      } while (bVar5);
+      do {
+        psVar14 = psVar13 + -0x18;
+        psVar3 = *(string **)psVar14;
+        uVar7 = *(ulong *)(psVar13 + -0x10);
+        if (-1 < (char)psVar13[-1]) {
+          psVar3 = psVar14;
+          uVar7 = (ulong)(byte)psVar13[-1];
+        }
+        sVar4 = uVar6;
+        if (uVar7 <= uVar6) {
+          sVar4 = uVar7;
+        }
+        iVar8 = _memcmp(psVar3,ppvVar2,sVar4);
+        bVar5 = uVar7 < uVar6;
+        if (iVar8 != 0) {
+          bVar5 = iVar8 < 0;
+        }
+        psVar13 = psVar14;
+      } while (!bVar5);
+    } while (psVar12 < psVar14);
+  }
+  else {
+    psVar9 = psVar1 + -0x18;
+  }
+  if (psVar9 != param_1) {
+    if ((char)param_1[0x17] < '\0') {
+      operator_delete(*(void **)param_1);
+    }
+    uVar16 = *(undefined8 *)(psVar9 + 8);
+    uVar15 = *(undefined8 *)psVar9;
+    *(undefined8 *)(param_1 + 0x10) = *(undefined8 *)(psVar9 + 0x10);
+    *(undefined8 *)(param_1 + 8) = uVar16;
+    *(undefined8 *)param_1 = uVar15;
+    psVar12[-1] = (string)0x0;
+    psVar12[-0x18] = (string)0x0;
+  }
+  *(ulong *)(psVar9 + 0x10) = local_90;
+  *(ulong *)(psVar9 + 8) = uStack_98;
+  *(void **)psVar9 = local_a0;
+  auVar17[8] = psVar10 <= psVar1;
+  auVar17._0_8_ = psVar9;
+  auVar17._9_7_ = 0;
+  return auVar17;
+}
+
+
+
+
+// ========================================
+// Function: __insertion_sort_incomplete[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00001f54
+// Signature: bool __insertion_sort_incomplete[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, __less * param_3)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* bool std::__insertion_sort_incomplete[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void,
+   void>&, std::string*>(std::string*, std::string*, std::__less<void, void>&) */
+
+bool std::
+     __insertion_sort_incomplete_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,__less *param_3)
+
+{
+  string *psVar1;
+  string *psVar2;
+  void **ppvVar3;
+  size_t sVar4;
+  bool bVar5;
+  ulong uVar6;
+  ulong uVar7;
+  long lVar8;
+  int iVar9;
+  int iVar10;
+  undefined8 uVar11;
+  string *psVar12;
+  undefined8 uVar13;
+  string *psVar14;
+  long lVar15;
+  long lVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  undefined8 uVar19;
+  void *local_a0;
+  ulong uStack_98;
+  ulong local_90;
+  
+  switch(((long)param_2 - (long)param_1 >> 3) * -0x5555555555555555) {
+  case 0:
+  case 1:
+    break;
+  case 2:
+    psVar14 = param_2 + -0x18;
+    psVar12 = *(string **)psVar14;
+    uVar6 = *(ulong *)(param_2 + -0x10);
+    if (-1 < (char)param_2[-1]) {
+      psVar12 = psVar14;
+      uVar6 = (ulong)(byte)param_2[-1];
+    }
+    psVar1 = *(string **)param_1;
+    uVar7 = *(ulong *)(param_1 + 8);
+    if (-1 < (char)param_1[0x17]) {
+      psVar1 = param_1;
+      uVar7 = (ulong)(byte)param_1[0x17];
+    }
+    sVar4 = uVar7;
+    if (uVar6 <= uVar7) {
+      sVar4 = uVar6;
+    }
+    iVar9 = _memcmp(psVar12,psVar1,sVar4);
+    bVar5 = uVar6 < uVar7;
+    if (iVar9 != 0) {
+      bVar5 = iVar9 < 0;
+    }
+    if (bVar5) {
+      uVar11 = *(undefined8 *)(param_1 + 0x10);
+      uVar18 = *(undefined8 *)(param_1 + 8);
+      uVar17 = *(undefined8 *)param_1;
+      uVar13 = *(undefined8 *)(param_2 + -8);
+      uVar19 = *(undefined8 *)psVar14;
+      *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + -0x10);
+      *(undefined8 *)param_1 = uVar19;
+      *(undefined8 *)(param_1 + 0x10) = uVar13;
+      *(undefined8 *)(param_2 + -0x10) = uVar18;
+      *(undefined8 *)psVar14 = uVar17;
+      *(undefined8 *)(param_2 + -8) = uVar11;
+    }
+    break;
+  case 3:
+    __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+              (param_1,param_1 + 0x18,param_2 + -0x18,param_3);
+    break;
+  case 4:
+    __sort4_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+              (param_1,param_1 + 0x18,param_1 + 0x30,param_2 + -0x18,param_3);
+    break;
+  case 5:
+    __sort5_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+              (param_1,param_1 + 0x18,param_1 + 0x30,param_1 + 0x48,param_2 + -0x18,param_3);
+    break;
+  default:
+    __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+              (param_1,param_1 + 0x18,param_1 + 0x30,param_3);
+    if (param_1 + 0x48 != param_2) {
+      lVar16 = 0;
+      iVar9 = 0;
+      psVar12 = param_1 + 0x30;
+      psVar14 = param_1 + 0x48;
+      do {
+        psVar1 = *(string **)psVar14;
+        uVar6 = *(ulong *)(psVar14 + 8);
+        if (-1 < (char)psVar14[0x17]) {
+          psVar1 = psVar14;
+          uVar6 = (ulong)(byte)psVar14[0x17];
+        }
+        psVar2 = *(string **)psVar12;
+        uVar7 = *(ulong *)(psVar12 + 8);
+        if (-1 < (char)psVar12[0x17]) {
+          psVar2 = psVar12;
+          uVar7 = (ulong)(byte)psVar12[0x17];
+        }
+        sVar4 = uVar7;
+        if (uVar6 <= uVar7) {
+          sVar4 = uVar6;
+        }
+        iVar10 = _memcmp(psVar1,psVar2,sVar4);
+        bVar5 = uVar6 < uVar7;
+        if (iVar10 != 0) {
+          bVar5 = iVar10 < 0;
+        }
+        if (bVar5) {
+          uStack_98 = *(ulong *)(psVar14 + 8);
+          local_a0 = *(void **)psVar14;
+          local_90 = *(ulong *)(psVar14 + 0x10);
+          *(undefined8 *)(psVar14 + 8) = 0;
+          *(undefined8 *)(psVar14 + 0x10) = 0;
+          *(undefined8 *)psVar14 = 0;
+          lVar8 = lVar16;
+          do {
+            lVar15 = lVar8;
+            *(undefined8 *)(param_1 + lVar15 + 0x50) = *(undefined8 *)(param_1 + lVar15 + 0x38);
+            *(undefined8 *)(param_1 + lVar15 + 0x48) = *(undefined8 *)(param_1 + lVar15 + 0x30);
+            *(undefined8 *)(param_1 + lVar15 + 0x58) = *(undefined8 *)(param_1 + lVar15 + 0x40);
+            param_1[lVar15 + 0x47] = (string)0x0;
+            param_1[lVar15 + 0x30] = (string)0x0;
+            psVar12 = param_1;
+            if (lVar15 == -0x30) goto LAB_00002070;
+            ppvVar3 = local_a0;
+            uVar6 = uStack_98;
+            if (-1 < (long)local_90) {
+              ppvVar3 = &local_a0;
+              uVar6 = local_90 >> 0x38;
+            }
+            psVar12 = *(string **)(param_1 + lVar15 + 0x18);
+            uVar7 = *(ulong *)(param_1 + lVar15 + 0x20);
+            if (-1 < (char)param_1[lVar15 + 0x2f]) {
+              psVar12 = param_1 + lVar15 + 0x18;
+              uVar7 = (ulong)(byte)param_1[lVar15 + 0x2f];
+            }
+            sVar4 = uVar7;
+            if (uVar6 <= uVar7) {
+              sVar4 = uVar6;
+            }
+            iVar10 = _memcmp(ppvVar3,psVar12,sVar4);
+            bVar5 = uVar6 < uVar7;
+            if (iVar10 != 0) {
+              bVar5 = iVar10 < 0;
+            }
+            lVar8 = lVar15 + -0x18;
+          } while (bVar5);
+          psVar12 = param_1 + lVar15 + 0x30;
+LAB_00002070:
+          *(ulong *)(psVar12 + 8) = uStack_98;
+          *(void **)psVar12 = local_a0;
+          *(ulong *)(psVar12 + 0x10) = local_90;
+          iVar9 = iVar9 + 1;
+          if (iVar9 == 8) {
+            return psVar14 + 0x18 == param_2;
+          }
+        }
+        psVar1 = psVar14 + 0x18;
+        lVar16 = lVar16 + 0x18;
+        psVar12 = psVar14;
+        psVar14 = psVar1;
+      } while (psVar1 != param_2);
+    }
+  }
+  return true;
+}
+
+
+
+
+// ========================================
+// Function: __sort4[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00002224
+// Signature: void __sort4[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, string * param_3, string * param_4, __less * param_5)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__sort4[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::string*, std::string*, std::string*, std::__less<void, void>&)
+    */
+
+void std::__sort4_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,string *param_3,string *param_4,__less *param_5)
+
+{
+  string *psVar1;
+  string *psVar2;
+  size_t sVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  
+  __sort3_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+            (param_1,param_2,param_3,param_5);
+  psVar1 = *(string **)param_4;
+  uVar5 = *(ulong *)(param_4 + 8);
+  if (-1 < (char)param_4[0x17]) {
+    psVar1 = param_4;
+    uVar5 = (ulong)(byte)param_4[0x17];
+  }
+  psVar2 = *(string **)param_3;
+  uVar6 = *(ulong *)(param_3 + 8);
+  if (-1 < (char)param_3[0x17]) {
+    psVar2 = param_3;
+    uVar6 = (ulong)(byte)param_3[0x17];
+  }
+  sVar3 = uVar6;
+  if (uVar5 <= uVar6) {
+    sVar3 = uVar5;
+  }
+  iVar7 = _memcmp(psVar1,psVar2,sVar3);
+  bVar4 = uVar5 < uVar6;
+  if (iVar7 != 0) {
+    bVar4 = iVar7 < 0;
+  }
+  if (bVar4) {
+    uVar8 = *(undefined8 *)(param_3 + 0x10);
+    uVar11 = *(undefined8 *)(param_3 + 8);
+    uVar10 = *(undefined8 *)param_3;
+    uVar9 = *(undefined8 *)(param_4 + 0x10);
+    uVar12 = *(undefined8 *)param_4;
+    *(undefined8 *)(param_3 + 8) = *(undefined8 *)(param_4 + 8);
+    *(undefined8 *)param_3 = uVar12;
+    *(undefined8 *)(param_3 + 0x10) = uVar9;
+    *(undefined8 *)(param_4 + 8) = uVar11;
+    *(undefined8 *)param_4 = uVar10;
+    *(undefined8 *)(param_4 + 0x10) = uVar8;
+    psVar1 = *(string **)param_3;
+    uVar5 = *(ulong *)(param_3 + 8);
+    if (-1 < (char)param_3[0x17]) {
+      psVar1 = param_3;
+      uVar5 = (ulong)(byte)param_3[0x17];
+    }
+    psVar2 = *(string **)param_2;
+    uVar6 = *(ulong *)(param_2 + 8);
+    if (-1 < (char)param_2[0x17]) {
+      psVar2 = param_2;
+      uVar6 = (ulong)(byte)param_2[0x17];
+    }
+    sVar3 = uVar6;
+    if (uVar5 <= uVar6) {
+      sVar3 = uVar5;
+    }
+    iVar7 = _memcmp(psVar1,psVar2,sVar3);
+    bVar4 = uVar5 < uVar6;
+    if (iVar7 != 0) {
+      bVar4 = iVar7 < 0;
+    }
+    if (bVar4) {
+      uVar8 = *(undefined8 *)(param_2 + 0x10);
+      uVar11 = *(undefined8 *)(param_2 + 8);
+      uVar10 = *(undefined8 *)param_2;
+      uVar9 = *(undefined8 *)(param_3 + 0x10);
+      uVar12 = *(undefined8 *)param_3;
+      *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_3 + 8);
+      *(undefined8 *)param_2 = uVar12;
+      *(undefined8 *)(param_2 + 0x10) = uVar9;
+      *(undefined8 *)(param_3 + 8) = uVar11;
+      *(undefined8 *)param_3 = uVar10;
+      *(undefined8 *)(param_3 + 0x10) = uVar8;
+      psVar1 = *(string **)param_2;
+      uVar5 = *(ulong *)(param_2 + 8);
+      if (-1 < (char)param_2[0x17]) {
+        psVar1 = param_2;
+        uVar5 = (ulong)(byte)param_2[0x17];
+      }
+      psVar2 = *(string **)param_1;
+      uVar6 = *(ulong *)(param_1 + 8);
+      if (-1 < (char)param_1[0x17]) {
+        psVar2 = param_1;
+        uVar6 = (ulong)(byte)param_1[0x17];
+      }
+      sVar3 = uVar6;
+      if (uVar5 <= uVar6) {
+        sVar3 = uVar5;
+      }
+      iVar7 = _memcmp(psVar1,psVar2,sVar3);
+      bVar4 = uVar5 < uVar6;
+      if (iVar7 != 0) {
+        bVar4 = iVar7 < 0;
+      }
+      if (bVar4) {
+        uVar8 = *(undefined8 *)(param_1 + 0x10);
+        uVar11 = *(undefined8 *)(param_1 + 8);
+        uVar10 = *(undefined8 *)param_1;
+        uVar9 = *(undefined8 *)(param_2 + 0x10);
+        uVar12 = *(undefined8 *)param_2;
+        *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + 8);
+        *(undefined8 *)param_1 = uVar12;
+        *(undefined8 *)(param_1 + 0x10) = uVar9;
+        *(undefined8 *)(param_2 + 8) = uVar11;
+        *(undefined8 *)param_2 = uVar10;
+        *(undefined8 *)(param_2 + 0x10) = uVar8;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __sort5[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 000023d4
+// Signature: void __sort5[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, string * param_3, string * param_4, string * param_5, __less * param_6)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__sort5[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::string*, std::string*, std::string*, std::string*,
+   std::__less<void, void>&) */
+
+void std::__sort5_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (string *param_1,string *param_2,string *param_3,string *param_4,string *param_5,
+               __less *param_6)
+
+{
+  string *psVar1;
+  string *psVar2;
+  size_t sVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  
+  __sort4_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+            (param_1,param_2,param_3,param_4,param_6);
+  psVar1 = *(string **)param_5;
+  uVar5 = *(ulong *)(param_5 + 8);
+  if (-1 < (char)param_5[0x17]) {
+    psVar1 = param_5;
+    uVar5 = (ulong)(byte)param_5[0x17];
+  }
+  psVar2 = *(string **)param_4;
+  uVar6 = *(ulong *)(param_4 + 8);
+  if (-1 < (char)param_4[0x17]) {
+    psVar2 = param_4;
+    uVar6 = (ulong)(byte)param_4[0x17];
+  }
+  sVar3 = uVar6;
+  if (uVar5 <= uVar6) {
+    sVar3 = uVar5;
+  }
+  iVar7 = _memcmp(psVar1,psVar2,sVar3);
+  bVar4 = uVar5 < uVar6;
+  if (iVar7 != 0) {
+    bVar4 = iVar7 < 0;
+  }
+  if (bVar4) {
+    uVar8 = *(undefined8 *)(param_4 + 0x10);
+    uVar11 = *(undefined8 *)(param_4 + 8);
+    uVar10 = *(undefined8 *)param_4;
+    uVar9 = *(undefined8 *)(param_5 + 0x10);
+    uVar12 = *(undefined8 *)param_5;
+    *(undefined8 *)(param_4 + 8) = *(undefined8 *)(param_5 + 8);
+    *(undefined8 *)param_4 = uVar12;
+    *(undefined8 *)(param_4 + 0x10) = uVar9;
+    *(undefined8 *)(param_5 + 8) = uVar11;
+    *(undefined8 *)param_5 = uVar10;
+    *(undefined8 *)(param_5 + 0x10) = uVar8;
+    psVar1 = *(string **)param_4;
+    uVar5 = *(ulong *)(param_4 + 8);
+    if (-1 < (char)param_4[0x17]) {
+      psVar1 = param_4;
+      uVar5 = (ulong)(byte)param_4[0x17];
+    }
+    psVar2 = *(string **)param_3;
+    uVar6 = *(ulong *)(param_3 + 8);
+    if (-1 < (char)param_3[0x17]) {
+      psVar2 = param_3;
+      uVar6 = (ulong)(byte)param_3[0x17];
+    }
+    sVar3 = uVar6;
+    if (uVar5 <= uVar6) {
+      sVar3 = uVar5;
+    }
+    iVar7 = _memcmp(psVar1,psVar2,sVar3);
+    bVar4 = uVar5 < uVar6;
+    if (iVar7 != 0) {
+      bVar4 = iVar7 < 0;
+    }
+    if (bVar4) {
+      uVar8 = *(undefined8 *)(param_3 + 0x10);
+      uVar11 = *(undefined8 *)(param_3 + 8);
+      uVar10 = *(undefined8 *)param_3;
+      uVar9 = *(undefined8 *)(param_4 + 0x10);
+      uVar12 = *(undefined8 *)param_4;
+      *(undefined8 *)(param_3 + 8) = *(undefined8 *)(param_4 + 8);
+      *(undefined8 *)param_3 = uVar12;
+      *(undefined8 *)(param_3 + 0x10) = uVar9;
+      *(undefined8 *)(param_4 + 8) = uVar11;
+      *(undefined8 *)param_4 = uVar10;
+      *(undefined8 *)(param_4 + 0x10) = uVar8;
+      psVar1 = *(string **)param_3;
+      uVar5 = *(ulong *)(param_3 + 8);
+      if (-1 < (char)param_3[0x17]) {
+        psVar1 = param_3;
+        uVar5 = (ulong)(byte)param_3[0x17];
+      }
+      psVar2 = *(string **)param_2;
+      uVar6 = *(ulong *)(param_2 + 8);
+      if (-1 < (char)param_2[0x17]) {
+        psVar2 = param_2;
+        uVar6 = (ulong)(byte)param_2[0x17];
+      }
+      sVar3 = uVar6;
+      if (uVar5 <= uVar6) {
+        sVar3 = uVar5;
+      }
+      iVar7 = _memcmp(psVar1,psVar2,sVar3);
+      bVar4 = uVar5 < uVar6;
+      if (iVar7 != 0) {
+        bVar4 = iVar7 < 0;
+      }
+      if (bVar4) {
+        uVar8 = *(undefined8 *)(param_2 + 0x10);
+        uVar11 = *(undefined8 *)(param_2 + 8);
+        uVar10 = *(undefined8 *)param_2;
+        uVar9 = *(undefined8 *)(param_3 + 0x10);
+        uVar12 = *(undefined8 *)param_3;
+        *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_3 + 8);
+        *(undefined8 *)param_2 = uVar12;
+        *(undefined8 *)(param_2 + 0x10) = uVar9;
+        *(undefined8 *)(param_3 + 8) = uVar11;
+        *(undefined8 *)param_3 = uVar10;
+        *(undefined8 *)(param_3 + 0x10) = uVar8;
+        psVar1 = *(string **)param_2;
+        uVar5 = *(ulong *)(param_2 + 8);
+        if (-1 < (char)param_2[0x17]) {
+          psVar1 = param_2;
+          uVar5 = (ulong)(byte)param_2[0x17];
+        }
+        psVar2 = *(string **)param_1;
+        uVar6 = *(ulong *)(param_1 + 8);
+        if (-1 < (char)param_1[0x17]) {
+          psVar2 = param_1;
+          uVar6 = (ulong)(byte)param_1[0x17];
+        }
+        sVar3 = uVar6;
+        if (uVar5 <= uVar6) {
+          sVar3 = uVar5;
+        }
+        iVar7 = _memcmp(psVar1,psVar2,sVar3);
+        bVar4 = uVar5 < uVar6;
+        if (iVar7 != 0) {
+          bVar4 = iVar7 < 0;
+        }
+        if (bVar4) {
+          uVar8 = *(undefined8 *)(param_1 + 0x10);
+          uVar11 = *(undefined8 *)(param_1 + 8);
+          uVar10 = *(undefined8 *)param_1;
+          uVar9 = *(undefined8 *)(param_2 + 0x10);
+          uVar12 = *(undefined8 *)param_2;
+          *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + 8);
+          *(undefined8 *)param_1 = uVar12;
+          *(undefined8 *)(param_1 + 0x10) = uVar9;
+          *(undefined8 *)(param_2 + 8) = uVar11;
+          *(undefined8 *)param_2 = uVar10;
+          *(undefined8 *)(param_2 + 0x10) = uVar8;
+        }
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __sift_down[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00002608
+// Signature: void __sift_down[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, __less * param_2, difference_type param_3, string * param_4)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__sift_down[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::__less<void, void>&,
+   std::iterator_traits<std::string*>::difference_type, std::string*) */
+
+void std::__sift_down_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (long param_1,undefined8 param_2,long param_3,undefined8 *param_4)
+
+{
+  ulong uVar1;
+  undefined8 *puVar2;
+  undefined8 *puVar3;
+  undefined8 ***pppuVar4;
+  size_t sVar5;
+  undefined8 *puVar6;
+  bool bVar7;
+  undefined8 **ppuVar8;
+  ulong uVar9;
+  ulong uVar10;
+  int iVar11;
+  long lVar12;
+  undefined8 *puVar13;
+  undefined8 *puVar14;
+  undefined8 *puVar15;
+  ulong uVar16;
+  undefined8 *puVar17;
+  ulong uVar18;
+  undefined8 uVar19;
+  undefined8 uVar20;
+  undefined8 *local_a0;
+  undefined8 *puStack_98;
+  ulong local_90;
+  long lStack_88;
+  undefined8 **local_80;
+  ulong uStack_78;
+  ulong local_70;
+  
+  if (1 < param_3) {
+    lVar12 = (long)param_4 - param_1 >> 3;
+    uVar18 = param_3 - 2U >> 1;
+    if (lVar12 * -0x5555555555555555 <= (long)uVar18) {
+      uVar1 = lVar12 * 0x5555555555555556 | 1;
+      puVar13 = (undefined8 *)(param_1 + uVar1 * 0x18);
+      uVar16 = lVar12 * 0x5555555555555556 + 2;
+      if ((long)uVar16 < param_3) {
+        puVar14 = puVar13 + 3;
+        local_a0 = (undefined8 *)*puVar14;
+        puStack_98 = (undefined8 *)*puVar13;
+        puVar15 = puStack_98;
+        uVar9 = puVar13[1];
+        if (-1 < (char)*(byte *)((long)puVar13 + 0x17)) {
+          puVar15 = puVar13;
+          uVar9 = (ulong)*(byte *)((long)puVar13 + 0x17);
+        }
+        puVar2 = local_a0;
+        uVar10 = puVar13[4];
+        if (-1 < (char)*(byte *)((long)puVar13 + 0x2f)) {
+          puVar2 = puVar14;
+          uVar10 = (ulong)*(byte *)((long)puVar13 + 0x2f);
+        }
+        sVar5 = uVar10;
+        if (uVar9 <= uVar10) {
+          sVar5 = uVar9;
+        }
+        iVar11 = _memcmp(puVar15,puVar2,sVar5);
+        bVar7 = uVar9 < uVar10;
+        if (iVar11 != 0) {
+          bVar7 = iVar11 < 0;
+        }
+        ppuVar8 = &local_a0;
+        if (!bVar7) {
+          ppuVar8 = &puStack_98;
+        }
+        puVar15 = *ppuVar8;
+        if (!bVar7) {
+          puVar14 = puVar13;
+          uVar16 = uVar1;
+        }
+      }
+      else {
+        puVar15 = (undefined8 *)*puVar13;
+        puVar14 = puVar13;
+        uVar16 = uVar1;
+      }
+      uVar1 = puVar14[1];
+      if (-1 < (char)*(byte *)((long)puVar14 + 0x17)) {
+        puVar15 = puVar14;
+        uVar1 = (ulong)*(byte *)((long)puVar14 + 0x17);
+      }
+      puVar13 = (undefined8 *)*param_4;
+      uVar9 = param_4[1];
+      if (-1 < (char)*(byte *)((long)param_4 + 0x17)) {
+        puVar13 = param_4;
+        uVar9 = (ulong)*(byte *)((long)param_4 + 0x17);
+      }
+      sVar5 = uVar9;
+      if (uVar1 <= uVar9) {
+        sVar5 = uVar1;
+      }
+      iVar11 = _memcmp(puVar15,puVar13,sVar5);
+      bVar7 = uVar1 < uVar9;
+      if (iVar11 != 0) {
+        bVar7 = iVar11 < 0;
+      }
+      if (!bVar7) {
+        uStack_78 = param_4[1];
+        local_80 = (undefined8 **)*param_4;
+        local_70 = param_4[2];
+        param_4[1] = 0;
+        param_4[2] = 0;
+        *param_4 = 0;
+        local_90 = uVar18;
+        lStack_88 = param_3;
+        do {
+          puVar13 = puVar14;
+          uVar20 = puVar13[1];
+          uVar19 = *puVar13;
+          param_4[2] = puVar13[2];
+          param_4[1] = uVar20;
+          *param_4 = uVar19;
+          *(undefined1 *)((long)puVar13 + 0x17) = 0;
+          *(undefined1 *)puVar13 = 0;
+          if ((long)uVar18 < (long)uVar16) break;
+          uVar1 = uVar16 << 1 | 1;
+          puVar15 = (undefined8 *)(param_1 + uVar1 * 0x18);
+          uVar16 = uVar16 * 2 + 2;
+          if ((long)uVar16 < param_3) {
+            puVar14 = puVar15 + 3;
+            puVar17 = (undefined8 *)*puVar14;
+            puVar6 = (undefined8 *)*puVar15;
+            puVar2 = puVar6;
+            uVar18 = puVar15[1];
+            if (-1 < (char)*(byte *)((long)puVar15 + 0x17)) {
+              puVar2 = puVar15;
+              uVar18 = (ulong)*(byte *)((long)puVar15 + 0x17);
+            }
+            puVar3 = puVar17;
+            uVar9 = puVar15[4];
+            if (-1 < (char)*(byte *)((long)puVar15 + 0x2f)) {
+              puVar3 = puVar14;
+              uVar9 = (ulong)*(byte *)((long)puVar15 + 0x2f);
+            }
+            sVar5 = uVar9;
+            if (uVar18 <= uVar9) {
+              sVar5 = uVar18;
+            }
+            iVar11 = _memcmp(puVar2,puVar3,sVar5);
+            bVar7 = uVar18 < uVar9;
+            if (iVar11 != 0) {
+              bVar7 = iVar11 < 0;
+            }
+            param_3 = lStack_88;
+            uVar18 = local_90;
+            if (!bVar7) {
+              puVar17 = puVar6;
+              puVar14 = puVar15;
+              uVar16 = uVar1;
+            }
+          }
+          else {
+            puVar17 = (undefined8 *)*puVar15;
+            puVar14 = puVar15;
+            uVar16 = uVar1;
+          }
+          uVar1 = puVar14[1];
+          if (-1 < (char)*(byte *)((long)puVar14 + 0x17)) {
+            puVar17 = puVar14;
+            uVar1 = (ulong)*(byte *)((long)puVar14 + 0x17);
+          }
+          pppuVar4 = (undefined8 ***)local_80;
+          uVar9 = uStack_78;
+          if (-1 < (long)local_70) {
+            pppuVar4 = &local_80;
+            uVar9 = local_70 >> 0x38;
+          }
+          sVar5 = uVar9;
+          if (uVar1 <= uVar9) {
+            sVar5 = uVar1;
+          }
+          iVar11 = _memcmp(puVar17,pppuVar4,sVar5);
+          bVar7 = uVar1 < uVar9;
+          if (iVar11 != 0) {
+            bVar7 = iVar11 < 0;
+          }
+          param_4 = puVar13;
+        } while (!bVar7);
+        puVar13[2] = local_70;
+        puVar13[1] = uStack_78;
+        *puVar13 = local_80;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __pop_heap[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>,std::string*>
+// Entry: 000028cc
+// Signature: void __pop_heap[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>,std::string*>(string * param_1, string * param_2, __less * param_3, difference_type param_4)
+// ========================================
+
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__pop_heap[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>,
+   std::string*>(std::string*, std::string*, std::__less<void, void>&,
+   std::iterator_traits<std::string*>::difference_type) */
+
+void std::__pop_heap_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>,std::string*>
+               (undefined8 *param_1,long param_2,undefined8 param_3,long param_4)
+
+{
+  undefined8 *puVar1;
+  ulong uVar2;
+  ulong uVar3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  size_t sVar6;
+  undefined1 uVar7;
+  byte bVar8;
+  byte bVar9;
+  bool bVar10;
+  int iVar11;
+  long lVar12;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  long lVar15;
+  undefined8 *puVar16;
+  ulong uVar17;
+  ulong uVar18;
+  undefined8 *puVar19;
+  undefined8 uVar20;
+  undefined8 uVar21;
+  undefined7 uStack_78;
+  undefined1 local_71;
+  
+  lVar12 = *____stack_chk_guard;
+  if (1 < param_4) {
+    uVar13 = *param_1;
+    uStack_78 = (undefined7)param_1[1];
+    uVar14 = *(undefined8 *)((long)param_1 + 0xf);
+    local_71 = (undefined1)uVar14;
+    uVar7 = *(undefined1 *)((long)param_1 + 0x17);
+    param_1[1] = 0;
+    param_1[2] = 0;
+    *param_1 = 0;
+    puVar16 = param_1;
+    uVar17 = 0;
+    do {
+      puVar1 = puVar16 + uVar17 * 3 + 3;
+      uVar3 = uVar17 << 1 | 1;
+      uVar2 = uVar17 * 2 + 2;
+      uVar18 = uVar3;
+      puVar19 = puVar1;
+      if ((long)uVar2 < param_4) {
+        bVar8 = *(byte *)((long)puVar16 + uVar17 * 0x18 + 0x47);
+        puVar19 = puVar16 + uVar17 * 3 + 6;
+        bVar9 = *(byte *)((long)puVar16 + uVar17 * 0x18 + 0x2f);
+        puVar4 = (undefined8 *)*puVar1;
+        uVar18 = puVar16[uVar17 * 3 + 4];
+        if (-1 < (char)bVar9) {
+          puVar4 = puVar1;
+          uVar18 = (ulong)bVar9;
+        }
+        puVar5 = (undefined8 *)*puVar19;
+        uVar17 = puVar16[uVar17 * 3 + 7];
+        if (-1 < (char)bVar8) {
+          puVar5 = puVar19;
+          uVar17 = (ulong)bVar8;
+        }
+        sVar6 = uVar17;
+        if (uVar18 <= uVar17) {
+          sVar6 = uVar18;
+        }
+        iVar11 = _memcmp(puVar4,puVar5,sVar6);
+        bVar10 = uVar18 < uVar17;
+        if (iVar11 != 0) {
+          bVar10 = iVar11 < 0;
+        }
+        uVar18 = uVar2;
+        if (!bVar10) {
+          uVar18 = uVar3;
+          puVar19 = puVar1;
+        }
+      }
+      if (*(char *)((long)puVar16 + 0x17) < '\0') {
+        operator_delete((void *)*puVar16);
+      }
+      uVar21 = puVar19[1];
+      uVar20 = *puVar19;
+      puVar16[2] = puVar19[2];
+      puVar16[1] = uVar21;
+      *puVar16 = uVar20;
+      *(undefined1 *)((long)puVar19 + 0x17) = 0;
+      *(undefined1 *)puVar19 = 0;
+      puVar16 = puVar19;
+      uVar17 = uVar18;
+    } while ((long)uVar18 <= (long)(param_4 - 2U >> 1));
+    if (puVar19 == (undefined8 *)(param_2 + -0x18)) {
+      *puVar19 = uVar13;
+      puVar19[1] = CONCAT17(local_71,uStack_78);
+      *(undefined8 *)((long)puVar19 + 0xf) = uVar14;
+      *(undefined1 *)((long)puVar19 + 0x17) = uVar7;
+      lVar15 = *____stack_chk_guard;
+      goto joined_r0x00002ad0;
+    }
+    uVar21 = *(undefined8 *)(param_2 + -0x10);
+    uVar20 = *(undefined8 *)(param_2 + -0x18);
+    puVar19[2] = *(undefined8 *)(param_2 + -8);
+    puVar19[1] = uVar21;
+    *puVar19 = uVar20;
+    *(undefined8 *)(param_2 + -0x18) = uVar13;
+    *(ulong *)(param_2 + -0x10) = CONCAT17(local_71,uStack_78);
+    *(undefined8 *)(param_2 + -9) = uVar14;
+    *(undefined1 *)(param_2 + -1) = uVar7;
+    __sift_up_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+              (param_1,puVar19 + 3,param_3,
+               ((long)(puVar19 + 3) - (long)param_1 >> 3) * -0x5555555555555555);
+  }
+  lVar15 = *____stack_chk_guard;
+joined_r0x00002ad0:
+  if (lVar15 != lVar12) {
+                    /* WARNING: Subroutine does not return */
+    ___stack_chk_fail();
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __sift_up[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+// Entry: 00002ad8
+// Signature: void __sift_up[abi:ne180100]<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>(string * param_1, string * param_2, __less * param_3, difference_type param_4)
+// ========================================
+
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void std::__sift_up[abi:ne180100]<std::_ClassicAlgPolicy, std::__less<void, void>&,
+   std::string*>(std::string*, std::string*, std::__less<void, void>&,
+   std::iterator_traits<std::string*>::difference_type) */
+
+void std::__sift_up_abi_ne180100_<std::_ClassicAlgPolicy,std::__less<void,void>&,std::string*>
+               (long param_1,long param_2,undefined8 param_3,long param_4)
+
+{
+  undefined8 *puVar1;
+  void **ppvVar2;
+  size_t sVar3;
+  bool bVar4;
+  ulong uVar5;
+  ulong uVar6;
+  int iVar7;
+  undefined8 *puVar8;
+  ulong uVar9;
+  undefined8 *puVar10;
+  undefined8 *puVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  void *local_70;
+  ulong uStack_68;
+  ulong local_60;
+  
+  if (1 < param_4) {
+    uVar9 = param_4 - 2U >> 1;
+    puVar10 = (undefined8 *)(param_1 + uVar9 * 0x18);
+    puVar8 = (undefined8 *)(param_2 + -0x18);
+    puVar11 = (undefined8 *)*puVar10;
+    uVar5 = puVar10[1];
+    if (-1 < (char)*(byte *)((long)puVar10 + 0x17)) {
+      puVar11 = puVar10;
+      uVar5 = (ulong)*(byte *)((long)puVar10 + 0x17);
+    }
+    puVar1 = (undefined8 *)*puVar8;
+    uVar6 = *(ulong *)(param_2 + -0x10);
+    if (-1 < (char)*(byte *)(param_2 + -1)) {
+      puVar1 = puVar8;
+      uVar6 = (ulong)*(byte *)(param_2 + -1);
+    }
+    sVar3 = uVar6;
+    if (uVar5 <= uVar6) {
+      sVar3 = uVar5;
+    }
+    iVar7 = _memcmp(puVar11,puVar1,sVar3);
+    bVar4 = uVar5 < uVar6;
+    if (iVar7 != 0) {
+      bVar4 = iVar7 < 0;
+    }
+    if (bVar4) {
+      local_60 = *(ulong *)(param_2 + -8);
+      uStack_68 = *(ulong *)(param_2 + -0x10);
+      local_70 = (void *)*puVar8;
+      *(undefined8 *)(param_2 + -0x10) = 0;
+      *(undefined8 *)(param_2 + -8) = 0;
+      *puVar8 = 0;
+      uVar5 = uStack_68;
+      ppvVar2 = local_70;
+      if (-1 < (long)local_60) {
+        uVar5 = local_60 >> 0x38;
+        ppvVar2 = &local_70;
+      }
+      do {
+        puVar11 = puVar10;
+        uVar13 = puVar11[1];
+        uVar12 = *puVar11;
+        puVar8[2] = puVar11[2];
+        puVar8[1] = uVar13;
+        *puVar8 = uVar12;
+        *(undefined1 *)((long)puVar11 + 0x17) = 0;
+        *(undefined1 *)puVar11 = 0;
+        if (uVar9 == 0) break;
+        uVar9 = uVar9 - 1 >> 1;
+        puVar10 = (undefined8 *)(param_1 + uVar9 * 0x18);
+        puVar8 = (undefined8 *)*puVar10;
+        uVar6 = puVar10[1];
+        if (-1 < (char)*(byte *)((long)puVar10 + 0x17)) {
+          puVar8 = puVar10;
+          uVar6 = (ulong)*(byte *)((long)puVar10 + 0x17);
+        }
+        sVar3 = uVar5;
+        if (uVar6 <= uVar5) {
+          sVar3 = uVar6;
+        }
+        iVar7 = _memcmp(puVar8,ppvVar2,sVar3);
+        bVar4 = uVar6 < uVar5;
+        if (iVar7 != 0) {
+          bVar4 = iVar7 < 0;
+        }
+        puVar8 = puVar11;
+      } while (bVar4);
+      puVar11[1] = uStack_68;
+      *puVar11 = local_70;
+      puVar11[2] = local_60;
+    }
+  }
+  return;
+}
+
+
+
+
+// ========================================
+// Function: __Unwind_Resume
+// Entry: 00004000
+// Signature: void __Unwind_Resume(_Unwind_Exception * exception_object)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void __Unwind_Resume(_Unwind_Exception *exception_object)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: error
+// Entry: 00004100
+// Signature: undefined error(int param_1, string * param_2, char * param_3, char * param_4, int param_5)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::error(int param_1,string *param_2,char *param_3,char *param_4,int param_5)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: join
+// Entry: 00004200
+// Signature: undefined join(string * param_1, string * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::fs::join(string *param_1,string *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: destroy
+// Entry: 00004300
+// Signature: undefined destroy(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::utils::trace::details::Region::destroy(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: Region
+// Entry: 00004400
+// Signature: undefined __thiscall Region(Region * this, LocationStaticStorage * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall
+cv::utils::trace::details::Region::Region(Region *this,LocationStaticStorage *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: format
+// Entry: 00004500
+// Signature: undefined format(char * param_1, ...)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void cv::format(char *param_1,...)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: logic_error
+// Entry: 00004600
+// Signature: undefined __thiscall logic_error(logic_error * this, char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::logic_error::logic_error(logic_error *this,char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~length_error
+// Entry: 00004700
+// Signature: undefined __thiscall ~length_error(length_error * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::length_error::~length_error() */
+
+void __thiscall std::length_error::~length_error(length_error *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~out_of_range
+// Entry: 00004800
+// Signature: undefined __thiscall ~out_of_range(out_of_range * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::out_of_range::~out_of_range() */
+
+void __thiscall std::out_of_range::~out_of_range(out_of_range *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: bad_array_new_length
+// Entry: 00004900
+// Signature: undefined __thiscall bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::bad_array_new_length::bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ~bad_array_new_length
+// Entry: 00004a00
+// Signature: undefined __thiscall ~bad_array_new_length(bad_array_new_length * this)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* std::bad_array_new_length::~bad_array_new_length() */
+
+void __thiscall std::bad_array_new_length::~bad_array_new_length(bad_array_new_length *this)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: assign
+// Entry: 00004b00
+// Signature: undefined assign(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::string::assign(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator=
+// Entry: 00004c00
+// Signature: undefined __thiscall operator=(string * this, string * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void __thiscall std::string::operator=(string *this,string *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: terminate
+// Entry: 00004d00
+// Signature: undefined terminate(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::terminate(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.delete
+// Entry: 00005300
+// Signature: void operator.delete(void * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void operator_delete(void *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: operator.new
+// Entry: 00005400
+// Signature: void * operator.new(ulong param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * operator_new(ulong param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_allocate_exception
+// Entry: 00005500
+// Signature: undefined ___cxa_allocate_exception(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_allocate_exception(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_begin_catch
+// Entry: 00005600
+// Signature: undefined ___cxa_begin_catch(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_begin_catch(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___cxa_throw
+// Entry: 00005a00
+// Signature: noreturn undefined ___cxa_throw(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___cxa_throw(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: ___stack_chk_fail
+// Entry: 00005c00
+// Signature: noreturn undefined ___stack_chk_fail(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void ___stack_chk_fail(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _closedir
+// Entry: 00005e00
+// Signature: undefined _closedir(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _closedir(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memcmp
+// Entry: 00005f00
+// Signature: int _memcmp(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _memcmp(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _memmove
+// Entry: 00006000
+// Signature: void * _memmove(void * param_1, void * param_2, size_t param_3)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * _memmove(void *param_1,void *param_2,size_t param_3)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _opendir
+// Entry: 00006100
+// Signature: undefined _opendir(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _opendir(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _readdir
+// Entry: 00006200
+// Signature: undefined _readdir(void)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void _readdir(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _stat
+// Entry: 00006300
+// Signature: int _stat(char * param_1, stat * param_2)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int _stat(char *param_1,stat *param_2)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+
+// ========================================
+// Function: _strlen
+// Entry: 00006400
+// Signature: size_t _strlen(char * param_1)
+// ========================================
+
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+size_t _strlen(char *param_1)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+
+// SUMMARY
+// Decompiled: 57
+// Failed: 0
+// Skipped external functions: 0
